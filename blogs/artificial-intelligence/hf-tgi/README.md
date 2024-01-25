@@ -9,9 +9,8 @@
 
 # Efficient deployment of large language models with Text Generation Inference on AMD GPUs
 
-**Author:** Douglas Jia, AI Software Solutions \
-**Read time:** 5 minutes\
-**Last edited:** 16 Jan 2024
+**Author:** [Douglas Jia](../../authors/douglas-jia.md)\
+**First published:** 26 Jan 2024
 
 [Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference/index) is a
 toolkit for deploying and serving Large Language Models (LLMs) with unparalleled efficiency. TGI is

@@ -18,3 +18,4 @@ includes causal inference and strategic analysis.
 
 * [LLM distributed supervised fine-tuning with JAX](../artificial-intelligence/distributed-sft-jax/README.md)
 * [Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs](../artificial-intelligence/megatron-deepspeed-pretrain/README.md)
+* [Efficient deployment of large language models with Text Generation Inference on AMD GPUs](../artificial-intelligence/hf-tgi/README.md)

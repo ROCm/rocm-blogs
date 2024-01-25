@@ -9,6 +9,16 @@
 ::::{grid} 3
 :margin: 1
 
+:::{grid-item-card} LLMs and Text Generation Inference
+:padding: 1
+:link: ./artificial-intelligence/hf-tgi/README
+:link-type: doc
+
+Efficient deployment of large language models with Text Generation Inference on AMD GPUs
++++
+26 Jan 2024
+:::
+
 :::{grid-item-card} LLM fine-tuning with JAX
 :padding: 1
 :link: ./artificial-intelligence/distributed-sft-jax/README
