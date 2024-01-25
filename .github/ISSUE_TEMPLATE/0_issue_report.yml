@@ -1,0 +1,76 @@
+name: Issue Report
+description: File a report for something not working correctly.
+title: "[Issue]: "
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Thank you for taking the time to fill out this report!
+
+      On a Linux system, you can acquire your OS, CPU, GPU, and ROCm version (for filling out this report) with the following commands:
+      echo "OS:" && cat /etc/os-release | grep -E "^(NAME=|VERSION=)";
+      echo "CPU: " && cat /proc/cpuinfo | grep "model name" | sort --unique;
+      echo "GPU:" && /opt/rocm/bin/rocminfo | grep -E "^\s*(Name|Marketing Name)";
+      echo "ROCm in /opt:" && ls -1 /opt | grep -E "rocm-";
+- type: textarea
+  attributes:
+    label: Problem Description
+    description: Describe the issue you encountered.
+    placeholder: "The steps to reproduce can be included here, or in the dedicated section further below."
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: Operating System
+    description: What is the name and version number of the OS?
+    placeholder: "e.g. Ubuntu 22.04.3 LTS (Jammy Jellyfish)"
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: CPU
+    description: What CPU did you encounter the issue on?
+    placeholder: "e.g. AMD Ryzen 9 5900HX with Radeon Graphics"
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: GPU
+    description: What GPU(s) did you encounter the issue on?
+    placeholder: "e.g. MI200"
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: ROCm Version
+    description: What version(s) of ROCm did you encounter the issue on?
+    placeholder: "e.g. 5.7.0"
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: ROCm Component
+    description: (Optional) If this issue relates to a specific ROCm component, it can be mentioned here.
+    placeholder: "e.g. rocBLAS"
+
+- type: textarea
+  attributes:
+    label: Steps to Reproduce
+    description: (Optional) Detailed steps to reproduce the issue.
+    placeholder: Please also include what you expected to happen, and what actually did, at the failing step(s).
+  validations:
+    required: false
+
+- type: textarea
+  attributes:
+    label: Output of /opt/rocm/bin/rocminfo --support
+    description: The output of rocminfo --support will help to better address the problem.
+    placeholder: |
+      ROCk module is loaded
+      =====================
+      HSA System Attributes
+      =====================
+      [...]
+  validations:
+    required: true
