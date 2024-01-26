@@ -9,26 +9,6 @@
 ::::{grid} 3
 :margin: 1
 
-:::{grid-item-card} LLMs and Text Generation Inference
-:padding: 1
-:link: ./artificial-intelligence/hf-tgi/README
-:link-type: doc
-
-Efficient deployment of large language models with Text Generation Inference on AMD GPUs
-+++
-26 Jan 2024
-:::
-
-:::{grid-item-card} LLM fine-tuning with JAX
-:padding: 1
-:link: ./artificial-intelligence/distributed-sft-jax/README
-:link-type: doc
-
-LLM distributed supervised fine-tuning with JAX
-+++
-26 Jan 2024
-:::
-
 :::{grid-item-card} Pre-training BERT (PyTorch)
 :padding: 1
 :link: ./artificial-intelligence/bert-hg-pytorch/README
@@ -45,26 +25,6 @@ Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
 :link-type: doc
 
 Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
-+++
-26 Jan 2024
-:::
-
-:::{grid-item-card} Fine-tune Llama 2 with LoRA
-:padding: 1
-:link: ./artificial-intelligence/llama2-lora/README
-:link-type: doc
-
-A step-by-step guide to customizing a LLM for question answering
-+++
-26 Jan 2024
-:::
-
-:::{grid-item-card} LoRA & efficient fine-tuning
-:padding: 1
-:link: ./artificial-intelligence/lora-fundamentals/README
-:link-type: doc
-
-Using LoRA for efficient fine-tuning: fundamental principles
 +++
 26 Jan 2024
 :::
