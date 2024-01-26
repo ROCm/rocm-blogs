@@ -6,7 +6,7 @@
 
 # Clint Greene
 
-Clint is a Principle Member of Technical Staff in AMD.
+Clint is a Software Development Engineer at AMD.
 
 # Blogs
 

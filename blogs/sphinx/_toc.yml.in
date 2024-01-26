@@ -8,18 +8,10 @@ subtrees:
 
 - caption: Artificial intelligence
   entries:
-  - file: artificial-intelligence/hf-tgi/README.md
-    title: LLMs and Text Generation Inference
-  - file: artificial-intelligence/distributed-sft-jax/README.md
-    title: LLM fine-tuning with JAX
   - file: artificial-intelligence/bert-hg-pytorch/README.md
     title: Pre-training BERT (PyTorch)
   - file: artificial-intelligence/bert-hg-tf/README.md
     title: Pre-training BERT (TensorFlow)
-  - file: artificial-intelligence/llama2-lora/README.md
-    title: Fine-tune Llama 2 with LoRA
-  - file: artificial-intelligence/lora-fundamentals/README.md
-    title:  LoRA & efficient fine-tuning
   - file: artificial-intelligence/megatron-deepspeed-pretrain/README.md
     title: LLM Training with Megatron-DeepSpeed
   - file: artificial-intelligence/pytorch-lightning/README.md

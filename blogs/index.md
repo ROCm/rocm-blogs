@@ -25,14 +25,6 @@ Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
 Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
 :::
 
-:::{grid-item-card} LoRA & efficient fine-tuning
-:padding: 1
-:link: ./artificial-intelligence/lora-fundamentals/README
-:link-type: doc
-
-Using LoRA for efficient fine-tuning: fundamental principles
-:::
-
 :::{grid-item-card} LLM training with Megatron-DeepSpeed
 :padding: 1
 :link: ./artificial-intelligence/megatron-deepspeed-pretrain/README
