@@ -73,12 +73,12 @@ Our goal is to train a neural network for the classification of the MNIST databa
 We then fine-tune this network to improve its performance for a category in which it doesn't initially
 perform well.
 
-* Hardware: We use an AMD Instinct GPU with [ROCm](https://github.com/RadeonOpenCompute/ROCm).
+* Hardware: We use an AMD Instinct GPU with [ROCm 5.7.0](https://github.com/RadeonOpenCompute/ROCm).
 * Software: PyTorch, tqdm
 
 ### Getting started
 
-1. Import the packages. There is no specific version requirement for PyTorch or ROCm.
+1. Import the packages.  
 
     ``` python
     import torch
@@ -118,7 +118,6 @@ perform well.
 
     ``` python
     # Create an overly expensive neural network to classify MNIST digits
-    # Daddy got money, so I don't care about efficiency
     class RichBoyNet(nn.Module):
         def __init__(self, hidden_size_1=1000, hidden_size_2=2000):
             super(RichBoyNet,self).__init__()
