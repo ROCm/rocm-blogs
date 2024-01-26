@@ -29,6 +29,7 @@ subtrees:
     title: Accelerating XGBoost
 
 - caption: Acknowlegements
+  entries:
   - file: contributor-bios.md
     title: Blog contributors
 
