@@ -59,7 +59,7 @@ shards that are distributed across the available GPUs.
 In the preceding step, you set up a server that actively listens for incoming requests. Now you can
 open a new terminal to interact with this server (be sure to keep the original server running throughout
 this process). To query the server, you can use various methods; we demonstrate two commonly used
-options: Python requests package and Curl command line.
+options: Python `requests` package and `curl` command line.
 
 ### Python requests package
 

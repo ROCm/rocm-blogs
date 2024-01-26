@@ -6,13 +6,12 @@
 
 # Douglas Jia
 
-Douglas is a Principal Deep Learning Data Scientist at AMD, where he specializes in assisting
-enterprise clients with the deployment of large language models (LLMs) on AMD GPUs. In this role,
+Douglas holds a PhD degree in Biostatistics and is a Principal Deep Learning Data Scientist at AMD, where he specializes in assisting enterprise clients with the deployment of large language models (LLMs) on AMD GPUs. In this role,
 Douglas focuses on optimizing GPU utilization to meet the diverse business requirements of AMD's
 customers. Before joining AMD, Douglas gained extensive experience during his tenure at Google and
 JPMorgan Chase, where he dedicated several years to the development of natural language models,
 fine-tuning LLMs, and conducting online controlled experiments (A/B testing). His expertise also
-includes causal inference and strategic analysis.
+includes causal inference, product analytics and strategic analysis.
 
 # Blogs
 

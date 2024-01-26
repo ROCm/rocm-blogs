@@ -12,7 +12,6 @@ Science from NYU. Her expertise lies in the application of Computer Vision model
 medical imaging and 3D scene reconstruction. Prior to joining AMD, Vara Lakshmi worked on a
 generative AI project in Medical Imaging at Google Summer of Code.
 
-
 ## Blogs
 
 * [Pre-training BERT using Hugging Face & PyTorch on an AMD GPU](../artificial-intelligence/bert-hg-pytorch/README.md)
