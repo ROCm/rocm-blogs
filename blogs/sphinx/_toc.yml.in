@@ -28,7 +28,7 @@ subtrees:
   - file: artificial-intelligence/xgboost-multi-gpu/README.md
     title: Accelerating XGBoost
 
-- caption: Acknowlegements
+- caption: Acknowledgements
   entries:
   - file: contributor-bios.md
     title: Blog contributors
