@@ -15,8 +15,6 @@
 :link-type: doc
 
 Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
-+++
-26 Jan 2024
 :::
 
 :::{grid-item-card} Pre-training BERT (TensorFlow)
@@ -25,8 +23,14 @@ Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
 :link-type: doc
 
 Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
-+++
-26 Jan 2024
+:::
+
+:::{grid-item-card} LoRA & efficient fine-tuning
+:padding: 1
+:link: ./artificial-intelligence/lora-fundamentals/README
+:link-type: doc
+
+Using LoRA for efficient fine-tuning: fundamental principles
 :::
 
 :::{grid-item-card} LLM training with Megatron-DeepSpeed
@@ -35,8 +39,6 @@ Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
 :link-type: doc
 
 Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs
-+++
-26 Jan 2024
 :::
 
 :::{grid-item-card} PyTorch Lightning
@@ -45,8 +47,6 @@ Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs
 :link-type: doc
 
 PyTorch Lightning on AMD GPUs
-+++
-26 Jan 2024
 :::
 
 :::{grid-item-card} Accelerating XGBoost
@@ -55,7 +55,5 @@ PyTorch Lightning on AMD GPUs
 :link-type: doc
 
 Accelerating XGBoost using Multiple AMD GPUs
-+++
-26 Jan 2024
 :::
 ::::

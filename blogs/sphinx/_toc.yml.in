@@ -6,10 +6,6 @@ defaults:
 root: index
 subtrees:
 
-- entries:
-  - file: contributor-bios.md
-    title: Blog contributors
-
 - caption: Artificial intelligence
   entries:
   - file: artificial-intelligence/hf-tgi/README.md
@@ -30,3 +26,9 @@ subtrees:
     title: Pytorch Lightning
   - file: artificial-intelligence/xgboost-multi-gpu/README.md
     title: Accelerating XGBoost
+
+- caption: Acknowledgements
+  entries:
+  - file: contributor-bios.md
+    title: Blog contributors
+
