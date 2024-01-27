@@ -44,7 +44,10 @@ external_toc_path = "./sphinx/_toc.yml"
 external_projects_current_project = "rocm"
 
 html_theme = "rocm_docs_theme"
-html_theme_options = {"flavor": "rocm-blogs"}
+html_theme_options = {
+    "flavor": "rocm-blogs",
+    "link_main_doc": False,
+}
 
 extensions = ["rocm_docs"]
 external_toc_path = "./sphinx/_toc.yml"
