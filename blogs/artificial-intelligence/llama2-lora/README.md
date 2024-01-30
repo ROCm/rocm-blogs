@@ -112,42 +112,41 @@ Next, install the required libraries.
 !pip install -q pandas torch peft transformers==4.31.0 trl==0.4.7 accelerate
 ```
 
-#### Installing bitsandbytes
-
-ROCm needs a special version of bitsandbytes (`bitsandbytes-rocm`).
+#### Install bitsandbytes
 
 1. Install bitsandbytes using the following code.
 
     ``` bash
-    git clone https://github.com/Lzy17/bitsandbytes-rocm
-    cd bitsandbytes-rocm
+    %%bash
+    git clone --recurse https://github.com/ROCmSoftwarePlatform/bitsandbytes
+    cd bitsandbytes
+    git checkout 4c0ca08aa24d622940d9abdcff6090efc85dbc30
     make hip
-    python3 setup.py install
+    python setup.py install
     ```
 
-2. Test the installation.
+2. Check the bitsandbytes version (0.39.1).
 
     ``` bash
-    python3 -m bitsandbytes
-    cd bitsandbytes-rocm/benchmarking/accuracy
-    python bnb_accuracy.py
+    %%bash
+    pip list | grep bitsandbytes
     ```
 
-3. Import the required packages.
+#### Import the required packages
 
-    ``` python
-    import torch
-    from datasets import load_dataset
-    from transformers import (
-        AutoModelForCausalLM,
-        AutoTokenizer,
-        BitsAndBytesConfig,
-        TrainingArguments,
-        pipeline
-    )
-    from peft import LoraConfig
-    from trl import SFTTrainer
-    ```
+``` python
+import torch
+from datasets import load_dataset
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    BitsAndBytesConfig,
+    TrainingArguments,
+    pipeline
+)
+from peft import LoraConfig
+from trl import SFTTrainer
+```
 
 ### Step 2: Configuring the model and data
 
