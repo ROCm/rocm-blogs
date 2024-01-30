@@ -8,19 +8,24 @@ subtrees:
 
 - caption: Artificial intelligence
   entries:
-  - file: artificial-intelligence/bert-hg-pytorch/README.md
-    title: Pre-training BERT (PyTorch)
-  - file: artificial-intelligence/bert-hg-tf/README.md
-    title: Pre-training BERT (TensorFlow)
-  - file: artificial-intelligence/megatron-deepspeed-pretrain/README.md
-    title: LLM Training with Megatron-DeepSpeed
-  - file: artificial-intelligence/pytorch-lightning/README.md
-    title: Pytorch Lightning
-  - file: artificial-intelligence/xgboost-multi-gpu/README.md
+  - file: artificial-intelligence/008-hf-tgi/README.md
+    title: Efficient deployment of LLMs with Text Generation Inference
+  - file: artificial-intelligence/007-lora-fundamentals/README.md
+    title: Using LoRA for efficient fine-tuning
+  - file: artificial-intelligence/006-distributed-sft-jax/README.md
+    title: LLM distributed supervised fine-tuning with JAX
+  - file: artificial-intelligence/005-xgboost-multi-gpu/README.md
     title: Accelerating XGBoost
+  - file: artificial-intelligence/004-pytorch-lightning/README.md
+    title: Pytorch Lightning
+  - file: artificial-intelligence/003-megatron-deepspeed-pretrain/README.md
+    title: LLM Training with Megatron-DeepSpeed
+  - file: artificial-intelligence/002-bert-hg-pytorch/README.md
+    title: Pre-training BERT (PyTorch)
+  - file: artificial-intelligence/001-bert-hg-tf/README.md
+    title: Pre-training BERT (TensorFlow)
 
 - caption: Acknowledgements
   entries:
   - file: contributor-bios.md
     title: Blog contributors
-

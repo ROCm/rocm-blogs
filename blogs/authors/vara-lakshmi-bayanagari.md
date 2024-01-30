@@ -14,5 +14,5 @@ generative AI project in Medical Imaging at Google Summer of Code.
 
 ## Blogs
 
-* [Pre-training BERT using Hugging Face & PyTorch on an AMD GPU](../artificial-intelligence/bert-hg-pytorch/README.md)
-* [Pre-training BERT using Hugging Face & TensorFlow on an AMD GPU](../artificial-intelligence/bert-hg-tf/README.md)
+* [Pre-training BERT using Hugging Face & PyTorch on an AMD GPU](../artificial-intelligence/002-bert-hg-pytorch/README.md)
+* [Pre-training BERT using Hugging Face & TensorFlow on an AMD GPU](../artificial-intelligence/001-bert-hg-tf/README.md)

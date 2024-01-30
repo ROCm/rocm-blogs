@@ -107,7 +107,7 @@ First, install the required packages (`%%capture` is a *cell magic* that will su
 !pip install git+https://github.com/deepmind/optax.git
 !pip install evaluate
 !pip install ipywidgets
-!pip install black isort #jupyter notebook code formatter; optional
+!pip install black isort # Jupyter Notebook code formatter; optional
 ```
 
 Import the remaining packages and functionalities.

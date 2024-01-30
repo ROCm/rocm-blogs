@@ -16,4 +16,4 @@ and large language models (LLMs).
 # Blogs
 
 * [Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering](../artificial-intelligence/llama2-lora/README.md)
-* [Using LoRA for efficient fine-tuning: Fundamental principles](../artificial-intelligence/lora-fundamentals/README.md)
+* [Using LoRA for efficient fine-tuning: Fundamental principles](../artificial-intelligence/007-lora-fundamentals/README.md)
