@@ -9,6 +9,14 @@
 ::::{grid} 3
 :margin: 1
 
+:::{grid-item-card} Stable diffusion (AITemplate)
+:padding: 1
+:link: ./artificial-intelligence/stable-diffusion-aitemplate/README
+:link-type: doc
+
+Efficient image generation with Stable Diffusion models and AITemplate using AMD GPUs
+:::
+
 :::{grid-item-card} Fine-tune Llama 2 with LoRA
 :padding: 1
 :link: ./artificial-intelligence/llama2-lora/README
