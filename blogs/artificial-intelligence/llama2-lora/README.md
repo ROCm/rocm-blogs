@@ -58,7 +58,7 @@ computing power. However, in this tutorial, we use LoRA to overcome these challe
 [LoRA](https://arxiv.org/abs/2106.09685) is an innovative technique-- developed by researchers at
 Microsoft--designed to address the challenges of fine-tuning LLMs. This results in a significant
 reduction in the number of parameters (by a factor of up to 10,000) that need to be fine-tuned, which
-significantly reduces GPU memory requirements. To learn more about the fundamental principles of LoRA, refer to [Using LoRA for efficient fine-tuning: Fundamental principles](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/20240104-lora-fundamentals).
+significantly reduces GPU memory requirements. To learn more about the fundamental principles of LoRA, refer to [Using LoRA for efficient fine-tuning: Fundamental principles](../lora-fundamentals/README.md).
 
 ## Step-by-step Llama 2 fine-tuning
 
