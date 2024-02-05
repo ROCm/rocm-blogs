@@ -72,7 +72,7 @@ the market grows, more machine learning libraries and frameworks are adding AMD 
 To harness the computational capabilities required for this task, we leverage the
 [AMD Accelerator Cloud (AAC)](https://aac.amd.com/). AAC is a platform that offers on-demand cloud
 computing resources and APIs on a pay-as-you-go basis. Specifically, we use a
-[JAX docker container](https://hub.docker.com/r/rocm/jax) with 8 GPUs (on AAC) to utilize the full
+[JAX docker container](https://hub.docker.com/layers/rocm/jax-build/rocm5.5.0-jax0.4.14-py3.10.0-fusion-imp/images/sha256-02a74b2f1992607adade6bbc0afb8db46fc901e442d67377facebd5c713a2ef6?context=explore) with 8 GPUs (on AAC) to utilize the full
 potential of cutting-edge GPU parallel computing.
 
 This article is hardware-agnostic, meaning that access to AAC is **not** a requirement for successfully
