@@ -1,11 +1,11 @@
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="PyTorch Lightning on AMD GPUs">
+  <meta name="description" content="Simplifying Deep Learning: A Guide to PyTorch Lightning">
   <meta name="author" content="Phillip Dang">
   <meta name="keywords" content="PyTorch, PyTorch Lightning, train models">
 </head>
 
-# PyTorch Lightning on AMD GPUs
+# Simplifying Deep Learning: A Guide to PyTorch Lightning
 
 **Author:** [Phillip Dang](../../authors/phillip-dang.md)\
 **First published:** 26 Jan 2024

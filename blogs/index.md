@@ -62,7 +62,7 @@ Accelerating XGBoost using Multiple AMD GPUs
 :link: ./artificial-intelligence/pytorch-lightning/README
 :link-type: doc
 
-PyTorch Lightning on AMD GPUs
+Simplifying Deep Learning: A Guide to PyTorch Lightning
 :::
 
 :::{grid-item-card} LLM training with Megatron-DeepSpeed
