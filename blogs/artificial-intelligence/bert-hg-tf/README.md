@@ -230,7 +230,7 @@ Load the pre-trained weights using TensorFlow's `load_weights` function.
 model.load_weights('path/to/ckpt/folder/variables/variables')
 ```
 
-Perform the inference again on the same text; note dramatic change in understanding for the input
+Perform the inference again on the same text; note the dramatic change in understanding for the input
 text and predicting `[MASK]` tokens.
 
 ``` python

@@ -6,13 +6,16 @@
 
 # Douglas Jia
 
-Douglas holds a PhD degree in Biostatistics and is a Principal Deep Learning Data Scientist at AMD, where he specializes in assisting enterprise clients with the deployment of large language models (LLMs) on AMD GPUs. In this role,
-Douglas focuses on optimizing GPU utilization to meet the diverse business requirements of AMD's
-customers. Before joining AMD, Douglas gained extensive experience during his tenure at Google and
-JPMorgan Chase, where he dedicated several years to the development of natural language models,
-fine-tuning LLMs, and conducting online controlled experiments (A/B testing). His expertise also
-includes causal inference, product analytics and strategic analysis.
+Douglas is a Principal Deep Learning Data Scientist at AMD, where he specializes in assisting enterprise
+customers with the optimization and deployment of large language models (LLMs) and other deep
+learning models on AMD GPUs. Before joining AMD, Douglas gained extensive experience during his
+tenure at Google and JPMorgan Chase, where he dedicated several years to the development of
+natural language models, fine-tuning LLMs, and conducting online controlled experiments
+(A/B testing). He holds a PhD in Biostatistics with expertise spanning causal inference, product analytics
+and strategic analysis.
 
 # Blogs
 
-* [Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs](../artificial-intelligence/megatron-deepspeed-pretrain/README.md)
+* [LLM distributed supervised fine-tuning with JAX](../artificial-intelligence/006-distributed-sft-jax/README.md)
+* [Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs](../artificial-intelligence/003-megatron-deepspeed-pretrain/README.md)
+* [Efficient deployment of large language models with Text Generation Inference on AMD GPUs](../artificial-intelligence/008-hf-tgi/README.md)

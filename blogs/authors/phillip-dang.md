@@ -17,4 +17,4 @@ worked on Facebook Feed deep learning recommendation systems at Meta.
 
 # Blogs
 
-* [PyTorch Lightning on AMD GPUs](../artificial-intelligence/pytorch-lightning/README.md)
+* [PyTorch Lightning on AMD GPUs](../artificial-intelligence/004-pytorch-lightning/README.md)
