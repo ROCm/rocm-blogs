@@ -31,8 +31,7 @@ latex_elements = {
 project = "ROCm Blogs"
 author = "Advanced Micro Devices, Inc."
 copyright = "Copyright (c) 2023-2024 Advanced Micro Devices, Inc. All rights reserved."
-version = "6.0.0"
-release = "6.0.0"
+
 setting_all_article_info = False
 all_article_info_os = ["linux", "windows"]
 all_article_info_author = ""
