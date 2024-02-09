@@ -17,7 +17,7 @@ from Transformers (BERT) base model from scratch using Hugging Face libraries wi
 backend for English corpus text (WikiText-103-raw-v1).
 
 You can find files related to this blog post in the
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-pytorch).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/bert-hg-pytorch).
 
 ## Introduction to BERT
 
@@ -238,7 +238,7 @@ The Churchill takes his own, when it comes to writing : he continued to ground h
 ```
 
 The source code is stored in this
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-pytorch/src).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/bert-hg-pytorch/src).
 
 ## Conclusion
 

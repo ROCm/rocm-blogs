@@ -15,7 +15,7 @@
 This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations from Transformers (BERT) base model from scratch using Hugging Face libraries with a Tensorflow backend for English corpus text (WikiText-103-raw-v1).
 
 You can find files related to this blog post in the
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-tf).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/bert-hg-tf).
 
 ## Introduction to BERT
 
@@ -95,7 +95,7 @@ steps involved in this:
 
 I performed the preceding preprocessing steps for the `WikiText-103-raw-v1` corpus, with 2,500 M
 words, then uploaded the resulting validation data set into
-[this repository](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-tf/data).
+[this repository](./data/wikiTokenizedValid.hf.zip).
 The preprocessed train split is uploaded [here](https://huggingface.co/lakshmi97/bert-preprocessed-tokens) on Hugging Face Hub.
 
 Next, import the `DataCollatorForLanguageModeling` collator to run MLM preprocessing and obtain
