@@ -18,3 +18,9 @@ seismic wave propagation with topography and implementing GPU stencil kernels ta
 the OLCF Summit supercomputer. Some of Ossian's technical interests include high order
 numerical methods for partial differential equations, stencil-based and matrix-free
 methods, as well as GPU kernel development and optimization.
+
+# Blogs
+
+* [Finite difference method - Laplacian part 1](../high-performance-computing/finite-difference/laplacian-part1/README.md)
+* [Finite difference method - Laplacian part 2](../high-performance-computing/finite-difference/laplacian-part2/README.md)
+* [Finite difference method - Laplacian part 3](../high-performance-computing/finite-difference/laplacian-part3/README.md)

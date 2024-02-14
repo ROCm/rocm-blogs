@@ -29,6 +29,17 @@ subtrees:
   - file: artificial-intelligence/bert-hg-tf/README.md
     title: Pre-training BERT (TensorFlow)
 
+- caption: High performance computing
+  entries:
+  - file: high-performance-computing/finite-difference/laplacian-part1/README.md
+    title: Finite difference - Laplacian (1)
+  - file: high-performance-computing/finite-difference/laplacian-part2/README.md
+    title: Finite difference - Laplacian (2)
+  - file: high-performance-computing/finite-difference/laplacian-part3/README.md
+    title: Finite difference - Laplacian (3)
+  - file: high-performance-computing/finite-difference/laplacian-part4/README.md
+    title: Finite difference - Laplacian (4)
+
 - caption: Acknowledgements
   entries:
   - file: contributor-bios.md

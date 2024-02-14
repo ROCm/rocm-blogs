@@ -17,3 +17,10 @@ codes using GPUs and developed high-fidelity/low-dissipation discontinuous Galer
 methods for turbulence/combustion models on GPUs. His current research interests
 include optimizing C/C++/Fortran GPU applications, iterative solvers and preconditioning,
 finite element discretizations, and numerical weather prediction applications.
+
+# Blogs
+
+* [Finite difference method - Laplacian part 1](../high-performance-computing/finite-difference/laplacian-part1/README.md)
+* [Finite difference method - Laplacian part 2](../high-performance-computing/finite-difference/laplacian-part2/README.md)
+* [Finite difference method - Laplacian part 3](../high-performance-computing/finite-difference/laplacian-part3/README.md)
+* [Finite difference method - Laplacian part 4](../high-performance-computing/finite-difference/laplacian-part4/README.md)

@@ -13,3 +13,10 @@ physics for fusion energy applications. Sean continued his research at Sandia Na
 Laboratories where he developed high-energy density physics modeling tools, before
 shifting to AMD where he supports the porting and optimization of scientific software
 for GPU accelerated HPC environments.
+
+# Blogs
+
+* [Finite difference method - Laplacian part 1](../high-performance-computing/finite-difference/laplacian-part1/README.md)
+* [Finite difference method - Laplacian part 2](../high-performance-computing/finite-difference/laplacian-part2/README.md)
+* [Finite difference method - Laplacian part 3](../high-performance-computing/finite-difference/laplacian-part3/README.md)
+* [Finite difference method - Laplacian part 4](../high-performance-computing/finite-difference/laplacian-part4/README.md)

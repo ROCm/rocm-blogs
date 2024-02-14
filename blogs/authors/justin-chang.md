@@ -16,3 +16,10 @@ finite element simulation time of subsurface flow through dual porosity porous
 medium and lithium-ion batteries used in electric vehicles. He also worked for
 the Oil and Gas industry and focused on GPU porting and optimization of key
 FWI, RTM, and other seismic imaging workloads.
+
+# Blogs
+
+* [Finite difference method - Laplacian part 1](../high-performance-computing/finite-difference/laplacian-part1/README.md)
+* [Finite difference method - Laplacian part 2](../high-performance-computing/finite-difference/laplacian-part2/README.md)
+* [Finite difference method - Laplacian part 3](../high-performance-computing/finite-difference/laplacian-part3/README.md)
+* [Finite difference method - Laplacian part 4](../high-performance-computing/finite-difference/laplacian-part4/README.md)

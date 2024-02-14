@@ -89,4 +89,36 @@ Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
 Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
 :::
 
+:::{grid-item-card} Finite difference: Laplacian (1)
+:padding: 1
+:link: ./high-performance-computing/finite-difference/laplacian-part1/README
+:link-type: doc
+
+Initial implementation of the finite difference method and performance
+:::
+
+:::{grid-item-card} Finite difference: Laplacian (2)
+:padding: 1
+:link: ./high-performance-computing/finite-difference/laplacian-part2/README
+:link-type: doc
+
+Optimizations with loop tiling and memory access patterns
+:::
+
+:::{grid-item-card} Finite difference: Laplacian (3)
+:padding: 1
+:link: ./high-performance-computing/finite-difference/laplacian-part3/README
+:link-type: doc
+
+Optimizations with launch bounds and nontemporal memory operations
+:::
+
+:::{grid-item-card} Finite difference: Laplacian (4)
+:padding: 1
+:link: ./high-performance-computing/finite-difference/laplacian-part4/README
+:link-type: doc
+
+Performance benchmarking across various AMD GPUs and cache size limitations
+:::
+
 ::::

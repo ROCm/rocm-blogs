@@ -14,3 +14,9 @@ His PhD research focused at the intersection of high performance scientific comp
 numerical analysis, and material science. Recently, his research interests have
 expanded to include development of physics-informed machine learning models and
 tools to accelerate scientific discovery and engineering design.
+
+# Blogs
+
+* [Finite difference method - Laplacian part 1](../high-performance-computing/finite-difference/laplacian-part1/README.md)
+* [Finite difference method - Laplacian part 2](../high-performance-computing/finite-difference/laplacian-part2/README.md)
+* [Finite difference method - Laplacian part 3](../high-performance-computing/finite-difference/laplacian-part3/README.md)
