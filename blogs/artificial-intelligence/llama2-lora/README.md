@@ -109,7 +109,7 @@ GPU[1]      : Card SKU:      D65209
 Next, install the required libraries.
 
 ``` python
-!pip install -q pandas torch peft transformers==4.31.0 trl==0.4.7 accelerate
+!pip install -q pandas torch peft transformers==4.31.0 trl==0.4.7 accelerate scipy
 ```
 
 #### Install bitsandbytes
