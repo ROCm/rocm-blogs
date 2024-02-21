@@ -23,3 +23,4 @@ FWI, RTM, and other seismic imaging workloads.
 * [Finite difference method - Laplacian part 2](../high-performance-computing/finite-difference/laplacian-part2/README.md)
 * [Finite difference method - Laplacian part 3](../high-performance-computing/finite-difference/laplacian-part3/README.md)
 * [Finite difference method - Laplacian part 4](../high-performance-computing/finite-difference/laplacian-part4/README.md)
+* [Jacobi solver](../high-performance-computing/jacobi/README.md)

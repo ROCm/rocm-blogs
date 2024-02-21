@@ -41,6 +41,10 @@ subtrees:
     title: Finite difference - Laplacian (3)
   - file: high-performance-computing/finite-difference/laplacian-part4/README.md
     title: Finite difference - Laplacian (4)
+  - file: high-performance-computing/jacobi/README.md
+    title: Jacobi solver
+  - file: high-performance-computing/spmv/part-1/README.md
+    title: Sparse matrix vector multiply (1)
 
 - caption: Software tools & optimization
   entries:

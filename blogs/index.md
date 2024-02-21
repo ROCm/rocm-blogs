@@ -185,4 +185,20 @@ Optimizations with launch bounds and nontemporal memory operations
 Performance benchmarking across various AMD GPUs and cache size limitations
 :::
 
+:::{grid-item-card} Sparse matrix vector multiply (1)
+:padding: 1
+:link: ./high-performance-computing/jacobi/README
+:link-type: doc
+
+Introduction to various implementations of sparse matrix vector multiply (SpMV)
+:::
+
+:::{grid-item-card} Jacobi solver
+:padding: 1
+:link: ./high-performance-computing/jacobi/README
+:link-type: doc
+
+Implementation of the Jacobi solver with both HIP and OpenMP offloading
+:::
+
 ::::
