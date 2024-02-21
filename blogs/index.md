@@ -9,6 +9,14 @@
 ::::{grid} 3
 :margin: 1
 
+:::{grid-item-card} 3D scene mapping using NeRF
+:padding: 1
+:link: ./artificial-intelligence/nerf/README
+:link-type: doc
+
+Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU
+:::
+
 :::{grid-item-card} Stable diffusion (AITemplate)
 :padding: 1
 :link: ./artificial-intelligence/stable-diffusion-aitemplate/README
