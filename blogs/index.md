@@ -9,6 +9,14 @@
 ::::{grid} 3
 :margin: 1
 
+:::{grid-item-card} Stable Diffusion (ONNX Runtime)
+:padding: 1
+:link: ./artificial-intelligence/stable-diffusion-onnx-runtime/README
+:link-type: doc
+
+Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
+:::
+
 :::{grid-item-card} 3D scene mapping using NeRF
 :padding: 1
 :link: ./artificial-intelligence/nerf/README

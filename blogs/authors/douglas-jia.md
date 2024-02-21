@@ -16,6 +16,8 @@ and strategic analysis.
 
 # Blogs
 
-* [LLM distributed supervised fine-tuning with JAX](../artificial-intelligence/006-distributed-sft-jax/README.md)
-* [Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs](../artificial-intelligence/003-megatron-deepspeed-pretrain/README.md)
-* [Efficient deployment of large language models with Text Generation Inference on AMD GPUs](../artificial-intelligence/008-hf-tgi/README.md)
+* [Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs](../artificial-intelligence/stable-diffusion-onnx-runtime/README.md)
+* [Efficient image generation with Stable Diffusion models and AITemplate using AMD GPUs](../artificial-intelligence/stable-diffusion-aitemplate/README.md)
+* [LLM distributed supervised fine-tuning with JAX](../artificial-intelligence/distributed-sft-jax/README.md)
+* [Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs](../artificial-intelligence/megatron-deepspeed-pretrain/README.md)
+* [Efficient deployment of large language models with Text Generation Inference on AMD GPUs](../artificial-intelligence/hf-tgi/README.md)
