@@ -15,3 +15,7 @@ of Waterloo, where he studied convergence and stability properties of the discon
 Galerkin finite element method on hyperbolic systems. Noel's research interests
 include GPU acceleration of high-order continuous and discontinuous finite element
 methods, and large-scale geometric and algebraic multigrid methods.
+
+# Blogs
+
+* [Matrix cores](../software-tools-optimization/matrix-cores/README.md)

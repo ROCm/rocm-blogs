@@ -11,3 +11,7 @@ t Engineer in AMD Research. He obtained a PhD in Computer Science from Utrecht U
 and has a background in design and analysis of algorithms. In the past decade, he focused
 on implementation and performance tuning of GPU codes. He currently works on performance
 analysis tools for HPC workloads on AMD GPUs.
+
+# Blogs
+
+* [Matrix cores](../software-tools-optimization/matrix-cores/README.md)

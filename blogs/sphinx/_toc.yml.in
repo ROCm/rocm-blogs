@@ -40,6 +40,23 @@ subtrees:
   - file: high-performance-computing/finite-difference/laplacian-part4/README.md
     title: Finite difference - Laplacian (4)
 
+- caption: Software tools & optimization
+  entries:
+  - file: software-tools-optimization/pytorch-tensorflow-env/README.md
+    title: PyTorch & TensorFlow environment
+  - file: software-tools-optimization/gpu-aware-mpi/README.md
+    title: GPU-aware MPI
+  - file: software-tools-optimization/register-pressure/README.md
+    title: Register pressure
+  - file: software-tools-optimization/profilers/README.md
+    title: Introduction to profiling tools
+  - file: software-tools-optimization/mi200-memory-space/README.md
+    title: MI200 memory space
+  - file: software-tools-optimization/rocm-installation/README.md
+    title: ROCm™ installation
+  - file: software-tools-optimization/matrix-cores/README.md
+    title: Matrix cores
+
 - caption: Acknowledgements
   entries:
   - file: contributor-bios.md

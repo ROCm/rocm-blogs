@@ -13,3 +13,7 @@ experience in the seismic data processing field developing and optimizing pre-pr
 migration and post processing applications using hybrid MPI + OpenMP on CPU clusters
 and using CUDA or OpenCL on GPUs. She spends her time at AMD solving optimization
 challenges in scientific applications running on large-scale HPC clusters.
+
+# Blogs
+
+* [Matrix cores](../software-tools-optimization/matrix-cores/README.md)

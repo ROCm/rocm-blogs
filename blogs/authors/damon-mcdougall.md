@@ -14,3 +14,7 @@ as part of the Frontier Center of Excellence team optimizing scientific codes fo
 CPUs and GPUs at exascale. His professional interests include high-performance computing,
 large-scale systems, uncertainty quantification, statistical computing, and scientific
 software development.
+
+# Blogs
+
+* [Matrix cores](../software-tools-optimization/matrix-cores/README.md)

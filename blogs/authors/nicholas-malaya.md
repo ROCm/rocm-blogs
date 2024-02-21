@@ -14,3 +14,7 @@ Bayesian inference, and ML/AI. He received his PhD from the University of Texas.
 Before that, he double majored in Physics and Mathematics at Georgetown University
 where he received the Treado medal. In his copious spare time he enjoys motorcycles,
 long distance running, wine, and spending time with his wife and children.
+
+# Blogs
+
+* [Matrix cores](../software-tools-optimization/matrix-cores/README.md)

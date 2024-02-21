@@ -89,6 +89,62 @@ Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
 Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
 :::
 
+:::{grid-item-card} PyTorch & TensorFlow environment
+:padding: 1
+:link: ./software-tools-optimization/pytorch-tensorflow-env/README
+:link-type: doc
+
+Creating a PyTorch & TensorFlow code environment on AMD GPUs
+:::
+
+:::{grid-item-card} GPU-aware MPI
+:padding: 1
+:link: ./software-tools-optimization/gpu-aware-mpi/README
+:link-type: doc
+
+Leveraging various GPU-aware MPI implementations with ROCm
+:::
+
+:::{grid-item-card} Register pressure
+:padding: 1
+:link: ./software-tools-optimization/profilers/README
+:link-type: doc
+
+Register pressure in AMD CDNA2 GPUs
+:::
+
+:::{grid-item-card} Introduction to profiling tools
+:padding: 1
+:link: ./software-tools-optimization/profilers/README
+:link-type: doc
+
+Introduction to the various profiling tools for AMD hardware
+:::
+
+:::{grid-item-card} MI200 memory space
+:padding: 1
+:link: ./software-tools-optimization/mi200-memory-space/README
+:link-type: doc
+
+Overview of the AMD Instinct MI200 memory space
+:::
+
+:::{grid-item-card} ROCm™ installation
+:padding: 1
+:link: ./software-tools-optimization/rocm-installation/README
+:link-type: doc
+
+Introduction to three possible ROCm installation methods
+:::
+
+:::{grid-item-card} Matrix cores
+:padding: 1
+:link: ./software-tools-optimization/matrix-cores/README
+:link-type: doc
+
+Accelerating GEMM computations using AMD's matrix core technology
+:::
+
 :::{grid-item-card} Finite difference: Laplacian (1)
 :padding: 1
 :link: ./high-performance-computing/finite-difference/laplacian-part1/README
