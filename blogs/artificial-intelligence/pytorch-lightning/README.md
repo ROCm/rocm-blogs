@@ -12,9 +12,9 @@
 
 PyTorch Lightning is a higher-level wrapper built on top of PyTorch. Its purpose is to simplify and
 abstract the process of training PyTorch models. It provides a structured and organized approach to
-machine learning tasks by abstracting away the repetitive boilerplate code, allowing you to focus more
-on model development and experimentation. PyTorch Lightning works out-of-the-box with AMD GPUs
-and ROCm.
+machine learning (ML) tasks by abstracting away the repetitive boilerplate code, allowing you to focus
+more on model development and experimentation. PyTorch Lightning works out-of-the-box with AMD
+GPUs and ROCm.
 
 For more information on PyTorch Lightning, refer to
 [this article](https://lightning.ai/docs/pytorch/stable/tutorials.html).
@@ -65,7 +65,7 @@ number of GPUs: 2
 ```
 
 Once you've confirmed that your system recognizes your devices, you're ready to go through a typical
-machine learning (ML) workflow on PyTorch. This includes loading and processing the data, setting up
+ML workflow on PyTorch. This includes loading and processing the data, setting up
 a training loop, a validation loop, and optimizers. Afterwards, you can see how PyTorch Lightning does
 all this for you by providing a framework that can wrap all such modules in a scalable, easy-to-use way.
 

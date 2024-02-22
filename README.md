@@ -10,8 +10,8 @@ We currently showcase the following topics:
 
 * Implementations of mathematical algorithms, such as partial differential equation discretizations,
   linear algebra, and solvers
-* Optimizations for artificial intelligence and high performance computing applications
-  and machine learning models
+* Optimizations for artificial intelligence and high-performance computing (HPC) applications
+  and machine learning (ML) models
 * Tips and tricks to leverage ROCm tools, the ROCm software stack, and hardware-level optimizations
 * Ecosystem and partner relations
 

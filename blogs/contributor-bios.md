@@ -9,6 +9,18 @@
 ::::{grid} 2
 :margin: 1
 
+:::{grid-item-card} [Alessandro Fanfarillo](./authors/alessandro-fanfarillo.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Asitav Mishra](./authors/asitav-mishra.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Clint Greene](./authors/clint-greene.md)
 :padding: 1
 
@@ -19,6 +31,12 @@ Principal Deep Learning Data Scientist at AMD
 :padding: 1
 
 Principal Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [David Doscher](./authors/david-doscher.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
 :::
 
 :::{grid-item-card} [Douglas Jia](./authors/douglas-jia.md)
@@ -45,10 +63,34 @@ Senior Member of Technical Staff at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Mahdieh Ghazimirsaeed](./authors/mahdieh-ghazimirsaeed.md)
+:padding: 1
+
+Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Maria Ruiz Varela](./authors/maria-ruiz-varela.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Nicholas Curtis](./authors/nicholas-curtis.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Nicholas Malaya](./authors/nicholas-malaya.md)
 :padding: 1
 
 Fellow at AMD
+:::
+
+:::{grid-item-card} [Noah Wolfe](./authors/noah-wolfe.md)
+:padding: 1
+
+Member of Technical Staff at AMD
 :::
 
 :::{grid-item-card} [Noel Chalmers](./authors/noel-chalmers.md)
@@ -61,6 +103,12 @@ Senior Member of Technical Staff at AMD
 :padding: 1
 
 Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Paul Mullowney](./authors/paul-mullowney.md)
+:padding: 1
+
+Principal Member of Technical Staff at AMD
 :::
 
 :::{grid-item-card} [Phillip Dang](./authors/phillip-dang.md)
@@ -93,6 +141,12 @@ Senior Member of Technical Staff at AMD
 Machine Learning Engineer at AMD
 :::
 
+:::{grid-item-card} [Suyash Tandon](./authors/suyash-tandon.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Thomas Gibson](./authors/thomas-gibson.md)
 :padding: 1
 
@@ -103,6 +157,12 @@ Member of Technical Staff at AMD
 :padding: 1
 
 Machine Learning Engineer at AMD
+:::
+
+:::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md)
+:padding: 1
+
+Machine Learning Researcher at AMD
 :::
 
 ::::
