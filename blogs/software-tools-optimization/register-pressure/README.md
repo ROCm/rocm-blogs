@@ -4,7 +4,7 @@
   <meta name="keywords" content="HPC, MI250, optimization, registers, hardware">
 </head>
 
-# Register pressure in AMD CDNA™2 GPUs #
+# Register pressure in AMD CDNA™2 GPUs
 
 **Authors:** [Alessandro Fanfarillo](../../authors/alessandro-fanfarillo.md),
 [Nicholas Curtis](../../authors/nicholas-curtis.md)\
@@ -22,7 +22,7 @@ post is focused on a practical demo showing how to apply the recommendations exp
 can also find the slides. We focus solely on the AMD CDNA™2 architecture (MI200 series GPUs)
 using ROCm 5.4.
 
-## Registers and occupancy ##
+## Registers and occupancy
 
 General purpose registers are the fastest type of memory available in traditional
 processors. In most cases, the ALUs (Arithmetic Logic Units) in traditional processors
@@ -34,7 +34,7 @@ to be manipulated by the ALU.
 When we use the word *optimize* we should always clarify the objective of the optimization
 process. In fact, regular CPUs and accelerators, such as GPUs, because of their very nature,
 have different ways of executing programs and achieving high performance. On one hand,
-traditional CPUs are latency-oriented and are designed to execute as many instructions
+traditional CPUs are latency-oriented and are designed to run as many instructions
 from a single serial thread as possible. On the other hand, GPUs are throughput-oriented
 and are designed to take advantage of parallelism between independent threads as
 much as possible.
@@ -90,7 +90,7 @@ of VGPRs used by a kernel.
 Table 1: Occupancy related to VGPRs usage in MI200
 </p>
 
-## Register spilling ##
+## Register spilling
 
 Register allocation is the process of assigning local variables and expression results
 of a GPU kernel to the registers available on the hardware. It is performed by the
@@ -123,7 +123,7 @@ number of hardware registers available, the performance will suffer from low occ
 (1 wave per CU in the worst case) and high cost of accessing the register variables
 that needed to be "spilled" to scratch memory.
 
-## How to reduce register pressure ##
+## How to reduce register pressure
 
 As mentioned before, the compiler applies heuristic techniques to maximize occupancy
 by minimizing the number of registers needed by a certain GPU kernels. These heuristic
@@ -186,11 +186,11 @@ to be much more literal in unrolling loops than other compilers.
 some LDS memory to manually store variables, possibly the ones with the longest
 liveness, and save a few registers per thread.
 
-## Example ##
+## Example
 
 For the rest of our discussion, we will focus on the following code:
 
-```c++
+```cpp
 __global__ void kernel (double *phi, double *laplacian_phi,
       double *grad_phi_x, double *grad_phi_y, double *grad_phi_z,
       double *f0, double *f1, double *f2, double *f3, double *f4,
@@ -361,12 +361,12 @@ waves per SIMD unit; about half of the best achievable case. By looking at the
 occupancy table in Table 1 shown earlier, we see that we would need to reduce the
 number of used VGPRS from 102 to 96 or below in order to reach an occupancy of 5 waves/SIMD.
 
-### Optimization n.1: remove unnecessary math function invocations ###
+### Optimization n.1: remove unnecessary math function invocations
 
 Looking at the following code, we notice the use of the `pow` function needed to
 square the variable `current_phi`.
 
-```c++
+```cpp
  if(i <= nx && j <= ny && z <= nz)
     {
       m = i + ldx * (j + ldy * z);
@@ -381,7 +381,7 @@ to device functions, including math functions. A possible optimization is to rep
 the general purpose function `pow` with a specific code for squaring the variable
 as follows:
 
-```c++
+```cpp
  if(i <= nx && j <= ny && z <= nz)
     {
       m = i + ldx * (j + ldy * z);
@@ -411,7 +411,7 @@ lbm_nopow_1.cpp:16:1: remark:     LDS Size [bytes/block]: 0 [-Rpass-analysis=ker
 Although the reduction may not seem significant, this will allow for more
 room for improvement in later optimizations.
 
-### Optimization n.2: move variable definition close to its first use ###
+### Optimization n.2: move variable definition close to its first use
 
 Once a variable is defined, its value is stored in a register for future use. Defining
 variables at the beginning of the kernel and using them at the end will dramatically
@@ -422,7 +422,7 @@ manually rearrange the code.
 After a quick visual inspections we can see that the definition of array location `f[m]`
 does not depend on `ux`, `uy`, or `uz` as opposed to the other arrays `f1` to `f6`.
 
-```c++
+```cpp
       mu_phi = alpha * current_phi * ( current_phi_2 - phi2 ) - k * laplacian_phi[m];
 
       fx = mu_phi * grad_phi_x[m];
@@ -454,7 +454,7 @@ does not depend on `ux`, `uy`, or `uz` as opposed to the other arrays `f1` to `f
 
 After moving the definition of `f[m]` right before the definition of `ux`
 
-```c++
+```cpp
       mu_phi = alpha * current_phi * ( current_phi_2 - phi2 ) - k * laplacian_phi[m];
 
       f0[m] = itauphi1 * f0[m] + -3.0 * gamma * mu_phi * itauphi + itauphi * current_phi;
@@ -501,7 +501,7 @@ lbm_rearrage_2.cpp:16:1: remark:     VGPRs Spill: 0 [-Rpass-analysis=kernel-reso
 lbm_rearrage_2.cpp:16:1: remark:     LDS Size [bytes/block]: 0 [-Rpass-analysis=kernel-resource-usage]
 ```
 
-## On the use of the *restrict* keyword ##
+## On the use of the *restrict* keyword
 
 In the C-type languages like C++, aliasing is one of the main limitations
 to achieve high performance. To avoid this problem, the standard C99 introduced
@@ -519,7 +519,7 @@ As an example, let us add the `restrict` keyword to the `g14` array because it
 gets reused several times in the rest of the code and we may achieve higher
 performance from the reuse.
 
-```c++
+```cpp
 __global__ void kernel (double *  phi, double *  laplacian_phi,
               double *  grad_phi_x, double * grad_phi_y, double *  grad_phi_z,
               double *  f0, double *  f1, double *  f2, double *  f3, double *  f4,
@@ -568,7 +568,7 @@ lbm_2_restrict.cpp:16:1: remark:     VGPRs Spill: 0 [-Rpass-analysis=kernel-reso
 lbm_2_restrict.cpp:16:1: remark:     LDS Size [bytes/block]: 0 [-Rpass-analysis=kernel-resource-usage]
 ```
 
-## Conclusion ##
+## Conclusion
 
 In this post, we described, at a high level, the nature and consequences of register
 pressure for HPC applications and algorithms running on AMD's CDNA™2 architecture.

@@ -65,7 +65,7 @@ memory spaces available in HIP.
 
 Pageable host memory in HIP uses the standard allocator and deallocator:
 
-```c++
+```cpp
 template<typename T>
 T *
 allocateHost_Pageable(const size_t size)
@@ -99,11 +99,12 @@ the on-device bandwidth (>40x on MI200).
 Pinned host memory can be allocated with one of two types of coherence support:
 
 1. `hipHostMallocCoherent`
-   - Coherent pinned memory (aka zero-copy access memory) means that the host memory is not cached locally on the GPU, which implies fine-grained coherence.
-   - Fine-grained coherence means the CPU can access up-to-date data in an allocation *while* a kernel is using the data on the GPU.
+   * Coherent pinned memory (aka zero-copy access memory) means that the host memory is not cached locally on the GPU, which implies fine-grained coherence.
+   * Fine-grained coherence means the CPU can access up-to-date data in an allocation *while* a kernel is using the data on the GPU.
+
 2. `hipHostMallocNonCoherent`
-   - Non-coherent pinned memory means the GPU is free to locally store host data in MI200's L2 cache while it is in use.
-   - The host may not see an up-to-date allocation while a kernel is running on device, and must wait until after the kernel completes or the cache is flushed (e.g. via a device or stream synchronize call).
+   * Non-coherent pinned memory means the GPU is free to locally store host data in MI200's L2 cache while it is in use.
+   * The host may not see an up-to-date allocation while a kernel is running on device, and must wait until after the kernel completes or the cache is flushed (e.g. via a device or stream synchronize call).
 
 Pinned memory allocations are coherent memory by default (`hipHostMallocDefault`).
 Within HIP there are additional pinned memory flags (e.g. `hipHostMallocMapped` and
@@ -113,7 +114,7 @@ performance, so we will ignore them. The
 has more information on pinned memory allocation flags. Allocating coherent and
 non-coherent memory is controlled using the above flags with the `hipHostMalloc` call:
 
-```c++
+```cpp
 template<typename T>
 T *
 allocateHost_PinnedCoherent(const size_t size)
@@ -160,7 +161,7 @@ turn the pageable allocation into a pinned allocation.
 To allocate registered memory, we must first allocate pageable memory, then register
 it with the currently active GPU.
 
-```c++
+```cpp
 template<typename T>
 T *
 allocateHost_Registered(size_t size,
@@ -185,7 +186,7 @@ While this registration maps the host data to device, it does not necessarily me
 that a kernel running on device can use the existing host pointer. Instead, the registered
 device pointer can be retrieved given the host pointer:
 
-```c++
+```cpp
 template<typename T>
 T *
 getRegisteredDevicePtr(T * host_ptr)
@@ -214,7 +215,7 @@ pages between host and device.
 Managed memory is not available on all systems, so it is advised to add a check
 for managed memory to your code:
 
-```c++
+```cpp
 bool
 managedMemoryEnabled(const int device_id)
 {
@@ -228,7 +229,7 @@ Systems built using AMD's MI200 line of GPUs generally support managed memory,
 though with some caveats that we [discuss below](#enabling-page-migration).
 Allocating managed memory uses `hipMallocManaged`:
 
-```c++
+```cpp
 template<typename T>
 T *
 allocateManaged(size_t size,
@@ -269,7 +270,7 @@ Much like pinned host memory, device memory can be allocated as fine-grained or 
 For performance reasons, we generally don't want to restrict the cacheability of data
 on device, so the device allocator `hipMalloc` returns coarse-grained memory:
 
-```c++
+```cpp
 template<typename T>
 T *
 allocateDevice(const size_t size,

@@ -22,7 +22,7 @@ optimizations to hit the projected performance target on a `512` $\times$ `512` 
 grid of points on a single GCD of a MI250X GPU. Shown below is the final HIP kernel
 which we refer to as Kernel 5:
 
-```c++
+```cpp
 // Tiling factor
 #define m 8
 // Launch bounds
@@ -116,7 +116,7 @@ all of the above GPUs. Each dimension is increased in multiples of 256 until we 
 `nx,ny,nz = 1024, 1024, 1024`. Recall that the Figure of Merit (FOM) is defined as
 the _effective memory bandwidth_:
 
-```c++
+```cpp
 theoretical_fetch_size = ((nx * ny * nz - 8 - 4 * (nx - 2) - 4 * (ny - 2) - 4 * (nz - 2) ) * sizeof(double);
 theoretical_write_size = ((nx - 2) * (ny - 2) * (nz - 2)) * sizeof(double);
 effective_memory_bandwidth = (theoretical_fetch_size + theoretical_write_size) / average_kernel_execution_time;
@@ -147,12 +147,12 @@ The figure below depicts the FOM[^1] across the various AMD GPUs and problem siz
 Figure 1: Performance of Kernel 5 across various AMD GPUs and problem sizes
 </p>
 
-Note that the RX 6900 XT GPU does not have enough memory to execute the
+Note that the RX 6900 XT GPU does not have enough memory to run the
 largest example `nx,ny,nz = 1024, 1924, 1024` so it is not shown in the figure above.
 Performance across all sizes on the RX 6900 XT and RX 7900 XTX GPUs appear relatively consistent,
 whereas all Instinct™ GPUs exhibit degraded performance when the problem size crosses
 a certain threshold. In the next sections we will investigate the source of the
-performance degredation on Instinct™ GPUs.
+performance degradation on Instinct™ GPUs.
 
 ## Root cause of performance degradation
 
@@ -278,7 +278,7 @@ Kernel 6 (After)
 <tr>
 <td>
 
-```c++
+```cpp
 dim3 grid(
     (nx - 1) / block.x + 1,
     (ny - 1) / (block.y * m) + 1,
@@ -288,7 +288,7 @@ dim3 grid(
 </td>
 <td>
 
-```c++
+```cpp
 dim3 grid(
     (ny - 1) / (block.y * m) + 1,
     (nz - 1) / block.z + 1,
@@ -313,24 +313,24 @@ Kernel 6 (After)
 <tr>
 <td>
 
-```c++
-int i = threadIdx.x 
+```cpp
+int i = threadIdx.x
       + blockIdx.x * blockDim.x;
-int j = m*(threadIdx.y 
+int j = m*(threadIdx.y
       + blockIdx.y * blockDim.y);
-int k = threadIdx.z 
+int k = threadIdx.z
       + blockIdx.z * blockDim.z;
 ```
 
 </td>
 <td>
 
-```c++
-int i = threadIdx.x 
+```cpp
+int i = threadIdx.x
       + blockIdx.z * blockDim.x;
-int j = m*(threadIdx.y 
+int j = m*(threadIdx.y
       + blockIdx.x * blockDim.y);
-int k = threadIdx.z 
+int k = threadIdx.z
       + blockIdx.y * blockDim.z;
 ```
 
@@ -380,8 +380,8 @@ Kernel 7 (After)
 <tr>
 <td>
 
-```c++
- 
+```cpp
+
 dim3 grid(
     (nx - 1) / block.x + 1,
     (ny - 1) / (block.y * m) + 1 ,
@@ -389,7 +389,7 @@ dim3 grid(
 
 ...
 
- 
+
 laplacian_kernel<<<grid, block>>>(d_f, d_u,
     nx, ny, nz, invhx2, invhy2, invhz2, 
     invhxyz2);
@@ -398,7 +398,7 @@ laplacian_kernel<<<grid, block>>>(d_f, d_u,
 </td>
 <td>
 
-```c++
+```cpp
 int bny = (ny - 1) / 4 + 1;
 dim3 grid(
     (nx - 1) / block.x + 1,
@@ -409,7 +409,7 @@ dim3 grid(
 
 for (int i = 0; i < 4; i++)
   laplacian_kernel<<<grid, block>>>(d_f, d_u,
-      nx, ny, nz, invhx2, invhy2, invhz2, 
+      nx, ny, nz, invhx2, invhy2, invhz2,
       invhxyz2, bny*i);
 ```
 
@@ -417,7 +417,7 @@ for (int i = 0; i < 4; i++)
 </tr>
 </table>
 
-Three changes were made to the code. First we modifyed the `grid.y` value by using `bny = (ny - 1) / 4 + 1` instead of `ny`
+Three changes were made to the code. First we modified the `grid.y` value by using `bny = (ny - 1) / 4 + 1` instead of `ny`
 to indicate that we're only iterating through one quarter of the domain in the y direction. Next we add a for loop to launch four
 HIP kernels to compute the stencils across each of the four sub domains. Finally we modify the kernel arguments by adding a y-direction
 offset. The device kernel needs to be modified as follows:
@@ -434,30 +434,30 @@ Kernel 7 (After)
 <tr>
 <td>
 
-```c++
+```cpp
 __global__ void laplacian_kernel(T * f,
     const T * u, int nx, int ny, int nz,
-    T invhx2, T invhy2, T invhz2, 
+    T invhx2, T invhy2, T invhz2,
     T invhxyz2) {
 
 ...
 
-int j = m*(threadIdx.y 
+int j = m*(threadIdx.y
       + blockIdx.y * blockDim.y);
 ```
 
 </td>
 <td>
 
-```c++
+```cpp
 __global__ void laplacian_kernel(T * f,
     const T * u, int nx, int ny, int nz,
-    T invhx2, T invhy2, T invhz2, 
+    T invhx2, T invhy2, T invhz2,
     T invhxyz2, int sy) {
 
 ...
 
-int j = sy + m*(threadIdx.y 
+int j = sy + m*(threadIdx.y
       + blockIdx.y * blockDim.y);
 ```
 

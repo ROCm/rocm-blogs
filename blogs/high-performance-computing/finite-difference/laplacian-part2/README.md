@@ -38,7 +38,7 @@ $$\nabla \cdot \nabla u = \nabla^2 u = \frac{\partial^2u}{\partial x^2} + \frac{
 
 The initial HIP implementation is shown below
 
-```c++
+```cpp
 template <typename T>
 __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T invhx2, T invhy2, T invhz2, T invhxyz2) {
 
@@ -54,13 +54,13 @@ __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T i
 
     const int slice = nx * ny;
     size_t pos = i + nx * j + slice * k;
-    
+
     // Compute the result of the stencil operation
     f[pos] = u[pos] * invhxyz2
            + (u[pos - 1]     + u[pos + 1]) * invhx2
            + (u[pos - nx]    + u[pos + nx]) * invhy2
            + (u[pos - slice] + u[pos + slice]) * invhz2;
-} 
+}
 
 template <typename T>
 void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int BLK_Z, T hx, T hy, T hz) {
@@ -73,7 +73,7 @@ void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int
     T invhxyz2 = -2. * (invhx2 + invhy2 + invhz2);
 
     laplacian_kernel<<<grid, block>>>(d_f, d_u, nx, ny, nz, invhx2, invhy2, invhz2, invhxyz2);
-} 
+}
 ```
 
 and the corresponding performance on a single MI250X GCD:
@@ -84,7 +84,7 @@ Kernel: 1
 Precision: double
 nx,ny,nz = 512, 512, 512
 block sizes = 256, 1, 1
-Laplacian kernel took: 2.64172 ms, effective memory bandwidth: 808.148 GB/s 
+Laplacian kernel took: 2.64172 ms, effective memory bandwidth: 808.148 GB/s
 ```
 
 The reported `808.148 GB/s` meets 69.4% of the target we established in the previous post.
@@ -122,7 +122,7 @@ one `u` element and reuse the other two `u` elements already loaded and stored i
 we should try to minimize the number of loads per store instruction per thread. If we tile by some factor,
 let's pick two, then each thread would perform two stores, but consider the number of loads:
 
-```c++
+```cpp
 f[pos]     = u[pos - 1]  + u[pos]     + u[pos + 1];
 f[pos + 1] = u[pos]      + u[pos + 1] + u[pos + 2];
 ```
@@ -130,7 +130,7 @@ f[pos + 1] = u[pos]      + u[pos + 1] + u[pos + 2];
 Note that `u[pos]` and `u[pos + 1]` appear twice, which means we only need to load them once. This
 observation allows us to reuse the previously loaded value. To make this point clear, we can introduce two variables:
 
-```c++
+```cpp
 double u0 = u[pos];
 double u1 = u[pos + 1];
 f[pos]     = u[pos - 1] + u0  + u1;
@@ -179,8 +179,8 @@ Kernel 2 setup (after)
 <tr>
 <td style="vertical-align:top">
 
-```c++
- 
+```cpp
+
 
 
 
@@ -205,7 +205,7 @@ dim3 grid((nx - 1) / block.x + 1,
 </td>
 <td style="vertical-align:top">
 
-```c++
+```cpp
 #define m 1
 
 ...
@@ -220,8 +220,8 @@ if (i == 0 || i >= nx - 1 ||
     return;
 
 ...
- 
- 
+
+
 dim3 grid((nx - 1) / block.x + 1,
           (ny - 1) / (block.y * m) + 1,
           (nz - 1) / block.z + 1);
@@ -260,30 +260,30 @@ Step 1 (after)
 <tr>
 <td style="vertical-align:top">
 
-```c++
- 
- 
+```cpp
+
+
 f[pos] = u[pos] * invhxyz2
-       + (u[pos - 1]     
+       + (u[pos - 1]
        +  u[pos + 1]) * invhx2
-       + (u[pos - nx]    
+       + (u[pos - nx]
        +  u[pos + nx]) * invhy2
-       + (u[pos - slice] 
+       + (u[pos - slice]
        +  u[pos + slice]) * invhz2;
  ```
 
 </td>
 <td style="vertical-align:top">
 
-```c++
+```cpp
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1)
     f[pos + n*nx] = u[pos + n*nx] * invhxyz2
-       + (u[pos - 1 + n*nx]     
+       + (u[pos - 1 + n*nx]
        +  u[pos + 1 + n*nx]) * invhx2
-       + (u[pos - nx + n*nx]    
+       + (u[pos - nx + n*nx]
        +  u[pos + nx + n*nx]) * invhy2
-       + (u[pos - slice + n*nx] 
+       + (u[pos - slice + n*nx]
        +  u[pos + slice + n*nx]) * invhz2;
 ```
 
@@ -310,34 +310,34 @@ Step 2 (after)
 <tr>
 <td style="vertical-align:top">
 
-```c++
- 
+```cpp
+
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1)
     f[pos + n*nx] = u[pos + n*nx] * invhxyz2
-       + (u[pos - 1 + n*nx]     
+       + (u[pos - 1 + n*nx]
        +  u[pos + 1 + n*nx]) * invhx2
-       + (u[pos - nx + n*nx]    
+       + (u[pos - nx + n*nx]
        +  u[pos + nx + n*nx]) * invhy2
-       + (u[pos - slice + n*nx] 
+       + (u[pos - slice + n*nx]
        +  u[pos + slice + n*nx]) * invhz2;
- 
- 
+
+
 ```
 
 </td>
 <td style="vertical-align:top">
 
-```c++
+```cpp
 T Lu[m] = {0};
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1) {
     Lu[n] = u[pos + n*nx] * invhxyz2;
-    Lu[n] += (u[pos - 1 + n*nx]     
+    Lu[n] += (u[pos - 1 + n*nx]
           +   u[pos + 1 + n*nx]) * invhx2;
-    Lu[n] += (u[pos - nx + n*nx]    
+    Lu[n] += (u[pos - nx + n*nx]
           +   u[pos + nx + n*nx]) * invhy2;
-    Lu[n] += (u[pos - slice + n*nx] 
+    Lu[n] += (u[pos - slice + n*nx]
           +   u[pos + slice + n*nx]) * invhz2;
     f[pos + n*nx] = Lu[n];
   }
@@ -363,36 +363,36 @@ Step 3 (after)
 <tr>
 <td style="vertical-align:top">
 
-```c++
+```cpp
 T Lu[m] = {0};
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1) {
     Lu[n] = u[pos + n*nx] * invhxyz2;
-    Lu[n] += (u[pos - 1 + n*nx]     
+    Lu[n] += (u[pos - 1 + n*nx]
           +   u[pos + 1 + n*nx]) * invhx2;
-    Lu[n] += (u[pos - nx + n*nx]    
+    Lu[n] += (u[pos - nx + n*nx]
           +   u[pos + nx + n*nx]) * invhy2;
-    Lu[n] += (u[pos - slice + n*nx] 
+    Lu[n] += (u[pos - slice + n*nx]
           +  u[pos + slice + n*nx]) * invhz2;
     f[pos + n*nx] = Lu[n];
   }
-  
- 
+
+
 ```
 
 </td>
 <td style="vertical-align:top">
 
-```c++
+```cpp
 T Lu[m] = {0};
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1) {
     Lu[n] = u[pos + n*nx] * invhxyz2;
-    Lu[n] += (u[pos - 1 + n*nx]     
+    Lu[n] += (u[pos - 1 + n*nx]
           +   u[pos + 1 + n*nx]) * invhx2;
-    Lu[n] += (u[pos - nx + n*nx]    
+    Lu[n] += (u[pos - nx + n*nx]
           +   u[pos + nx + n*nx]) * invhy2;
-    Lu[n] += (u[pos - slice + n*nx] 
+    Lu[n] += (u[pos - slice + n*nx]
           +   u[pos + slice + n*nx]) * invhz2;
   }
 for (int n = 0; n < m; n++)
@@ -423,50 +423,50 @@ Kernel 2 computation - Step 4 (after)
 <tr>
 <td style="vertical-align:top">
 
-```c++
- 
+```cpp
+
 T Lu[m] = {0};
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1) {
     Lu[n] = u[pos + n*nx] * invhxyz2;
-    Lu[n] += (u[pos - 1 + n*nx]     
+    Lu[n] += (u[pos - 1 + n*nx]
           +   u[pos + 1 + n*nx]) * invhx2;
-    Lu[n] += (u[pos - nx + n*nx]    
+    Lu[n] += (u[pos - nx + n*nx]
           +   u[pos + nx + n*nx]) * invhy2;
-    Lu[n] += (u[pos - slice + n*nx] 
+    Lu[n] += (u[pos - slice + n*nx]
           +   u[pos + slice + n*nx]) * invhz2;
   }
 for (int n = 0; n < m; n++)
   if (j + n > 0 && j + n < ny - 1)
     f[pos + n*nx] = Lu[n];
-  
- 
- 
 
- 
- 
+
+
+
+
+
 ```
 
 </td>
 <td style="vertical-align:top">
 
-```c++
+```cpp
 T center;
 T Lu[m] = {0};
 for (int n = 0; n < m; n++) {
   center = u[pos + n*nx];
   Lu[n] = center * invhxyz2
-        + (u[pos - 1 + n*nx]     
+        + (u[pos - 1 + n*nx]
         +  u[pos + 1 + n*nx]) * invhx2;
-  if (n == 0) 
+  if (n == 0)
     Lu[n] += u[pos - nx + n*nx] * invhy2;
-  if (n > 0) 
+  if (n > 0)
     Lu[n-1] += center * invhy2;
-  if (n < m - 1) 
+  if (n < m - 1)
     Lu[n+1] += center * invhy2;
-  if (n == m - 1) 
+  if (n == m - 1)
     Lu[n] += u[pos + nx + n*nx] * invhy2;
-  Lu[n] += (u[pos - slice + n*nx] 
+  Lu[n] += (u[pos - slice + n*nx]
         +   u[pos + slice + n*nx]) * invhz2;
 }
 for (int n = 0; n < m; n++)
@@ -480,21 +480,21 @@ for (int n = 0; n < m; n++)
 
 Below is the full kernel 2 implementation capturing all the above code modifications:
 
-```c++
+```cpp
 // Tiling factor
 #define m 1
 template <typename T>
 __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T invhx2, T invhy2, T invhz2, T invhxyz2) {
-    
+
     int i = threadIdx.x + blockIdx.x * blockDim.x;
     int j = m*(threadIdx.y + blockIdx.y * blockDim.y);
     int k = threadIdx.z + blockIdx.z * blockDim.z;
-    
+
     // Exit if this thread is on the xz boundary
     if (i == 0 || i >= nx - 1 ||
         k == 0 || k >= nz - 1)
         return;
-    
+
     const int slice = nx * ny;
     size_t pos = i + nx * j + slice * k;
 
@@ -507,23 +507,23 @@ __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T i
     // Loop tiling
     for (int n = 0; n < m; n++) {
         center = u[pos + n*nx]; // store for reuse
-  
+
         // x direction
         Lu[n] += center *invhxyz2
               + (u[pos - 1 + n*nx] + u[pos + 1 + n*nx]) * invhx2;
-  
+
         // y - 1, first n
         if (n == 0) Lu[n] += u[pos - nx + n*nx] * invhy2;
-  
+
         // reuse: y + 1 for prev n
         if (n > 0) Lu[n-1] += center * invhy2;
-  
+
         // reuse: y - 1 for next n
         if (n < m - 1) Lu[n+1] += center * invhy2;
-  
+
         // y + 1, last n
         if (n == m - 1) Lu[n] += u[pos + nx + n*nx] * invhy2;
-  
+
         // z - 1 and z + 1
         Lu[n] += (u[pos - slice + n*nx] + u[pos + slice + n*nx]) * invhz2;
     }
@@ -545,7 +545,7 @@ void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int
     T invhxyz2 = -2. * (invhx2 + invhy2 + invhz2);
 
     laplacian_kernel<<<grid, block>>>(d_f, d_u, nx, ny, nz, invhx2, invhy2, invhz2, invhxyz2);
-} 
+}
 ```
 
 Note that this kernel is currently written so that `ny` must be divisible by `block.y * m`.
@@ -626,37 +626,37 @@ Under this different approach, we first access all `z - 1` elements, followed by
 direction elements, the `y + 1` element of iteration `n = m - 1`, and end with all `z + 1` elements. Each thread now accesses all needed
 `u` elements by ascending memory address. A significant rewrite of the kernel is necessary, so we first present the full implementation:
 
-```c++
+```cpp
 // Tiling factor
 #define m 1
 template <typename T>
 __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T invhx2, T invhy2, T invhz2, T invhxyz2) {
-    
+
     int i = threadIdx.x + blockIdx.x * blockDim.x;
     int j = m*(threadIdx.y + blockIdx.y * blockDim.y);
     int k = threadIdx.z + blockIdx.z * blockDim.z;
-    
+
     // Exit if this thread is on the xz boundary
     if (i == 0 || i >= nx - 1 ||
         k == 0 || k >= nz - 1)
         return;
-    
+
     const int slice = nx * ny;
     size_t pos = i + nx * j + slice * k;
-    
+
     // Each thread accumulates m stencils in the y direction
     T Lu[m] = {0};
-    
+
     // Scalar for reusable data
     T center;
-    
+
     // z - 1, loop tiling
     for (int n = 0; n < m; n++)
         Lu[n] += u[pos - slice + n*nx] * invhz2;
-    
+
     // y - 1
     Lu[0]   += j > 0 ? u[pos - 1*nx] * invhy2 : 0; // bound check
-    
+
     // x direction, loop tiling
     for (int n = 0; n < m; n++) {
         // x - 1
@@ -668,17 +668,17 @@ __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T i
 
         // x + 1
         Lu[n] += u[pos + 1 + n*nx] * invhx2;
-        
+
         // reuse: y + 1 for prev n
         if (n > 0) Lu[n-1] += center * invhy2;
 
         // reuse: y - 1 for next n
         if (n < m - 1) Lu[n+1] += center * invhy2;
     }
-    
+
     // y + 1
     Lu[m-1]  += j < ny - m ? u[pos + m*nx] * invhy2 : 0; // bound check
-    
+
     // z + 1, loop tiling
     for (int n = 0; n < m; n++)
       Lu[n] += u[pos + slice + n*nx] * invhz2;
@@ -687,7 +687,7 @@ __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T i
     for (int n = 0; n < m; n++)
       if (n + j > 0 && n + j < ny - 1)
         f[pos + n*nx] = Lu[n];
-} 
+}
 
 template <typename T>
 void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int BLK_Z, T hx, T hy, T hz) {
@@ -705,11 +705,11 @@ void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int
 
 We now go into the details of the computational steps within this kernel. First, we access all `z - 1` grid points followed by a single `y - 1`:
 
-```c++
+```cpp
     // z - 1, loop tiling
     for (int n = 0; n < m; n++)
         Lu[n] += u[pos - slice + n*nx] * invhz2;
-    
+
     // y - 1
     Lu[0]   += j > 0 ? u[pos - 1*nx] * invhy2 : 0; // bound check
 ```
@@ -720,7 +720,7 @@ Neither the `z - 1` nor `y - 1` elements are reused at the thread level.
 
 Next, the thread computes the `x`direction stencils:
 
-```c++
+```cpp
     // x direction, loop tiling
     for (int n = 0; n < m; n++) {
         // x - 1
@@ -732,7 +732,7 @@ Next, the thread computes the `x`direction stencils:
 
         // x + 1
         Lu[n] += u[pos + 1 + n*nx] * invhx2;
-        
+
         // reuse: y + 1 for prev n
         if (n > 0) Lu[n-1] += center * invhy2;
 
@@ -746,10 +746,10 @@ center element `u[pos + n*nx]` could be reused up to two times as in the previou
 
 Afterwards, we load the final `y + 1` point as well as all the `z + 1` points:
 
-```c++
+```cpp
     // y + 1
     Lu[m-1]  += j < ny - m ? u[pos + m*nx] * invhy2 : 0; // bound check
-    
+
     // z + 1, loop tiling
     for (int n = 0; n < m; n++)
       Lu[n] += u[pos + slice + n*nx] * invhz2;
@@ -760,7 +760,7 @@ Another conditional operator is used so that it computes the `y + 1` stencil of 
 
 Lastly, all threads inside the `y` boundary are written back to memory:
 
-```c++
+```cpp
     // Store only if thread is inside y boundary
     for (int n = 0; n < m; n++)
       if (n + j > 0 && n + j < ny - 1)

@@ -29,10 +29,10 @@ $$
 
 of several standard SpMV implementations including:
 
-- Scalar Compressed Sparse Row (CSR),
-- Vector CSR,
-- Ellpack, and
-- Blocked Ellpack.
+* Scalar Compressed Sparse Row (CSR)
+* Vector CSR
+* ELLPACK
+* Blocked ELLPACK
 
 Many common SpMV APIs, such as [rocSparse](https://rocm.docs.amd.com/projects/rocSPARSE/en/latest/basics.html#csr-storage-format),
 use this generalized interface. We want to provide a fair comparison between our
@@ -43,13 +43,13 @@ statistic of the matrix, to be used throughout this post, is the average number
 of nonzeros per row, $nnz_{avg}$. Distribution of work to different GPU compute
 resources will often be based on this measure.
 
-First, we'll review the widely-used CSR and Ellpack formats for sparse matrices.
+First, we'll review the widely-used CSR and ELLPACK formats for sparse matrices.
 After describing the implementations, we will compare their relative performance
 on AMD MI250X architectures for a variety of sparse matrices. Conversion algorithms
 from one matrix storage format to another can be a costly endeavor. Our code
 [samples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/)
 will provide non-optimized device implementations of conversion algorithms between
-CSR and Ellpack however we will not discuss them in detail in this post.
+CSR and ELLPACK however we will not discuss them in detail in this post.
 
 ## Storage formats
 
@@ -75,9 +75,9 @@ times dense vector (i.e. sparse dot product) calculation.
 
 <img src="diagrams/SparsityCSR.png" width="500px">
 
-### Ellpack format
+### ELLPACK format
 
-The Ellpack format is an effective data structure for SpMV when the variation in
+The ELLPACK format is an effective data structure for SpMV when the variation in
 the number of nonzeros per row is small. The format reverses the ordering of the
 storage to column major, compared to CSR, and uses zero padding to achieve uniformity
 in the data structure. The number of entries per row is determined by the maximum
@@ -91,13 +91,13 @@ to the left in the array.
 
 <img src="diagrams/SparsityExampleEll.png" width="500px">
 
-The Ellpack format can be further optimized by forming the Ellpack data structre
+The ELLPACK format can be further optimized by forming the ELLPACK data structre
 in chunks of rows. This minimizes the amount of zero padding while achieving uniformity
-across the data. We will refer to this as Blocked Ellpack.
+across the data. We will refer to this as Blocked ELLPACK.
 
 ## GPU kernel implementations
 
-Below are some standard SpMV implementations based on the CSR and Ellpack formats:
+Below are some standard SpMV implementations based on the CSR and ELLPACK formats:
 
 ### Scalar CSR kernel
 
@@ -108,7 +108,7 @@ by each thread thus negating the need for more advanced techniques requiring
 shared memory and/or warp-level reductions. A straightforward implementation
 of the scalar CSR kernel is shown in the following code snippet.
 
-```c++
+```cpp
 __global__ void scalar_csr_kernel(const int m,
                                   const int *__restrict__ row_offsets,
                                   const int *__restrict__ cols,
@@ -123,13 +123,13 @@ __global__ void scalar_csr_kernel(const int m,
     // determine the start and ends of each row
     int p = row_offsets[row];
     int q = row_offsets[row+1];
-    
-    // execute the full sparse row * vector dot product operation
+
+    // run the full sparse row * vector dot product operation
     double sum = 0;
     for (int i = p; i < q; i++) {
       sum += vals[i] * x[cols[i]];
     }
-    
+
     // write to memory
     if (beta == 0) {
       y[row] = alpha * sum;
@@ -143,7 +143,7 @@ void scalar_csr(int m,
                 int threads_per_block,
                 int * row_offsets,
                 int * cols,
-                double * vals, 
+                double * vals,
                 double * x,
                 double * y,
                 double alpha,
@@ -168,12 +168,12 @@ In this context, $n_{threads}$ is a tuneable
 parameter that we can use to maximize performance of this implementation. Within the
 kernel definition, we then
 
-- compute our row based on simple mapping of threads and blocks,
-- ensure that we do NOT read beyond any array bounds in the row offsets array,
-- we determine the column (and thus vector) indices and matrix values to load via adjacent reads of the row offsets array,
-- we do a scalar computation of the sparse dot product, and finally
-- we write the result to memory.
-  
+* compute our row based on simple mapping of threads and blocks,
+* ensure that we do NOT read beyond any array bounds in the row offsets array,
+* determine the column (and thus vector) indices and matrix values to load via adjacent reads of the row offsets array,
+* do a scalar computation of the sparse dot product, and finally
+* write the result to memory.
+
 In the last step, we can save some memory bandwidth by testing on whether $y$ vector is overwritten or updated.
 
 The scalar CSR implementation will achieve mediocre performance for the broadest
@@ -183,7 +183,7 @@ Indeed, when the average number of nonzeros per row is high, multiple requests
 will be required to service the memory transactions and coalescence will be minimal.
 In contrast, when the average number of nonzeros per row is very low, high memory
 bandwidth can be coupled to simplistic nature of this kernel to achieve good
-performance.  
+performance.
 
 See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/scalar_csr.cpp)
 for how to run the Scalar CSR kernel from a matrix market file input.
@@ -205,7 +205,7 @@ than wavefront size threads, which is 64 on MI200 architectures. This may limit
 performance when the average number of nonzeros per row is much larger than the
 wavefront size.
 
-```c++
+```cpp
 template <int THREADS_PER_ROW>
 __global__ void vector_csr_kernel(const int m,
                                   const int *__restrict__ row_offsets,
@@ -261,7 +261,7 @@ void vector_csr(int m,
   threads_per_row = threads_per_row > warpSize ? warpSize : threads_per_row;
   int rows_per_block = threads_per_block / threads_per_row;
   int num_blocks = (m + rows_per_block - 1) / rows_per_block;
-  
+
   dim3 grid(num_blocks, 1, 1);
   dim3 block(threads_per_row, rows_per_block, 1);
   if (threads_per_row <= 2)
@@ -273,15 +273,15 @@ void vector_csr(int m,
       vector_csr_kernel<32><<<grid, block>>>(m, row_offsets, cols, vals, x, y, alpha, beta);
   else
       vector_csr_kernel<64><<<grid, block>>>(m, row_offsets, cols, vals, x, y, alpha, beta);
-}     
+}
 ```
 
 This implementation has a couple of key differences with scalar implementation.
 We use $nnz_{avg}$ to build a two-dimensional thread block.
 
-- The x-dimension of the thread denotes the number of threads assigned to each row. This is computed from a function, [prevPowerOf2](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/vector_csr.cpp#L310), which computes smallest power of 2 less than or equal to the input variable.
-- the y-dimension denotes the number of rows per thread block.
-- The total number of thread blocks is determined by the number of rows handled by each block.
+* The x-dimension of the thread denotes the number of threads assigned to each row. This is computed from a function, [prevPowerOf2](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/vector_csr.cpp#L310), which computes smallest power of 2 less than or equal to the input variable.
+* the y-dimension denotes the number of rows per thread block.
+* The total number of thread blocks is determined by the number of rows handled by each block.
 
 Templates are used to launch the kernel with the number of threads per row becoming
 a compile-time constant. This enables optimizations during loop unrolling of the reduction algorithms.
@@ -291,8 +291,8 @@ lies in how the row index is calculated from the block/grid launch heuristics. I
 note that we use y component of the thread index and block size to compute this value.
 Then, the sparse dot product is then broken up into two steps.
 
-- Each thread loops over the row in multiples of template parameter computing a partial result of the sparse dot product.
-- Once completed, the subwarp then uses the shuffle down operation to accumulate the value to thread 0 in each wavefront.
+* Each thread loops over the row in multiples of template parameter computing a partial result of the sparse dot product.
+* Once completed, the subwarp then uses the shuffle down operation to accumulate the value to thread 0 in each wavefront.
 
 Here we note the lack of synchronization steps in either part of the sparse dot
 products steps. This is due to our limiting ourselves to reductions that are at
@@ -301,16 +301,16 @@ least as small as the wavefront size.
 See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/vector_csr.cpp)
 for how to run the Vector CSR kernel from a matrix market file input.
 
-### Ellpack kernel
+### ELLPACK kernel
 
-The Ellpack SpMV implementation parallelizes the computation along the rows. Because
+The ELLPACK SpMV implementation parallelizes the computation along the rows. Because
 the data has been reordered to be stored column major, memory accesses along contiguous
-lines of Ellpack data are coalesced. In the implementation shown below, we assume
-that the input *cols* and *vals* arrays have already been converted to the ellpack
+lines of ELLPACK data are coalesced. In the implementation shown below, we assume
+that the input *cols* and *vals* arrays have already been converted to the ELLPACK
 format. A key piece of this format is the meta data parameter, the maximum number
 of nonzeros per row, which is also passed in as a parameter.
 
-```c++
+```cpp
 __global__ void ellpack_kernel(const int m,
                                const int max_nnz_per_row,
                                const int *__restrict__ cols,
@@ -340,7 +340,7 @@ __global__ void ellpack_kernel(const int m,
 void ellpack(int m,
              int threads_per_block,
              int max_nnz_per_row,
-             int * cols, 
+             int * cols,
              double * vals,
              double * x,
              double * y,
@@ -361,15 +361,15 @@ accessed in a coalesced manner. The padding in the data stucture enables us to w
 code without costly conditionals in the sparse dot product implementation.
 
 See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/ellpack.cpp)
-for how to run the Ellpack kernel from a matrix market file input. This example
-includes a device conversion to Ellpack from the CSR format.
+for how to run the ELLPACK kernel from a matrix market file input. This example
+includes a device conversion to ELLPACK from the CSR format.
 
-### Blocked ellpack kernel
+### Blocked ELLPACK kernel
 
-The blocked ellpack data structure is designed to minimize the extra memory reads
-introduced in the ellpack structure. The maxima number of entries per row is computed
+The blocked ELLPACK data structure is designed to minimize the extra memory reads
+introduced in the ELLPACK structure. The maxima number of entries per row is computed
 within a set of rows that is a multiple of the wavefront size. Then, a localized
-ellpack structure is computed in each chunk. Each chunk is then
+ELLPACK structure is computed in each chunk. Each chunk is then
 concatenated to form the global data structure. This requires an additional small
 array, akin to the CSR row offsets, that indicates the start and end of each block
 in terms of maximum number of columns per row.
@@ -380,7 +380,7 @@ avoid the integer division used for calculating the global wave index. The globa
 wave index is used to immediately return from the kernel those trailing waves that
 play no part in the computation.
 
-```c++
+```cpp
 template<int LOG2WFSIZE>
 __global__ void blocked_ellpack_kernel(const int m,
                                        const int tw,
@@ -423,8 +423,8 @@ __global__ void blocked_ellpack_kernel(const int m,
 ```
 
 See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/block_ellpack.cpp)
-for how to run the Block Ellpack kernel from a matrix market file input. This example
-includes a device conversion to Block Ellpack from the CSR format.
+for how to run the Block ELLPACK kernel from a matrix market file input. This example
+includes a device conversion to Block ELLPACK from the CSR format.
 
 ## Performance
 
@@ -477,7 +477,7 @@ and 512 threads per block--these were typically slightly less optimal than 256. 
 the left figure, we show the average time per SpMV execution scaled by the default
 RocSparse performance. In the right figure, we show the setup costs scaled by the
 average SpMV timing for the three formats where either a conversion from CSR format
-is required (Ellpack and Block Ellpack), or an analysis of the CSR matrix is needed
+is required (ELLPACK and Block ELLPACK), or an analysis of the CSR matrix is needed
 (RocSparseWithAnalysis).
 
 <img src="diagrams/hip_vs_rocm_dt_2023-10-02_256.png" width="500px" align="left">
@@ -486,9 +486,9 @@ is required (Ellpack and Block Ellpack), or an analysis of the CSR matrix is nee
 The data shows significant variation across the set of matrices considered here.
 Using Rocsparse with analysis is typically the fastest, however it comes with
 the most significant setup cost. This algorithm is particularly effective for matrices
-with long tails in the nnz per row distribution. The Block Ellpack implementation
+with long tails in the nnz per row distribution. The Block ELLPACK implementation
 is often quite good, especially when the variance in the nnz per row is small.
-The setup costs associated with Block Ellpack is often a lot smaller than
+The setup costs associated with Block ELLPACK is often a lot smaller than
 RocsparseWithAnalysis costs and the gains are often quite good.
 
 The matrices `_nalu_large_level1_`, `_nalu_large_level2_`, and `_nalu_large_level3_`
@@ -496,8 +496,8 @@ have nnz per row distributions with long tails. This is also the case for the
 medium and small versions of the nalu matrices. The distribution, and the sparsity
 pattern are shown for `_nalu_large_level2_` in the figures below. Because of the
 scattered nature of sparsity pattern and the long tails in the nnz per row distribution,
-these matrices will typically lead to large amounts of 0-fill in both Ellpack storage
-formats. Ultimately, the simplicity of the Ellpack kernels will not be able to
+these matrices will typically lead to large amounts of 0-fill in both ELLPACK storage
+formats. Ultimately, the simplicity of the ELLPACK kernels will not be able to
 overcome the large increase in memory reads from the 0-filled values. This explains
 why the performance of these implementations degrades so significantly. In contrast,
 the RocSparse kernel with analysis is designed to handle these types of matrices
@@ -512,7 +512,7 @@ cases reasonably well.
 This concludes the first part of developing and optimizing some basic SpMV kernels
 using HIP. We have demonstrated the performance of several different storage formats
 for a wide range of matrices. We have also shown the performance costs of converting
-from CSR formats to Ellpack and the internal Rocsparse format. In general, the
+from CSR formats to ELLPACK and the internal Rocsparse format. In general, the
 Rocsparse with Analysis algorithm provides the best performance across the board however
 it comes with a more signficant setup cost than the other formats considered here.
 Since SpMV algorithms are typically embedded in larger algorithms, such as AMG,

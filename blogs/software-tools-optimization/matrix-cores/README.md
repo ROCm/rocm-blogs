@@ -164,8 +164,8 @@ The matrix dimensions and number of blocks supported on CDNA2 GPUs are listed in
 |               |               |4  |4  |4  |4     |16    |128        |
 
 A complete list of all instructions supported by the CDNA2 Architecture can be found
-in the [AMD Instinct MI200 Instruction Set Architecture Reference Guide][cdna_isa_mai].
-AMD's [Matrix Instruction Calculator][matrix_instruction_calculator] tool allows
+in the [AMD Instinct MI200 Instruction Set Architecture Reference Guide](https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf#%5B%7B%22num%22%3A219%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C792%2Cnull%5D).
+AMD's [Matrix Instruction Calculator](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator) tool allows
 generating more information such as computational throughput and register usage
 of MFMA instructions on AMD Radeon™ and AMD Instinct™ accelerators.
 
@@ -189,17 +189,17 @@ The following two figures show 1) the shape and size of the $A$ and $B$ inputs; 
 2) how the elements of $A$ and $B$ map to lanes in the register owned by the
 wavefront.
 
-![!](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+![the shape and size of the A and B inputs](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
 
-![!](images/v_mfma_f64_16x16x4f64_lane_layout.svg)
+![how the elements of A and B map to lanes in the register owned by the wavefront](images/v_mfma_f64_16x16x4f64_lane_layout.svg)
 
 The following two figures show 1) the shape and size of the output matrix $D$; and
 2) how the elements of $D$ map to lanes in the registers owned by the
 wavefront:
 
-![!](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
+![shape and size of the output matrix D](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
 
-![!](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
+![how the elements of $D$ map to lanes in the registers owned by the wavefront](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
 
 An example kernel performing this MFMA operation is given below.
 
@@ -207,20 +207,20 @@ An example kernel performing this MFMA operation is given below.
 #define M 16
 #define N 16
 #define K 4
- 
+
 using float4 = __attribute__( (__vector_size__(K * sizeof(float)) )) float;
- 
+
 __global__ void sgemm_16x16x4(const float *A, const float *B, float *D)
 {
   float4 dmn = {0};
- 
+
   int mk = threadIdx.y + K * threadIdx.x;
   int kn = threadIdx.x + N * threadIdx.y;
- 
+
   float amk = A[mk];
   float bkn = B[kn];
   dmn = __builtin_amdgcn_mfma_f32_16x16x4f32(amk, bkn, dmn, 0, 0, 0);
- 
+
   for (int i = 0; i < 4; ++i) {
     const int idx = threadIdx.x + i * N + threadIdx.y * 4 * N;
     D[idx] = dmn[i];
@@ -268,21 +268,21 @@ The kernel below shows an example of this multiplication for a packed batch of 4
 #define M 16
 #define N 16
 #define K 1
- 
+
 using float16 = __attribute__( (__vector_size__(16 * sizeof(float)) )) float;
- 
+
 __global__ void sgemm_16x16x1(const float *A, const float *B, float *D)
 {
   float16 dmnl = {0};
- 
+
   int mkl = K * threadIdx.x + M * K * threadIdx.y;
   int knl = threadIdx.x + N * K * threadIdx.y;
- 
+
   float amkl = A[mkl];
   float bknl = B[knl];
- 
+
   dmnl = __builtin_amdgcn_mfma_f32_16x16x1f32(amkl, bknl, dnml, 0, 0, 0);
- 
+
   for (int l = 0; l < 4; ++l) {
     for (int i = 0; i < 4; ++i) {
       const int idx = threadIdx.x + i * N  + threadIdx.y * 4 * N + l * M * N;
@@ -297,7 +297,7 @@ This kernel is launched using:
 ```cuda
 dim3 grid (1, 1, 1);
 dim3 block(16, 4, 1);
- 
+
 sgemm_16x16x1 <<< grid, block >>> (d_A, d_B, d_D);
 ```
 
@@ -331,28 +331,24 @@ multiply-accumulate problems into fragments and using them in block-wise operati
 that are distributed in parallel across wavefronts. The API is a header library
 of GPU device code allowing matrix core acceleration may be compiled directly
 into your kernel device code. This can benefit from compiler optimization in the
-generation of kernel assembly. More details are available in the [rocWMMA repo][rocwmma_repo_link].
+generation of kernel assembly. More details are available in the [rocWMMA repo](https://github.com/ROCmSoftwarePlatform/rocWMMA).
 
 ## A note on the AMD Matrix Instruction Calculator tool
 
 For those curious about how various MFMA instructions perform on AMD Radeon and
 AMD Instinct accelerators and would like to understand the mapping between matrix
-elements and hardware registers, we direct you to the [AMD Matrix Instruction Calculator][matrix_instruction_calculator]
+elements and hardware registers, we direct you to the
+[AMD Matrix Instruction Calculator](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator)
 tool. This powerful tool can be used to describe WMMA instructions as well as
 MFMA ISA-level instructions for a given architecture.
 We welcome [issues](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator/issues) and feedback from the community.
 
-## References
+## Additional resources
 
-- [AMD Instinct MI200 Instruction Set Architecture Reference Guide](https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf)
-- [AMD CDNA Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna-whitepaper.pdf)
-- [AMD CDNA™ 2 Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna2-white-paper.pdf)
-- [AMD Matrix Instruction Calculator Tool][matrix_instruction_calculator]
+* [AMD Instinct MI200 Instruction Set Architecture Reference Guide](https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf)
+* [AMD CDNA Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna-whitepaper.pdf)
+* [AMD CDNA™ 2 Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna2-white-paper.pdf)
+* [AMD Matrix Instruction Calculator Tool](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator)
 
 We would like to thank Joseph Greathouse for his helpful reviews and suggestions.
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
-
-<!--List of URLs referenced in text above-->
-[cdna_isa_mai]: https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf#%5B%7B%22num%22%3A219%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C0%2C792%2Cnull%5D "MFMA Operations in CDNA2"
-[rocwmma_repo_link]: https://github.com/ROCmSoftwarePlatform/rocWMMA "rocWMMA repo"
-[matrix_instruction_calculator]: https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator "AMD Matrix Instruction Calculator Tool"

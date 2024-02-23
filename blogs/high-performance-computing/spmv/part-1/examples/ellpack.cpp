@@ -64,7 +64,7 @@ void read_mm(const string filename, int& m, int& n, int& nnz, int& max_nnz_per_r
              vector<int> & rows, vector<int> & cols, vector<double> & vals);
 
 /********************************************************
- * CSR Ellpack Conversion Kernels
+ * CSR ELLPACK Conversion Kernels
  ********************************************************/
 template <int THREADS_PER_ROW>
 __global__ void
@@ -103,7 +103,7 @@ fillColEll(const int m, const int max_nnz_per_row, const int *__restrict__ rows,
 }
 
 /********************************************************
- * Ellpack SpMV Kernel
+ * ELLPACK SpMV Kernel
  ********************************************************/
 __global__ void ellpack_kernel(const int m, const int max_nnz_per_row,
                                const int *__restrict__ cols,
@@ -189,7 +189,7 @@ int main(int argc, char const *argv[]) {
     ? threads_per_block / threads_per_row : 1;
   int num_blocks = (m + rows_per_block - 1) / rows_per_block;
 
-  /* Convert to Ellpack */
+  /* Convert to ELLPACK */
   HIP_CALL(hipDeviceSynchronize());
   auto start = std::chrono::high_resolution_clock::now();
   int *dellcols = NULL;
@@ -223,7 +223,7 @@ int main(int argc, char const *argv[]) {
   double alpha = 1.0, beta = 0.0;
   num_blocks = (m + threads_per_block - 1) / threads_per_block;
 
-  /* Call Ellpack SpMV */
+  /* Call ELLPACK SpMV */
   auto avg_timing = 0.0;
   auto avg_bandwidth = 0.0;
   for (int i=0; i<numTrials; ++i)

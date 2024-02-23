@@ -25,7 +25,7 @@ training. Access to [AAC](https://aac.amd.com) is required to follow along.
 After launching a Dask workload on AAC, clone the XGBoost ROCm repository and `cd`
 into it.
 
-``` bash
+```bash
 git clone https://github.com/ROCmSoftwarePlatform/xgboost.git
 cd xgboost
 git submodule update --init --recursive
@@ -35,7 +35,7 @@ Next, build XGBoost from source. We're building on MI 200 Instinct Series GPUs, 
 `DCMAK_HIP_ARCHITECTURES` to `gfx90a`. If you're using different architecture, modify this
 accordingly. You can look up your architecture using: `rocminfo | grep gfx`.
 
-``` bash
+```bash
 mkdir build
 cd build
 cmake -DUSE_HIP=ON -DCMAKE_HIP_ARCHITECTURES="gfx90a" -DUSE_RCCL=1 ../
@@ -44,7 +44,7 @@ make -j
 
 You can now compile XGBoost into a Python package. It should install XGBoost version `2.1.0-dev`.
 
-``` bash
+```bash
 cd python-package
 pip install .
 ```
@@ -58,14 +58,14 @@ Download a training dataset to measure the speedups achieved by distributing com
 multiple GPUs. We use the Higgs boson dataset, where the goal is to differentiate a signal process that
 produces Higgs bosons from those that do not.
 
-``` bash
+```bash
 wget http://mlphysics.ics.uci.edu/data/higgs/HIGGS.csv.gz
 gunzip HIGGS.csv.gz
 ```
 
 Import the libraries you'll need for XGBoost training.
 
-``` bash
+```bash
 import time
 import os
 import dask
@@ -89,7 +89,7 @@ Set `num_gpus` to the number of GPUs you want to use. This will be used to speci
 use. Then, create a cluster in single-node mode with `LocalHIPCluster` and connect a client to this
 cluster.
 
-``` python
+```python
 num_gpus = 4
 devices = ','.join([str(i) for i in range(num_gpus)])
 cluster = LocalHIPCluster(HIP_VISIBLE_DEVICES=devices)
@@ -103,7 +103,7 @@ Your distributed environment is now set up for computation.
 The dataset comes pre-balanced, cleaned, and standardized. For benchmarking purposes, we train
 using the full dataset and load it as a Dask dataframe.
 
-``` python
+```python
 colnames = ['label'] + ['feature-%02d' % i for i in range(1, 29)]
 fn = 'HIGGS.csv'
 df = dd.read_csv(fn, header=None, names=colnames, dtype='float32')
@@ -117,7 +117,7 @@ We then create an `xgboost.dask.DaskDMatrix` object and pass it to `xgboost.dask
 other parameters, much like XGBoost's normal, non-Dask interface. Unlike that interface, data and
 labels must be either Dask DataFrame or Dask Array instances.
 
-``` python
+```python
 dtrain = xgb.dask.DaskDMatrix(client, X, y)
 
 start_time = time.time()
@@ -135,7 +135,7 @@ print("[INFO]: ------ Training is completed in {} seconds ------".format((time.t
 With XGBoost's Dask train interface, we pass our Dask client as an additional argument for carrying out
 the computation.
 
-``` python
+```bash
 [INFO]: ------ Training is completed in 24.53920841217041 seconds ------
 ```
 
@@ -144,7 +144,7 @@ the computation.
 The Dask interface has 2 prediction functions: `predict` and `inplace_predict`. We use the `predict`
 function. After obtaining the trained model booster, inference can be done using:
 
-``` python
+```python
 booster = bst['booster']
 # Set to use GPU for inference.
 booster.set_param({'device': 'gpu'})

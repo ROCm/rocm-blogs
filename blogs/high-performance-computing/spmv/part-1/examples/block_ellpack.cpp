@@ -64,7 +64,7 @@ void read_mm(const string filename, int& m, int& n, int& nnz, int& max_nnz_per_r
              vector<int> & rows, vector<int> & cols, vector<double> & vals);
 
 /********************************************************
- * CSR Ellpack Conversion Kernels
+ * CSR ELLPACK Conversion Kernels
  ********************************************************/
 __global__ void computeMaxNnzPerRowPerBlock(const int m, const int total_warps, const int *__restrict__ rows,
                                             uint32_t *__restrict__ max_nnz_per_row_per_warp,
@@ -153,7 +153,7 @@ fillBlockColEll(const int m, const int total_warps,
 }
 
 /********************************************************
- * Block Ellpack SpMV Kernel
+ * Block ELLPACK SpMV Kernel
  ********************************************************/
 template <int LOG2WFSIZE>
 __global__ void blocked_ellpack_kernel(const uint32_t m, const uint32_t tw,
@@ -255,7 +255,7 @@ int main(int argc, char const *argv[]) {
   int total_warps = (m + warpSize - 1) / warpSize;
 
   /************************************************************/
-  /* Convert to Blocked Ellpack                               */
+  /* Convert to Blocked ELLPACK                               */
   /************************************************************/
 
   HIP_CALL(hipDeviceSynchronize());
@@ -341,7 +341,7 @@ int main(int argc, char const *argv[]) {
   grid = dim3(num_blocks,1,1);
   block = dim3(threads_per_block,1,1);
 
-  /* Call Block Ellpack SpMV */
+  /* Call Block ELLPACK SpMV */
   auto avg_bandwidth = 0.0;
   auto avg_timing = 0.0;
   for (int i=0; i<numTrials; ++i)

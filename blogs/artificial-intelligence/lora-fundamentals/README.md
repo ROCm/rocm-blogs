@@ -80,7 +80,7 @@ perform well.
 
 1. Import the packages. There are no specific version requirements for PyTorch or ROCm.
 
-    ``` python
+    ```python
     import torch
     import torchvision.datasets as datasets
     import torchvision.transforms as transforms
@@ -90,14 +90,14 @@ perform well.
 
 2. Sets the seed for generating random numbers to make the model deterministic.
 
-    ``` python
+    ```python
     # Make torch deterministic
     _ = torch.manual_seed(0)
     ```
 
 3. Load the data set.
 
-    ``` python
+    ```python
     transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
 
     # Load the MNIST data set
@@ -116,7 +116,7 @@ perform well.
 4. Create the neural network to classify the digits (we used code that makes it more complicated in
     order to better showcase LoRA).
 
-    ``` python
+    ```python
     # Create an overly expensive neural network to classify MNIST digits
     # Daddy got money, so I don't care about efficiency
     class RichBoyNet(nn.Module):
@@ -140,7 +140,7 @@ perform well.
 5. Train the network for one epoch to simulate a complete general pre-training on the data. This
     process takes seconds on an AMD Instinct GPU.
 
-    ``` python
+    ```python
     def train(train_loader, net, epochs=5, total_iterations_limit=None):
         cross_el = nn.CrossEntropyLoss()
         optimizer = torch.optim.Adam(net.parameters(), lr=0.001)

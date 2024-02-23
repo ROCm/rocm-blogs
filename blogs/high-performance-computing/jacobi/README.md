@@ -85,7 +85,7 @@ The following code shows the Jacobi solver program.
 In the code, `Jacobi_t Jacobi(mesh);` does the Jacobi object setup and
 `Jacobi.Run()` does the Jacobi solver execution.
 
-```c++
+```cpp
 int main(int argc, char ** argv)
 {
   mesh_t mesh;
@@ -104,9 +104,9 @@ int main(int argc, char ** argv)
 
 The Jacobi object consists of two main components:
 
-- Setup Jacobi object
-  - `CreateMesh()`
-  - `InitializeData()`
+* Setup Jacobi object
+  * `CreateMesh()`
+  * `InitializeData()`
 
 The routine `CreateMesh()` creates a two-dimensional Cartesian mesh with uniform
 mesh spacing -- see Figure 1. The routine `InitializeData()` initializes host variables $\bf u$ (`h_U` in the
@@ -124,15 +124,15 @@ Figure 1: A uniform rectangular grid to discretize the computational domain
 
 The main Jacobi solver execution includes the following functions:
 
-- Execute Jacobi method
-  - `Laplacian()`
-  - `BoundaryConditions()`
-  - `Update()`
-  - `Norm()`
+* Run Jacobi method
+  * `Laplacian()`
+  * `BoundaryConditions()`
+  * `Update()`
+  * `Norm()`
 
 The following code shows the order of the function calls in each Jacobi iteration
 
-```c++
+```cpp
   // Scalar factor used in Jacobi method
   const dfloat factor = 1/(2.0/(mesh.dx*mesh.dx) + 2.0/(mesh.dy*mesh.dy));
   const dfloat _1bydx2 = 1.0/(mesh.dx*mesh.dx);
@@ -159,7 +159,7 @@ The following code shows the order of the function calls in each Jacobi iteratio
 The function `Laplacian()` performs the main Laplacian operation discussed
 earlier and is shown below:
 
-```c++
+```cpp
 // AU_i,j = (-U_i+1,j + 2U_i,j - U_i-1,j)/dx^2 +
 //          (-U_i,j+1 + 2U_i,j - U_i,j-1)/dy^2
 void Laplacian(mesh_t& mesh,
@@ -191,7 +191,7 @@ void Laplacian(mesh_t& mesh,
 The `BoundaryConditions()` is a function to apply boundary conditions to
 $A{\bf u}$ term. It applies only to the boundary nodes:
 
-```c++
+```cpp
 void BoundaryConditions(mesh_t& mesh,
                         const dfloat _1bydx2,
                         const dfloat _1bydy2,
@@ -235,7 +235,7 @@ void BoundaryConditions(mesh_t& mesh,
 The essence of Jacobi solver is in the `Update()` function which performs
 the Jacobi iteration:
 
-```c++
+```cpp
 //Jacobi iterative method
 // U = U + D^{-1}*(RHS - AU)
 
@@ -244,11 +244,11 @@ void Update(mesh_t& mesh,
             dfloat* RHS,
             dfloat* AU,
             dfloat* RES,
-            dfloat* U) 
+            dfloat* U)
 {
   const int N = mesh.N;
 
-  for (int id=0;id<N;id++) 
+  for (int id=0;id<N;id++)
   {
     const dfloat r_res = RHS[id] - AU[id];
     RES[id] = r_res;
@@ -260,7 +260,7 @@ void Update(mesh_t& mesh,
 The function `Norm()` is the main function that performs a reduction operation and
 returns a scalar residual used to check for solver convergence:
 
-```c++
+```cpp
 dfloat Norm(mesh_t& mesh, dfloat *U) {
 
   dfloat norm = 0;
@@ -284,7 +284,7 @@ port the four major code regions discussed above. Note that, for the most optimi
 we used a launch bound of 256 (`BLOCK_SIZE`) for all kernels. The following code snippet shows the
 function calls in each Jacobi iteration, which is same as the serial code:
 
-```c++
+```cpp
   // Scalar factor used in Jacobi method
   const dfloat factor = 1/(2.0/(mesh.dx*mesh.dx) + 2.0/(mesh.dy*mesh.dy));
   const dfloat _1bydx2 = 1.0/(mesh.dx*mesh.dx);
@@ -292,7 +292,7 @@ function calls in each Jacobi iteration, which is same as the serial code:
 
   auto timerStart = std::chrono::high_resolution_clock::now();
 
-  while ((iterations < JACOBI_MAX_LOOPS) && (residual > JACOBI_TOLERANCE)) 
+  while ((iterations < JACOBI_MAX_LOOPS) && (residual > JACOBI_TOLERANCE))
   {
     // Compute Laplacian
     Laplacian(mesh, _1bydx2, _1bydy2, HD_U, HD_AU);
@@ -305,7 +305,7 @@ function calls in each Jacobi iteration, which is same as the serial code:
 
     // Compute residual = ||U||
     residual = Norm(mesh, HD_RES);
-    
+
     ++iterations;
   }
 ```
@@ -313,7 +313,7 @@ function calls in each Jacobi iteration, which is same as the serial code:
 Some of the kernel launch configurations are set up in
 `InitializeData()`, as shown in the following code snippet:
 
-```c++
+```cpp
   // ...
   // Kernel launch configurations
   mesh.block.x = BLOCK_SIZE;
@@ -325,7 +325,7 @@ Some of the kernel launch configurations are set up in
 The code for `LaplacianKernel()` and `Laplacian()` routine that launches this
 kernel are shown below:
 
-```c++
+```cpp
 __global__
 __launch_bounds__(BLOCK_SIZE)
 void LaplacianKernel(const int localNx,
@@ -346,7 +346,7 @@ void LaplacianKernel(const int localNx,
     const int tid_d = tid - stride;
     const int tid_u = tid + stride;
 
-    __builtin_nontemporal_store((-U[tid_l] + 2*U[tid] - U[tid_r])*fac_dx2 + 
+    __builtin_nontemporal_store((-U[tid_l] + 2*U[tid] - U[tid_r])*fac_dx2 +
                                 (-U[tid_d] + 2*U[tid] - U[tid_u])*fac_dy2, &(AU[tid]));
 }
 
@@ -354,7 +354,7 @@ void Laplacian(mesh_t& mesh,
                const dfloat _1bydx2,
                const dfloat _1bydy2,
                dfloat* U,
-               dfloat* AU) 
+               dfloat* AU)
 {
   int stride = mesh.Nx;
   int localNx = mesh.Nx-2;
@@ -367,7 +367,7 @@ void Laplacian(mesh_t& mesh,
 The kernel `BoundaryConditionsKernel()`, and its launching function are
 shown below:
 
-```c++
+```cpp
 __global__
 __launch_bounds__(BLOCK_SIZE)
 void BoundaryConditionsKernel(const int Nx,
@@ -376,7 +376,7 @@ void BoundaryConditionsKernel(const int Nx,
                               const dfloat fac_dx2,
                               const dfloat fac_dy2,
                               const dfloat * U,
-                              dfloat * AU) 
+                              dfloat * AU)
 {
     const int id = GET_GLOBAL_ID_0;
 
@@ -386,15 +386,15 @@ void BoundaryConditionsKernel(const int Nx,
     int i = Nx-1;
     int j = id - 2*Nx - Ny + 2;
 
-    if (id < Nx) 
+    if (id < Nx)
     { //bottom
         i = id; j = 0;
     }
-    else if (id<2*Nx) 
+    else if (id<2*Nx)
     { //top
         i = id - Nx; j = Ny-1;
     }
-    else if (id < 2*Nx + Ny-1) 
+    else if (id < 2*Nx + Ny-1)
     { //left
         i = 0; j = id - 2*Nx + 1;
     }
@@ -425,7 +425,7 @@ void BoundaryConditions(mesh_t& mesh,
 
 The following code shows the HIP implementation of `UpdateKernel()`:
 
-```c++
+```cpp
 __global__
 __launch_bounds__(BLOCK_SIZE)
 void UpdateKernel(const int N,
@@ -450,7 +450,7 @@ void Update(mesh_t& mesh,
             dfloat* RHS,
             dfloat* AU,
             dfloat* RES,
-            dfloat* U) 
+            dfloat* U)
 {
   UpdateKernel<<<mesh.grid,mesh.block>>>(mesh.N, factor, RHS, AU, RES, U);
 }
@@ -460,7 +460,7 @@ The following code shows the HIP implementation of `NormKernel()`
 which is loosely based off the HIP dot implementation in
 [BabelStream](https://github.com/UoB-HPC/BabelStream/blob/develop/src/hip/HIPStream.cpp):
 
-```c++
+```cpp
 #define NORM_BLOCK_SIZE 512
 #define NORM_NUM_BLOCKS 256
 __global__
@@ -507,8 +507,8 @@ dfloat Norm(mesh_t& mesh, dfloat *U)
 
 Note that the buffer `mesh.norm_sum` is non-coherent pinned memory, meaning that it
 is mapped into the address space of the GPU. We defer all interested readers to
-[this article](../mi200-memory-space/Overview.md#non-pageable-pinned-memory) for a more thorough
-discussion. The parameters `NORM_BLOCK_SIZE` and `NORM_NUM_BLOCKS` can and should be tuned
+[this article](../../software-tools-optimization/mi200-memory-space/README.md#non-pageable-pinned-memory)
+for a more thorough discussion. The parameters `NORM_BLOCK_SIZE` and `NORM_NUM_BLOCKS` can and should be tuned
 to optimize the performance on your hardware.
 
 The Table summarizes time per iteration spent in the major kernels of the Jacobi
@@ -542,18 +542,18 @@ Let's consider the most expensive code region observed in the HIP ported Jacobi 
 `Update()`. A simple OpenMP target offload approach would be as
 follows:
 
-```c++
+```cpp
 void Update(mesh_t& mesh,
             const dfloat factor,
             dfloat* RHS,
             dfloat* AU,
             dfloat* RES,
-            dfloat* U) 
+            dfloat* U)
 {
   const int N = mesh.N;
   #pragma omp target data map(to:RHS[0:N],AU[0:N]) map(from:RES[0:N]) map(tofrom:U[0:N])
   #pragma omp target teams distribute parallel for
-  for (int id=0;id<N;id++) 
+  for (int id=0;id<N;id++)
   {
     const dfloat r_res = RHS[id] - AU[id];
     RES[id] = r_res;
@@ -565,14 +565,14 @@ void Update(mesh_t& mesh,
 The state variables are mapped onto device region and Jacobi update is
 invoked in the target region. This is an example of structured target mapping
 construct.
-Similar stuctured target mapping is done for Laplacian and Norm routines.
+Similar structured target mapping is done for Laplacian and Norm routines.
 
-```c++
+```cpp
 void Laplacian(mesh_t& mesh,
                const dfloat _1bydx2,
                const dfloat _1bydy2,
                dfloat* U,
-               dfloat* AU) 
+               dfloat* AU)
 {
   int stride = mesh.Nx;
   int localNx = mesh.Nx-2;
@@ -597,7 +597,7 @@ void Laplacian(mesh_t& mesh,
 }
 ```
 
-```c++
+```cpp
 dfloat Norm(mesh_t& mesh, dfloat *U)
 {
   dfloat norm = 0.0;
@@ -635,7 +635,7 @@ device between `target enter data` and `target exit data` map constructs. We
 perform the host to device copy before the Jacobi iterations and release the
 device data after the loops end, as shown below:
 
-```c++
+```cpp
 void Jacobi_t::Run()
 {
   const int N = mesh.N;
@@ -648,7 +648,7 @@ void Jacobi_t::Run()
     BoundaryConditions(mesh, _1bydx2, _1bydy2, HD_U, HD_AU);
     Update(mesh, factor, HD_RHS, HD_AU, HD_RES, HD_U);
     residual = Norm(mesh, HD_RES);
-    
+
     ++iterations;
   }
   ...
@@ -669,8 +669,8 @@ target region any more.
 Here, the state vector $U$ is already mapped onto the device using the
 unstructured data map constructs at the very beginning of the Jacobi solver.
 
-```c++
-dfloat Norm(mesh_t& mesh, dfloat *U) 
+```cpp
+dfloat Norm(mesh_t& mesh, dfloat *U)
 {
   dfloat norm = 0.0;
   const int N = mesh.N;

@@ -69,7 +69,7 @@ $$
 
 The following code example demonstrates how to implement the Laplacian stencil in host code:
 
-```C++
+```cpp
 template <typename T>
 void laplacian_host(T *h_f, const T *h_u, T hx, T hy, T, hz, int nx, int ny,
 int nz) {
@@ -133,7 +133,7 @@ One of the goals of this blog is to show how to efficiently treat this memory ac
 To begin, consider a large cube where `nx = ny = nz = 512`.
 We first allocate memory for both the input array `d_u` and the output array `d_f` using `double` precision:
 
-```c++
+```cpp
 // Parameters
 using precision = double;
 size_t nx = 512, ny = 512, nz = 512; // Cube dimensions
@@ -155,7 +155,7 @@ verifying correctness (not shown for brevity).
 
 The below code snippet presents our initial HIP implementation of the Laplacian:
 
-```c++
+```cpp
 template <typename T>
 __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T invhx2, T invhy2, T invhz2, T invhxyz2) {
 
@@ -171,13 +171,13 @@ __global__ void laplacian_kernel(T * f, const T * u, int nx, int ny, int nz, T i
 
     const int slice = nx * ny;
     size_t pos = i + nx * j + slice * k;
-    
+
     // Compute the result of the stencil operation
     f[pos] = u[pos] * invhxyz2
            + (u[pos - 1]     + u[pos + 1]) * invhx2
            + (u[pos - nx]    + u[pos + nx]) * invhy2
            + (u[pos - slice] + u[pos + slice]) * invhz2;
-} 
+}
 
 template <typename T>
 void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int BLK_Z, T hx, T hy, T hz) {
@@ -190,7 +190,7 @@ void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int
     T invhxyz2 = -2. * (invhx2 + invhy2 + invhz2);
 
     laplacian_kernel<<<grid, block>>>(d_f, d_u, nx, ny, nz, invhx2, invhy2, invhz2, invhxyz2);
-} 
+}
 ```
 
 The `laplacian` host function is responsible for launching the device kernel, `laplacian_kernel`,
@@ -219,7 +219,7 @@ second thread block would have work to do.
 
 The main computation,
 
-```c++
+```cpp
     // Compute the result of the stencil operation
     f[pos] = u[pos] * invhxyz2
            + (u[pos - 1]     + u[pos + 1]) * invhx2
@@ -266,7 +266,7 @@ For performance evaluation, we can use *effective memory bandwidth* as our figur
 Roughly speaking, the effective memory bandwidth is the average rate of data transfer considering the least amount of data that needs
 to move through the entire memory subsystem: from high-latency off-chip HBM to low-latency registers. The effective memory bandwidth is defined as
 
-```c++
+```cpp
 effective_memory_bandwidth = (theoretical_fetch_size + theoretical_write_size) / average_kernel_execution_time;
 
 ```
@@ -275,7 +275,7 @@ To measure the average kernel execution time, we use the function `hipEventElaps
 for full implementation details). The formula for calculating the theoretical fetch and write sizes
 (in bytes) of an `nx * ny * nz` cube are:
 
-```c++
+```cpp
 theoretical_fetch_size = ((nx * ny * nz - 8 - 4 * (nx - 2) - 4 * (ny - 2) - 4 * (nz - 2) ) * sizeof(double);
 theoretical_write_size = ((nx - 2) * (ny - 2) * (nz - 2)) * sizeof(double);
 ```

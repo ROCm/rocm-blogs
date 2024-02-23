@@ -133,7 +133,7 @@ thread block size of 1024 threads. If the thread block size is known at compile 
 practice to set the launch bounds for the kernel. Setting launch bounds takes the following
 arguments:
 
-```c++
+```cpp
 __launch_bounds__(MAX_THREADS_PER_BLOCK,MIN_WAVES_PER_EU)
 ```
 
@@ -147,7 +147,7 @@ the default `MAX_THREADS_PER_BLOCK` value of 1024 needs to be changed because we
 So far, we have been using a thread block size of 256 $\times$ 1 $\times$ 1, so here is how to set
 the launch bounds with `MAX_THREADS_PER_BLOCK = 256` for Kernel 3:
 
-```c++
+```cpp
 template <typename T>
 __launch_bounds__(256)
 __global__ void laplacian_kernel(...) {
@@ -230,7 +230,7 @@ entries in `u`. It should also be noted that these intrinsics are specific to AM
 The AMD clang compiler provides two overloaded builtins allowing generation of non-temporal
 loads and stores:
 
-```c++
+```cpp
 T __builtin_nontemporal_load(T *addr);
 void __builtin_nontemporal_store(T value, T *addr);
 ```
@@ -250,26 +250,26 @@ Kernel 1 (After)
 <tr>
 <td>
 
-```c++
+```cpp
 f[pos] = u[pos] * invhxyz2
-       + (u[pos - 1]     
+       + (u[pos - 1]
        +  u[pos + 1]) * invhx2
-       + (u[pos - nx]    
+       + (u[pos - nx]
        +  u[pos + nx]) * invhy2
-       + (u[pos - slice] 
+       + (u[pos - slice]
        +  u[pos + slice]) * invhz2;
 ```
 
 </td>
 <td>
 
-```c++
+```cpp
 __builtin_nontemporal_store(u[pos] * invhxyz2
-       + (u[pos - 1]     
+       + (u[pos - 1]
        +  u[pos + 1]) * invhx2
-       + (u[pos - nx]    
+       + (u[pos - nx]
        +  u[pos + nx]) * invhy2
-       + (u[pos - slice] 
+       + (u[pos - slice]
        +  u[pos + slice]) * invhz2, &f[pos]);
 ```
 
@@ -314,14 +314,14 @@ Kernel 5 (After)
 <tr>
 <td>
 
-```c++
+```cpp
 f[pos + n*nx] = Lu[n];
 ```
 
 </td>
 <td>
 
-```c++
+```cpp
 __builtin_nontemporal_store(Lu[n],&f[pos + n*nx]);
 ```
 

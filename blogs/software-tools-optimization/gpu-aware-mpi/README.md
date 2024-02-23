@@ -50,7 +50,7 @@ GPU-Aware communication.
 
 The following code shows a simple GPU-Aware point-to-point communication example:
 
-```c++
+```cpp
 #include <stdio.h>
 #include <hip/hip_runtime.h>
 #include <mpi.h>
