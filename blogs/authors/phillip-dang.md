@@ -14,7 +14,3 @@ AI code efficiently on AMD GPUs, providing expertise on end-to-end pipelines and
 Before joining AMD, Phillip contributed to the development of a retrieval-augmented generation
 (RAG)-based conversational AI chatbot at Flexport using large language models (LLMs). Prior to this, he
 worked on Facebook Feed deep learning recommendation systems at Meta.
-
-# Blogs
-
-* [PyTorch Lightning on AMD GPUs](../artificial-intelligence/004-pytorch-lightning/README.md)

@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 1 Feb 2024
+author: Sean Song
+tags: LLM, AI/ML, GenAI, Llama, LoRA, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Fine-tune Llama 2 with LoRA: Customizing a large language
@@ -7,9 +15,6 @@
 </head>
 
 # Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
-
-**Author:** [Sean Song](../../authors/sean-song.md)\
-**First published:** 26 Jan 2024
 
 In this blog, we show you how to fine-tune Llama 2 on an AMD GPU with ROCm. We use Low-Rank
 Adaptation of Large Language Models (LoRA) to overcome memory and computing limitations and
@@ -85,13 +90,13 @@ Our setup:
 
 First, let's confirm the availability of the GPU.
 
-```python
+```bash
 !rocm-smi --showproductname
 ```
 
 Your output should look like this:
 
-```python
+```bash
 ========================= ROCm System Management Interface =========================
 =================================== Product Info ===================================
 GPU[0]      : Card series:      AMD INSTINCT MI250 (MCM) OAM AC MBA
@@ -108,15 +113,15 @@ GPU[1]      : Card SKU:      D65209
 
 Next, install the required libraries.
 
-``` python
-!pip install -q pandas torch peft transformers==4.31.0 trl==0.4.7 accelerate
+```bash
+!pip install -q pandas torch peft transformers==4.31.0 trl==0.4.7 accelerate scipy
 ```
 
 #### Install bitsandbytes
 
 1. Install bitsandbytes using the following code.
 
-    ``` bash
+    ```bash
     %%bash
     git clone --recurse https://github.com/ROCmSoftwarePlatform/bitsandbytes
     cd bitsandbytes
@@ -127,14 +132,14 @@ Next, install the required libraries.
 
 2. Check the bitsandbytes version (0.39.1).
 
-    ``` bash
+    ```bash
     %%bash
     pip list | grep bitsandbytes
     ```
 
 #### Import the required packages
 
-``` python
+```python
 import torch
 from datasets import load_dataset
 from transformers import (
@@ -323,7 +328,7 @@ For a direct comparison between models using the same criteria, we maintain cons
 
 To check the trainable parameters in your base model, use the following code.
 
-``` python
+```python
 def print_trainable_parameters(model):
     """
     Prints the number of trainable parameters in the model.
@@ -478,7 +483,7 @@ Now you can test with the base model (original) and your fine-tuned model.
 
 * Base model:
 
-    ``` python
+    ```python
     # Generate text using base model
     query = "What do you think is the most important part of building an AI chatbot?"
     text_gen = pipeline(task="text-generation", model=base_model_name, tokenizer=llama_tokenizer, max_length=200)

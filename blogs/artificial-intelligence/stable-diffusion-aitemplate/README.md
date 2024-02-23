@@ -1,16 +1,20 @@
+---
+blogpost: true
+date: 24 Jan 2024
+author: Douglas Jia
+tags: AI/ML, GenAI, Images, Stable Diffusion
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Efficient image generation with stable diffusion models and
   AITemplate using AMD GPUs">
-  <meta name="author" content="Douglas Jia">
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, AITemplate,
    Stable Diffusion, inpainting, image-to-image">
 </head>
 
 # Efficient image generation with Stable Diffusion models and AITemplate using AMD GPUs
-
-**Author:** [Douglas Jia](../../authors/douglas-jia.md)\
-**First published:** 09 Feb 2024
 
 Stable Diffusion has emerged as a groundbreaking advancement in the field of image generation,
 empowering users to translate text descriptions into captivating visual output.
@@ -30,6 +34,7 @@ a range of image manipulation tasks, including image-to-image translation and in
 
 * **Image-to-image translation** involves transforming one image into another while preserving
   essential features, such as style, color palette, and structure.
+
 * **Inpainting** focuses on restoring damaged or incomplete images by filling in missing or corrupted
   regions with plausible and consistent details.
 

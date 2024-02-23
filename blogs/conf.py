@@ -56,5 +56,75 @@ html_theme_options = {
     "link_main_doc": False,
 }
 
-extensions = ["rocm_docs"]
+extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx"]
 external_toc_path = "./sphinx/_toc.yml"
+
+templates_path = [ablog.get_html_templates_path()]
+
+html_sidebars = {
+    "**": [
+        "postcard.html",
+        "recentposts.html",
+        "tagcloud.html",        
+        "categories.html",
+        "archives.html",
+        "authors.html",
+    ]
+}
+
+blog_authors = {
+    'Justin Chang': ('Justin Chang', 'http://rocm.blogs.amd.com/authors/justin-chang.html'),
+    'Rene Van Oostrum': ('Rene Van Oostrum',
+               'https://rocm.blogs.amd.com/authors/rene-van-oostrum.html'),
+}
+blog_feed_length = 10
+blog_feed_archives = True
+blog_feed_fulltext = True
+blog_feed_templates = {
+    "atom": {
+        "content": "{{ title }}{% for tag in post.tags %}" " #{{ tag.name|trim()|replace(' ', '') }}" "{% endfor %}",
+    },
+    "social": {
+        "content": "{{ title }}{% for tag in post.tags %}" " #{{ tag.name|trim()|replace(' ', '') }}" "{% endfor %}",
+    },
+}
+
+nitpicky = True
+nitpick_ignore = []
+for line in open("nitpick-exceptions"):
+    if line.strip() == "" or line.startswith("#"):
+        continue
+    dtype, target = line.split(None, 1)
+    target = target.strip()
+    nitpick_ignore.append((dtype, target))
+
+
+def parse_event(env, sig, signode):
+    event_sig_re = re.compile(r"([a-zA-Z-]+)\s*\((.*)\)")
+    m = event_sig_re.match(sig)
+    if not m:
+        signode += addnodes.desc_name(sig, sig)
+        return sig
+    name, args = m.groups()
+    signode += addnodes.desc_name(name, name)
+    plist = addnodes.desc_parameterlist()
+    for arg in args.split(","):
+        arg = arg.strip()
+        plist += addnodes.desc_parameter(arg, arg)
+    signode += plist
+    return name
+
+
+def setup(app):
+    from sphinx.ext.autodoc import cut_lines
+    from sphinx.util.docfields import GroupedField
+
+    app.connect("autodoc-process-docstring", cut_lines(4, what=["module"]))
+    app.add_object_type(
+        "confval",
+        "confval",
+        objname="configuration value",
+        indextemplate="pair: %s; configuration value",
+    )
+    fdesc = GroupedField("parameter", label="Parameters", names=["param"], can_collapse=True)
+    app.add_object_type("event", "event", "pair: %s; event", parse_event, doc_field_types=[fdesc])

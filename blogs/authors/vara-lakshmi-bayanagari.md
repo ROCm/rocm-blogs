@@ -11,8 +11,3 @@ advanced machine learning (ML) models on AMD hardware. She holds a Master's degr
 Science from NYU. Her expertise lies in the application of Computer Vision models in the fields of
 medical imaging and 3D scene reconstruction. Prior to joining AMD, Vara Lakshmi worked on a
 generative AI project in Medical Imaging at Google Summer of Code.
-
-## Blogs
-
-* [Pre-training BERT using Hugging Face & PyTorch on an AMD GPU](../artificial-intelligence/002-bert-hg-pytorch/README.md)
-* [Pre-training BERT using Hugging Face & TensorFlow on an AMD GPU](../artificial-intelligence/001-bert-hg-tf/README.md)

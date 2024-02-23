@@ -8,6 +8,10 @@ subtrees:
 
 - caption: Artificial intelligence
   entries:
+  - file: artificial-intelligence/stable-diffusion-onnx-runtime/README.md
+    title: Stable Diffusion (ONNX Runtime)
+  - file: artificial-intelligence/nerf/README.md
+    title: 3D scene mapping using NeRF
   - file: artificial-intelligence/stable-diffusion-aitemplate/README.md
     title: Stable diffusion (AITemplate)
   - file: artificial-intelligence/llama2-lora/README.md
@@ -28,6 +32,38 @@ subtrees:
     title: Pre-training BERT (PyTorch)
   - file: artificial-intelligence/bert-hg-tf/README.md
     title: Pre-training BERT (TensorFlow)
+
+- caption: High-performance computing
+  entries:
+  - file: high-performance-computing/finite-difference/laplacian-part1/README.md
+    title: Finite difference - Laplacian (1)
+  - file: high-performance-computing/finite-difference/laplacian-part2/README.md
+    title: Finite difference - Laplacian (2)
+  - file: high-performance-computing/finite-difference/laplacian-part3/README.md
+    title: Finite difference - Laplacian (3)
+  - file: high-performance-computing/finite-difference/laplacian-part4/README.md
+    title: Finite difference - Laplacian (4)
+  - file: high-performance-computing/jacobi/README.md
+    title: Jacobi solver
+  - file: high-performance-computing/spmv/part-1/README.md
+    title: Sparse matrix vector multiply (1)
+
+- caption: Software tools & optimization
+  entries:
+  - file: software-tools-optimization/pytorch-tensorflow-env/README.md
+    title: PyTorch & TensorFlow environment
+  - file: software-tools-optimization/gpu-aware-mpi/README.md
+    title: GPU-aware MPI
+  - file: software-tools-optimization/register-pressure/README.md
+    title: Register pressure
+  - file: software-tools-optimization/profilers/README.md
+    title: Introduction to profiling tools
+  - file: software-tools-optimization/mi200-memory-space/README.md
+    title: MI200 memory space
+  - file: software-tools-optimization/rocm-installation/README.md
+    title: ROCm™ installation
+  - file: software-tools-optimization/matrix-cores/README.md
+    title: Matrix cores
 
 - caption: Acknowledgements
   entries:

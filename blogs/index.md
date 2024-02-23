@@ -12,36 +12,20 @@
 ::::{grid} 3
 :margin: 1
 
-:::{grid-item-card} Stable diffusion (AITemplate)
+:::{grid-item-card} Stable Diffusion (ONNX Runtime)
 :padding: 1
-:link: ./artificial-intelligence/stable-diffusion-aitemplate/README
+:link: ./artificial-intelligence/stable-diffusion-onnx-runtime/README
 :link-type: doc
 
-Efficient image generation with Stable Diffusion models and AITemplate using AMD GPUs
+Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
 :::
 
-:::{grid-item-card} Fine-tune Llama 2 with LoRA
+:::{grid-item-card} 3D scene mapping using NeRF
 :padding: 1
-:link: ./artificial-intelligence/llama2-lora/README
+:link: ./artificial-intelligence/nerf/README
 :link-type: doc
 
-Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
-:::
-
-:::{grid-item-card} LLMs and Text Generation Inference
-:padding: 1
-:link: ./artificial-intelligence/hf-tgi/README
-:link-type: doc
-
-Efficient deployment of LLMs with Text Generation Inference
-:::
-
-:::{grid-item-card} LoRA & efficient fine-tuning
-:padding: 1
-:link: ./artificial-intelligence/lora-fundamentals/README
-:link-type: doc
-
-Using LoRA for efficient fine-tuning: fundamental principles
+Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU
 :::
 
 :::{grid-item-card} LLM fine-tuning with JAX
@@ -50,6 +34,14 @@ Using LoRA for efficient fine-tuning: fundamental principles
 :link-type: doc
 
 LLM distributed supervised fine-tuning with JAX
+:::
+
+:::{grid-item-card} Jacobi solver
+:padding: 1
+:link: ./high-performance-computing/jacobi/README
+:link-type: doc
+
+Simplifying deep learning: A guide to PyTorch Lightning
 :::
 
 :::{grid-item-card} Finite difference: Laplacian, part 4
@@ -67,38 +59,8 @@ Performance benchmarking across various AMD GPUs and cache size limitations
 
 :::
 
-:::{grid-item-card} PyTorch Lightning
-:padding: 1
-:link: ./artificial-intelligence/pytorch-lightning/README
-:link-type: doc
-
-PyTorch Lightning on AMD GPUs
-:::
-
-:::{grid-item-card} LLM training with Megatron-DeepSpeed
-:padding: 1
-:link: ./artificial-intelligence/megatron-deepspeed-pretrain/README
-:link-type: doc
-
-Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs
-:::
-
-:::{grid-item-card} Pre-training BERT (PyTorch)
-:padding: 1
-:link: ./artificial-intelligence/bert-hg-pytorch/README
-:link-type: doc
-
-Pre-training BERT using Hugging Face & PyTorch on multiple AMD GPUs
-:::
-
-:::{grid-item-card} Pre-training BERT (TensorFlow)
-:padding: 1
-:link: ./artificial-intelligence/bert-hg-tf/README
-:link-type: doc
-
-Pre-training BERT using Hugging Face & TensorFlow on a single AMD GPU
-:::
-
+::::{grid} 3
+:margin: 1
 ::::
 
 <h2>Software tools & optimizations</h2>

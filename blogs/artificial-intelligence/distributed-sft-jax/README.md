@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 25 Jan 2024
+author: Douglas Jia
+tags: LLM, AI/ML, BERT, GenAI, Tuning, AAC
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="LLM distributed supervised fine-tuning with JAX">
@@ -6,9 +14,6 @@
 </head>
 
 # LLM distributed supervised fine-tuning with JAX
-
-**Author:** [Douglas Jia](../../authors/douglas-jia.md)\
-**First published:** 26 Jan 2024
 
 In this article, we review the process for fine-tuning a Bidirectional Encoder Representations
 from Transformers (BERT)-based large language model (LLM) using JAX for a text classification task. We

@@ -4,10 +4,10 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
-# Rene Van Oostrum
+# René Van Oostrum
 
-René van Oostrum is a Principal Member of Technical Staff (PMTS) Software Developmen
-t Engineer in AMD Research. He obtained a PhD in Computer Science from Utrecht University
-and has a background in design and analysis of algorithms. In the past decade, he focused
-on implementation and performance tuning of GPU codes. He currently works on performance
-analysis tools for HPC workloads on AMD GPUs.
+René  is a Principal Member of Technical Staff (PMTS), Software Development Engineer at AMD
+Research. He obtained a PhD in Computer Science from Utrecht University and has a background in
+algorithm design and analysis. During the past decade, he's focused on GPU code implementation and
+performance tuning. He currently works on performance analysis tools for HPC workloads on AMD
+GPUs.
