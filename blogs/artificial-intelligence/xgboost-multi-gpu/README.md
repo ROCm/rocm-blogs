@@ -1,13 +1,18 @@
+---
+blogpost: true
+date: 26 Jan 2024
+author: Clint Greene
+tags: LLM, AI/ML, Scientific computing, AAC
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Accelerating XGBoost with Dask using multiple AMD GPUs">
-  <meta name="keywords" content="XGBoost, Dask, train models, accelerate XGBoost training">
+  <meta name="keywords" content="XGBoost, Dask, train models,">
 </head>
 
 # Accelerating XGBoost with Dask using multiple AMD GPUs
-
-**Author:** [Clint Greene](../../authors/clint-greene.md)\
-**First published:** 26 Jan 2024
 
 XGBoost is an optimized library for distributed gradient boosting. It has become the leading machine
 learning library for solving regression and classification problems. For a deeper dive into how gradient

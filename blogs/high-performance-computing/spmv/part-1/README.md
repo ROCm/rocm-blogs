@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 3 Nov 2023
+author: Paul Mullowney
+tags: Scientific computing, HPC, Sparse, Memory
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Sparse matrix vector multiplication - Part 1">
@@ -6,16 +14,13 @@
 
 # Sparse matrix vector multiplication - part 1
 
-**Authors:** [Paul Mullowney](../../../authors/paul-mullowney.md) \
-**First published:** 3 Nov 2023
-
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 Sparse matrix vector multiplication (SpMV) is a core computational kernel of nearly
 every implicit [sparse linear algebra solver](https://epubs.siam.org/doi/book/10.1137/1.9780898718003).
 The performance of algorithms ranging from simple Krylov algorithms to multigrid
 methods is dependent, in large part, on the speed of the SpMV implementation. Because
-SpMVs have very low arithmatic intensity, defined as the number of floating point
+SpMVs have very low arithmetic intensity, defined as the number of floating point
 operations per memory access, the speed of the implementation is limited by the memory
 bandwidth. Implementations that maximize the memory bandwidth will achieve superior
 performance compared to simple approaches. Alternatively, implementations that exploit
@@ -357,7 +362,7 @@ void ellpack(int m,
 The decomposition of work across thread blocks is identical to the scalar csr format.
 Moreover, the sparse dot products are also performed in scalar fashion. The key
 distinction between this kernel and the scalar CSR kernel is that the matrix is
-accessed in a coalesced manner. The padding in the data stucture enables us to write
+accessed in a coalesced manner. The padding in the data structure enables us to write
 code without costly conditionals in the sparse dot product implementation.
 
 See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/ellpack.cpp)
@@ -470,7 +475,7 @@ in green in the figures below.
 The performance results are shown in the figure below for a single MI250X GCD[^1].
 In addition to the code samples provided above, we also provide a
 [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/rocsparse_csr.cpp)
-for how to run the Rocsparse CSR kernel from a matrix market file input.
+for how to run the rocSPARSE CSR kernel from a matrix market file input.
 
 For each kernel, we use 256 threads per block. Results were also generated for 128
 and 512 threads per block--these were typically slightly less optimal than 256. In
@@ -484,7 +489,7 @@ is required (ELLPACK and Block ELLPACK), or an analysis of the CSR matrix is nee
 <img src="diagrams/hip_setup_vs_spmv_2023-10-02_256.png" width="500px">
 
 The data shows significant variation across the set of matrices considered here.
-Using Rocsparse with analysis is typically the fastest, however it comes with
+Using RocSPARSE with analysis is typically the fastest, however it comes with
 the most significant setup cost. This algorithm is particularly effective for matrices
 with long tails in the nnz per row distribution. The Block ELLPACK implementation
 is often quite good, especially when the variance in the nnz per row is small.
@@ -515,6 +520,7 @@ for a wide range of matrices. We have also shown the performance costs of conver
 from CSR formats to ELLPACK and the internal Rocsparse format. In general, the
 Rocsparse with Analysis algorithm provides the best performance across the board however
 it comes with a more signficant setup cost than the other formats considered here.
+
 Since SpMV algorithms are typically embedded in larger algorithms, such as AMG,
 it is important to consider the full application profile when choosing the optimal
 format for your particular problem.

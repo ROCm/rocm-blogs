@@ -1,3 +1,12 @@
+---
+blogpost: true
+date: 26 Jan 2023
+author: David Doscher
+tags: HPC
+category: Software tools & optimizations
+
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="ROCm installation">
@@ -5,9 +14,6 @@
 </head>
 
 # AMD ROCm™ installation
-
-**Authors:** [David Doscher](../../authors/david-doscher.md)\
-**First published:** 26 Jan 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.
@@ -33,7 +39,7 @@ to the Release, Support and API documentation for ROCm. Please refer to the
 [Hardware / Software Support Guide](https://rocm.docs.amd.com/en/latest/release/gpu_os_support.html)
 for the software and hardware supported by the V 5.7 release of ROCm. This post
 will be based on an Ubuntu 22.04 operating system and the AMD MI (MI210, MI250,
-etc.) series GPU card. The full installation process is documentated in the
+etc.) series GPU card. The full installation process is documented in the
 [Installation Guide](https://rocm.docs.amd.com/en/latest/deploy/linux/).
 
 AMD ROCm™ is a brand name for the ROCm open software platform supporting

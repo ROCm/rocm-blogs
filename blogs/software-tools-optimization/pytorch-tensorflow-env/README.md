@@ -1,13 +1,18 @@
+---
+blogpost: true
+date: 11 Sep 2023
+author: Yao Fehlis
+tags: PyTorch, AI/ML, TensorFlow
+category: Software tools & optimizations
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Creating a PyTorch TensorFlow environment">
+  <meta name="description" content="Creating a PyTorch TensorFlow environment on AMD GPUs">
   <meta name="keywords" content="AI, PyTorch, TensorFlow, docker, hipify, ROCm">
 </head>
 
-# Creating a PyTorch/TensorFlow Code Environment on AMD GPUs
-
-**Authors:** [Yao Fehlis](../../authors/yao-fehlis.md)\
-**First published:** 11 Sep 2023
+# Creating a PyTorch/TensorFlow code environment on AMD GPUs
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.

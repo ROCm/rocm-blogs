@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 12 Apr 2023
+author: Thomas Gibson, Noah Wolfe, Gina Sitaraman, Suyash Tandon
+tags: Profiling, Memory
+category: Software tools & optimizations
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Profiling tools">
@@ -5,12 +13,6 @@
 </head>
 
 # Introduction to profiling tools for AMD hardware
-
-**Authors:** [Thomas Gibson](../../authors/thomas-gibson.md),
-[Noah Wolfe](../../authors/noah-wolfe.md),
-[Gina Sitaraman](../../authors/gina-sitaraman.md),
-[Suyash Tandon](../../authors/suyash-tandon.md),
-**First published:** 12 Apr 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.

@@ -1,16 +1,20 @@
+---
+blogpost: true
+date: 26 Jan 2024
+author: Vara Lakshmi Bayanagari
+tags: LLM, PyTorch, AI/ML, BERT, GenAI, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Pre-training BERT using Hugging Face & PyTorch on an
   AMD GPU">
-  <meta name="author" content="Vara Lakshmi Bayanagari">
   <meta name="keywords" content="BERT, language representation model, fine-tuning, Masked
   Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300">
 </head>
 
 # Pre-training BERT using Hugging Face & PyTorch on an AMD GPU
-
-**Author:** [Vara Lakshmi Bayanagari](../../authors/vara-lakshmi-bayanagari.md)\
-**First published:** 26 Jan 2024
 
 This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations
 from Transformers (BERT) base model from scratch using Hugging Face libraries with a PyTorch

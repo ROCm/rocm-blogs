@@ -1,15 +1,18 @@
+---
+blogpost: true
+date: 8 Jun 2023
+author: Mahdieh Ghazimirsaeed, Noel Chalmers, Damon McDougall
+tags: MPI, HPC, Scientific computing
+category: Software tools & optimizations
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Register pressure">
+  <meta name="description" content="GPU-aware MPI with ROCm">
   <meta name="keywords" content="HPC, MI250, MPI, cray, mpich, openmpi, rocm">
 </head>
 
 # GPU-aware MPI with ROCm
-
-**Authors:** [Mahdieh Ghazimirsaeed](../../authors/mahdieh-ghazimirsaeed.md),
-[Noel Chalmers](../../authors/noel-chalmers.md),
-[Damon McDougall](../../authors/damon-mcdougall.md)\
-**First published:** 8 Jun 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.

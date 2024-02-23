@@ -1,8 +1,17 @@
+---
+blogpost: true
+date: 24 Jan 2024
+author: Douglas Jia
+tags: AI/ML, GenAI, Images, PyTorch, Stable Diffusion
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs">
+  <meta name="description" content="Efficient image generation with Stable Diffusion models and
+    ONNX Runtime using AMD GPUs">
   <meta name="keywords" content="Stable Diffusion, ONNX, image-to-image, text-to-image,
-  inpainting, AMD, GPU, MI300, MI250">
+    inpainting, AMD, GPU, MI300, MI250">
 </head>
 
 # Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
@@ -22,8 +31,10 @@ empowering users to seamlessly translate text descriptions into captivating visu
 Stable Diffusion uses diffusion modeling to gradually introduce noise into an image until the image
 becomes unrecognizable in the forward pass. Then, guided by text prompts, the model meticulously
 reverses this process, gradually refining the noisy image back into a coherent and meaningful
-representation that aligns with the textual input. This innovative technique allows Stable Diffusion to generate images with remarkable fidelity and faithfulness to the provided text descriptions. By carefully
-controlling the diffusion process and incorporating textual guidance, the model effectively captures the essence of the text, translating abstract concepts into vivid visual representations.
+representation that aligns with the textual input. This innovative technique allows Stable Diffusion to
+generate images with remarkable fidelity and faithfulness to the provided text descriptions. By carefully
+controlling the diffusion process and incorporating textual guidance, the model effectively captures the
+essence of the text, translating abstract concepts into vivid visual representations.
 
 The versatility of Stable Diffusion extends beyond text-to-image generation, and include a range of
 image manipulation tasks, such as image-to-image translation and inpainting.

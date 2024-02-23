@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 15 Sep 2023
+author: Asitav Mishra, Rajat Arora, Justin Chang
+tags: Scientific computing, HPC
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Finite difference method - Laplacian Part 1">
@@ -5,11 +13,6 @@
 </head>
 
 # Jacobi Solver with HIP and OpenMP offloading
-
-**Authors:** [Asitav Mishra](../../authors/asitav-mishra.md),
-[Rajat Arora](../../authors/rajat-arora.md),
-[Justin Chang](../../authors/justin-chang.md)\
-**First published:** 15 Sep 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
@@ -49,7 +52,7 @@ $$
 \frac{-u_{i,  j-1} + 2u_{i,j} - u_{i,  j+1}}{\Delta y^2} = f_{i,j}
 $$
 
-[^1]: See the [Finite Difference](../finite-difference/laplacian-part1/README.md) blogpost.
+[^1]: See the [Finite Difference](../finite-difference/laplacian-part1/README.md) blog post.
 
 The above finite difference Laplacian operator leads to a sparse matrix
 operator, $A$ on the vector of unknown $\bf u$: $A {\bf u} = f$. Here:
@@ -104,9 +107,9 @@ int main(int argc, char ** argv)
 
 The Jacobi object consists of two main components:
 
-* Setup Jacobi object
-  * `CreateMesh()`
-  * `InitializeData()`
+- Setup Jacobi object
+  - `CreateMesh()`
+  - `InitializeData()`
 
 The routine `CreateMesh()` creates a two-dimensional Cartesian mesh with uniform
 mesh spacing -- see Figure 1. The routine `InitializeData()` initializes host variables $\bf u$ (`h_U` in the
@@ -124,11 +127,11 @@ Figure 1: A uniform rectangular grid to discretize the computational domain
 
 The main Jacobi solver execution includes the following functions:
 
-* Run Jacobi method
-  * `Laplacian()`
-  * `BoundaryConditions()`
-  * `Update()`
-  * `Norm()`
+- Run Jacobi method
+  - `Laplacian()`
+  - `BoundaryConditions()`
+  - `Update()`
+  - `Norm()`
 
 The following code shows the order of the function calls in each Jacobi iteration
 

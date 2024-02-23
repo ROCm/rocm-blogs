@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 14 Nov 2022
+author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel Chalmers, Ossian O'Reilly
+tags: Scientific computing, Memory, HPC, GEMM
+category: Software tools & optimizations
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Matrix cores">
@@ -6,18 +14,10 @@
 
 # AMD matrix cores
 
-**Authors:** [Gina Sitaraman](../../authors/gina-sitaraman.md),
-[Damon McDougall](../../authors/damon-mcdougall.md),
-[Rene Van Oostrum](../../authors/rene-van-oostrum.md),
-[Nicholas Malaya](../../authors/nicholas-malaya.md),
-[Noel Chalmers](../../authors/noel-chalmers.md),
-[Ossian O'Reilly](../../authors/ossian-oreilly.md)\
-**First published:** 14 Nov 2022
-
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.
 
-Matrix multiplication is a fundamental aspect of Linear Algebra and it is an
+Matrix multiplication is a fundamental aspect of linear algebra and it is an
 ubiquitous computation within High Performance Computing (HPC) Applications.
 Since the introduction of AMD's CDNA Architecture, Generalized Matrix Multiplication
 (GEMM) computations are now hardware-accelerated through Matrix Core Processing
@@ -345,10 +345,10 @@ We welcome [issues](https://github.com/RadeonOpenCompute/amd_matrix_instruction_
 
 ## Additional resources
 
-* [AMD Instinct MI200 Instruction Set Architecture Reference Guide](https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf)
-* [AMD CDNA Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna-whitepaper.pdf)
-* [AMD CDNA™ 2 Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna2-white-paper.pdf)
-* [AMD Matrix Instruction Calculator Tool](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator)
+- [AMD Instinct MI200 Instruction Set Architecture Reference Guide](https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf)
+- [AMD CDNA Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna-whitepaper.pdf)
+- [AMD CDNA™ 2 Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna2-white-paper.pdf)
+- [AMD Matrix Instruction Calculator Tool](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator)
 
 We would like to thank Joseph Greathouse for his helpful reviews and suggestions.
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)

@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 18 Jul 2023
+author: Justin Chang, Thomas Gibson, Sean Miller
+tags: Scientific computing, HPC, Memory
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Finite difference method - Laplacian Part 4">
@@ -6,11 +14,6 @@
 </head>
 
 # Finite difference method - Laplacian part 4
-
-**Authors:** [Justin Chang](../../../authors/justin-chang.md),
-[Thomas Gibson](../../../authors/thomas-gibson.md),
-[Sean Miller](../../../authors/sean-miller.md),
-**First published:** 18 Jul 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 

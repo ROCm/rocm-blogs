@@ -1,16 +1,18 @@
+---
+blogpost: true
+date: 9 Mar 2023
+author: Sean Miller, Rajat Arora, Gina Sitaraman, Maria Ruiz Varela
+tags: Memory
+category: Software tools & optimizations
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Matrix cores">
+  <meta name="description" content="AMD Instinct MI200 GPU memory space overview">
   <meta name="keywords" content="HPC, MI250, HMM, memory, unified, HBM, hardware">
 </head>
 
 # AMD Instinct™ MI200 GPU memory space overview
-
-**Authors:** [Sean Miller](../../authors/sean-miller.md),
-[Rajat Arora](../../authors/rajat-arora.md),
-[Gina Sitaraman](../../authors/gina-sitaraman.md),
-[Maria Ruiz Varela](../../authors/maria-ruiz-varela.md)\
-**First published:** 9 Mar 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.
@@ -99,12 +101,12 @@ the on-device bandwidth (>40x on MI200).
 Pinned host memory can be allocated with one of two types of coherence support:
 
 1. `hipHostMallocCoherent`
-   * Coherent pinned memory (aka zero-copy access memory) means that the host memory is not cached locally on the GPU, which implies fine-grained coherence.
-   * Fine-grained coherence means the CPU can access up-to-date data in an allocation *while* a kernel is using the data on the GPU.
+   - Coherent pinned memory (aka zero-copy access memory) means that the host memory is not cached locally on the GPU, which implies fine-grained coherence.
+   - Fine-grained coherence means the CPU can access up-to-date data in an allocation *while* a kernel is using the data on the GPU.
 
 2. `hipHostMallocNonCoherent`
-   * Non-coherent pinned memory means the GPU is free to locally store host data in MI200's L2 cache while it is in use.
-   * The host may not see an up-to-date allocation while a kernel is running on device, and must wait until after the kernel completes or the cache is flushed (e.g. via a device or stream synchronize call).
+   - Non-coherent pinned memory means the GPU is free to locally store host data in MI200's L2 cache while it is in use.
+   - The host may not see an up-to-date allocation while a kernel is running on device, and must wait until after the kernel completes or the cache is flushed (e.g. via a device or stream synchronize call).
 
 Pinned memory allocations are coherent memory by default (`hipHostMallocDefault`).
 Within HIP there are additional pinned memory flags (e.g. `hipHostMallocMapped` and

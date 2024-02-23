@@ -1,16 +1,20 @@
+---
+blogpost: true
+date: 24 Jan 2024
+author: Douglas Jia
+tags: LLM, AI/ML, GenAI
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Efficient deployment of large language models with Hugging
   Face text generation inference empowered by AMD GPUs">
-  <meta name="author" content="Douglas Jia">
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, Hugging Face, LLM,
   language model, TGI, Text Generation Inference">
 </head>
 
 # Efficient deployment of large language models with Text Generation Inference on AMD GPUs
-
-**Author:** [Douglas Jia](../../authors/douglas-jia.md)\
-**First published:** 26 Jan 2024
 
 [Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference/index) is a
 toolkit for deploying and serving Large Language Models (LLMs) with unparalleled efficiency. TGI is

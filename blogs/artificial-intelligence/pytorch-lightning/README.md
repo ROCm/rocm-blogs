@@ -1,14 +1,18 @@
+---
+blogpost: true
+date: 8 Feb 2024
+author: Phillip Dang
+tags: PyTorch, AI/ML, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Simplifying Deep Learning: A Guide to PyTorch Lightning">
-  <meta name="author" content="Phillip Dang">
+  <meta name="description" content="Simplifying deep learning: A guide to PyTorch Lightning">
   <meta name="keywords" content="PyTorch, PyTorch Lightning, train models">
 </head>
 
-# Simplifying Deep Learning: A Guide to PyTorch Lightning
-
-**Author:** [Phillip Dang](../../authors/phillip-dang.md)\
-**First published:** 26 Jan 2024
+# Simplifying deep learning: A guide to PyTorch Lightning
 
 PyTorch Lightning is a higher-level wrapper built on top of PyTorch. Its purpose is to simplify and
 abstract the process of training PyTorch models. It provides a structured and organized approach to

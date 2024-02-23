@@ -1,7 +1,19 @@
-# Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU
+---
+blogpost: true
+date: 7 Feb 2024
+author: Vara Lakshmi Bayanagari
+tags: PyTorch, AI/ML, GenAI, Images, NeRF
+category: Applications & models
+language: English
+---
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Two-dimensional images to three-dimensional scene mapping
+  using NeRF on an AMD GPU">
+  <meta name="keywords" content="AI/ML, GenAI, images, NeRF, PyTorch">
+</head>
 
-**Author:** [Vara Lakshmi Bayanagari](../../authors/vara-lakshmi-bayanagari.md)\
-**First published:** 7 Feb 2024
+# Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU
 
 This tutorial aims to explain the fundamentals of NeRF and its implementation in PyTorch. The code
 used in this tutorial is inspired by

@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 1 Feb 2024
+author: Sean Song
+tags: LLM, AI/ML, GenAI, Llama, LoRA, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Fine-tune Llama 2 with LoRA: Customizing a large language
@@ -7,9 +15,6 @@
 </head>
 
 # Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
-
-**Author:** [Sean Song](../../authors/sean-song.md)\
-**First published:** 26 Jan 2024
 
 In this blog, we show you how to fine-tune Llama 2 on an AMD GPU with ROCm. We use Low-Rank
 Adaptation of Large Language Models (LoRA) to overcome memory and computing limitations and

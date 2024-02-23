@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 11 May 2023
+author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
+tags: Scientific computing, HPC, Memory
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Finite difference method - Laplacian Part 3">
@@ -5,13 +13,6 @@
 </head>
 
 # Finite difference method - Laplacian part 3
-
-**Authors:** [Justin Chang](../../../authors/justin-chang.md),
-[Rajat Arora](../../../authors/rajat-arora.md),
-[Thomas Gibson](../../../authors/thomas-gibson.md),
-[Sean Miller](../../../authors/sean-miller.md),
-[Ossian O'reilly](../../../authors/ossian-oreilly.md)\
-**First published:** 11 May 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 

@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 17 May 2023
+author: Alessandro Fanfarillo, Nicholas Curtis
+tags: HPC, Memory
+category: Software tools & optimizations
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Register pressure">
@@ -5,10 +13,6 @@
 </head>
 
 # Register pressure in AMD CDNA™2 GPUs
-
-**Authors:** [Alessandro Fanfarillo](../../authors/alessandro-fanfarillo.md),
-[Nicholas Curtis](../../authors/nicholas-curtis.md)\
-**First published:** 17 May 2023
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
 > blog series.

@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 5 Feb 2024
+author: Sean Song
+tags: LLM, AI/ML, GenAI, LoRA, Tuning, PyTorch
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Using LoRA for efficient fine-tuning: Fundamental principles">
@@ -6,9 +14,6 @@
 </head>
 
 # Using LoRA for efficient fine-tuning: Fundamental principles
-
-**Author:** [Sean Song](../../authors/sean-song.md)\
-**First published:** 26 Jan 2024
 
 [Low-Rank Adaptation of Large Language Models (LoRA)](https://arxiv.org/abs/2106.09685) is used to
 address the challenges of fine-tuning large language models (LLMs). Models like GPT and Llama, which
