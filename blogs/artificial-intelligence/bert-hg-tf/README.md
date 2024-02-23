@@ -1,21 +1,27 @@
+---
+blogpost: true
+date: 29 Jan 2024
+author: Vara Lakshmi Bayanagari
+tags: LLM, PyTorch, AI/ML, BERT, GenAI, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Pre-training BERT using Hugging Face & TensorFlow on an
+  <meta name="description" content="Pre-training BERT using Hugging Face & PyTorch on an
   AMD GPU">
-  <meta name="author" content="Vara Lakshmi Bayanagari">
-  <meta name="keywords" content="BERT, language representation model, fine-tuning, General
-  Language Understanding Evaluation, GLUE, Generative AI, AMD GPU">
+  <meta name="keywords" content="BERT, language representation model, fine-tuning, Masked
+  Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300">
 </head>
 
 # Pre-training BERT using Hugging Face & TensorFlow on an AMD GPU
 
-**Author:** [Vara Lakshmi Bayanagari](../../authors/vara-lakshmi-bayanagari.md)\
-**First published:** 26 Jan 2024
-
-This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations from Transformers (BERT) base model from scratch using Hugging Face libraries with a Tensorflow backend for English corpus text (WikiText-103-raw-v1).
+This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations
+from Transformers (BERT) base model from scratch using Hugging Face libraries with a TensorFlow
+backend for English corpus text (WikiText-103-raw-v1).
 
 You can find files related to this blog post in the
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-tf).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/bert-hg-tf).
 
 ## Introduction to BERT
 
@@ -34,7 +40,7 @@ example, MLM preprocessing is applied as follows: the `dog` token is left unchan
 is to predict these random tokens using `CategoricalCrossEntropy` loss, so that the model learns the
 grammar, patterns, and structure of the language.
 
-``` bash
+```bash
 Input sentence: My dog is a Golden Retriever and his is 5 years old
 
 After MLM: My dog is a [MASK] Retriever paper his is 5 [MASK] old
@@ -50,7 +56,7 @@ Instead of feeding the model a stream of tokens, this task inputs tokens from a 
 pair of sentences formed are random (label=0) or if `B` is next to `A` (label=1). The NSP pre-training is
 therefore a binary classification task.
 
-``` python
+```python
 _IsNext_ Pair: [1] My dog is a Golden Retriever. He is five years old.
 
 Not _IsNext_ Pair: [0] My dog is a Golden Retriever. The next chapter in the book is a biography.
@@ -95,7 +101,7 @@ steps involved in this:
 
 I performed the preceding preprocessing steps for the `WikiText-103-raw-v1` corpus, with 2,500 M
 words, then uploaded the resulting validation data set into
-[this repository](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-tf/data).
+[this repository](./data/wikiTokenizedValid.hf.zip).
 The preprocessed train split is uploaded [here](https://huggingface.co/lakshmi97/bert-preprocessed-tokens) on Hugging Face Hub.
 
 Next, import the `DataCollatorForLanguageModeling` collator to run MLM preprocessing and obtain
@@ -103,7 +109,7 @@ mask and sentence classification labels. For demonstration purposes, I used the 
 `Wikitext-103-raw-v1` that has 4,000+ sentences. Convert the resulting data set to a TensorFlow
 `tf.data.Dataset` object using the `_to_tf_dataset_` function.
 
-``` python
+```python
 tokenized_dataset_valid = datasets.load_from_disk('./wikiTokenizedValid.hf')
 tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
 
@@ -132,7 +138,7 @@ checkpoint to fine-tune a different data set and test on various NLP tasks.
 
 The entire code is:
 
-``` python
+```python
 import datasets
 from transformers import DataCollatorForLanguageModeling, AutoTokenizer, BertConfig
 import random
@@ -193,7 +199,7 @@ print(e)
 Take an example text, convert it to input tokens using the tokenizer, and produce a masked input from
 the collator.
 
-``` python
+```python
 tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
 
 collater = DataCollatorForLanguageModeling(
@@ -209,7 +215,7 @@ inp = collater([tokens])
 Initialize the model with no pre-trained weights and perform inference. You can see that the model
 produces random tokens with no contextual meaning.
 
-``` python
+```python
 config = BertConfig.from_pretrained('bert-base-cased')
 model = TFBertForPreTraining(config)
 
@@ -218,7 +224,7 @@ print('Input: ', tokenizer.decode(inp['input_ids'][0]), '\n')
 print('Output: ', tokenizer.decode(tf.argmax(out[0],-1)[0]))
 ```
 
-``` bash
+```bash
 Input:  The author takes his own [MASK] when it comes to writing : he seeks to ground his claims in clear, [MASK] examples [MASK] [MASK] shows [MASK] [MASK] of [MASK] writing to help readers better reptiles exactly what he ’ s critiquing
 
 Output:  ہ owing difference Ana editorσFI akin logistics Universal dickpine boxer nationalist television Party survivebach revolvespineḤ Sense beard Clive motto akin‘ abortion constituency Administrator Sense Universal Engineers molecular laughing wanna swim TanakaḤ noisesCs Administrator Gilesae Administrator
@@ -226,14 +232,14 @@ Output:  ہ owing difference Ana editorσFI akin logistics Universal dickpine bo
 
 Load the pre-trained weights using TensorFlow's `load_weights` function.
 
-``` python
+```python
 model.load_weights('path/to/ckpt/folder/variables/variables')
 ```
 
 Perform the inference again on the same text; note the dramatic change in understanding for the input
 text and predicting `[MASK]` tokens.
 
-``` python
+```python
 out = model.predict(inp)
 print('Input: ', tokenizer.decode(inp['input_ids'][0]), '\n')
 print('Output: ', tokenizer.decode(tf.argmax(out[0],-1)[0]))
@@ -243,7 +249,7 @@ The input and output are shown in the following example. The model was trained o
 set (3,000+ sentences); the performance can be improved by training on a bigger data set using a
 higher number of steps or epochs.
 
-``` bash
+```bash
 Input:  The author takes his own [MASK] when it comes to writing : he seeks to ground his claims in clear, [MASK] examples [MASK] [MASK] shows [MASK] [MASK] of [MASK] writing to help readers better reptiles exactly what he ’ s critiquing
 
 Output:  The author takes his own, when it comes to writing : he continued to ground his claims in clear, as examples of. shows. University of the writing to help and better. on what he's crit " give

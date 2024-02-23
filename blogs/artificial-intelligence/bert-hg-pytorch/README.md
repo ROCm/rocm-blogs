@@ -1,23 +1,27 @@
+---
+blogpost: true
+date: 26 Jan 2024
+author: Vara Lakshmi Bayanagari
+tags: LLM, PyTorch, AI/ML, BERT, GenAI, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Pre-training BERT using Hugging Face & PyTorch on an
   AMD GPU">
-  <meta name="author" content="Vara Lakshmi Bayanagari">
   <meta name="keywords" content="BERT, language representation model, fine-tuning, Masked
   Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300">
 </head>
 
 # Pre-training BERT using Hugging Face & PyTorch on an AMD GPU
 
-**Author:** [Vara Lakshmi Bayanagari](../../authors/vara-lakshmi-bayanagari.md)\
-**First published:** 26 Jan 2024
-
 This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations
 from Transformers (BERT) base model from scratch using Hugging Face libraries with a PyTorch
 backend for English corpus text (WikiText-103-raw-v1).
 
 You can find files related to this blog post in the
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-pytorch).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/bert-hg-pytorch).
 
 ## Introduction to BERT
 
@@ -43,7 +47,7 @@ the `Golden` and `years` tokens are masked, and the `and` token is replaced with
 `paper`. The pre-training objective is to predict these random tokens using `CategoricalCrossEntropy`
 loss, so that the model learns the grammar, patterns, and structure of the language.
 
-``` bash
+```bash
 Input sentence: My dog is a Golden Retriever and his is 5 years old
 
 After MLM: My dog is a [MASK] Retriever paper his is 5 [MASK] old
@@ -59,7 +63,7 @@ Instead of feeding the model a stream of tokens, this task inputs tokens from a 
 pair of sentences formed are random (label=0) or if `B` is next to `A` (label=1). The NSP pre-training is
 therefore a binary classification task.
 
-``` python
+```python
 _IsNext_ Pair: [1] My dog is a Golden Retriever. He is five years old.
 
 Not _IsNext_ Pair: [0] My dog is a Golden Retriever. The next chapter in the book is a biography.
@@ -130,7 +134,7 @@ mask and sentence classification labels. When using the Trainer class we only ne
 data loader from the data set and the collater functions. For demonstration purposes, we experimented
 using the validation split of `Wikitext-103-raw-v1` that has 3,000+ sentence pairs.
 
-``` python
+```python
 tokenizer = AutoTokenizer.from_pretrained('bert-base-cased')
 collater = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=True, mlm_probability=0.15)
 # tokenized_dataset = datasets.load_from_disk(args.dataset_file)
@@ -150,7 +154,7 @@ You're now ready to train the model using `t.train()`. You can also resume train
 checkpoint available in the `output_dir` folder and resumes training until it reaches a total of
 `num_train_epochs`.
 
-``` python
+```python
 train_args = TrainingArguments(output_dir=args.output_dir, overwrite_output_dir =True, per_device_train_batch_size =args.BATCH_SIZE, logging_first_step=True,
                                    logging_strategy='epoch', evaluation_strategy = 'epoch', save_strategy ='epoch', num_train_epochs=args.EPOCHS,save_total_limit=50)
 t = Trainer(model, args = train_args, data_collator=collater, train_dataset = tokenized_dataset, optimizers=(optimizer, None), eval_dataset = tokenized_dataset_valid)
@@ -167,7 +171,7 @@ fine-tune a different data set and test on various NLP tasks.
 
 The entire code is:
 
-``` python
+```python
 set_seed(42)
 parser = argparse.ArgumentParser()
 parser.add_argument('--BATCH_SIZE', type=int, default = 8) # 32 is the global batch size, since I use 8 GPUs
@@ -206,7 +210,7 @@ t.train()#resume_from_checkpoint=True)
 Take an example text, convert it to input tokens using the tokenizer, and produce a masked input from
 the collator.
 
-``` python
+```python
 collater = DataCollatorForLanguageModeling(
     tokenizer=tokenizer, mlm=True, mlm_probability=0.15, pad_to_multiple_of=128)
 text="The author takes his own advice when it comes to writing: he seeks to ground his claims in clear, concrete examples. He shows specific examples of bad writing to help readers better grasp exactly what he’s critiquing"
@@ -218,7 +222,7 @@ inp['attention_mask'] = torch.where(inp['input_ids']==0,0,1)
 Initialize the model with pre-trained weights and perform inference. You can see that the model
 produces random tokens with no contextual meaning.
 
-``` python
+```python
 config = BertConfig.from_pretrained('bert-base-cased')
 model = BertForPreTraining.from_pretrained('./acc_valid/checkpoint-19600/')
 model.eval()
@@ -232,13 +236,13 @@ The input and output are shown in the following example. The model was trained o
 set (3,000+ sentences); you can improve the performance by training on a larger data set, such as a
 train split of `wikiText-103-raw-v1`.
 
-``` bash
+```bash
 The author takes his own advice when it comes to writing : he [MASK] to ground his claims in clear, concrete examples. He shows specific examples of bad
 The Churchill takes his own, when it comes to writing : he continued to ground his claims in clear, this examples. He shows is examples of bad
 ```
 
 The source code is stored in this
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/blogs/artificial-intelligence/bert-hg-pytorch/src).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/bert-hg-pytorch/src).
 
 ## Conclusion
 

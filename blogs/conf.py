@@ -4,19 +4,24 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+import ablog
 import shutil
 import jinja2
 import os
 
 from rocm_docs import ROCmDocs
+from sphinx import addnodes
+
+import ablog
+
+ablog_builder = "dirhtml"
+ablog_website = "_website"
 
 # Environement to process Jinja templates.
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 
 # Jinja templates to render out.
-templates = [
-
-]
+templates = []
 
 latex_engine = "xelatex"
 latex_elements = {
@@ -36,11 +41,13 @@ setting_all_article_info = False
 all_article_info_os = ["linux", "windows"]
 all_article_info_author = ""
 
-exclude_patterns = ['temp']
+exclude_patterns = ["temp"]
 
 external_toc_path = "./sphinx/_toc.yml"
 
 external_projects_current_project = "rocm"
+blog_title = "AMD ROCm Blogs"
+blog_baseurl = "https://rocm.blogs.amd.com/"
 
 html_title = "ROCm Blogs"
 html_theme = "rocm_docs_theme"

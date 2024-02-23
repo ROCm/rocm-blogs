@@ -1,20 +1,24 @@
+---
+blogpost: true
+date: 8 Feb 2024
+author: Phillip Dang
+tags: PyTorch, AI/ML, Tuning
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="PyTorch Lightning on AMD GPUs">
-  <meta name="author" content="Phillip Dang">
+  <meta name="description" content="Simplifying deep learning: A guide to PyTorch Lightning">
   <meta name="keywords" content="PyTorch, PyTorch Lightning, train models">
 </head>
 
-# PyTorch Lightning on AMD GPUs
-
-**Author:** [Phillip Dang](../../authors/phillip-dang.md)\
-**First published:** 26 Jan 2024
+# Simplifying deep learning: A guide to PyTorch Lightning
 
 PyTorch Lightning is a higher-level wrapper built on top of PyTorch. Its purpose is to simplify and
 abstract the process of training PyTorch models. It provides a structured and organized approach to
-machine learning tasks by abstracting away the repetitive boilerplate code, allowing you to focus more
-on model development and experimentation. PyTorch Lightning works out-of-the-box with AMD GPUs
-and ROCm.
+machine learning (ML) tasks by abstracting away the repetitive boilerplate code, allowing you to focus
+more on model development and experimentation. PyTorch Lightning works out-of-the-box with AMD
+GPUs and ROCm.
 
 For more information on PyTorch Lightning, refer to
 [this article](https://lightning.ai/docs/pytorch/stable/tutorials.html).
@@ -35,7 +39,7 @@ To follow along with this blog, you must have the following software:
 
 Next, make sure your system recognizes both AMD GPUs:
 
-``` cpp
+```cpp
 ! rocm-smi --showproductname
 ================= ROCm System Management Interface ================
 ========================= Product Info ============================
@@ -53,19 +57,19 @@ GPU[1] : Card SKU: D67301
 
 Make sure PyTorch also recognizes these GPUs:
 
-``` python
+```python
 import torch
 print(f"number of GPUs: {torch.cuda.device_count()}")
 print([torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())])
 ```
 
-``` cpp
+```bash
 number of GPUs: 2
 ['AMD Radeon Graphics', 'AMD Radeon Graphics']
 ```
 
 Once you've confirmed that your system recognizes your devices, you're ready to go through a typical
-machine learning (ML) workflow on PyTorch. This includes loading and processing the data, setting up
+ML workflow on PyTorch. This includes loading and processing the data, setting up
 a training loop, a validation loop, and optimizers. Afterwards, you can see how PyTorch Lightning does
 all this for you by providing a framework that can wrap all such modules in a scalable, easy-to-use way.
 
@@ -73,13 +77,13 @@ all this for you by providing a framework that can wrap all such modules in a sc
 
 Before you begin, make sure you have all the necessary libraries installed:
 
-``` python
+```python
 pip install lightning transformers datasets torchmetrics
 ```
 
 Next import the modules you'll be working with for this blog:
 
-``` python
+```python
 import collections
 import torch
 import torch.nn as nn
@@ -95,7 +99,7 @@ from sklearn.metrics import accuracy_score, classification_report
 Our data set for this blog is the IMDb movie reviews, and our task is to classify whether a review is
 positive (1) or negative (0). Load the data set and look at a few examples:
 
-``` python
+```python
 # Load IMDb data set
 
 imdb = load_dataset("imdb")
@@ -112,7 +116,7 @@ counts = collections.Counter(imdb['train']['label'])
 print(counts)
 ```
 
-``` python
+```python
 DatasetDict({
     train: Dataset({
         features: ['text', 'label'],
@@ -154,7 +158,7 @@ As typical in a PyTorch workflow, we define a custom
 movie reviews and their sentiments for our model. Specifically, it tokenizes the text, handles the
 different sequence lengths, and returns the input IDs and labels our model will learn from.
 
-``` python
+```python
 class SentimentDataset(Dataset):
     def __init__(self, data, tokenizer, max_length):
         self.texts = data['text']
@@ -176,7 +180,7 @@ With the custom data class defined, split the data into training and validation 
 DataLoader wrapper. We typically use PyTorch DataLoader to support efficient data handling/batching,
 parallelization, shuffling, and sampling.
 
-``` python
+```python
 # Split data into 2 sets
 
 train_data = imdb['train']
@@ -206,7 +210,7 @@ Our model consists of:
 * A fully connected linear layer to help fine-tune the model on the classification task by reducing the
   output dimensionality from the embedding dimensions to 1.
 
-``` python
+```python
 class SentimentClassifier(nn.Module):
     def __init__(self, pretrained_model_name='bert-base-uncased', freeze_bert=True):
         super(SentimentClassifier, self).__init__()
@@ -230,7 +234,7 @@ class SentimentClassifier(nn.Module):
 Set the computation device to the AMD GPU, initialize the model, set create an optimizer, and set up a
 criterion for the loss function.
 
-``` python
+```python
 # Set device
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -251,7 +255,7 @@ criterion = nn.BCEWithLogitsLoss()
 
 This is our typical training and validation loop without using Lightning:
 
-``` python
+```python
 # Training loop
 
 model.to(device)
@@ -287,7 +291,7 @@ accuracy = accuracy_score(actual_labels, predictions)
 print(f"Epoch [{epoch + 1}/{num_epochs}], Train Loss: {loss.item():.4f}, Val Accuracy: {accuracy:.4f}")
 ```
 
-``` python
+```python
 Epoch [1/10], Train Loss: 0.3400, Val Accuracy: 0.3130
 
 ```
@@ -308,7 +312,7 @@ There are two main components required to train a model with PyTorch Lightning:
 
 Import the Lightning library to see these two components in action:
 
-``` python
+```python
 import lightning as L
 ```
 
@@ -331,7 +335,7 @@ The methods of a `LightningDataModule` typically include:
 
 5. `val_dataloader`: Defines how your validation data set should be loaded, batched, and shuffled.
 
-``` python
+```python
 class SentimentDataModule(L.LightningDataModule):
     def __init__(self, batch_size=32, max_length=128):
         super().__init__()
@@ -379,7 +383,7 @@ include:
 5. `validation_step`: Similar to `training_step()`, this method defines the computation for a validation
    iteration.
 
-``` python
+```python
 class SentimentClassifier(L.LightningModule):
     def __init__(self, vocab_size, embedding_dim, learning_rate=0.001) -> None:
         super().__init__()
@@ -420,7 +424,7 @@ class SentimentClassifier(L.LightningModule):
 Once you've defined the data and model components, you can train the model using the following
 code:
 
-``` python
+```python
 model = SentimentClassifier()
 dm = SentimentDataModule()
 
@@ -428,7 +432,7 @@ trainer = L.Trainer(max_epochs=num_epochs, accelerator='gpu')
 trainer.fit(model, dm)
 ```
 
-``` python
+```python
 GPU available: True (cuda), used: True
 TPU available: False, using: 0 TPU cores
 IPU available: False, using: 0 IPUs
@@ -451,7 +455,7 @@ LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
 
 Here is our complete code that you can run in a notebook or as a script in the terminal:
 
-``` python
+```python
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset

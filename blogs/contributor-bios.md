@@ -9,6 +9,18 @@
 ::::{grid} 2
 :margin: 1
 
+:::{grid-item-card} [Alessandro Fanfarillo](./authors/alessandro-fanfarillo.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Asitav Mishra](./authors/asitav-mishra.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Clint Greene](./authors/clint-greene.md)
 :padding: 1
 
@@ -103,6 +115,12 @@ Member of Technical Staff at AMD
 :padding: 1
 
 Machine Learning Engineer at AMD
+:::
+
+:::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md)
+:padding: 1
+
+Machine Learning Researcher at AMD
 :::
 
 ::::

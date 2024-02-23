@@ -1,3 +1,11 @@
+---
+blogpost: true
+date: 24 Jan 2024
+author: Douglas Jia
+tags: LLM, AI/ML, Tuning, AAC, PyTorch
+category: Applications & models
+language: English
+---
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Pre-training a large language model with
@@ -8,9 +16,6 @@
 </head>
 
 # Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs
-
-**Author:** [Douglas Jia](../../authors/douglas-jia.md)\
-**First published:** 26 Jan 2024
 
 In this blog, we show you how to pre-train a GPT-3 model using the Megatron-DeepSpeed
 framework on multiple AMD GPUs. We also demonstrate how to perform inference on the
