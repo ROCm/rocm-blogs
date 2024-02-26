@@ -68,7 +68,6 @@ html_sidebars = {
         "tagcloud.html",        
         "categories.html",
         "archives.html",
-        "authors.html",
     ]
 }
 
