@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 24 Jan 2024
+date: 23 Feb 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, Images, PyTorch, Stable Diffusion
 category: Applications & models
@@ -15,9 +15,6 @@ language: English
 </head>
 
 # Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
-
-**Author:** [Douglas Jia](../../authors/douglas-jia.md)\
-**First published:** 23 Feb 2024
 
 In this blog, we show you how to use pre-trained Stable Diffusion models to generate images from text
 (text-to-image), transform existing visuals (image-to-image), and restore damaged pictures
