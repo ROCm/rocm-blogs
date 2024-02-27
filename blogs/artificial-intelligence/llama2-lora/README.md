@@ -83,7 +83,7 @@ This example leverages two GCDs (Graphics Compute Dies) of a AMD MI250 GPU and e
 Our setup:
 
 * Hardware: AMD Instinct MI250
-* Software: [ROCm 5.7.1](https://rocm.docs.amd.com/en/latest/deploy/linux/quick_start.html)
+* Software: [ROCm 5.7.1](https://rocm.docs.amd.com/en/docs-5.7.1/deploy/linux/quick_start.html)
 * Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`
 
 ### Step 1: Getting started
