@@ -36,9 +36,9 @@ Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD G
 LLM distributed supervised fine-tuning with JAX
 :::
 
-:::{grid-item-card} PyTorch Lightning
+:::{grid-item-card} Jacobi solver
 :padding: 1
-:link: ./artificial-intelligence/pytorch-lightning/README
+:link: ./high-performance-computing/jacobi/README
 :link-type: doc
 
 Simplifying deep learning: A guide to PyTorch Lightning
