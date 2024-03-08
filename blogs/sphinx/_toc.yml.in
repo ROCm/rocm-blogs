@@ -32,6 +32,8 @@ subtrees:
     title: Pre-training BERT (PyTorch)
   - file: artificial-intelligence/bert-hg-tf/README.md
     title: Pre-training BERT (TensorFlow)
+  - file: artificial-intelligence/MusicGen/README.md
+    title: MusicGen (Pytorch)
 
 - caption: High-performance computing
   entries:
