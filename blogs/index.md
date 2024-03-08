@@ -59,8 +59,6 @@ Performance benchmarking across various AMD GPUs and cache size limitations
 
 :::
 
-::::{grid} 3
-:margin: 1
 ::::
 
 <h2>Software tools & optimizations</h2>
@@ -70,7 +68,7 @@ Performance benchmarking across various AMD GPUs and cache size limitations
 
 :::{grid-item-card} Register pressure
 :padding: 1
-:link: ./software-tools-optimization/profilers/README
+:link: ./software-tools-optimization/register-pressure/README
 :link-type: doc
 
 Register pressure in AMD CDNA2 GPUs
