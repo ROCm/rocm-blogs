@@ -13,6 +13,7 @@
 :margin: 1
 
 :::{grid-item-card} Stable Diffusion (ONNX Runtime)
+
 :padding: 1
 :link: ./artificial-intelligence/stable-diffusion-onnx-runtime/README
 :link-type: doc
