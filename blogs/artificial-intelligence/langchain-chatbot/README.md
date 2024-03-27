@@ -89,8 +89,7 @@ To install LangChain, run `pip install langchain`.
 ### Language model
 
 In this blog, we use [Google Flan-T5-XXL](https://huggingface.co/google/flan-t5-xxl) as our underlying
-language model. Our reasons for using this model include: it's free, has decent performance, and it
-requires minimal setup.
+language model.
 
 To install our language model and chat with documents, run the following code:
 `pip install transformers sentence-transformers`.
