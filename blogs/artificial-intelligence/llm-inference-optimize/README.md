@@ -55,10 +55,8 @@ In the Llama-2-7b model, there are 32 attention heads in the self-attention modu
 dimensions. The Multilayer Perceptron (MLP) module has 11,008 intermediate size and it is composed
 of three layers: `gate_proj`, `up_proj`, and `down_proj`.
 
-<p align="center">
 <img src="images/llm_inf_opt_1.png" alt=" " width="50%">
 <img src="images/llm_inf_opt_2.png" alt=" " width="40%">
-</p>
 
 Based on their behaviors, LLMs are categorized into the following:
 
@@ -70,9 +68,7 @@ Based on their behaviors, LLMs are categorized into the following:
 
 In this blog, we focus more on Llama2 CLM.
 
-<p align="center">
 <img src="images/llm_inf_opt_3.png" alt=" " width="70%">
-</p>
 
 The token generation in a CLM is performed in the following two phases:
 
@@ -89,9 +85,7 @@ The TTFT and TPOT are used to calculate the latency in a CLM:
 [latency](https://www.databricks.com/blog/llm-inference-performance-engineering-best-practices) =
 TTFT + TPOT \* (max_new_tokens - 1)
 
-<p align="center">
 <img src="images/llm_inf_opt_4.png" alt=" " width="100%">
-</p>
 
 The dimension of the input in the **prefill** phase after token embedding is proportional to
 **batch_size \* input sequence_length**. The tokens in the prefill phase are processed at the same
@@ -127,9 +121,7 @@ duplication overhead. The lack of overhead causes the tensor parallel to be wide
 ability to fit larger LLM onto high-capacity MI250 DDR with some collective operation synchronization
 overheads.
 
-<p align="center">
 <img src="images/llm_inf_opt_5.png" alt=" " width="100%">
-</p>
 
 In the preceding figure, note that the roofline of the MI250 single GCD is similar to that of MI210.
 
@@ -167,15 +159,11 @@ For toolkit setup, refer to [Text Generation Inference (TGI)](https://github.com
 
 * **Prefill latency**
 
-<p align="center">
 <img src="images/llm_inf_opt_chart_1.png" alt=" " width="100%">
-</p>
 
 * **Output decoding latency**
 
-<p align="center">
 <img src="images/llm_inf_opt_chart_2.png" alt=" " width="100%">
-</p>
 
 ### Default machine-learning framework
 
@@ -313,15 +301,11 @@ is available now.
 
 * **Prefill latency**
 
-<p align="center">
 <img src="images/llm_inf_opt_chart_3.png" alt=" " width="100%">
-</p>
 
 * **Output decoding latency**
 
-<p align="center">
 <img src="images/llm_inf_opt_chart_4.png" alt=" " width="100%">
-</p>
 
 ### Hugging Face Text Generation Inference
 
@@ -338,20 +322,16 @@ makes it a good choice.
 
 One server with 4 x MI250 has a total of 8 graphics compute dies (GCDs). Each GCD has 64 GB of HBM.
 
-<p align="center">
 <img src="images/llm_inf_opt_6.png" alt=" " width="43%">
 <img src="images/llm_inf_opt_7.png" alt=" " width="45%">
-</p>
 
 To fully utilize multiple MI250 GPUs, you need to consider the interconnect bandwidth between the
 GPU's GCDs, as the inter-GCD connections have non-uniform throughput. For example, with TP=4,
 using GCD#0,1,4,6 together gives the best performance, as the collective operations (such as
 all-reduce or all-gather) cause less synchronization overhead in TP.
 
-<p align="center">
 <img src="images/llm_inf_opt_8.png" alt=" " width="50%">
 <img src="images/llm_inf_opt_9.png" alt=" " width="80%">
-</p>
 
 With non-uniform memory access (NUMA) balancing enabled, the GPU must wait for the preemptive
 memory management unit (MMU) notifier changes derived from page faults. Therefore, disabling
