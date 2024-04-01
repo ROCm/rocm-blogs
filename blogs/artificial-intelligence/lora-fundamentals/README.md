@@ -78,12 +78,17 @@ Our goal is to train a neural network for the classification of the MNIST databa
 We then fine-tune this network to improve its performance for a category in which it doesn't initially
 perform well.
 
-* Hardware: We use an AMD Instinct GPU with [ROCm](https://github.com/RadeonOpenCompute/ROCm).
-* Software: PyTorch, tqdm
+* Hardware: AMD Instinct GPU
+* Software:
+  * [ROCm 5.7+](https://github.com/RadeonOpenCompute/ROCm)
+  * [PyTorch 1.7.0+](https://pytorch.org/)
+  * tqdm
+
+The code utilized in this blog post includes contributions sourced from [LoRA implementation](https://github.com/hkproj/pytorch-lora/blob/main/lora.ipynb), with due credit attributed to Umar Jamil.
 
 ### Getting started
 
-1. Import the packages. There are no specific version requirements for PyTorch or ROCm.
+1. Import the packages.
 
     ```python
     import torch
