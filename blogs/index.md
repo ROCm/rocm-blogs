@@ -108,7 +108,7 @@ Overview of the AMD Instinct MI200 memory space
 
 :::{grid-item-card} More ...
 :padding: 1
-:link: ./blog/category/software-tools-optimization.html
+:link: ./blog/category/software-tools-optimizations.html
 :link-type: url
 
 :::
