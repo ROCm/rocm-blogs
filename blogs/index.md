@@ -12,6 +12,15 @@
 ::::{grid} 3
 :margin: 1
 
+:::{grid-item-card} LLM inference optimizations
+:padding: 1
+:link: ./artificial-intelligence/llm-inference-optimize/README
+:link-type: doc
+
+Software optimization techniques to deploy state-of-the-art LLMs
+on AMD CDNA2 GPUs
+:::
+
 :::{grid-item-card} Stable Diffusion (ONNX Runtime)
 :padding: 1
 :link: ./artificial-intelligence/stable-diffusion-onnx-runtime/README
@@ -42,14 +51,6 @@ LLM distributed supervised fine-tuning with JAX
 :link-type: doc
 
 Simplifying deep learning: A guide to PyTorch Lightning
-:::
-
-:::{grid-item-card} Finite difference: Laplacian, part 4
-:padding: 1
-:link: ./high-performance-computing/finite-difference/laplacian-part4/README
-:link-type: doc
-
-Performance benchmarking across various AMD GPUs and cache size limitations
 :::
 
 :::{grid-item-card} More ...
@@ -108,7 +109,7 @@ Overview of the AMD Instinct MI200 memory space
 
 :::{grid-item-card} More ...
 :padding: 1
-:link: ./blog/category/software-tools-optimization.html
+:link: ./blog/category/software-tools-optimizations.html
 :link-type: url
 
 :::

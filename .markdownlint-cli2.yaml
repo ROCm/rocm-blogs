@@ -10,6 +10,7 @@ config:
   MD033: false
   MD034: false
   MD041: false
+  MD046: false # Allow indented code blocks (which are output by nbconvert)
   MD051: false
 ignores:
   - CHANGELOG.md

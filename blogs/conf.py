@@ -4,15 +4,16 @@
 # list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
-import ablog
-import shutil
-import jinja2
 import os
-
-from rocm_docs import ROCmDocs
-from sphinx import addnodes
+import shutil
 
 import ablog
+import jinja2
+from rocm_docs import ROCmDocs
+from sphinx.ext.autodoc import cut_lines
+from sphinx.util.docfields import GroupedField
+
+from sphinx import addnodes
 
 ablog_builder = "dirhtml"
 ablog_website = "_website"
@@ -53,40 +54,54 @@ html_title = "ROCm Blogs"
 html_theme = "rocm_docs_theme"
 html_theme_options = {
     "flavor": "rocm-blogs",
-    "link_main_doc": False,
 }
 
 extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx"]
 external_toc_path = "./sphinx/_toc.yml"
 
-templates_path = [ablog.get_html_templates_path()]
+templates_path = [ablog.get_html_templates_path(), "."]
 
 html_sidebars = {
     "**": [
         "postcard.html",
-        "recentposts.html",
-        "tagcloud.html",        
+        "./templates/recentposts.html",
+        "tagcloud.html",
         "categories.html",
         "archives.html",
     ]
 }
 
 blog_authors = {
-    'Justin Chang': ('Justin Chang', 'http://rocm.blogs.amd.com/authors/justin-chang.html'),
-    'Rene Van Oostrum': ('Rene Van Oostrum',
-               'https://rocm.blogs.amd.com/authors/rene-van-oostrum.html'),
+    "Justin Chang": (
+        "Justin Chang",
+        "http://rocm.blogs.amd.com/authors/justin-chang.html",
+    ),
+    "Rene Van Oostrum": (
+        "Rene Van Oostrum",
+        "https://rocm.blogs.amd.com/authors/rene-van-oostrum.html",
+    ),
 }
-blog_feed_length = 10
 blog_feed_archives = True
 blog_feed_fulltext = True
 blog_feed_templates = {
     "atom": {
-        "content": "{{ title }}{% for tag in post.tags %}" " #{{ tag.name|trim()|replace(' ', '') }}" "{% endfor %}",
+        "content": "{{ title }}{% for tag in post.tags %}"
+        " #{{ tag.name|trim()|replace(' ', '') }}"
+        "{% endfor %}",
     },
     "social": {
-        "content": "{{ title }}{% for tag in post.tags %}" " #{{ tag.name|trim()|replace(' ', '') }}" "{% endfor %}",
+        "content": "{{ title }}{% for tag in post.tags %}"
+        " #{{ tag.name|trim()|replace(' ', '') }}"
+        "{% endfor %}",
     },
 }
+blog_feed_length = 10
+
+html_static_path = ['_static']
+
+html_css_files = [
+    'css/custom.css',
+]
 
 nitpicky = True
 nitpick_ignore = []
@@ -115,9 +130,6 @@ def parse_event(env, sig, signode):
 
 
 def setup(app):
-    from sphinx.ext.autodoc import cut_lines
-    from sphinx.util.docfields import GroupedField
-
     app.connect("autodoc-process-docstring", cut_lines(4, what=["module"]))
     app.add_object_type(
         "confval",
@@ -125,5 +137,9 @@ def setup(app):
         objname="configuration value",
         indextemplate="pair: %s; configuration value",
     )
-    fdesc = GroupedField("parameter", label="Parameters", names=["param"], can_collapse=True)
-    app.add_object_type("event", "event", "pair: %s; event", parse_event, doc_field_types=[fdesc])
+    fdesc = GroupedField(
+        "parameter", label="Parameters", names=["param"], can_collapse=True
+    )
+    app.add_object_type(
+        "event", "event", "pair: %s; event", parse_event, doc_field_types=[fdesc]
+    )

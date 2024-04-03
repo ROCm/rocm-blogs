@@ -72,7 +72,7 @@ machine-learning libraries and frameworks are adding AMD GPU support.
 To achieve the computational capabilities required for this task, we use the
 [AMD Accelerator Cloud (AAC)](https://aac.amd.com/), which is a platform that offers on-demand
 cloud computing resources and APIs. On AAC, we use a
-[PyTorch Docker container](https://hub.docker.com/r/rocm/pytorch) with 8 GPUs.
+[PyTorch Docker container](https://hub.docker.com/r/rocm/pytorch) (version: rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1) with 8 GPUs.
 
 Our methods are hardware-agnostic, meaning that access to AAC is **not** a requirement for
 successfully running our code examples. As long as you have access to accelerator devices, such
@@ -149,13 +149,13 @@ configuration). Here is a list of configurations you may need to revise:
 * `eval_interval`
 * `num_save`
 * `save_interval`
-* `VOCAB_PATH`
-* `MERGE_PATH`
-* `DATA_BLEND`
+* `vocab_path`
+* `merge_path`
+* `data_path`
 * File paths in `data_options`
 
 Because ROCm doesn't currently support gradient accumulation fusion, you must add
-`--no-gradient-accumulation-fusion` to `megatron_options`.
+`--no-gradient-accumulation-fusion` to `megatron_options`. You can take a look at the [actual training script](https://github.com/microsoft/Megatron-DeepSpeed/compare/main...jiagaoxiang:Megatron-DeepSpeed:main) we used to gain an understanding of what needs to be revised and how to approach it.
 
 ```sh
 %%sh
