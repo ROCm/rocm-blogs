@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 8 March 2024
+date: 8 Mar 2024
 author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
