@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  ray-blog:
+    build:
+      context: ..
+      dockerfile: ./docker/dockerfile
+    volumes:
+      - ..:/root/
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    command: /bin/bash
