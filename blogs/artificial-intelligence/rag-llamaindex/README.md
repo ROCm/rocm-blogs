@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 04 April 2024
+date: 04 Apr 2024
 author: Clint Greene
 tags: LLM, AI/ML, RAG
 category: Applications & models
