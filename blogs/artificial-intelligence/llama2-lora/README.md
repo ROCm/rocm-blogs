@@ -83,8 +83,10 @@ This example leverages two GCDs (Graphics Compute Dies) of a AMD MI250 GPU and e
 Our setup:
 
 * Hardware: AMD Instinct MI250
-* Software: [ROCm 5.7.1](https://rocm.docs.amd.com/en/docs-5.7.1/deploy/linux/quick_start.html)
-* Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`
+* Software:
+  * [ROCm 5.7.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/)
+  * [Pytorch 2.0.1+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html#installing-pytorch-for-rocm)
+* Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`, `scipy`
 
 ### Step 1: Getting started
 
@@ -114,23 +116,45 @@ GPU[1]      : Card SKU:      D65209
 Next, install the required libraries.
 
 ```bash
-!pip install -q pandas torch peft transformers==4.31.0 trl==0.4.7 accelerate scipy
+!pip install -q pandas peft transformers==4.31.0 trl==0.4.7 accelerate scipy
 ```
 
 #### Install bitsandbytes
 
 1. Install bitsandbytes using the following code.
 
-    ```bash
-    %%bash
-    git clone --recurse https://github.com/ROCmSoftwarePlatform/bitsandbytes
-    cd bitsandbytes
-    git checkout 4c0ca08aa24d622940d9abdcff6090efc85dbc30
-    make hip
-    python setup.py install
-    ```
+    * For ROCm 5.7
 
-2. Check the bitsandbytes version (0.39.1).
+        ```bash
+        ## Install/update `hipBLASLt`. This step takes around half an hour.
+        git clone --recurse https://github.com/ROCm/hipBLASLt
+        cd hipBLASLt
+        git checkout 4b3b34405e7e25cff404f69bfd0a832644430477
+        ./install.sh -idc
+        
+        cd ..
+        pip install einops lion_pytorch
+
+        # Install `bitsandbytes`
+        git clone --recurse https://github.com/ROCm/bitsandbytes.git
+        cd bitsandbytes
+        git checkout rocm5.7_internal_testing
+        make hip
+        python setup.py install
+        ```
+
+    * For ROCm 6.0+
+
+        ```bash
+        # Install `bitsandbytes`
+        git clone --recurse https://github.com/ROCm/bitsandbytes.git
+        cd bitsandbytes
+        git checkout rocm_enabled
+        make hip
+        python setup.py install
+        ```
+
+2. Check the bitsandbytes version (0.42.0).
 
     ```bash
     %%bash
