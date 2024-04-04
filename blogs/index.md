@@ -45,12 +45,12 @@ Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD G
 LLM distributed supervised fine-tuning with JAX
 :::
 
-:::{grid-item-card} Jacobi solver
+:::{grid-item-card} Scale AI applications with Ray
 :padding: 1
-:link: ./high-performance-computing/jacobi/README
+:link: ./artificial-intelligence/ray/README
 :link-type: doc
 
-Simplifying deep learning: A guide to PyTorch Lightning
+AMD has been working with Ray to provide support on ROCm
 :::
 
 :::{grid-item-card} More ...
