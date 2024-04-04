@@ -8,6 +8,8 @@ subtrees:
 
 - caption: Artificial intelligence
   entries:
+  - file: artificial-intelligence/monai-deploy/README.md
+    title: MONAI Deploy
   - file: artificial-intelligence/stable-diffusion-onnx-runtime/README.md
     title: Stable Diffusion (ONNX Runtime)
   - file: artificial-intelligence/nerf/README.md
