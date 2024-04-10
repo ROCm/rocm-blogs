@@ -1,0 +1,14 @@
+FROM rocm/dev-ubuntu-22.04:5.7
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends python3.10-venv
+
+RUN curl -sSL https://pdm-project.org/install-pdm.py | python3
+
+WORKDIR /root
+COPY pyproject.toml pdm.lock ./
+# Install using PDM
+RUN --mount=type=cache,target=/root/.cache /root/.local/bin/pdm sync
+ENV PATH=/root/.venv/bin:${PATH}
+
+WORKDIR /root/workdir

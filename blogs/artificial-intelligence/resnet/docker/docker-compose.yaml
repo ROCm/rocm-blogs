@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  blog:
+    image: blog/resnet
+    build:
+      context: ..
+      dockerfile: ./docker/dockerfile
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    security_opt:
+      - seccomp:unconfined
+    ipc: host
+    volumes:
+      - ../:/root/workdir
+    ports:
+      - "8888:8888"
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token=''
