@@ -1,0 +1,32 @@
+[project]
+name = "resnet"
+version = "1.0.0"
+description = "AMD Resnet Blog"
+authors = [
+    {name = "Logan Grado", email = "logan.grado@amd.com"},
+]
+dependencies = [
+    "torch==2.2.1",
+    "torchvision==0.17.1",
+    "datasets==2.17.0",
+    "matplotlib>=3.8.3",
+]
+requires-python = ">=3.10,<3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[[tool.pdm.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/rocm5.7"
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ipython>=8.21.0",
+    "ipdb>=0.13.13",
+    "jupyter>=1.0.0",
+    "jupyterlab>=4.1.4",
+    "jupytext>=1.16.1",
+]
