@@ -37,11 +37,9 @@
 #
 # The ResNet model was originally proposed in [Deep Residual Learning for Image Recognition](https://arxiv.org/abs/1512.03385) by Kaiming He, et al. in 2015, for image classification. The key contribution of this paper was to add residual connections, which allow for training networks that are substantially deeper than previous networks (see figure below). ResNet models are used in a variety of contexts, such as image classification, object detection, etc.
 #
-# <figure>
-#     <img src="images/residual_connection.png"
-#          alt="Residual connection">
-#     <figcaption>Diagram of a residual connection, from the original paper. The residual connection (right) flows around computational blocks.</figcaption>
-# </figure>
+# ![png](images/residual_connection.png)
+#
+# > Diagram of a residual connection, from the original paper. The residual connection (right) flows around computational blocks.
 
 # %% [markdown]
 # ## Prerequisites
