@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 20 Mar 2024
+date: 11 Apr 2024
 author: Douglas Jia
 tags: AI/ML, Deep Learning, Reinforcement Learning, PyTorch, Deep Q-Network, DQN
 category: Applications & models
