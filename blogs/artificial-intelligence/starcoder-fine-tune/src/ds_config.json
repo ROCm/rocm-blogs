@@ -1,0 +1,41 @@
+{
+    "optimizer": {
+        "type": "Adam",
+        "params": {
+            "lr": "auto",
+            "weight_decay": "auto"
+        }
+    },
+    "scheduler": {
+        "type": "WarmupCosineLR",
+        "params": {
+            "warmup_min_ratio": 0,
+            "warmup_num_steps": "auto",
+            "total_num_steps":"auto"
+        }
+    },
+    "fp16": {
+        "enabled": "auto"
+    },
+    "zero_optimization": {
+        "stage": 1,
+        "allgather_partitions": true,
+        "allgather_bucket_size": 2e8,
+        "overlap_comm": true,
+        "reduce_scatter": true,
+        "reduce_bucket_size": 2e8,
+        "contiguous_gradients": true,
+        "cpu_offload": true
+    },
+    "activation_checkpointing": {
+        "partition_activations": true,
+        "cpu_checkpointing": true,
+        "contiguous_memory_optimization": true,
+        "number_checkpoints": 4
+    },
+    "gradient_accumulation_steps": "auto",
+    "train_batch_size": "auto",
+    "steps_per_print": 2000,
+    "wall_clock_breakdown": false,
+    "train_micro_batch_size_per_gpu": "auto"
+}

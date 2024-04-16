@@ -1,0 +1,32 @@
+[project]
+name = "automatic-mixed-precision"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Logan Grado", email = "logan.grado@amd.com"},
+]
+dependencies = [
+    "torch==2.3.0.dev20240228",
+    "matplotlib>=3.8.3",
+    "setuptools>=69.1.1",
+]
+requires-python = ">=3.11,<3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[[tool.pdm.source]]
+name = "torch-nightly"
+url = "https://download.pytorch.org/whl/nightly/rocm6.0/"
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "jupytext>=1.16.1",
+    "ipython>=8.21.0",
+    "ipdb>=0.13.13",
+    "jupyter>=1.0.0",
+    "jupyterlab>=4.1.2",
+    "nbconvert>=7.16.2",
+]

@@ -1,0 +1,16 @@
+FROM rocm/dev-ubuntu-22.04:6.0
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt-get update && apt-get install -y python3.11 python3.11-venv
+
+RUN curl -sSL https://pdm-project.org/install-pdm.py | python3.11 -
+
+WORKDIR /root
+COPY pyproject.toml pdm.lock ./
+# Install using PDM
+RUN --mount=type=cache,target=/root/.cache /root/.local/bin/pdm sync
+ENV PATH="/root/.venv/bin:${PATH}"
+
+WORKDIR /root/workdir
