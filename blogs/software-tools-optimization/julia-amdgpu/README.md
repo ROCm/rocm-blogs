@@ -1,6 +1,7 @@
 ---
 blogpost: true
 date: 10 Apr 2024
+author: Anton Smirnov
 tags: Julia, GPGPU, HPC, AI/ML, Scientific computing
 category: Software tools & optimizations
 language: English
