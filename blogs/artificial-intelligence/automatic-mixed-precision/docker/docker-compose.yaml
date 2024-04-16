@@ -1,0 +1,14 @@
+services:
+  blog:
+    image: blog/amp
+    build:
+      context: ..
+      dockerfile: ./docker/dockerfile
+    ports:
+      - "8888:8888"
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    volumes:
+      - ../:/root/workdir
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token=''

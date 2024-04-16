@@ -1,0 +1,5 @@
+host: amd
+root_dir: ./
+image: blog/amp
+command: "jupyter-lab --allow-root --no-browser --NotebookApp.token='' --port 9000 --ip=0.0.0.0"
+ports: ["9000:9000"]
