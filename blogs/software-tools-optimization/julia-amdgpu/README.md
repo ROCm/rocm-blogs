@@ -25,7 +25,7 @@ It provides the support for both high-level array programming
 as well as low-level kernel programming
 and integrates with rich Julia ecosystem for a unifying experience.
 
-#### Quickstart
+## Quickstart
 
 Installing AMDGPU.jl is as easy as adding a regular Julia package.
 From the Julia REPL, execute (`]` symbol enters Pkg REPL mode, `Backspace` exits it):
@@ -37,7 +37,7 @@ From the Julia REPL, execute (`]` symbol enters Pkg REPL mode, `Backspace` exits
 Users are also required to have a working ROCm installation, see
 [requirements](https://amdgpu.juliagpu.org/dev/#Requirements) section.
 
-#### Example: element-wise addition
+## Example: element-wise addition
 
 Once you have a working AMDGPU.jl installation,
 you can import the package and start using it:
@@ -74,7 +74,7 @@ compute element-wise sum, store it in `ch`
 and compare against `c` using `≈` operator
 (Julia supports [Unicode input](https://docs.julialang.org/en/v1/manual/unicode-input/)).
 
-#### Example: GPU kernel for element-wise addition
+## Example: GPU kernel for element-wise addition
 
 Alternatively, we can perform the same computation by writing our custom GPU kernel.
 
@@ -120,7 +120,7 @@ true
 We can see that it is extremenly easy to do kernel programming with Julia
 and kernels are not limited in functionality and being on par with HIP.
 
-#### Integration with Julia ecosystem
+## Integration with Julia ecosystem
 
 AMDGPU.jl integrates ROCm libraries with Julia ecosystem offering unifying
 experience, where there's almost no difference between
@@ -167,7 +167,7 @@ julia> loss, grads = Zygote.withgradient(θ) do θ
 
 And much more!
 
-#### Performance
+## Performance
 
 Provided that you are using efficient constructs, the performance of
 Julia GPU code is on par with C++ and sometimes even exceeding it,
@@ -189,6 +189,7 @@ Below is the optimized LLVM IR for `vadd!` kernel defined above:
 ```julia
 julia> @device_code_llvm @roc launch=false vadd!(c, a, b)
 ```
+
 ```llvm
 ;  @ REPL[4]:1 within `vadd!`
 define amdgpu_kernel void @_Z5vadd_14ROCDeviceArrayI7Float32Li1ELi1EES_IS0_Li1ELi1EES_IS0_Li1ELi1EE(
@@ -243,7 +244,7 @@ L92:                                              ; preds = %L45, %conversion
 
 With this users have a fine control over their code and can target high-performance applications.
 
-#### Applications & Libraries
+## Applications & Libraries
 
 With rich ecosystem integration it is extremely easy to implement applications,
 here are just a few of them that have support for AMD GPUs:
@@ -257,7 +258,7 @@ here are just a few of them that have support for AMD GPUs:
 - [GPU4GEO](https://ptsolvers.github.io/GPU4GEO/stream/):
     Modelling of ice motion using LUMI supercomputer targeting LUMI-G's AMD MI250x GPUs.
 
-#### Try it out!
+## Try it out
 
 [AMDGPU.jl](https://github.com/JuliaGPU/AMDGPU.jl) supports both
 Linux and Windows OS and a wide range of devices!
