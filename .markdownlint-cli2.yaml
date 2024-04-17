@@ -4,7 +4,7 @@ config:
     style: asterisk
   MD013: false
   MD026:
-    punctuation: '.,;:!'
+    punctuation: '.,;:'
   MD029:
     style: ordered
   MD033: false

@@ -26,7 +26,7 @@ we will discuss the role of affinity, placement, and order in improving performa
 High Performance Computing (HPC) workloads. A short case study is also presented to
 familiarize you with performance considerations on a node in the
 [Frontier](https://www.olcf.ornl.gov/frontier/) supercomputer. In a
-[follow-up article](./Affinity_Part2.md), we also aim to equip you with the tools you
+[follow-up article](../part-2/README.md), we also aim to equip you with the tools you
 need to understand your system's hardware topology and set up affinity for your
 application accordingly.
 
@@ -232,7 +232,7 @@ design the best strategy for using the available resources. Knowing the communic
 pattern between processes can guide placement of the processes. We also need to know how
 to control placement for the processes and threads of our application. The tools to
 understand system topology and techniques for setting affinity will be discussed in [Part
-2](./Affinity_Part2.md) of the Affinity blog series.
+2](../part-2/README.md) of the Affinity blog series.
 
 ### References
 

@@ -14,7 +14,7 @@ language: English
 
 # Affinity part 2 - System topology and controlling affinity
 
-In [Part 1](./Affinity_Part1.md) of the Affinity blog series, we looked at the
+In [Part 1](../part-1/README.md) of the Affinity blog series, we looked at the
 importance of setting affinity for High Performance Computing (HPC) workloads. In this
 blog post, our goals are the following:
 
@@ -346,7 +346,7 @@ built with Slurm integration, slurm bindings can be used to set affinity at runt
 
 In hybrid applications where processes use CPU cores and GPU(s), we need to additionally
 control the affinity of each process to GPU devices. By default, all processes see all
-GPU devices. In [Part 1](./Affinity_Part1.md) of this blog series, we saw the importance
+GPU devices. In [Part 1](../part-1/README.md) of this blog series, we saw the importance
 of mapping processes to GPU device(s) and CPU cores in the same NUMA domain. Now, we will
 look at different ways of achieving that. Our goal is to equip you with different
 techniques so that you can determine what works on your system.
