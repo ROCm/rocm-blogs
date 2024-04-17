@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 18 Mar 2024
+date: 17 Apr 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, Images, PyTorch, Stable Diffusion
 category: Applications & models
