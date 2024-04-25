@@ -83,7 +83,7 @@ Half-precision operations provide numerous benefits during training:
 
 However, training a model entirely in half-precision can have some challenges. These challenges include the risk of loss of accuracy in computations, as well as issues such as vanishing or exploding gradients, which can degrade the performance of the model. This is where AMP comes in.
 
-ROCm has support for a wide variety of datatypes and precisions - for full details see [ROCm Precision Support](https://rocm.docs.amd.com/en/develop/about/compatibility/data-type-support.html).
+ROCm has support for a wide variety of datatypes and precisions - for full details see [ROCm Precision Support](https://rocm.docs.amd.com/en/latest/about/compatibility/precision-support.html).
 
 ## Automatic mixed precision
 
