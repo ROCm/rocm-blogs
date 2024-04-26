@@ -92,16 +92,18 @@ you'll use for pre-training. The cell blocks with `%%sh` represent Linux command
 
 ```sh
 %%sh
-#Install DeepSpeed
+python -m pip install --upgrade pip
 
-cd /home/aac
+#Install DeepSpeed
+home_dir=$PWD
+cd $home_dir
 git clone --recursive https://github.com/microsoft/DeepSpeed.git
 cd DeepSpeed
 pip install .[dev,1bit,autotuning]
 
 # Clone Megatron-DeepSpeed
 
-cd /home/aac
+cd $home_dir
 git clone https://github.com/microsoft/Megatron-DeepSpeed.git
 cd Megatron-DeepSpeed
 pip3 install pybind11 nltk transformers
@@ -120,7 +122,7 @@ bash download_vocab.sh
 
 # Pre-process data for oscar dataset
 
-export BASE_SRC_PATH=/home/aac/Megatron-DeepSpeed
+export BASE_SRC_PATH=$home_dir/Megatron-DeepSpeed
 export BASE_DATA_PATH=${BASE_SRC_PATH}/dataset
 python3 ${BASE_SRC_PATH}/tools/preprocess_data.py --input ${BASE_DATA_PATH}/oscar-1GB.jsonl --output-prefix ${BASE_DATA_PATH}/my-gpt2 --vocab-file ${BASE_DATA_PATH}/gpt2-vocab.json --dataset-impl mmap --tokenizer-type GPT2BPETokenizer --merge-file ${BASE_DATA_PATH}/gpt2-merges.txt --append-eod --workers 8
 
@@ -128,7 +130,7 @@ python3 ${BASE_SRC_PATH}/tools/preprocess_data.py --input ${BASE_DATA_PATH}/osca
 # solution for attention mechanisms. If you don't want to use FlashAttention, remove
 # the '--use-flash-attn' flag in the script.
 
-cd /home/aac
+cd $home_dir
 git clone --recursive https://github.com/ROCmSoftwarePlatform/flash-attention.git
 cd flash-attention
 py_version=$(python -V | grep -oP '(?<=[.])\w+(?=[.])')
