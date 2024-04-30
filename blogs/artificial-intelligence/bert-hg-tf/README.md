@@ -2,7 +2,7 @@
 blogpost: true
 date: 29 Jan 2024
 author: Vara Lakshmi Bayanagari
-tags: LLM, PyTorch, AI/ML, BERT, GenAI, Tuning
+tags: LLM, AI/ML, BERT, GenAI, Tuning
 category: Applications & models
 language: English
 ---
