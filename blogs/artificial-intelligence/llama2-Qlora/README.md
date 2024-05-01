@@ -9,11 +9,11 @@ language: English
 
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llma 2 on a single AMD GPU">
+  <meta name="description" content="Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU">
   <meta name="keywords" content="LoRA, Low-rank Adaptation, QLoRA, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI">
 </head>
 
-# Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llma 2 on a single AMD GPU
+# Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU
 
 Building on the previous blog [Fine-tune Llama 2 with LoRA blog](https://rocm.blogs.amd.com/artificial-intelligence/llama2-lora/README.html), we delve into another Parameter Efficient Fine-Tuning (PEFT) approach known as Quantized Low Rank Adaptation (QLoRA). The focus will be on leveraging QLoRA for the fine-tuning of Llama-2 7B model using a single AMD GPU with ROCm. This task, made possible through the use of QLoRA, addresses challenges related to memory and computing limitations. The exploration aims to showcase how QLoRA can be employed to enhance accessibility to open-source large language models.
 
