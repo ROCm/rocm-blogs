@@ -72,14 +72,126 @@ html_sidebars = {
 }
 
 blog_authors = {
-    "Justin Chang": (
+"Alessandro Fanfarillo": (
+        "Alessandro Fanfarillo",
+        "http://rocm.blogs.amd.com/authors/alessandro-fanfarillo.html",
+),
+"Anton Smirnov": (
+        "Anton Smirnov",
+        "http://rocm.blogs.amd.com/authors/anton-smirnov.html",
+),
+"Asitav Mishra": (
+        "Asitav Mishra",
+        "http://rocm.blogs.amd.com/authors/asitav-mishra.html",
+),
+"Clint Greene": (
+        "Clint Greene",
+        "http://rocm.blogs.amd.com/authors/clint-greene.html",
+),
+"Damon McDougall": (
+        "Damon McDougall",
+        "http://rocm.blogs.amd.com/authors/damon-mcdougall.html",
+),
+"David Doscher": (
+        "David Doscher",
+        "http://rocm.blogs.amd.com/authors/david-doscher.html",
+),
+"Douglas Jia": (
+        "Douglas Jia",
+        "http://rocm.blogs.amd.com/authors/douglas-jia.html",
+),
+"Eliot Li": (
+        "Eliot Li",
+        "http://rocm.blogs.amd.com/authors/eliot-li.html",
+),
+"Fabricio Flores": (
+        "Fabricio Flores",
+        "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
+),
+"Gina Sitaraman": (
+        "Gina Sitaraman",
+        "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
+),
+"Justin Chang": (
         "Justin Chang",
         "http://rocm.blogs.amd.com/authors/justin-chang.html",
-    ),
-    "Rene Van Oostrum": (
+),
+"Mahdieh Ghazimirsaeed": (
+        "Mahdieh Ghazimirsaeed",
+        "http://rocm.blogs.amd.com/authors/mahdieh-ghazimirsaeed.html",
+),
+"Maria Ruiz Varela": (
+        "Maria Ruiz Varela",
+        "http://rocm.blogs.amd.com/authors/maria-ruiz-varela.html",
+),
+"Nicholas Curtis": (
+        "Nicholas Curtis",
+        "https://rocm.blogs.amd.com/authors/nicholas-curtis.html",
+),
+"Nicholas Malaya": (
+        "Nicholas Malaya",
+        "http://rocm.blogs.amd.com/authors/nicholas-malaya.html",
+),
+"Noah Wolfe": (
+        "Noah Wolfe",
+        "http://rocm.blogs.amd.com/authors/noah-wolfe.html",
+),
+"Noel Chalmers": (
+        "Noel Chalmers",
+        "http://rocm.blogs.amd.com/authors/noel-chalmers.html",
+),
+"Ossian O'Reilly": (
+        "Ossian O'Reilly",
+        "http://rocm.blogs.amd.com/authors/ossian-oreilly.html",
+),
+"Paul Mullowney": (
+        "Paul Mullowney",
+        "http://rocm.blogs.amd.com/authors/paul-mullowney.html",
+),
+"Phillip Dang": (
+        "Phillip Dang",
+        "http://rocm.blogs.amd.com/authors/phillip-dang.html",
+),
+"Rajat Arora": (
+        "Rajat Arora",
+        "http://rocm.blogs.amd.com/authors/rajat-arora.html",
+),
+"Rene Van Oostrum": (
         "Rene Van Oostrum",
-        "https://rocm.blogs.amd.com/authors/rene-van-oostrum.html",
-    ),
+        "http://rocm.blogs.amd.com/authors/rene-van-oostrum.html",
+),
+"Sean Miller": (
+        "Sean Miller",
+        "http://rocm.blogs.amd.com/authors/sean-miller.html",
+),
+"Sean Song": (
+        "Sean Song",
+        "http://rocm.blogs.amd.com/authors/sean-song.html",
+),
+"Seungrok Jung": (
+        "Seungrok Jung",
+        "http://rocm.blogs.amd.com/authors/seung-rok-jung.html",
+),
+"Suyash Tandon": (
+        "Suyash Tandon",
+        "http://rocm.blogs.amd.com/authors/suyash-tandon.html",
+),
+"Thomas Gibson": (
+        "Thomas Gibson",
+        "http://rocm.blogs.amd.com/authors/thomas-gibson.html",
+),
+"Vara Lakshmi Bayanagari": (
+        "Vara Lakshmi Bayanagari",
+        "http://rocm.blogs.amd.com/authors/vara-lakshmi-bayanagari.html",
+),
+"Vicky Tsang": (
+        "Vicky Tsang",
+        "http://rocm.blogs.amd.com/authors/vicky-tsang.html",
+),
+"Yao Fehlis": (
+        "Yao Fehlis",
+        "http://rocm.blogs.amd.com/authors/yao-fehlis.html",
+),
 }
 blog_feed_archives = True
 blog_feed_fulltext = True
