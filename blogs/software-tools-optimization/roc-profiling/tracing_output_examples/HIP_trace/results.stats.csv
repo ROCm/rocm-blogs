@@ -1,0 +1,2 @@
+"Name","Calls","TotalDurationNs","AverageNs","Percentage"
+"elementwise_kernel",1,5280,5280,100.0
