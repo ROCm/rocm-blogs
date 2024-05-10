@@ -2,7 +2,7 @@
 blogpost: true
 date: 30 Apr 2024
 author: Vara Lakshmi Bayanagari
-tags: Tensorflow, AI/ML, AMD GPU, Neural Collaborative Filtering, recommendation systems, ranking
+tags: TensorFlow, AI/ML, AMD GPU, Neural Collaborative Filtering, recommendation systems, ranking
 category: Applications & models
 language: English
 ---
