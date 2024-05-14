@@ -2,15 +2,16 @@
 blogpost: true
 date: 26 Jan 2024
 author: Clint Greene
-tags: LLM, AI/ML, Scientific computing, AAC
+tags: LLM, AI/ML, Scientific computing
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Accelerating XGBoost with Dask using multiple AMD GPUs"
+    "keywords": "XGBoost, Dask, train models, AAC"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Accelerating XGBoost with Dask using multiple AMD GPUs">
-  <meta name="keywords" content="XGBoost, Dask, train models,">
-</head>
 
 # Accelerating XGBoost with Dask using multiple AMD GPUs
 

@@ -2,16 +2,16 @@
 blogpost: true
 date: 9 April 2024
 author: Logan Grado
-tags: AI/ML, ResNet, Images, PyTorch, Image Classification, CIFAR10
+tags: AI/ML, ResNet, Images, PyTorch, Image Classification
 category: Applications & models
 language: English
----
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="ResNet for image classification using AMD GPUs">
-  <meta name="keywords" content="AI/ML, ResNet, Images, PyTorch, Image Classification, CIFAR10, Computer Vision, MI210, MI250, MI300, ROCm">
-</head>
+myst:
+  html_meta:
+    "description lang=en": "ResNet for image classification using AMD GPUs"
+    "keywords": "AI/ML, ResNet, Images, PyTorch, Image Classification, CIFAR10, Computer Vision, MI210, MI250, MI300, ROCm"
+    "property=og:locale": "en_US"
+---
 
 # ResNet for image classification using AMD GPUs
 

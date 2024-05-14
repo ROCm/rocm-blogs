@@ -2,17 +2,18 @@
 blogpost: true
 date: 29 Jan 2024
 author: Vara Lakshmi Bayanagari
-tags: LLM, AI/ML, BERT, GenAI, Tuning
+tags: LLM, AI/ML, GenAI, Tuning, Natural Language Processing
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Pre-training BERT using Hugging Face & PyTorch on an
+  AMD GPU"
+    "keywords": "BERT, language representation model, fine-tuning, Masked
+  Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300, Natural Language Processing"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Pre-training BERT using Hugging Face & PyTorch on an
-  AMD GPU">
-  <meta name="keywords" content="BERT, language representation model, fine-tuning, Masked
-  Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300">
-</head>
 
 # Pre-training BERT using Hugging Face & TensorFlow on an AMD GPU
 
