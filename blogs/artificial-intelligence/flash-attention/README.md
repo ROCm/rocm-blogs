@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 13 May 2024
+date: 15 May 2024
 author: Clint Greene
 tags: AI/ML, PyTorch
 category: Applications & models
