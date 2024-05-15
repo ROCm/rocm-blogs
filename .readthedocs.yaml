@@ -13,9 +13,9 @@ python:
    - requirements: blogs/sphinx/requirements.txt
 
 build:
-   os: ubuntu-20.04
+   os: ubuntu-22.04
    tools:
-      python: "3.8"
+      python: "3.10"
    jobs:
       post_build: 
          - sed -i "s/\&lt;no title\&gt; \&#8212; ROCm Blogs/AMD ROCm\™ Blogs/g" $READTHEDOCS_OUTPUT/html/index.html
