@@ -2,15 +2,16 @@
 blogpost: true
 date: 13 May 2024
 author: Clint Greene
-tags: AI/ML, Flash Attention
+tags: AI/ML, PyTorch
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Accelerating Large Language Models with Flash Attention on AMD GPUs"
+    "keywords": "Flash Attention, LLMs, ROCm, AMD GPUs, MI250, MI210, MI300"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Accelerating Large Language Models with Flash Attention on AMD GPUs">
-  <meta name="keywords" content="Flash Attention, LLMs, ROCm, AMD GPUs, MI250, MI210, MI300">
-</head>
 
 # Accelerating Large Language Models with Flash Attention on AMD GPUs
 
