@@ -1,0 +1,35 @@
+# yaml for checking tags
+# check ONLY the file being updated ends in .md
+
+name: linting-blogs-tags
+
+on:
+  pull_request:
+    paths:
+      - '*'
+  push:
+    paths:
+      - '*'
+
+# the tags should be like: tags: A, B, C, strip into A B C
+jobs:
+  check-tags:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: setup python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install markdown
+      - name: Check for tags
+        run: |
+          python3 check-tags.py

@@ -2,15 +2,16 @@
 blogpost: true
 date: 16 Apr, 2024
 author: Vara Lakshmi Bayanagari
-tags: C++, PyTorch, AI/ML, AMD GPU, custom cpp extension
+tags: PyTorch, AI/ML, custom cpp extension, Programming Languages
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "PyTorch C++ Extension on AMD hardware"
+    "keywords": "Custom cpp extension, AMD GPU, Pytorch, C++, Programming Languages"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="PyTorch C++ Extension on AMD hardware">
-  <meta name="keywords" content="Custom cpp extension, AMD GPU, Pytorch, C++">
-</head>
 
 # PyTorch C++ Extension on AMD GPU
 

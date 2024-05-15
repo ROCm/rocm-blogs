@@ -2,15 +2,16 @@
 blogpost: true
 date: 1 May 2024
 author: Fabricio Flores
-tags: LLM, OpenLLM, vLLM, ROCm, AMD, GPU, MI300, MI250
+tags: LLM, OpenLLM, vLLM, ROCm, GPU, MI300, MI250
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Step-by-Step Guide to OpenLLM on AMD GPUs"
+    "keywords": "LLM, OpenLLM, vLLM, ROCm, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Step-by-Step Guide to OpenLLM on AMD GPUs">
-  <meta name="keywords" content="LLM, OpenLLM, vLLM, ROCm, AMD, GPU, MI300, MI250">
-</head>
 
 # Step-by-Step Guide to Use OpenLLM on AMD GPUs
 

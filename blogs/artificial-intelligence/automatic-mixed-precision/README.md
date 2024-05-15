@@ -2,15 +2,16 @@
 blogpost: true
 date: 29 March 2024
 author: Logan Grado
-tags: PyTorch, Mixed Precision, Automatic Mixed Precision
+tags: PyTorch, Mixed Precision
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Automatic mixed precision in PyTorch using AMD GPUs"
+    "keywords": "AI/ML, PyTorch, Mi201, MI250, MI300, ROCm, AMP, Automatic Mixed Precision, Precision"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Automatic mixed precision in PyTorch using AMD GPUs">
-  <meta name="keywords" content="AI/ML, PyTorch, Mi201, MI250, MI300, ROCm, AMP, Automatic Mixed Precision, Precision">
-</head>
 
 # Automatic mixed precision in PyTorch using AMD GPUs
 

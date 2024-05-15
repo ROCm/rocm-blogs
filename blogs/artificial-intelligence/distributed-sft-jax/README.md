@@ -2,16 +2,17 @@
 blogpost: true
 date: 25 Jan 2024
 author: Douglas Jia
-tags: LLM, AI/ML, BERT, GenAI, Tuning, AAC
+tags: LLM, AI/ML, GenAI, Tuning, Natural Language Processing
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "LLM distributed supervised fine-tuning with JAX"
+    "keywords": "AMD GPU, MI300, MI250, train models, LLM, JAX, fine-tuning,
+  BERT, GLUE, ROCm, SFT, AAC, Natural Language Processing"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="LLM distributed supervised fine-tuning with JAX">
-  <meta name="keywords" content="AMD GPU, MI300, MI250, train models, LLM, JAX, fine-tuning,
-  BERT, GLUE, ROCm, SFT">
-</head>
 
 # LLM distributed supervised fine-tuning with JAX
 

@@ -2,15 +2,16 @@
 blogpost: true
 date: 30 Apr 2024
 author: Vara Lakshmi Bayanagari
-tags: Tensorflow, AI/ML, AMD GPU, Neural Collaborative Filtering, recommendation systems, ranking
+tags: TensorFlow, AI/ML, Neural Collaborative Filtering, recommendation systems, ranking
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Training a Neural Collaborative Filtering (NCF) Recommender on an AMD GPU"
+    "keywords": "Tensorflow, AI/ML, AMD GPU, recommendation systems, ranking, ROCm, MI300X, MI250, MI210, AMD GPU"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Training a Neural Collaborative Filtering (NCF) Recommender on an AMD GPU">
-  <meta name="keywords" content="Tensorflow, AI/ML, AMD GPU, recommendation systems, ranking, ROCm, MI300X, MI250, MI210">
-</head>
 
 # Training a Neural Collaborative Filtering (NCF) Recommender on an AMD GPU
 

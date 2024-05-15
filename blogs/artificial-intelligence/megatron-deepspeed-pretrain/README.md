@@ -2,18 +2,19 @@
 blogpost: true
 date: 24 Jan 2024
 author: Douglas Jia
-tags: LLM, AI/ML, Tuning, AAC, PyTorch
+tags: LLM, AI/ML, Tuning, PyTorch
 category: Applications & models
 language: English
----
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Pre-training a large language model with
-  Megatron-DeepSpeed on multiple AMD GPUs">
-  <meta name="keywords" content="Megatron, language model, fine-tuning, DeepSpeed,
+
+myst:
+  html_meta:
+    "description lang=en": "Pre-training a large language model with
+  Megatron-DeepSpeed on multiple AMD GPUs"
+    "keywords": "Megatron, language model, fine-tuning, DeepSpeed,
   Generative AI, Megatron-DeepSpeed, GPT-3, 3D parallelism, AMD GPU, MI300, MI250,
-    flash-attention">
-</head>
+    flash-attention, AAC"
+    "property=og:locale": "en_US"
+---
 
 # Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs
 
