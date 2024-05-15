@@ -88,6 +88,10 @@ blog_authors = {
         "Clint Greene",
         "http://rocm.blogs.amd.com/authors/clint-greene.html",
 ),
+"Corbin Robeck": (
+        "Corbin Robeck",
+        "http://rocm.blogs.amd.com/authors/corbin-robeck.html",
+),
 "Damon McDougall": (
         "Damon McDougall",
         "http://rocm.blogs.amd.com/authors/damon-mcdougall.html",
