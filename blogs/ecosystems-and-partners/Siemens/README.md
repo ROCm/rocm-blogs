@@ -14,7 +14,7 @@ myst:
 
 # Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+
 
-Siemens recently announced that its Simcenter [STAR-CCM+](https://plm.sw.siemens.com/en-US/simcenter/fluids-thermal-simulation/star-ccm/) multi-physics computational fluid dynamics (CFD) software now supports [AMD Instinct™ GPUs](https://www.amd.com/en/products/accelerators/instinct.htmlhttps://www.amd.com/en/products/accelerators/instinct.html) for GPU-native computation. This move addresses its users' needs for computational efficiency, reduced simulation costs and energy usage, and greater hardware choice.
+Siemens recently announced that its Simcenter [STAR-CCM+](https://plm.sw.siemens.com/en-US/simcenter/fluids-thermal-simulation/star-ccm/) multi-physics computational fluid dynamics (CFD) software now supports [AMD Instinct™ GPUs](https://www.amd.com/en/products/accelerators/instinct.html) for GPU-native computation. This move addresses its users' needs for computational efficiency, reduced simulation costs and energy usage, and greater hardware choice.
 
 Liam McManus, Technical Product Manager for Simcenter STAR-CCM+, said, "Our customers want to design faster, evaluate more designs further upstream, and accelerate their overall design cycle. To do that, they need to increase the throughput of their simulations."
 
@@ -36,7 +36,7 @@ Michael Kuron, a Siemens senior software engineer who led the port, emphasized, 
 
 ## AMD ROCm and HIP smooth the transition
 
-Of course, hardware was only part of the consideration. McManus said, "The [AMD ROCm platform](https://www.amd.com/en/products/software/rocm.htmlhttps://www.amd.com/en/products/software/rocm.html) has been critical in ensuring that our software could fully leverage the computational power of AMD GPUs. Its open-source nature and comprehensive toolset have significantly eased the development and optimization of our applications."
+Of course, hardware was only part of the consideration. McManus said, "The [AMD ROCm platform](https://www.amd.com/en/products/software/rocm.html) has been critical in ensuring that our software could fully leverage the computational power of AMD GPUs. Its open-source nature and comprehensive toolset have significantly eased the development and optimization of our applications."
 
 Kuron added, "Because the entire ROCm stack is open-source, I can look under the hood and fix things without waiting for any technical support." Kuron continued, "In the ROCm ecosystem, all the runtime and math libraries, plus all the stuff built on top of those, are open source. We have excellent insight when new features and capabilities come in."
 
