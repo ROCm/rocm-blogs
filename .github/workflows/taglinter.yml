@@ -4,12 +4,18 @@
 name: linting-blogs-tags
 
 on:
-  pull_request:
-    paths:
-      - '*'
   push:
-    paths:
-      - '*'
+    branches: 
+    - develop
+    - release
+    - 'docs/*'
+    - 'roc**'
+  pull_request:
+    branches: 
+    - develop
+    - release
+    - 'docs/*'
+    - 'roc**'
 
 # the tags should be like: tags: A, B, C, strip into A B C
 jobs:

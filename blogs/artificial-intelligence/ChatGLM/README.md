@@ -2,17 +2,18 @@
 blogpost: true
 date: 4 April 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, LLM
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Bilingual language model ChatGLM-6B"
+    "author": "Phillip Dang"
+    "keywords": "PyTorch, LLMs, Large Language Models, AMD, GPU, MI300,
+   MI250"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Bilingual language model ChatGLM-6B">
-  <meta name="author" content="Phillip Dang">
-  <meta name="keywords" content="PyTorch, LLMs, Large Language Models, AMD, GPU, MI300,
-   MI250">
-</head>
 
 # Using the ChatGLM-6B bilingual language model with AMD GPUs
 

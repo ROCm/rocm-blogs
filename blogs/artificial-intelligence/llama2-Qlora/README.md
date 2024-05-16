@@ -2,16 +2,16 @@
 blogpost: true
 date: 15 April 2024
 author: Sean Song
-tags: LLM, AI/ML, GenAI, Llama, LoRA, Tuning, QLora
+tags: LLM, AI/ML, Generative AI, Tuning
 category: Applications & models
 language: English
----
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU">
-  <meta name="keywords" content="LoRA, Low-rank Adaptation, QLoRA, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI">
-</head>
+myst:
+  html_meta:
+    "description lang=en": "Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU"
+    "keywords": "LoRA, Low-rank Adaptation, QLoRA, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI"
+    "property=og:locale": "en_US"
+---
 
 # Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU
 

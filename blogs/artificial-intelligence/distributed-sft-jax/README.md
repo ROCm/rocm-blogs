@@ -2,7 +2,7 @@
 blogpost: true
 date: 25 Jan 2024
 author: Douglas Jia
-tags: LLM, AI/ML, GenAI, Tuning, Natural Language Processing
+tags: LLM, AI/ML, Generative AI, Tuning, Natural Language Processing
 category: Applications & models
 language: English
 

@@ -2,7 +2,7 @@
 blogpost: true
 date: 18 Apr 2024
 author: Alessandro Fanfarillo, Alex Voicu 
-tags: Compiler, HPC, Memory, Performance, Programming Language
+tags: C++, Compiler, HPC, Memory, Performance, Programming Languages
 category: Software tools & optimizations
 language: English
 

@@ -2,16 +2,17 @@
 blogpost: true
 date: 8 Mar 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Generative AI
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Music Generation With MusicGen on an AMD GPU"
+    "author": "Phillip Dang"
+    "keywords": "PyTorch, MusicGen, train models, Tuning, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Music Generation With MusicGen on an AMD GPU">
-  <meta name="author" content="Phillip Dang">
-  <meta name="keywords" content="PyTorch, MusicGen, train models">
-</head>
 
 # Music Generation With MusicGen on an AMD GPU
 

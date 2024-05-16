@@ -2,16 +2,17 @@
 blogpost: true
 date: 4 Apr 2024
 author: Fabricio Flores
-tags: LLM, AI/ML, GenAI
+tags: LLM, AI/ML, Generative AI
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Building semantic search with SentenceTransformers on AMD"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, SentenceTransformers
+    semantic Search, text embeddings, BERT, transformers, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Building semantic search with SentenceTransformers on AMD">
-  <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, SentenceTransformers
-    semantic Search, text embeddings, BERT, transformers">
-</head>
 
 # Building semantic search with SentenceTransformers on AMD
 

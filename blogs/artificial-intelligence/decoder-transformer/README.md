@@ -5,13 +5,14 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Building a decoder transformer model"
+    "author": "Phillip Dang"
+    "keywords": "PyTorch, decoder, transformer, GPT, Tuning"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Building a decoder transformer model">
-  <meta name="author" content="Phillip Dang">
-  <meta name="keywords" content="PyTorch, decoder, transformer, GPT">
-</head>
 
 # Building a decoder transformer model on AMD GPU(s)
 

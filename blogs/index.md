@@ -7,6 +7,37 @@
 
 <h1><a href="blog/atom.xml"><i class="fa fa-rss fa-rotate-270"></i></a> AMD ROCm™ Blogs</h1>
 
+<h2>Ecosystems and Partners</h2>
+
+::::{grid} 3
+:margin 1
+
+:::{grid-item-card} AMD and University of Michigan Collaboration
+:padding: 1
+:link: ./ecosystems-and-partners/university-of-michigan/README
+:link-type: doc
+
+AMD Collaboration with the University of Michigan offers
+High Performance Open-Source Solutions to the Bioinformatics Community
+:::
+
+:::{grid-item-card} Siemens and AMD partnership
+:padding: 1
+:link: ./ecosystems-and-partners/Siemens/README
+:link-type: doc
+
+Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+
+:::
+
+:::{grid-item-card} More ...
+:padding: 1
+:link: ./blog/category/ecosystem-and-partners.html
+:link-type: url
+
+:::
+
+::::
+
 <h2>Applications & models </h2>
 
 ::::{grid} 3
@@ -113,6 +144,7 @@ Overview of the AMD Instinct MI200 memory space
 :link-type: url
 
 :::
+
 ::::
 
 <h2> Stay informed</h2>

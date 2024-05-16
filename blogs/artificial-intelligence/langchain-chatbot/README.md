@@ -5,13 +5,14 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Question-answering Chatbot with LangChain"
+    "Author": "Phillip Dang"
+    "keywords": "PyTorch, LangChain, Chatbot, RAG, FAISS, AMD, GPU, MI300, MI250, Tuning"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Question-answering Chatbot with LangChain">
-  <meta name="author" content="Phillip Dang">
-  <meta name="keywords" content="PyTorch, LangChain, Chatbot, RAG, FAISS, AMD, GPU, MI300, MI250">
-</head>
 
 # Question-answering Chatbot with LangChain on an AMD GPU
 

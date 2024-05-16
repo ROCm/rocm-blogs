@@ -2,16 +2,17 @@
 blogpost: true
 date: 15 Mar 2024
 author: Seungrok Jung
-tags: LLM, AI/ML, GenAI, Llama, Tuning
+tags: LLM, AI/ML, Generative AI, Tuning
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "LLM Inference optimizations on AMD Instinct (TM) GPUs"
+    "author": "Seungrok Jung"
+    "keywords": "LLM, optimization, inference, AMD, GPU, MI210, MI250, Generative AI, Tuning"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="LLM Inference optimizations on AMD Instinct (TM) GPUs">
-  <meta name="author" content="Seungrok Jung">
-  <meta name="keywords" content="LLM, optimization, inference, AMD, GPU, MI210, MI250">
-</head>
 
 # Large language model inference optimizations on AMD GPUs
 

@@ -5,12 +5,13 @@ author: Gina Sitaraman, Bob Robey, George Markomanolis
 tags: HPC, Memory, MPI, OpenMP, Performance, Tuning, NUMA
 category: Software tools & optimizations
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Affinity Part 1"
+    "keywords": "Affinity, HPC, hardware, memory, MPI, OpenMP, performance, tuning, NUMA"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Affinity Part 1">
-  <meta name="keywords" content="Affinity, HPC, hardware, memory, MPI, OpenMP, performance, tuning, NUMA">
-</head>
 
 # Affinity part 1 - Affinity, placement, and order
 

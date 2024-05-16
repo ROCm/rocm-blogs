@@ -2,16 +2,17 @@
 blogpost: true
 date: 7 Feb 2024
 author: Vara Lakshmi Bayanagari
-tags: PyTorch, AI/ML, GenAI, Images, NeRF
+tags: PyTorch, AI/ML, Generative AI, NeRF
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Two-dimensional images to three-dimensional scene mapping
+  using NeRF on an AMD GPU"
+    "keywords": "AI/ML, GenAI, images, NeRF, PyTorch"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Two-dimensional images to three-dimensional scene mapping
-  using NeRF on an AMD GPU">
-  <meta name="keywords" content="AI/ML, GenAI, images, NeRF, PyTorch">
-</head>
 
 # Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU
 

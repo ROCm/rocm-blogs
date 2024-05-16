@@ -2,15 +2,16 @@
 blogpost: true
 date: 14 Nov 2022
 author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel Chalmers, Ossian O'Reilly
-tags: Scientific computing, Memory, HPC, GEMM
+tags: Compiler, Linear Algebra, Memory, HPC, Optimization
 category: Software tools & optimizations
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Matrix cores"
+    "keywords": "HPC, GEMM, MI250, intrinsics, performance, Mathematical Operations"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Matrix cores">
-  <meta name="keywords" content="HPC, GEMM, MI250, intrinsics, performance">
-</head>
 
 # AMD matrix cores
 

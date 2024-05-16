@@ -59,7 +59,7 @@ html_theme_options = {
 extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx"]
 external_toc_path = "./sphinx/_toc.yml"
 
-templates_path = [ablog.get_html_templates_path(), "."]
+templates_path = ["."]
 
 html_sidebars = {
     "**": [

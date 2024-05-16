@@ -5,12 +5,13 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Simplifying deep learning: A guide to PyTorch Lightning"
+    "keywords": "PyTorch, PyTorch Lightning, train models, Tuning"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Simplifying deep learning: A guide to PyTorch Lightning">
-  <meta name="keywords" content="PyTorch, PyTorch Lightning, train models">
-</head>
 
 # Simplifying deep learning: A guide to PyTorch Lightning
 

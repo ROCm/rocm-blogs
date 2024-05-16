@@ -2,7 +2,7 @@
 blogpost: true
 date: 1 May 2024
 author: Fabricio Flores
-tags: LLM, OpenLLM, vLLM, ROCm, GPU, MI300, MI250
+tags: LLM
 category: Applications & models
 language: English
 

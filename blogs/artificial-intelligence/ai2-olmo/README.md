@@ -2,16 +2,17 @@
 blogpost: true
 date: 17 Apr 2024
 author: Douglas Jia
-tags: AI/ML, GenAI, Images, PyTorch, Stable Diffusion
+tags: AI/ML, Generative AI, PyTorch, Stable Diffusion
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Inferencing with AI2's OLMo model on AMD GPU"
+    "keywords": "OLMo, AI2, Allen Institute for AI, GPU,
+  AMD, MI300, MI250, LLM, ROCm, Open Source"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Inferencing with AI2's OLMo model on AMD GPU">
-  <meta name="keywords" content="OLMo, AI2, Allen Institute for AI, GPU,
-  AMD, MI300, MI250, LLM, ROCm, Open Source">
-</head>
 
 # Inferencing with AI2's OLMo model on AMD GPU
 

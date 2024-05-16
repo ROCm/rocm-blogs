@@ -2,7 +2,7 @@
 blogpost: true
 date: 4 Apr 2024
 author: Clint Greene
-tags: AI/ML, vLLM, LLM, Inference, Serving
+tags: AI/ML, LLM, Inference, Serving
 category: Applications & models
 language: English
 ---
