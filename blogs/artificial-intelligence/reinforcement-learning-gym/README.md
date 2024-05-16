@@ -2,15 +2,16 @@
 blogpost: true
 date: 11 Apr 2024
 author: Douglas Jia
-tags: AI/ML, Deep Learning, Reinforcement Learning, PyTorch, Deep Q-Network, DQN
+tags: AI/ML, PyTorch
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment"
+    "keywords": "Reinforcement Learning, Stable Baselines3, Deep Reinforcement Learning, Gymnasium, DQN, Deep Q-Network, CarRacing, AMD, GPU, MI300, MI250, ROCm"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment">
-  <meta name="keywords" content="Reinforcement Learning, Stable Baselines3, Deep Reinforcement Learning, Gymnasium, DQN, Deep Q-Network, CarRacing, AMD, GPU, MI300, MI250, ROCm">
-</head>
 
 # GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment
 

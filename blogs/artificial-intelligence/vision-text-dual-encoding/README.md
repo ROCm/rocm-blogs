@@ -2,15 +2,16 @@
 blogpost: true
 date: 24 Apr 2024
 author: Sean Song
-tags: LLM, AI/ML, GenAI, LoRA, Tuning, PyTorch
+tags: LLM, AI/ML, Generative AI, Tuning, PyTorch
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model"
+    "keywords": "CLIP, Contrastive learning, multimodal learning, AMD Instinct GPU, MI300, Training, Language-Image, Vision-Text, ROCm, Training, Generative AI, Tuning"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model">
-  <meta name="keywords" content="CLIP, Contrastive learning, multimodal learning, AMD Instinct GPU, MI300, Training, Language-Image, Vision-Text, ROCm, Training">
-</head>
 
 # Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model
 

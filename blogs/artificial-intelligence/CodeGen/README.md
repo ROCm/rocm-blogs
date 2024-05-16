@@ -2,15 +2,16 @@
 blogpost: true
 date: 16 Apr 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Generative AI
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Program Synthesis with CodeGen"
+    "keywords": "PyTorch, PyTorch Lightning, train models, Tuning, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Program Synthesis with CodeGen">
-  <meta name="keywords" content="PyTorch, PyTorch Lightning, train models">
-</head>
 
 # Program Synthesis with CodeGen
 

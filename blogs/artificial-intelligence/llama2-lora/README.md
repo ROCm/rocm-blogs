@@ -2,17 +2,18 @@
 blogpost: true
 date: 1 Feb 2024
 author: Sean Song
-tags: LLM, AI/ML, GenAI, Llama, LoRA, Tuning
+tags: LLM, AI/ML, Generative AI, Tuning
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Fine-tune Llama 2 with LoRA: Customizing a large language
+  model for question-answering"
+    "keywords": "LoRA, Low-rank Adaptation, fine-tuning, large language model,
+  Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Fine-tune Llama 2 with LoRA: Customizing a large language
-  model for question-answering">
-  <meta name="keywords" content="LoRA, Low-rank Adaptation, fine-tuning, large language model,
-  Generative AI">
-</head>
 
 # Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
 

@@ -5,12 +5,13 @@ author: Vara Lakshmi Bayanagari
 tags: Segmentation, PyTorch, AI/ML, MONAI, Computer Vision
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Total body segmentation using MONAI Deploy with ROCm"
+    "keywords": "Segmentation, PyTorch, AI/ML, MONAI, Computer VisionT"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Total body segmentation using MONAI Deploy with ROCm">
-  <meta name="keywords" content="Segmentation, PyTorch, AI/ML, MONAI, Computer Vision">
-</head>
 
 # Total body segmentation using MONAI Deploy on an AMD GPU
 

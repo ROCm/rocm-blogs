@@ -2,17 +2,18 @@
 blogpost: true
 date: 24 Jan 2024
 author: Douglas Jia
-tags: AI/ML, GenAI, Images, Stable Diffusion
+tags: AI/ML, Generative AI, Stable Diffusion
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Efficient image generation with stable diffusion models and
+  AITemplate using AMD GPUs"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, AITemplate,
+   Stable Diffusion, inpainting, image-to-image, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Efficient image generation with stable diffusion models and
-  AITemplate using AMD GPUs">
-  <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, AITemplate,
-   Stable Diffusion, inpainting, image-to-image">
-</head>
 
 # Efficient image generation with Stable Diffusion models and AITemplate using AMD GPUs
 

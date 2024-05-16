@@ -2,7 +2,7 @@
 blogpost: true
 date: 26 Jan 2024
 author: Vara Lakshmi Bayanagari
-tags: LLM, PyTorch, AI/ML, GenAI, Tuning, Natural Language Processing
+tags: LLM, Generative AI, PyTorch, AI/ML, Natural Language Processing, Tuning
 category: Applications & models
 language: English
 

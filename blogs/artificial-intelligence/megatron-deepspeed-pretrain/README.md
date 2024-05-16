@@ -12,7 +12,7 @@ myst:
   Megatron-DeepSpeed on multiple AMD GPUs"
     "keywords": "Megatron, language model, fine-tuning, DeepSpeed,
   Generative AI, Megatron-DeepSpeed, GPT-3, 3D parallelism, AMD GPU, MI300, MI250,
-    flash-attention, AAC"
+    flash-attention, AAC, Tuning"
     "property=og:locale": "en_US"
 ---
 

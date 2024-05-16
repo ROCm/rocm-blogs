@@ -2,17 +2,18 @@
 blogpost: true
 date: 23 Feb 2024
 author: Douglas Jia
-tags: AI/ML, GenAI, Images, PyTorch, Stable Diffusion
+tags: AI/ML, Generative AI, PyTorch, Stable Diffusion
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Efficient image generation with Stable Diffusion models and
+    ONNX Runtime using AMD GPUs"
+    "keywords": "Stable Diffusion, ONNX, image-to-image, text-to-image,
+    inpainting, AMD, GPU, MI300, MI250, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Efficient image generation with Stable Diffusion models and
-    ONNX Runtime using AMD GPUs">
-  <meta name="keywords" content="Stable Diffusion, ONNX, image-to-image, text-to-image,
-    inpainting, AMD, GPU, MI300, MI250">
-</head>
 
 # Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
 

@@ -2,15 +2,16 @@
 blogpost: true
 date: 16 Apr 2024
 author: Anton Smirnov
-tags: Julia, GPGPU, HPC, AI/ML, Scientific computing
+tags: Julia, HPC, AI/ML
 category: Software tools & optimizations
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Programming AMD GPUs with Julia"
+    "keywords": "Julia, AMDGPU, GPGPU, HPC, AI, ROCm"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="">
-  <meta name="keywords" content="Julia, AMDGPU, GPGPU, HPC, AI, ROCm">
-</head>
 
 # Programming AMD GPUs with Julia
 

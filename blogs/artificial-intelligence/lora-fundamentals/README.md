@@ -2,16 +2,17 @@
 blogpost: true
 date: 5 Feb 2024
 author: Sean Song
-tags: LLM, AI/ML, GenAI, LoRA, Tuning, PyTorch
+tags: LLM, AI/ML, Generative AI, Tuning, PyTorch
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Using LoRA for efficient fine-tuning: Fundamental principles"
+    "keywords": "LoRA, low-rank adaptation, fine-tuning, ROCm, MNIST, model
+  training, generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Using LoRA for efficient fine-tuning: Fundamental principles">
-  <meta name="keywords" content="LoRA, low-rank adaptation, fine-tuning, ROCm, MNIST, model
-  training, generative AI">
-</head>
 
 # Using LoRA for efficient fine-tuning: Fundamental principles
 

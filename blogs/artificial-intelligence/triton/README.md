@@ -2,15 +2,16 @@
 blogpost: true
 date: 15 Apr 2024
 author: Clint Greene
-tags: AI/ML, Triton, Kernel, GPU Programming
+tags: AI/ML, Triton, Kernel
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Developing Triton Kernels on AMD GPUs"
+    "keywords": "Triton, Kernel, Triton kernels, ROCm, AMD GPUs, GPU Programming"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Developing Triton Kernels on AMD GPUs">
-  <meta name="keywords" content="Triton, Kernel, Triton kernels, ROCm, AMD GPUs">
-</head>
 
 # Developing Triton Kernels on AMD GPUs
 

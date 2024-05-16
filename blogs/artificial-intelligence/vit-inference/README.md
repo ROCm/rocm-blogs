@@ -2,16 +2,16 @@
 blogpost: true
 date: 4 Apr 2024
 author: Eliot Li
-tags: AI/ML, GenAI, Images
+tags: AI/ML, Generative AI, Computer Vision
 category: Applications & models
 language: English
----
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Image classification using Vision Transformer with AMD GPUs">
-  <meta name="keywords" content="image classification, Vision Transformer, AMD, GPU, MI300, MI250">
-</head>
+myst:
+  html_meta:
+    "description lang=en": "Image classification using Vision Transformer with AMD GPUs"
+    "keywords": "image classification, Vision Transformer, AMD, GPU, MI300, MI250, Generative AI"
+    "property=og:locale": "en_US"
+---
 
 # Image classification using Vision Transformer with AMD GPUs
 

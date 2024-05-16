@@ -2,15 +2,16 @@
 blogpost: true
 date: 16 Apr 2024
 author: Douglas Jia
-tags: AI/ML, GenAI, Fine-tune, PyTorch, LoRA, PEFT
+tags: AI/ML, Generative AI, PyTorch, Tuning
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs"
+    "keywords": "Instruction fine-tuning, StarCoder, StarCoder2, PEFT, Parameter-efficient tine-tuning, LoRA, Fine-tuning, AMD, GPU, MI300, MI250, ROCm, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs">
-  <meta name="keywords" content="Instruction fine-tuning, StarCoder, StarCoder2, PEFT, Parameter-efficient tine-tuning, LoRA, Fine-tuning, AMD, GPU, MI300, MI250, ROCm">
-</head>
 
 # Instruction fine-tuning of StarCoder with PEFT on multiple AMD GPUs
 

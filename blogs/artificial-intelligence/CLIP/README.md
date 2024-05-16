@@ -2,15 +2,16 @@
 blogpost: true
 date: 16 April 2024
 author: Sean Song
-tags: AI/ML, GenAI, Computer Vision, Multimodal, Vision-Text
+tags: AI/ML, Generative AI, Computer Vision, Natural Language Processing, Multimodal
 category: Applications & models
 language: English
+
+myst:
+  html_meta:
+    "description lang=en": "Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU"
+    "keywords": "CLIP, Contrastive learning, multimodal model, Computer vision Language-Image, Vision-Text, MI210, MI250, MI300, ROCm"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU">
-  <meta name="keywords" content="CLIP, Contrastive learning, multimodal model, Computer vision Language-Image, Vision-Text, MI210, MI250, MI300, ROCm">
-</head>
 
 # Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU
 
