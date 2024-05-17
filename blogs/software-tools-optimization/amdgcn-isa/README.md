@@ -5,12 +5,11 @@ author: Asitav Mishra, Corbin Robeck
 tags: Compiler, HPC, Memory
 category: Software tools & optimizations
 language: English
+html_meta:
+  "description lang=en": "Reading AMDGCN ISA"
+  "keywords": "Compiler, HPC, Memory"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Reading AMDGCN ISA">
-  <meta name="keywords" content="Compiler, HPC, Memory">
-</head>
 
 <!---
 Copyright (c) 2024 Advanced Micro Devices, Inc. (AMD)

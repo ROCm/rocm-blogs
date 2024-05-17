@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: AI/ML, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment"

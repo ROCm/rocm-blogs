@@ -1,17 +1,15 @@
 ---
 blogpost: true
 date: 8 Apr 2024
-
 author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Small language models with Phi-2"
+  "keywords": "PyTorch, language model, AMD, GPU, MI300, MI250, Phi-2"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Small language models with Phi-2">
-  <meta name="keywords" content="PyTorch, language model, AMD, GPU, MI300, MI250, Phi-2">
-</head>
 
 # Small language models with Phi-2
 

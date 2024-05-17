@@ -5,7 +5,6 @@ author: Vara Lakshmi Bayanagari
 tags: Segmentation, PyTorch, AI/ML, MONAI, Computer Vision
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Total body segmentation using MONAI Deploy with ROCm"

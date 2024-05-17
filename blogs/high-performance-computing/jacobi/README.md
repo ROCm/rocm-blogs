@@ -5,12 +5,11 @@ author: Asitav Mishra, Rajat Arora, Justin Chang
 tags: Scientific computing, HPC
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Finite difference method - Laplacian Part 1"
+  "keywords": "HPC, jacobi, OpenMP, PDE, MI250, performance"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Finite difference method - Laplacian Part 1">
-  <meta name="keywords" content="HPC, jacobi, OpenMP, PDE, MI250, performance">
-</head>
 
 # Jacobi Solver with HIP and OpenMP offloading
 

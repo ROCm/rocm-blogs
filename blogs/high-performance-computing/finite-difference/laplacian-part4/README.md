@@ -5,13 +5,12 @@ author: Justin Chang, Thomas Gibson, Sean Miller
 tags: Scientific computing, HPC, Memory
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Finite difference method - Laplacian Part 4"
+  "keywords": "HPC, finite difference, PDE, MI50, MI100, MI210,
+  RX 6900 XT, RX 7900 XTX, MI250, performance"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Finite difference method - Laplacian Part 4">
-  <meta name="keywords" content="HPC, finite difference, PDE, MI50, MI100, MI210,
-  RX 6900 XT, RX 7900 XTX, MI250, performance">
-</head>
 
 # Finite difference method - Laplacian part 4
 

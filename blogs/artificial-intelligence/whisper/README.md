@@ -5,7 +5,6 @@ author: Clint Greene
 tags: AI/ML, Whisper, Speech to Text
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Speech to Text on AMD with Whisper"

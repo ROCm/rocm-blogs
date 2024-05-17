@@ -5,7 +5,6 @@ author: Clint Greene
 tags: AI/ML, Triton, Kernel
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Developing Triton Kernels on AMD GPUs"

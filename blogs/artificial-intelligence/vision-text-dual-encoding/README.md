@@ -5,7 +5,6 @@ author: Sean Song
 tags: LLM, AI/ML, Generative AI, Tuning, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model"

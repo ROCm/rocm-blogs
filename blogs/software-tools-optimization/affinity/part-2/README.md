@@ -5,7 +5,6 @@ author: Gina Sitaraman, Bob Robey, George Markomanolis
 tags: HPC, Memory, MPI, OpenMP, Performance, Tuning, NUMA
 category: Software tools & optimizations
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Affinity Part 2"

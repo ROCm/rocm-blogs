@@ -5,7 +5,6 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, LLM
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Bilingual language model ChatGLM-6B"

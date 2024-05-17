@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: LLM, AI/ML, Tuning, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Pre-training a large language model with

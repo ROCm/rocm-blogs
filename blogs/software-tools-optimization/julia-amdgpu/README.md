@@ -5,7 +5,6 @@ author: Anton Smirnov
 tags: Julia, HPC, AI/ML
 category: Software tools & optimizations
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Programming AMD GPUs with Julia"

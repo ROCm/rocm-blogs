@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: AI/ML, Generative AI, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Transforming Words into Motion: A Guide to Video Generation with AMD GPU"

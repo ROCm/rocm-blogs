@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: AI/ML, Generative AI, PyTorch, Tuning
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs"

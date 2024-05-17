@@ -5,7 +5,6 @@ author: Sean Song
 tags: LLM, AI/ML, Generative AI, Tuning
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Fine-tune Llama 2 with LoRA: Customizing a large language

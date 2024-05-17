@@ -5,12 +5,11 @@ author: Sean Miller, Rajat Arora, Gina Sitaraman, Maria Ruiz Varela
 tags: Memory
 category: Software tools & optimizations
 language: English
+html_meta:
+  "description lang=en": "AMD Instinct MI200 GPU memory space overview"
+  "keywords": "HPC, MI250, HMM, memory, unified, HBM, hardware"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="AMD Instinct MI200 GPU memory space overview">
-  <meta name="keywords" content="HPC, MI250, HMM, memory, unified, HBM, hardware">
-</head>
 
 # AMD Instinct™ MI200 GPU memory space overview
 

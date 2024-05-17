@@ -5,7 +5,6 @@ author: Fabricio Flores
 tags: LLM
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Step-by-Step Guide to OpenLLM on AMD GPUs"

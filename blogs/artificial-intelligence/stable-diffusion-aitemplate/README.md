@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: AI/ML, Generative AI, Stable Diffusion
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Efficient image generation with stable diffusion models and

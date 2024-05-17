@@ -5,7 +5,6 @@ author: Sean Song
 tags: AI/ML, Generative AI, Computer Vision, Natural Language Processing, Multimodal
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU"

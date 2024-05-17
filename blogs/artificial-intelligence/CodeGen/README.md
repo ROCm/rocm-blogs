@@ -5,7 +5,6 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Generative AI
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Program Synthesis with CodeGen"

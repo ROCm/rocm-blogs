@@ -5,7 +5,6 @@ author: Clint Greene
 tags: AI/ML, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Accelerating Large Language Models with Flash Attention on AMD GPUs"

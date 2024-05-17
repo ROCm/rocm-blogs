@@ -5,12 +5,11 @@ author: Mahdieh Ghazimirsaeed, Noel Chalmers, Damon McDougall
 tags: MPI, HPC, Scientific computing
 category: Software tools & optimizations
 language: English
+html_meta:
+  "description lang=en": "GPU-aware MPI with ROCm"
+  "keywords": "HPC, MI250, MPI, cray, mpich, openmpi, ROCm"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="GPU-aware MPI with ROCm">
-  <meta name="keywords" content="HPC, MI250, MPI, cray, mpich, openmpi, rocm">
-</head>
 
 # GPU-aware MPI with ROCm
 

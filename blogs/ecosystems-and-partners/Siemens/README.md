@@ -4,7 +4,6 @@ date: 16 May 2024
 tags: Partner Applications
 category: Ecosystems and Partners
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+"

@@ -5,7 +5,6 @@ author: Vara Lakshmi Bayanagari
 tags: C++, PyTorch, AI/ML
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "PyTorch C++ Extension on AMD hardware"

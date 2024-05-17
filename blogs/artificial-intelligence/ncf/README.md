@@ -5,7 +5,6 @@ author: Vara Lakshmi Bayanagari
 tags: TensorFlow, AI/ML, Neural Collaborative Filtering, recommendation systems, ranking
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Training a Neural Collaborative Filtering (NCF) Recommender on an AMD GPU"
