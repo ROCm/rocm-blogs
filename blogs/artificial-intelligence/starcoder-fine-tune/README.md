@@ -57,11 +57,13 @@ In this section, we will walk you through how to implement the LoRA fine-tuning 
 To enhance the efficiency of fine-tuning, in addition to employing the LoRA technique, we will incorporate the `bitsandbytes` package to optimize memory usage through quantization—a compression technique that reduces the precision of weights in large language models. Please use the code below to install it from the ROCmSoftwarePlatform GitHub repo:
 
 ```text
-git clone --recurse https://github.com/ROCmSoftwarePlatform/bitsandbytes
+git clone --recurse https://github.com/ROCm/bitsandbytes
 cd bitsandbytes
 git checkout rocm_enabled
-make hip
-python setup.py install
+pip install -r requirements-dev.txt
+cmake -DCOMPUTE_BACKEND=hip -S . #Use -DBNB_ROCM_ARCH="gfx90a;gfx942" to target specific gpu arch
+make
+pip install .
 cd ..
 ```
 
