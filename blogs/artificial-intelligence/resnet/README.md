@@ -5,7 +5,6 @@ author: Logan Grado
 tags: AI/ML, ResNet, PyTorch, Computer Vision
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "ResNet for image classification using AMD GPUs"

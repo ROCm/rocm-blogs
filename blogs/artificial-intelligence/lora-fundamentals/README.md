@@ -5,7 +5,6 @@ author: Sean Song
 tags: LLM, AI/ML, Generative AI, Tuning, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Using LoRA for efficient fine-tuning: Fundamental principles"

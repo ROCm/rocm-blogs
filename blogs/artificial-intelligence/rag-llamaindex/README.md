@@ -5,12 +5,11 @@ author: Clint Greene
 tags: LLM, AI/ML, RAG
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Retrieval Augmented Generation (RAG) using LlamaIndex"
+  "keywords": "RAG, Retrieval Augmented Generation, Prompt Engineering, LLMs, Large Language Models, AMD, GPU, MI300, MI250"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Retrieval Augmented Generation (RAG) using LlamaIndex">
-  <meta name="keywords" content="RAG, Retrieval Augmented Generation, Prompt Engineering, LLMs, Large Language Models, AMD, GPU, MI300, MI250">
-</head>
 
 # Retrieval Augmented Generation (RAG) using LlamaIndex
 

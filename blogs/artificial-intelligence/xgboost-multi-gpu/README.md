@@ -5,7 +5,6 @@ author: Clint Greene
 tags: LLM, AI/ML, Scientific computing
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Accelerating XGBoost with Dask using multiple AMD GPUs"

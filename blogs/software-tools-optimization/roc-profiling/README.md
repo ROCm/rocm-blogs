@@ -5,12 +5,11 @@ author: Fabricio Flores
 tags: Profiling, Tracing, HPC 
 category: Software tools & optimizations
 language: English
+html_meta:
+  "description lang=en": "AMD in Action: Unveiling the Power of Application Tracing and Profiling"
+  "keywords": "Profiling, Tracing, HPC, HIP, HSA, AMD, GPU, MI300, MI250, MI210"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="AMD in Action: Unveiling the Power of Application Tracing and Profiling">
-  <meta name="keywords" content="Profiling, Tracing, HPC, HIP, HSA, AMD, GPU, MI300, MI250, MI210">
-</head>
 
 # AMD in Action: Unveiling the Power of Application Tracing and Profiling
 

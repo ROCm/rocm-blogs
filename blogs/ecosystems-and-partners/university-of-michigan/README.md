@@ -4,7 +4,6 @@ date: 16 May 2024
 tags: Partner Applications
 category: Ecosystems and Partners
 language: English
-
 myst:
   html_meta:
     "description lang=en": "AMD Collaboration with the University of Michigan offers High Performance Open-Source Solutions to the Bioinformatics Community"

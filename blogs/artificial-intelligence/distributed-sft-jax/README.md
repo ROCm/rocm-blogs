@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: LLM, AI/ML, Generative AI, Tuning, Natural Language Processing
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "LLM distributed supervised fine-tuning with JAX"

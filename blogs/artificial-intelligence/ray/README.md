@@ -5,7 +5,6 @@ author: Vicky Tsang, Logan Grado, Eliot Li
 tags: LLM, AI/ML, Generative AI, Tuning, Stable Diffusion
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Scale AI applications with Ray"

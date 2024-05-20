@@ -5,7 +5,6 @@ author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel
 tags: Compiler, Linear Algebra, Memory, HPC, Optimization
 category: Software tools & optimizations
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Matrix cores"

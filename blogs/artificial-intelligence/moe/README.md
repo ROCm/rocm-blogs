@@ -5,12 +5,11 @@ author: Clint Greene
 tags: AI/ML, Mixtral, Mixture of Experts
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Inferencing with Mixtral 8x22B on AMD GPUs"
+  "keywords": "MOE, Mixture of Experts, Mixtral, AMD, GPU, MI300, MI250"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Inferencing with Mixtral 8x22B on AMD GPUs">
-  <meta name="keywords" content="MOE, Mixture of Experts, Mixtral, AMD, GPU, MI300, MI250">
-</head>
 
 # Inferencing with Mixtral 8x22B on AMD GPUs
 

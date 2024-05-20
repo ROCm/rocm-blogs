@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: LLM, AI/ML, Generative AI
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Efficient deployment of large language models with Hugging

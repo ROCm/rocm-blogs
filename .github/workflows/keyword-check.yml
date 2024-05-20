@@ -1,0 +1,39 @@
+# check all mark down files for correct keyword field
+
+name: checking-blog-keywords
+
+on:
+  push:
+    branches: 
+    - develop
+    - release
+    - 'docs/*'
+    - 'roc**'
+  pull_request:
+    branches: 
+    - develop
+    - release
+    - 'docs/*'
+    - 'roc**'
+
+jobs:
+  check-myst:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: setup python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install markdown
+      - name: Check for correct MyST field
+        run: |
+          python3 check-keywords.py

@@ -5,7 +5,6 @@ author: Sean Song
 tags: LLM, AI/ML, Generative AI, Tuning
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU"

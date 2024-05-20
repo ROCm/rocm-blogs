@@ -5,7 +5,6 @@ author: Eliot Li
 tags: AI/ML, Generative AI, Computer Vision
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Image classification using Vision Transformer with AMD GPUs"

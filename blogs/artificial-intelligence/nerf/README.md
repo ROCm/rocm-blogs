@@ -5,7 +5,6 @@ author: Vara Lakshmi Bayanagari
 tags: PyTorch, AI/ML, Generative AI, NeRF
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Two-dimensional images to three-dimensional scene mapping

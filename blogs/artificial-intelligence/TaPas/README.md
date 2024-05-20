@@ -1,18 +1,15 @@
 ---
 blogpost: true
 date: 26 Apr 2024
-
-
 author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Table Question-Answering with TaPas"
+  "keywords": "PyTorch, TaPas, LLM, Bert, AMD, GPU, MI300, MI250"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Table Question-Answering with TaPas">
-  <meta name="keywords" content="PyTorch, TaPas, LLM, Bert, AMD, GPU, MI300, MI250">
-</head>
 
 # Table Question-Answering with TaPas
 

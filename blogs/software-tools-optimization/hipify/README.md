@@ -5,12 +5,11 @@ author: Suyash Tandon, Maria Ruiz Varela, Gina Sitaraman, Bob Robey
 tags: Compiler, Installation, HPC, Optimization
 category: Software tools & optimizations
 language: English
+html_meta:
+  "description lang=en": "Application portability with HIP"
+  "keywords": "Compiler, Installation, HPC, Optimization"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Application portability with HIP">
-  <meta name="keywords" content="Compiler, Installation, HPC, Optimization">
-</head>
 
 <!---
 Copyright (c) 2024 Advanced Micro Devices, Inc. (AMD)

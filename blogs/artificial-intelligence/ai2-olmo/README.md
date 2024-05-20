@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: AI/ML, Generative AI, PyTorch, Stable Diffusion
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Inferencing with AI2's OLMo model on AMD GPU"

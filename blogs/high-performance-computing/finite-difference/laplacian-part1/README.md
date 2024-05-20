@@ -5,12 +5,11 @@ author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
 tags: HPC, Scientific computing
 category: Applications & models
 language: English
+html_meta:
+  "description lang=en": "Finite difference method - Laplacian Part 1"
+  "keywords": "HPC, finite difference, PDE, MI250, performance"
+  "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Finite difference method - Laplacian Part 1">
-  <meta name="keywords" content="HPC, finite difference, PDE, MI250, performance">
-</head>
 
 # Finite difference method - Laplacian part 1
 

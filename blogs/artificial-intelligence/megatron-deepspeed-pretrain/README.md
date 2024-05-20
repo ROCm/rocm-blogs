@@ -5,7 +5,6 @@ author: Douglas Jia
 tags: LLM, AI/ML, Tuning, PyTorch
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Pre-training a large language model with
@@ -73,7 +72,7 @@ machine-learning libraries and frameworks are adding AMD GPU support.
 To achieve the computational capabilities required for this task, we use the
 [AMD Accelerator Cloud (AAC)](https://aac.amd.com/), which is a platform that offers on-demand
 cloud computing resources and APIs. On AAC, we use a
-[PyTorch Docker container](https://hub.docker.com/r/rocm/pytorch) (version: rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1) with 8 GPUs.
+[PyTorch Docker container](https://hub.docker.com/r/rocm/pytorch) (version: rocm5.7_ubuntu22.04_py3.10_pytorch_2.0.1; we also tested version: rocm6.1_ubuntu22.04_py3.10_pytorch_2.1.2) with 8 GPUs.
 
 Our methods are hardware-agnostic, meaning that access to AAC is **not** a requirement for
 successfully running our code examples. As long as you have access to accelerator devices, such
@@ -89,30 +88,27 @@ PyTorch are installed correctly. Refer to the following two tutorials for instal
 First, install DeepSpeed (and other required packages) and clone the Megatron-DeepSpeed GitHub
 repository to your local (or to a server). You then need to download and pre-process the data set
 you'll use for pre-training. The cell blocks with `%%sh` represent Linux command line code. We use
-`/home/aac` for our home directory; replace this with your home directory when running the code.
+`/home/aac` for our home directory (or `/var/lib/jenkins` if pulling the docker directly from Docker Hub); replace this with your home directory when running the code.
 
 ```sh
 %%sh
 python -m pip install --upgrade pip
 
-#Install DeepSpeed
-home_dir=$PWD
+#Install DeepSpeed and other packages
+home_dir=/var/lib/jenkins
 cd $home_dir
-git clone --recursive https://github.com/microsoft/DeepSpeed.git
-cd DeepSpeed
-pip install .[dev,1bit,autotuning]
+pip install -U pip \
+    && pip3 install deepspeed transformers pybind11 nltk ipython matplotlib
 
 # Clone Megatron-DeepSpeed
 
 cd $home_dir
 git clone https://github.com/microsoft/Megatron-DeepSpeed.git
 cd Megatron-DeepSpeed
-pip3 install pybind11 nltk transformers
 
 # Install libaio-dev
 
-sudo apt-get update
-sudo apt-get -y install libaio-dev
+apt-get update && apt-get -y install libaio-dev rustc cargo
 
 # Download data set
 
@@ -158,7 +154,7 @@ configuration). Here is a list of configurations you may need to revise:
 * File paths in `data_options`
 
 Because ROCm doesn't currently support gradient accumulation fusion, you must add
-`--no-gradient-accumulation-fusion` to `megatron_options`. You can take a look at the [actual training script](https://github.com/microsoft/Megatron-DeepSpeed/compare/main...jiagaoxiang:Megatron-DeepSpeed:main) we used to gain an understanding of what needs to be revised and how to approach it.
+`--no-gradient-accumulation-fusion` to `megatron_options`. You can take a look at the [actual training script](https://github.com/microsoft/Megatron-DeepSpeed/compare/main...jiagaoxiang:Megatron-DeepSpeed:main#diff-878701810c6639f47c4db689d4a12a5dba196238e5c03d6c1dc7aa146d7388c6) we used to gain an understanding of what needs to be revised and how to approach it.
 
 ```sh
 %%sh

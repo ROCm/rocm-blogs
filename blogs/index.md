@@ -9,7 +9,7 @@
 
 <h2>Ecosystems and Partners</h2>
 
-::::{grid} 3
+::::{grid} 1 2 3 3
 :margin 1
 
 :::{grid-item-card} AMD and University of Michigan Collaboration
@@ -35,12 +35,11 @@ Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options fo
 :link-type: url
 
 :::
-
 ::::
 
 <h2>Applications & models </h2>
 
-::::{grid} 3
+::::{grid} 1 2 3 3
 :margin: 1
 
 :::{grid-item-card} LLM inference optimizations
@@ -95,7 +94,7 @@ AMD has been working with Ray to provide support on ROCm
 
 <h2>Software tools & optimizations</h2>
 
-::::{grid} 3
+::::{grid} 1 2 3 3
 :margin: 1
 
 :::{grid-item-card} Register pressure
@@ -144,7 +143,6 @@ Overview of the AMD Instinct MI200 memory space
 :link-type: url
 
 :::
-
 ::::
 
 <h2> Stay informed</h2>

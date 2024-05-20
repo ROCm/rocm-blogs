@@ -5,7 +5,6 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "Building a decoder transformer model"

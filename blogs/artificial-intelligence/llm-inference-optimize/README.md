@@ -5,7 +5,6 @@ author: Seungrok Jung
 tags: LLM, AI/ML, Generative AI, Tuning
 category: Applications & models
 language: English
-
 myst:
   html_meta:
     "description lang=en": "LLM Inference optimizations on AMD Instinct (TM) GPUs"
