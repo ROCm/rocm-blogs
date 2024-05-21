@@ -32,7 +32,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
-# Reading AMDGCN ISA
+# Reading AMD GPU ISA
 
 For an application developer it is often helpful to read the Instruction
 Set Architecture (ISA) for the GPU architecture that is used to perform its
@@ -262,7 +262,7 @@ please refer to
 ### Scratch/stack memory
 
 In the event of high register pressure in a kernel some of its data is stored
-in a special memory space, _Scratch_7 memory, that is private to the thread but
+in a special memory space, _Scratch_ memory, that is private to the thread but
 belongs to the global memory. This means the data access is slower than
 using register memory. Scratch memory does not use LDS and therefore
 scratch instructions do not use LDS bandwidth. These instructions only use
@@ -599,15 +599,17 @@ note the use of `dwordx2` for loading double type.
 
 ### Pragma unroll
 
-Compiler directive `pragma unroll` can be very effective in optimizing a kernel
-performance, for example, in reducing register pressure and improving
-occupancy. Adding `pragma unroll` on the first loop in baseline kernel shown
-below improves the kernel performance.
+Compiler directive `pragma unroll <unroll_factor>` can be very effective in
+optimizing a kernel performance by controlling the `<unroll_factor>`.
+Larger `unroll_factor` potentially can yield lower execution time, but
+it can lead to larger register pressure and reduced occupancy.
+For example, let us compare unroll factors of 8 with 32 on the first loop in
+an unroll kernel example below.
 
 <table>
 <tr>
-<th>Baseline kernel</th>
-<th>Pragma unroll optimization </th>
+<th>Baseline kernel (unroll factor=8)</th>
+<th>Optimized kernel (unroll factor=32) </th>
 </tr>
 <tr>
 <td>
@@ -621,6 +623,7 @@ __global__ void kernel_unroll(float* in, size_t fac)
     return;
 
   float temp[NITER];
+  #pragma unroll 8
   for (size_t it = 0; it < NITER; ++it)
     temp[it] = in[tid + it*fac];
 
@@ -663,21 +666,20 @@ The values of several variables common in these kernels are:
 #define NITER 128
 ```
 
-The kernel usage from the baseline kernel is shown below:
+The kernel usage from the baseline kernel (unroll factor of 8) is shown below:
 
 ```bash
 SGPRs: 22 [-Rpass-analysis=kernel-resource-usage]
-VGPRs: 85 [-Rpass-analysis=kernel-resource-usage]
+VGPRs: 21 [-Rpass-analysis=kernel-resource-usage]
 AGPRs: 0 [-Rpass-analysis=kernel-resource-usage]
 ScratchSize [bytes/lane]: 528 [-Rpass-analysis=kernel-resource-usage]
-Occupancy [waves/SIMD]: 5 [-Rpass-analysis=kernel-resource-usage]
+Occupancy [waves/SIMD]: 8 [-Rpass-analysis=kernel-resource-usage]
 SGPRs Spill: 0 [-Rpass-analysis=kernel-resource-usage]
 VGPRs Spill: 0 [-Rpass-analysis=kernel-resource-usage]
 LDS Size [bytes/block]: 0 [-Rpass-analysis=kernel-resource-usage]
 ```
 
-With `pragma unroll` compiler optimization, we notice about two-fold reduction
-in VGPRs and improved occupancy of 8 waves/SIMD (100%) from 5 waves/SIMD.
+With unroll factor of 32, we notice about two-fold increase in VGPRs.
 
 ```bash
 SGPRs: 22 [-Rpass-analysis=kernel-resource-usage]
@@ -691,11 +693,11 @@ LDS Size [bytes/block]: 0 [-Rpass-analysis=kernel-resource-usage]
 ```
 
 If we look at the ISA source code `*.s` of the baseline code, the biggest
-`global_load_dword` VGPR index is v84, which corresponds to 85 VGPRs.
+`global_load_dword` VGPR index is v20, which corresponds to 21 VGPRs.
 
 ```bash
 ...
-global_load_dword v84, v[46:47], off
+global_load_dword v20, v[8:9], off
 ...
 ```
 
@@ -713,9 +715,10 @@ Please note that with the pragma unroll of size 32, the ISA will show only
 the loop has `niter = 128`. The pragma unrolled kernel simply performs the 128
 global loads over 4 such passes with 32 global loads in each pass.
 
-However, we have to be careful about too large a pragma unroll size.
-For example, unroll size of 64 leads to greater register (VGPRs) usage and
-reduced occupancy of 6 waves/SIMD compared to a unroll size of 32. This is
+Continueing the loop unroll discussion,
+we have to be careful about too large a pragma unroll size.
+For example, an unroll size of 64 leads to greater register (VGPRs) usage and
+reduced occupancy of 6 waves/SIMD compared to an unroll size of 32. This is
 clear from its kernel usage summary shown below:
 
 ```bash
@@ -737,6 +740,14 @@ is v73, corresponding to 74 VPGRs:
 global_load_dword v73, v[10:11], off
 ...
 ```
+
+> **Warning**
+> Sometimes a compiler might use loop unrolling by default for optimization.
+> This may lead to large register usage and potentially lower occupancy.
+> In the above example, not including any pragma unroll directive
+> still leads to pragma unroll factor of 128 due to compiler optimization
+> with rocm/6.1.0. This results in larger register usage of 85 VGPRs and lower
+> occupancy of 5 waves/SIMD.
 
 Note that the above example has large scratch allocations (528 bytes/thread).
 This is not surprising since the kernel uses a large stack array
