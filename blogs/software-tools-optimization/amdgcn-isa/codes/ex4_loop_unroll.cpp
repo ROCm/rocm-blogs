@@ -13,8 +13,9 @@ __global__ void kernel_unroll(float* in, size_t fac)
   float temp[NITER];
 
   // No pragma unroll results in the largest s/vgprs + lowest occupancy.
-  // Unroll up to 32 leads to lower vgprs and better occupancy.
-  // Unroll 64 or more leads to larger s/vgpr, and lower occupancy.
+  //  - This is because compiler still defaults to unroll factor of 128
+  // Unroll factor = 1 leads to lowest vgprs and better occupancy.
+  // Unroll factor >=64 leads to larger vgprs and lower occupancy.
   #pragma unroll 32
   for (size_t it = 0; it < NITER; ++it)
     temp[it] = in[tid + it*fac];
