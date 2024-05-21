@@ -1,7 +1,7 @@
 # yaml for checking tags
 # check ONLY the file being updated ends in .md
 
-name: linting-blogs-tags
+name: Linting
 
 on:
   push:
@@ -20,6 +20,7 @@ on:
 # the tags should be like: tags: A, B, C, strip into A B C
 jobs:
   check-tags:
+    name: Blogs / Tags
     runs-on: ubuntu-latest
     strategy:
       matrix:
