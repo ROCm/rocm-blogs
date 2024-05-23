@@ -63,6 +63,7 @@ templates_path = ["."]
 
 html_sidebars = {
     "**": [
+        "search-field.html",
         "postcard.html",
         "./templates/recentposts.html",
         "tagcloud.html",
