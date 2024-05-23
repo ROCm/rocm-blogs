@@ -63,6 +63,7 @@ templates_path = ["."]
 
 html_sidebars = {
     "**": [
+        "search-field.html",
         "postcard.html",
         "./templates/recentposts.html",
         "tagcloud.html",
@@ -115,6 +116,10 @@ blog_authors = {
 "Gina Sitaraman": (
         "Gina Sitaraman",
         "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
+),
+"Hari Sadasivan": (
+        "Hari Sadasivan",
+        "http://rocm.blogs.amd.com/authors/hari-sadasivan.html",
 ),
 "Justin Chang": (
         "Justin Chang",

@@ -2,7 +2,7 @@
 blogpost: true
 date: 24 Apr 2024
 author: Douglas Jia
-tags: AI/ML, Generative AI, PyTorch
+tags: AI/ML, GenAI, PyTorch
 category: Applications & models
 language: English
 myst:

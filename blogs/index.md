@@ -31,7 +31,7 @@ Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options fo
 
 :::{grid-item-card} More ...
 :padding: 1
-:link: ./blog/category/ecosystem-and-partners.html
+:link: ./blog/category/ecosystems-and-partners.html
 :link-type: url
 
 :::

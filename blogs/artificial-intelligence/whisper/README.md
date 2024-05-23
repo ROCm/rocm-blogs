@@ -2,7 +2,7 @@
 blogpost: true
 date: 16 Apr 2024
 author: Clint Greene
-tags: AI/ML, Whisper, Speech to Text
+tags: AI/ML, Speech, Computer Vision
 category: Applications & models
 language: English
 myst:

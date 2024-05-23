@@ -2,7 +2,7 @@
 blogpost: true
 date: 15 April 2024
 author: Sean Song
-tags: LLM, AI/ML, Generative AI, Tuning
+tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
 myst:

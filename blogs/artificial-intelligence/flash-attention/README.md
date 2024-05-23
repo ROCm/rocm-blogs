@@ -2,7 +2,7 @@
 blogpost: true
 date: 15 May 2024
 author: Clint Greene
-tags: AI/ML, PyTorch
+tags: AI/ML, PyTorch, LLM
 category: Applications & models
 language: English
 myst:

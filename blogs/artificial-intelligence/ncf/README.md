@@ -2,7 +2,7 @@
 blogpost: true
 date: 30 Apr 2024
 author: Vara Lakshmi Bayanagari
-tags: TensorFlow, AI/ML, Neural Collaborative Filtering, recommendation systems, ranking
+tags: TensorFlow, AI/ML, recommendation systems
 category: Applications & models
 language: English
 myst:

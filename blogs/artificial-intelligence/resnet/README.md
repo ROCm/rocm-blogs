@@ -2,7 +2,7 @@
 blogpost: true
 date: 9 April 2024
 author: Logan Grado
-tags: AI/ML, ResNet, PyTorch, Computer Vision
+tags: AI/ML, Reinforcement Learning, PyTorch, Computer Vision
 category: Applications & models
 language: English
 myst:

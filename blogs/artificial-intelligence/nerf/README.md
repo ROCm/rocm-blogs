@@ -2,7 +2,7 @@
 blogpost: true
 date: 7 Feb 2024
 author: Vara Lakshmi Bayanagari
-tags: PyTorch, AI/ML, Generative AI, NeRF
+tags: PyTorch, AI/ML, GenAI
 category: Applications & models
 language: English
 myst:

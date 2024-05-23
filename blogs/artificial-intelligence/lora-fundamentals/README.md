@@ -2,7 +2,7 @@
 blogpost: true
 date: 5 Feb 2024
 author: Sean Song
-tags: LLM, AI/ML, Generative AI, Tuning, PyTorch
+tags: LLM, AI/ML, GenAI, Fine-Tuning, PyTorch
 category: Applications & models
 language: English
 myst:

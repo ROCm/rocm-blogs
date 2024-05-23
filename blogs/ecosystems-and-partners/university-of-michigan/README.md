@@ -1,6 +1,7 @@
 ---
 blogpost: true
 date: 16 May 2024
+author: Hari Sadasivan, Gina Sitaraman
 tags: Partner Applications
 category: Ecosystems and Partners
 language: English

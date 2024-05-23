@@ -2,7 +2,7 @@
 blogpost: true
 date: 24 Jan 2024
 author: Douglas Jia
-tags: LLM, AI/ML, Generative AI
+tags: LLM, AI/ML, GenAI
 category: Applications & models
 language: English
 myst:

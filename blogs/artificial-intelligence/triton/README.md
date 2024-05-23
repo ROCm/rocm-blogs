@@ -2,7 +2,7 @@
 blogpost: true
 date: 15 Apr 2024
 author: Clint Greene
-tags: AI/ML, Triton, Kernel
+tags: AI/ML
 category: Applications & models
 language: English
 myst:

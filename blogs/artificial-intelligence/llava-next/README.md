@@ -2,7 +2,7 @@
 blogpost: true
 date: 26 Apr 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Multimodal, Fine-Tuning, LLM
 category: Applications & models
 language: English
 html_meta:

@@ -2,13 +2,13 @@
 blogpost: true
 date: 8 Feb 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
 myst:
   html_meta:
     "description lang=en": "Simplifying deep learning: A guide to PyTorch Lightning"
-    "keywords": "PyTorch, PyTorch Lightning, train models, Tuning"
+    "keywords": "PyTorch, PyTorch Lightning, train models, Tuning, Fine-Tuning"
     "property=og:locale": "en_US"
 ---
 

@@ -2,7 +2,7 @@
 blogpost: true
 date: 24 Jan 2024
 author: Douglas Jia
-tags: LLM, AI/ML, Tuning, PyTorch
+tags: LLM, AI/ML, Fine-Tuning, PyTorch
 category: Applications & models
 language: English
 myst:

@@ -2,7 +2,7 @@
 blogpost: true
 date: 17 Apr 2024
 author: Douglas Jia
-tags: AI/ML, Generative AI, PyTorch, Stable Diffusion
+tags: AI/ML, GenAI, PyTorch, Diffusion Model, LLM
 category: Applications & models
 language: English
 myst:
