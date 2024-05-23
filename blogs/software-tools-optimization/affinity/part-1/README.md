@@ -2,7 +2,7 @@
 blogpost: true
 date: 16 Apr 2024
 author: Gina Sitaraman, Bob Robey, George Markomanolis 
-tags: HPC, Memory, MPI, OpenMP, Performance, Tuning, NUMA
+tags: HPC, Memory, OpenMP, Performance, System-Tuning
 category: Software tools & optimizations
 language: English
 myst:

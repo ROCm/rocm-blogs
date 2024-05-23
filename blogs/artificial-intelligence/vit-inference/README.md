@@ -2,7 +2,7 @@
 blogpost: true
 date: 4 Apr 2024
 author: Eliot Li
-tags: AI/ML, Generative AI, Computer Vision
+tags: AI/ML, GenAI, Computer Vision
 category: Applications & models
 language: English
 myst:

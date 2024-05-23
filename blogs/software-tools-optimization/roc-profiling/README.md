@@ -2,7 +2,7 @@
 blogpost: true
 date: 7 May 2024
 author: Fabricio Flores
-tags: Profiling, Tracing, HPC 
+tags: Profiling, HPC 
 category: Software tools & optimizations
 language: English
 html_meta:

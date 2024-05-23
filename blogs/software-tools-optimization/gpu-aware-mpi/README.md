@@ -2,7 +2,7 @@
 blogpost: true
 date: 8 Jun 2023
 author: Mahdieh Ghazimirsaeed, Noel Chalmers, Damon McDougall
-tags: MPI, HPC, Scientific computing
+tags: HPC, Scientific computing
 category: Software tools & optimizations
 language: English
 html_meta:

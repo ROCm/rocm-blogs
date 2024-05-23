@@ -2,7 +2,7 @@
 blogpost: true
 date: 1 May 2024
 author: Fabricio Flores
-tags: LLM
+tags: LLM, Serving
 category: Applications & models
 language: English
 myst:

@@ -2,7 +2,7 @@
 blogpost: true
 date: 16 Apr 2024
 author: Douglas Jia
-tags: AI/ML, Generative AI, PyTorch, Tuning
+tags: AI/ML, GenAI, PyTorch, Fine-Tuning
 category: Applications & models
 language: English
 myst:

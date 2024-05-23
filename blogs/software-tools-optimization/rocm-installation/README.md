@@ -2,7 +2,7 @@
 blogpost: true
 date: 26 Jan 2023
 author: David Doscher
-tags: HPC
+tags: HPC, Installation
 category: Software tools & optimizations
 language: English
 html_meta:

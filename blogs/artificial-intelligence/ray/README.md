@@ -2,13 +2,13 @@
 blogpost: true
 date: 1 Apr 2024
 author: Vicky Tsang, Logan Grado, Eliot Li
-tags: LLM, AI/ML, Generative AI, Tuning, Stable Diffusion
+tags: LLM, AI/ML, GenAI, Fine-Tuning, Diffusion Model
 category: Applications & models
 language: English
 myst:
   html_meta:
     "description lang=en": "Scale AI applications with Ray"
-    "keywords": "AMD GPU, ROCm, Model Serving, Ray, ML Platform, Workload Orchestration, Generative AI, Tuning"
+    "keywords": "AMD GPU, ROCm, Model Serving, Ray, ML Platform, Workload Orchestration, Generative AI, Tuning, Stable Diffusion, Fine-Tuning, GenAI"
     "property=og:locale": "en_US"
 ---
 

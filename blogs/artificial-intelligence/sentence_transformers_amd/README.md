@@ -2,7 +2,7 @@
 blogpost: true
 date: 4 Apr 2024
 author: Fabricio Flores
-tags: LLM, AI/ML, Generative AI
+tags: LLM, AI/ML, GenAI, Computer Vision
 category: Applications & models
 language: English
 myst:

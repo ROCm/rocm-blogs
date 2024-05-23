@@ -2,7 +2,7 @@
 blogpost: true
 date: 29 March 2024
 author: Logan Grado
-tags: PyTorch, Mixed Precision
+tags: PyTorch, AI/ML
 category: Applications & models
 language: English
 myst:

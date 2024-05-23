@@ -2,14 +2,14 @@
 blogpost: true
 date: 11 Mar 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
 myst:
   html_meta:
     "description lang=en": "Question-answering Chatbot with LangChain"
     "Author": "Phillip Dang"
-    "keywords": "PyTorch, LangChain, Chatbot, RAG, FAISS, AMD, GPU, MI300, MI250, Tuning"
+    "keywords": "PyTorch, LangChain, Chatbot, RAG, FAISS, AMD, GPU, MI300, MI250, Tuning, Fine-Tuning"
     "property=og:locale": "en_US"
 ---
 

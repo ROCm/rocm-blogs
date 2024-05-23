@@ -2,7 +2,7 @@
 blogpost: true
 date: 11 Apr 2024
 author: Douglas Jia
-tags: AI/ML, PyTorch
+tags: AI/ML, PyTorch, Reinforcement Learning
 category: Applications & models
 language: English
 myst:

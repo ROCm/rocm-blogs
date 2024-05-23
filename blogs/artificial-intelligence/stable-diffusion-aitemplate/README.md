@@ -2,7 +2,7 @@
 blogpost: true
 date: 24 Jan 2024
 author: Douglas Jia
-tags: AI/ML, Generative AI, Stable Diffusion
+tags: AI/ML, GenAI, Diffusion Model
 category: Applications & models
 language: English
 myst:

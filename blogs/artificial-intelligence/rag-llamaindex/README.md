@@ -2,7 +2,7 @@
 blogpost: true
 date: 04 Apr 2024
 author: Clint Greene
-tags: LLM, AI/ML, RAG
+tags: LLM, AI/ML
 category: Applications & models
 language: English
 html_meta:

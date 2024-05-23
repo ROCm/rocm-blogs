@@ -2,7 +2,7 @@
 blogpost: true
 date: 16 Apr 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Generative AI
+tags: PyTorch, AI/ML, GenAI
 category: Applications & models
 language: English
 myst:

@@ -2,7 +2,7 @@
 blogpost: true
 date: 3 Nov 2023
 author: Paul Mullowney
-tags: Scientific computing, HPC, Memory
+tags: Scientific computing, HPC, Memory, Linear Algebra
 category: Applications & models
 language: English
 html_meta:
