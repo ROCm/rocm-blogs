@@ -746,7 +746,8 @@ global_load_dword v73, v[10:11], off
 > This may lead to large register usage and potentially lower occupancy.
 > In the above example, not including any pragma unroll directive
 > still leads to pragma unroll factor of 128 due to compiler optimization
-> with rocm/6.1.0. This results in larger register usage of 85 VGPRs and lower
+> with rocm/6.1.0 on MI250, for example.
+> This results in larger register usage of 85 VGPRs and lower
 > occupancy of 5 waves/SIMD.
 
 Note that the above example has large scratch allocations (528 bytes/thread).
