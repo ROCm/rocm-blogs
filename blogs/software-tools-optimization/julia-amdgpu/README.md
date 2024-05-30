@@ -3,7 +3,7 @@ blogpost: true
 date: 16 Apr 2024
 author: Anton Smirnov
 tags: Julia, HPC, AI/ML
-category: Software tools & optimizations
+category: Ecosystems and Partners
 language: English
 myst:
   html_meta:
@@ -262,3 +262,9 @@ here are just a few of them that have support for AMD GPUs:
 
 [AMDGPU.jl](https://github.com/JuliaGPU/AMDGPU.jl) supports both
 Linux and Windows OS and a wide range of devices!
+
+## Acknowledgements
+
+Special thanks to the Anton Smirnov and the Julia community for contributing this blog. The ROCm software
+ecosystem is strengthened by community projects such as Julia that enable you to use AMD GPUs in new ways.
+If you have a project you would like to share here, please raise an issue or PR.
