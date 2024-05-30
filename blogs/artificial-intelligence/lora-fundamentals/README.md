@@ -74,17 +74,18 @@ figure.
 
 ## Train a neural network using the LoRA technique
 
-Our goal is to train a neural network for the classification of the MNIST database of handwritten digits.
-We then fine-tune this network to improve its performance for a category in which it doesn't initially
-perform well.
+In this blog, we utilize the [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html) dataset to train a basic image classifier from scratch using several epochs. Following that, we further train the model with LoRA, illustrating the advantages of incorporating LoRA into the training process.
 
-* Hardware: AMD Instinct GPU
+### Setup
+
+This demo was creating using the following settings. For comprehensive support details, please refer to the [ROCm documentation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/).
+
+* Hardware & OS:
+  * [AMD Instinct GPU](https://www.amd.com/en/products/accelerators/instinct.html)
+  * Ubuntu 22.04.3 LTS
 * Software:
-  * [ROCm 5.7+](https://github.com/RadeonOpenCompute/ROCm)
-  * [PyTorch 1.7.0+](https://pytorch.org/)
-  * tqdm
-
-The code utilized in this blog post includes contributions sourced from [LoRA implementation](https://github.com/hkproj/pytorch-lora/blob/main/lora.ipynb), with due credit attributed to Umar Jamil.
+  * [ROCm 5.7.0+](https://rocm.docs.amd.com/en/latest/)
+  * [Pytorch 2.0+](https://pytorch.org/)
 
 ### Getting started
 
@@ -92,381 +93,434 @@ The code utilized in this blog post includes contributions sourced from [LoRA im
 
     ```python
     import torch
-    import torchvision.datasets as datasets
+    import torchvision
     import torchvision.transforms as transforms
-    import torch.nn as nn
-    from tqdm import tqdm
     ```
 
-2. Sets the seed for generating random numbers to make the model deterministic.
+2. Load the dataset and set the device.
 
     ```python
-    # Make torch deterministic
-    _ = torch.manual_seed(0)
-    ```
+    # 10 classes from CIFAR10 dataset
+    classes = ('airplane', 'automobile', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
 
-3. Load the data set.
+    # batch size
+    batch_size = 8
 
-    ```python
-    transform = transforms.Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
+    # image preprocessing
+    preprocessor = transforms.Compose(
+        [transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
 
-    # Load the MNIST data set
-    mnist_trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-    # Create a dataloader for the training
-    train_loader = torch.utils.data.DataLoader(mnist_trainset, batch_size=10, shuffle=True)
-
-    # Load the MNIST test set
-    mnist_testset = datasets.MNIST(root='./data', train=False, download=True, transform=transform)
-    test_loader = torch.utils.data.DataLoader(mnist_testset, batch_size=10, shuffle=True)
+    # training dataset
+    train_set = torchvision.datasets.CIFAR10(root='./dataset', train=True,
+                                            download=True, transform=preprocessor)
+    train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size,
+                                            shuffle=True, num_workers=8)
+    # test dataset
+    test_set = torchvision.datasets.CIFAR10(root='./dataset', train=False,
+                                        download=True, transform=preprocessor)
+    test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size,
+                                            shuffle=False, num_workers=8)
 
     # Define the device
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     ```
 
-4. Create the neural network to classify the digits (we used code that makes it more complicated in
-    order to better showcase LoRA).
+3. Display some samples from the dataset.
 
     ```python
-    # Create an overly expensive neural network to classify MNIST digits
-    # Daddy got money, so I don't care about efficiency
-    class RichBoyNet(nn.Module):
-        def __init__(self, hidden_size_1=1000, hidden_size_2=2000):
-            super(RichBoyNet,self).__init__()
-            self.linear1 = nn.Linear(28*28, hidden_size_1)
-            self.linear2 = nn.Linear(hidden_size_1, hidden_size_2)
-            self.linear3 = nn.Linear(hidden_size_2, 10)
-            self.relu = nn.ReLU()
+    import matplotlib.pyplot as plt
+    import numpy as np
 
-        def forward(self, img):
-            x = img.view(-1, 28*28)
-            x = self.relu(self.linear1(x))
-            x = self.relu(self.linear2(x))
-            x = self.linear3(x)
+    # helper function to display image
+    def image_display(images):
+        # get the original image
+        images = images * 0.5 + 0.5
+        plt.imshow(np.transpose(images.numpy(), (1, 2, 0)))
+        plt.axis('off')
+        plt.show()
+
+    # get a batch of images
+    images, labels = next(iter(train_loader))
+    # display images
+    image_display(torchvision.utils.make_grid(images))
+    # show ground truth labels
+    print('Ground truth labels: ', ' '.join(f'{classes[labels[j]]}' for j in range(images.shape[0])))
+    ```
+
+    Output:
+
+    ![png](./images/output_17_0.png)
+
+    ```text
+    Ground truth labels:  cat ship ship airplane frog frog automobile frog
+    ```
+
+4. Create a basic three-layer neural network for image classification, focusing on simplicity to clearly illustrate the LoRA effect.
+
+    ```python
+    import torch.nn as nn
+    import torch.nn.functional as F
+
+    class net(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.fc1 = nn.Linear(3*32*32, 4096)
+            self.fc2 = nn.Linear(4096, 2048)
+            self.fc3 = nn.Linear(2048, 10)
+
+        def forward(self, x):
+            x = torch.flatten(x, 1)
+            x = F.relu(self.fc1(x))
+            x = F.relu(self.fc2(x))
+            x = self.fc3(x)
             return x
 
-    net = RichBoyNet().to(device)
+    # move the model to device
+    classifier = net().to(device)
     ```
 
-5. Train the network for one epoch to simulate a complete general pre-training on the data. This
-    process takes seconds on an AMD Instinct GPU.
+5. Train the model.
+
+    We use [cross-entropy](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) loss and [Adam](https://pytorch.org/docs/stable/generated/torch.optim.Adam.html) for the loss function and optimizer.
 
     ```python
-    def train(train_loader, net, epochs=5, total_iterations_limit=None):
-        cross_el = nn.CrossEntropyLoss()
-        optimizer = torch.optim.Adam(net.parameters(), lr=0.001)
+    import torch.optim as optim
 
-        total_iterations = 0
+    def train(train_loader, classifier, start_epoch = 0, epochs=1, device="cuda:0"):
+        classifier = classifier.to(device)
+        classifier.train()
+        criterion = nn.CrossEntropyLoss()
+        optimizer = optim.Adam(classifier.parameters(), lr=0.001)
+        
+        for epoch in range(epochs):  # training loop
 
-        for epoch in range(epochs):
-            net.train()
-
-            loss_sum = 0
-            num_iterations = 0
-
-            data_iterator = tqdm(train_loader, desc=f'Epoch {epoch+1}')
-            if total_iterations_limit is not None:
-                data_iterator.total = total_iterations_limit
-            for data in data_iterator:
-                num_iterations += 1
-                total_iterations += 1
-                x, y = data
-                x = x.to(device)
-                y = y.to(device)
+            loss_log = 0.0
+            for i, data in enumerate(train_loader, 0):
+                inputs, labels = data[0].to(device), data[1].to(device)
+                # Resets the parameter gradients
                 optimizer.zero_grad()
-                output = net(x.view(-1, 28*28))
-                loss = cross_el(output, y)
-                loss_sum += loss.item()
-                avg_loss = loss_sum / num_iterations
-                data_iterator.set_postfix(loss=avg_loss)
+        
+                outputs = classifier(inputs)
+                loss = criterion(outputs, labels)
                 loss.backward()
                 optimizer.step()
-
-                if total_iterations_limit is not None and total_iterations >= total_iterations_limit:
-                    return
-
-    train(train_loader, net, epochs=1)
+        
+                # print loss after every 1000 mini-batches
+                loss_log += loss.item()
+                if i % 2000 == 1999:    
+                    print(f'[{start_epoch + epoch}, {i+1:5d}] loss: {loss_log / 2000:.3f}')
+                    loss_log = 0.0
     ```
 
-    Epoch 1: 100%|██████████| 6000/6000 [00:20<00:00, 299.74it/s, loss=0.237]
-
-    > [!TIP]
-    > Keep a copy of the original weights (clone them) in order to see that the original weights weren't
-    > altered after fine-tuning.
+    Start to train the model.
 
     ```python
-    original_weights = {}
-    for name, param in net.named_parameters():
-        original_weights[name] = param.clone().detach()
+    import time
+
+    start_epoch = 0
+    epochs = 1
+    # warm up the gpu with one epoch
+    train(train_loader, classifier, start_epoch=start_epoch, epochs=epochs, device=device)
+
+    # run another epoch to record the time
+    start_epoch += epochs
+    epochs = 1
+    start = time.time()
+    train(train_loader, classifier, start_epoch=start_epoch, epochs=epochs, device=device)
+    torch.cuda.synchronize()
+    end = time.time()
+    train_time = (end - start)
+
+    print(f"One epoch takes {train_time:.3f} seconds")
     ```
 
-### Fine-tuning
+    Output:
 
-1. Choose a digit to fine-tune. The pre-trained network performs poorly on digit 9, so we'll fine-tune
-   this.
+    ```text
+        [0,  2000] loss: 1.987
+        [0,  4000] loss: 1.906
+        [0,  6000] loss: 1.843
+        [1,  2000] loss: 1.807
+        [1,  4000] loss: 1.802
+        [1,  6000] loss: 1.782
+        One epoch takes 31.896 seconds
+    ```
+
+    It takes around 31 seconds for one epoch.
+
+    Save the model.
 
     ```python
-    def test():
+    model_path = './classifier_cira10.pth'
+    torch.save(classifier.state_dict(), model_path)
+    ```
+
+    We will train the same model with LoRA applied later and check how long it takes to train with one epoch.
+
+6. Load the saved model and have a quick test.
+
+    ```python
+    # Prepare the test data.
+    images, labels = next(iter(test_loader))
+    # display the test images
+    image_display(torchvision.utils.make_grid(images))
+    # show ground truth labels
+    print('Ground truth labels: ', ' '.join(f'{classes[labels[j]]}' for j in range(images.shape[0])))
+
+    # Load the saved model and have a test
+    model = net()
+    model.load_state_dict(torch.load(model_path))
+    model = model.to(device)
+    images = images.to(device)
+    outputs = model(images)
+    _, predicted = torch.max(outputs, 1)
+
+    print('Predicted: ', ' '.join(f'{classes[predicted[j]]}'
+                                for j in range(images.shape[0])))
+    ```
+
+    Output:
+
+    ![png](./images/output_17_0.png)
+
+    ```text
+    Ground truth labels:  cat ship ship airplane frog frog automobile frog
+    Predicted:  deer truck airplane ship deer frog automobile bird
+    ```
+
+    We observe that training the model for only two epochs does not produce a satisfactory outcome. Let's examine how the model performs on the entire test dataset.
+
+    ```python
+    def test(model, test_loader, device):
+        model=model.to(device)
+        model.eval()
         correct = 0
         total = 0
-
-        wrong_counts = [0 for i in range(10)]
-
         with torch.no_grad():
-            for data in tqdm(test_loader, desc='Testing'):
-                x, y = data
-                x = x.to(device)
-                y = y.to(device)
-                output = net(x.view(-1, 784))
-                for idx, i in enumerate(output):
-                    if torch.argmax(i) == y[idx]:
-                        correct +=1
-                    else:
-                        wrong_counts[y[idx]] +=1
-                    total +=1
-        print(f'Accuracy: {round(correct/total, 3)}')
-        for i in range(len(wrong_counts)):
-            print(f'wrong counts for the digit {i}: {wrong_counts[i]}')
+            for data in test_loader:
+                images, labels = data[0].to(device), data[1].to(device)
+                # images = images.to(device)
+                # labels = labels.to(device)
+                # inference
+                outputs = model(images)
+                # get the best prediction
+                _, predicted = torch.max(outputs.data, 1)
+                
+                total += labels.size(0)
+                correct += (predicted == labels).sum().item()
+        
+        print(f'Accuracy of the given model on the {total} test images is {100 * correct // total} %')
 
-    test()
+    test(model, test_loader, device)
     ```
 
-    ```bash
-        Testing: 100%|██████████| 1000/1000 [00:02<00:00, 497.86it/s]
+   Output:
 
-        Accuracy: 0.951
-        wrong counts for the digit 0: 35
-        wrong counts for the digit 1: 31
-        wrong counts for the digit 2: 26
-        wrong counts for the digit 3: 81
-        wrong counts for the digit 4: 34
-        wrong counts for the digit 5: 15
-        wrong counts for the digit 6: 74
-        wrong counts for the digit 7: 67
-        wrong counts for the digit 8: 11
-        wrong counts for the digit 9: 116
+    ```text
+        Accuracy of the given model on the 10000 test images is 32 %
     ```
 
-2. Visualize how many parameters are in the original network before introducing the LoRA matrices.
+    This outcome suggests that there is significant potential to improve the model through further training. In the following sections, we will apply LoRA to the model and continue the training using this approach.
+
+7. Apply LoRA to the model.
+
+    Define helper functions used to apply LoRA to the model.
 
     ```python
-    # Print the size of the weights matrices of the network
-    # Save the count of the total number of parameters
-    total_parameters_original = 0
-    for index, layer in enumerate([net.linear1, net.linear2, net.linear3]):
-        total_parameters_original += layer.weight.nelement() + layer.bias.nelement()
-        print(f'Layer {index+1}: W: {layer.weight.shape} + B: {layer.bias.shape}')
-    print(f'Total number of parameters: {total_parameters_original:,}')
-    ```
-
-    ```python
-        Layer 1: W: torch.Size([1000, 784]) + B: torch.Size([1000])
-        Layer 2: W: torch.Size([2000, 1000]) + B: torch.Size([2000])
-        Layer 3: W: torch.Size([10, 2000]) + B: torch.Size([10])
-        Total number of parameters: 2,807,010
-    ```
-
-3. Define the LoRA parameterization.
-
-    ```python
-    class LoRAParametrization(nn.Module):
+    class ParametrizationWithLoRA(nn.Module):
         def __init__(self, features_in, features_out, rank=1, alpha=1, device='cpu'):
             super().__init__()
-            # Section 4.1 of the paper:
-            # We use a random Gaussian initialization for A and zero for B, so ∆W = BA is zero at the
-            # beginning of training
-            self.lora_A = nn.Parameter(torch.zeros((rank,features_out)).to(device))
-            self.lora_B = nn.Parameter(torch.zeros((features_in, rank)).to(device))
-            nn.init.normal_(self.lora_A, mean=0, std=1)
 
-            # Section 4.1 of the paper:
-            # We then scale ∆Wx by α/r , where α is a constant in r.
-            # When optimizing with Adam, tuning α is roughly the same as tuning the learning rate if we
-            # scale the initialization appropriately.
-            # As a result, we simply set α to the first r we try and do not tune it.
-            # This scaling helps to reduce the need to retune hyperparameters when we vary r.
+            # Create A B and scale used in ∆W = BA x α/r
+            self.lora_weights_A = nn.Parameter(torch.zeros((rank,features_out)).to(device))
+            nn.init.normal_(self.lora_weights_A, mean=0, std=1)
+            self.lora_weights_B = nn.Parameter(torch.zeros((features_in, rank)).to(device))
             self.scale = alpha / rank
+            
             self.enabled = True
 
         def forward(self, original_weights):
             if self.enabled:
-                # Return W + (B*A)*scale
-                return original_weights + torch.matmul(self.lora_B, self.lora_A).view(original_weights.shape) * self.scale
+                return original_weights + torch.matmul(self.lora_weights_B, self.lora_weights_A).view(original_weights.shape) * self.scale
             else:
                 return original_weights
-    ```
 
-4. Add the parameterization to our network. You can learn more about
-   [PyTorch parametrizations](https://pytorch.org/tutorials/intermediate/parametrizations.html) on
-   PyTorch.org.
-
-    ```python
-    import torch.nn.utils.parametrize as parametrize
-
-    def linear_layer_parameterization(layer, device, rank=1, lora_alpha=1):
-        # Only add the parameterization to the weight matrix, ignore the Bias
-
-        # From section 4.2 of the paper:
-        # We limit our study to only adapting the attention weights for downstream tasks and freeze the
-        # MLP modules (so they are not trained in downstream tasks) both for simplicity and
-        # parameter-efficiency.
-        # [...]
-        # We leave the empirical investigation of [...], and biases to a future work.
-
+    def apply_parameterization_lora(layer, device, rank=1, alpha=1):
+        """
+        Apply loRA to a given layer
+        """
         features_in, features_out = layer.weight.shape
-        return LoRAParametrization(
-            features_in, features_out, rank=rank, alpha=lora_alpha, device=device
+        return ParametrizationWithLoRA(
+            features_in, features_out, rank=rank, alpha=alpha, device=device
         )
-
-    parametrize.register_parametrization(
-        net.linear1, "weight", linear_layer_parameterization(net.linear1, device)
-    )
-    parametrize.register_parametrization(
-        net.linear2, "weight", linear_layer_parameterization(net.linear2, device)
-    )
-    parametrize.register_parametrization(
-        net.linear3, "weight", linear_layer_parameterization(net.linear3, device)
-    )
-
-
-    def enable_disable_lora(enabled=True):
-        for layer in [net.linear1, net.linear2, net.linear3]:
+        
+    def enable_lora(model, enabled=True):
+        """
+        enabled = True: incorporate the the lora parameters to the model
+        enabled = False: the lora parameters have no impact on the model
+        """
+        for layer in [model.fc1, model.fc2, model.fc3]:
             layer.parametrizations["weight"][0].enabled = enabled
     ```
 
-5. Display the number of parameters added by LoRA.
+    Apply LoRA to our model.
 
     ```python
-    total_parameters_lora = 0
-    total_parameters_non_lora = 0
-    for index, layer in enumerate([net.linear1, net.linear2, net.linear3]):
-        total_parameters_lora += layer.parametrizations["weight"][0].lora_A.nelement() + layer.parametrizations["weight"][0].lora_B.nelement()
-        total_parameters_non_lora += layer.weight.nelement() + layer.bias.nelement()
-        print(
-            f'Layer {index+1}: W: {layer.weight.shape} + B: {layer.bias.shape} + Lora_A: {layer.parametrizations["weight"][0].lora_A.shape} + Lora_B: {layer.parametrizations["weight"][0].lora_B.shape}'
-        )
-    # The non-LoRA parameters count must match the original network
-    assert total_parameters_non_lora == total_parameters_original
-    print(f'Total number of parameters (original): {total_parameters_non_lora:,}')
-    print(f'Total number of parameters (original + LoRA): {total_parameters_lora + total_parameters_non_lora:,}')
-    print(f'Parameters introduced by LoRA: {total_parameters_lora:,}')
-    parameters_increment = (total_parameters_lora / total_parameters_non_lora) * 100
-    print(f'Parameters increment: {parameters_increment:.3f}%')
+    import torch.nn.utils.parametrize as parametrize
+    parametrize.register_parametrization(model.fc1, "weight", apply_parameterization_lora(model.fc1, device))
+    parametrize.register_parametrization(model.fc2, "weight", apply_parameterization_lora(model.fc2, device))
+    parametrize.register_parametrization(model.fc3, "weight", apply_parameterization_lora(model.fc3, device))
+    ```
+
+    Now, our model's parameters comprise two parts: the original parameters and the parameters introduced by LoRA. As we have not yet trained this updated model, the LoRA weights are initialized in a manner that should not impact the model's accuracy (refer to 'ParametrizationWithLoRA'). Therefore, disabling or enabling LoRA should result in the same accuracy for the model. Let's test this hypothesis.
+
+    ```python
+    enable_lora(model, enabled=False)
+    test(model, test_loader, device)
+    ```
+
+    Output:
+
+    ```text
+        Accuracy of the network on the 10000 test images: 32 %
     ```
 
     ```python
-        Layer 1: W: torch.Size([1000, 784]) + B: torch.Size([1000]) + Lora_A: torch.Size([1, 784]) + Lora_B: torch.Size([1000, 1])
-        Layer 2: W: torch.Size([2000, 1000]) + B: torch.Size([2000]) + Lora_A: torch.Size([1, 1000]) + Lora_B: torch.Size([2000, 1])
-        Layer 3: W: torch.Size([10, 2000]) + B: torch.Size([10]) + Lora_A: torch.Size([1, 2000]) + Lora_B: torch.Size([10, 1])
-        Total number of parameters (original): 2,807,010
-        Total number of parameters (original + LoRA): 2,813,804
-        Parameters introduced by LoRA: 6,794
-        Parameters increment: 0.242%
+    enable_lora(model, enabled=True)
+    test(model, test_loader, device)
     ```
 
-6. Freeze all the parameters of the original network and only fine-tune the ones introduced by LoRA.
-   Then, fine-tune the model for digit 9 for 100 batches.
+    Output:
+
+    ```text
+        Accuracy of the network on the 10000 test images: 32 %
+    ```
+
+    That's what we expected.
+
+    Now let's take a look how many parameters were added by LoRA.
 
     ```python
-    # Freeze the non-Lora parameters
-    for name, param in net.named_parameters():
+    total_lora_params = 0
+    total_original_params = 0
+    for index, layer in enumerate([model.fc1, model.fc2, model.fc3]):
+        total_lora_params += layer.parametrizations["weight"][0].lora_weights_A.nelement() + layer.parametrizations["weight"][0].lora_weights_B.nelement()
+        total_original_params += layer.weight.nelement() + layer.bias.nelement()
+
+    print(f'Number of parameters in the model with LoRA: {total_lora_params + total_original_params:,}')
+    print(f'Parameters added by LoRA: {total_lora_params:,}')
+    params_increment = (total_lora_params / total_original_params) * 100
+    print(f'Parameters increment: {params_increment:.3f}%')
+    ```
+
+    Output:
+
+    ```text
+        Number of parameters in the model with LoRA: 21,013,524
+        Parameters added by LoRA: 15,370
+        Parameters increment: 0.073%
+    ```
+
+    The LoRA only adds 0.073% parameters to our model.
+
+8. Continue to train the model with LoRA
+
+    Before we continue to train the model we want to freeze all the model's original parameters as the paper mentioned. By doing this we only update the weights introduced by LoRA, which is 0.073% of the amount of the original model's parameters.
+
+    ```python
+    for name, param in model.named_parameters():
         if 'lora' not in name:
-            print(f'Freezing non-LoRA parameter {name}')
             param.requires_grad = False
-
-    # Load the MNIST data set again, by keeping only the digit 9
-    mnist_trainset = datasets.MNIST(root='./data', train=True, download=True, transform=transform)
-    exclude_indices = mnist_trainset.targets == 9
-    mnist_trainset.data = mnist_trainset.data[exclude_indices]
-    mnist_trainset.targets = mnist_trainset.targets[exclude_indices]
-    # Create a dataloader for the training
-    train_loader = torch.utils.data.DataLoader(mnist_trainset, batch_size=10, shuffle=True)
-
-    # Train the network with LoRA only on the digit 9 and only for 100 batches (hoping that it would
-    # improve the performance on the digit 9)
-    train(train_loader, net, epochs=1, total_iterations_limit=100)
     ```
 
-    ```bash
-        Freezing non-LoRA parameter linear1.bias
-        Freezing non-LoRA parameter linear1.parametrizations.weight.original
-        Freezing non-LoRA parameter linear2.bias
-        Freezing non-LoRA parameter linear2.parametrizations.weight.original
-        Freezing non-LoRA parameter linear3.bias
-        Freezing non-LoRA parameter linear3.parametrizations.weight.original
-
-        Epoch 1:  99%|█████████▉| 99/100 [00:00<00:00, 200.52it/s, loss=0.132]
-    ```
-
-7. Verify that the fine-tuning didn't alter the original weights (using only those introduced by LoRA).
+    Continue to train the model with LoRA applied.
 
     ```python
-    # Check that the frozen parameters are still unchanged by the finetuning
-    assert torch.all(net.linear1.parametrizations.weight.original == original_weights['linear1.weight'])
-    assert torch.all(net.linear2.parametrizations.weight.original == original_weights['linear2.weight'])
-    assert torch.all(net.linear3.parametrizations.weight.original == original_weights['linear3.weight'])
+    # make sure the loRA is enabled 
+    enable_lora(model, enabled=True)
 
-    enable_disable_lora(enabled=True)
-    # Now let's use layer of net.linear1 as an example to check if the Lora is applied to the model
-    # correctly as defined in the LoRAParametrization.forward()
-    # The new linear1.weight is obtained by the "forward" function of our LoRA parametrization
-    # The original weights have been moved to net.linear1.parametrizations.weight.original
-    # More info here: https://pytorch.org/tutorials/intermediate/parametrizations.html#inspecting-a-parametrized-module
-    assert torch.equal(net.linear1.weight, net.linear1.parametrizations.weight.original + (net.linear1.parametrizations.weight[0].lora_B @ net.linear1.parametrizations.weight[0].lora_A) * net.linear1.parametrizations.weight[0].scale)
+    start_epoch += epochs
+    epochs = 1
+    # warm up the GPU with the new model (loRA enabled) one epoch for testing the training time
+    train(train_loader, model, start_epoch=start_epoch, epochs=epochs, device=device)
 
-    enable_disable_lora(enabled=False)
-    # If we disable LoRA, the linear1.weight is the original one
-    assert torch.equal(net.linear1.weight, original_weights['linear1.weight'])
+    start = time.time()
+    # run another epoch to record the time
+    start_epoch += epochs
+    epochs = 1
+    import time
+    start = time.time()
+    train(train_loader, model, start_epoch=start_epoch, epochs=epochs, device=device)
+    torch.cuda.synchronize()
+    end = time.time()
+    train_time = (end - start)
+    print(f"One epoch takes {train_time} seconds")
     ```
 
-8. Test the network with LoRA enabled (the digit 9 should be classified better).
+    Output:
+
+    ```text
+        [2,  2000] loss: 1.643
+        [2,  4000] loss: 1.606
+        [2,  6000] loss: 1.601
+        [3,  2000] loss: 1.568
+        [3,  4000] loss: 1.560
+        [3,  6000] loss: 1.585
+        One epoch takes 16.622623205184937 seconds
+    ```
+
+    You may notice that it now only takes around 16 seconds to complete training for one epoch, which is approximately 53% of the time required to train the original model (31 seconds).
+
+    The decrease in loss signifies that the model has learned from updating the parameters introduced by LoRA. Now, if we test the model with LoRA enabled, the accuracy should be higher than what we previously achieved with the original model (32%). If we disable LoRA, the model should yield the same accuracy as the original model. Let's proceed with these tests.
 
     ```python
-    # Test with LoRA enabled
-    enable_disable_lora(enabled=True)
-    test()
+    enable_lora(model, enabled=True)
+    test(model, test_loader, device)
+    enable_lora(model, enabled=False)
+    test(model, test_loader, device)
     ```
 
-    ```bash
-    Testing: 100%|██████████| 1000/1000 [00:02<00:00, 471.08it/s]
+    Output:
 
-    Accuracy: 0.905
-    wrong counts for the digit 0: 144
-    wrong counts for the digit 1: 34
-    wrong counts for the digit 2: 30
-    wrong counts for the digit 3: 216
-    wrong counts for the digit 4: 161
-    wrong counts for the digit 5: 73
-    wrong counts for the digit 6: 93
-    wrong counts for the digit 7: 100
-    wrong counts for the digit 8: 95
-    wrong counts for the digit 9: 6
+    ```text
+        Accuracy of the given model on the 10000 test images is 42 %
+        Accuracy of the given model on the 10000 test images is 32 %
     ```
 
-    Test the network with LoRA disabled (the accuracy and errors counts must be the same as the
-    original network).
+    Test the updated model again with the previous images.
 
     ```python
-    # Test with LoRA disabled
-    enable_disable_lora(enabled=False)
-    test()
+    # display the test images
+    image_display(torchvision.utils.make_grid(images.cpu()))
+    # show ground truth labels
+    print('Ground truth labels: ', ' '.join(f'{classes[labels[j]]}' for j in range(images.shape[0])))
+
+    # Load the saved model and have a test
+    enable_lora(model, enabled=True)
+    images = images.to(device)
+    outputs = model(images)
+    _, predicted = torch.max(outputs, 1)
+
+    print('Predicted: ', ' '.join(f'{classes[predicted[j]]}'
+                                for j in range(images.shape[0])))
     ```
 
-    ```bash
-    Testing: 100%|██████████| 1000/1000 [00:01<00:00, 517.04it/s]
+    Output:
 
-    Accuracy: 0.951
-    wrong counts for the digit 0: 35
-    wrong counts for the digit 1: 31
-    wrong counts for the digit 2: 26
-    wrong counts for the digit 3: 81
-    wrong counts for the digit 4: 34
-    wrong counts for the digit 5: 15
-    wrong counts for the digit 6: 74
-    wrong counts for the digit 7: 67
-    wrong counts for the digit 8: 11
-    wrong counts for the digit 9: 116
+    ![png](./images/output_17_0.png)
+
+    ```text
+        Ground truth labels:  cat ship ship airplane frog frog automobile frog
+        Predicted:  cat ship ship ship frog frog automobile frog
     ```
 
-> [!NOTE]
-> You might observe that fine-tuning has impacted the accuracies of other labels. This is expected, as
-> our fine-tuning was exclusively focused on digit 9.
+    We can observe that the new model performed better compared to the results obtained in step 6, demonstrating that the parameters have indeed learned meaningful information.
+
+## Conclusion
+
+In this blog post, we explore the LoRA algorithm, delving into its principles and implementation on AMD GPU with ROCm. We have developed a basic network and LoRA modules from scratch to demonstrate how LoRA effectively reduces trainable parameters and training time. We invite you to delve deeper by reading about [Fine-tuning the Llama 2 model with LoRA](https://rocm.blogs.amd.com/artificial-intelligence/llama2-lora/README.html) and [Fine-tuning Llama 2 on a single AMD GPU with QLoRA](https://rocm.blogs.amd.com/artificial-intelligence/llama2-Qlora/README.html).
+
+## Disclaimers
+
+Third-party content is licensed to you directly by the third party that owns the content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
