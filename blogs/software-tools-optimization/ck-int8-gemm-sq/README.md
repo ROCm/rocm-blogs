@@ -2,7 +2,7 @@
 blogpost: true
 date: 31 May 2024
 author: Cheng Ling
-tags: HPC, Linear Algebra
+tags: LLM, Linear Algebra
 category: Software tools & optimizations
 language: English
 html_meta:
