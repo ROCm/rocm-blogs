@@ -1,14 +1,21 @@
 ---
 blogpost: true
-date: 31 May 2024
+date: 16 May 2024
+author: Cheng Ling
 tags: HPC, Linear Algebra
 category: Software tools & optimizations
 language: English
 html_meta:
-  "description lang=en": "Cheng Ling"
-  "keywords": "AMD GPU, HPC, MI300, library, GEMM, Linear Algebra"
+  "blogpost": "true"
+  "date": "16 May 2024"
+  "author": "Cheng Ling"
+  "description lang=en": "SmoothQuant model inference on AMD Instinct MI300X using Composable Kernel"
+  "keywords": "Mixed Precision, Kernel, Inference, Linear Algebra"
+  "category": "Software tools & optimizations"
   "property=og:locale": "en_US"
+  "language": "English"
 ---
+
 <!---
 Copyright (c) 2024 Advanced Micro Devices, Inc. (AMD)
 
