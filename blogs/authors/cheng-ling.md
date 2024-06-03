@@ -1,12 +1,9 @@
 ---
-blogpost: true
 date: 31 May 2024
-tags: HPC, Linear Algebra
-category: Software tools & optimizations
 language: English
 html_meta:
   "description lang=en": "Cheng Ling"
-  "keywords": "AMD GPU, HPC, MI300, library, GEMM, Linear Algebra"
+  "keywords": "AMD GPU, HPC, MI300, library, GEMM, Linear Algebra, contributor, blog author"
   "property=og:locale": "en_US"
 ---
 
