@@ -5,10 +5,11 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
-html_meta:
-  "description lang=en": "Small language models with Phi-2"
-  "keywords": "PyTorch, language model, AMD, GPU, MI300, MI250, Phi-2"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Small language models with Phi-2"
+    "keywords": "PyTorch, language model, AMD, GPU, MI300, MI250, Phi-2"
+    "property=og:locale": "en_US"
 ---
 
 # Small language models with Phi-2

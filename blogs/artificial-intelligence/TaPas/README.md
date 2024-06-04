@@ -5,10 +5,11 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, LLM, Fine-Tuning
 category: Applications & models
 language: English
-html_meta:
-  "description lang=en": "Table Question-Answering with TaPas"
-  "keywords": "PyTorch, TaPas, LLM, Bert, AMD, GPU, MI300, MI250"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Table Question-Answering with TaPas"
+    "keywords": "PyTorch, TaPas, LLM, Bert, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
 
 # Table Question-Answering with TaPas

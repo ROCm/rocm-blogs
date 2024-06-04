@@ -17,7 +17,7 @@ def check_myst(file: str) -> None:
     # error flag, 0 = no error, 1 = error
     # you want it to print out all the errors, so you shouldnt exit on the first one
     if ('tags' in md.Meta):
-        if ('html_meta' in md.Meta):
+        if ('myst' in md.Meta):
             return 0
         print(f'{file} has no MyST HTML metadata, please add that in, use https://myst-parser.readthedocs.io/en/v0.15.1/syntax/syntax.html#setting-html-metadata.')
         return 1

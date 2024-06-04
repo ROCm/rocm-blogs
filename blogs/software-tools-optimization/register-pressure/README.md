@@ -5,10 +5,11 @@ author: Alessandro Fanfarillo, Nicholas Curtis
 tags: HPC, Memory
 category: Software tools & optimizations
 language: English
-html_meta:
-  "description lang=en": "Register pressure"
-  "keywords": "HPC, MI250, optimization, registers, hardware"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Register pressure"
+    "keywords": "HPC, MI250, optimization, registers, hardware"
+    "property=og:locale": "en_US"
 ---
 
 # Register pressure in AMD CDNA™2 GPUs

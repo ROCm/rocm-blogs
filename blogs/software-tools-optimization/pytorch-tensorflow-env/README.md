@@ -5,10 +5,11 @@ author: Yao Fehlis
 tags: PyTorch, AI/ML, TensorFlow
 category: Software tools & optimizations
 language: English
-html_meta:
-  "description lang=en": "Creating a PyTorch TensorFlow environment on AMD GPUs"
-  "keywords": "AI, PyTorch, TensorFlow, docker, hipify, ROCm"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Creating a PyTorch TensorFlow environment on AMD GPUs"
+    "keywords": "AI, PyTorch, TensorFlow, docker, hipify, ROCm"
+    "property=og:locale": "en_US"
 ---
 
 # Creating a PyTorch/TensorFlow code environment on AMD GPUs

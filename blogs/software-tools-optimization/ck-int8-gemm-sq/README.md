@@ -2,18 +2,19 @@
 blogpost: true
 date: 31 May 2024
 author: Cheng Ling
-tags: HPC, Linear Algebra
+tags: LLM, Linear Algebra
 category: Software tools & optimizations
 language: English
-html_meta:
-  "blogpost": "true"
-  "date": "16 May 2024"
-  "author": "Cheng Ling"
-  "description lang=en": "SmoothQuant model inference on AMD Instinct MI300X using Composable Kernel"
-  "keywords": "Mixed Precision, Kernel, Inference, Linear Algebra"
-  "category": "Software tools & optimizations"
-  "property=og:locale": "en_US"
-  "language": "English"
+myst:
+  html_meta:
+    "blogpost": "true"
+    "date": "31 May 2024"
+    "author": "Cheng Ling"
+    "description lang=en": "SmoothQuant model inference on AMD Instinct MI300X using Composable Kernel"
+    "keywords": "Mixed Precision, Kernel, Inference, Linear Algebra"
+    "category": "Software tools & optimizations"
+    "property=og:locale": "en_US"
+    "language": "English"
 ---
 
 <!---

@@ -40,7 +40,8 @@ For that, we will use the following setup:
   * [Pytorch for ROCm 2.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html)
 * Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`, `scipy`
 
-In this blog, we conducted our experiment using a single MI250GPU with the Docker image [rocm/pytorch:rocm6.1_ubuntu22.04_py3.10_pytorch_2.1.2](https://hub.docker.com/layers/rocm/pytorch/rocm6.1_ubuntu22.04_py3.10_pytorch_2.1.2/images/sha256-f6ea7cee8aae299c7f6368187df7beed29928850c3929c81e6f24b34271d652b?context=explore).
+In this blog, we conducted our experiment using a single MI250GPU with the Docker image [rocm/pytorch:rocm6.1_ubuntu20.04_py3.9_pytorch_2.1.2
+](https://hub.docker.com/layers/rocm/pytorch/rocm6.1_ubuntu20.04_py3.9_pytorch_2.1.2/images/sha256-96ba7b33bc7fa37b88c5ed550488960dd1dcedabaa8a9c17a4fd62e6c50e7574?context=explore).
 
 You can find the complete code used in this blog from the [Github repo](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/llama2-Qlora).
 

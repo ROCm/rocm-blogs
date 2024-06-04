@@ -5,10 +5,11 @@ author: Clint Greene
 tags: AI/ML, LLM, Serving
 category: Applications & models
 language: English
-html_meta:
-  "description lang=en": "Inferencing and Serving with vLLM on AMD GPUs"
-  "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Inferencing and Serving with vLLM on AMD GPUs"
+    "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
+    "property=og:locale": "en_US"
 ---
 
 # Inferencing and serving with vLLM on AMD GPUs

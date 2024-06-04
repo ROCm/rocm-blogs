@@ -5,10 +5,11 @@ author: David Doscher
 tags: HPC, Installation
 category: Software tools & optimizations
 language: English
-html_meta:
-  "description lang=en": "ROCm installation"
-  "keywords": "HPC, ROCm, MI250, MI300, libraries, installation"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "ROCm installation"
+    "keywords": "HPC, ROCm, MI250, MI300, libraries, installation"
+    "property=og:locale": "en_US"
 ---
 
 # AMD ROCm™ installation
