@@ -65,7 +65,7 @@ html_sidebars = {
     "**": [
         "search-field.html",
         "postcard.html",
-        "./templates/recentposts.html",
+        "recentposts.html",
         "tagcloud.html",
         "categories.html",
         "archives.html",
