@@ -5,10 +5,11 @@ author: Paul Mullowney
 tags: Scientific computing, HPC, Memory, Linear Algebra
 category: Applications & models
 language: English
-html_meta:
-  "description lang=en": "Sparse matrix vector multiplication - Part 1"
-  "keywords": "HPC, spmv, rocblas, linear algebra, PDE, MI250, performance"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Sparse matrix vector multiplication - Part 1"
+    "keywords": "HPC, spmv, rocblas, linear algebra, PDE, MI250, performance"
+    "property=og:locale": "en_US"
 ---
 
 # Sparse matrix vector multiplication - part 1

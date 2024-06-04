@@ -5,10 +5,11 @@ author: Suyash Tandon, Maria Ruiz Varela, Gina Sitaraman, Bob Robey
 tags: Compiler, Installation, HPC, Optimization
 category: Software tools & optimizations
 language: English
-html_meta:
-  "description lang=en": "Application portability with HIP"
-  "keywords": "Compiler, Installation, HPC, Optimization"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Application portability with HIP"
+    "keywords": "Compiler, Installation, HPC, Optimization"
+    "property=og:locale": "en_US"
 ---
 
 <!---

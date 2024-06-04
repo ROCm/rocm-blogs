@@ -5,10 +5,11 @@ author: Thomas Gibson, Noah Wolfe, Gina Sitaraman, Suyash Tandon
 tags: Profiling, Memory
 category: Software tools & optimizations
 language: English
-html_meta:
-  "description lang=en": "Profiling tools"
-  "keywords": "HPC, MI250, MI300, Omniperf, Omnitrace, rocprof"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Profiling tools"
+    "keywords": "HPC, MI250, MI300, Omniperf, Omnitrace, rocprof"
+    "property=og:locale": "en_US"
 ---
 
 # Introduction to profiling tools for AMD hardware

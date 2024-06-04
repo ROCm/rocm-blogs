@@ -5,10 +5,11 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
-html_meta:
-  "description lang=en": "Text Summarization with FLAN-T5 on AMD GPU"
-  "keywords": "PyTorch, FLAN-T5, LLM, fine-tune, summarization, AMD, GPU, MI300, MI250"
-  "property=og:locale": "en_US"
+myst:
+  html_meta:
+    "description lang=en": "Text Summarization with FLAN-T5 on AMD GPU"
+    "keywords": "PyTorch, FLAN-T5, LLM, fine-tune, summarization, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
 
 # Text Summarization with FLAN-T5
