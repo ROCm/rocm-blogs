@@ -69,8 +69,16 @@ myst:
 ::::{grid} 1 2 3 3
 :margin 1
 
+:::{grid-item-card} Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators
+:padding: 1
+:link: ./ecosystems-and-partners/stone-ridge/README
+:link-type: doc
+
+Stone Ridge Technology latest development effort was to port ECHELON from CUDA to the AMD HIP platform, enabling ECHELON to use AMD Instinct GPUs like the MI210, MI250X, and the upcoming MI300 Series
+:::
+
 :::{grid-item-card} University of Michigan, AMD collaboration
-:padding: 0
+:padding: 1
 :link: ./ecosystems-and-partners/university-of-michigan/README
 :link-type: doc
 
@@ -84,14 +92,6 @@ High Performance Open-Source Solutions to the Bioinformatics Community
 :link-type: doc
 
 Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+
-:::
-
-:::{grid-item-card} Programming AMD GPUs with Julia
-:padding: 1
-:link: ./software-tools-optimization/julia-amdgpu/README
-:link-type: doc
-
-Julia is a high-level, general-purpose dynamic programming language
 :::
 ::::
 
@@ -107,9 +107,17 @@ Julia is a high-level, general-purpose dynamic programming language
 ::::{grid} 1 2 3 3
 :margin: 1
 
+:::{grid-item-card} Segment Anything with AMD GPUs
+:padding: 1
+:link: ./artificial-intelligence/segment-anything/README.html
+:link-type: url
+
+The Segment Anything Model (SAM) is a cutting-edge image segmentation model that democratizes promptable segmentation
+:::
+
 :::{grid-item-card} Detectron2 on AMD GPUs
 :padding: 1
-:link: ./artificial-intelligence/detectron2/README
+:link: ./blogs/artificial-intelligence/segment-anything/README
 :link-type: doc
 
 Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs
@@ -147,14 +155,6 @@ Mixtral 8x22B is a sparse MoE decoder-only transformer model, get it working on 
 Collaborative Filtering is a type of item recommendation where new items are recommended to the user based on their past interactions.
 :::
 
-:::{grid-item-card} Table Question-Answering with TaPas
-:padding: 1
-:link: ./blog/category/applications-models.html
-:link-type: url
-
-The TaPas (Table Parser) model is a BERT-based, weakly supervised question answering model that has been designed and pretrained for answering questions about tabular data
-:::
-
 ::::
 
 <div class="container">
@@ -169,20 +169,28 @@ The TaPas (Table Parser) model is a BERT-based, weakly supervised question answe
 ::::{grid} 1 2 3 3
 :margin: 1
 
+:::{grid-item-card} SmoothQuant model inference on AMD Instinct MI300X using Composable Kernel
+:padding: 1
+:link: ./software-tools-optimization/ck-int8-gemm-sq/README.html
+:link-type: url
+
+The AMD ROCm™ Composable Kernel (CK) library provides a programming model for writing performance-critical kernels for machine learning workloads.
+:::
+
+:::{grid-item-card} AMD in Action: Unveiling the Power of Application Tracing and Profiling
+:padding: 1
+:link: ./software-tools-optimization/roc-profiling/README
+:link-type: doc
+
+Rocprof is a robust tool designed to analyze and optimize the performance of HIP programs on AMD ROCm platforms
+:::
+
 :::{grid-item-card} Reading AMD GPU ISA
 :padding: 1
 :link: ./software-tools-optimization/amdgcn-isa/README
 :link-type: doc
 
 In this blog post, we will discuss how to read and understand the ISA for AMD’s Graphics Core Next (AMDGCN) architecture
-:::
-
-:::{grid-item-card} AMD in Action: Unveiling the Power of Application Tracing and Profiling
-:padding: 1
-:link: ./high-performance-computing/roc-profiling/README
-:link-type: doc
-
-Rocprof is a robust tool designed to analyze and optimize the performance of HIP programs on AMD ROCm platforms
 :::
 
 :::{grid-item-card} Application portability with HIP
@@ -209,13 +217,6 @@ The C++17 standard added the concept of parallel algorithms to the pre-existing 
 Affinity is a way for processes to indicate preference of hardware components so that a given process is always scheduled to the same set of compute cores and is able to access data from local memory efficiently
 :::
 
-:::{grid-item-card} Affinity part 2 - System topology and controlling affinity
-:padding: 1
-:link: ./software-tools-optimization/affinity/part-2/README
-:link-type: url
-
-Discuss ways to verify if affinity is set up correctly for your run. Point to tools that can help you understand the topology of your system. Show you how to set affinity for different types of applications.
-:::
 ::::
 
 <h2> Stay informed</h2>
