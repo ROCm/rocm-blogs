@@ -69,6 +69,14 @@ myst:
 ::::{grid} 1 2 3 3
 :margin 1
 
+:::{grid-item-card} Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators
+:padding: 1
+:link: ./ecosystems-and-partners/stone-ridge/README
+:link-type: doc
+
+Stone Ridge Technology latest development effort was to port ECHELON from CUDA to the AMD HIP platform, enabling ECHELON to use AMD Instinct GPUs like the MI210, MI250X, and the upcoming MI300 Series
+:::
+
 :::{grid-item-card} University of Michigan, AMD collaboration
 :padding: 1
 :link: ./ecosystems-and-partners/university-of-michigan/README
@@ -84,14 +92,6 @@ High Performance Open-Source Solutions to the Bioinformatics Community
 :link-type: doc
 
 Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+
-:::
-
-:::{grid-item-card} Programming AMD GPUs with Julia
-:padding: 1
-:link: ./software-tools-optimization/julia-amdgpu/README
-:link-type: doc
-
-Julia is a high-level, general-purpose dynamic programming language
 :::
 ::::
 
