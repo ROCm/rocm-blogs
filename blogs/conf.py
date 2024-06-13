@@ -77,6 +77,10 @@ blog_authors = {
         "Alessandro Fanfarillo",
         "http://rocm.blogs.amd.com/authors/alessandro-fanfarillo.html",
 ),
+"Alex Voicu": (
+        "Alex Voicu",
+        "http://rocm.blogs.amd.com/authors/alex-voicu.html",
+),
 "Anton Smirnov": (
         "Anton Smirnov",
         "http://rocm.blogs.amd.com/authors/anton-smirnov.html",
@@ -84,6 +88,10 @@ blog_authors = {
 "Asitav Mishra": (
         "Asitav Mishra",
         "http://rocm.blogs.amd.com/authors/asitav-mishra.html",
+),
+"Bob Robey": (
+        "Bob Robey",
+        "http://rocm.blogs.amd.com/authors/bob-robey.html",
 ),
 "Clint Greene": (
         "Clint Greene",
@@ -112,6 +120,10 @@ blog_authors = {
 "Fabricio Flores": (
         "Fabricio Flores",
         "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
+),
+"George Markomanolis": (
+        "George Markomanolis",
+        "http://rocm.blogs.amd.com/authors/george-markomanolis.html",
 ),
 "Gina Sitaraman": (
         "Gina Sitaraman",
