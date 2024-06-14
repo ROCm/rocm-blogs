@@ -5,7 +5,7 @@ MD013: false
 MD026:
   punctuation: '.,;:'
 MD029:
-  style: ordered
+  style: one_or_ordered
 MD033: false
 MD034: false
 MD041: false
