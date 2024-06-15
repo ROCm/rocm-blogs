@@ -2,7 +2,7 @@
 blogpost: true
 date: 11 Sep 2023
 author: Yao Fehlis
-tags: PyTorch, AI/ML, TensorFlow
+tags: AI/ML, Installation, PyTorch, TensorFlow
 category: Software tools & optimizations
 language: English
 myst:

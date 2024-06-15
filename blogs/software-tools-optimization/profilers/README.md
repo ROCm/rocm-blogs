@@ -2,7 +2,7 @@
 blogpost: true
 date: 12 Apr 2023
 author: Thomas Gibson, Noah Wolfe, Gina Sitaraman, Suyash Tandon
-tags: Profiling, Memory
+tags: HPC, Memory, Profiling
 category: Software tools & optimizations
 language: English
 myst:

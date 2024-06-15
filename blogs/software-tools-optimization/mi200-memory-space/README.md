@@ -2,7 +2,7 @@
 blogpost: true
 date: 9 Mar 2023
 author: Sean Miller, Rajat Arora, Gina Sitaraman, Maria Ruiz Varela
-tags: Memory
+tags: HPC, Memory
 category: Software tools & optimizations
 language: English
 myst:

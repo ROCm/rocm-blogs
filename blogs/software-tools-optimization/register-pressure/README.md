@@ -2,7 +2,7 @@
 blogpost: true
 date: 17 May 2023
 author: Alessandro Fanfarillo, Nicholas Curtis
-tags: HPC, Memory
+tags: Compiler, HPC, Memory, Optimization
 category: Software tools & optimizations
 language: English
 myst:

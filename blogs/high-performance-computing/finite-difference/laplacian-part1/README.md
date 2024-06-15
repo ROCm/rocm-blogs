@@ -2,7 +2,7 @@
 blogpost: true
 date: 14 Nov 2022
 author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
-tags: HPC, Scientific computing
+tags: HPC, Memory, Performance, Profiling, Scientific computing
 category: Applications & models
 language: English
 myst:
