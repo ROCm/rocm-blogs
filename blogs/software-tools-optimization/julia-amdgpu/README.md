@@ -2,7 +2,7 @@
 blogpost: true
 date: 16 Apr 2024
 author: Anton Smirnov
-tags: Julia, HPC, AI/ML
+tags: HPC, AI/ML, Scientific computing
 category: Ecosystems and Partners
 language: English
 myst:

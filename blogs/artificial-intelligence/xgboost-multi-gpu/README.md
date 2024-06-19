@@ -2,7 +2,7 @@
 blogpost: true
 date: 26 Jan 2024
 author: Clint Greene
-tags: LLM, AI/ML, Scientific computing
+tags: LLM, AI/ML
 category: Applications & models
 language: English
 myst:

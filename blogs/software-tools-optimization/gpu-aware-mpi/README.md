@@ -2,7 +2,7 @@
 blogpost: true
 date: 8 Jun 2023
 author: Mahdieh Ghazimirsaeed, Noel Chalmers, Damon McDougall
-tags: HPC, Scientific computing
+tags: Compiler, HPC, Installation, Memory, Performance
 category: Software tools & optimizations
 language: English
 myst:
