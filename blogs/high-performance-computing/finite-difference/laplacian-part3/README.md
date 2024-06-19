@@ -2,7 +2,7 @@
 blogpost: true
 date: 11 May 2023
 author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
-tags: Compiler, HPC, Memory, Optimization, Performance, Profiling, Scientific computing
+tags: Compiler, HPC, Memory, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
 myst:

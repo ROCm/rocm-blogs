@@ -2,7 +2,7 @@
 blogpost: true
 date: 15 Sep 2023
 author: Asitav Mishra, Rajat Arora, Justin Chang
-tags: HPC, Linear Algebra, OpenMP, Optimization, Performance, Profiling, Scientific computing
+tags: HPC, Linear Algebra, OpenMP, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
 myst:
