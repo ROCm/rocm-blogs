@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(davidosc)=
+
 # David Doscher
+
+```{image} ./data/David-Doscher.jpg
+:alt: David
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 David is a Senior Member of Technical Staff (SMTS) in the Software System Design Engineering group.
 He leads the quality assurance program for AMD’s high-performance computing (HPC) applications.

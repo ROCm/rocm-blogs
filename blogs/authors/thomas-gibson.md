@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(thomgibs)=
+
 # Thomas Gibson
+
+```{image} ./data/Thomas-Gibson.png
+:alt: Thomas
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Thomas is a Member of Technical Staff (MTS), Software System Design Engineer in the Data Center GPU
 Solutions and Performance Analysis group. He obtained his PhD in computational mathematics from

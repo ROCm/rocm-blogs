@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(rajaaror)=
+
 # Rajat Arora
+
+```{image} ./data/Rajat-Arora.jpg
+:alt: Rajat
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Rajat is a Senior Member of Technical Staff (SMTS), Software System Design Engineer in AMD's Data
 Center GPU Solutions and Performance Analysis group, where he works on porting and optimizing

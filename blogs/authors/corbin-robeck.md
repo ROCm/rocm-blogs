@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(corbrobe)=
+
 # Corbin Robeck
+
+```{image} ./data/Corbin-Robeck.jpg
+:alt: Corbin
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Corbin Robeck is a Member of Technical Staff in AMD Research working on GPU kernel performance
 optimization tools for HPC frameworks and machine learning compilers. Prior to AMD, Corbin
