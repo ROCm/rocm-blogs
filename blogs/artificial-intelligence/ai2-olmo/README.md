@@ -15,6 +15,8 @@ myst:
 
 # Inferencing with AI2's OLMo model on AMD GPU
 
+<span style="font-size:0.7em;">17 Apr, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 In this blog, we will show you how to generate text using AI2's OLMo model on AMD GPU.
 
 ## Introduction

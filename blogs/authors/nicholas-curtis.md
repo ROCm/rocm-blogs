@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(nichcurt)=
+
 # Nicholas Curtis
+
+```{image} ./data/Nicholas-Curtis.jpg
+:alt: Nicholas
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Nicholas is a Senior Member of Technical Staff (SMTS) in the Data Center GPU Solutions and
 Performance Analysis group at AMD. Nick has led AMD's efforts working on porting and optimizing

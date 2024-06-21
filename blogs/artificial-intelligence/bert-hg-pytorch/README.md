@@ -16,6 +16,8 @@ myst:
 
 # Pre-training BERT using Hugging Face & PyTorch on an AMD GPU
 
+<span style="font-size:0.7em;">17 Apr, 2024 by {hoverxref}`Vara Bayanagari<varabaya>`. </span>
+
 This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations
 from Transformers (BERT) base model from scratch using Hugging Face libraries with a PyTorch
 backend for English corpus text (WikiText-103-raw-v1).

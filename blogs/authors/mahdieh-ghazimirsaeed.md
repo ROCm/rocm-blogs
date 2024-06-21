@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(mahdghaz)=
+
 # Mahdieh Ghazimirsaeed
+
+```{image} ./data/Mahdieh-Ghazimirsaeed.jpg
+:alt: Mahdieh
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Mahdieh is a Member of Technical Staff (MTS), Software System Design Engineer in the Data Center
 GPU Solutions and Performance Analysis group. She works on the optimization of scientific codes for

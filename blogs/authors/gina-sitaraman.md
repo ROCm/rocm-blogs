@@ -5,7 +5,16 @@
   blog author">
 </head>
 
+(ginasita)=
+
 # Gina Sitaraman
+
+```{image} ./data/Gina-Sitaraman.png
+:alt: Gina
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Gina Sitaraman is a Senior Member of Technical Staff (SMTS) Software System Design Engineer in the Data
 Center GPU Solutions and Performance Analysis group. She obtained her PhD in Computer Science from the

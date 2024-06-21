@@ -117,7 +117,7 @@ The Segment Anything Model (SAM) is a cutting-edge image segmentation model that
 
 :::{grid-item-card} Detectron2 on AMD GPUs
 :padding: 1
-:link: ./blogs/artificial-intelligence/segment-anything/README
+:link: ./artificial-intelligence/detectron2/README
 :link-type: doc
 
 Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs

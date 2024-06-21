@@ -2,7 +2,7 @@
 blogpost: true
 date: 18 Jul 2023
 author: Justin Chang, Thomas Gibson, Sean Miller
-tags: HPC, Memory, Optimization, Performance, Profiling, Scientific computing
+tags: HPC, Memory, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
 myst:

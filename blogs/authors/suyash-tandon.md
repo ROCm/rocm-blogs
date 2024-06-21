@@ -5,7 +5,16 @@
   blog author">
 </head>
 
+(suyatand)=
+
 # Suyash Tandon
+
+```{image} ./data/Suyash-Tandon.jpg
+:alt: Suyash
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Suyash is a Senior Member of Technical Staff (SMTS) at AMD with a focus on performance engineering
 and the optimization of scientific applications using modern AMD GPUs, which drive the world's most

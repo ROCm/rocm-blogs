@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(fabrflor)=
+
 # Fabricio Flores
+
+```{image} ./data/Fabricio-Flores.jpg
+:alt: Fabricio
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Fabricio is a Senior Machine Learning Engineer at AMD, known for his expertise in deploying deep
 learning models for computer vision and large language model (LLM) applications on AMD GPUs. He

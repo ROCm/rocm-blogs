@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(ossiorei)=
+
 # Ossian O'Reilly
+
+```{image} ./data/Ossian-OReilly.jpg
+:alt: Ossian
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Ossian is a Member of Technical Staff (MTS), Software System Design Engineer in the Data Center GPU
 Solutions and Performance Analysis group at AMD. He works on porting and optimizing scientific

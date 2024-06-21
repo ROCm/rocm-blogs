@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(phildang)=
+
 # Phillip Dang
+
+```{image} ./data/Phillip-Dang.jpg
+:alt: Phillip
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Phillip is a Senior Machine Learning Engineer at AMD, where he specializes in the evaluation and
 enhancement of cutting-edge machine learning (ML) models. His role involves rigorous testing of the

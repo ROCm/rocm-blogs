@@ -5,7 +5,16 @@
   author">
 </head>
 
-# Damon McDougall
+(damomcdo)=
+
+# Damon Mcdougall
+
+```{image} ./data/Damon-Mcdougall.jpeg
+:alt: Damon
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Damon is a Principal Engineer in the Data Center GPU Solutions and Performance Analysis group at
 AMD. He obtained a PhD in Mathematics from the University of Warwick. Following his doctorate, he

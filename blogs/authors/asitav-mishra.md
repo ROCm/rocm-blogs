@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(asitmish)=
+
 # Asitav Mishra
+
+```{image} ./data/Asitav-Mishra.jpg
+:alt: Asitav
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Asitav is a Senior Member of Technical Staff (SMTS) at AMD who focuses on porting and optimizing
 scientific applications on modern AMD GPUs that drive world's largest exascale supercomputers. He

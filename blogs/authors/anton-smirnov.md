@@ -5,7 +5,16 @@
   blog author">
 </head>
 
+(antosmir)=
+
 # Anton Smirnov
+
+```{image} ./data/first-last.jpg
+:alt: Anton
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Anton is a core developer of [AMDGPU.jl](https://github.com/JuliaGPU/AMDGPU.jl)
 a Julia package for programming AMD GPUs.

@@ -15,6 +15,12 @@
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Anton Smirnov](./authors/anton-smirnov.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD*
+:::
+
 :::{grid-item-card} [Asitav Mishra](./authors/asitav-mishra.md)
 :padding: 1
 
@@ -25,6 +31,12 @@ Senior Member of Technical Staff at AMD
 :padding: 1
 
 Principal Deep Learning Data Scientist at AMD
+:::
+
+:::{grid-item-card} [Corbin Robeck](./authors/corbin-robeck.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD*
 :::
 
 :::{grid-item-card} [Damon McDougall](./authors/damon-mcdougall.md)
@@ -45,6 +57,12 @@ Senior Member of Technical Staff at AMD
 Principal Deep Learning Data Scientist at AMD
 :::
 
+:::{grid-item-card} [Eliot Li](./authors/eliot-li.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD*
+:::
+
 :::{grid-item-card} [Fabricio Flores](./authors/fabricio-flores.md)
 :padding: 1
 
@@ -55,6 +73,12 @@ Senior Machine Learning Engineer at AMD
 :padding: 1
 
 Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Hari Sadasivan](./authors/hari-sadasivan.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD*
 :::
 
 :::{grid-item-card} [Justin Chang](./authors/justin-chang.md)
@@ -111,7 +135,7 @@ Member of Technical Staff at AMD
 Principal Member of Technical Staff at AMD
 :::
 
-:::{grid-item-card} [Phillip Dang](./authors/phillip-dang.md)
+:::{grid-item-card} [Phillip Dang](./authors/phillip-dang.md) *
 :padding: 1
 
 Senior Machine Learning Engineer at AMD
@@ -135,10 +159,16 @@ Principal Member of Technical Staff at AMD
 Senior Member of Technical Staff at AMD
 :::
 
-:::{grid-item-card} [Sean Song](./authors/sean-song.md)
+:::{grid-item-card} [Sean Song](./authors/sean-song.md) *
 :padding: 1
 
 Machine Learning Engineer at AMD
+:::
+
+:::{grid-item-card} [Seung Rok Jung](./authors/seung-rok-jung.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD*
 :::
 
 :::{grid-item-card} [Suyash Tandon](./authors/suyash-tandon.md)
@@ -159,7 +189,13 @@ Member of Technical Staff at AMD
 Machine Learning Engineer at AMD
 :::
 
-:::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md)
+:::{grid-item-card} [Vicky Tsang](./authors/vicky-tsang.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD*
+:::
+
+:::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md) *
 :padding: 1
 
 Machine Learning Researcher at AMD

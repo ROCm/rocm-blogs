@@ -2,7 +2,7 @@
 blogpost: true
 date: 16 Apr 2024
 author: Anton Smirnov
-tags: HPC, AI/ML, Scientific computing
+tags: HPC, AI/ML, Scientific Computing
 category: Ecosystems and Partners
 language: English
 myst:

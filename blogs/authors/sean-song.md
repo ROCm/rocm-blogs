@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(seansong)=
+
 # Sean Song
+
+```{image} ./data/Sean-Song.jpg
+:alt: Sean
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Sean is a Machine Learning Engineer at AMD, where he specializes in research and deployment of
 state-of-the-art deep learning solutions on AMD’s AI accelerators. With a PhD in Mathematics and

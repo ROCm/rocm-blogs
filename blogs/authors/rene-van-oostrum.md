@@ -4,7 +4,16 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(reneoost)=
+
 # René Van Oostrum
+
+```{image} ./data/Rene-Van-Oostrum.png
+:alt: Rene
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 René  is a Principal Member of Technical Staff (PMTS), Software Development Engineer at AMD
 Research. He obtained a PhD in Computer Science from Utrecht University and has a background in

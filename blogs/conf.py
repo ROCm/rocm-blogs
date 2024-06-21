@@ -53,11 +53,13 @@ blog_baseurl = "https://rocm.blogs.amd.com/"
 html_title = "ROCm Blogs"
 html_theme = "rocm_docs_theme"
 html_theme_options = {
-    "flavor": "rocm-blogs",
+    "flavor": "rocm-blogs"
 }
 
-extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx"]
+extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx", 'hoverxref.extension', 'myst_parser']
 external_toc_path = "./sphinx/_toc.yml"
+
+hoverxref_api_host = "/_"
 
 templates_path = ["."]
 
@@ -97,10 +99,6 @@ blog_authors = {
         "Clint Greene",
         "http://rocm.blogs.amd.com/authors/clint-greene.html",
 ),
-"Corbin Robeck": (
-        "Corbin Robeck",
-        "http://rocm.blogs.amd.com/authors/corbin-robeck.html",
-),
 "Damon McDougall": (
         "Damon McDougall",
         "http://rocm.blogs.amd.com/authors/damon-mcdougall.html",
@@ -128,10 +126,6 @@ blog_authors = {
 "Gina Sitaraman": (
         "Gina Sitaraman",
         "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
-),
-"Hari Sadasivan": (
-        "Hari Sadasivan",
-        "http://rocm.blogs.amd.com/authors/hari-sadasivan.html",
 ),
 "Justin Chang": (
         "Justin Chang",

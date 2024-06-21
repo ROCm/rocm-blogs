@@ -5,7 +5,16 @@
   author">
 </head>
 
+(yao-fehl)=
+
 # Yao Fehlis
+
+```{image} ./data/Yao-Fehlis.jpg
+:alt: Yao
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Yao is a Member of Technical Staff (MTS) in the Research and Advanced Development group at AMD.
 Her focus involves AI for science and manufacturing, and large language models. In AI for science, she
