@@ -19,3 +19,5 @@ docs/about/release-notes.md
 docs/about/CHANGELOG.md
 
 .ipynb_checkpoints
+.vs/*
+blogs/artificial-intelligence/.vs/*
