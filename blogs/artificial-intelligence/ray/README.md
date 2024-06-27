@@ -14,6 +14,8 @@ myst:
 
 # Scale AI applications with Ray
 
+<span style="font-size:0.7em;">1, Apr 2024 by {hoverxref}`Vicky Tsang<vicktsan>, {hoverxref}`Logan Grado<logagrad>`, {hoverxref}`Eliot Li<elioli>. </span>
+
 Most machine-learning (ML) workloads today require multiple GPUs or nodes to achieve the
 performance or scale required by applications. However, scaling workloads beyond single node/single GPU workloads is difficult and require some expertise in distributed processing.
 

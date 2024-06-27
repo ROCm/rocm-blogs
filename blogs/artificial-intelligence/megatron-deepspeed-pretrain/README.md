@@ -17,6 +17,8 @@ myst:
 
 # Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs
 
+<span style="font-size:0.7em;">24 Jan, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 In this blog, we show you how to pre-train a GPT-3 model using the Megatron-DeepSpeed
 framework on multiple AMD GPUs. We also demonstrate how to perform inference on the
 text-generation task with your pre-trained model.

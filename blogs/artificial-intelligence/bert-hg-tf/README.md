@@ -16,6 +16,8 @@ myst:
 
 # Pre-training BERT using Hugging Face & TensorFlow on an AMD GPU
 
+<span style="font-size:0.7em;">29, Jan 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
+
 This blog explains an end-to-end process for pre-training the Bidirectional Encoder Representations
 from Transformers (BERT) base model from scratch using Hugging Face libraries with a TensorFlow
 backend for English corpus text (WikiText-103-raw-v1).

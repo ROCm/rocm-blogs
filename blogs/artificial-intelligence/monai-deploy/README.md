@@ -14,6 +14,8 @@ myst:
 
 # Total body segmentation using MONAI Deploy on an AMD GPU
 
+<span style="font-size:0.7em;">4, Apr 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
+
 Medical Open Network for Artificial Intelligence (MONAI) is an open-source organization that provides
 PyTorch implementation of state-of-the-art medical imaging models, ranging from classification and
 segmentation to image generation. Catering to the needs of researchers, clinicians, and fellow domain

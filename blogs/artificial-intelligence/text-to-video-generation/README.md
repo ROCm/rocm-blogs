@@ -14,6 +14,8 @@ myst:
 
 # Transforming Words into Motion: A Guide to Video Generation with AMD GPU
 
+<span style="font-size:0.7em;">24 Apr, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 This blog introduces the advancements in text-to-video generation through enhancements to the stable diffusion model and demonstrates the process of generating videos from text prompts on an AMD GPU using Alibaba's ModelScopeT2V model.
 
 ## Introduction

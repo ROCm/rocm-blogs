@@ -14,6 +14,8 @@ myst:
 
 # Accelerating XGBoost with Dask using multiple AMD GPUs
 
+<span style="font-size:0.7em;">26 Jan, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 XGBoost is an optimized library for distributed gradient boosting. It has become the leading machine
 learning library for solving regression and classification problems. For a deeper dive into how gradient
 boosting works, we recommend reading

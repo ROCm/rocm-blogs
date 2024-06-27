@@ -14,6 +14,8 @@ myst:
 
 # Training a Neural Collaborative Filtering (NCF) Recommender on an AMD GPU
 
+<span style="font-size:0.7em;">30, Apr 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
+
 ## Introduction
 
 Collaborative Filtering is a type of item recommendation where new items are recommended to the user based on their past interactions. [Neural Collaborative Filtering (NCF)](https://arxiv.org/abs/1708.05031) is a recommendation system that uses neural network to model the user-item interaction function. NCF focuses on optimizing a collaborative function, which is essentially a user-item interaction model represented by a neural network and ranks the recommended items for the user.

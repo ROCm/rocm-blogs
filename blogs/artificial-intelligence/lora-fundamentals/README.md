@@ -15,6 +15,8 @@ myst:
 
 # Using LoRA for efficient fine-tuning: Fundamental principles
 
+<span style="font-size:0.7em;">5, Feb 2024 by {hoverxref}`Sean Song<seansong>`. </span>
+
 [Low-Rank Adaptation of Large Language Models (LoRA)](https://arxiv.org/abs/2106.09685) is used to
 address the challenges of fine-tuning large language models (LLMs). Models like GPT and Llama, which
 boast billions of parameters, are typically cost-prohibitive to fine-tune for specific tasks or domains.

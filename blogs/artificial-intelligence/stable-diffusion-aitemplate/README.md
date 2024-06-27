@@ -16,6 +16,8 @@ myst:
 
 # Efficient image generation with Stable Diffusion models and AITemplate using AMD GPUs
 
+<span style="font-size:0.7em;">24 Jan, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 Stable Diffusion has emerged as a groundbreaking advancement in the field of image generation,
 empowering users to translate text descriptions into captivating visual output.
 

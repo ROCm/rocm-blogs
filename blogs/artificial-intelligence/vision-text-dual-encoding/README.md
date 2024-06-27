@@ -14,6 +14,8 @@ myst:
 
 # Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model
 
+<span style="font-size:0.7em;">24 Apr, 2024 by {hoverxref}`Sean Song<seansong>`. </span>
+
 In this blog, we will build a vision-text dual encoder model akin to CLIP and fine-tune it with the [COCO dataset](https://cocodataset.org/#overview) on AMD GPU with ROCm.  This work is inspired by the principles of [CLIP](https://openai.com/research/clip) and the [Hugging Face example](https://github.com/huggingface/transformers/tree/main/examples/pytorch/contrastive-image-text). The idea is to train a vision encoder and a text encoder jointly to project the representation of images and their descriptions into the same embedding space, such that the text embeddings are located near the embeddings of the images they describe. The objective during training is to maximize the similarity between the embeddings of image and text pairs in the batch while minimizing the similarity of embeddings for incorrect pairs. The model achieves this by learning a multimodal embedding space. A symmetric cross entropy loss is optimized over these similarity scores.
 
 ![png](./image/CLIP.png)

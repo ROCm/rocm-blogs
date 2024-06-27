@@ -16,6 +16,8 @@ myst:
 
 # Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
 
+<span style="font-size:0.7em;">23 Feb, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 In this blog, we show you how to use pre-trained Stable Diffusion models to generate images from text
 (text-to-image), transform existing visuals (image-to-image), and restore damaged pictures
 (inpainting) on AMD GPUs using ONNX Runtime.

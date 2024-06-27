@@ -14,6 +14,8 @@ myst:
 
 # Finite difference method - Laplacian part 1
 
+<span style="font-size:0.7em;">14 Nov, 2022 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`, {hoverxref}`Ossian O'Reilly<ossiorei>`. </span>
+
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 The finite difference method is a canonical example of a computational physics stencil discretization commonly used in applications ranging from geophysics (weather and oil \& gas) and electromagnetics (semiconductors and astrophysics) to gas dynamics (airflow and plasmas).

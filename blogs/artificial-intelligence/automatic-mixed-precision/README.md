@@ -14,6 +14,8 @@ myst:
 
 # Automatic mixed precision in PyTorch using AMD GPUs
 
+<span style="font-size:0.7em;">29, March 2024 by {hoverxref}`Logan Grado<logagrad>`. </span>
+
 As models increase in size, the time and memory needed to train them--and consequently, the cost--also increases. Therefore, any measures we take to reduce training time and memory usage can be highly beneficial. This is where Automatic Mixed Precision (AMP) comes in.
 
 In this blog, we will discuss the basics of AMP, how it works, and how it can improve training efficiency on AMD GPUs.

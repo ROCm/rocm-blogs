@@ -14,6 +14,8 @@ myst:
 
 # Multimodal (Visual and Language) understanding with LLaVA-NeXT
 
+<span style="font-size:0.7em;">26, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 LLaVa (Large Language And Vision Assistant) was introduced in 2023 and became a milestone for multimodal models. It combines a pretrained [vision encoder](https://openai.com/research/clip) and a pretrained [LLM](https://lmsys.org/blog/2023-03-30-vicuna/) for general purpose visual and language understanding. In January 2024, LLaVa-NeXT was released, which boasts significant enhancements, including higher input's visual resolution and improved logical reasoning and world knowledge.
 
 At its core, LLaVa models use a simple linear layer to connect image features into the word embedding space, which makes them more efficient to run experiments. Other multimodal models such as Flamingo and BLIP-2 use more sophisticated methods such as gated cross-attention and Q-former to connect the image and language representation. The figure below shows the high-level architecture of LLaVa [(source)](https://arxiv.org/pdf/2304.08485.pdf).

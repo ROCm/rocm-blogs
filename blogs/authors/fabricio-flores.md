@@ -8,13 +8,6 @@
 
 # Fabricio Flores
 
-```{image} ./data/Fabricio-Flores.jpg
-:alt: Fabricio
-:class: bg-primary
-:height: 250px
-:align: left
-```
-
 Fabricio is a Senior Machine Learning Engineer at AMD, known for his expertise in deploying deep
 learning models for computer vision and large language model (LLM) applications on AMD GPUs. He
 has a strong background in mathematics, with advanced studies in computational mechanics and

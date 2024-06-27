@@ -14,6 +14,8 @@ myst:
 
 # Small language models with Phi-2
 
+<span style="font-size:0.7em;">8, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 Like many other LLMs, Phi-2 is a transformer-based model with a next-word prediction objective that
 is  trained on billions of tokens. At 2.7 billion parameters, Phi-2 is a relatively small language model,
 but it achieves outstanding performance on a variety of tasks, including common sense reasoning,

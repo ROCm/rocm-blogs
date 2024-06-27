@@ -15,6 +15,8 @@ myst:
 
 # Question-answering Chatbot with LangChain on an AMD GPU
 
+<span style="font-size:0.7em;">11, Mar 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 LangChain is a framework designed to harness the power of language models for building
 cutting-edge applications. By connecting language models to various contextual sources and providing
 reasoning abilities based on the given context, LangChain creates context-aware applications that can

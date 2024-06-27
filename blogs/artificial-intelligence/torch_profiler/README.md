@@ -15,6 +15,8 @@ myst:
 
 # Unveiling performance insights with PyTorch Profiler on an AMD GPU
 
+<span style="font-size:0.7em;">29 May, 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 In the realm of machine learning, optimizing performance is often as crucial as refining model architectures. In this blog, we delve into the PyTorch Profiler, a handy tool designed to help peek under the hood of our PyTorch model and shed light on bottlenecks and inefficiencies. This blog will walk through the basics of how the PyTorch Profiler works and how to leverage it to make your models more efficient in an AMD GPU + ROCm system.
 
 ## What is PyTorch Profiler?

@@ -15,6 +15,8 @@ myst:
 
 # Building a decoder transformer model on AMD GPU(s)
 
+<span style="font-size:0.7em;">12, Mar 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 In this blog, we demonstrate how to run
 [Andrej Karpathy's beautiful PyTorch re-implementation of GPT](https://colab.research.google.com/drive/1JMLa53HDuA-i7ZBmqV7ZnA3c_fvtXnx-?usp=sharing)
 on single and multiple AMD GPUs on a single node using PyTorch 2.0 and ROCm. We use the works of

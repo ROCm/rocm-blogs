@@ -15,6 +15,8 @@ myst:
 
 # Large language model inference optimizations on AMD GPUs
 
+<span style="font-size:0.7em;">15, Mar 2024 by {hoverxref}`Seungrok Jung<seunjung>`. </span>
+
 Large language models (LLMs) have transformed natural language processing and comprehension,
 facilitating a multitude of AI applications in diverse fields. LLMs have various promising use cases,
 including AI assistants, chatbots, programming, gaming, learning, searching, and recommendation

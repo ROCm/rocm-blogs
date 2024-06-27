@@ -14,6 +14,8 @@ myst:
 
 # Simplifying deep learning: A guide to PyTorch Lightning
 
+<span style="font-size:0.7em;">8, Feb 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 PyTorch Lightning is a higher-level wrapper built on top of PyTorch. Its purpose is to simplify and
 abstract the process of training PyTorch models. It provides a structured and organized approach to
 machine learning (ML) tasks by abstracting away the repetitive boilerplate code, allowing you to focus

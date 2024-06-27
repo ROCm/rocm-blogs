@@ -17,6 +17,8 @@ myst:
 
 # Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs
 
+<span style="font-size:0.7em;">23, May 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
+
 This blog gives an overview of Detectron2 and the inference of segmentation pipelines in its core library on an AMD GPU.
 
 ## Introduction

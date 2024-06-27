@@ -16,6 +16,8 @@ myst:
 
 # Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
 
+<span style="font-size:0.7em;">1, Feb 2024 by {hoverxref}`Sean Song<seansong>`. </span>
+
 In this blog, we show you how to fine-tune Llama 2 on an AMD GPU with ROCm. We use Low-Rank
 Adaptation of Large Language Models (LoRA) to overcome memory and computing limitations and
 make open-source large language models (LLMs) more accessible. We also show you how to

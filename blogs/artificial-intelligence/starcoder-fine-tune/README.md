@@ -14,6 +14,8 @@ myst:
 
 # Instruction fine-tuning of StarCoder with PEFT on multiple AMD GPUs
 
+<span style="font-size:0.7em;">16 Apr, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 In this blog, we will show you how to fine-tune the StarCoder base model on AMD GPUs with an instruction-answer pair dataset so that it can follow instructions to generate code and answer questions. We will also show you how to use parameter-efficient fine-tuning (PEFT) to minimize the computation cost for the fine-tuning process.
 
 You can find all the files/scripts mentioned by this blog in the [GitHub repository](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/starcoder-fine-tune).

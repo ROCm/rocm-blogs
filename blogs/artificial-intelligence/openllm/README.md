@@ -14,6 +14,8 @@ myst:
 
 # Step-by-Step Guide to Use OpenLLM on AMD GPUs
 
+<span style="font-size:0.7em;">1, May 2024 by {hoverxref}`Fabricio Flores<fabrflor>`. </span>
+
 ## Introduction
 
 [OpenLLM](https://github.com/bentoml/OpenLLM) is an open-source platform designed to facilitate the deployment and utilization of large language models (LLMs), supporting a wide range of models for diverse applications, whether in cloud environments or on-premises. In this tutorial, we will guide you through the process of starting an LLM server using OpenLLM, enabling interaction with the server from your local machine, with special emphasis on leveraging the capabilities of AMD GPUs.

@@ -14,6 +14,8 @@ myst:
 
 # Accelerating Large Language Models with Flash Attention on AMD GPUs
 
+<span style="font-size:0.7em;">15, May 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 ## Introduction
 
 In this blog post, we will guide you through the process of installing Flash Attention on AMD GPUs and provide benchmarks comparing its performance to standard SDPA in PyTorch. We will also measure end-to-end prefill latency for multiple Large Language Models (LLMs) in Hugging Face.

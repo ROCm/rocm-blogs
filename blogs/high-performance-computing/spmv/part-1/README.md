@@ -14,6 +14,8 @@ myst:
 
 # Sparse matrix vector multiplication - part 1
 
+<span style="font-size:0.7em;">3 Nov, 2023 by {hoverxref}`Paul Mullowney<paulmull>`. </span>
+
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 Sparse matrix vector multiplication (SpMV) is a core computational kernel of nearly

@@ -14,6 +14,8 @@ myst:
 
 # GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment
 
+<span style="font-size:0.7em;">11 Apr, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 This blog will delve into the fundamentals of deep reinforcement learning, guiding you through a practical code example that utilizes an AMD GPU to train a Deep Q-Network (DQN) policy within the Gymnasium environment.
 
 You can find all the files mentioned by this blog in the [Github repo](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/reinforcement-learning-gym).
