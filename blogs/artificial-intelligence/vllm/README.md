@@ -14,6 +14,8 @@ myst:
 
 # Inferencing and serving with vLLM on AMD GPUs
 
+<span style="font-size:0.7em;">4 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 ## Introduction
 
 vLLM is a high-performance, memory-efficient serving engine for large language models (LLMs). It leverages PagedAttention and continuous batching techniques to rapidly process LLM requests. PagedAttention optimizes memory utilization by partitioning the Key-Value (KV) cache into manageable blocks. The KV cache stores previously computed keys and values, enabling the model to focus on calculating attention solely for the current token. These blocks are subsequently managed through a lookup table, akin to memory page handling in operating systems.

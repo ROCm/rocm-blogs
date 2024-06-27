@@ -16,6 +16,8 @@ myst:
 
 # Using the ChatGLM-6B bilingual language model with AMD GPUs
 
+<span style="font-size:0.7em;">4, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 ChatGLM-6B is an open bilingual (Chinese-English) language model with 6.2 billion parameters. It's
 optimized for Chinese conversation based on General Language Model (GLM) architecture. GLM is a
 pretraining framework that seeks to combine the strengths of autoencoder models (like BERT) and

@@ -8,7 +8,7 @@
 
 # Douglas Jia
 
-```{image} ./data/douglas-jia.jpg
+```{image} ./data/douglas-jia.jpeg
 :alt: Douglas
 :class: bg-primary
 :height: 250px

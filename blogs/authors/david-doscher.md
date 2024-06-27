@@ -8,13 +8,6 @@
 
 # David Doscher
 
-```{image} ./data/David-Doscher.jpg
-:alt: David
-:class: bg-primary
-:height: 250px
-:align: left
-```
-
 David is a Senior Member of Technical Staff (SMTS) in the Software System Design Engineering group.
 He leads the quality assurance program for AMD’s high-performance computing (HPC) applications.
 David's background includes development and quality assurance work, ranging from low-level circuit

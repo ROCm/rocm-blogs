@@ -14,6 +14,8 @@ myst:
 
 # Speech-to-Text on an AMD GPU with Whisper
 
+<span style="font-size:0.7em;">16 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 ## Introduction
 
 [Whisper](https://openai.com/research/whisper) is an advanced automatic speech recognition (ASR) system, developed by OpenAI. It employs a straightforward encoder-decoder Transformer architecture where incoming audio is divided into 30-second segments and subsequently fed into the encoder. The decoder can be prompted with special tokens to guide the model to perform tasks such as language identification, transcription, and translation.

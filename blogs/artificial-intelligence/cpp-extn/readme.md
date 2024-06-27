@@ -14,6 +14,8 @@ myst:
 
 # PyTorch C++ Extension on AMD GPU
 
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
+
 This blog demonstrates how to use the PyTorch C++ extension with an example and discusses its advantages over regular PyTorch modules. The experiments were carried out on AMD GPUs and ROCm 5.7.0 software. For more information about supported GPUs and operating systems, see [System Requirements (Linux)](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html).
 
 ## Introduction

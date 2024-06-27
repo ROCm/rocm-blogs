@@ -15,6 +15,8 @@ myst:
 
 # Finite difference method - Laplacian part 4
 
+<span style="font-size:0.7em;">18 Jul, 2023 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`. </span>
+
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 In the previous three posts, we presented a HIP implementation of the finite difference

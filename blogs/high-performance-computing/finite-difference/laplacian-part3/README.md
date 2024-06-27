@@ -14,6 +14,8 @@ myst:
 
 # Finite difference method - Laplacian part 3
 
+<span style="font-size:0.7em;">11 May, 2023 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`, {hoverxref}`Ossian O'Reilly<ossiorei>`. </span>
+
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 In the previous two Laplacian posts, we developed a HIP implementation of a finite-difference code designed around a Laplace operator

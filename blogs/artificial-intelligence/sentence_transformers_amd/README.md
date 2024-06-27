@@ -15,6 +15,8 @@ myst:
 
 # Building semantic search with SentenceTransformers on AMD
 
+<span style="font-size:0.7em;">4 Apr, 2024 by {hoverxref}`Fabricio Flores<fabrflor>`. </span>
+
 In this blog, we explain how to train a SentenceTransformers model on the Sentence Compression
 dataset to perform semantic search. We use the BERT base model (uncased) as the base transformer
 and apply Hugging Face PyTorch libraries.

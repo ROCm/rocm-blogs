@@ -14,6 +14,8 @@ myst:
 
 # Program Synthesis with CodeGen
 
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 CodeGen is a family of standard transformer-based auto-regressive language models for program synthesis, which as [defined by the authors](https://arxiv.org/pdf/2203.13474.pdf) as a method for generating computer programs that solve specified problems, using input-output examples or natural language descriptions.
 
 The specific CodeGen model that we'll be testing is fine-tuned on a set of data which consists of 71.7B tokens of Python programming language. For a deeper dive into the inner workings of CodeGen, we recommend that users take a look at [this paper](https://arxiv.org/pdf/2203.13474.pdf) from Salesforce.

@@ -15,6 +15,8 @@ myst:
 
 # LLM distributed supervised fine-tuning with JAX
 
+<span style="font-size:0.7em;">25 Jan, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 In this article, we review the process for fine-tuning a Bidirectional Encoder Representations
 from Transformers (BERT)-based large language model (LLM) using JAX for a text classification task. We
 explore techniques for parallelizing this fine-tuning procedure across multiple AMD GPUs, then

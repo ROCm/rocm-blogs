@@ -14,6 +14,8 @@ myst:
 
 # Inferencing with Mixtral 8x22B on AMD GPUs
 
+<span style="font-size:0.7em;">1, May 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 ## Introduction
 
  Mixture of Experts (MoE) has regained prominence in the AI community since the release of [Mistral AI's](https://mistral.ai) Mixtral 8x7B. Inspired by this development, multiple AI companies have followed suit by releasing MoE-based models, including xAI’s Grok-1, Databricks’ DBRX, and Snowflake's Artic. The MoE architecture provides several advantages over dense models of comparable size, including faster training times, quicker inference, and enhanced performance on benchmarks. This architecture consists of two components. The first component is sparse MoE layers that replace the dense feed-forward network (FFN) layers in the typical Transformer architecture. Each MoE layer contains a specific number of experts that are typically FFNs themselves. The second component is a router network that determines which tokens are sent to which experts. Since each token is only routed to a subset of the experts, the inference latency is significantly shorter.

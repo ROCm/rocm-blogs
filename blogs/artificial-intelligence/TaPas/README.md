@@ -14,6 +14,8 @@ myst:
 
 # Table Question-Answering with TaPas
 
+<span style="font-size:0.7em;">26 Apr, 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 Conventionally, the question-answering task is framed as a semantic parsing task where the question is translated to a full logical form that can be executed against the table to retrieve the correct answer. However, this requires a lot of annotated data, which can be expensive to acquire.
 
 In response to this challenge, TaPas opts for predicting a streamlined program by choosing a portion of the table cells along with a potential aggregation operation to apply to them. As a result, TaPas can grasp operations directly from natural language, eliminating the necessity for explicit formal specifications.

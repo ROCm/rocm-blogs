@@ -8,13 +8,6 @@
 
 # Nicholas Malaya
 
-```{image} ./data/Nicholas-Malaya.jpg
-:alt: Nicholas
-:class: bg-primary
-:height: 250px
-:align: left
-```
-
 Nick is an AMD Fellow with an emphasis in software development, algorithms, and high-performance
 computing. He is AMD's technical lead for exascale application performance, and is focused on
 ensuring workloads run efficiently on the world's largest supercomputers. Nick's research interests

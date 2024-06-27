@@ -15,6 +15,8 @@ myst:
 
 # Music Generation With MusicGen on an AMD GPU
 
+<span style="font-size:0.7em;">8, Mar 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 MusicGen is an autoregressive, transformer-based model that predicts the next segment of a piece of
 music based on previous segments. This is a similar approach to language models predicting the next
 token.

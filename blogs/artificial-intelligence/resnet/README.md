@@ -14,6 +14,8 @@ myst:
 
 # ResNet for image classification using AMD GPUs
 
+<span style="font-size:0.7em;">9 Apr, 2024 by {hoverxref}`Logan Grado<logagrad>`. </span>
+
 In this blog, we demonstrate training a simple ResNet model for image classification on AMD GPUs using ROCm on the CIFAR10 dataset. Training a ResNet model on AMD GPUs is simple, requiring no additional work beyond installing ROCm and appropriate PyTorch libraries.
 
 ## Introduction

@@ -14,6 +14,8 @@ myst:
 
 # Text Summarization with FLAN-T5
 
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+
 In this blog, we showcase the language model FLAN-T5 and how to fine-tune it on a summarization task with HuggingFace in an AMD GPUs + ROCm system.
 
 ## Introduction

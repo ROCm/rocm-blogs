@@ -14,6 +14,8 @@ myst:
 
 # Developing Triton Kernels on AMD GPUs
 
+<span style="font-size:0.7em;">15 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 ## Introduction
 
 OpenAI has developed a powerful GPU focused programming language and compiler called [Triton](https://triton-lang.org) that works seamlessly with AMD GPUs. The goal of Triton is to enable AI engineers and scientists to write high-performant GPU code with minimal expertise. Triton kernels are performant because of their blocked program representation, allowing them to be compiled into highly optimized binary code. Triton also leverages Python for kernel development, making it both familiar and accessible. And the kernels can be easily compiled by simply declaring the `triton.jit` python decorator before the kernel.

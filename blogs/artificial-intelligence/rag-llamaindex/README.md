@@ -14,6 +14,8 @@ myst:
 
 # Retrieval Augmented Generation (RAG) using LlamaIndex
 
+<span style="font-size:0.7em;">4, Apr 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+
 ## Prerequisites
 
 To run this blog, you will need the following:

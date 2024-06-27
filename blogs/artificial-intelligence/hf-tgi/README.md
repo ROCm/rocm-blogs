@@ -16,6 +16,8 @@ myst:
 
 # Efficient deployment of large language models with Text Generation Inference on AMD GPUs
 
+<span style="font-size:0.7em;">24 Jan, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 [Text Generation Inference (TGI)](https://huggingface.co/docs/text-generation-inference/index) is a
 toolkit for deploying and serving Large Language Models (LLMs) with unparalleled efficiency. TGI is
 tailored for popular open-source LLMs, such as Llama, Falcon, StarCoder, BLOOM, GPT-NeoX, and T5.

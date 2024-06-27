@@ -15,6 +15,8 @@ myst:
 
 # Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU
 
+<span style="font-size:0.7em;">7, Feb 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
+
 This tutorial aims to explain the fundamentals of NeRF and its implementation in PyTorch. The code
 used in this tutorial is inspired by
 [Mason McGough’s colab notebook](https://colab.research.google.com/drive/1TppdSsLz8uKoNwqJqDGg8se8BHQcvg_K?usp=sharing)

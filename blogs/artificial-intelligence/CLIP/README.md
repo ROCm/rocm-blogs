@@ -14,6 +14,8 @@ myst:
 
 # Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU
 
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Sean Song<seansong>`. </span>
+
 ## Introduction
 
 Contrastive Language-Image Pre-Training (CLIP) is a multimodal deep learning model that bridges vision and natural language. It was introduced in the paper “[Learning Transferrable Visual Models from Natural Language Supervision](https://arxiv.org/abs/2103.00020)” (2021) from OpenAI, and it was trained contrastively on a huge amount (400 million) of web scraped data of image-caption pairs (one of the first models to do this).

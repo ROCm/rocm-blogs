@@ -14,6 +14,8 @@ myst:
 
 # Segment Anything with AMD GPUs
 
+<span style="font-size:0.7em;">4 Jun, 2024 by {hoverxref}`Sean Song<seansong>`. </span>
+
 ## Introduction
 
 Segmentation — identifying which image pixels belong to an object — is a fundamental task in computer vision with widespread applications from scientific image analysis to photo editing. The [Segment Anything Model (SAM)](https://arxiv.org/abs/2304.02643) is a cutting-edge image segmentation model that democratizes promptable segmentation, allowing unparalleled versatility in image analysis tasks. SAM can be used to help power applications in domains that require finding and segmenting any object in any image. For the AI research community and others, SAM holds promise as a pivotal component within larger AI systems, enabling a comprehensive understanding of the world in multimodal contexts.

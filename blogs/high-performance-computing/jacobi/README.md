@@ -14,6 +14,8 @@ myst:
 
 # Jacobi Solver with HIP and OpenMP offloading
 
+<span style="font-size:0.7em;">15 Sept, 2023 by {hoverxref}`Asitav Mishra<asitmish>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Justin Chang<justchan>`. </span>
+
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 The Jacobi method serves as a fundamental iterative linear solver for Partial
