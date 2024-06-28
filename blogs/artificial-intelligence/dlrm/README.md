@@ -1,19 +1,21 @@
 ---
 blogpost: true
-date: 26 Jun 2024
+date: 28 Jun 2024
 
 author: Phillip Dang
 tags: PyTorch
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Deep Learning Recommendation Model on AMD GPU"
+    "keywords": "PyTorch, Deep Learning, Recommendation, DLRM, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Deep Learning Recommendation Model on AMD GPU">
-  <meta name="keywords" content="PyTorch, Deep Learning, Recommendation, DLRM, AMD, GPU, MI300, MI250">
-</head>
 
 # Deep Learning Recommendation Models on AMD GPUs
+
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 In this blog, we demonstrate how to build a simple Deep Learning Recommendation Model (DLRM) with PyTorch on a ROCm-capable AMD GPU.
 
