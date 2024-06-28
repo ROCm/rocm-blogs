@@ -15,7 +15,7 @@ myst:
 
 # Deep Learning Recommendation Models on AMD GPUs
 
-<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
+<span style="font-size:0.7em;">28, June 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 In this blog, we demonstrate how to build a simple Deep Learning Recommendation Model (DLRM) with PyTorch on a ROCm-capable AMD GPU.
 
