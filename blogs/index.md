@@ -107,6 +107,14 @@ Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options fo
 ::::{grid} 1 2 3 3
 :margin: 1
 
+:::{grid-item-card} Deep Learning Recommendation Model on AMD GPU
+:padding: 1
+:link: ./artificial-intelligence/dlrm/README
+:link-type: doc
+
+In this blog, we demonstrate how to build a simple Deep Learning Recommendation Model (DLRM) with PyTorch on a ROCm-capable AMD GPU.
+:::
+
 :::{grid-item-card} Segment Anything with AMD GPUs
 :padding: 1
 :link: ./artificial-intelligence/segment-anything/README.html
@@ -145,14 +153,6 @@ OpenLLM is an open-source platform designed to facilitate the deployment and uti
 :link-type: doc
 
 Mixtral 8x22B is a sparse MoE decoder-only transformer model, get it working on AMD GPUs
-:::
-
-:::{grid-item-card} Training a Neural Collaborative Filtering (NCF) Recommender
-:padding: 1
-:link: ./artificial-intelligence/ncf/README
-:link-type: doc
-
-Collaborative Filtering is a type of item recommendation where new items are recommended to the user based on their past interactions.
 :::
 
 ::::
