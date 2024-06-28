@@ -63,9 +63,9 @@ The following terms are used in this blog post:
 | [AMD "Zen" Core](https://www.amd.com/en/technologies/zen-core)| AMD's x86-64 processor core architecture design. Used by the AMD EPYC&trade;, AMD Ryzen&trade;, AMD Ryzen&trade; PRO, and AMD Threadripper&trade; PRO processor series.|
 | [RDNA&trade;](https://www.amd.com/en/technologies/rdna) | AMD's Traditional GPU architecture optimized for graphically demanding workloads like gaming and visualization. Includes the RX 5000, 6000 and 7000 GPUs. |
 | [CDNA&trade;](https://www.amd.com/en/technologies/cdna) | AMD's Compute dedicated GPU architecture optimized for accelerating HPC, ML/AI, and data center type workloads. Includes the AMD Instinct™ MI50/60, MI100, and MI200 series accelerators.|
-| [HIP](https://rocm.docs.amd.com/projects/HIP/en/latest/user_guide/programming_manual.html) | A C++ Runtime API and kernel language that allows developers to create portable compute kernels/applications for AMD and NVIDIA GPUs from a single source code |
-| [Timeline Trace](https://amdresearch.github.io/omnitrace/output.html#perfetto-output) | A profiling approach where durations of compute kernels and data transfers between devices are collected and visualized |
-| [Roofline Analysis](https://amdresearch.github.io/omniperf/profiling.html#standalone-roofline) | Hardware agnostic methodology for quantifying a workload's ability to saturate the given compute architecture in terms of floating-point compute and memory bandwidth |
+| [HIP](https://rocm.docs.amd.com/projects/HIP/en/latest/understand/programming_model.html) | A C++ Runtime API and kernel language that allows developers to create portable compute kernels/applications for AMD and NVIDIA GPUs from a single source code |
+| [Timeline Trace](https://rocm.github.io/omnitrace/output.html#perfetto-output) | A profiling approach where durations of compute kernels and data transfers between devices are collected and visualized |
+| [Roofline Analysis](https://rocm.github.io/omniperf/profiling.html#standalone-roofline) | Hardware agnostic methodology for quantifying a workload's ability to saturate the given compute architecture in terms of floating-point compute and memory bandwidth |
 | Hardware Counters | Individual metrics which track how many times a certain event occurs in the hardware, such as bytes moved from L2 cache or a 32 bit floating point add performed |
 
 ## What tools to use?
@@ -121,7 +121,7 @@ and [AMD <greek>u</greek>Prof](#amd-uprof) interface with the low-level  [ROC-pr
 dealing with text/CSV files and hardware-specific metrics unless there is a specific need. On Windows systems, one will have to rely
 on using either [AMD <greek>u</greek>Prof](#amd-uprof) or [Radeon&trade; GPU Profiler](#radeon-gpu-profiler).
 
-> **Quick Tip**:  The relatively new Omni\* suite of tools ([Omniperf](#omniperf) and [Omnitrace](#omnitrace)), available
+> **Quick Tip**:  The Omni\* suite of tools ([Omniperf](#omniperf) and [Omnitrace](#omnitrace)), available
 on Linux&reg; platforms, provide an easy-to-use interface for studying performance of the code across AMD hardware and
 should be treated as "go-to" profiling tools for performance tuning and benchmarking.
 
@@ -144,7 +144,7 @@ In this section, we provide a brief overview of the above-mentioned AMD tools an
 
 ### Omnitrace
 
-[Omnitrace](https://amdresearch.github.io/omnitrace/) is a comprehensive profiling and tracing tool for parallel
+[Omnitrace](https://rocm.github.io/omnitrace/) is a comprehensive profiling and tracing tool for parallel
 applications, including HPC and ML packages, written in C, C++, Fortran, HIP, OpenCL&trade;, and Python&trade; which execute
 on the CPU or CPU+GPU. It is capable of gathering the performance information
 of functions through any combination of binary instrumentation, call-stack
@@ -173,14 +173,13 @@ viewing what else is happening on the system during a performance bottleneck.
 Figure 2: Omnitrace timeline trace example.
 </p>
 
-Omnitrace is an AMD open source research project that is not distributed with the ROCm&trade; software stack so
-please see the [official Omnitrace documentation](https://amdresearch.github.io/omnitrace/) for the latest information.
-Users are encouraged to submit [issues](https://github.com/AMDResearch/omnitrace/issues), feature requests, and provide
+Please see the [official Omnitrace documentation](https://rocm.github.io/omnitrace/) for the latest information.
+Users are encouraged to submit [issues](https://github.com/rocm/omnitrace/issues), feature requests, and provide
 any additional feedback.
 
 ### Omniperf
 
-[Omniperf](https://amdresearch.github.io/omniperf/) is a system performance profiler
+[Omniperf](https://rocm.github.io/omniperf/) is a system performance profiler
 for High-Performance Computing (HPC) and Machine-Learning (ML) workloads using AMD Instinct&trade; GPUs.
 Omniperf utilizes [AMD ROC-profiler](#roc-profiler) to collect hardware
 performance counters. The Omniperf tool performs system profiling based on all approved hardware
@@ -210,14 +209,13 @@ Figure 3: Omniperf memory chart analysis panel.
 In a nutshell, Omniperf provides details about hardware activity for a particular GPU kernel.
 It also supports both a web-based GUI or command-line analyzer, depending on the user's preference.
 For up-to-date information on available Omniperf features, we highly encourage readers to view
-the [official Omniperf documentation](https://amdresearch.github.io/omniperf/introduction.html#features).
-Omniperf is also an AMD open source research project and is not distributed as part of
-the ROCm&trade; software stack. Users are encouraged to submit [issues](https://github.com/AMDResearch/omniperf/issues),
+the [official Omniperf documentation](https://rocm.github.io/omniperf/introduction.html#features).
+Users are encouraged to submit [issues](https://github.com/rocm/omniperf/issues),
 feature requests and we welcome contributions and feedback from the community.
 
 ### ROC-profiler
 
-The [ROC-profiler](https://github.com/ROCm-Developer-Tools/rocprofiler)
+The [ROC-profiler](https://github.com/rocm/rocprofiler)
 primarily serves as the low level API for accessing and extracting GPU hardware
 performance metrics, also typically called performance counters. These counters
 quantify the performance of the underlying architecture showcasing which
@@ -227,8 +225,8 @@ functionality for listing all available hardware counters for your specific GPU 
 and collecting counters during the execution.
 
 The `rocprof` utility also depends on the
-[ROC-tracer](https://github.com/ROCm-Developer-Tools/roctracer) and
-[ROC-TX](https://rocm.docs.amd.com/projects/roctracer/en/latest/roctracer_spec.html#)
+[ROC-tracer](https://github.com/rocm/roctracer) and
+[ROC-TX](https://rocm.docs.amd.com/projects/roctracer/en/latest/reference/roctx-spec.html)
 libraries, giving it the ability to collect timeline traces of the GPU software stack
 as well as user anotated code regions. Note that `rocprof` is a command-line only
 utility so input and output takes the format of txt and CSV files. These formats
