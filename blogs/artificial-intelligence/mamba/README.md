@@ -14,7 +14,7 @@ myst:
 
 # Mamba on AMD GPUs with ROCm
 
-<span style="font-size:0.7em;">28, Jun 2024 by Sean Song, Jassani Adeem and Moskvichev Arseny</span>
+<span style="font-size:0.7em;">28, Jun 2024 by {hoverxref}`Sean Song<seansong>`, {hoverxref}`Jassani Adeem<jassadee>`, {hoverxref}`Moskvichev Arseny<moskarse>`. </span>
 
 Recently, [Mamba](https://arxiv.org/abs/2312.00752) introduced a novel architecture that not only surpasses the Transformers in modeling effectiveness but also achieves linear scaling to the input sequence length.
 
