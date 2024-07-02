@@ -15,6 +15,8 @@ myst:
 
 # A Guide to Implementing and Training Generative Pre-trained Transformers (GPT) in JAX on AMD GPUs
 
+<span style="font-size:0.7em;">2 July, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
+
 In this blog, we illustrate the process of implementing and training a Generative Pre-trained Transformer (GPT) model in JAX, drawing from Andrej Karpathy's PyTorch-based [nanoGPT](https://github.com/karpathy/nanoGPT). Through an examination of the distinctions between PyTorch and JAX in realizing key components of the GPT model—such as self-attention and optimizers—we elucidate the distinctive attributes of JAX. Moreover, we offer an introductory overview of GPT model fundamentals to enhance comprehension.
 
 ## Background
