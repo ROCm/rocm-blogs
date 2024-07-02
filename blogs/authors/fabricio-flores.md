@@ -4,6 +4,8 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(fabrflor)=
+
 # Fabricio Flores
 
 Fabricio is a Senior Machine Learning Engineer at AMD, known for his expertise in deploying deep

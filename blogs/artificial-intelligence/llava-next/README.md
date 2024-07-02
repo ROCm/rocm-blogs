@@ -1,19 +1,20 @@
 ---
 blogpost: true
 date: 26 Apr 2024
-
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Multimodal, Fine-Tuning, LLM
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Multimodal instruction-following data with LLaVA-NeXT on AMD GPU"
+    "keywords": "PyTorch, llava, llm, visual, multimodal, instruction, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Multimodal instruction-following data with LLaVA-NeXT on AMD GPU">
-  <meta name="keywords" content="PyTorch, llava, llm, visual, multimodal, instruction, AMD, GPU, MI300, MI250">
-</head>
 
 # Multimodal (Visual and Language) understanding with LLaVA-NeXT
+
+<span style="font-size:0.7em;">26, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 LLaVa (Large Language And Vision Assistant) was introduced in 2023 and became a milestone for multimodal models. It combines a pretrained [vision encoder](https://openai.com/research/clip) and a pretrained [LLM](https://lmsys.org/blog/2023-03-30-vicuna/) for general purpose visual and language understanding. In January 2024, LLaVa-NeXT was released, which boasts significant enhancements, including higher input's visual resolution and improved logical reasoning and world knowledge.
 

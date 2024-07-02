@@ -1,19 +1,20 @@
 ---
 blogpost: true
 date: 8 Apr 2024
-
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Small language models with Phi-2"
+    "keywords": "PyTorch, language model, AMD, GPU, MI300, MI250, Phi-2"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Small language models with Phi-2">
-  <meta name="keywords" content="PyTorch, language model, AMD, GPU, MI300, MI250, Phi-2">
-</head>
 
 # Small language models with Phi-2
+
+<span style="font-size:0.7em;">8, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 Like many other LLMs, Phi-2 is a transformer-based model with a next-word prediction objective that
 is  trained on billions of tokens. At 2.7 billion parameters, Phi-2 is a relatively small language model,

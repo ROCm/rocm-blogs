@@ -4,6 +4,8 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(nichmala)=
+
 # Nicholas Malaya
 
 Nick is an AMD Fellow with an emphasis in software development, algorithms, and high-performance

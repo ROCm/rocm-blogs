@@ -2,17 +2,19 @@
 blogpost: true
 date: 16 Apr 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, GenAI
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Program Synthesis with CodeGen"
+    "keywords": "PyTorch, PyTorch Lightning, train models, Tuning, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Program Synthesis with CodeGen">
-  <meta name="keywords" content="PyTorch, PyTorch Lightning, train models">
-</head>
 
 # Program Synthesis with CodeGen
+
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 CodeGen is a family of standard transformer-based auto-regressive language models for program synthesis, which as [defined by the authors](https://arxiv.org/pdf/2203.13474.pdf) as a method for generating computer programs that solve specified problems, using input-output examples or natural language descriptions.
 

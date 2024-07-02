@@ -2,18 +2,19 @@
 blogpost: true
 date: 15 April 2024
 author: Sean Song
-tags: LLM, AI/ML, GenAI, Llama, LoRA, Tuning, QLora
+tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU"
+    "keywords": "LoRA, Low-rank Adaptation, QLoRA, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI"
+    "property=og:locale": "en_US"
 ---
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llma 2 on a single AMD GPU">
-  <meta name="keywords" content="LoRA, Low-rank Adaptation, QLoRA, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI">
-</head>
+# Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU
 
-# Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llma 2 on a single AMD GPU
+<span style="font-size:0.7em;">15, Apr 2024 by {hoverxref}`Sean Song<seansong>`. </span>
 
 Building on the previous blog [Fine-tune Llama 2 with LoRA blog](https://rocm.blogs.amd.com/artificial-intelligence/llama2-lora/README.html), we delve into another Parameter Efficient Fine-Tuning (PEFT) approach known as Quantized Low Rank Adaptation (QLoRA). The focus will be on leveraging QLoRA for the fine-tuning of Llama-2 7B model using a single AMD GPU with ROCm. This task, made possible through the use of QLoRA, addresses challenges related to memory and computing limitations. The exploration aims to showcase how QLoRA can be employed to enhance accessibility to open-source large language models.
 
@@ -37,11 +38,12 @@ For that, we will use the following setup:
 
 * Hardware & OS: See [this link](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html) for a list of supported hardware and OS with ROCm.
 * Software:
-  * [ROCm 5.7.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/)
+  * [ROCm 6.1.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/)
   * [Pytorch for ROCm 2.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html)
 * Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`, `scipy`
 
-Note in this blog we conduct the experiment on a single MI250GPU + ROCm 5.7.0.
+In this blog, we conducted our experiment using a single MI250GPU with the Docker image [rocm/pytorch:rocm6.1_ubuntu20.04_py3.9_pytorch_2.1.2
+](https://hub.docker.com/layers/rocm/pytorch/rocm6.1_ubuntu20.04_py3.9_pytorch_2.1.2/images/sha256-96ba7b33bc7fa37b88c5ed550488960dd1dcedabaa8a9c17a4fd62e6c50e7574?context=explore).
 
 You can find the complete code used in this blog from the [Github repo](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/llama2-Qlora).
 
@@ -91,7 +93,7 @@ if use_cuda:
 We will start by installing the required libraries.
 
 ```python
-!pip install -q pandas peft transformers==4.31.0 trl==0.4.7 accelerate scipy
+!pip install -q pandas peft==0.9.0 transformers==4.31.0 trl==0.4.7 accelerate scipy
 ```
 
 #### Installing bitsandbytes
@@ -100,38 +102,19 @@ ROCm needs a special version of bitsandbytes (`bitsandbytes-rocm`).
 
 1. Install bitsandbytes using the following code.
 
-    * For ROCm 5.7
+    ```bash
+    git clone --recurse https://github.com/ROCm/bitsandbytes
+    cd bitsandbytes
+    git checkout rocm_enabled
+    pip install -r requirements-dev.txt
+    cmake -DCOMPUTE_BACKEND=hip -S . #Use -DBNB_ROCM_ARCH="gfx90a;gfx942" to target specific gpu arch
+    make
+    pip install .
+    ```
 
-        ```bash
-        ## Install/update `hipBLASLt`. This step takes around half an hour.
-        git clone --recurse https://github.com/ROCm/hipBLASLt
-        cd hipBLASLt
-        git checkout 4b3b34405e7e25cff404f69bfd0a832644430477
-        ./install.sh -idc
+2. Check the bitsandbytes version.
 
-        cd ..
-        pip install einops lion_pytorch
-
-        # Install `bitsandbytes`
-        git clone --recurse https://github.com/ROCm/bitsandbytes.git
-        cd bitsandbytes
-        git checkout rocm5.7_internal_testing
-        make hip
-        python setup.py install
-        ```
-
-    * For ROCm 6.0+
-
-        ```bash
-        # Install `bitsandbytes`
-        git clone --recurse https://github.com/ROCm/bitsandbytes.git
-        cd bitsandbytes
-        git checkout rocm_enabled
-        make hip
-        python setup.py install
-        ```
-
-2. Check the bitsandbytes version (0.42.0).
+    At the time of writing this blog, the version is 0.43.0.
 
     ```bash
     %%bash

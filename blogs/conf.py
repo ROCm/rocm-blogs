@@ -53,18 +53,21 @@ blog_baseurl = "https://rocm.blogs.amd.com/"
 html_title = "ROCm Blogs"
 html_theme = "rocm_docs_theme"
 html_theme_options = {
-    "flavor": "rocm-blogs",
+    "flavor": "rocm-blogs"
 }
 
-extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx"]
+extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx", 'hoverxref.extension', 'myst_parser']
 external_toc_path = "./sphinx/_toc.yml"
 
-templates_path = [ablog.get_html_templates_path(), "."]
+hoverxref_api_host = "/_"
+
+templates_path = ["."]
 
 html_sidebars = {
     "**": [
+        "search-field.html",
         "postcard.html",
-        "./templates/recentposts.html",
+        "recentposts.html",
         "tagcloud.html",
         "categories.html",
         "archives.html",
@@ -72,126 +75,138 @@ html_sidebars = {
 }
 
 blog_authors = {
-    "alessandro fanfarillo": (
-        "alessandro fanfarillo",
+"Alessandro Fanfarillo": (
+        "Alessandro Fanfarillo",
         "http://rocm.blogs.amd.com/authors/alessandro-fanfarillo.html",
-    ),
-    "anton smirnov": (
-        "anton smirnov",
+),
+"Alex Voicu": (
+        "Alex Voicu",
+        "http://rocm.blogs.amd.com/authors/alex-voicu.html",
+),
+"Anton Smirnov": (
+        "Anton Smirnov",
         "http://rocm.blogs.amd.com/authors/anton-smirnov.html",
-    ),
-    "asitav mishra": (
-        "asitav mishra",
+),
+"Asitav Mishra": (
+        "Asitav Mishra",
         "http://rocm.blogs.amd.com/authors/asitav-mishra.html",
-    ),
-    "clint greene": (
-        "clint greene",
+),
+"Bob Robey": (
+        "Bob Robey",
+        "http://rocm.blogs.amd.com/authors/bob-robey.html",
+),
+"Clint Greene": (
+        "Clint Greene",
         "http://rocm.blogs.amd.com/authors/clint-greene.html",
-    ),
-    "damon mcdougall": (
-        "damon mcdougall",
+),
+"Damon McDougall": (
+        "Damon McDougall",
         "http://rocm.blogs.amd.com/authors/damon-mcdougall.html",
-    ),
-    "david doscher": (
-        "david doscher",
+),
+"David Doscher": (
+        "David Doscher",
         "http://rocm.blogs.amd.com/authors/david-doscher.html",
-    ),
-    "douglas jia": (
-        "douglas jia",
+),
+"Douglas Jia": (
+        "Douglas Jia",
         "http://rocm.blogs.amd.com/authors/douglas-jia.html",
-    ),
-    "eliot li": (
-        "eliot li",
+),
+"Eliot Li": (
+        "Eliot Li",
         "http://rocm.blogs.amd.com/authors/eliot-li.html",
-    ),
-    "fabricio flores": (
-        "fabricio flores",
+),
+"Fabricio Flores": (
+        "Fabricio Flores",
         "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
-    ),
-    "gina sitaraman": (
-        "gina sitaraman",
+),
+"George Markomanolis": (
+        "George Markomanolis",
+        "http://rocm.blogs.amd.com/authors/george-markomanolis.html",
+),
+"Gina Sitaraman": (
+        "Gina Sitaraman",
         "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
-    ),
-    "justin chang": (
-        "justin chang",
+),
+"Justin Chang": (
+        "Justin Chang",
         "http://rocm.blogs.amd.com/authors/justin-chang.html",
-    ),
-    "mahdieh ghazimirsaeed": (
-        "mahdieh ghazimirsaeed",
+),
+"Mahdieh Ghazimirsaeed": (
+        "Mahdieh Ghazimirsaeed",
         "http://rocm.blogs.amd.com/authors/mahdieh-ghazimirsaeed.html",
-    ),
-    "maria ruiz varela": (
-        "maria ruiz varela",
+),
+"Maria Ruiz Varela": (
+        "Maria Ruiz Varela",
         "http://rocm.blogs.amd.com/authors/maria-ruiz-varela.html",
-    ),
-    "nicholas curtis": (
-        "nicholas curtis",
-        "http://rocm.blogs.amd.com/authors/nicholas-curtis.html",
-    ),
-    "nicholas malaya": (
-        "nicholas malaya",
+),
+"Nicholas Curtis": (
+        "Nicholas Curtis",
+        "https://rocm.blogs.amd.com/authors/nicholas-curtis.html",
+),
+"Nicholas Malaya": (
+        "Nicholas Malaya",
         "http://rocm.blogs.amd.com/authors/nicholas-malaya.html",
-    ),
-    "noah wolfe": (
-        "noah wolfe",
+),
+"Noah Wolfe": (
+        "Noah Wolfe",
         "http://rocm.blogs.amd.com/authors/noah-wolfe.html",
-    ),
-    "noel chalmers": (
-        "noel chalmers",
+),
+"Noel Chalmers": (
+        "Noel Chalmers",
         "http://rocm.blogs.amd.com/authors/noel-chalmers.html",
-    ),
-    "ossian oreilly": (
-        "ossian oreilly",
+),
+"Ossian O'Reilly": (
+        "Ossian O'Reilly",
         "http://rocm.blogs.amd.com/authors/ossian-oreilly.html",
-    ),
-    "paul mullowney": (
-        "paul mullowney",
+),
+"Paul Mullowney": (
+        "Paul Mullowney",
         "http://rocm.blogs.amd.com/authors/paul-mullowney.html",
-    ),
-    "phillip dang": (
-        "phillip dang",
+),
+"Phillip Dang": (
+        "Phillip Dang",
         "http://rocm.blogs.amd.com/authors/phillip-dang.html",
-    ),
-    "rajat arora": (
-        "rajat arora",
+),
+"Rajat Arora": (
+        "Rajat Arora",
         "http://rocm.blogs.amd.com/authors/rajat-arora.html",
-    ),
-    "rene van oostrum": (
-        "rene van oostrum",
+),
+"Rene Van Oostrum": (
+        "Rene Van Oostrum",
         "http://rocm.blogs.amd.com/authors/rene-van-oostrum.html",
-    ),
-    "sean miller": (
-        "sean miller",
+),
+"Sean Miller": (
+        "Sean Miller",
         "http://rocm.blogs.amd.com/authors/sean-miller.html",
-    ),
-    "sean song": (
-        "sean song",
+),
+"Sean Song": (
+        "Sean Song",
         "http://rocm.blogs.amd.com/authors/sean-song.html",
-    ),
-    "seung rok jung": (
-        "seung rok jung",
+),
+"Seungrok Jung": (
+        "Seungrok Jung",
         "http://rocm.blogs.amd.com/authors/seung-rok-jung.html",
-    ),
-    "suyash tandon": (
-        "suyash tandon",
+),
+"Suyash Tandon": (
+        "Suyash Tandon",
         "http://rocm.blogs.amd.com/authors/suyash-tandon.html",
-    ),
-    "thomas gibson": (
-        "thomas gibson",
+),
+"Thomas Gibson": (
+        "Thomas Gibson",
         "http://rocm.blogs.amd.com/authors/thomas-gibson.html",
-    ),
-    "vara lakshmi bayanagari": (
-        "vara lakshmi bayanagari",
+),
+"Vara Lakshmi Bayanagari": (
+        "Vara Lakshmi Bayanagari",
         "http://rocm.blogs.amd.com/authors/vara-lakshmi-bayanagari.html",
-    ),
-    "vicky tsang": (
-        "vicky tsang",
+),
+"Vicky Tsang": (
+        "Vicky Tsang",
         "http://rocm.blogs.amd.com/authors/vicky-tsang.html",
-    ),
-    "yao fehlis": (
-        "yao fehlis",
+),
+"Yao Fehlis": (
+        "Yao Fehlis",
         "http://rocm.blogs.amd.com/authors/yao-fehlis.html",
-    ),
+),
 }
 blog_feed_archives = True
 blog_feed_fulltext = True

@@ -4,13 +4,21 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(ossiorei)=
+
 # Ossian O'Reilly
+
+```{image} ./data/Ossian-OReilly.jpg
+:alt: Ossian
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
 Ossian is a Member of Technical Staff (MTS), Software System Design Engineer in the Data Center GPU
 Solutions and Performance Analysis group at AMD. He works on porting and optimizing scientific
-computing and engineering applications for AMD GPUs.
-
-Ossian holds a PhD in Geophysics from Stanford University and a PhD in Computational Mathematics
+computing and engineering applications for AMD GPUs. He holds a PhD in Geophysics from Stanford
+University and a PhD in Computational Mathematics
 from Linköping University, Sweden. His doctoral research focused on high-order numerical methods
 for seismic wave propagation containing frictional interfaces and fluid-filled cracks, with applications to
 earthquake and volcano seismology, and the Oil & Gas industry. As a postdoc, he worked on

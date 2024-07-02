@@ -4,6 +4,8 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(seansong)=
+
 # Sean Song
 
 Sean is a Machine Learning Engineer at AMD, where he specializes in research and deployment of

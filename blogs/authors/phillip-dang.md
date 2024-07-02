@@ -4,6 +4,8 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(phildang)=
+
 # Phillip Dang
 
 Phillip is a Senior Machine Learning Engineer at AMD, where he specializes in the evaluation and

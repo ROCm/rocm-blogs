@@ -2,17 +2,19 @@
 blogpost: true
 date: 16 Apr 2024
 author: Douglas Jia
-tags: AI/ML, GenAI, Fine-tune, PyTorch, LoRA, PEFT
+tags: AI/ML, GenAI, PyTorch, Fine-Tuning
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs"
+    "keywords": "Instruction fine-tuning, StarCoder, StarCoder2, PEFT, Parameter-efficient tine-tuning, LoRA, Fine-tuning, AMD, GPU, MI300, MI250, ROCm, Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs">
-  <meta name="keywords" content="Instruction fine-tuning, StarCoder, StarCoder2, PEFT, Parameter-efficient tine-tuning, LoRA, Fine-tuning, AMD, GPU, MI300, MI250, ROCm">
-</head>
 
 # Instruction fine-tuning of StarCoder with PEFT on multiple AMD GPUs
+
+<span style="font-size:0.7em;">16 Apr, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
 
 In this blog, we will show you how to fine-tune the StarCoder base model on AMD GPUs with an instruction-answer pair dataset so that it can follow instructions to generate code and answer questions. We will also show you how to use parameter-efficient fine-tuning (PEFT) to minimize the computation cost for the fine-tuning process.
 
@@ -56,11 +58,13 @@ In this section, we will walk you through how to implement the LoRA fine-tuning 
 To enhance the efficiency of fine-tuning, in addition to employing the LoRA technique, we will incorporate the `bitsandbytes` package to optimize memory usage through quantization—a compression technique that reduces the precision of weights in large language models. Please use the code below to install it from the ROCmSoftwarePlatform GitHub repo:
 
 ```text
-git clone --recurse https://github.com/ROCmSoftwarePlatform/bitsandbytes
+git clone --recurse https://github.com/ROCm/bitsandbytes
 cd bitsandbytes
 git checkout rocm_enabled
-make hip
-python setup.py install
+pip install -r requirements-dev.txt
+cmake -DCOMPUTE_BACKEND=hip -S . #Use -DBNB_ROCM_ARCH="gfx90a;gfx942" to target specific gpu arch
+make
+pip install .
 cd ..
 ```
 

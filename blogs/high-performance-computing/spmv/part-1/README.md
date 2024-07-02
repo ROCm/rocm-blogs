@@ -2,17 +2,19 @@
 blogpost: true
 date: 3 Nov 2023
 author: Paul Mullowney
-tags: Scientific computing, HPC, Sparse, Memory
+tags: HPC, Linear Algebra, Performance, Scientific Computing
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Sparse matrix vector multiplication - Part 1"
+    "keywords": "HPC, spmv, rocblas, linear algebra, PDE, MI250, performance"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Sparse matrix vector multiplication - Part 1">
-  <meta name="keywords" content="HPC, spmv, rocblas, linear algebra, PDE, MI250, performance">
-</head>
 
 # Sparse matrix vector multiplication - part 1
+
+<span style="font-size:0.7em;">3 Nov, 2023 by {hoverxref}`Paul Mullowney<paulmull>`. </span>
 
 > **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 

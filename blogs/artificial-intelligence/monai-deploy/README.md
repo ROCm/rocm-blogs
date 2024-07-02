@@ -2,17 +2,19 @@
 blogpost: true
 date: 4 Apr 2024
 author: Vara Lakshmi Bayanagari
-tags: Segmentation, PyTorch, AI/ML, MONAI, Computer Vision
+tags: PyTorch, AI/ML, Computer Vision
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Total body segmentation using MONAI Deploy with ROCm"
+    "keywords": "Segmentation, PyTorch, AI/ML, MONAI, Computer Vision"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Total body segmentation using MONAI Deploy with ROCm">
-  <meta name="keywords" content="Segmentation, PyTorch, AI/ML, MONAI, Computer Vision">
-</head>
 
 # Total body segmentation using MONAI Deploy on an AMD GPU
+
+<span style="font-size:0.7em;">4, Apr 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
 
 Medical Open Network for Artificial Intelligence (MONAI) is an open-source organization that provides
 PyTorch implementation of state-of-the-art medical imaging models, ranging from classification and
@@ -102,7 +104,17 @@ To follow along with this blog, you'll need to:
   ```
 
 * Download a single test subject for inferencing from
-  [zenodo.org](https://zenodo.org/records/10047263).
+  [zenodo.org](https://zenodo.org/records/10047263) into the input folder i.e., [ts_data](./src/ts_data)
+
+  ```bash
+   curl https://zenodo.org/records/10047263/files/Totalsegmentator_dataset_small_v201.zip --output ts.zip
+   unzip ts.zip s0011/ct.nii.gz
+   mv s0011/ct.nii.gz ts_data
+
+   // Remove downloads
+   rm -r s0011
+   rm ts.zip
+  ```
 
 * Install other required libraries.
 
@@ -114,15 +126,22 @@ To follow along with this blog, you'll need to:
 
 [TotalSegmentator](https://github.com/wasserth/TotalSegmentator) is an open source project that uses
 a ResNet equivalent to segment 105 parts from a whole body human CT scan. This includes skull,
-stomach, heart, lungs, and gastrointestinal tracts.
+stomach, heart, lungs, and gastrointestinal tracts. The list of all classes is stored
+[here](https://github.com/Project-MONAI/model-zoo/blob/dev/models/wholeBody_ct_segmentation/configs/metadata.json#L86).
 
 ![total-body-segmentation.JPG](./images/total-body-segmentation.JPG)
 
 We use MONAI's pre-trained model to build the TotalSegmentator app using MONAI Deploy App SDK.
 You can find the training configuration used to pre-train this model on
-[GitHub](https://github.com/Project-MONAI/model-zoo/blob/dev/models/wholeBody_ct_segmentation/configs/train.json).
-The list of all classes is stored
-[here](https://github.com/Project-MONAI/model-zoo/blob/dev/models/wholeBody_ct_segmentation/configs/metadata.json#L86).
+[Project-MONAI GitHub repo](https://github.com/Project-MONAI/model-zoo/blob/dev/models/wholeBody_ct_segmentation/configs/train.json).
+We shall use this config file to construct the pre-processing and post-processing pipeline
+of our model and load it with the
+[pretrained checkpoint](https://github.com/Project-MONAI/model-zoo/tree/dev/models/wholeBody_ct_segmentation#high-resolution-and-low-resolution-models). Make sure to download the checkpoint and place it in the input folder i.e., [ts_data](./src/ts_data),
+otherwise the scripts throws an error as shown in the code block below.
+
+```bash
+curl https://drive.google.com/file/d/1c3osYscnr6710ObqZZS8GkZJQlWlc7rt/view?usp=share_link -o ./ts_data/model.pt
+```
 
 Build the first operator of the TotalSegmentator app - PreprocessNiftiOperator, which loads a NIfTI file
 and the pre-trained model from the input path.
@@ -265,7 +284,7 @@ The segmentation of a test example is carried out through the following command;
 as NIfTI objects in the output folder.
 
 ```bash
-monai-deploy exec total_body_segmentation.py -i dcm/ -o output/ -l DEBUG
+monai-deploy exec total_body_segmentation.py -i ts_data/ -o output/ -l DEBUG
 ```
 
 ### Results

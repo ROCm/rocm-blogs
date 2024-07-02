@@ -2,17 +2,19 @@
 blogpost: true
 date: 1 Apr 2024
 author: Vicky Tsang, Logan Grado, Eliot Li
-tags: LLM, AI/ML, GenAI, Tuning, Stable Diffusion
+tags: LLM, AI/ML, GenAI, Fine-Tuning, Diffusion Model
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Scale AI applications with Ray"
+    "keywords": "AMD GPU, ROCm, Model Serving, Ray, ML Platform, Workload Orchestration, Generative AI, Tuning, Stable Diffusion, Fine-Tuning, GenAI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Scale AI applications with Ray">
-  <meta name="keywords" content="AMD GPU, ROCm, Model Serving, Ray, ML Platform, Workload Orchestration">
-</head>
 
 # Scale AI applications with Ray
+
+<span style="font-size:0.7em;">1, Apr 2024 by {hoverxref}`Vicky Tsang<vicktsan>, {hoverxref}`Logan Grado<logagrad>`, {hoverxref}`Eliot Li<elioli>. </span>
 
 Most machine-learning (ML) workloads today require multiple GPUs or nodes to achieve the
 performance or scale required by applications. However, scaling workloads beyond single node/single GPU workloads is difficult and require some expertise in distributed processing.

@@ -5,6 +5,8 @@
   blog author">
 </head>
 
+(antosmir)=
+
 # Anton Smirnov
 
 Anton is a core developer of [AMDGPU.jl](https://github.com/JuliaGPU/AMDGPU.jl)

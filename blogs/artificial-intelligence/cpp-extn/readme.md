@@ -2,17 +2,19 @@
 blogpost: true
 date: 16 Apr, 2024
 author: Vara Lakshmi Bayanagari
-tags: C++, PyTorch, AI/ML, AMD GPU, custom cpp extension
+tags: C++, PyTorch, AI/ML
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "PyTorch C++ Extension on AMD hardware"
+    "keywords": "Custom cpp extension, AMD GPU, Pytorch, C++, Programming Languages, Custom C++ Extension"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="PyTorch C++ Extension on AMD hardware">
-  <meta name="keywords" content="Custom cpp extension, AMD GPU, Pytorch, C++">
-</head>
 
 # PyTorch C++ Extension on AMD GPU
+
+<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Vara Lakshmi Bayanagari<varabaya>`. </span>
 
 This blog demonstrates how to use the PyTorch C++ extension with an example and discusses its advantages over regular PyTorch modules. The experiments were carried out on AMD GPUs and ROCm 5.7.0 software. For more information about supported GPUs and operating systems, see [System Requirements (Linux)](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html).
 

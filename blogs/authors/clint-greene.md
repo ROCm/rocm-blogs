@@ -4,6 +4,8 @@
   <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(clingree)=
+
 # Clint Greene
 
 Clint is a Principal Deep Learning Data Scientist at AMD. Passionate about the advancement of artificial intelligence, he is renowned for his expertise in deep learning and language modeling. Clint specializes

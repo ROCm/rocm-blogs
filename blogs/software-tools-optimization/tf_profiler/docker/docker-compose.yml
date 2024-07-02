@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  tf_prof:
+    image: tf_profiler
+    build: .
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
+    ipc: host
+    group_add:
+      - video
+    shm_size: 8G
+    volumes:
+      - ../:/usr/src/app
+    ports:
+      - "8888:8888"
+      - "6006:6006"
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token=''

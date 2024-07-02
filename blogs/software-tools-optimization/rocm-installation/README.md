@@ -2,16 +2,15 @@
 blogpost: true
 date: 26 Jan 2023
 author: David Doscher
-tags: HPC
+tags: HPC, Installation
 category: Software tools & optimizations
-
 language: English
+myst:
+  html_meta:
+    "description lang=en": "ROCm installation"
+    "keywords": "HPC, ROCm, MI250, MI300, libraries, installation"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="ROCm installation">
-  <meta name="keywords" content="HPC, ROCm, MI250, MI300, libraries, installation">
-</head>
 
 # AMD ROCm™ installation
 

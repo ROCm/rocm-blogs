@@ -2,18 +2,20 @@
 blogpost: true
 date: 12 Mar 2024
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Building a decoder transformer model"
+    "author": "Phillip Dang"
+    "keywords": "PyTorch, decoder, transformer, GPT, Tuning"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Building a decoder transformer model">
-  <meta name="author" content="Phillip Dang">
-  <meta name="keywords" content="PyTorch, decoder, transformer, GPT">
-</head>
 
 # Building a decoder transformer model on AMD GPU(s)
+
+<span style="font-size:0.7em;">12, Mar 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 In this blog, we demonstrate how to run
 [Andrej Karpathy's beautiful PyTorch re-implementation of GPT](https://colab.research.google.com/drive/1JMLa53HDuA-i7ZBmqV7ZnA3c_fvtXnx-?usp=sharing)

@@ -2,18 +2,20 @@
 blogpost: true
 date: 25 Jan 2024
 author: Douglas Jia
-tags: LLM, AI/ML, BERT, GenAI, Tuning, AAC
+tags: LLM, AI/ML, GenAI, Fine-Tuning, JAX
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "LLM distributed supervised fine-tuning with JAX"
+    "keywords": "AMD GPU, MI300, MI250, train models, LLM, JAX, fine-tuning,
+  BERT, GLUE, ROCm, SFT, AAC, Natural Language Processing"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="LLM distributed supervised fine-tuning with JAX">
-  <meta name="keywords" content="AMD GPU, MI300, MI250, train models, LLM, JAX, fine-tuning,
-  BERT, GLUE, ROCm, SFT">
-</head>
 
 # LLM distributed supervised fine-tuning with JAX
+
+<span style="font-size:0.7em;">25 Jan, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
 
 In this article, we review the process for fine-tuning a Bidirectional Encoder Representations
 from Transformers (BERT)-based large language model (LLM) using JAX for a text classification task. We

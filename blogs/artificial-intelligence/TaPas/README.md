@@ -1,20 +1,20 @@
 ---
 blogpost: true
 date: 26 Apr 2024
-
-
 author: Phillip Dang
-tags: PyTorch, AI/ML, Tuning
+tags: PyTorch, AI/ML, LLM, Fine-Tuning
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Table Question-Answering with TaPas"
+    "keywords": "PyTorch, TaPas, LLM, Bert, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Table Question-Answering with TaPas">
-  <meta name="keywords" content="PyTorch, TaPas, LLM, Bert, AMD, GPU, MI300, MI250">
-</head>
 
 # Table Question-Answering with TaPas
+
+<span style="font-size:0.7em;">26 Apr, 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 Conventionally, the question-answering task is framed as a semantic parsing task where the question is translated to a full logical form that can be executed against the table to retrieve the correct answer. However, this requires a lot of annotated data, which can be expensive to acquire.
 

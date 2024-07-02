@@ -2,17 +2,19 @@
 blogpost: true
 date: 16 Apr 2024
 author: Clint Greene
-tags: AI/ML, ASR, Whisper, Speech to Text
+tags: AI/ML, Speech, Computer Vision
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Speech to Text on AMD with Whisper"
+    "keywords": "Whisper, ASR, Automatic Speech Recognition, AMD, GPU, MI300, MI250"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Speech to Text on AMD with Whisper">
-  <meta name="keywords" content="Whisper, ASR, Automatic Speech Recognition, AMD, GPU, MI300, MI250">
-</head>
 
 # Speech-to-Text on an AMD GPU with Whisper
+
+<span style="font-size:0.7em;">16 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
 
 ## Introduction
 

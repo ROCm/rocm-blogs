@@ -2,18 +2,19 @@
 blogpost: true
 date: 4 Apr 2024
 author: Eliot Li
-tags: AI/ML, GenAI, Images
+tags: AI/ML, GenAI, Computer Vision
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Image classification using Vision Transformer with AMD GPUs"
+    "keywords": "image classification, Vision Transformer, AMD, GPU, MI300, MI250, Generative AI"
+    "property=og:locale": "en_US"
 ---
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Image classification using Vision Transformer with AMD GPUs">
-  <meta name="keywords" content="image classification, Vision Transformer, AMD, GPU, MI300, MI250">
-</head>
-
 # Image classification using Vision Transformer with AMD GPUs
+
+<span style="font-size:0.7em;">4 Apr, 2024 by {hoverxref}`Eliot Li<elioli>`. </span>
 
 The Vision Transformer (ViT) model was first proposed in
 [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929). ViT is an attractive alternative to conventional Convolutional Neural Network (CNN) models due to its excellent scalability and adaptability in the field of computer vision. On the other hand, ViT can be more expensive compared to CNN for large input images as it has quadratic computation complexity with respect to input size.

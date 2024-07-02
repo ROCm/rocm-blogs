@@ -2,15 +2,15 @@
 blogpost: true
 date: 17 May 2023
 author: Alessandro Fanfarillo, Nicholas Curtis
-tags: HPC, Memory
+tags: Compiler, HPC, Memory, Optimization
 category: Software tools & optimizations
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Register pressure"
+    "keywords": "HPC, MI250, optimization, registers, hardware"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Register pressure">
-  <meta name="keywords" content="HPC, MI250, optimization, registers, hardware">
-</head>
 
 # Register pressure in AMD CDNA™2 GPUs
 

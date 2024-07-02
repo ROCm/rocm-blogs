@@ -2,19 +2,21 @@
 blogpost: true
 date: 1 Feb 2024
 author: Sean Song
-tags: LLM, AI/ML, GenAI, Llama, LoRA, Tuning
+tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Fine-tune Llama 2 with LoRA: Customizing a large language
+  model for question-answering"
+    "keywords": "LoRA, Low-rank Adaptation, fine-tuning, large language model,
+  Generative AI"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Fine-tune Llama 2 with LoRA: Customizing a large language
-  model for question-answering">
-  <meta name="keywords" content="LoRA, Low-rank Adaptation, fine-tuning, large language model,
-  Generative AI">
-</head>
 
 # Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
+
+<span style="font-size:0.7em;">1, Feb 2024 by {hoverxref}`Sean Song<seansong>`. </span>
 
 In this blog, we show you how to fine-tune Llama 2 on an AMD GPU with ROCm. We use Low-Rank
 Adaptation of Large Language Models (LoRA) to overcome memory and computing limitations and
@@ -82,11 +84,13 @@ This example leverages two GCDs (Graphics Compute Dies) of a AMD MI250 GPU and e
 
 Our setup:
 
-* Hardware: AMD Instinct MI250
+* Hardware & OS: See [this link](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html) for a list of supported hardware and OS with ROCm.
 * Software:
-  * [ROCm 5.7.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/)
+  * [ROCm 6.1.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/)
   * [Pytorch 2.0.1+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html#installing-pytorch-for-rocm)
 * Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`, `scipy`
+
+In this blog, we conducted our experiment using a single MI250GPU with the Docker image [rocm/pytorch:rocm6.1_ubuntu20.04_py3.9_pytorch_2.1.2](https://hub.docker.com/layers/rocm/pytorch/rocm6.1_ubuntu20.04_py3.9_pytorch_2.1.2/images/sha256-96ba7b33bc7fa37b88c5ed550488960dd1dcedabaa8a9c17a4fd62e6c50e7574?context=explore).
 
 ### Step 1: Getting started
 
@@ -116,45 +120,26 @@ GPU[1]      : Card SKU:      D65209
 Next, install the required libraries.
 
 ```bash
-!pip install -q pandas peft transformers==4.31.0 trl==0.4.7 accelerate scipy
+!pip install -q pandas peft==0.9.0 transformers==4.31.0 trl==0.4.7 accelerate scipy
 ```
 
 #### Install bitsandbytes
 
 1. Install bitsandbytes using the following code.
 
-    * For ROCm 5.7
+    ```bash
+    git clone --recurse https://github.com/ROCm/bitsandbytes
+    cd bitsandbytes
+    git checkout rocm_enabled
+    pip install -r requirements-dev.txt
+    cmake -DCOMPUTE_BACKEND=hip -S . #Use -DBNB_ROCM_ARCH="gfx90a;gfx942" to target specific gpu arch
+    make
+    pip install .
+    ```
 
-        ```bash
-        ## Install/update `hipBLASLt`. This step takes around half an hour.
-        git clone --recurse https://github.com/ROCm/hipBLASLt
-        cd hipBLASLt
-        git checkout 4b3b34405e7e25cff404f69bfd0a832644430477
-        ./install.sh -idc
-        
-        cd ..
-        pip install einops lion_pytorch
+2. Check the bitsandbytes version.
 
-        # Install `bitsandbytes`
-        git clone --recurse https://github.com/ROCm/bitsandbytes.git
-        cd bitsandbytes
-        git checkout rocm5.7_internal_testing
-        make hip
-        python setup.py install
-        ```
-
-    * For ROCm 6.0+
-
-        ```bash
-        # Install `bitsandbytes`
-        git clone --recurse https://github.com/ROCm/bitsandbytes.git
-        cd bitsandbytes
-        git checkout rocm_enabled
-        make hip
-        python setup.py install
-        ```
-
-2. Check the bitsandbytes version (0.42.0).
+    At the time of writing this blog, the version is 0.43.0.
 
     ```bash
     %%bash

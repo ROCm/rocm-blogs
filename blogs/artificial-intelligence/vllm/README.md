@@ -2,17 +2,19 @@
 blogpost: true
 date: 4 Apr 2024
 author: Clint Greene
-tags: AI/ML, vLLM, LLM, Inference, Serving
+tags: AI/ML, LLM, Serving
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "Inferencing and Serving with vLLM on AMD GPUs"
+    "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="Inferencing and Serving with vLLM on AMD GPUs">
-  <meta name="keywords" content="LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300">
-</head>
 
 # Inferencing and serving with vLLM on AMD GPUs
+
+<span style="font-size:0.7em;">4 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
 
 ## Introduction
 

@@ -5,12 +5,12 @@ author: Alessandro Fanfarillo, Alex Voicu
 tags: C++, Compiler, HPC, Memory, Performance
 category: Software tools & optimizations
 language: English
+myst:
+  html_meta:
+    "description lang=en": "C++17 parallel algorithms and HIPSTDPAR"
+    "keywords": "XC++, Compiler, HPC, Memory, Performance, Programming Language"
+    "property=og:locale": "en_US"
 ---
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="C++17 parallel algorithms and HIPSTDPAR">
-  <meta name="keywords" content="C++, Compiler, HPC, Memory, Performance">
-</head>
 
 # C++17 parallel algorithms and HIPSTDPAR #
 

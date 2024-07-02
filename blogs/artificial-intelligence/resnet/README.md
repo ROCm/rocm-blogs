@@ -2,18 +2,19 @@
 blogpost: true
 date: 9 April 2024
 author: Logan Grado
-tags: AI/ML, ResNet, Images, PyTorch, Image Classification, CIFAR10
+tags: AI/ML, Reinforcement Learning, PyTorch, Computer Vision
 category: Applications & models
 language: English
+myst:
+  html_meta:
+    "description lang=en": "ResNet for image classification using AMD GPUs"
+    "keywords": "AI/ML, ResNet, Images, PyTorch, Image Classification, CIFAR10, Computer Vision, MI210, MI250, MI300, ROCm"
+    "property=og:locale": "en_US"
 ---
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="description" content="ResNet for image classification using AMD GPUs">
-  <meta name="keywords" content="AI/ML, ResNet, Images, PyTorch, Image Classification, CIFAR10, Computer Vision, MI210, MI250, MI300, ROCm">
-</head>
-
 # ResNet for image classification using AMD GPUs
+
+<span style="font-size:0.7em;">9 Apr, 2024 by {hoverxref}`Logan Grado<logagrad>`. </span>
 
 In this blog, we demonstrate training a simple ResNet model for image classification on AMD GPUs using ROCm on the CIFAR10 dataset. Training a ResNet model on AMD GPUs is simple, requiring no additional work beyond installing ROCm and appropriate PyTorch libraries.
 

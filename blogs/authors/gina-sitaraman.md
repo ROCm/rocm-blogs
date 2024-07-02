@@ -5,13 +5,19 @@
   blog author">
 </head>
 
+(ginasita)=
+
 # Gina Sitaraman
 
-Gina is a Senior Member of Technical Staff (SMTS), Software System Design Engineer in the Data Center
-GPU Solutions and Performance Analysis group. She obtained her PhD in Computer Science from the
-University of Texas at Dallas. She has over a decade of experience developing and optimizing
-pre-processing, migration, and post-processing applications for seismic data. For this work, she uses
-hybrid MPI + OpenMP on CPU clusters and CUDA or OpenCL on GPUs.
+```{image} ./data/Gina-Sitaraman.png
+:alt: Gina
+:class: bg-primary
+:height: 250px
+:align: left
+```
 
-At AMD, Gina spends her time solving optimization challenges in scientific applications that run on
-large-scale HPC clusters.
+Gina Sitaraman is a Senior Member of Technical Staff (SMTS) Software System Design Engineer in the Data
+Center GPU Solutions and Performance Analysis group. She obtained her PhD in Computer Science from the
+University of Texas at Dallas. She has over a decade of experience developing and optimizing seismic
+data processing applications. She spends her time at AMD solving optimization challenges in scientific
+applications running on large-scale HPC clusters with AMD Instinct™ GPUs.

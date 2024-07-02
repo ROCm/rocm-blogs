@@ -4,6 +4,8 @@
   <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
+(davidosc)=
+
 # David Doscher
 
 David is a Senior Member of Technical Staff (SMTS) in the Software System Design Engineering group.
