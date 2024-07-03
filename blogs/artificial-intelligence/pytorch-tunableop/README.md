@@ -7,10 +7,10 @@ category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": Accelerating models on ROCm using PyTorch TunableOp
+    "description lang=en": "Accelerating models on ROCm using PyTorch TunableOp"
     "author": "Logan Grado"
-    "keywords": Optimization, LLM, GenAI, Linear Algebra, PyTorch
-    "property=og:locale": "en_US",
+    "keywords": "Optimization, LLM, GenAI, Linear Algebra, PyTorch"
+    "property=og:locale": "en_US"
 ---
 
 # Accelerating models on ROCm using PyTorch TunableOp
