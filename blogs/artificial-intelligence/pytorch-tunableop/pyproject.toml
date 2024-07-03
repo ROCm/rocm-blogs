@@ -1,0 +1,35 @@
+[project]
+name = "pytorch-tunableop"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Logan Grado", email = "logan.grado@amd.com"},
+]
+dependencies = [
+    # "torch==2.4.0.dev20240423",
+    "transformers>=4.39.3",
+    "pandas>=2.2.2",
+    "matplotlib>=3.8.4",
+    "click>=8.1.7",
+    "torch==2.3.0",
+]
+requires-python = ">=3.10,<3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[[tool.pdm.source]]
+name = "torch"
+url = "https://download.pytorch.org/whl/rocm6.0/"
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ipython>=8.21.0",
+    "ipdb>=0.13.13",
+    "jupyter>=1.0.0",
+    "jupyterlab>=4.1.2",
+    "jupytext>=1.16.1",
+    "nbconvert>=7.16.2",
+]

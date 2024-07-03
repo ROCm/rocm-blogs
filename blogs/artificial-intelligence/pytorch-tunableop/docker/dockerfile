@@ -1,0 +1,17 @@
+ARG PY=3.10
+FROM rocm/dev-ubuntu-22.04:6.0.2-complete
+ARG PY
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y software-properties-common \
+    && add-apt-repository ppa:deadsnakes/ppa \
+    && apt-get update && apt-get install -y python${PY} python${PY}-venv python${PY}-dev git
+
+RUN curl -sSL https://pdm-project.org/install-pdm.py | python${PY} -
+
+# Install using PDM
+COPY pyproject.toml pdm.lock ./
+RUN --mount=type=cache,target=/root/.cache /root/.local/bin/pdm sync
+ENV PATH="/.venv/bin:${PATH}"
+
+WORKDIR /root/workdir
