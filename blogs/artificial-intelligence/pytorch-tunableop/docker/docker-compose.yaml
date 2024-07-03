@@ -1,0 +1,13 @@
+services:
+  blog:
+    image: blog/tunableop
+    build:
+      context: ..
+      dockerfile: ./docker/dockerfile
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    volumes:
+      - ../:/root/workdir
+      - ~/.cache:/root/.cache
+    command: /bin/bash

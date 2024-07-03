@@ -16,3 +16,4 @@ ignores:
   - docs/CHANGELOG.md
   - "{,docs/}{RELEASE,release}.md"
   - tools/autotag/templates/**/*.md
+  - "**/source.md"
