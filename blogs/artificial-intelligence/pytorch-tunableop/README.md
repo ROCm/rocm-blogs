@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 1 May 2024
+date: 3 July 2024
 author: Logan Grado
 tags: Optimization, LLM, GenAI, Linear Algebra, PyTorch
 category: Applications & models
