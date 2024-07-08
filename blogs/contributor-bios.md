@@ -195,7 +195,7 @@ Machine Learning Engineer at AMD
 Senior Member of Technical Staff at AMD
 :::
 
-:::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md) 
+:::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md)
 :padding: 1
 
 Machine Learning Researcher at AMD

@@ -7,6 +7,10 @@ myst:
     "property=og:locale": "en_US"
 ---
 
+<!--
+Updated July 8 2024
+-->
+
 <h1><a href="blog/atom.xml"><i class="fa fa-rss fa-rotate-270"></i></a> AMD ROCm™ Blogs</h1>
 
 <script>
@@ -107,6 +111,30 @@ Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options fo
 ::::{grid} 1 2 3 3
 :margin: 1
 
+:::{grid-item-card} Accelerating models on ROCm using PyTorch TunableOp
+:padding: 1
+:link: ./artificial-intelligence/pytorch-tunableop/README
+:link-type: doc
+
+In this blog, we will show how to leverage PyTorch TunableOp to accelerate models using ROCm on AMD GPUs.
+:::
+
+:::{grid-item-card} A Guide to Implementing and Training Generative Pre-trained Transformers (GPT) in JAX on AMD GPUs
+:padding: 1
+:link: ./artificial-intelligence/nanoGPT-JAX/README
+:link-type: doc
+
+In this blog, we illustrate the process of implementing and training a Generative Pre-trained Transformer (GPT) model in JAX.
+:::
+
+:::{grid-item-card} Mamba on AMD GPUs with ROCm
+:padding: 1
+:link: ./artificial-intelligence/mamba/README
+:link-type: doc
+
+In this blog, we delve into the Mamba architecture and demonstrate how to use Mamba on AMD GPUs with the ROCm platform.
+:::
+
 :::{grid-item-card} Deep Learning Recommendation Model on AMD GPU
 :padding: 1
 :link: ./artificial-intelligence/dlrm/README
@@ -120,7 +148,7 @@ In this blog, we demonstrate how to build a simple Deep Learning Recommendation 
 :link: ./artificial-intelligence/segment-anything/README.html
 :link-type: url
 
-The Segment Anything Model (SAM) is a cutting-edge image segmentation model that democratizes promptable segmentation
+The Segment Anything Model (SAM) is a cutting-edge image segmentation model that democratizes promptable segmentation.
 :::
 
 :::{grid-item-card} Detectron2 on AMD GPUs
@@ -128,31 +156,7 @@ The Segment Anything Model (SAM) is a cutting-edge image segmentation model that
 :link: ./artificial-intelligence/detectron2/README
 :link-type: doc
 
-Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs
-:::
-
-:::{grid-item-card} Accelerating Large Language Models with Flash Attention on AMD GPUs
-:padding: 1
-:link: ./artificial-intelligence/flash-attention/README
-:link-type: doc
-
-In this blog post, we will guide you through the process of installing Flash Attention on AMD GPUs
-:::
-
-:::{grid-item-card} Step-by-Step Guide to Use OpenLLM on AMD GPUs
-:padding: 1
-:link: ./artificial-intelligence/openllm/README
-:link-type: doc
-
-OpenLLM is an open-source platform designed to facilitate the deployment and utilization of large language models (LLMs)
-:::
-
-:::{grid-item-card} Inferencing with Mixtral 8x22B on AMD GPUs
-:padding: 1
-:link: ./artificial-intelligence/moe/README
-:link-type: doc
-
-Mixtral 8x22B is a sparse MoE decoder-only transformer model, get it working on AMD GPUs
+Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs.
 :::
 
 ::::
