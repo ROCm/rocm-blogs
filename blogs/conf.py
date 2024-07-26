@@ -207,6 +207,14 @@ blog_authors = {
         "Yao Fehlis",
         "http://rocm.blogs.amd.com/authors/yao-fehlis.html",
 ),
+"Arseny Moskvichev": (
+        "Arseny Moskvichev",
+        "http://rocm.blogs.amd.com/authors/arseny-moskvichev.html",
+),
+"Adeem Jassani": (
+        "Adeem Jassani",
+        "http://rocm.blogs.amd.com/authors/adeem-jassani.html",
+),
 }
 blog_feed_archives = True
 blog_feed_fulltext = True

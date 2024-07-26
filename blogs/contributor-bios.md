@@ -201,4 +201,16 @@ Senior Member of Technical Staff at AMD
 Machine Learning Researcher at AMD
 :::
 
+:::{grid-item-card} [Arseny Moskvichev](./authors/arseny-moskvichev.md) *
+:padding: 1
+
+Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Adeem Jassani](./authors/adeem-jassani.md) *
+:padding: 1
+
+Senior Software Development Engineer
+:::
+
 ::::
