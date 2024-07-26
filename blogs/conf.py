@@ -50,6 +50,11 @@ external_projects_current_project = "rocm"
 blog_title = "AMD ROCm Blogs"
 blog_baseurl = "https://rocm.blogs.amd.com/"
 
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "rocm.blogs.amd.com")
+html_context = {}
+if os.environ.get("READTHEDOCS", "") == "True":
+    html_context["READTHEDOCS"] = True
+
 html_title = "ROCm Blogs"
 html_theme = "rocm_docs_theme"
 html_theme_options = {
