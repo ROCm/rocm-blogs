@@ -19,3 +19,12 @@ build:
    jobs:
       post_build: 
          - sed -i "s/\&lt;no title\&gt; \&#8212; ROCm Blogs/AMD ROCm\™ Blogs/g" $READTHEDOCS_OUTPUT/html/index.html
+
+search:
+  ranking:
+    api/v1/*: -1
+    api/v2/*: 4
+  ignore:
+    - 404.html
+    - blog/*
+    - blog.html
