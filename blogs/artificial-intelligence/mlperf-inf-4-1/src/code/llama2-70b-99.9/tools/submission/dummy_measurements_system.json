@@ -1,0 +1,7 @@
+{
+    "input_data_types": "Dummy",
+    "retraining": "Dummy",
+    "starting_weights_filename": "Dummy",
+    "weight_data_types": "Dummy",
+    "weight_transformations": "Dummy"
+}

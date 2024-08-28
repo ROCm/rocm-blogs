@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feature Description &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Feature Description</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_sources/user_guide_feature_description.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="feature-description">
+<h1>Feature Description<a class="headerlink" href="#feature-description" title="Permalink to this heading"></a></h1>
+<p>Quark for PyTorch provides the key features as below:</p>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Feature Name</th>
+<th>Feature Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data Type</td>
+<td><a href="https://en.wikipedia.org/wiki/Half-precision_floating-point_format">Float16</a> / <a href="https://en.wikipedia.org/wiki/Bfloat16_floating-point_format">Bfloat16</a> / Int4 / Uint4 / Int8/ <a href="https://www.opencompute.org/documents/ocp-8-bit-floating-point-specification-ofp8-revision-1-0-2023-06-20-pdf">FP8(e4m3fn)</a></td>
+</tr>
+<tr>
+<td>Quant Strategy</td>
+<td>Static quant / Dynamic quant / Weight only quant</td>
+</tr>
+<tr>
+<td>Quant Scheme</td>
+<td>Per tensor / Per channel / Per group</td>
+</tr>
+<tr>
+<td>Symmetric</td>
+<td>Symmetric / Asymmetric</td>
+</tr>
+<tr>
+<td>Calibration method</td>
+<td>Maxmin / Percentile</td>
+</tr>
+<tr>
+<td>Scale Type</td>
+<td>Float32 / Float16</td>
+</tr>
+<tr>
+<td>KV-Cache Quant</td>
+<td>FP8 KV-Cache Quant</td>
+</tr>
+<tr>
+<td>In-Place Replace OP</td>
+<td>nn.Linear</td>
+</tr>
+<tr>
+<td>Pre-Quant Optimization</td>
+<td>SmoothQuant (Single_GPU/CPU)</td>
+</tr>
+<tr>
+<td>Quant Algorithm</td>
+<td>AWQ / GPTQ (Single_GPU/CPU)</td>
+</tr>
+<tr>
+<td>Export Format</td>
+<td><a href="#onnx-exporting">ONNX</a> / <a href="#json-safetensors-exporting">Json-Safetensors(vLLM Adopted)</a></td>
+</tr>
+<tr>
+<td>Operating Systems</td>
+<td>Linux(ROCm/CUDA) / Windows(CPU)</td>
+</tr>
+</tbody>
+</table><p>We present detailed explanations of these features:</p>
+<section id="quant-strategy">
+<h2>Quant Strategy<a class="headerlink" href="#quant-strategy" title="Permalink to this heading"></a></h2>
+<p>Quark for Pytorch offers three distinct quantization strategies tailored to meet the requirements of various HW backends:</p>
+<ul class="simple">
+<li><p><strong>Post Training Weight-Only Quantization</strong>: The weights are quantized ahead of time but the activations are not quantized(using original float data type) during inference.</p></li>
+<li><p><strong>Post Training Dynamic Quantization</strong>: The weights are quantized ahead of time but the activations are dynamically quantized during inference.</p></li>
+<li><p><strong>Post Training Static Quantization</strong>: Post Training Static Quantization quantizes both the weights and activations in the model. To achieve the best results, this process necessitates calibration with a dataset that accurately represents the actual data, which allows for precise determination of the optimal quantization parameters for activations.</p></li>
+</ul>
+<p>Here is one sample example for different quant strategies:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Set model</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/opt-125m&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/opt-125m&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Set quantization configuration</span>
+<span class="kn">from</span> <span class="nn">quark.torch.quantization.config.config</span> <span class="kn">import</span> <span class="n">Config</span>
+
+<span class="c1"># 2-1. For weight only quantization, please uncomment the following 2 lines.</span>
+<span class="kn">from</span> <span class="nn">quark.torch.quantization.config.custom_config</span> <span class="kn">import</span> <span class="n">DEFAULT_W_UINT4_PER_GROUP_CONFIG</span>
+<span class="n">quant_config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">global_quant_config</span><span class="o">=</span><span class="n">DEFAULT_W_UINT4_PER_GROUP_CONFIG</span><span class="p">)</span>
+
+<span class="c1"># 2-2. For dynamic quantization, please uncomment the following 2 lines.</span>
+<span class="c1"># from quark.torch.quantization.config.custom_config import DEFAULT_W_INT8_A_INT8_PER_TENSOR_DYNAMIC_CONFIG</span>
+<span class="c1"># quant_config = Config(global_quant_config=DEFAULT_W_INT8_A_INT8_PER_TENSOR_DYNAMIC_CONFIG)</span>
+
+<span class="c1"># 2-3. For static quantization , please uncomment the following 2 lines.</span>
+<span class="c1"># from quark.torch.quantization.config.custom_config import DEFAULT_W_FP8_A_FP8_PER_TENSOR_CONFIG</span>
+<span class="c1"># quant_config = Config(global_quant_config=DEFAULT_W_FP8_A_FP8_PER_TENSOR_CONFIG)</span>
+
+<span class="c1"># 3. Define calibration dataloader (still need this step for weight only and dynamic quantization)</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello, how are you?&quot;</span>
+<span class="n">tokenized_outputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+<span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">tokenized_outputs</span><span class="p">[</span><span class="s1">&#39;input_ids&#39;</span><span class="p">])</span>
+
+<span class="c1"># 4. In-place replacement with quantized modules in model</span>
+<span class="kn">from</span> <span class="nn">quark.torch</span> <span class="kn">import</span> <span class="n">ModelQuantizer</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">ModelQuantizer</span><span class="p">(</span><span class="n">quant_config</span><span class="p">)</span>
+<span class="n">quant_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">quantize_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">calib_dataloader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The strategies share the same user API. Users simply need to set the strategy through the quantization configuration, as demonstrated in the example above. More details about setting quantization configuration are in the chapter “Configuring Quark for PyTorch”</p>
+</section>
+<section id="the-quant-schemes">
+<h2>The Quant Schemes<a class="headerlink" href="#the-quant-schemes" title="Permalink to this heading"></a></h2>
+<p>Quark for PyTorch is capable of handling <code class="docutils literal notranslate"><span class="pre">per</span> <span class="pre">tensor</span></code>, <code class="docutils literal notranslate"><span class="pre">per</span> <span class="pre">channel</span></code> and <code class="docutils literal notranslate"><span class="pre">per</span> <span class="pre">group</span></code> quantization, supporting both symmetric and asymmetric methods.</p>
+<ul class="simple">
+<li><p><strong>Per Tensor Quantization</strong> means that quantize the tensor with one scalar. The scaling factor is a scalar.</p></li>
+<li><p><strong>Per Channel Quantization</strong> means that for each dimension, typically the channel dimension of a tensor, the values in the tensor are quantized with different quantization parameters. The scaling factor is a 1-D tensor, with the length of the quantization axis. For the input tensor with shape <code class="docutils literal notranslate"><span class="pre">(D0,</span> <span class="pre">...,</span> <span class="pre">Di,</span> <span class="pre">...,</span> <span class="pre">Dn)</span></code> and <code class="docutils literal notranslate"><span class="pre">ch_axis=i</span></code>, The scaling factor is a 1-D tensor of length <code class="docutils literal notranslate"><span class="pre">Di</span></code>.</p></li>
+<li><p><strong>Per Group Quantization</strong> means that divides the tensor into smaller blocks that are independently quantized. The scaling factor has the same dimension with the input tensor. For the input tensor with shape <code class="docutils literal notranslate"><span class="pre">(D0,</span> <span class="pre">...,</span> <span class="pre">Di,</span> <span class="pre">...,</span> <span class="pre">Dn)</span></code> and <code class="docutils literal notranslate"><span class="pre">ch_axis=i</span></code> and <code class="docutils literal notranslate"><span class="pre">group_size=m</span></code>, The scaling factor has the shape of <code class="docutils literal notranslate"><span class="pre">(D0,</span> <span class="pre">...,</span> <span class="pre">Di/m,</span> <span class="pre">...,</span> <span class="pre">Dn)</span></code>.</p></li>
+</ul>
+</section>
+<section id="the-symmetric-asymmetric-quantization">
+<h2>The Symmetric/Asymmetric Quantization<a class="headerlink" href="#the-symmetric-asymmetric-quantization" title="Permalink to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Symmetric/Asymmetric</span> <span class="pre">quantization</span></code> is primarily used to describe the quantization of integers. <code class="docutils literal notranslate"><span class="pre">Symmetric</span> <span class="pre">quantization</span></code> involves scaling the data by a fixed scaling factor, and zero-point is generally set at zero. <code class="docutils literal notranslate"><span class="pre">Asymmetric</span> <span class="pre">quantization</span></code> uses a scaling factor and a zero-point that can shift, allowing the zero of the quantized data to represent a value other than zero.</p>
+</section>
+<section id="the-calibration-methods">
+<h2>The Calibration Methods<a class="headerlink" href="#the-calibration-methods" title="Permalink to this heading"></a></h2>
+<p>Quark for PyTorch supports these types of calibration methods:</p>
+<ul class="simple">
+<li><p><strong>MinMax Calibration method</strong>: The <code class="docutils literal notranslate"><span class="pre">MinMax</span></code> calibration method for computing the quantization parameters based on the running min and max values. This method uses the tensor min/max statistics to compute the quantization parameters. The module records the running minimum and maximum of incoming tensors and uses this statistic to compute the quantization parameters.</p></li>
+<li><p><strong>Percentile Calibration method</strong>: The <code class="docutils literal notranslate"><span class="pre">Percentile</span></code> calibration method, often used in robust scaling, involves scaling features based on percentile information from a static histogram, rather than using the absolute minimum and maximum values. This method is particularly useful for managing outliers in data.</p></li>
+<li><p><strong>MSE Calibration method</strong>: The <code class="docutils literal notranslate"><span class="pre">MSE</span></code> (Mean Squared Error) calibration method refers to a method where calibration is performed by minimizing the mean squared error between the predicted outputs and the actual outputs. This method is typically used in regression contexts where the goal is to adjust model parameters or data transformations to reduce the average squared difference between estimated values and the true values. MSE calibration helps in refining model accuracy by fine-tuning predictions to be as close as possible to the real data points.</p></li>
+</ul>
+</section>
+<section id="kv-cache-quant">
+<h2>KV-Cache Quant<a class="headerlink" href="#kv-cache-quant" title="Permalink to this heading"></a></h2>
+<p>Quark for PyTorch supports the quantization of <code class="docutils literal notranslate"><span class="pre">kv</span> <span class="pre">cache</span></code> in the attention layer of transformer models.</p>
+</section>
+<section id="pre-quant-optimization">
+<h2>Pre-Quant Optimization<a class="headerlink" href="#pre-quant-optimization" title="Permalink to this heading"></a></h2>
+<p>Quark for PyTorch supports <code class="docutils literal notranslate"><span class="pre">SmoothQuant</span></code> as the pre-quant optimization.</p>
+</section>
+<section id="advanced-quant-algorithm">
+<h2>Advanced Quant Algorithm<a class="headerlink" href="#advanced-quant-algorithm" title="Permalink to this heading"></a></h2>
+<p>Quark for PyTorch supports <code class="docutils literal notranslate"><span class="pre">AWQ</span></code> and <code class="docutils literal notranslate"><span class="pre">GPTQ</span></code> as the pre-quant optimization.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/2306.00978"><strong>AWQ</strong></a> : Quark for PyTorch re-implements the algorithm of AWQ. Quark for PyTorch only supports <code class="docutils literal notranslate"><span class="pre">AWQ</span></code> with quantization data type as <code class="docutils literal notranslate"><span class="pre">uint4</span></code> and <code class="docutils literal notranslate"><span class="pre">per</span> <span class="pre">group</span></code>, running on <code class="docutils literal notranslate"><span class="pre">Linux</span></code> with the <code class="docutils literal notranslate"><span class="pre">GPU</span> <span class="pre">mode</span></code> for now.</p></li>
+<li><p><a class="reference external" href="https://arxiv.org/abs/2210.17323"><strong>GPTQ</strong></a> : Quark for PyTorch re-implements the algorithm of GPTQ. Quark for PyTorch only supports <code class="docutils literal notranslate"><span class="pre">GPTQ</span></code> with quantization data type as <code class="docutils literal notranslate"><span class="pre">uint4</span></code> and <code class="docutils literal notranslate"><span class="pre">per</span> <span class="pre">group</span></code>, running on <code class="docutils literal notranslate"><span class="pre">Linux</span></code> with the <code class="docutils literal notranslate"><span class="pre">GPU</span> <span class="pre">mode</span></code> for now.</p></li>
+</ul>
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

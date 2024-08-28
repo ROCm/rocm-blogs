@@ -1,0 +1,81 @@
+quark.torch.quantization.api
+============================
+
+.. py:module:: quark.torch.quantization.api
+
+.. autoapi-nested-parse::
+
+   Quark Quantization API for PyTorch.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   quark.torch.quantization.api.ModelQuantizer
+
+
+Module Contents
+---------------
+
+.. py:class:: ModelQuantizer(config: quark.torch.quantization.config.config.Config)
+
+   Provides an API for quantizing deep learning models using PyTorch. This class handles the configuration and processing of the model for quantization based on user-defined parameters. It is essential to ensure that the 'config' provided has all necessary quantization parameters defined. This class assumes that the model is compatible with the quantization settings specified in 'config'.
+
+   :param config: Configuration object containing settings for quantization.
+   :type config: Config
+
+
+   .. py:method:: quantize_model(model: torch.nn.Module, dataloader: Union[torch.utils.data.DataLoader[torch.Tensor], torch.utils.data.DataLoader[List[Dict[str, torch.Tensor]]], torch.utils.data.DataLoader[Dict[str, torch.Tensor]]]) -> torch.nn.Module
+
+      This function aims to quantize the given PyTorch model to optimize its performance and reduce its size. This function accepts a model and a torch dataloader. The dataloader is used to provide data necessary for calibration during the quantization process. Depending on the type of data provided (either tensors directly or structured as lists or dictionaries of tensors), the function will adapt the quantization approach accordingly.It's important that the model and dataloader are compatible in terms of the data they expect and produce. Misalignment in data handling between the model and the dataloader can lead to errors during the quantization process.
+
+      :param model: The PyTorch model to be quantized. This model should be already trained and ready for quantization.
+      :type model: nn.Module
+      :param dataloader: The DataLoader providing data that the quantization process will use for calibration. This can be a simple DataLoader returning
+                         tensors, or a more complex structure returning either a list of dictionaries or a dictionary of tensors.
+      :type dataloader: Union[DataLoader[torch.Tensor], DataLoader[List[Dict[str, torch.Tensor]]], DataLoader[Dict[str, torch.Tensor]]]
+
+      :returns: The quantized version of the input model. This model is now optimized for inference with reduced size and potentially improved
+                performance on targeted devices.
+      :rtype: nn.Module
+
+      **Examples**:
+
+          .. code-block:: python
+
+              # Model & Data preparation
+              from transformers import AutoModelForCausalLM, AutoTokenizer
+              model = AutoModelForCausalLM.from_pretrained("facebook/opt-125m")
+              model.eval()
+              tokenizer = AutoTokenizer.from_pretrained("facebook/opt-125m")
+              from quark.torch.quantization.config.config import Config
+              from quark.torch.quantization.config.custom_config import DEFAULT_W_UINT4_PER_GROUP_CONFIG
+              quant_config = Config(global_quant_config=DEFAULT_W_UINT4_PER_GROUP_CONFIG)
+              from torch.utils.data import DataLoader
+              text = "Hello, how are you?"
+              tokenized_outputs = tokenizer(text, return_tensors="pt")
+              calib_dataloader = DataLoader(tokenized_outputs['input_ids'])
+
+              from quark.torch import ModelQuantizer
+              quantizer = ModelQuantizer(quant_config)
+              quant_model = quantizer.quantize_model(model, calib_dataloader)
+
+
+
+
+   .. py:method:: freeze(model: torch.nn.Module) -> torch.nn.Module
+
+      Freezes the quantized model by replacing FakeQuantize modules with FreezedFakeQuantize modules.
+      If Users want to export quantized model to torch_compile, please freeze model first.
+
+      :param model: The neural network model containing quantized layers.
+      :type model: nn.Module
+
+      :returns: The modified model with FakeQuantize modules replaced by FreezedFakeQuantize modules.
+      :rtype: nn.Module
+
+
+

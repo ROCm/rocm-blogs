@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exporting &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exporting</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_sources/user_guide_exporting_gen.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="exporting">
+<h1>Exporting<a class="headerlink" href="#exporting" title="Permalink to this heading"></a></h1>
+<section id="onnx-exporting">
+<h2>Onnx Exporting<a class="headerlink" href="#onnx-exporting" title="Permalink to this heading"></a></h2>
+<p>PyTorch provides a function to export the ONNX graph at this <a class="reference external" href="https://pytorch.org/docs/stable/onnx_torchscript.html#torch.onnx.export">link</a>. Quark supports the export of onnx graph for int4, in8, fp8 , float16 and bfloat16 quantized models.
+For int4, int8, and fp8 quantization, the quantization operators used in onnx graph are <a class="reference external" href="https://onnx.ai/onnx/operators/onnx__QuantizeLinear.html">QuantizerLinear</a>_<a class="reference external" href="https://onnx.ai/onnx/operators/onnx__DequantizeLinear.html">DequantizerLinear</a> pair. For float16 and bfloat16 quantization, the quantization operators are the cast_cast pair.
+Mix quantization of int4/uint4 and int8/uint8 is not supported currently. In other words, if the model contains both quantized nodes of uint4/int4 and uint8/int8, this function cannot be used to export the ONNX graph.m</p>
+<section id="example-of-onnx-exporting">
+<h3>Example of Onnx Exporting<a class="headerlink" href="#example-of-onnx-exporting" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">export_path</span> <span class="o">=</span> <span class="s2">&quot;./output_dir&quot;</span>
+<span class="n">batch_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">calib_dataloader</span><span class="p">)</span>
+<span class="n">input_args</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">batch_iter</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">quant_scheme</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;w_int4_per_channel_sym&quot;</span><span class="p">,</span> <span class="s2">&quot;w_uint4_per_group_asym&quot;</span><span class="p">,</span> <span class="s2">&quot;w_int4_per_group_sym&quot;</span><span class="p">,</span> <span class="s2">&quot;w_uint4_a_bfloat16_per_group_asym&quot;</span><span class="p">]:</span>
+    <span class="n">uint4_int4_flag</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">uint4_int4_flag</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="kn">from</span> <span class="nn">quark.torch</span> <span class="kn">import</span> <span class="n">ModelExporter</span>
+<span class="kn">from</span> <span class="nn">quark.torch.export.config.custom_config</span> <span class="kn">import</span> <span class="n">DEFAULT_EXPORTER_CONFIG</span>
+<span class="n">exporter</span> <span class="o">=</span> <span class="n">ModelExporter</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">DEFAULT_EXPORTER_CONFIG</span><span class="p">,</span> <span class="n">export_dir</span><span class="o">=</span><span class="n">export_path</span><span class="p">)</span>
+<span class="n">exporter</span><span class="o">.</span><span class="n">export_onnx_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_args</span><span class="p">,</span> <span class="n">uint4_int4_flag</span><span class="o">=</span><span class="n">uint4_int4_flag</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="json-safetensors-vllm-adopted-exporting">
+<h2>Json-Safetensors(vLLM Adopted) Exporting<a class="headerlink" href="#json-safetensors-vllm-adopted-exporting" title="Permalink to this heading"></a></h2>
+<p>Json-safetensors exporting is specifically designed for the VLLM compiler. Currently, the supported quantization formats include only fp8 per_tensor quantization, weight-only int4 per_group quantization, and w4a8 per_group quantization. The models supported include Llama2-7b, Llama2-13b, Llama2-70b, and Llama3-8b.</p>
+<section id="example-of-json-safetensors-vllm-adopted-exporting">
+<h3>Example of Json-Safetensors(vLLM Adopted) Exporting<a class="headerlink" href="#example-of-json-safetensors-vllm-adopted-exporting" title="Permalink to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">export_path</span> <span class="o">=</span> <span class="s2">&quot;./output_dir&quot;</span>
+<span class="kn">from</span> <span class="nn">quark.torch</span> <span class="kn">import</span> <span class="n">ModelExporter</span>
+<span class="kn">from</span> <span class="nn">quark.torch.export.config.custom_config</span> <span class="kn">import</span> <span class="n">DEFAULT_EXPORTER_CONFIG</span>
+<span class="n">exporter</span> <span class="o">=</span> <span class="n">ModelExporter</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">DEFAULT_EXPORTER_CONFIG</span><span class="p">,</span> <span class="n">export_dir</span><span class="o">=</span><span class="n">export_path</span><span class="p">)</span>
+<span class="n">exporter</span><span class="o">.</span><span class="n">export_model_info</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_type</span><span class="p">,</span> <span class="n">model_dtype</span><span class="p">,</span> <span class="n">export_type</span><span class="o">=</span><span class="s2">&quot;vllm-adopt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

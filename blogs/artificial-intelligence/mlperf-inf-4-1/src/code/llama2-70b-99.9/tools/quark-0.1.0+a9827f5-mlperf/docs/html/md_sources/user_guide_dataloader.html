@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding Calibration Datasets &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Adding Calibration Datasets</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_sources/user_guide_dataloader.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="adding-calibration-datasets">
+<h1>Adding Calibration Datasets<a class="headerlink" href="#adding-calibration-datasets" title="Permalink to this heading"></a></h1>
+<p>Quark utilizes <a class="reference external" href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html">Pytorch Dataloader</a> for normalization during quantization calibration. The Pytorch Dataloader accepts instances of the Pytorch Dataset class as input. Pytorch datasets can be formatted as torch.Tensors, lists, or other types, provided they conform to specific rules (For the official guide on creating a Dataset, please refer to this <a class="reference external" href="https://pytorch.org/tutorials/beginner/basics/data_tutorial.html">link</a>).</p>
+<p>We provide an example of quantizing the large language models using typical datasets such as <code class="docutils literal notranslate"><span class="pre">pileval</span></code> and <code class="docutils literal notranslate"><span class="pre">wikitext</span></code>. You can find the example <a class="reference external" href="../../../examples/torch/language_modeling/README">here</a>. In the section titled <code class="docutils literal notranslate"><span class="pre">Define</span> <span class="pre">calibration</span> <span class="pre">dataloader</span></code> (users can search for this keyword in quantize_quark.py from the example path), we provide a detailed example of how to set up a dataloader and how to convert a Hugging Face dataset to a PyTorch dataloader.</p>
+<p>For large language models, the input data for PyTorch models is often represented as either a torch.Tensor or a dictionary. Here we provide three types of input PyTorch Dataset formats for the dataloader as examples. Users can define their own PyTorch Dataset for Dataloader, which must be compatible with PyTorch model input.</p>
+<section id="dataloader-with-dataset-as-torch-tensor">
+<h2>Dataloader with Dataset as torch.Tensor<a class="headerlink" href="#dataloader-with-dataset-as-torch-tensor" title="Permalink to this heading"></a></h2>
+<p>If the Dataset format is torch.Tensor, the the method of generating Pytorch Dataloader is simple. For example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">input_tensor</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>
+<span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">input_tensor</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dataloader-with-list-dict-str-torch-tensor-or-list-torch-tensor">
+<h2>Dataloader with List[Dict[str, torch.Tensor]] or List[torch.Tensor]<a class="headerlink" href="#dataloader-with-list-dict-str-torch-tensor-or-list-torch-tensor" title="Permalink to this heading"></a></h2>
+<p>If the Dataset format is</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">input_list</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)},</span> <span class="p">{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)}]</span>
+<span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">input_list</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dataloader-with-dict-str-torch-tensor">
+<h2>Dataloader with Dict[str, torch.Tensor]<a class="headerlink" href="#dataloader-with-dict-str-torch-tensor" title="Permalink to this heading"></a></h2>
+<p>If the Dataset format is Dict, user should define the function of collate_fn, for example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">my_collate_fn</span><span class="p">(</span><span class="n">blocks</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">]:</span>
+    <span class="n">data_batch</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">data_batch</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">([</span><span class="n">block</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">block</span> <span class="ow">in</span> <span class="n">blocks</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">device</span><span class="p">:</span>
+        <span class="n">data_batch</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_batch</span><span class="p">[</span><span class="s2">&quot;input_ids&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data_batch</span>
+
+<span class="n">input_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;input_ids&#39;</span><span class="p">:</span><span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="mi">128</span><span class="p">)}</span>
+<span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">input_dict</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">collate_fn</span><span class="o">=</span><span class="n">my_collate_fn</span><span class="p">)</span>
+</pre></div>
+</div>
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

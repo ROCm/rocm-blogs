@@ -1,0 +1,55 @@
+# Quick Start
+
+If users want to quantize `opt-125m` model with the `int8` data type for `symmetric` `per tensor` `weight-only` quantization, they can write their Python script as shown below. Detailed explanations for each step will be provided on other chapter of the User Guide. 
+
+``` python
+# 1. Set model
+from transformers import AutoModelForCausalLM, AutoTokenizer
+model = AutoModelForCausalLM.from_pretrained("facebook/opt-125m")
+model.eval()
+tokenizer = AutoTokenizer.from_pretrained("facebook/opt-125m")
+
+# 2. Set quantization configuration
+from quark.torch.quantization.config.type import Dtype, ScaleType, RoundType, QSchemeType
+from quark.torch.quantization.config.config import Config, QuantizationSpec, QuantizationConfig
+from quark.torch.quantization.observer.observer import PerTensorMinMaxObserver
+DEFAULT_INT8_PER_TENSOR_SYM_SPEC = QuantizationSpec(dtype=Dtype.int8,
+                                        qscheme=QSchemeType.per_tensor,
+                                        observer_cls=PerTensorMinMaxObserver,
+                                        symmetric=True,
+                                        scale_type=ScaleType.float,
+                                        round_method=RoundType.half_even,
+                                        is_dynamic=False)
+
+DEFAULT_W_INT8_PER_TENSOR_CONFIG = QuantizationConfig(weight=DEFAULT_INT8_PER_TENSOR_SYM_SPEC)
+quant_config = Config(global_quant_config=DEFAULT_W_INT8_PER_TENSOR_CONFIG)
+
+# 3. Define calibration dataloader (still need this step for weight only and dynamic quantization)
+from torch.utils.data import DataLoader
+text = "Hello, how are you?"
+tokenized_outputs = tokenizer(text, return_tensors="pt")
+calib_dataloader = DataLoader(tokenized_outputs['input_ids'])
+
+# 4. In-place replacement with quantized modules in model
+from quark.torch import ModelQuantizer
+quantizer = ModelQuantizer(quant_config)
+quant_model = quantizer.quantize_model(model, calib_dataloader)
+
+# # 5. (Optional) Export onnx
+# # If user want to export the quantized model, please freeze the quantized model first
+# freezed_quantized_model = quantizer.freeze(quant_model)
+# from quark.torch import ModelExporter
+# # Get dummy input
+# for data in calib_dataloader:
+#     input_args = data
+#     break
+# quant_model = quant_model.to('cuda')
+# input_args = input_args.to('cuda')
+# exporter = ModelExporter('export_path')
+# exporter.export_onnx_model(quant_model, input_args)
+```
+
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+-->

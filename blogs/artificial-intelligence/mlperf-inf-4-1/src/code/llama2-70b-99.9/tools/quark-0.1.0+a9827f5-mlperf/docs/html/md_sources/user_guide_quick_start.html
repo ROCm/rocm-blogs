@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_sources/user_guide_quick_start.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this heading"></a></h1>
+<p>If users want to quantize <code class="docutils literal notranslate"><span class="pre">opt-125m</span></code> model with the <code class="docutils literal notranslate"><span class="pre">int8</span></code> data type for <code class="docutils literal notranslate"><span class="pre">symmetric</span></code> <code class="docutils literal notranslate"><span class="pre">per</span> <span class="pre">tensor</span></code> <code class="docutils literal notranslate"><span class="pre">weight-only</span></code> quantization, they can write their Python script as shown below. Detailed explanations for each step will be provided on other chapter of the User Guide.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Set model</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModelForCausalLM</span><span class="p">,</span> <span class="n">AutoTokenizer</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/opt-125m&quot;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;facebook/opt-125m&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Set quantization configuration</span>
+<span class="kn">from</span> <span class="nn">quark.torch.quantization.config.type</span> <span class="kn">import</span> <span class="n">Dtype</span><span class="p">,</span> <span class="n">ScaleType</span><span class="p">,</span> <span class="n">RoundType</span><span class="p">,</span> <span class="n">QSchemeType</span>
+<span class="kn">from</span> <span class="nn">quark.torch.quantization.config.config</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">QuantizationSpec</span><span class="p">,</span> <span class="n">QuantizationConfig</span>
+<span class="kn">from</span> <span class="nn">quark.torch.quantization.observer.observer</span> <span class="kn">import</span> <span class="n">PerTensorMinMaxObserver</span>
+<span class="n">DEFAULT_INT8_PER_TENSOR_SYM_SPEC</span> <span class="o">=</span> <span class="n">QuantizationSpec</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">Dtype</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span>
+                                        <span class="n">qscheme</span><span class="o">=</span><span class="n">QSchemeType</span><span class="o">.</span><span class="n">per_tensor</span><span class="p">,</span>
+                                        <span class="n">observer_cls</span><span class="o">=</span><span class="n">PerTensorMinMaxObserver</span><span class="p">,</span>
+                                        <span class="n">symmetric</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">scale_type</span><span class="o">=</span><span class="n">ScaleType</span><span class="o">.</span><span class="n">float</span><span class="p">,</span>
+                                        <span class="n">round_method</span><span class="o">=</span><span class="n">RoundType</span><span class="o">.</span><span class="n">half_even</span><span class="p">,</span>
+                                        <span class="n">is_dynamic</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">DEFAULT_W_INT8_PER_TENSOR_CONFIG</span> <span class="o">=</span> <span class="n">QuantizationConfig</span><span class="p">(</span><span class="n">weight</span><span class="o">=</span><span class="n">DEFAULT_INT8_PER_TENSOR_SYM_SPEC</span><span class="p">)</span>
+<span class="n">quant_config</span> <span class="o">=</span> <span class="n">Config</span><span class="p">(</span><span class="n">global_quant_config</span><span class="o">=</span><span class="n">DEFAULT_W_INT8_PER_TENSOR_CONFIG</span><span class="p">)</span>
+
+<span class="c1"># 3. Define calibration dataloader (still need this step for weight only and dynamic quantization)</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Hello, how are you?&quot;</span>
+<span class="n">tokenized_outputs</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">return_tensors</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+<span class="n">calib_dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">tokenized_outputs</span><span class="p">[</span><span class="s1">&#39;input_ids&#39;</span><span class="p">])</span>
+
+<span class="c1"># 4. In-place replacement with quantized modules in model</span>
+<span class="kn">from</span> <span class="nn">quark.torch</span> <span class="kn">import</span> <span class="n">ModelQuantizer</span>
+<span class="n">quantizer</span> <span class="o">=</span> <span class="n">ModelQuantizer</span><span class="p">(</span><span class="n">quant_config</span><span class="p">)</span>
+<span class="n">quant_model</span> <span class="o">=</span> <span class="n">quantizer</span><span class="o">.</span><span class="n">quantize_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">calib_dataloader</span><span class="p">)</span>
+
+<span class="c1"># # 5. (Optional) Export onnx</span>
+<span class="c1"># # If user want to export the quantized model, please freeze the quantized model first</span>
+<span class="c1"># freezed_quantized_model = quantizer.freeze(quant_model)</span>
+<span class="c1"># from quark.torch import ModelExporter</span>
+<span class="c1"># # Get dummy input</span>
+<span class="c1"># for data in calib_dataloader:</span>
+<span class="c1">#     input_args = data</span>
+<span class="c1">#     break</span>
+<span class="c1"># quant_model = quant_model.to(&#39;cuda&#39;)</span>
+<span class="c1"># input_args = input_args.to(&#39;cuda&#39;)</span>
+<span class="c1"># exporter = ModelExporter(&#39;export_path&#39;)</span>
+<span class="c1"># exporter.export_onnx_model(quant_model, input_args)</span>
+</pre></div>
+</div>
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

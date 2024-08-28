@@ -1,0 +1,114 @@
+# Configuration Description
+
+Configuration of quantization in `Quark for Pytorch` is set by python `dataclass` because it is rigorous and can help users avoid typos. We provide a class `Config` in `quark.torch.quantization.config.config` for configuration, as demonstrated in the example above. In `Config`, users should set certain instances (all instances are optional except global_quant_config):
+
++ `global_quant_config(QuantizationConfig)`: Global quantization configuration applied to the entire model unless overridden at the layer level.
++ `layer_type_quant_config(QuantizationConfig)`: A dictionary mapping from layer types (e.g., 'Conv2D', 'Dense') to their quantization configurations. Default is an empty dictionary.
++ `layer_quant_config(QuantizationConfig)`: A dictionary mapping from layer names to their quantization configurations, allowing for per-layer customization. Default is an empty dictionary.
++ `exclude(QuantizationConfig)`: A list of layer names to be excluded from quantization, enabling selective quantization of the model. Default is an empty list.
++ `algo_config(AlgoConfig)`: Optional configuration for the quantization algorithm, such as GPTQ and AWQ. After this process, the datatype/fake_datatype of weights will be changed with quantization scales.
++ `pre_quant_opt_config(PreProcessConfig)`: Optional pre-processing optimization, such as Equalization and SmoothQuant. After this process, the value of weights will be changed, but the dtype/fake_dtype will be the same.
+
+The `Config` should be like:
+
+```python
+
+from quark.torch.quantization.config.config import Config
+quant_config = Config(global_quant_config=..., layer_type_quant_config=..., layer_quant_config=...)
+```
+
+#### Setting `QuantizationConfig`
+
+`QuantizationConfig` is used to describe the global, layer-type-wise, or layer-wise quantization information for each `nn.Module`, such as `nn.Linear`, which include:
+
++ `input_tensors(QuantizationSpec)`: Input tensors quantization specification. If None, following the hierarchical quantization setup. e.g. If the input_tensors in layer_type_quant_config is None, the configuration from global_quant_config will be used instead. Defaults to None. If None in global_quant_config, input_tensors are not quantized.
++ `output_tensors(QuantizationSpec)`: Output tensors quantization specification. Defaults to None. If None, the same as above.
++ `weight(QuantizationSpec)`: The weights tensors quantization specification. Defaults to None. If None, the same as above.
++ `bias(QuantizationSpec)`: The bias tensors quantization specification. Defaults to None. If None, the same as above.
++ `target_device(DeviceType)`: Configuration specifying the target device (e.g., CPU, GPU, IPU) for the quantized model.
+
+The `QuantizationConfig` should be like:
+
+```python
+
+from quark.torch.quantization.config.config import QuantizationConfig
+QuantizationConfig(input_tensors=..., output_tensors=..., weight=..., ...)
+```
+
+#### Configuring Quantization Strategy (Setting `QuantizationSpec`)
+
+`QuantizationSpec` aims to describe the quantization specification for each tensor. Users can set these features:
++ `dtype`: The data type for quantization (e.g., int8, int4).
++ `is_dynamic`: Specifies whether dynamic or static quantization should be used. Default is None, which indicates no specification.
++ `observer_cls`: The class of observer to be used for determining quantization parameters like min/max values. Default is None.
++ `qscheme`: The quantization scheme to use, such as per_tensor, per_channel or per_group. Default is None.
++ `ch_axis`: The channel axis for per-channel quantization. Default is None.
++ `group_size`: The size of the group for per-group quantization. Default is None.
++ `symmetric`: Indicates if the quantization should be symmetric around zero. If True, quantization is symmetric. If None, it defers to a higher-level or global setting. Default is None.
++ `round_method`: The rounding method during quantization, such as half_even. If None, it defers to a higher-level or default method. Default is None.
++ `scale_type`: Defines the scale type to be used for quantization, like power of two or float. If None, it defers to a higher-level setting or uses a default method. Default is None.
+
+The `QuantizationSpec` should be like:
+
+```python
+from quark.torch.quantization.config.config import QuantizationSpec
+from quark.torch.quantization.config.type import Dtype, ScaleType, RoundType, QSchemeType
+# Per Tensor Config
+QuantizationSpec(dtype=Dtype.int8,
+                qscheme=QSchemeType.per_tensor,
+                observer_cls=PerTensorMinMaxObserver,
+                symmetric=True,
+                scale_type=ScaleType.float,
+                round_method=RoundType.half_even,
+                is_dynamic=False)
+
+# Per Channel Config, should set ch_axis
+QuantizationSpec(dtype=Dtype.int4,
+                observer_cls=PerChannelMinMaxObserver,
+                symmetric=True,
+                scale_type=ScaleType.float,
+                round_method=RoundType.half_even,
+                qscheme=QSchemeType.per_channel,
+                ch_axis=0,
+                is_dynamic=False)
+
+
+# Per Group Config, should set ch_axis and group_size
+QuantizationSpec(dtype=Dtype.int4,
+                observer_cls=PerChannelMinMaxObserver,
+                symmetric=True,
+                scale_type=ScaleType.float,
+                round_method=RoundType.half_even,
+                qscheme=QSchemeType.per_group,
+                ch_axis=0,
+                is_dynamic=False,
+                group_size=128)
+```
+
+#### Configuring Calibration Method
+
+Quark for PyTorch supports these types of calibration methods:
+
+- MinMax Calibration method (per tensor/channel/group)
+- Percentile Calibration method (per tensor)
+- MSE Calibration method (per tensor)
+
+Users can configuring the calibration method for each tensors in modules by using the instance `observer_cls` in the `QuantizationSpec` of quantization configuration:
+
+```python
+QuantizationSpec(...,
+                observer_cls=PerChannelMinMaxObserver,
+                ...)
+```
+
+Users can choose the `observer_cls` in:
+
+- `PerTensorMinMaxObserver`
+- `PerChannelMinMaxObserver` 
+- `PerTensorPercentileObserver`
+- `PerTensorMSEObserver`
+
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+-->

@@ -1,0 +1,43 @@
+ARG BASE_IMAGE
+FROM $BASE_IMAGE
+
+RUN apt update \
+ && apt install -y \
+	numactl \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN pip install \
+	absl-py \
+	datasets \
+	evaluate \
+	nltk \
+	numpy==1.26.4 \
+	py-libnuma \
+	rouge_score
+
+WORKDIR /app
+RUN git clone --recurse-submodules https://github.com/mlcommons/inference.git --branch v4.1 --depth 1 mlperf_inference \
+ && cd mlperf_inference/loadgen \
+ && CFLAGS="-std=c++14 -O3" python -m pip install .
+
+WORKDIR /app
+RUN git clone https://github.com/ROCm/rocm_bandwidth_test --depth 1 rocm_bandwidth_test \
+ && cd rocm_bandwidth_test \
+ && mkdir build \
+ && cd build \
+ && cmake -DCMAKE_MODULE_PATH="/app/rocm_bandwidth_test/cmake_modules" -DCMAKE_PREFIX_PATH="/opt/rocm/" .. \
+ && make \
+ && make install
+
+WORKDIR /app
+RUN wget -O quark-0.1.0+a9827f5-py39-none-any.whl "https://www.xilinx.com/bin/public/openDownload?filename=quark-0.1.0+a9827f5-py39-none-any.whl" \
+ && pip install quark-0.1.0+a9827f5-py39-none-any.whl \
+ && rm quark-0.1.0+a9827f5-py39-none-any.whl
+
+WORKDIR /app
+RUN wget -O kv_cache_scales.json https://raw.githubusercontent.com/vllm-project/vllm/38c4b7e863570a045308af814c72f4504297222e/tests/fp8_kv/llama2-70b-fp8-kv/kv_cache_scales.json
+
+COPY code /lab-mlperf-inference/code
+
+WORKDIR /lab-mlperf-inference/code/llama2-70b-99.9/test_VllmFp8
+

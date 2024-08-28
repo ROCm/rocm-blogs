@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Model Quantization using Quark &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Language Model Quantization using Quark</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_sources/quark_torch_llm_example_gen.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="language-model-quantization-using-quark">
+<h1>Language Model Quantization using Quark<a class="headerlink" href="#language-model-quantization-using-quark" title="Permalink to this heading"></a></h1>
+<p>This document provides examples of quantizing and exporting the language models(OPT, Llama…) using Quark. We offer several scripts for various quantization strategies. If users wish to apply their own <strong>Customer Settings</strong> for the <code class="docutils literal notranslate"><span class="pre">calibration</span> <span class="pre">method</span></code>, <code class="docutils literal notranslate"><span class="pre">dataset</span></code>, or <code class="docutils literal notranslate"><span class="pre">quant</span> <span class="pre">config</span></code>, they can refer to the <a class="reference external" href="./user_guide_gen.html">User Guide</a> for help.</p>
+<section id="models-supported">
+<h2>Models supported<a class="headerlink" href="#models-supported" title="Permalink to this heading"></a></h2>
+<table border="1" class="docutils">
+<thead>
+<tr>
+<th>Model Family</th>
+<th>Model Name</th>
+<th>FP16</th>
+<th>BFP16</th>
+<th>FP8(+FP8_KV_CACHE)</th>
+<th>W_UIN4(Per group)+A_BF16(+AWQ/GPTQ)</th>
+<th>INT8</th>
+<th>SmoothQuant</th>
+<th>FP8 SafeTensors Export</th>
+<th>INT8 ONNX Export</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LLAMA 2</td>
+<td>meta-llama/Llama-2-*-hf</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+</tr>
+<tr>
+<td>LLAMA 3</td>
+<td>meta-llama/Llama-3-*-hf</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+</tr>
+<tr>
+<td>OPT</td>
+<td>facebook/opt-*</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&times;</td>
+<td>&check;</td>
+</tr>
+<tr>
+<td>Qwen 1.5</td>
+<td>Qwen/Qwen1.5-*</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&check;</td>
+<td>&times;</td>
+<td>&check;</td>
+</tr>
+</tbody>
+</table><p>Note: <code class="docutils literal notranslate"><span class="pre">*</span></code> represents different model sizes, such as <code class="docutils literal notranslate"><span class="pre">7b</span></code>.</p>
+</section>
+<section id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Permalink to this heading"></a></h2>
+<p>For Llama2 models, download the HF Llama2 checkpoint. The Llama2 models checkpoint can be accessed by submitting a permission request to Meta. For additional details, see the <a class="reference external" href="https://huggingface.co/docs/transformers/main/en/model_doc/llama2">Llama2 page on Huggingface</a>. Upon obtaining permission, download the checkpoint to the <code class="docutils literal notranslate"><span class="pre">[llama2_checkpoint_folder]</span></code>.</p>
+</section>
+<section id="quantization-export-scripts">
+<h2>Quantization &amp; Export Scripts<a class="headerlink" href="#quantization-export-scripts" title="Permalink to this heading"></a></h2>
+<p>You can run the following python scripts in the <code class="docutils literal notranslate"><span class="pre">examples/torch/language_modeling</span></code> path. Here we use Llama2-7b as an example.</p>
+<p><strong>Recipe 1: Evaluation of Llama2 float16 model without quantization</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">skip_quantization</span>
+</pre></div>
+</div>
+<p>Llama2-7b perplexity with wikitext dataset (on A100 GPU): 5.4720</p>
+<p><strong>Recipe 2: Quantization of Llama2 with AWQ (W_uint4 A_float16 per_group asymmetric)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_uint4_per_group_asym</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">quant_algo</span> <span class="n">awq</span> \
+                          <span class="o">--</span><span class="n">dataset</span> <span class="n">pileval_for_awq_benchmark</span> \
+                          <span class="o">--</span><span class="n">seq_len</span> <span class="mi">512</span>
+</pre></div>
+</div>
+<p>Llama2-7b perplexity with wikitext dataset (on A100 GPU): 5.6168</p>
+<p><strong>Recipe 3: Quantization of &amp; vLLM_Adopt_SafeTensors_Export Llama2 with W_int4 A_float16 per_group symmetric</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_int4_per_group_sym</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">model_export</span> <span class="n">vllm_adopted_safetensors</span>
+</pre></div>
+</div>
+<p>If the code runs successfully, it will produce one JSON file and one .safetensor file in <code class="docutils literal notranslate"><span class="pre">[output_dir]</span></code> and the terminal will display <code class="docutils literal notranslate"><span class="pre">[Quark]</span> <span class="pre">Quantized</span> <span class="pre">model</span> <span class="pre">exported</span> <span class="pre">to</span> <span class="pre">...</span> <span class="pre">successfully.</span></code>
+Llama2-7b perplexity with wikitext dataset (on A100 GPU): 5.7912</p>
+<p><strong>Recipe 4: Quantization &amp; vLLM_Adopt_SafeTensors_Export of W_FP8_A_FP8 with FP8 KV cache</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_fp8_a_fp8</span> \
+                          <span class="o">--</span><span class="n">kv_cache_dtype</span> <span class="n">fp8</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">model_export</span> <span class="n">vllm_adopted_safetensors</span>
+</pre></div>
+</div>
+<p>If the code runs successfully, it will produce one JSON file and one .safetensor file in <code class="docutils literal notranslate"><span class="pre">[output_dir]</span></code> and the terminal will display <code class="docutils literal notranslate"><span class="pre">[Quark]</span> <span class="pre">Quantized</span> <span class="pre">model</span> <span class="pre">exported</span> <span class="pre">to</span> <span class="pre">...</span> <span class="pre">successfully.</span></code></p>
+<p>Llama2-7b perplexity with wikitext dataset (on A100 GPU): 5.5133</p>
+<p><strong>Recipe 5: Quantization &amp; vLLM_Adopt_SafeTensors_Export of only W_FP8_A_FP8</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_fp8_a_fp8</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">model_export</span> <span class="n">vllm_adopted_safetensors</span>
+</pre></div>
+</div>
+<p>If the code runs successfully, it will produce one JSON file and one .safetensor file in <code class="docutils literal notranslate"><span class="pre">[output_dir]</span></code> and the terminal will display <code class="docutils literal notranslate"><span class="pre">[Quark]</span> <span class="pre">Quantized</span> <span class="pre">model</span> <span class="pre">exported</span> <span class="pre">to</span> <span class="pre">...</span> <span class="pre">successfully.</span></code></p>
+<p>Llama2-7b perplexity with wikitext dataset (on A100 GPU): 5.5093</p>
+<p><strong>Recipe 6: Quantization &amp; vLLM_Adopt_SafeTensors_Export of W_FP8_A_FP8_O_FP8</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_fp8_a_fp8_o_fp8</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">model_export</span> <span class="n">vllm_adopted_safetensors</span>
+</pre></div>
+</div>
+<p>If the code runs successfully, it will produce one JSON file and one .safetensor file in <code class="docutils literal notranslate"><span class="pre">[output_dir]</span></code> and the terminal will display <code class="docutils literal notranslate"><span class="pre">[Quark]</span> <span class="pre">Quantized</span> <span class="pre">model</span> <span class="pre">exported</span> <span class="pre">to</span> <span class="pre">...</span> <span class="pre">successfully.</span></code></p>
+<p>Llama2-7b perplexity with wikitext dataset (on A100 GPU): 5.5487</p>
+<p><strong>Recipe 7: Quantization &amp; vLLM_Adopt_SafeTensors_Export of W_FP8_A_FP8_O_FP8 without weight scaling factors of gate_proj and up_proj merged.</strong> And if option “–no_weight_matrix_merge” is not set, weight scaling factors of gate_proj and up_proj are merged.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_fp8_a_fp8_o_fp8</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">model_export</span> <span class="n">vllm_adopted_safetensors</span> \
+                          <span class="o">--</span><span class="n">no_weight_matrix_merge</span>
+</pre></div>
+</div>
+<p>If the code runs successfully, it will produce one JSON file and one .safetensor file in <code class="docutils literal notranslate"><span class="pre">[output_dir]</span></code> and the terminal will display <code class="docutils literal notranslate"><span class="pre">[Quark]</span> <span class="pre">Quantized</span> <span class="pre">model</span> <span class="pre">exported</span> <span class="pre">to</span> <span class="pre">...</span> <span class="pre">successfully.</span></code></p>
+<p><strong>Recipe 8: Quantization &amp; Torch compile of W_INT8_A_INT8_PER_TENSOR_SYM</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python3</span> <span class="n">quantize_quark</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">model_dir</span> <span class="p">[</span><span class="n">llama2</span> <span class="n">checkpoint</span> <span class="n">folder</span><span class="p">]</span> \
+                          <span class="o">--</span><span class="n">output_dir</span> <span class="n">output_dir</span> \
+                          <span class="o">--</span><span class="n">quant_scheme</span> <span class="n">w_int8_a_int8_per_tensor_sym</span> \
+                          <span class="o">--</span><span class="n">num_calib_data</span> <span class="mi">128</span> \
+                          <span class="o">--</span><span class="n">device</span> <span class="n">cpu</span> \
+                          <span class="o">--</span><span class="n">data_type</span> <span class="n">bfloat16</span> \
+                          <span class="o">--</span><span class="n">model_export</span> <span class="n">torch_compile</span>
+</pre></div>
+</div>
+<!--
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

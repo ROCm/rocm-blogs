@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>quark.torch.export.api &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../md_sources/quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../md_sources/install.html">Installation Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../md_sources/user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../md_sources/example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../md_sources/faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">quark.torch.export.api</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../../../_sources/autoapi/quark/torch/export/api/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-quark.torch.export.api">
+<span id="quark-torch-export-api"></span><h1>quark.torch.export.api<a class="headerlink" href="#module-quark.torch.export.api" title="Permalink to this heading"></a></h1>
+<p>Quark Exporting API for PyTorch.</p>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#quark.torch.export.api.ModelExporter" title="quark.torch.export.api.ModelExporter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ModelExporter</span></code></a></p></td>
+<td><p>Provides an API for exporting quantized Pytorch deep learning models.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="quark.torch.export.api.ModelExporter">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">quark.torch.export.api.</span></span><span class="sig-name descname"><span class="pre">ModelExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../config/config/index.html#quark.torch.export.config.config.ExporterConfig" title="quark.torch.export.config.config.ExporterConfig"><span class="pre">quark.torch.export.config.config.ExporterConfig</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">pathlib.Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">tempfile.gettempdir()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#quark.torch.export.api.ModelExporter" title="Permalink to this definition"></a></dt>
+<dd><p>Provides an API for exporting quantized Pytorch deep learning models.
+This class converts the quantized model to json-safetensors files or onnx graph, and saves to export_dir.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<a class="reference internal" href="../config/config/index.html#quark.torch.export.config.config.ExporterConfig" title="quark.torch.export.config.config.ExporterConfig"><em>ExporterConfig</em></a>) – Configuration object containing settings for exporting.</p></li>
+<li><p><strong>export_dir</strong> (<em>Union</em><em>[</em><em>Path</em><em>, </em><em>str</em><em>]</em>) – The target export diretory. This could be a string or a pathlib.Path(string) object.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="quark.torch.export.api.ModelExporter.export_model_info">
+<span class="sig-name descname"><span class="pre">export_model_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_dtype</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.dtype</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">torch.float16</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'vllm-adopt'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#quark.torch.export.api.ModelExporter.export_model_info" title="Permalink to this definition"></a></dt>
+<dd><p>This function aims to export json and safetensors files of the quantized Pytorch model.
+The model’s network architecture is stored in the json file, and parameters including weight, bias, scale, and zero_point are stored in the safetensors file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The quantized model to be exported.</p></li>
+<li><p><strong>model_type</strong> (<em>str</em>) – The type of the model, e.g. gpt2, gptj, llama or gptnext.</p></li>
+<li><p><strong>model_dtype</strong> (<em>torch.dtype</em>) – The weight data type of the quantized model. Default is torch.float16.</p></li>
+<li><p><strong>export_type</strong> (<em>str</em>) – The specific format in which the JSON and safetensors files are stored.
+The choices include ‘vllm-adopt’ and ‘native’. Default is vllm-adopt.
+If set to ‘vllm-adopt’, the exported files are customized for the VLLM compiler.
+The ‘native’ configuration is currently for internal testing use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p><strong>Examples</strong>:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">export_path</span> <span class="o">=</span> <span class="s2">&quot;./output_dir&quot;</span>
+<span class="kn">from</span> <span class="nn">quark.torch</span> <span class="kn">import</span> <span class="n">ModelExporter</span>
+<span class="kn">from</span> <span class="nn">quark.torch.export.config.custom_config</span> <span class="kn">import</span> <span class="n">DEFAULT_EXPORTER_CONFIG</span>
+<span class="n">exporter</span> <span class="o">=</span> <span class="n">ModelExporter</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">DEFAULT_EXPORTER_CONFIG</span><span class="p">,</span> <span class="n">export_dir</span><span class="o">=</span><span class="n">export_path</span><span class="p">)</span>
+<span class="n">exporter</span><span class="o">.</span><span class="n">export_model_info</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">model_type</span><span class="p">,</span> <span class="n">model_dtype</span><span class="p">,</span> <span class="n">export_type</span><span class="o">=</span><span class="s2">&quot;vllm-adopt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since the export_type “native” is only for internal testing use currently, this function is only used to export files required by the VLLM compiler.
+Supported quantization types include fp8, int4_per_group, and w4a8_per_group.
+Supported models include Llama2-7b, Llama2-13b, Llama2-70b, and Llama3-8b.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="quark.torch.export.api.ModelExporter.export_onnx_model">
+<span class="sig-name descname"><span class="pre">export_onnx_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.nn.Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opset_version</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_constant_folding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">operator_export_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.onnx.OperatorExportTypes</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">torch.onnx.OperatorExportTypes.ONNX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uint4_int4_flag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#quark.torch.export.api.ModelExporter.export_onnx_model" title="Permalink to this definition"></a></dt>
+<dd><p>This function aims to export onnx graph of the quantized Pytorch model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>torch.nn.Module</em>) – The quantized model to be exported.</p></li>
+<li><p><strong>input_args</strong> (<em>Union</em><em>[</em><em>torch.Tensor</em><em>, </em><em>Tuple</em><em>[</em><em>float</em><em>]</em><em>]</em>) – Example inputs for this quantized model.</p></li>
+<li><p><strong>input_names</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Names to assign to the input nodes of the onnx graph, in order. Default is empty list.</p></li>
+<li><p><strong>output_names</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Names to assign to the output nodes of the onnx graph, in order. Default is empty list.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Flag to control showing verbose log or no. Default is False</p></li>
+<li><p><strong>opset_version</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The version of the default (ai.onnx) opset to target.
+If not set, it will be valued the latest version that is stable for the current version of PyTorch.</p></li>
+<li><p><strong>do_constant_folding</strong> (<em>bool</em>) – Apply the constant-folding optimization. Default is False</p></li>
+<li><p><strong>operator_export_type</strong> (<em>torch.onnx.OperatorExportTypes</em>) – Export operator type in onnx graph.
+The choices include OperatorExportTypes.ONNX, OperatorExportTypes.ONNX_FALLTHROUGH, OperatorExportTypes.ONNX_ATEN and OperatorExportTypes.ONNX_ATEN_FALLBACK.
+Default is OperatorExportTypes.ONNX.</p></li>
+<li><p><strong>uint4_int4_flag</strong> (<em>bool</em>) – Flag to indicate uint4/int4 quantized model or not. Default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+<p><strong>Examples</strong>:</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">quark.torch</span> <span class="kn">import</span> <span class="n">ModelExporter</span>
+<span class="kn">from</span> <span class="nn">quark.torch.export.config.custom_config</span> <span class="kn">import</span> <span class="n">DEFAULT_EXPORTER_CONFIG</span>
+<span class="n">exporter</span> <span class="o">=</span> <span class="n">ModelExporter</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">DEFAULT_EXPORTER_CONFIG</span><span class="p">,</span> <span class="n">export_dir</span><span class="o">=</span><span class="n">export_path</span><span class="p">)</span>
+<span class="n">exporter</span><span class="o">.</span><span class="n">export_onnx_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">input_args</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Mix quantization of int4/uint4 and int8/uint8 is not supported currently.
+In other words, if the model contains both quantized nodes of uint4/int4 and uint8/int8, this function cannot be used to export the ONNX graph.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
