@@ -1,0 +1,60 @@
+# Installation Guide
+
+## Install from ZIP
+
+1. Install [PyTorch](https://pytorch.org/) for the compute platform(CUDA, ROCM, CPU...). Version of torch >= 2.2.0.
+
+2. Download the [📥quark.zip](https://xcoartifactory/ui/native/uai-pip-local/com/amd/quark/main/nightly/). Extract the downloaded zip file and there is a whl package in it.
+
+3. Install quark whl package by
+
+    ```bash
+    pip install [quark whl package].whl
+    ```
+
+4. (Optional) Verify the installation by running `python -c "import quark"`. If it does not report error, the installation is done.
+
+5. (Optional) Compile the `fast quantization kernels`. When using Quark's quantization APIs for the first time, it will compile the `fast quantization kernels` using your installed Torch and CUDA if available. This process may take a few minutes but subsequent quantization calls will be much faster. To invoke this compilation now and check if it is successful, run the following command:
+
+    ```bash
+    python -c "import quark.torch.kernel"
+    ```
+
+## Install from source code
+
+1. Install [Anaconda](https://www.anaconda.com/). Then create and activate a conda environment using the command below:
+    ```bash
+    conda create -n quark python=3.9
+    conda activate quark
+    ```
+
+2. Install [PyTorch](https://pytorch.org/) for the compute platform(CUDA, ROCM, CPU...). Version of torch >= 2.2.0.
+
+3. Download and open repository 
+    ```bash
+    git clone https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark.git
+    cd Quark
+    ```
+
+4. Install other dependencies.
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+5. Install the main component.
+
+    ```bash
+    pip install -e .
+    ```
+
+6. (Optional) Verify the installation by running `python -c "import quark"`. If it does not report error, the installation is done.
+
+7. (Optional) Compile the `fast quantization kernels`. When using Quark's quantization APIs for the first time, it will compile the `fast quantization kernels` using your installed Torch and CUDA if available. This process may take a few minutes but subsequent quantization calls will be much faster. To invoke this compilation now and check if it is successful, run the following command:
+
+    ```bash
+    python -c "import quark.torch.kernel"
+    ```
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+-->

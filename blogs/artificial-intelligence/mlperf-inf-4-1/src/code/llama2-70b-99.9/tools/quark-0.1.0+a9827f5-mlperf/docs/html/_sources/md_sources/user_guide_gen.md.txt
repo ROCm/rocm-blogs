@@ -1,0 +1,26 @@
+# User Guide
+
+There are several steps to quantize a floating-point model with `Quark for PyTorch`:
+
+1. Load original float model
+2. Set quantization configuration
+3. Define dataloader
+4. Use the Quark API to perform in-place replacement of the model's modules with quantized module.
+5. (Optional) Export quantized model to other format such as ONNX
+
+More details:
+
+- [Quick Start Example](././user_guide_quick_start_gen.html)
+
+- [Configuring Quark for PyTorch](././user_guide_config_description_gen.html)
+
+- [Adding Calibration Datasets](././user_guide_dataloader_gen.html)
+
+- [Exporting for ONNX & Json-Safetensors(vLLM Adopted)](././user_guide_exporting_gen.html)
+
+- [Feature Description](././user_guide_feature_description_gen.html)
+
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+-->

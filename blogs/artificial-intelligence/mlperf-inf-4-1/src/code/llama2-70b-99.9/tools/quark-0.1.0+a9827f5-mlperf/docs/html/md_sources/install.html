@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation Guide &mdash; Quark  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="User Guide" href="user_guide_gen.html" />
+    <link rel="prev" title="Quark" href="quark_torch_main_gen.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Quark
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quark_torch_main_gen.html">Quark for Pytorch</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install-from-zip">Install from ZIP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-from-source-code">Install from source code</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide_gen.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_doc/apis.html">APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_gen.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Quark</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/md_sources/install.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation-guide">
+<h1>Installation Guide<a class="headerlink" href="#installation-guide" title="Permalink to this heading"></a></h1>
+<section id="install-from-zip">
+<h2>Install from ZIP<a class="headerlink" href="#install-from-zip" title="Permalink to this heading"></a></h2>
+<ol>
+<li><p>Install <a class="reference external" href="https://pytorch.org/">PyTorch</a> for the compute platform(CUDA, ROCM, CPU…). Version of torch &gt;= 2.2.0.</p></li>
+<li><p>Download the <a class="reference external" href="https://xcoartifactory/ui/native/uai-pip-local/com/amd/quark/main/nightly/">📥quark.zip</a>. Extract the downloaded zip file and there is a whl package in it.</p></li>
+<li><p>Install quark whl package by</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span><span class="o">[</span>quark<span class="w"> </span>whl<span class="w"> </span>package<span class="o">]</span>.whl
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Verify the installation by running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">quark&quot;</span></code>. If it does not report error, the installation is done.</p></li>
+<li><p>(Optional) Compile the <code class="docutils literal notranslate"><span class="pre">fast</span> <span class="pre">quantization</span> <span class="pre">kernels</span></code>. When using Quark’s quantization APIs for the first time, it will compile the <code class="docutils literal notranslate"><span class="pre">fast</span> <span class="pre">quantization</span> <span class="pre">kernels</span></code> using your installed Torch and CUDA if available. This process may take a few minutes but subsequent quantization calls will be much faster. To invoke this compilation now and check if it is successful, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quark.torch.kernel&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="install-from-source-code">
+<h2>Install from source code<a class="headerlink" href="#install-from-source-code" title="Permalink to this heading"></a></h2>
+<ol>
+<li><p>Install <a class="reference external" href="https://www.anaconda.com/">Anaconda</a>. Then create and activate a conda environment using the command below:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>quark<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.9
+conda<span class="w"> </span>activate<span class="w"> </span>quark
+</pre></div>
+</div>
+</li>
+<li><p>Install <a class="reference external" href="https://pytorch.org/">PyTorch</a> for the compute platform(CUDA, ROCM, CPU…). Version of torch &gt;= 2.2.0.</p></li>
+<li><p>Download and open repository</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://gitenterprise.xilinx.com/AMDNeuralOpt/Quark.git
+<span class="nb">cd</span><span class="w"> </span>Quark
+</pre></div>
+</div>
+</li>
+<li><p>Install other dependencies.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+</li>
+<li><p>Install the main component.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</li>
+<li><p>(Optional) Verify the installation by running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;import</span> <span class="pre">quark&quot;</span></code>. If it does not report error, the installation is done.</p></li>
+<li><p>(Optional) Compile the <code class="docutils literal notranslate"><span class="pre">fast</span> <span class="pre">quantization</span> <span class="pre">kernels</span></code>. When using Quark’s quantization APIs for the first time, it will compile the <code class="docutils literal notranslate"><span class="pre">fast</span> <span class="pre">quantization</span> <span class="pre">kernels</span></code> using your installed Torch and CUDA if available. This process may take a few minutes but subsequent quantization calls will be much faster. To invoke this compilation now and check if it is successful, run the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import quark.torch.kernel&quot;</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<!-- 
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
+--></section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quark_torch_main_gen.html" class="btn btn-neutral float-left" title="Quark" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_guide_gen.html" class="btn btn-neutral float-right" title="User Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Advanced Micro Devices, Inc. All rights reserved.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

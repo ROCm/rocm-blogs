@@ -1,0 +1,67 @@
+<div align="center">
+
+# Quark
+
+[![release](https://img.shields.io/badge/release-0.1.0-blue)](quark/version.txt)
+[![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+[![documentation](https://img.shields.io/badge/Quark-Documentation-blue)](../index.html)
+
+
+<div align="left">
+
+**Quark** is a deep learning model quantization toolkit for quantizing models from PyTorch, ONNX and other frameworks. It provides easy-to-use APIs for quantization and more advanced features than native frameworks, in support for multiple HW backends.
+
+## Quark for Pytorch
+
+[![python](https://img.shields.io/badge/python-3.9%2B-green)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.2%2B-green)](https://pytorch.org/)
+
+**Quark for PyTorch** aims to provide developers with a flexible, efficient, and easy-to-use toolkit for quantizing deep learning models from PyTorch. The current quantization method is based on PyTorch in-place operator replacement. In particular, the tool provides the key features and verified models as below:
+
++ Support symmetric/asymmetric post-training quantization (PTQ) strategies (weight-only/dynamic/ static PTQ), for various quantization levels (per tensor/channel/group) with multiple data types (float16/bfloat16/int4/uint4/int8/fp8 (e4m3fn)).
++ Support **configuring calibration methods**, including MinMax, Percentile, and MSE.
++ Support **kv-cache** quantization for large language models.
++ Support advanced quantization algorithms, including **SmoothQuant**, **AWQ**, and **GPTQ**, for uint4 quantization on GPU.
++ Support exporting quantized models to **ONNX** and **vLLM-adopted** JSON-safetensors format.
++ Support operation on Linux (GPU mode) and Windows (CPU mode) operating systems.
++ Provide examples for LLM models, such as OPT, **Llama 2**, **Llama 3**, **Qwen1.5** models with typical datasets, such as "pileval", "wikitext". Users can set up their own models and add custom datasets.
+
+> **Note**:
+> Details of key features can be found in the [User Guide](././user_guide_gen.html). Details of verified models can be found in the [Language Model Examples](./quark_torch_llm_example_gen.html). Check out our [FAQ](././faq_gen.html) for more details.
+
+### Resources
+
+- [Documentation](../index.html): contains **APIs**, **User Guide** and other detailed information.
+- [Examples](./quark_torch_llm_example_gen.html)
+
+### Installation
+
+- [Installation Guide](./install.html)
+
+### Getting Started
+
+After successfully installing the necessary packages, you can now proceed to run your first quantization program.
+
+``` python
+from torch.utils.data import DataLoader
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from quark.torch import ModelQuantizer
+from quark.torch.quantization.config.config import Config
+from quark.torch.quantization.config.custom_config import DEFAULT_W_UINT4_PER_GROUP_CONFIG
+
+model = AutoModelForCausalLM.from_pretrained("facebook/opt-125m").eval()
+tokenizer = AutoTokenizer.from_pretrained("facebook/opt-125m")
+
+text = "Hello, how are you?"
+tokenized_outputs = tokenizer(text, return_tensors="pt")
+calib_dataloader = DataLoader(tokenized_outputs['input_ids'])
+
+quant_config = Config(global_quant_config=DEFAULT_W_UINT4_PER_GROUP_CONFIG)
+quantizer = ModelQuantizer(quant_config)
+quant_model = quantizer.quantize_model(model, calib_dataloader)
+```
+
+If the code runs successfully, the terminal will display `[QUARK-INFO]: Model quantization has been completed.`
+
+## License
+Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved. SPDX-License-Identifier: MIT
