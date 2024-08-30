@@ -164,7 +164,7 @@ Updated August 29 2024
   </a>
 </div>
 
-::::{grid} 2 2 2 2
+::::{grid} 1 2 2 2
 :margin 2
 
 :::{grid-item-card}
@@ -237,11 +237,11 @@ Updated August 29 2024
 <a href="./artificial-intelligence/mlperf-inf-4-1/README.html" class="small-card-header-link">
     <h2 class="card-header">Using statistical methods to reliably compare algorithm performance in large generative AI models with JAX Profiler on AMD GPUs</h2>
 </a>
-<div class="date">August 28, 2024 by <a href="https://rocm.blogs.amd.com/authors/authors/meena-arunachalam.html">Meena Arunachalam</a>
+<div class="date">August 28, 2024 by Meena Arunachalam
   ,
-  <a href="https://rocm.blogs.amd.com/authors/miro-hodak.html">Miro Hodak</a>
+  Miro Hodak
   ,
-  <a href="https://rocm.blogs.amd.com/authors/jeremy-arnold.html">Jeremy Arnold</a>
+  Jeremy Arnold
   ,
   <a href="https://rocm.blogs.amd.com/authors/eliot-li.html">Eliot Li</a>
 
