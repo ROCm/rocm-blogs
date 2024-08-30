@@ -13,9 +13,6 @@ myst:
 ---
 
 # Getting Started with Llama 3 on AMD Instinct and Radeon GPUs
-<span style="font-size:0.7em;">23, August 2024 by `Garrett Byrd<garrettbyrd>`, `Joe Schoonover<joeschoonover>`. </span>
-
-
 
 ## Introduction
 ### Source code and Presentation
