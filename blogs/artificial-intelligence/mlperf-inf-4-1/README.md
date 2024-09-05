@@ -18,7 +18,8 @@ myst:
 
 Measuring the performance of new technologies is as old as human history, and often as intriguing (consider for example that we still compare the performance of new electric vehicle motors using horsepower). In the rapidly advancing field of machine learning (ML) MLPerf was established by [MLCommons](https://mlcommons.org/) on May 2nd 2018 and quickly became the golden standard of measuring the accuracy, speed, and efficiency of AI. MLPerf provides benchmarks on training, HPC and Inference performance. Companies across the industry use MLPerf submissions to evaluate the performance of various GPUs and software platforms, and make their technology adoption decisions based on these results.
 
-Recently, two competitive MLPerf Inference submissions were made using AMD’s Instinct TM MI300X GPUs (one by AMD, and the other by Dell), you can read how well our GPUs did [here](https://mlcommons.org/benchmarks/inference-datacenter/). In this blog post we will show you, step-by-step, how to reproduce the results of AMD’s submission to MLPerf, on your own, using ROCm and AMD Instinct TM MI300X GPU. So, roll up your sleeves and let’s get started!
+Recently, two competitive MLPerf Inference submissions were made using AMD’s Instinct TM MI300X GPUs (one by AMD, and the other by Dell), you can find the results
+[here](https://mlcommons.org/benchmarks/inference-datacenter/), and read more on how well our GPUs did [here](https://mlcommons.org/benchmarks/inference-datacenter/). In this blog post we will show you, step-by-step, how to reproduce the results of AMD’s submission to MLPerf, on your own, using ROCm and AMD Instinct TM MI300X GPU. So, roll up your sleeves and let’s get started!
 
 ## MLPerf Submission
 
@@ -189,7 +190,7 @@ You can also generate results for only the Offline scenario or only the Server s
 
 ## Summary
 
-In this blog post we showed you how to reproduce, on your own, the results of AMD’s MLPerf Inference submission with Llama 2 70B model Powered by MI300X. You can find the MLPerf results [here](https://mlcommons.org/benchmarks/inference-datacenter/). Please note that due to variation in the hardware configuration and condition in each run, specific results may deviate from the submitted result. You are encouraged to build on our effort and optimize your workloads using MI300X and ROCm.
+In this blog post we showed you how to reproduce, on your own, the results of AMD’s MLPerf Inference submission with Llama 2 70B model Powered by MI300X. You can find the MLPerf results [here](https://mlcommons.org/benchmarks/inference-datacenter/), and read our post discussing the results in-depth, [here](https://community.amd.com/t5/instinct-accelerators/engineering-insights-unveiling-mlperf-results-on-amd-instinct/ba-p/705623). Please note that due to variation in the hardware configuration and condition in each run, specific results may deviate from the submitted result. You are encouraged to build on our effort and optimize your workloads using MI300X and ROCm.
 
 ## Disclaimers
 
