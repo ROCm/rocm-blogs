@@ -19,7 +19,7 @@ myst:
 Measuring the performance of new technologies is as old as human history, and often as intriguing (consider for example that we still compare the performance of new electric vehicle motors using horsepower). In the rapidly advancing field of machine learning (ML) MLPerf was established by [MLCommons](https://mlcommons.org/) on May 2nd 2018 and quickly became the golden standard of measuring the accuracy, speed, and efficiency of AI. MLPerf provides benchmarks on training, HPC and Inference performance. Companies across the industry use MLPerf submissions to evaluate the performance of various GPUs and software platforms, and make their technology adoption decisions based on these results.
 
 Recently, two competitive MLPerf Inference submissions were made using AMD’s Instinct TM MI300X GPUs (one by AMD, and the other by Dell), you can find the results
-[here](https://mlcommons.org/benchmarks/inference-datacenter/), and read more on how well our GPUs did [here](https://mlcommons.org/benchmarks/inference-datacenter/). In this blog post we will show you, step-by-step, how to reproduce the results of AMD’s submission to MLPerf, on your own, using ROCm and AMD Instinct TM MI300X GPU. So, roll up your sleeves and let’s get started!
+[here](https://mlcommons.org/benchmarks/inference-datacenter/), and read more on how well our GPUs did [here](https://community.amd.com/t5/instinct-accelerators/engineering-insights-unveiling-mlperf-results-on-amd-instinct/ba-p/705623). In this blog post we will show you, step-by-step, how to reproduce the results of AMD’s submission to MLPerf, on your own, using ROCm and AMD Instinct TM MI300X GPU. So, roll up your sleeves and let’s get started!
 
 ## MLPerf Submission
 
