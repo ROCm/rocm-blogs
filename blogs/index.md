@@ -235,7 +235,7 @@ Updated August 29 2024
 :class-body: small-sd-card
 
 <a href="./artificial-intelligence/mlperf-inf-4-1/README.html" class="small-card-header-link">
-    <h2 class="card-header">Using statistical methods to reliably compare algorithm performance in large generative AI models with JAX Profiler on AMD GPUs</h2>
+    <h2 class="card-header">Benchmarking Machine Learning using ROCm and AMD GPUs: Reproducing Our MLPerf Inference Submission</h2>
 </a>
 <div class="date">August 28, 2024 by Meena Arunachalam
   ,
@@ -247,7 +247,7 @@ Updated August 29 2024
 
 </div>
 
-The AMD MLPerf Inference v4.1 submission has three entries for Llama 2 70B. The submission used a fully open-source software stack based on the ROCm platform and vLLM inference engine+++
+Measuring the performance of new technologies is as old as human history, and often as intriguing. The AMD MLPerf Inference v4.1 submission has three entries for Llama 2 70B. The submission used a fully open-source software stack based on the ROCm platform and vLLM inference engine.
 <a href="./artificial-intelligence/mlperf-inf-4-1/README.html" class="read-more-btn-small">Read More <span class="arrows-small">></span></a>
 :::
 
