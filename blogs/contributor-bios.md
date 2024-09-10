@@ -93,6 +93,12 @@ Senior Member of Technical Staff at AMD
 Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Matt Elliott](./authors/matt-elliott.md)
+:padding: 1
+
+Technical Marketing Engineer at AMD
+:::
+
 :::{grid-item-card} [Maria Ruiz Varela](./authors/maria-ruiz-varela.md)
 :padding: 1
 

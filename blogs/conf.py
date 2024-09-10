@@ -140,6 +140,10 @@ blog_authors = {
         "Mahdieh Ghazimirsaeed",
         "http://rocm.blogs.amd.com/authors/mahdieh-ghazimirsaeed.html",
 ),
+"Matt Elliott": (
+        "Matt Elliott",
+        "http://rocm.blogs.amd.com/authors/matt-elliott.html",
+),
 "Maria Ruiz Varela": (
         "Maria Ruiz Varela",
         "http://rocm.blogs.amd.com/authors/maria-ruiz-varela.html",
@@ -240,7 +244,11 @@ blog_feed_length = 10
 html_static_path = ['_static']
 
 html_css_files = [
-    'css/custom.css',
+    'css/custom.css', 'css/asciinema-player.css'
+]
+
+html_js_files = [
+    'js/asciinema-player.min.js',
 ]
 
 nitpicky = True
