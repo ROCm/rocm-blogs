@@ -15,7 +15,7 @@
 :align: left
 ```
 
-Matt Elliott is a Technical Marketing Engineer at AMD with experience in several sectors, 
-including healthcare, manufacturing, big law, VARs, CSPs and high tech. He is passionate about all 
-things networking, virtualization, automation, cloud, monitoring and AI. Matt graduated from the 
+Matt Elliott is a Technical Marketing Engineer at AMD with experience in several sectors,
+including healthcare, manufacturing, big law, VARs, CSPs and high tech. He is passionate about all
+things networking, virtualization, automation, cloud, monitoring and AI. Matt graduated from the
 University of Kentucky with a degree in Computer Science, and he is CCIE #56011.
