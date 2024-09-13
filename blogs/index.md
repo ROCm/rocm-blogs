@@ -164,14 +164,14 @@ Updated August 29 2024
   </a>
 </div>
 
-::::{grid} 1 2 2 2
+::::{grid} 1 3 3 3
 :margin 2
 
 :::{grid-item-card}
 :padding: 1
 :img-top: ./images/stone-ridge.jpg
-:class-img-top: large-sd-card-img-top
-:class-body: large-sd-card
+:class-img-top: small-sd-card-img-top
+:class-body: small-sd-card
 
 <a href=".\ecosystems-and-partners\stone-ridge\README.html" class="card-header-link">
   <h2 class="card-header">Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators</h2>
@@ -186,8 +186,8 @@ Updated August 29 2024
 :::{grid-item-card}
 :padding: 1
 :img-top: ./images/university-of-michigan-bioinformatics.jpg
-:class-img-top: large-sd-card-img-top
-:class-body: large-sd-card
+:class-img-top: small-sd-card-img-top
+:class-body: small-sd-card
 
 <a href="./ecosystems-and-partners/university-of-michigan/README.html" class="card-header-link">
   <h2 class="card-header">AMD Collaboration with the University of Michigan offers High Performance Open-Source Solutions to the Bioinformatics Community</h2>
@@ -202,8 +202,8 @@ Updated August 29 2024
 :::{grid-item-card}
 :padding: 1
 :img-top: ./images/siemens.jpg
-:class-img-top: large-sd-card-img-top
-:class-body: large-sd-card
+:class-img-top: small-sd-card-img-top
+:class-body: small-sd-card
 
 <a href="./ecosystems-and-partners/Siemens/README.html" class="card-header-link">
   <h2 class="card-header">Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+</h2>
@@ -347,7 +347,7 @@ In this blog we explore how to fine-tune the Robustly Optimized BERT Pretraining
   </a>
 </div>
 
-::::{grid} 1 2 2 2
+::::{grid} 1 3 3 3
 :margin: 1
 
 :::{grid-item-card}
