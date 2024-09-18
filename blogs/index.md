@@ -274,7 +274,7 @@ In this blog you will learn how to use ROCm, running on AMD’s Instinct GPUs, f
 :class-body: small-sd-card
 
 <a href="./artificial-intelligence/timeseries_transformers/README.html" class="small-card-header-link">
-    <h2 class="card-header">Times series transformers</h2>
+    <h2 class="card-header">Using AMD GPUs for Enhanced Time Series Forecasting with Transformers</h2>
 </a>
 <div class="date">August 19, 2024 by <a href="https://rocm.blogs.amd.com/authors/fabricio-flores.html">Fabricio Flores</a></div>
 
