@@ -1,6 +1,7 @@
 ---
 blogpost: true
-date: 4 Apr 2024
+blog_title: 'Inferencing and serving with vLLM on AMD GPUs'
+date: Sept 19 2024
 author: Clint Greene
 tags: AI/ML, LLM, Serving
 category: Applications & models
@@ -14,39 +15,41 @@ myst:
 
 # Inferencing and serving with vLLM on AMD GPUs
 
-<span style="font-size:0.7em;">4 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
+<span style="font-size:0.7em;">19 September, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
 
 ## Introduction
 
-vLLM is a high-performance, memory-efficient serving engine for large language models (LLMs). It leverages PagedAttention and continuous batching techniques to rapidly process LLM requests. PagedAttention optimizes memory utilization by partitioning the Key-Value (KV) cache into manageable blocks. The KV cache stores previously computed keys and values, enabling the model to focus on calculating attention solely for the current token. These blocks are subsequently managed through a lookup table, akin to memory page handling in operating systems.
+In the rapidly evolving field of artificial intelligence, Large Language Models (LLMs) have emerged as powerful tools for understanding and generating human-like text. However, deploying these models efficiently at scale presents significant challenges. This is where vLLM comes into play. vLLM is an innovative open-source library designed to optimize the serving of LLMs using advanced techniques. Central to vLLM is PagedAttention, a novel algorithm that enhances the efficiency of the model's attention mechanism by managing it as virtual memory. This approach optimizes GPU memory utilization, facilitating the processing of longer sequences and enabling more efficient handling of large models within existing hardware constraints. Additionally, vLLM incorporates continuous batching to maximize throughput and minimize latency. By leveraging these cutting-edge techniques, vLLM significantly improves the performance and scalability of LLM deployment, allowing organizations to harness the power of state-of-the-art AI models more effectively and economically.
 
-Continuous batching dynamically accumulates incoming requests into batches, eliminating the need to wait for a fixed batch size to be reached. This strategy enables vLLM to begin processing requests promptly upon arrival, thereby reducing latency and enhancing overall throughput.
+Diving deeper into vLLM’s advanced features, PagedAttention optimizes memory usage by partitioning the Key-Value (KV) cache into manageable blocks of non-contiguous memory, similar to how operating systems manage memory pages. This structure ensures optimal use of memory resources. The KV cache enables the model to focus attention calculations solely on the current token by storing previously computed keys and values. This approach speeds up processing and reduces memory overhead, as it eliminates the need to recompute attention scores for past tokens.
 
-In this blog, you will learn how to inference offline and deploy LLMs as a service using state of the art LLMs such as: Mistral-7B, Yi-34B, and Falcon-40B with vLLM.
+In parallel, continuous batching improves throughput and minimizes latency by dynamically grouping incoming requests into batches, eliminating the need to wait for a fixed batch size. This allows vLLM to process requests immediately as they arrive, ensuring faster response times and greater efficiency in handling high volumes of requests.
+
+In this blog, we’ll guide you through the basics of using vLLM to serve large language models, from setting up your environment to performing basic inference with state of the art LLMs such as Qwen2-7B, Yi-34B, and Llama3-70B with vLLM on AMD GPUs.
 
 ## Prerequisites
 
 To run this blog, you'll need:
 
-* **Linux**: see [supported Linux distributions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems)
+* **Linux**: see the [supported Linux distributions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems)
 * **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 * **AMD GPUs**: see the [list of compatible GPUs](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-gpus)
 
 ## Installation
 
-We recommend using the vLLM ROCm docker container as a quick start because it's not trivial to install and build vLLM and it's dependencies from source. To get started, let's pull the vLLM ROCm docker container.
+To access the latest vLLM features on ROCm, clone the vLLM repository and build the Docker image using the commands below. Depending on your system, the build process might take a significant amount of time.
 
 ```bash
-docker pull embeddedllminfo/vllm-rocm:vllm-v0.2.4
+git clone https://github.com/vllm-project/vllm.git
+cd vllm
+DOCKER_BUILDKIT=1 docker build -f Dockerfile.rocm -t vllm-rocm .
 ```
 
-And then run it, replacing <path/to/model> with the appropriate path if you have a folder of LLMs you would like to mount and access in the container.
+Once you've successfully built the vLLM ROCm Docker image, you can run it using the following command. If you have a folder containing multiple LLMs that you'd like to access within the container, simply replace <path/to/model> with the actual path to that folder to mount and utilize your LLMs seamlessly within the container; if not, just remove `-v <path/to/model>:/app/models` from the command below.
 
 ```bash
-docker run -it --network=host --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --device /dev/kfd --device /dev/dri -v <path/to/model>:/app/model embeddedllminfo/vllm-rocm:vllm-v0.2.4
+docker run -it --network=host --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --device /dev/kfd --device /dev/dri -v <path/to/model>:/app/models vllm-rocm
 ```
-
-If you need to build it from source with newer versions, we recommend following the official [vLLM ROCm installation guide](https://docs.vllm.ai/en/latest/getting_started/amd-installation.html#quick-start-docker-rocm).
 
 ## Inferencing
 
@@ -77,15 +80,15 @@ sampling_params = SamplingParams(max_tokens=128,
     top_p=0.95,)
 ```
 
-You're now ready to load an LLM. We'll demonstrate how to load the smaller Mistral-7B model, as well
-as the larger models, Yi-34B and Falcon-40B.
+You're now ready to load an LLM. We'll demonstrate how to load the smaller Qwen2-7B model, as well
+as the larger models, Yi-34B and Llama3-70B.
 
-### Mistral-7B
+### Qwen2-7B
 
-Since Mistral easily fits into the VRAM on an MI210, we can simply call the LLM class with the model's name which will load Mistral-7B from the Hugging Face cache folder. If you have the model weights elsewhere, you can also directly specify the path like this: `model="/app/model/mistral-7b/"` assuming you specified the appropriate folder to mount in the `docker run` command. If you haven't predownloaded the weights yet, we recommend doing it before this step to speedup the loading time.
+Since Qwen2 easily fits into the VRAM on an MI210, we can simply call the LLM class with the model's name which will load Qwen2-7B from the Hugging Face cache folder. If you have the model weights elsewhere, you can also directly specify the path like this: `model="/app/model/qwen-7b/"` assuming you specified the appropriate folder to mount in the `docker run` command. If you haven't predownloaded the weights yet, we recommend doing it before this step to speedup the loading time.
 
 ```python
-llm = LLM(model="mistralai/Mistral-7B-v0.1")
+llm = LLM(model="Qwen/Qwen2-7B-Instruct")
 ```
 
 To generate text using the preceding prompt, we simply call `generate` to print the output
@@ -98,97 +101,130 @@ generated_text = outputs[0].outputs[0].text
 print(prompt + ': ' + generated_text)
 ```
 
+which outputs:
+
 ```text
-Silent algorithm
-Whispers patterns to the world,
-Intelligence grows.
+Data flows in streams,
+Algorithms sift and learn,
+Predictions emerge.
 ```
 
-To run much larger (30 B+) parameter language models, we must utilize tensor parallelism to distribute
+To run much larger (30 B+) parameter language models, we might need to utilize tensor parallelism to distribute
 the model across multiple GPUs. This works by splitting the model weight matrices column-wise into N
 parts, with each of the N GPUs receiving a different part. After each GPU finishes computing, results are
-joined with an `allreduce` operation. vLLM utilizes Megatron-LM's tensor parallelism algorithm and
-`torch.distributed` to manage the distributed runtime on single nodes.
+joined with an `allreduce` operation. vLLM utilizes Megatron-LM's tensor parallelism algorithm and python's `multiprocessing` to manage the distributed runtime on single nodes.
 
-To enable tensor parallelism with vLLM, simply add it as a parameter to LLM, specifying the number of
-GPUs you want to split across
+To enable tensor parallelism with vLLM, simply add it as a parameter to LLM, specifying the number of GPUs you want to split across. We also recommend using multiprocessing `mp` as the backend for distributing rather than `ray` because it's faster.
 
 ```python
-llm = LLM(model="tiiuae/falcon-40b-instruct", tensor_parallel_size=4)
+llm = LLM(model="meta-llama/Meta-Llama-3-70B-Instruct", tensor_parallel_size=4, distributed_executor_backend="mp")
 ```
 
-Using the same prompt and sampling parameters, Falcon-40B outputs:
+Using the same prompt and sampling parameters, Llama3-70B outputs:
 
 ```text
-Artificial intelligence
-Takes in data, learns the patterns
-Predicts the future
+Algorithms dance
+Data whispers secrets sweet
+Intelligence born
 ```
 
 Now let's try another top-performing LLM: Yi-34B.
 
 ```python
-llm = LLM(model="01-ai/Yi-34B", tensor_parallel_size=4)
+llm = LLM(model="01-ai/Yi-34B-Chat", tensor_parallel_size=4, distributed_executor_backend="mp")
 ```
 
 This outputs:
 
 ```text
-In the realm of data, where patterns dwell,
-Machine learning finds its way to tell,
-A story without words, just numbers strong.
+In the digital realm,
+Algorithms learn and evolve,
+Predicting the future.
 ```
 
 ## Serving
 
-You can deploy your LLM as a service with vLLM by calling `vllm.entrypoints.api_server` in the terminal.
+You can deploy your LLM as a service with vLLM by calling `vllm serve <model-name>` in the terminal.
 
 ```bash
-python -m vllm.entrypoints.api_server --model="mistralai/Mistral-7B-v0.1"
+vllm serve Qwen/Qwen2-7B-Instruct
 ```
 
 You can then query the vLLM service using a curl command in another terminal window.
 
 ```bash
-curl http://localhost:8000/generate \
+curl http://localhost:8000/v1/completions \
+    -H "Content-Type: application/json" \
     -d '{
+        "model": "/workspace/Meta-Llama-3-70B-Instruct/",
         "prompt": "Write a haiku about artificial intelligence",
         "max_tokens": 128,
         "top_p": 0.95,
         "top_k": 20,
         "temperature": 0.8
-    }'
+      }'
 ```
 
 This generates the following JSON output:
 
 ```text
 {
-  "text": [
-    "Silent thoughts awaken,
-     Dance with logic and emotion,
-     Life beyond the human."
-  ]
+  "id": "cmpl-622896e563984235a6f83633c46db7cf",
+  "object": "text_completion",
+  "created": 1724445396,
+  "model": "Qwen/Qwen2-7B-Instruct",
+  "choices": [
+    {
+      "index": 0,
+      "text": ". Machines learn and grow,\nBinary thoughts never falter,\nIntelligence artificial. \n\nThis haiku captures the idea of machines learning and growing through artificial intelligence, while their thoughts are never subject to the same limitations as human emotions or physical constraints. The use of binary suggests the reliance on a system of ones and zeros, which is a fundamental aspect of how computers process information. Overall, the haiku highlights the potential and possibilities of artificial intelligence while also acknowledging the limitations of machines as they lack the same complexity and depth of human intelligence.",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": null,
+      "prompt_logprobs": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 7,
+    "total_tokens": 115,
+    "completion_tokens": 108
+  }
 }
 ```
 
-If you need to serve an LLM that is too large to fit onto a single GPU, you can run multi-GPU serving by
-adding `--tensor-parallel-size <number-of-gpus>` when starting the `api_server`.
+If you need to serve an LLM that is too large to fit onto a single GPU, you can run multi-GPU serving by adding `--tensor-parallel-size <number-of-gpus>` when starting `vllm serve`. We also specify multiprocessing `mp` as the backend for distributing.
 
 ```bash
-python -m vllm.entrypoints.api_server --model="tiiuae/falcon-40b-instruct" --tensor-parallel-size 4
+vllm serve --model="meta-llama/Meta-Llama-3-70B-Instruct" --tensor-parallel-size 4 --distributed-executor-backend=mp
 ```
 
 This generates the following output:
 
 ```text
 {
-  "text": [
-    "A creation of man
-     It can think like a human
-     But without feelings"
-  ]
+  "id": "cmpl-bed1534b639a4ab7b65775f75cdeed33",
+  "object": "text_completion",
+  "created": 1724446207,
+  "model": "meta-llama/Meta-Llama-3-70B-Instruct",
+  "choices": [
+    {
+      "index": 0,
+      "text": "\nHere is a haiku about artificial intelligence:\n\nMetal minds awake\nIntelligence born of code\nFuture's uncertain",
+      "logprobs": null,
+      "finish_reason": "stop",
+      "stop_reason": 128009,
+      "prompt_logprobs": null
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 8,
+    "total_tokens": 32,
+    "completion_tokens": 24
+  }
 }
+```
+
+```{Note}
+This blog was originally uploaded on April 4, 2024
 ```
 
 ## Disclaimers
