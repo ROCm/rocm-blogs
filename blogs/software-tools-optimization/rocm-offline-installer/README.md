@@ -1,7 +1,7 @@
 ---
 blogpost: true
 date: 10 Sep, 2024
-title: 'Introducing the AMD ROCm™ Offline Installer Creator: Simplifying Deployment for AI and HPC'
+blog_title: 'Introducing the AMD ROCm™ Offline Installer Creator: Simplifying Deployment for AI and HPC'
 description: 'Presenting and demonstrating the use of the ROCm Offline Installer Creator, a tool enabling simple deployment of ROCm in disconnected environments in high-security environments and air-gapped networks'
 author: Matt Elliott
 tags: HPC, Installation
