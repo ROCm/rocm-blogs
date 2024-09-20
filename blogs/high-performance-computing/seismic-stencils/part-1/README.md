@@ -143,8 +143,8 @@ when advancing the wavefield.
 Most of the complexity that arises in the acoustic-iso seismic wave equation comes from the high
 order discretization of the spatial part. For this
 equation, it is necessary to discretize the Laplacian operator
-$\\nabla\^2$ expressed in Cartesian coordinates, i.e., $\\nabla\^2 =
-\\partial\^2\_{xx} + \\partial\^2\_{yy} + \\partial\^2\_{zz}$.
+$\nabla^2$ expressed in Cartesian coordinates, i.e., $\nabla^2 =
+\partial^2\_{xx} + \partial^2\_{yy} + \partial^2\_{zz}$.
 
 ### Multi-pass and one-pass approaches
 
