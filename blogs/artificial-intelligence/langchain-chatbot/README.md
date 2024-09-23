@@ -28,15 +28,21 @@ contained within specified documents.
 
 ## Prerequisites
 
-To follow along with this blog, you must have the following software:
+To run this blog, you will need the following:
 
-* [ROCm](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
+* **AMD GPUs**: [AMD Instinct GPU](https://www.amd.com/en/products/accelerators/instinct.html).
+* **Linux**: see the [supported Linux distributions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-operating-systems).
+* [ROCm 6.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 * [PyTorch](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html)
-* Linux OS
+* Alternately, you can launch a docker container with the same settings as above, replace ```/YOUR/FOLDER``` with a location of your choice to mount the directory onto the docker root directory. Here is a example using ROCm 6.2 with PyTorch 2.3:
+
+  ```bash
+  docker run -it --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --device /dev/kfd --device=/dev/dri -v /YOUR/FOLDER:/root rocm/pytorch:rocm6.2_ubuntu22.04_py3.10_pytorch_release_2.3.0
+  ```
 
 To check your hardware and make sure that the system recognizes your GPU, run:
 
-``` cpp
+```bash
 ! rocm-smi --showproductname
 ```
 
@@ -86,11 +92,11 @@ applications. It allows applications to:
 * **Engage in reasoning** by depending on a language model to logically deduce answers based on
   the given context, and determine the appropriate actions to take.
 
-To install LangChain, run `pip install langchain`.
+To install LangChain, run `pip install langchain langchain-community`.
 
 ### Language model
 
-In this blog, we use [Google Flan-T5-XXL](https://huggingface.co/google/flan-t5-xxl) as our underlying
+In this blog, we use [Google Flan-T5-large](https://huggingface.co/google/flan-t5-large) as our underlying
 language model.
 
 To install our language model and chat with documents, run the following code:
@@ -123,7 +129,7 @@ from langchain.prompts import PromptTemplate
 
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "your Huggingface API Token here"
 
-llm = HuggingFaceHub(repo_id="google/flan-t5-xxl",model_kwargs={'temperature':0.5,
+llm = HuggingFaceHub(repo_id="google/flan-t5-large",model_kwargs={'temperature':0.5,
                                                                'max_length': 512})
 ```
 
@@ -276,3 +282,7 @@ using the `input_documents=docs` argument.
 We recommend testing different LLMs as the base model and trying various LLMChains for different
 use cases. We also encourage experimenting with different processing methods, and segmenting the
 input documents to improve similarity search relevance.
+
+## Disclaimer
+
+Third-party content is licensed to you directly by the third party that owns the content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.

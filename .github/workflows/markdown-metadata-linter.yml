@@ -1,0 +1,41 @@
+# yml for checking metadata
+# check ONLY the file being updated ends in .md
+
+name: Linting
+
+on:
+  pull_request:
+    branches: 
+    - develop
+    - release
+    - main
+
+jobs:
+  check-markdown-metadata:
+    name: Blogs / Metadata
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.12]
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Setup Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install markdown
+      - name: Check for Markdown Metadata
+        run: |
+          FILES=$(git diff --name-only -r HEAD^1 HEAD)
+          echo $FILES
+          for FILE in $FILES; do
+            if [[ $FILE == *.md ]]; then
+              echo "Checking metadata in $FILE"
+              python3 metadata-check.py <<< $FILE
+            fi
+          done
