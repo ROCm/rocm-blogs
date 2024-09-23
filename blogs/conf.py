@@ -224,6 +224,14 @@ blog_authors = {
         "Adeem Jassani",
         "http://rocm.blogs.amd.com/authors/adeem-jassani.html",
 ),
+"Lei Shao": (
+        "Lei Shao",
+        "http://rocm.blogs.amd.com/authors/lei-shao.html",
+),
+"Luise Chen": (
+        "Luise Chen",
+        "http://rocm.blogs.amd.com/authors/luise-chen.html",
+)
 }
 blog_feed_archives = True
 blog_feed_fulltext = True
