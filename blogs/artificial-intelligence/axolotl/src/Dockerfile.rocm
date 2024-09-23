@@ -1,0 +1,92 @@
+ARG BASE_IMAGE="rocm/pytorch:rocm6.0.2_ubuntu22.04_py3.10_pytorch_2.1.2"
+
+FROM $BASE_IMAGE
+
+ARG FA_GFX_ARCHS="gfx90a;gfx942"
+RUN echo "FA_GFX_ARCHS is $FA_GFX_ARCHS"
+
+RUN echo "Base image is $BASE_IMAGE"
+
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    curl \
+    ca-certificates \
+    sudo \
+    git \
+    bzip2 \
+    libx11-6 \
+    build-essential \
+    wget \
+    unzip \
+    tmux \
+ && rm -rf /var/lib/apt/lists/*
+
+### Mount Point ###
+# When launching the container, mounts to APP_MOUNT 
+ARG APP_MOUNT=/axolotl-workspace
+VOLUME [ ${APP_MOUNT} ]
+WORKDIR ${APP_MOUNT}
+
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --no-cache-dir fastapi ninja tokenizers pandas ipython
+RUN python3 -m pip install --pre torch==2.3.0 torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0/
+
+ENV LLVM_SYMBOLIZER_PATH=/opt/rocm/llvm/bin/llvm-symbolizer
+ENV PATH=$PATH:/opt/rocm/bin:/libtorch/bin:
+ENV LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rocm/lib/:/libtorch/lib:
+ENV CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/libtorch/include:/libtorch/include/torch/csrc/api/include/:/opt/rocm/include/:
+ENV MAX_JOBS=nproc
+
+RUN echo $MAX_JOBS
+
+# Install Axolotl
+RUN mkdir libs \
+    && cd libs \
+    && git clone https://github.com/OpenAccess-AI-Collective/axolotl \
+    && cd axolotl \
+    && git checkout d4f6c65 \
+    && pip install -e . \
+    && cd ..
+
+# Install ROCm flash-attention
+RUN cd libs \
+    && git clone https://github.com/ROCm/flash-attention.git \
+    && cd flash-attention \
+    && git checkout stride_fix \
+    && export GPU_ARCHS=${FA_GFX_ARCHS} \
+    && pip install . \
+    && cd ..
+
+# Install ROCm xformers
+RUN cd libs \
+    && git clone https://github.com/ROCm/xformers \
+    && cd xformers \
+    && git checkout dfc196d \
+    && git submodule update --init --recursive \
+    && pip install . \
+    && cd ..
+
+# Install ROCm bitsandbytes
+RUN cd libs \
+    && git clone --recurse https://github.com/ROCm/bitsandbytes \
+    && cd bitsandbytes \
+    && git checkout rocm_enabled \
+    && pip install -r requirements-dev.txt \
+    && cmake -DCOMPUTE_BACKEND=hip -S . \
+    && make \
+    && pip install . \
+    && cd ..
+
+# Install DeepSpeed
+RUN cd libs \
+    && git clone https://github.com/microsoft/DeepSpeed.git \
+    && cd DeepSpeed \
+    && git submodule update --init --recursive \
+    && pip install .[dev,1bit,autotuning] \
+    && cd ..
+
+WORKDIR /axolotl-workspace
+COPY . .
+
+CMD ["/bin/bash"]
