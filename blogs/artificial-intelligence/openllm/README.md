@@ -1,27 +1,28 @@
 ---
 blogpost: true
+blog_title: 'Step-by-Step Guide to Use OpenLLM on AMD GPUs'
+thumbnail: './images/openllm_thumbnail.jpg'
 date: 1 May 2024
 author: Fabricio Flores
-tags: LLM, Serving
+tags: AI/ML, LLM, Serving
 category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Step-by-Step Guide to OpenLLM on AMD GPUs"
+    "description lang=en": "OpenLLM is an open-source platform for deploying large language models, enabling cloud or on-premises use. In this blog we focus on using OpenLLM to start an LLM server leveraging the capabilities of AMD GPUs"
+    "author": "Fabricio Flores"
     "keywords": "LLM, OpenLLM, vLLM, ROCm, AMD, GPU, MI300, MI250"
     "property=og:locale": "en_US"
 ---
 
 # Step-by-Step Guide to Use OpenLLM on AMD GPUs
 
-<span style="font-size:0.7em;">1, May 2024 by {hoverxref}`Fabricio Flores<fabrflor>`. </span>
-
 ## Introduction
 
 [OpenLLM](https://github.com/bentoml/OpenLLM) is an open-source platform designed to facilitate the deployment and utilization of large language models (LLMs), supporting a wide range of models for diverse applications, whether in cloud environments or on-premises. In this tutorial, we will guide you through the process of starting an LLM server using OpenLLM, enabling interaction with the server from your local machine, with special emphasis on leveraging the capabilities of AMD GPUs.
 
 You can find files related to this blog post in the
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/docs/artificial-intelligence/openllm).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/openllm).
 
 ## Requirements
 
