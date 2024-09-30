@@ -1,5 +1,7 @@
 ---
 blogpost: true
+blog_title: 'Automatic mixed precision in PyTorch using AMD GPUs.'
+thumbnail: './images/amp_thumbnail.jpg'
 date: 29 March 2024
 author: Logan Grado
 tags: PyTorch, AI/ML
@@ -7,14 +9,13 @@ category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Automatic mixed precision in PyTorch using AMD GPUs"
+    "description lang=en": ""
+    "author": "Logan Grado"
     "keywords": "AI/ML, PyTorch, Mi201, MI250, MI300, ROCm, AMP, Automatic Mixed Precision, Precision"
     "property=og:locale": "en_US"
 ---
 
 # Automatic mixed precision in PyTorch using AMD GPUs
-
-<span style="font-size:0.7em;">29, March 2024 by {hoverxref}`Logan Grado<logagrad>`. </span>
 
 As models increase in size, the time and memory needed to train them--and consequently, the cost--also increases. Therefore, any measures we take to reduce training time and memory usage can be highly beneficial. This is where Automatic Mixed Precision (AMP) comes in.
 
@@ -49,7 +50,7 @@ Using Docker is the easiest and most reliable way to construct the required envi
 * Clone the following repo, and `cd` into the blog directory
 
     ```shell
-    git clone git@github.com:ROCm/rocm-blogs.git
+    git clone https://github.com/ROCm/rocm-blogs.git
     cd rocm-blogs/blogs/artificial-intelligence/automatic-mixed-precision
     ```
 
