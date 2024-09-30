@@ -1,17 +1,19 @@
 ---
 blogpost: true
+blog_title: 'TensorFlow Profiler in practice: Optimizing TensorFlow models on AMD GPUs.'
+thumbnail: './images/tf_profiler_thumbnail.jpeg'
 date: 18 Jun 2024
 author: Fabricio Flores
-tags: Profiling, HPC
+tags: AI/ML, Profiling, HPC
 category: Software tools & optimizations
 language: English
 myst:
   html_meta:
-    "description lang=en": "TensorFlow Profiler in practice: Optimizing TensorFlow models on AMD GPUs"
+    "description lang=en": "TensorFlow Profiler measures resource use and performance of models, helping identify bottlenecks for optimization. This blog demonstrates the use of the TensorFlow Profiler tool on AMD hardware."
+    "author": "Fabricio Flores"
     "keywords": "TensorFlow, Profiler, Profiling, Tracing, HPC, AMD, GPU, MI300, MI250, MI210"
     "property=og:locale": "en_US"
 ---
-
 
 # TensorFlow Profiler in practice: Optimizing TensorFlow models on AMD GPUs
 
@@ -22,7 +24,7 @@ TensorFlow Profiler consists of a set of tools designed to measure resource util
 Machine learning algorithms, particularly deep neural networks, have high computational requirements. It's crucial to assess the performance of a machine learning application to ensure that the most optimized version of a model is being executed. This blog demonstrates how to use the TensorFlow Profiler tool on AMD hardware through an example of training an autoencoder model, collecting device traces, and modifying the autoencoder's architecture based on the analysis of the profiler data. For more information about TensorFlow Profiler, see [Optimize TensorFlow using the Profiler](https://www.tensorflow.org/guide/profiler).
 
 Find the resources related to this blog post in the
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/tf-profiler).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/tf_profiler).
 
 ## Prerequisites
 
@@ -51,7 +53,7 @@ Using Docker is the easiest and most reliable way to set up the required environ
 * Clone the repo, and `cd` into the blog directory:
 
     ```shell
-    git clone git@github.com:ROCm/rocm-blogs.git
+    git clone https://github.com/ROCm/rocm-blogs.git
     cd rocm-blogs/blogs/software-tools-optimization/tf_profiler
     ```
 

@@ -1,13 +1,15 @@
 ---
 blogpost: true
+blog_title: 'Using AMD GPUs for Enhanced Time Series Forecasting with Transformers.'
+thumbnail: './images/timeseries_transformers_thumbnail.jpeg'
 date: 19 Aug 2024
 author: Fabricio Flores
-tags: PyTorch, AI/ML, Time Series
+tags: AI/ML, LLM, PyTorch, Time Series
 category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Using AMD GPUs for Enhanced Time Series Forecasting with Transformers"
+    "description lang=en": "Time series forecasting (TSF) predicts future behavior using past data. This guide focuses on implementing Transformers for TSF, covering preprocessing to evaluation using AMD hardware."
     "author": "Fabricio Flores"
     "keywords": "PyTorch, Time Series Data, Transformers, Time Series Transformer, Autoformer, Informer, ROCm, AMD, GPU, MI300, MI250, MI210"
     "property=og:locale": "en_US"
@@ -38,7 +40,7 @@ For the case of time series data and prediction, Time Series Transformer, Autofo
 In this blog, we explore the capabilities these 3 models offer for the purpose of time series forecasting using AMD GPUs. We also provide a practical application using the **traffic_hourly** dataset, which is part of the  **monash_tsf** time series data repository.
 
 You can find the files related to this blog post in this
-[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/main/docs/artificial-intelligence/timeseries_transformers).
+[GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/timeseries_transformers).
 
 ## Requirements
 
@@ -57,7 +59,7 @@ This blog uses the **GluonTS** Python library for the management and transformat
 * Clone the repo and `cd` into the blog directory:
 
     ```shell
-    git clone git@github.com:ROCm/rocm-blogs.git
+    git clone https://github.com/ROCm/rocm-blogs.git
     cd rocm-blogs/blogs/artificial-intelligence/timeseries_transformers
     ```
 
