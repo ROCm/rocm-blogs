@@ -1,8 +1,8 @@
 ---
 blogpost: true
 blog_title: 'Fine-tuning and Testing Cutting-Edge Speech Models using ROCm on AMD GPUs'
-thumbnail: './images/thumb_speech_models.jpeg'
-date: 24 September 2024
+thumbnail: './images/${thumb_speech_models.jpeg}'
+date: 27 Jun 2024
 author: Fabricio Flores
 tags: AI/ML, LLM, PyTorch, Speech
 category: Applications & models
@@ -11,7 +11,7 @@ myst:
   html_meta:
     "description lang=en": This blog post demonstrates how to fine-tune and test three state-of-the-art machine learning Automatic Speech Recognition (ASR) models, running on AMD GPUs using ROCm."
     "author": "Fabricio Flores"
-    "keywords": "PyTorch,  Fine-tuning, Speech Models, Wav2Vec, Spanish, Automatic Speech Recognition, Audio Spectrogram Transformer, diarization, PyAnnote, AMD, GPU, MI300, MI250, MI210"
+    "keywords": "PyTorch,  Fine-tuning, Speech Models, Wav2Vec, Spanish, Automatic Speech Recognition, ASR, Audio Spectrogram Transformer, diarization, PyAnnote, AMD, GPU, MI300, MI250, MI210"
     "property=og:locale": "en_US"
 ---
 
@@ -46,7 +46,7 @@ You can find the resources related to this blog post in this
 * Clone the repo and `cd` into the blog directory:
 
     ```shell
-    git clone git@github.com:ROCm/rocm-blogs.git
+    git clone https://github.com/ROCm/rocm-blogs.git
     cd rocm-blogs/blogs/artificial-intelligence/speech_models
     ```
 

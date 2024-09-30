@@ -11,7 +11,7 @@ RUN pip install pandas==1.5.3
 RUN pip install transformers==4.41.2
 RUN pip install librosa
 RUN pip install jiwer
-RUN pip install datasets
+RUN pip install datasets==2.21.0
 RUN pip install accelerate==0.32.1
 RUN pip install unidecode
 RUN pip install evaluate
