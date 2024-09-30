@@ -3,6 +3,8 @@ services:
   speech_models:
     image: speech_models
     build: .
+    environment:
+      - CUDA_VISIBLE_DEVICES=0
     devices:
       - /dev/kfd
       - /dev/dri
