@@ -1,5 +1,7 @@
 ---
 blogpost: true
+blog_title: 'Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD'
+thumbnail: './images/roberta_amp_thumbnail.jpeg'
 date: 29 July 2024
 author: Fabricio Flores
 tags: PyTorch, AI/ML, LLM, Optimization
@@ -7,9 +9,9 @@ category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD"
+    "description lang=en": ""
     "author": "Fabricio Flores"
-    "keywords": "PyTorch, Mixed Precision, AMP, RoBERTa, BERT, LLM, Finetune, ROCm, AMD, GPU, MI300, MI250, MI210"
+    "keywords": "PyTorch, Mixed Precision, AMP, RoBERTa, BERT, LLM, Fine-tuning, ROCm, AMD, GPU, MI300, MI250, MI210"
     "property=og:locale": "en_US"
 ---
 
@@ -43,7 +45,7 @@ You can find files related to this blog post in the
 * Clone the repo and `cd` into the blog directory:
 
     ```shell
-    git clone git@github.com:ROCm/rocm-blogs.git
+    git clone https://github.com/ROCm/rocm-blogs.git
     cd rocm-blogs/blogs/artificial-intelligence/roberta_amp
     ```
 
