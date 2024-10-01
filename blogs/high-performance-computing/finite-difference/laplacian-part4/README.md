@@ -17,8 +17,6 @@ myst:
 
 <span style="font-size:0.7em;">18 Jul, 2023 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`. </span>
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
-
 In the previous three posts, we presented a HIP implementation of the finite difference
 method for the Laplace operator and applied four different optimizations.
 Over the course of these code modifications, we observed incremental performance
@@ -508,7 +506,7 @@ In a future lab notes post, we will consider other partial differential equation
 than the ones shown here. This most likely requires optimization strategies not outlined in these last four posts. Nonetheless, we believe all the optimization strategies outlined
 in this Laplacian series should be leveraged to get the best performance out of stencil kernels.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/finite-difference/examples)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/finite-difference)
 
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
 

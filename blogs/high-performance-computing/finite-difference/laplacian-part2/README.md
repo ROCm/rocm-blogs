@@ -16,8 +16,6 @@ myst:
 
 <span style="font-size:0.7em;">4 Jan, 2023 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`, {hoverxref}`Ossian O'Reilly<ossiorei>`. </span>
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
-
 In the previous Laplacian post, we developed a HIP implementation of a finite-difference stencil code designed around a Laplace operator.
 The initial implementation was found to be memory bandwidth bound, meaning that its runtime was limited by the rate at which
 we could move data to and from global memory. Furthermore, the current memory access pattern requires multiple
@@ -829,7 +827,7 @@ tailored towards a single MI250X GCD on a problem size of `nx,ny,nz = 512, 512, 
 
 The next post in this series will answer some of these remaining open questions.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/finite-difference/examples)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/finite-difference)
 
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
 

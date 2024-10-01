@@ -14,9 +14,6 @@ myst:
 
 # GPU-aware MPI with ROCm
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 MPI is the de facto standard for inter-process communication in High-Performance
 Computing. MPI processes compute on their local data while extensively communicating
 with each other. This enables MPI programs to be executed on systems with a distributed
@@ -415,7 +412,7 @@ mpirun -n 2 $OMB_DIR/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_bw -m $((16*1024
 16777216            49369.06
 ```
 
-[Accompanying code example](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/gpu-aware-mpi/examples)
+[Accompanying code example](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/gpu-aware-mpi)
 
 The authors would like to thank Edgar Gabriel and Maria Ruiz Varela for
 their helpful reviews and feedback. If you have any questions or comments,

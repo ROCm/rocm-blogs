@@ -14,9 +14,6 @@ myst:
 
 # AMD matrix cores
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 Matrix multiplication is a fundamental aspect of linear algebra and it is an
 ubiquitous computation within High Performance Computing (HPC) Applications.
 Since the introduction of AMD's CDNA Architecture, Generalized Matrix Multiplication
@@ -323,7 +320,7 @@ The layout for output $D$ and input $C$ is the same as the layout for input $B$.
 ## A note on rocWMMA
 
 We have presented only three examples of leveraging AMD Matrix cores using
-compiler intrinsics. [More examples can be found here](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/matrix-cores).
+compiler intrinsics. [More examples can be found here](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/matrix-cores).
 Note that the builtin functions may change in the future, so it may be better
 to use AMD's rocWMMA C++ library instead for accelerating mixed precision MFMA
 operations. The rocWMMA API facilitates breaking down matrix
@@ -331,24 +328,24 @@ multiply-accumulate problems into fragments and using them in block-wise operati
 that are distributed in parallel across wavefronts. The API is a header library
 of GPU device code allowing matrix core acceleration may be compiled directly
 into your kernel device code. This can benefit from compiler optimization in the
-generation of kernel assembly. More details are available in the [rocWMMA repo](https://github.com/ROCmSoftwarePlatform/rocWMMA).
+generation of kernel assembly. More details are available in the [rocWMMA repo](https://github.com/ROCm/rocWMMA).
 
 ## A note on the AMD Matrix Instruction Calculator tool
 
 For those curious about how various MFMA instructions perform on AMD Radeon and
 AMD Instinct accelerators and would like to understand the mapping between matrix
 elements and hardware registers, we direct you to the
-[AMD Matrix Instruction Calculator](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator)
+[AMD Matrix Instruction Calculator](https://github.com/ROCm/amd_matrix_instruction_calculator)
 tool. This powerful tool can be used to describe WMMA instructions as well as
 MFMA ISA-level instructions for a given architecture.
-We welcome [issues](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator/issues) and feedback from the community.
+We welcome [issues](https://github.com/ROCm/amd_matrix_instruction_calculator/issues) and feedback from the community.
 
 ## Additional resources
 
 - [AMD Instinct MI200 Instruction Set Architecture Reference Guide](https://developer.amd.com/wp-content/resources/CDNA2_Shader_ISA_18November2021.pdf)
 - [AMD CDNA Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna-whitepaper.pdf)
 - [AMD CDNA™ 2 Architecture Whitepaper](https://www.amd.com/system/files/documents/amd-cdna2-white-paper.pdf)
-- [AMD Matrix Instruction Calculator Tool](https://github.com/RadeonOpenCompute/amd_matrix_instruction_calculator)
+- [AMD Matrix Instruction Calculator Tool](https://github.com/ROCm/amd_matrix_instruction_calculator)
 
 We would like to thank Joseph Greathouse for his helpful reviews and suggestions.
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)

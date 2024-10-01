@@ -543,7 +543,7 @@ as combining all three kernels into a single monolithic one.
 [Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/seismic-stencils)
 
 If you have any questions or comments, please reach out to us on
-GitHub [Discussions](https://github.com/amd/amd-lab-notes/discussions)
+GitHub [Discussions](https://github.com/rocm/rocm-blogs/discussions)
 
 [^1]:Testing conducted using ROCm version 6.1.0-82. Benchmark results are not
 validated performance numbers, and are provided only to demonstrate relative

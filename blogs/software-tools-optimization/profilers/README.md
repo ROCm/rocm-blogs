@@ -14,9 +14,6 @@ myst:
 
 # Introduction to profiling tools for AMD hardware
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 Getting a code to be functionally correct is not always enough. In many industries,
 it is also required that applications and their complex software stack run as efficiently
 as possible to meet operational demands. This is particularly challenging as hardware

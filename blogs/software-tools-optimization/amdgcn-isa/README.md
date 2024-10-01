@@ -770,6 +770,8 @@ specific AMDGCN ISA documentation. If you have any questions or comments,
 please reach out to us on GitHub
 [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
 
+[Accompanying code samples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/amdgcn-isa)
+
 ## Additional resources
 
 - [AMDGCN Assembly](https://gpuopen.com/learn/amdgcn-assembly/)

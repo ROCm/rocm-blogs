@@ -1,5 +1,6 @@
 ---
 blogpost: true
+blog_title: 'Finite difference method - Laplacian part 1'
 date: 14 Nov 2022
 author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
 tags: HPC, Memory, Performance, Profiling, Scientific Computing
@@ -15,8 +16,6 @@ myst:
 # Finite difference method - Laplacian part 1
 
 <span style="font-size:0.7em;">14 Nov, 2022 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`, {hoverxref}`Ossian O'Reilly<ossiorei>`. </span>
-
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
 
 The finite difference method is a canonical example of a computational physics stencil discretization commonly used in applications ranging from geophysics (weather and oil \& gas) and electromagnetics (semiconductors and astrophysics) to gas dynamics (airflow and plasmas).
 Stencil codes are identified by an underlying requirement of accessing a local neighborhood of grid points (stencil) in order to evaluate a value at a single grid point, meaning that the performance of the algorithm is strongly tied its memory access pattern.
@@ -384,7 +383,7 @@ In part two of this series we will introduce optimization techniques aimed at re
 which are valuable not only for stencil kernels, but also for other bandwidth limited
 kernels that use a regular, non-contiguous memory access patterns.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/finite-difference/examples)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/finite-difference)
 
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
 

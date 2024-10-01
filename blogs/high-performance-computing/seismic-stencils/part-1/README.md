@@ -144,7 +144,7 @@ Most of the complexity that arises in the acoustic-iso seismic wave equation com
 order discretization of the spatial part. For this
 equation, it is necessary to discretize the Laplacian operator
 $\nabla^2$ expressed in Cartesian coordinates, i.e., $\nabla^2 =
-\partial^2\_{xx} + \partial^2\_{yy} + \partial^2\_{zz}$.
+\partial^2_{xx} + \partial^2_{yy} + \partial^2_{zz}$.
 
 ### Multi-pass and one-pass approaches
 
@@ -432,7 +432,7 @@ into how well our GPU implementations are utilizing the hardware.
 
 Therefore, we provide the *achieved memory bandwidth* which is attainable using two different approaches. The first approach is to
 use `rocprof` directly and take the sum of the `FETCH_SIZE` and `WRITE_SIZE` metrics divided by the average kernel execution time.
-The second approach is to use [omniperf](https://amdresearch.github.io/omniperf/) and take the sum of the reported `L2-EA Rd BW` and `L2-EA Wr BW`.
+The second approach is to use [omniperf](https://rocm.github.io/omniperf/) and take the sum of the reported `L2-EA Rd BW` and `L2-EA Wr BW`.
 Ideally we also want this number to be as close to the achievable memory bandwidth as possible.
 Below are the corresponding achieved memory bandwidth numbers[^1]:
 
@@ -469,7 +469,7 @@ optimizations to elevate the memory bandwidth numbers.
 [Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/seismic-stencils)
 
 If you have any questions or comments, please reach out to us on
-GitHub [Discussions](https://github.com/amd/amd-lab-notes/discussions)
+GitHub [Discussions](https://github.com/rocm/rocm-blogs/discussions)
 
 [^1]:Testing conducted using ROCm version 6.1.0-82. Benchmark results are not
 validated performance numbers, and are provided only to demonstrate relative

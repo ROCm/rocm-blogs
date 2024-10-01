@@ -404,8 +404,8 @@ MPI 003 - OMP 000 - HWT 048 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID 27
 MPI 003 - OMP 001 - HWT 056 - RT_GPU_ID 0 - GPU_ID 3 - Bus_ID 27
 ```
 
-A slightly [extended script](https://github.com/AMD/amd-lab-notes/blob/release/affinity/src/set_cpu_and_gpu_affinity.sh)
-can be found in the [AMD lab notes repository](https://github.com/amd/amd-lab-notes)
+A slightly [extended script](https://github.com/amd/HPCTrainingExamples/blob/main/rocm-blogs-codes/affinity/set_cpu_and_gpu_affinity.sh)
+can be found in the [HPC Training Examples repository](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes)
 which sets up both CPU and GPU affinity for more general cases such
 as running on multiple nodes, packing multiple ranks on each GPU device, striding the
 OpenMP threads or striding the MPI ranks so as to spread processes evenly across

@@ -16,8 +16,6 @@ myst:
 
 <span style="font-size:0.7em;">15 Sept, 2023 by {hoverxref}`Asitav Mishra<asitmish>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Justin Chang<justchan>`. </span>
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
-
 The Jacobi method serves as a fundamental iterative linear solver for Partial
 Differential Equations (PDE) governing a wide variety of physics of interest in
 high performance computing (HPC) applications. Discretization of a PDE by a
@@ -752,7 +750,7 @@ This agrees well with the observations made from the HBM table above.
 Figure 4: Roofline of Update kernel using HIP (left) and OpenMP offload (right)
 </p>
 
-[^3]: The rooflines are obtained using AMD [Omniperf](https://amdresearch.github.io/omniperf/) tool.
+[^3]: The rooflines are obtained using AMD [Omniperf](https://rocm.github.io/omniperf/) tool.
 
 Similar observations about achieved BW for the Laplacian kernels are made
 from the rooflines below in Figure 5 from both the
@@ -789,7 +787,7 @@ Jacobi Solver.
 The authors would like to thank Brian Cornille and Mahdieh Ghazimirsaeed for their helpful reviews
 and feedback.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/jacobi/codes)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/jacobi)
 
 If you have any questions or comments, please reach out to us on GitHub
 [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
