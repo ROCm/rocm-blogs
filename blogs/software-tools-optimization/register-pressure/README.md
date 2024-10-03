@@ -14,9 +14,6 @@ myst:
 
 # Register pressure in AMD CDNA™2 GPUs
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 Register pressure in GPU kernels has a tremendous impact on the overall performance
 of your HPC application. Understanding and controlling register usage allows developers
 to carefully design codes capable of maximizing hardware resources. The following blog
@@ -584,7 +581,7 @@ alter the outcome of the code examples shown in this post when a ROCm version di
 from 5.4 is used. We encourage readers to experiment with the code examples and
 evaluate performance with each change against different ROCm versions.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/register-pressure/codes)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/register-pressure)
 
 The authors would like to thank Justin Chang, Maria Ruiz Varela, and Gina Sitaraman
 for their helpful reviews and suggestions. If you have any questions or comments,

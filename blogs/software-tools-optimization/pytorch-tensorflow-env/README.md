@@ -14,9 +14,6 @@ myst:
 
 # Creating a PyTorch/TensorFlow code environment on AMD GPUs
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 **Goal**: The machine learning ecosystem is quickly exploding and we aim to make
 porting to AMD GPUs simple with this series of machine learning blogposts.
 

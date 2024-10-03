@@ -16,8 +16,6 @@ myst:
 
 <span style="font-size:0.7em;">11 May, 2023 by {hoverxref}`Justin Chang<justchan>`, {hoverxref}`Rajat Arora<rajaaror>`, {hoverxref}`Thomas Gibson<thomgibs>`, {hoverxref}`Sean Miller<seanmill>`, {hoverxref}`Ossian O'Reilly<ossiorei>`. </span>
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
-
 In the previous two Laplacian posts, we developed a HIP implementation of a finite-difference code designed around a Laplace operator
 and applied two possible code optimizations to optimize memory movement between the L2 cache and global memory.
 This third part will cover some additional optimizations and general tips to fine tune the performance of the kernel.
@@ -107,7 +105,7 @@ containing this information. Here is some sample output for the baseline HIP ker
 In addition to the ISA dump, there is a lot of information to unpack here.
 We defer all interested readers to
 [this presentation](https://www.olcf.ornl.gov/wp-content/uploads/Intro_Register_pressure_ORNL_20220812_2083.pdf)
-as well as the [register pressure](https://gpuopen.com/learn/amd-lab-notes/amd-lab-notes-register-pressure-readme/) post for more details
+as well as the [register pressure](https://rocm.blogs.amd.com/software-tools-optimization/register-pressure/README.html) post for more details
 on registers, scratch, occupancy, and more.
 
 The table below contains the above four key metrics for the baseline and optimized
@@ -377,7 +375,7 @@ in depth.
 
 The authors would like to thank Mahdieh Ghazimirsaeed and Maria Ruiz Varela for their helpful reviews and feedback.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/finite-difference/examples)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/finite-difference)
 
 If you have any questions or comments, please reach out to us on GitHub [Discussions](https://github.com/ROCm/rocm-blogs/discussions)
 

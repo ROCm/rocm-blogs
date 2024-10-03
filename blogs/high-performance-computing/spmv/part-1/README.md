@@ -16,8 +16,6 @@ myst:
 
 <span style="font-size:0.7em;">3 Nov, 2023 by {hoverxref}`Paul Mullowney<paulmull>`. </span>
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes) blog series.
-
 Sparse matrix vector multiplication (SpMV) is a core computational kernel of nearly
 every implicit [sparse linear algebra solver](https://epubs.siam.org/doi/book/10.1137/1.9780898718003).
 The performance of algorithms ranging from simple Krylov algorithms to multigrid
@@ -54,7 +52,7 @@ First, we'll review the widely-used CSR and ELLPACK formats for sparse matrices.
 After describing the implementations, we will compare their relative performance
 on AMD MI250X architectures for a variety of sparse matrices. Conversion algorithms
 from one matrix storage format to another can be a costly endeavor. Our code
-[samples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/)
+[samples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1)
 will provide non-optimized device implementations of conversion algorithms between
 CSR and ELLPACK however we will not discuss them in detail in this post.
 
@@ -192,7 +190,7 @@ In contrast, when the average number of nonzeros per row is very low, high memor
 bandwidth can be coupled to simplistic nature of this kernel to achieve good
 performance.
 
-See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/scalar_csr.cpp)
+See the following [sample](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1/scalar_csr.cpp)
 for how to run the Scalar CSR kernel from a matrix market file input.
 
 ### Vector CSR kernel
@@ -286,7 +284,7 @@ void vector_csr(int m,
 This implementation has a couple of key differences with scalar implementation.
 We use $nnz_{avg}$ to build a two-dimensional thread block.
 
-* The x-dimension of the thread denotes the number of threads assigned to each row. This is computed from a function, [prevPowerOf2](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/vector_csr.cpp#L310), which computes smallest power of 2 less than or equal to the input variable.
+* The x-dimension of the thread denotes the number of threads assigned to each row. This is computed from a function, [prevPowerOf2](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1/vector_csr.cpp#L310), which computes smallest power of 2 less than or equal to the input variable.
 * the y-dimension denotes the number of rows per thread block.
 * The total number of thread blocks is determined by the number of rows handled by each block.
 
@@ -305,7 +303,7 @@ Here we note the lack of synchronization steps in either part of the sparse dot
 products steps. This is due to our limiting ourselves to reductions that are at
 least as small as the wavefront size.
 
-See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/vector_csr.cpp)
+See the following [sample](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1/vector_csr.cpp)
 for how to run the Vector CSR kernel from a matrix market file input.
 
 ### ELLPACK kernel
@@ -367,7 +365,7 @@ distinction between this kernel and the scalar CSR kernel is that the matrix is
 accessed in a coalesced manner. The padding in the data structure enables us to write
 code without costly conditionals in the sparse dot product implementation.
 
-See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/ellpack.cpp)
+See the following [sample](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1/ellpack.cpp)
 for how to run the ELLPACK kernel from a matrix market file input. This example
 includes a device conversion to ELLPACK from the CSR format.
 
@@ -429,7 +427,7 @@ __global__ void blocked_ellpack_kernel(const int m,
 }
 ```
 
-See the following [sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/block_ellpack.cpp)
+See the following [sample](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1/block_ellpack.cpp)
 for how to run the Block ELLPACK kernel from a matrix market file input. This example
 includes a device conversion to Block ELLPACK from the CSR format.
 
@@ -476,7 +474,7 @@ in green in the figures below.
 
 The performance results are shown in the figure below for a single MI250X GCD[^1].
 In addition to the code samples provided above, we also provide a
-[sample](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/rocsparse_csr.cpp)
+[sample](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1/rocsparse_csr.cpp)
 for how to run the rocSPARSE CSR kernel from a matrix market file input.
 
 For each kernel, we use 256 threads per block. Results were also generated for 128
@@ -530,7 +528,7 @@ format for your particular problem.
 The author would like to thank Rajat Arora, Noel Chalmers, Justin Chang, and Maria
 Ruiz Varela for their helpful reviews and feedback.
 
-[Accompanying code examples](https://github.com/ROCm/rocm-blogs/tree/release/blogs/high-performance-computing/spmv/part-1/examples/)
+[Accompanying code examples](https://github.com/amd/HPCTrainingExamples/tree/main/rocm-blogs-codes/spmv-part1)
 
 If you have any questions or comments, please reach out to us on GitHub
 [Discussions](https://github.com/ROCm/rocm-blogs/discussions)

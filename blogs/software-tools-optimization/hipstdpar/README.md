@@ -467,7 +467,7 @@ reviews. If you have any questions please reach out to us on GitHub
 [19]: https://releases.llvm.org/18.1.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-hipstdpar
 [20]: https://www.kernel.org/doc/html/latest/mm/hmm.html
 [21]: https://rocm.docs.amd.com/en/latest/conceptual/gpu-memory.html#xnack
-[22]: https://gpuopen.com/learn/amd-lab-notes/amd-lab-notes-mi200-memory-space-overview/#enabling-page-migration
+[22]: https://rocm.blogs.amd.com/software-tools-optimization/mi200-memory-space/README.html#enabling-page-migration
 [23]: https://releases.llvm.org/18.1.0/tools/clang/docs/ClangCommandLineReference.html#cmdoption-clang-hipstdpar-interpose-alloc
 [24]: https://rocm.docs.amd.com/projects/HIP/en/latest/doxygen/html/group___memory_m.html
 [25]: https://en.cppreference.com/w/cpp/memory/new/operator_new

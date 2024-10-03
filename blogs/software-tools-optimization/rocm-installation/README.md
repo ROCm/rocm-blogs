@@ -14,9 +14,6 @@ myst:
 
 # AMD ROCm™ installation
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 AMD ROCm™ is the first open-source software development platform for HPC/Hyperscale-class
 GPU computing. AMD ROCm™ brings the UNIX philosophy of choice, minimalism and modular software
 development to GPU computing. Please see the AMD

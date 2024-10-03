@@ -14,9 +14,6 @@ myst:
 
 # AMD Instinct™ MI200 GPU memory space overview
 
-> **Note:** This blog was previously part of the [AMD lab notes](https://github.com/amd/amd-lab-notes)
-> blog series.
-
 The HIP API supports a wide variety of allocation methods for host and device memory
 on accelerated systems. In this post, we will:
 
