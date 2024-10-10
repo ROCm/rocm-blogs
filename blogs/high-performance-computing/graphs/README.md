@@ -1,6 +1,8 @@
 ---
 blogpost: true
 date: 29 July 2024
+blog_title: 'Graph analytics on AMD GPUs using Gunrock'
+thumbnail: '2024-10-10-gunrock.jpg'
 author: Thomas Gibson, Muhammad Osama
 tags: HPC, Installation, Performance, Scientific Computing
 category: Applications & models
