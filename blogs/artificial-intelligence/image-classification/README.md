@@ -1,5 +1,7 @@
 ---
 blogpost: true
+blog_title: 'Image Classification with BEiT, MobileNet, and EfficientNet using ROCm on AMD GPUs'
+thumbnail: './images/2024-10-03-image_classification.jpg'
 date: 3 Sept, 2024
 author: Vara Lakshmi Bayanagari
 tags: Computer Vision, PyTorch, AI/ML

@@ -1,6 +1,8 @@
 ---
 blogpost: true
 date: 21 August 2024
+blog_title: 'Performing natural language processing tasks with LLMs on ROCm running on AMD GPUs'
+thumbnail: '2024-10-03-llm-tasks.jpeg'
 author: Eliot Li
 tags: AI/ML, LLM
 category: Applications & models

@@ -1,6 +1,8 @@
 ---
 blogpost: true
 date: 28 Aug 2024
+blog_title: "Benchmarking Machine Learning using ROCm and AMD GPUs: Reproducing Our MLPerf Inference Submission"
+thumbnail: "2024-10-03-mlperf.jpeg"
 author: Meena Arunachalam, Miro Hodak, Jeremy Arnold, Eliot Li
 tags: AI/ML, LLM
 category: Applications & models

@@ -1,5 +1,7 @@
 ---
 blogpost: true
+blog_title: 'Optimize GPT Training: Enabling Mixed Precision Training in JAX using ROCm on AMD GPUs'
+thumbnail: '2024-10-10-jax-mixed-precision.jpeg'
 date: 6 Sept 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, JAX, LLM

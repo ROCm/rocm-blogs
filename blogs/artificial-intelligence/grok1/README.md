@@ -1,13 +1,15 @@
 ---
 blogpost: true
 date: 9 Aug 2024
+blog_title: 'Inferencing with Grok-1 on AMD GPUs'
+thumbnail: '2024-10-10-grok1.jpeg'
 author: Eliot Li, Luise Chen, Lei Shao
 tags: AI/ML, LLM
 category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Inferencing with Grok-1 on AMD GPUs"
+    "description lang=en": "We demonstrate that the massive Grok-1 Model from xAI can run seamlessly on the AMD MI300X GPU accelerator by leveraging the ROCm software platform."
     "keywords": "MOE, Mixture of Experts, Mixtral, AMD, GPU, MI300, MI250, LLM"
     "property=og:locale": "en_US"
 ---

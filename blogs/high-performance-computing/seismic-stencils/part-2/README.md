@@ -1,13 +1,15 @@
 ---
 blogpost: true
 date: 29 Aug 2024
+blog_title: "Seismic stencil codes - part 2"
+thumbnail: "2024-10-10-seismic.jpeg"
 author: Justin Chang, Ossian O'Reilly
 tags: HPC, Memory, Performance, Profiling, Optimization, Scientific Computing
 category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Seismic Stencil Codes - Part 1"
+    "description lang=en": "Seismic Stencil Codes - Part 2: In the previous post, recall that the kernel with stencil computation in the z-direction suffered from low effective bandwidth. This low performance comes from generating substantial amounts of data to movement to global memory."
     "keywords": "HPC, finite difference, Seismic, PDE, MI250, performance"
     "property=og:locale": "en_US"
 ---

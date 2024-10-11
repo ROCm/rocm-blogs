@@ -1,7 +1,7 @@
 ---
 blogpost: true
-blog_title: 'Using AMD GPUs for Enhanced Time Series Forecasting with Transformers.'
-thumbnail: './images/timeseries_transformers_thumbnail.jpeg'
+blog_title: 'Using AMD GPUs for Enhanced Time Series Forecasting with Transformers'
+thumbnail: '2024-10-10-timeseries.jpeg'
 date: 19 Aug 2024
 author: Fabricio Flores
 tags: AI/ML, LLM, PyTorch, Time Series

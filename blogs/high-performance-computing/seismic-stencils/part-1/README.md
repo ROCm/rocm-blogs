@@ -1,13 +1,17 @@
 ---
 blogpost: true
 date: 29 Aug 2024
+blog_title: "Seismic stencil codes - part 1"
+thumbnail: "2024-10-10-seismic.jpeg"
 author: Justin Chang, Ossian O'Reilly
 tags: HPC, Memory, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": "Seismic Stencil Codes - Part 1"
+    "description lang=en": "Seismic Stencil Codes - Part 1: Seismic workloads in the HPC space have a long history of being powered
+by high-order finite difference methods on structured grids. This trend
+continues to this day."
     "keywords": "HPC, finite difference, Seismic, PDE, MI250, performance"
     "property=og:locale": "en_US"
 ---
