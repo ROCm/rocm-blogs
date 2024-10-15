@@ -1,0 +1,174 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sdxl-headless-svc
+spec:
+  clusterIP: None
+  ports:
+  - port: 12342
+    protocol: TCP
+    targetPort: 12342
+  selector:
+    job-name: sdxl-finetune-multinode
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sdxl-finetune-multinode-config
+data:
+  headless_svc: sdxl-headless-svc
+  job_name: sdxl-finetune-multinode
+  master_addr: sdxl-finetune-multinode-0.sdxl-headless-svc
+  master_port: '12342'
+  num_replicas: '3'
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sdxl-finetune-multinode
+spec:
+  backoffLimit: 0
+  completions: 3
+  parallelism: 3
+  completionMode: Indexed
+  template:
+    metadata:
+      labels:
+        job: sdxl-multinode-job
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: accelerate-sdxl
+          image: rocm/pytorch:rocm6.2_ubuntu20.04_py3.9_pytorch_release_2.1.2
+          securityContext:
+            privileged: true
+            capabilities:
+              add: [ "IPC_LOCK" ]
+          env:
+          - name: HIP_VISIBLE_DEVICES
+            value: "0,1,2,3,4,5,6,7"
+          - name: HIP_FORCE_DEV_KERNARG
+            value: "1"
+          - name: GPU_MAX_HW_QUEUES
+            value: "2"
+          - name: USE_ROCMLINEAR
+            value: "1"
+          - name: NCCL_SOCKET_IFNAME
+            value: "rdma0"
+          - name: MASTER_ADDRESS
+            valueFrom:
+              configMapKeyRef:
+                key: master_addr
+                name: sdxl-finetune-multinode-config
+          - name: MASTER_PORT
+            valueFrom:
+              configMapKeyRef:
+                key: master_port
+                name: sdxl-finetune-multinode-config
+          - name: NCCL_IB_HCA
+            value: "mlx5_0,mlx5_2,mlx5_3,mlx5_4,mlx5_5,mlx5_7,mlx5_8,mlx5_9"
+          - name: HEADLESS_SVC
+            valueFrom:
+              configMapKeyRef:
+                key: headless_svc
+                name: sdxl-finetune-multinode-config
+          - name: NNODES
+            valueFrom:
+              configMapKeyRef:
+                key: num_replicas
+                name: sdxl-finetune-multinode-config
+          - name: NODE_RANK
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.annotations['batch.kubernetes.io/job-completion-index']
+          - name: WANDB_API_KEY
+            valueFrom:
+              secretKeyRef:
+                name: wandb-secret
+                key: WANDB_API_KEY
+          - name: HF_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: hf-secret
+                key: HF_TOKEN
+          volumeMounts:
+            - mountPath: /mnt
+              name: model-weights-volume
+            - mountPath: /etc/config
+              name: diffusers-config-volume
+            - { mountPath: /dev/infiniband, name: devinf }
+            - { mountPath: /dev/shm, name: shm }
+          resources:
+            requests:
+              amd.com/gpu: 8 
+            limits:
+              amd.com/gpu: 8 
+          command: ["/bin/bash", "-c", "--"]
+          args:
+            - |
+              # Clone the GitHub repo
+              git clone --recurse https://github.com/ROCm/bitsandbytes.git
+              cd bitsandbytes
+              git checkout rocm_enabled
+              # Install dependencies
+              pip install -r requirements-dev.txt
+              # Use -DBNB_ROCM_ARCH to specify target GPU arch
+              cmake -DBNB_ROCM_ARCH="gfx942" -DCOMPUTE_BACKEND=hip -S .
+              make
+              pip install .
+              cd .. 
+
+              # Set up Hugging Face authentication using the secret
+              mkdir -p ~/.huggingface
+              echo $HF_TOKEN > ~/.huggingface/token
+              
+              pip install deepspeed==0.14.5 wandb
+              git clone https://github.com/huggingface/diffusers && 
+              cd diffusers && pip install -e . && cd examples/text_to_image &&
+              pip install -r requirements_sdxl.txt
+              
+              export EXP_DIR=./output
+              mkdir -p output
+              LOG_FILE="${EXP_DIR}/sdxl_$(date '+%Y-%m-%d_%H-%M-%S')_MI300_SDXL_FINETUNE.log"
+              export MODEL_NAME="stabilityai/stable-diffusion-xl-base-1.0"
+              export VAE_NAME="madebyollin/sdxl-vae-fp16-fix"
+              export DATASET_NAME="lambdalabs/naruto-blip-captions"
+
+              export ACCELERATE_CONFIG_FILE="/etc/config/default_config_accelerate.yaml"
+              export HF_HOME=/mnt/huggingface
+              accelerate launch --config_file $ACCELERATE_CONFIG_FILE \
+                --main_process_ip $MASTER_ADDRESS \
+                --main_process_port $MASTER_PORT \
+                --machine_rank $NODE_RANK \
+                --num_processes $((8 * NNODES)) \
+                --num_machines $NNODES train_text_to_image_sdxl.py \
+                --pretrained_model_name_or_path=$MODEL_NAME \
+                --pretrained_vae_model_name_or_path=$VAE_NAME \
+                --dataset_name=$DATASET_NAME \
+                --resolution=512 --center_crop --random_flip \
+                --proportion_empty_prompts=0.1 \
+                --train_batch_size=12 \
+                --gradient_checkpointing \
+                --num_train_epochs=500 \
+                --use_8bit_adam \
+                --learning_rate=1e-04 --lr_scheduler="cosine" --lr_warmup_steps=200 \
+                --mixed_precision="fp16" \
+                --validation_prompt="a cute Sundar Pichai creature" --validation_epochs 20 \
+                --checkpointing_steps=1000 \
+                --report_to="wandb" \
+                --output_dir="sdxl-naruto-model" 2>&1 | tee "$LOG_FILE"
+              sleep 30m
+      volumes:
+        - name: model-weights-volume
+          hostPath:
+            path: /mnt/model_weights
+            type: Directory
+        - name: diffusers-config-volume
+          configMap:
+            name: accelerate-config
+        - { name: devinf, hostPath: { path: /dev/infiniband }}
+        - { name: shm, emptyDir: { medium: Memory, sizeLimit: 512Gi }}
+      restartPolicy: Never
+      subdomain: sdxl-headless-svc
