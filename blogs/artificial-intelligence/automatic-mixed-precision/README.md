@@ -9,7 +9,7 @@ category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": ""
+    "description lang=en": "In this blog, we will discuss the basics of AMP, how it works, and how it can improve training efficiency on AMD GPUs. As models increase in size, the time and memory needed to train them--and consequently, the cost--also increases. Therefore, any measures we take to reduce training time and memory usage can be highly beneficial. This is where Automatic Mixed Precision (AMP) comes in."
     "author": "Logan Grado"
     "keywords": "AI/ML, PyTorch, Mi201, MI250, MI300, ROCm, AMP, Automatic Mixed Precision, Precision"
     "property=og:locale": "en_US"
