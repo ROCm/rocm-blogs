@@ -88,7 +88,7 @@ Build the Docker image and launch a container using the commands below. Set the 
 export LAB_HIST="<path to the output>"
 
 # Build the image `mlperf/llama_inference:latest`
-./build_llama2.sh
+bash build_llama2.sh
 
 # Launch a docker container
 docker run -it --ipc=host --network=host --privileged --cap-add=CAP_SYS_ADMIN --device=/dev/kfd --device=/dev/dri --device=/dev/mem \
@@ -132,7 +132,7 @@ To generate results for the first entry of our submission, run the command below
 
 ``` bash
 cd /lab-mlperf-inference/code/llama2-70b-99.9/test_VllmFp8
-./run_scenarios.sh
+bash run_scenarios.sh
 ```
 
 A summary of the results in the Offline scenario can be found in the `mlperf_log_summary.txt` file under the `Offline/performance/run_1` folder:
@@ -188,7 +188,7 @@ TPOT Early Stopping Result:
 
 We recorded 20,360.10 completed tokens per second (unverified) in this particular trial, which is comparable to the result in the submission under this scenario (21,028.20).
 
-You can also generate results for only the Offline scenario or only the Server scenario.  To run only the Offline scenario, use `run_tests_Offline.sh`.  To run only the Server scenario, use `run_tests_Server.sh` respectively.
+You can also generate results for only the Offline scenario or only the Server scenario.  To run only the Offline or Server scenario only, use `run_tests_Offline.sh` or `run_tests_Server.sh` respectively.
 
 ## Summary
 
