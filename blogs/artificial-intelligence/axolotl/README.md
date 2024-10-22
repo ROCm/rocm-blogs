@@ -52,7 +52,7 @@ Through instruction tuning, the model learns to associate instructions with appr
 
 ### Axolotl
 
-[Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) is an open-source tool that simplifies the fine-tuning process of large language models (LLMs) on Hugging Face. It supports both full fine-tuning and parameter-efficient methods like Low-Rank Adaptation [(LoRA)](https://rocm.blogs.amd.com/artificial-intelligence/lora-fundamentals/README.html) and Quantized LoRA [(QLoRA)](https://rocm.blogs.amd.com/artificial-intelligence/llama2-Qlora/README.html). Axolotl integrates with advanced AI libraries such as xFormers and Flash Attention and can operate on a single GPU or scale up to multiple GPUs using Fully Sharded Data Parallel (FSDP) or DeepSpeed. You can configure all settings through a user-friendly YAML file or the command-line interface, making it easy to quickly customize and launch fine-tuning jobs.
+[Axolotl](https://github.com/OpenAccess-AI-Collective/axolotl) is an open-source tool that simplifies the fine-tuning process of large language models (LLMs) on Hugging Face. It supports both full fine-tuning and parameter-efficient methods like Low-Rank Adaptation [(LoRA)](https://rocm.blogs.amd.com/artificial-intelligence/lora-fundamentals/README.html) and Quantized LoRA [(QLoRA)](https://rocm.blogs.amd.com/artificial-intelligence/llama-Qlora/README.html). Axolotl integrates with advanced AI libraries such as xFormers and Flash Attention and can operate on a single GPU or scale up to multiple GPUs using Fully Sharded Data Parallel (FSDP) or DeepSpeed. You can configure all settings through a user-friendly YAML file or the command-line interface, making it easy to quickly customize and launch fine-tuning jobs.
 
 ## Prerequisites
 
