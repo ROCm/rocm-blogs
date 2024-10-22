@@ -11,11 +11,11 @@ echo "TS_START_BENCHMARKS=${TS_START_BENCHMARKS}"
 for i in $(seq 1 ${NUM_ITERS})
 do
         echo "Running $SCENARIO - Performance run $i/$NUM_ITERS"
-        ITER=$i ./test_VllmFp8_SyncServer_perf.sh
+        ITER=$i bash test_VllmFp8_SyncServer_perf.sh
 done
 echo "Running $SCENARIO - Accuracy"
-./test_VllmFp8_SyncServer_acc.sh
+bash test_VllmFp8_SyncServer_acc.sh
 echo "Running $SCENARIO - Audit"
-./test_VllmFp8_SyncServer_audit.sh
+bash test_VllmFp8_SyncServer_audit.sh
 echo "Done SyncServer"
 echo "TS_START_BENCHMARKS=${TS_START_BENCHMARKS}"

@@ -7,13 +7,13 @@ RUN apt update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN pip install \
-	absl-py \
-	datasets \
-	evaluate \
-	nltk \
+	absl-py==2.1.0 \
+	datasets==2.20.0 \
+	evaluate==0.4.2 \
+	nltk==3.8.1 \
 	numpy==1.26.4 \
-	py-libnuma \
-	rouge_score
+	py-libnuma==1.2 \
+	rouge_score==0.1.2
 
 WORKDIR /app
 RUN git clone --recurse-submodules https://github.com/mlcommons/inference.git --branch v4.1 --depth 1 mlperf_inference \
