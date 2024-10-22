@@ -16,8 +16,8 @@ subtrees:
     title: 3D scene mapping using NeRF
   - file: artificial-intelligence/stable-diffusion-aitemplate/README.md
     title: Stable diffusion (AITemplate)
-  - file: artificial-intelligence/llama2-lora/README.md
-    title: Fine-tune Llama 2 with LoRA
+  - file: artificial-intelligence/llama-lora/README.md
+    title: Fine-tune Llama with LoRA
   - file: artificial-intelligence/hf-tgi/README.md
     title: LLMs and Text Generation Inference
   - file: artificial-intelligence/lora-fundamentals/README.md

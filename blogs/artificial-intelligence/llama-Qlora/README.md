@@ -2,21 +2,23 @@
 blogpost: true
 date: 15 April 2024
 author: Sean Song
+blog_title: Enhancing LLM Accessibility\: A Deep Dive into QLoRA Through Fine-tuning Llama Model on a single AMD GPU
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
+thumbnail: './images/image.jpg'
 myst:
   html_meta:
-    "description lang=en": "Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU"
-    "keywords": "LoRA, Low-rank Adaptation, QLoRA, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI"
+    "description lang=en": "This blog demonstrate how to use QLora to efficiently fine-tune Llama model on a single AMD GPU with ROCm."
+    "keywords": "LoRA, Low-rank Adaptation, QLoRA, peft, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI"
     "property=og:locale": "en_US"
 ---
 
-# Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama 2 on a single AMD GPU
+# Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama Model on a single AMD GPU
 
 <span style="font-size:0.7em;">15, Apr 2024 by {hoverxref}`Sean Song<seansong>`. </span>
 
-Building on the previous blog [Fine-tune Llama 2 with LoRA blog](https://rocm.blogs.amd.com/artificial-intelligence/llama2-lora/README.html), we delve into another Parameter Efficient Fine-Tuning (PEFT) approach known as Quantized Low Rank Adaptation (QLoRA). The focus will be on leveraging QLoRA for the fine-tuning of Llama-2 7B model using a single AMD GPU with ROCm. This task, made possible through the use of QLoRA, addresses challenges related to memory and computing limitations. The exploration aims to showcase how QLoRA can be employed to enhance accessibility to open-source large language models.
+Building on the previous blog [Fine-tune Llama model with LoRA: Customizing a large language model for question-answering](https://rocm.blogs.amd.com/artificial-intelligence/llama-lora/README.html), we delve into another Parameter Efficient Fine-Tuning (PEFT) approach known as Quantized Low Rank Adaptation (QLoRA). The focus will be on leveraging QLoRA for the fine-tuning of Llama-2 7B model using a single AMD GPU with ROCm. This task, made possible through the use of QLoRA, addresses challenges related to memory and computing limitations. The exploration aims to showcase how QLoRA can be employed to enhance accessibility to open-source large language models.
 
 ## QLoRA Fine-tuning <a class="anchor" id="Introduction"></a>
 
@@ -30,9 +32,9 @@ In few words, QLoRA optimizes the memory usage of LLM fine-tuning without compro
 
 QLoRA and LoRA represent two parameter-efficient fine-tuning techniques. LoRA operates as a standalone fine-tuning method, while QLoRA incorporates LoRA as an auxiliary mechanism to address errors introduced during the quantization process and to additionally minimize the resource requirements during fine-tuning.
 
-## Step-by-step Llama 2 fine-tuning with QLoRA<a class="anchor" id="Step-By-Step-Guide"></a>
+## Step-by-step Llama model fine-tuning with QLoRA<a class="anchor" id="Step-By-Step-Guide"></a>
 
-This section will guide you through the steps to fine-tune the Llama 2 model, which has 7 billion parameters, on a single AMD GPU. The key to this accomplishment lies in the crucial support of QLoRA, which plays an indispensable role in efficiently reducing memory requirements.
+This section will guide you through the steps to fine-tune the Llama 2 model, which has 8 billion parameters, on a single AMD GPU. The key to this accomplishment lies in the crucial support of QLoRA, which plays an indispensable role in efficiently reducing memory requirements.
 
 For that, we will use the following setup:
 
@@ -42,9 +44,9 @@ For that, we will use the following setup:
   * [Pytorch for ROCm 2.0+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html)
 * Libraries: `transformers`, `accelerate`, `peft`, `trl`, `bitsandbytes`, `scipy`
 
-In this blog, we conducted our experiment using a single MI250GPU with the Docker image [rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_release-2.1.2](https://hub.docker.com/layers/rocm/pytorch/rocm6.1.2_ubuntu22.04_py3.10_pytorch_release-2.1.2/images/sha256-c8b4e8dfcc64e9bf68bf1b38a16fbc5d65b653ec600f98d3290f66e16c8b6078?context=explore).
+In this blog, we conducted our experiment using a single MI300X GPU with the Docker image [rocm/pytorch:rocm6.1.2_ubuntu22.04_py3.10_pytorch_release-2.1.2](https://hub.docker.com/layers/rocm/pytorch/rocm6.1.2_ubuntu22.04_py3.10_pytorch_release-2.1.2/images/sha256-c8b4e8dfcc64e9bf68bf1b38a16fbc5d65b653ec600f98d3290f66e16c8b6078?context=explore).
 
-You can find the complete code used in this blog from the [Github repo](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/llama2-Qlora).
+You can find the complete code used in this blog from the [Github repo](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/llama-Qlora).
 
 ### 1: Getting started
 
@@ -52,47 +54,28 @@ Our first step is to confirm the availability of GPU.
 
 ```python
 !rocm-smi --showproductname
-
 ```
 
 ```bash
-    ========================= ROCm System Management Interface ========================= 
-    =================================== Product Info ===================================
-    GPU[0]      : Card series:      AMD INSTINCT MI250 (MCM) OAM AC MBA
-    GPU[0]      : Card model:       0x0b0c
-    GPU[0]      : Card vendor:      Advanced Micro Devices, Inc. [AMD/ATI]
-    GPU[0]      : Card SKU:         D65209
-    GPU[1]      : Card series:      AMD INSTINCT MI250 (MCM) OAM AC MBA
-    GPU[1]      : Card model:       0x0b0c
-    GPU[1]      : Card vendor:      Advanced Micro Devices, Inc. [AMD/ATI]
-    GPU[1]      : Card SKU:         D65209
-    ====================================================================================
-    =============================== End of ROCm SMI Log ================================
-```
-
-Let's use only one Graphics Compute Die (GCD) or GPU, in case you have more than one GCDs or GPUs on your AMD machine.
-
-```python
-import os
-os.environ["HIP_VISIBLE_DEVICES"]="0"
-
-import torch
-use_cuda = torch.cuda.is_available()
-if use_cuda:
-    print('__CUDNN VERSION:', torch.backends.cudnn.version())
-    print('__Number CUDA Devices:', torch.cuda.device_count())
-    cunt = torch.cuda.device_count()
-```
-
-```bash
-    __CUDNN VERSION: 2020000
-    __Number CUDA Devices: 1
+    ============================ ROCm System Management Interface ============================
+    ====================================== Product Info ======================================
+    GPU[0]		: Card Series: 		AMD Instinct MI300X OAM
+    GPU[0]		: Card Model: 		0x74a1
+    GPU[0]		: Card Vendor: 		Advanced Micro Devices, Inc. [AMD/ATI]
+    GPU[0]		: Card SKU: 		MI3SRIOV
+    GPU[0]		: Subsystem ID: 	0x74a1
+    GPU[0]		: Device Rev: 		0x00
+    GPU[0]		: Node ID: 		2
+    GPU[0]		: GUID: 		47056
+    GPU[0]		: GFX Version: 		gfx942
+    ==========================================================================================
+    ================================== End of ROCm SMI Log ===================================
 ```
 
 We will start by installing the required libraries.
 
 ```python
-!pip install -q pandas peft==0.9.0 transformers==4.31.0 trl==0.4.7 accelerate scipy
+pip install -q pandas peft transformers trl accelerate scipy
 ```
 
 #### Installing bitsandbytes
@@ -147,7 +130,7 @@ model (it's the same as the original, but quicker to access).
 ```python
 # Model and tokenizer names
 base_model_name = "NousResearch/Llama-2-7b-chat-hf"
-new_model_name = "llama-2-7b-enhanced" #You can give your own name for fine tuned model
+new_model_name = "Llama-2-7b-chat-hf-enhanced" #You can give your own name for fine tuned model
 
 # Tokenizer
 llama_tokenizer = AutoTokenizer.from_pretrained(base_model_name, trust_remote_code=True)
@@ -300,13 +283,13 @@ The output looks like this:
 ``` python
 [250/250 05:31, Epoch 1/1]\
 Step     Training Loss \
-50       1.557800 \
-100      1.348100\
-150      1.277000\
-200      1.324300\
-250      1.347700
+50	     1.564200 \
+100	     1.348400 \
+150	     1.277900 \
+200	     1.323500 \
+250	     1.345700
 
-TrainOutput(global_step=250, training_loss=1.3709784088134767, metrics={'train_runtime': 335.085, 'train_samples_per_second': 2.984, 'train_steps_per_second': 0.746, 'total_flos': 8679674339426304.0, 'train_loss': 1.3709784088134767, 'epoch': 1.0})
+TrainOutput(global_step=250, training_loss=1.3719460601806641, metrics={'train_runtime': 312.3577, 'train_samples_per_second': 3.201, 'train_steps_per_second': 0.8, 'total_flos': 8679674339426304.0, 'train_loss': 1.3719460601806641, 'epoch': 1.0})
 ```
 
 ```python
@@ -319,39 +302,40 @@ fine_tuning.model.save_pretrained(new_model_name)
 During the training you could check the memory usage by using "rocm-smi" command in a terminal. The command will produce the following output, which tells the usage of memory and GPU.
 
 ``` python
-========================= ROCm System Management Interface =========================
-=================================== Concise Info ===================================
-GPU  Temp (DieEdge)  AvgPwr  SCLK     MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
-0    50.0c           352.0W  1700Mhz  1600Mhz  0%   auto  560.0W   17%   100%  
-====================================================================================
-=============================== End of ROCm SMI Log ================================
+============================================= ROCm System Management Interface =============================================
+======================================================= Concise Info =======================================================
+Device  Node  IDs              Temp        Power     Partitions          SCLK     MCLK     Fan  Perf  PwrCap  VRAM%  GPU%  
+              (DID,     GUID)  (Junction)  (Socket)  (Mem, Compute, ID)                                                    
+============================================================================================================================
+0       2     0x74a1,   47056  79.0°C      748.0W    NPS1, SPX, 0        1539Mhz  1300Mhz  0%   auto  750.0W  6%     99%     
+============================================================================================================================
+=================================================== End of ROCm SMI Log ====================================================
 ```
 
 To enhance comprehension of QLoRA's impact on training, we will conduct a quantitative analysis comparing QLoRA, LoRA, and full-parameter fine-tuning. This analysis will encompass memory usage, training speed, training loss, and other pertinent metrics, providing a comprehensive evaluation of their respective effects.
 
 ## 4. Comparison between QLoRA, LoRA, and full-parameter fine tuning <a class="anchor" id="Comparison"></a>
 
-Building upon our earlier blog titled [Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/llama2-lora), which demonstrated the fine-tuning of the Llama 2 model using both LoRA and full-parameter methods, we will now integrate the results obtained with QLoRA. This  aims to provide a comprehensive overview that incorporates insights from all three fine-tuning approaches.
+Building upon our earlier blog titled [Fine-tune Llama with LoRA: Customizing a large language model for question-answering](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/llama-lora), which demonstrated the fine-tuning of the Llama 2 model using both LoRA and full-parameter methods, we will now integrate the results obtained with QLoRA. This  aims to provide a comprehensive overview that incorporates insights from all three fine-tuning approaches.
 
 | Metric | Full-parameter | LoRA | **QLoRA**|
 |--------------------|-----------|-----------|-----------|
 |Trainable parameters| 6,738,415,616 | 4,194,304 | 4,194,304 |
-|Mem usage/GB |128 | 83.2 | 10.88|
-|Number of GCDs |2 | 2 | 1|
-|Training Speed|3 hours| 9 minutes |6 minutes|
-|Training Loss|1.368|1.377|1.347|
+|Mem usage/GB |144 | 82.56 | 11.52|
+|Training Speed|12 minutes| 3 minutes |5 minutes|
+|Training Loss|1.369|1.379|1.3457|
 
 * Memory usage:
   * In the case of full-parameter fine-tuning, there are **6,738,415,616** trainable parameters, leading to significant memory consumption during the training back propagation stage.
   * In contrast, LoRA and QLoRA introduces only **4,194,304** trainable parameters, accounting for a mere **0.062%** of the total trainable parameters in full-parameter fine-tuning.
-  * When monitoring memory usage during training, it becomes evident that fine-tuning with LoRA utilizes only 65% of the memory consumed by full-parameter fine-tuning. Impressively, QLoRA goes even further by significantly reducing memory consumption to just 8%.
+  * When monitoring memory usage during training, it becomes evident that fine-tuning with LoRA utilizes only **57%** memory consumed by full-parameter fine-tuning. Impressively, QLoRA goes even further by significantly reducing memory consumption to just **8%**.
   * This presents an opportunity to increase batch size, max sequence length, and train on larger datasets within the constraints of limited hardware resources.
 
 * Training speed:
-  * The results demonstrate that full-parameter fine-tuning takes **hours** to complete, while fine-tuning with LoRA and QLoRA concludes in **minutes**.
+  * The results demonstrate that full-parameter fine-tuning takes **12 minutes** to complete, while fine-tuning with LoRA and QLoRA takes **3 minutes** and **5 minutes**, respectively.
   * Several factors contribute to this acceleration in training speed:
-    * The fewer trainable parameters in LoRA translates to fewer derivative calculations and less memory needed to store and updates the weights.
-    * Full-parameter fine-tuning is more prone to being memory-bound, where the data movement becomes a bottleneck for training. This is reflected in lower GPU utilization. Although adjusting training settings can alleviate this, it may require more resources (additional GPUs) and a smaller batch size.
+    * The fewer trainable parameters in LoRA and QLora translates to fewer derivative calculations and less memory needed to store and updates the weights.
+    * Fine-tuning with LoRA is more straightforward and faster than QLoRA, as the quantization and de-quantization processes in QLoRA introduce additional overhead during training.
 
 * Accuracy:
   * In both training sessions, a notable reduction in training loss was observed. We achieved a closely aligned training loss for three fine-tuning approaches.
@@ -378,15 +362,19 @@ tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "right"
 ```
 
-Now, let's upload the model to Hugging Face, enabling us to conduct subsequent tests or share it with others. To proceed with this step, you'll need an active Hugging Face account.
-
 ```python
-from huggingface_hub import login
-#You need to use your Hugging Face Access Tokens
-login("hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-#Push the model to Hugging Face. This can take a few mins depending on model size and your network speed.
-model.push_to_hub(new_model_name, use_temp_dir=False)
-tokenizer.push_to_hub(new_model_name, use_temp_dir=False)
+from transformers import GenerationConfig
+def inference(llm_model, tokenizer, user_input):
+  def formatted_prompt(question)-> str:
+    return f"<|start|>user\n{question}<|end|>\n<|start|>assistant:"
+  prompt = formatted_prompt(user_input)
+  inputs = tokenizer([prompt], return_tensors="pt")
+  generation_config = GenerationConfig(penalty_alpha=0.6, do_sample = True,top_k=3, temperature=0.5,
+                                       repetition_penalty=1.2, max_new_tokens=200, pad_token_id=tokenizer.eos_token_id
+                                      )
+  inputs = tokenizer(prompt, return_tensors="pt").to('cuda')
+  outputs = llm_model.generate(**inputs, generation_config=generation_config)
+  print(tokenizer.decode(outputs[0], skip_special_tokens=True))
 ```
 
 Now we can test with the base model (original) and the fine-tuned model.
@@ -394,40 +382,26 @@ Now we can test with the base model (original) and the fine-tuned model.
 ### Test the base model
 
 ```python
-# Generate Text using base model
-query = "What do you think is the most important part of building an AI chatbot?"
-text_gen = pipeline(task="text-generation", model=base_model_name, tokenizer=llama_tokenizer, max_length=200)
-output = text_gen(f"<s>[INST] {query} [/INST]")
-print(output[0]['generated_text'])
+inference(base_model, tokenizer, user_input='What do you think is the most important part of building an AI chatbot?')
 ```
 
 ```text
-    <s>[INST] What do you think is the most important part of building an AI chatbot? [/INST]  There are several important aspects to consider when building an AI chatbot, but here are some of the most critical elements:
-
-    1. Natural Language Processing (NLP): A chatbot's ability to understand and interpret human language is crucial for effective communication. NLP is the foundation of any chatbot, and it involves training the AI model to recognize patterns in language, interpret meaning, and generate responses.
-    2. Conversational Flow: A chatbot's conversational flow refers to the way it interacts with users. A well-designed conversational flow should be intuitive, easy to follow, and adaptable to different user scenarios. This involves creating a dialogue flowchart that guides the conversation and ensures the chatbot responds appropriately to user inputs.
-    3. Domain Knowledge: A chat
+<|start|>user
+What do you think is the most important part of building an AI chatbot?<|end|>
+<|start|>assistant: The most important thing when creating an AI chatbot is to make sure that it can understand and respond appropriately. This requires developing a sophisticated natural language processing (NLP) system that can accurately interpret user input, identify relevant information in its knowledge base, and generate appropriate responses based on this analysis. Additionally, ensuring that your NLP model has access to high-quality training data sets will be critical for achieving accurate results. Finally, testing with real users should always follow development so as to ensure performance under actual usage conditions before deployment!<|end|>
 ```
 
 ### Test the fine-tuned model
 
 ```python
-# Generate Text using fine-tuned model
-query = "What do you think is the most important part of building an AI chatbot?"
-text_gen = pipeline(task="text-generation", model=new_model_name, tokenizer=llama_tokenizer, max_length=200)
-output = text_gen(f"<s>[INST] {query} [/INST]")
-print(output[0]['generated_text'])
+inference(model_enhanced, tokenizer, user_input='What do you think is the most important part of building an AI chatbot?')
 ```
 
 ```bash
-    <s>[INST] What do you think is the most important part of building an AI chatbot? [/INST] The most important part of building an AI chatbot is to ensure that it is able to understand and respond to user input in a way that is both accurate and natural-sounding.
-    
-    To achieve this, you will need to use a combination of natural language processing (NLP) techniques and machine learning algorithms to enable the chatbot to understand and interpret user input, and to generate appropriate responses.
-    
-    Some of the key considerations when building an AI chatbot include:
-    
-    1. Defining the scope and purpose of the chatbot: What kind of tasks or questions will the chatbot be able to handle? What kind of user input will it be able to understand?
-    2. Choosing the right NLP and machine learning algorithms: There are many different NLP and machine learning algorithms available, and the right ones will depend on the
+<|start|>user
+What do you think is the most important part of building an AI chatbot?<|end|>
+<|start|>assistant: The most important thing to consider when creating a chatbot is its purpose. What problem does it solve, and what kind of experience are users expecting from their interactions with your bot? Once you have identified these factors, you can start thinking about how best to implement them using natural language processing (NLP) techniques such as sentiment analysis or intent detection. It’s also essential to ensure that your model works well on different devices like mobile phones or tablets so they don't break down too quickly due to limited resources available at times when people need help urgently! Lastly but not least – make sure there aren’t any security vulnerabilities left unattended after deployment by testing everything thoroughly before launching anything publically accessible online without proper authorization first because hackers might exploit those weaknesses if given access inside systems where sensitive data resides within networks owned privately by individuals who trust only specific parties responsible for protecting confidential information shared between friends across social media platforms
+
 ```
 
 You can now observe the outputs of the two models based on the given query. As anticipated, the two outputs exhibit slight differences due to the fine-tuning process altering the model weights.

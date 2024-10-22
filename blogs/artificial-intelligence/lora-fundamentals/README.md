@@ -2,14 +2,15 @@
 blogpost: true
 date: 5 Feb 2024
 author: Sean Song
+blog_title: Using LoRA for efficient fine-tuning: Fundamental principles
 tags: LLM, AI/ML, GenAI, Fine-Tuning, PyTorch
 category: Applications & models
 language: English
+thumbnail: './images/image.jpg'
 myst:
   html_meta:
-    "description lang=en": "Using LoRA for efficient fine-tuning: Fundamental principles"
-    "keywords": "LoRA, low-rank adaptation, fine-tuning, ROCm, MNIST, model
-  training, generative AI"
+    "description lang=en": "This blog demonstrate how to use Lora to efficiently fine-tune Llama model on AMD GPUs with ROCm."
+    "keywords": "LoRA, low-rank adaptation, fine-tuning, ROCm, MNIST, model training, generative AI"
     "property=og:locale": "en_US"
 ---
 
@@ -521,7 +522,7 @@ This demo was creating using the following settings. For comprehensive support d
 
 ## Conclusion
 
-In this blog post, we explore the LoRA algorithm, delving into its principles and implementation on AMD GPU with ROCm. We have developed a basic network and LoRA modules from scratch to demonstrate how LoRA effectively reduces trainable parameters and training time. We invite you to delve deeper by reading about [Fine-tuning the Llama 2 model with LoRA](https://rocm.blogs.amd.com/artificial-intelligence/llama2-lora/README.html) and [Fine-tuning Llama 2 on a single AMD GPU with QLoRA](https://rocm.blogs.amd.com/artificial-intelligence/llama2-Qlora/README.html).
+In this blog post, we explore the LoRA algorithm, delving into its principles and implementation on AMD GPU with ROCm. We have developed a basic network and LoRA modules from scratch to demonstrate how LoRA effectively reduces trainable parameters and training time. We invite you to delve deeper by reading about [Fine-tuning the Llama model with LoRA](https://rocm.blogs.amd.com/artificial-intelligence/llama-lora/README.html) and [Fine-tuning Llama on a single AMD GPU with QLoRA](https://rocm.blogs.amd.com/artificial-intelligence/llama-Qlora/README.html).
 
 ## Disclaimers
 

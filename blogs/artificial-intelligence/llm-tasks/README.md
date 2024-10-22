@@ -785,7 +785,7 @@ Contriever was able to pick out the correct document, despite the fact that the 
 
 ## Summary
 
-In this blog you learned how to implement several popular LLMs using ROCm running on AMD GPUs, to easily perform various NLP tasks such as text generation, summarization, and solving math problems. If you are interested in improving the performance of these models, check out the ROCm blogs on fine-tuning [Llama2](https://rocm.blogs.amd.com/artificial-intelligence/llama2-lora/README.html) and [Starcoder](https://rocm.blogs.amd.com/artificial-intelligence/starcoder-fine-tune/README.html).
+In this blog you learned how to implement several popular LLMs using ROCm running on AMD GPUs, to easily perform various NLP tasks such as text generation, summarization, and solving math problems. If you are interested in improving the performance of these models, check out the ROCm blogs on fine-tuning [Llama](https://rocm.blogs.amd.com/artificial-intelligence/llama-lora/README.html) and [Starcoder](https://rocm.blogs.amd.com/artificial-intelligence/starcoder-fine-tune/README.html).
 
 ## Disclaimer
 
