@@ -49,11 +49,7 @@ To access the latest vLLM features in ROCm 6.2, clone the vLLM repository, modif
 
 ```bash
 git clone https://github.com/vllm-project/vllm.git
-git checkout 0f961b3
 cd vllm
-sed -i '/^ARG BASE_IMAGE=/c\ARG BASE_IMAGE="rocm/pytorch:rocm6.2_ubuntu20.04_py3.9_pytorch_release_2.3.0"' Dockerfile.rocm
-LINE_NUMBER=$(grep -n "ENV LLVM_SYMBOLIZER_PATH=/opt/rocm/llvm/bin/llvm-symbolizer" Dockerfile.rocm | cut -d: -f1)
-sed -i "${LINE_NUMBER}i RUN python3 -m pip uninstall -y torch torchvision && python3 -m pip install --no-cache-dir --pre torch torchvision --index-url https://download.pytorch.org/whl/nightly/rocm6.2/" Dockerfile.rocm
 DOCKER_BUILDKIT=1 docker build -f Dockerfile.rocm -t vllm-rocm .
 ```
 
