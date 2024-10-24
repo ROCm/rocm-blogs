@@ -105,6 +105,12 @@ Technical Marketing Engineer at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Michael Zhang](./authors/michael-zhang.md)
+:padding: 1
+
+Machine Learning Engineer at AMD
+:::
+
 :::{grid-item-card} [Nicholas Curtis](./authors/nicholas-curtis.md)
 :padding: 1
 

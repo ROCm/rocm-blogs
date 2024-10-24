@@ -150,6 +150,10 @@ blog_authors = {
         "Maria Ruiz Varela",
         "http://rocm.blogs.amd.com/authors/maria-ruiz-varela.html",
 ),
+"Michael Zhang": (
+        "Michael Zhang",
+        "http://rocm.blogs.amd.com/authors/michael-zhang.html",
+),
 "Nicholas Curtis": (
         "Nicholas Curtis",
         "https://rocm.blogs.amd.com/authors/nicholas-curtis.html",
