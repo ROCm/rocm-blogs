@@ -6,7 +6,6 @@
 
 import os
 import shutil
-
 import ablog
 import jinja2
 from rocm_docs import ROCmDocs
@@ -23,6 +22,9 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 
 # Jinja templates to render out.
 templates = []
+
+# blogs.generate_grid.main()
+os.system("python generate_grid.py")
 
 latex_engine = "xelatex"
 latex_elements = {
