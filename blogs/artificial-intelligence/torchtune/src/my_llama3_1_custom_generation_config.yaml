@@ -1,0 +1,43 @@
+# Config for running the InferenceRecipe in generate.py to generate output from an LLM
+#
+# To launch, run the following command from root torchtune directory:
+#    tune run generate --config generation
+
+# Model arguments
+model:
+  _component_: torchtune.models.llama3.llama3_8b
+
+checkpointer:
+  _component_: torchtune.utils.FullModelHFCheckpointer
+  checkpoint_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+  checkpoint_files: [
+    hf_model_0001_9.pt,
+    hf_model_0002_9.pt,
+    hf_model_0003_9.pt,
+    hf_model_0004_9.pt,
+  ]
+  
+  output_dir: /tmp/Meta-Llama-3.1-8B-Instruct/
+  model_type: LLAMA3
+
+device: cuda
+dtype: bf16
+
+seed: 1234
+
+# Tokenizer arguments
+tokenizer:
+  _component_: torchtune.models.llama3.llama3_tokenizer
+  path: /tmp/Meta-Llama-3.1-8B-Instruct/original/tokenizer.model
+
+# Generation arguments; defaults taken from gpt-fast
+prompt: "Summarize this dialogue: The crash happened about 07:20 GMT at the junction of the A127 and Progress Road in Leigh-on-Sea, Essex. The man, who police said is aged in his 20s, was treated at the scene for a head injury and suspected multiple fractures, the ambulance service said. He was airlifted to the Royal London Hospital for further treatment. The Southend-bound carriageway of the A127 was closed for about six hours while police conducted their initial inquiries. A spokeswoman for Essex Police said it was not possible comment to further as this time as the 'investigation is now being conducted by the IPCC'. --- Summary:"
+instruct_template: null
+chat_format: null
+max_new_tokens: 300
+temperature: 0.6 # 0.8 and 0.6 are popular values to try
+top_k: 300
+# It is recommended to set enable_kv_cache=False for long-context models like Llama3.1
+enable_kv_cache: False
+
+quantizer: null
