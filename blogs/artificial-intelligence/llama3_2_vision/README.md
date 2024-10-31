@@ -6,7 +6,7 @@ blog_title: Inference with Llama 3.2 Vision LLMs on AMD GPUs Using ROCm
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
-thumbnail: './images/image.jpg'
+thumbnail: './images/2024-10-31-inference-with-llama-3.2-vision.jpg'
 myst:
   html_meta:
     "description lang=en": "Meta's Llama 3.2 Vision models bring multimodal capabilities for vision-text tasks. This blog explores leveraging them on AMD GPUs with ROCm for efficient AI workflows."

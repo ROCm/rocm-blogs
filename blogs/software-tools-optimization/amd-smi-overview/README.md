@@ -1,6 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Getting to Know Your GPU: A Deep Dive into AMD SMI'
+thumbnail: '2024-10-31-amd-smi.jpeg'
 date: 17 Sep 2024
 author: Matt Elliott
 tags: HPC, Optimization, Performance, System-Tuning
