@@ -1,6 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Inferencing and serving with vLLM on AMD GPUs'
+thumbnail: '2024-10-31-inferencing-and-serving-with-vLLM-on-AMD-GPUs.jpeg'
 date: Sept 19 2024
 author: Clint Greene
 tags: AI/ML, LLM, Serving
@@ -156,7 +157,7 @@ You can then query the vLLM service using a curl command in another terminal win
 curl http://localhost:8000/v1/completions \
     -H "Content-Type: application/json" \
     -d '{
-        "model": "/workspace/Meta-Llama-3-70B-Instruct/",
+        "model": "Qwen/Qwen2-7B-Instruct",
         "prompt": "Write a haiku about artificial intelligence",
         "max_tokens": 128,
         "top_p": 0.95,
