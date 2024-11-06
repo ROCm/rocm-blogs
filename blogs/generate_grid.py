@@ -1,5 +1,6 @@
 # Index.md Generator
-# Updated 2024 October 21
+# Updated 2024 November 4
+# Version 1.1
 
 import os
 import re
@@ -144,7 +145,7 @@ def sort_blogs_by_date(blogs):
 
     return sorted(blogs_with_date, key=lambda blog: blog.date, reverse=True)
 
-def generate_blog_grid(blogs, output_file='latest_blogs.md', max_blogs=18):
+def generate_blog_grid(blogs, output_file='latest_blogs.md', max_blogs=9, max_category=3):
 
     index_template = """
 ---
@@ -333,6 +334,48 @@ Generated {datetime}
 {grid_items}
 ::::
 
+<div class="container">
+  <h2>Ecosystems and partners</h2>
+  <a href="blog/category/ecosystems-and-partners.html">
+    <button id="buttonWrapper">
+      See All >>
+    </button>
+  </a>
+</div>
+
+::::{grid} 1 2 2 3
+:margin 2
+{eco_grid_items}
+::::
+
+<div class="container">
+  <h2>Applications & models</h2>
+  <a href="blog/category/applications-models.html">
+    <button id="buttonWrapper">
+      See All >>
+    </button>
+  </a>
+</div>
+
+::::{grid} 1 2 2 3
+:margin 2
+{application_grid_items}
+::::
+
+<div class="container">
+  <h2>Software tools & optimizations</h2>
+  <a href="blog/category/software-tools-optimizations.html">
+    <button id="buttonWrapper">
+      See All >>
+    </button>
+  </a>
+</div>
+
+::::{grid} 1 2 2 3
+:margin 2
+{software_grid_items}
+::::
+
 <h2> Stay informed</h2>
 <ul>
   <li><a href="blog/atom.xml"> Subscribe to our <i class="fa fa-rss fa-rotate-270"></i> RSS feed</a></li>
@@ -343,11 +386,14 @@ Generated {datetime}
 
     # remove the first new line
     index_template = index_template[1:]
-    
+
     grid_items = []
+    application_grid_items = []
+    software_grid_items = []
+    holder = []
     author_pages_dir = './blogs/authors'  # Directory where author markdown files are stored
 
-    for index, blog in enumerate(blogs[:max_blogs]):
+    for index, blog in enumerate(blogs):
 
         title = blog.blog_title if hasattr(blog, 'blog_title') else 'No Title'
 
@@ -372,22 +418,47 @@ Generated {datetime}
         href = blog.file_path.replace('.md', '.html')
         href = href.replace('blogs', '.')
 
+        # swap href \ to / for windows
+        href = href.replace('\\', '/')
+
         # Generate an image or use default
         image = blog.thumbnail if hasattr(blog, 'thumbnail') else './images/generic.jpg'
 
         # check if image path is in the correct format
         if not image.startswith('./images/'):
 
-            image = './images/' + image
+          image = './images/' + image
 
+        # remove README.html
+        image_href = './blogs'+((href[1:].replace('/README.html', image[1:])))
+        image_href = image_href.replace('\\', '/')
+        
         # check if image is in images directory (blogs/images)
         temp_image = image.replace('//', '/').replace('./', 'blogs/')
 
-        if not os.path.exists(temp_image):
+        print ("\n-------------------------------------------------------------------\n")
+        print(f"Link: {href}")
 
-            print(f"Image {image} does not exist.")
+        if not os.path.exists(temp_image): 
 
+          print(f"Image {image} does not exist.")
+
+          image = './images/generic.jpg'
+
+          if os.path.exists(image_href):
+              
+            print(f"Image {image_href} exists.")
+            image = image_href.replace('./blogs', '.')
+
+          else:
+                
+            print(f"Image {image_href} does not exist.")
             image = './images/generic.jpg'
+
+        # check if images are in the relative blog directory
+        elif os.path.exists(href.replace('.html', '.md').replace('blogs', '.')):
+            
+            print (href.replace('.html', '.md').replace('blogs', '.'))
 
         else:
 
@@ -425,9 +496,6 @@ Generated {datetime}
         # Join author links with commas
         authors_html = ', '.join(author_links) if author_links else 'Unknown Author'
 
-        # swap href \ to / for windows
-        href = href.replace('\\', '/')
-
         # Create grid item card with authors
         grid_item = f"""
 :::{{grid-item-card}}
@@ -446,28 +514,102 @@ Generated {datetime}
 <div class="date">{date} by {authors_html}</div>
 :::
 """
-        grid_items.append(grid_item)
+        
+        if index < max_blogs:
 
-    # Join all grid items into one string
+          grid_items.append(grid_item)
+
+        elif blog.category == 'Applications & models' and len(application_grid_items) < max_category:
+            
+          application_grid_items.append(grid_item)
+
+        elif blog.category == 'Software tools & optimizations' and len(software_grid_items) < max_category:
+              
+          software_grid_items.append(grid_item)
+      
+    eco_grid_items = """
+:::{grid-item-card}
+:padding: 1
+:link: ./ecosystems-and-partners/stone-ridge/README
+:link-type: doc
+:img-top: ./images/stone-ridge.jpg
+:class-img-top: small-sd-card-img-top
+:class-body: small-sd-card
+:class: small-sd-card
+
++++
+<a href=".\ecosystems-and-partners\stone-ridge\README.html" class="card-header-link">
+  <h2 class="card-header">Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators</h2>
+</a>
+<p class="paragraph">Stone Ridge Technology (SRT) pioneered the use of GPUs for high performance reservoir simulation (HPC) nearly a decade ago with ECHELON...</p>
+<div class="date">June 10, 2024</div>
+:::
+
+:::{grid-item-card}
+:padding: 1
+:link: ./ecosystems-and-partners/university-of-michigan/README
+:link-type: doc
+:img-top: ./images/university-of-michigan-bioinformatics.jpg
+:class-img-top: small-sd-card-img-top
+:class-body: small-sd-card
+:class: small-sd-card
+
++++
+<a href="./ecosystems-and-partners/university-of-michigan/README.html" class="card-header-link">
+  <h2 class="card-header">AMD Collaboration with the University of Michigan!</h2>
+</a>
+<p class="paragraph">Long read DNA sequencing technology is revolutionizing genetic diagnostics and precision medicine by helping us discover structural variants and assem... </p>
+<div class="date">May 16, 2024</div>
+:::
+
+:::{grid-item-card}
+:padding: 1
+:link: ./ecosystems-and-partners/Siemens/README
+:link-type: doc
+:img-top: ./images/siemens.jpg
+:class-img-top: small-sd-card-img-top
+:class-body: small-sd-card
+:class: small-sd-card
+
++++
+<a href="./ecosystems-and-partners/Siemens/README.html" class="card-header-link">
+  <h2 class="card-header">Explore AMD Collaboration with Siemens on Simcenter STAR-CCM+</h2>
+</a>
+<p class="paragraph">Siemens recently announced that its Simcenter STAR-CCM+ multi-physics computational fluid dynamics (CFD) software now supports AMD Instinct™ GPUs... </p>
+<div class="date">May 16, 2024</div>
+:::
+"""
+
+    print(f"{software_grid_items}")
+
     grid_content = ''.join(grid_items)
+    application_grid_content = ''.join(application_grid_items)
+    software_grid_content = ''.join(software_grid_items)
+    eco_grid_content = ''.join(eco_grid_items)
 
     # Write the grid content to the Markdown file
     with open(output_file, 'w', encoding='utf-8') as f:
 
-        f.write(grid_content)
+      f.write(grid_content)
 
     print(f"Grid content successfully written to {output_file}")
 
     index_template = index_template.replace('{grid_items}', grid_content)
 
+    index_template = index_template.replace('{eco_grid_items}', eco_grid_content)
+
+    index_template = index_template.replace('{application_grid_items}', application_grid_content)
+
+    index_template = index_template.replace('{software_grid_items}', software_grid_content)
+
     index_template = index_template.replace('{datetime}', datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     # dangerous
-
+    
     # write new index.md
     with open('blogs/index.md', 'w', encoding='utf-8') as f:
 
-        f.write(index_template)
+      f.write(index_template)
 
     return index_template
 
@@ -482,9 +624,9 @@ def main():
 
     if not os.path.exists(root_directory):
 
-        print(f"The directory '{root_directory}' does not exist.")
+      print(f"The directory '{root_directory}' does not exist.")
 
-        return
+      return
 
     print(f"Searching for 'readme.md' files in '{root_directory}' and subdirectories...")
 
@@ -492,9 +634,9 @@ def main():
 
     if not readme_files:
 
-        print("No 'readme.md' files found.")
+      print("No 'readme.md' files found.")
 
-        return
+      return
 
     print(f"Found {len(readme_files)} 'readme.md' file(s).")
 
@@ -505,12 +647,12 @@ def main():
 
     for blog in sorted_blogs:
 
-        if hasattr(blog, 'author'):
+      if hasattr(blog, 'author'):
 
-            print(blog.author)
+        print(blog.author)
 
     # Generate the grid for the top 15 latest blogs
-    generate_blog_grid(sorted_blogs, max_blogs=18)
+    generate_blog_grid(sorted_blogs)
 
     # change back working directory
     os.chdir('blogs')
