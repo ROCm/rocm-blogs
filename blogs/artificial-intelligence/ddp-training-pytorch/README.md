@@ -6,7 +6,7 @@ blog_title: Distributed Data Parallel training on AMD GPU with ROCm
 tags: LLM, AI/ML, GenAI, PyTorch
 category: Applications & models
 language: English
-thumbnail: './images/image.jpg'
+thumbnail: 'ddp-amd.jpg'
 myst:
   html_meta:
     "description lang=en": "This blog demonstrates how to speed up the training of a ResNet model on the CIFAR-100 classification task using PyTorch DDP on AMD GPUs with ROCm."
@@ -14,7 +14,7 @@ myst:
     "property=og:locale": "en_US"
 ---
 
-# Distributed Data Parallel training on AMD GPU with ROCm
+# Distributed Data Parallel Training on AMD GPU with ROCm
 
 With the increase in complexity and size of machine learning models, the demand for computational resources grows. Training on a single GPU can become a bottleneck for deep learning applications, especially with large datasets and models that are slow to train on a single GPU. Parallelized training addresses this challenge. Out of the various forms of parallelized training, this blog focuses on [Distributed Data Parallel](https://pytorch.org/tutorials/intermediate/ddp_tutorial.html) (DDP), a key feature in PyTorch that accelerates training across multiple GPUs and nodes.
 

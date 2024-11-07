@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Multinode Fine-Tuning of Stable Diffusion XL on AMD GPUs with Hugging Face Accelerate and OCI's Kubernetes Engine (OKE)"
-thumbnail: './images/Multinode.jpeg'
+thumbnail: 'multinode-image.jpg'
 date: 15 October 2024
 author: Douglas Jia
 tags: AI/ML, Fine-Tuning, GenAI, Diffusion Model
