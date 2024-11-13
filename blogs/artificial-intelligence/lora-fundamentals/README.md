@@ -2,7 +2,7 @@
 blogpost: true
 date: 5 Feb 2024
 author: Sean Song
-blog_title: Using LoRA for efficient fine-tuning: Fundamental principles
+blog_title: 'Using LoRA for efficient fine-tuning: Fundamental principles'
 tags: LLM, AI/ML, GenAI, Fine-Tuning, PyTorch
 category: Applications & models
 language: English

@@ -2,7 +2,7 @@
 blogpost: true
 date: 1 Feb 2024
 author: Sean Song
-blog_title: Fine-tune Llama model with LoRA\: Customizing a large language model for question-answering
+blog_title: 'Fine-tune Llama model with LoRA: Customizing a large language model for question-answering'
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English

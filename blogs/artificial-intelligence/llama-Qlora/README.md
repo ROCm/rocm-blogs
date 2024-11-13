@@ -2,7 +2,7 @@
 blogpost: true
 date: 15 April 2024
 author: Sean Song
-blog_title: Enhancing LLM Accessibility\: A Deep Dive into QLoRA Through Fine-tuning Llama Model on a single AMD GPU
+blog_title: 'Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama Model on a single AMD GPU'
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
