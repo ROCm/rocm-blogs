@@ -9,6 +9,8 @@ on:
     - develop
     - release
     - main
+    paths-ignore:
+    - './blogs/authors'
 
 jobs:
   check-markdown-metadata:
