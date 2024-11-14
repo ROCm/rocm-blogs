@@ -3,9 +3,9 @@ blogpost: true
 blog_title: 'SGLang: Fast Serving Framework for Large Language and Vision-Language Models on AMD GPUs'
 thumbnail: 'cat.jpeg'
 date: 13 November 2024
-author: Michael Zhang, Hai Xiao
+author: Michael Zhang, Hai Xiao, Hui Liu
 tags: AI/ML, GenAI, LLM, PyTorch
-category: Tools & Libraries
+category: Software tools & optimizations
 language: English
 myst:
   html_meta:
