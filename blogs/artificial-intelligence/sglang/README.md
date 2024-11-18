@@ -93,28 +93,38 @@ To run SGLang on AMD GPUs, you will need:
 
 - [PyTorch](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html)
 
-Use the provided Docker file to build a docker image with ROCm support to simplify your deployment of SGLang on AMD GPUs.
+The simplest way to deploy SGLang on AMD GPUs is by using the prebuilt Docker image. Latest instructions are available in the [SGLang Installation Guide](https://sgl-project.github.io/start/install.html#method-3-using-docker).
 
-Here are the steps to get started:
+### Generic Build Steps for ROCm Docker Image
 
-1. Clone sglang blog's repository:
+To build your own Docker image with ROCm support, follow these steps:
+
+1. Clone the SGLang Repository:
 
     ```bash
     git clone https://github.com/sgl-project/sglang.git
     ```
 
-1. Build the Docker Image for ROCm AMD GPUs:
+1. Build the Docker Image:
+
+    Navigate to the `docker` directory in the cloned repository and run:
 
     ```bash
     cd sglang/docker
-    docker build -t v0.3.5-rocm620 -f Dockerfile.rocm .
+    docker build -t sglang-rocm:latest -f Dockerfile.rocm .
     ```
 
-1. Launch the Docker container:
+1. Launch the Docker Container:
+
+    Start the container with the following command:
 
     ```bash
-    docker run -it --ipc=host --cap-add=SYS_PTRACE --network=host --device=/dev/kfd --device=/dev/dri --security-opt seccomp=unconfined --group-add video --privileged -w /workspace v0.3.5-rocm620
+    docker run -it --ipc=host --cap-add=SYS_PTRACE --network=host \
+    --device=/dev/kfd --device=/dev/dri --security-opt seccomp=unconfined \
+    --group-add video --privileged -w /workspace sglang-rocm:latest
     ```
+
+For prebuilt options and further details, refer to the [official SGLang documentation](https://sgl-project.github.io/start/install.html).
 
 ## Quick Start with SGLang
 
