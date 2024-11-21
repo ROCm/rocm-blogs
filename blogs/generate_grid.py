@@ -500,8 +500,6 @@ Generated {datetime}
         grid_item = f"""
 :::{{grid-item-card}}
 :padding: 1
-:link: {href[:href.rfind('.html')]}
-:link-type: doc
 :img-top: {image}
 :class-img-top: small-sd-card-img-top
 :class-body: small-sd-card

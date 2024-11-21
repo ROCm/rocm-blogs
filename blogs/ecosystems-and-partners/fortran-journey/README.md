@@ -16,6 +16,8 @@ myst:
 
 # Introducing AMD's Next-Gen Fortran Compiler
 
+<span style="font-size:0.7em;">2024 November 13 by {hoverxref}`Justin Chang<justchan>`, Brian Cornille, Michael Klemm, and Johanna Potyka. </span>
+
 We are excited to share a brief preview of AMD's
 [Next-Gen Fortran Compiler](https://github.com/amd/InfinityHub-CI/blob/main/fortran/README.md),
 our new open source Fortran complier supporting OpenMP offloading. AMD's
