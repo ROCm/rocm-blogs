@@ -3,10 +3,12 @@ blogpost: true
 date: 10 June 2024
 tags: Partner Applications
 category: Ecosystems and Partners
+blog_title: 'Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators'
+thumbnail: 'stone-ridge.jpg'
 language: English
 myst:
   html_meta:
-    "description lang=en": "Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators"
+    "description lang=en": "Stone Ridge Technology (SRT) pioneered the use of GPUs for high performance reservoir simulation (HPC) nearly a decade ago with ECHELON, its flagship software product. ECHELON, the first of its kind, engineered from the outset to harness the full potential of massively parallel GPUs, stands apart in the industry for its power, efficiency, and accuracy. Now, ECHELON has added support for AMDInstinct accelerators into its simulation engine, offering new flexibility and optionality to its clients."
     "keywords": "Stone Ridge, SRT, ECHELON, HIP, Instinct GPU, HPC, MI210, MI250, MI300X, ROCm"
     "property=og:locale": "en_US"
 ---

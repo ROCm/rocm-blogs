@@ -1,13 +1,15 @@
 ---
 blogpost: true
 date: 16 May 2024
-author: Hari Sadasivan, Gina Sitaraman
 tags: Partner Applications
+blog_title: 'AMD Collaboration with the University of Michigan offers High Performance Open-Source Solutions to the Bioinformatics Community'
+thumbnail: 'university-of-michigan-bioinformatics.jpg'
 category: Ecosystems and Partners
 language: English
 myst:
   html_meta:
-    "description lang=en": "AMD Collaboration with the University of Michigan offers High Performance Open-Source Solutions to the Bioinformatics Community"
+    "description lang=en": "We are thrilled to share the success story of a 1.5-year collaboration between AMD and the University of Michigan, Ann Arbor where we used the AMD Instinct™ GPUs and
+ROCm™ software stack to optimize the sequence alignment bottleneck in long read processing workflows."
     "keywords": "University of Michigan, HPC, Bioinformatics, Minimap2, DCGPU, MI210, "
     "property=og:locale": "en_US"
 ---

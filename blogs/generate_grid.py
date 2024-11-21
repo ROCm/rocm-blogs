@@ -1,6 +1,6 @@
 # Index.md Generator
-# Updated 2024 November 4
-# Version 1.1
+# Updated 2024 November 13
+# Version 1.2
 
 import os
 import re
@@ -390,6 +390,8 @@ Generated {datetime}
     grid_items = []
     application_grid_items = []
     software_grid_items = []
+    eco_grid_items = []
+
     holder = []
     author_pages_dir = './blogs/authors'  # Directory where author markdown files are stored
 
@@ -494,7 +496,11 @@ Generated {datetime}
                 author_links.append(author.strip())
 
         # Join author links with commas
-        authors_html = ', '.join(author_links) if author_links else 'Unknown Author'
+        authors_html = ', '.join(author_links) if author_links else ''
+
+        if authors_html:
+             
+          authors_html = f"by {authors_html}"
 
         # Create grid item card with authors
         grid_item = f"""
@@ -509,7 +515,7 @@ Generated {datetime}
     <h2 class="card-header">{title}</h2>
 </a>
 <p class="paragraph">{description}</p>
-<div class="date">{date} by {authors_html}</div>
+<div class="date">{date} {authors_html}</div>
 :::
 """
         
@@ -524,59 +530,11 @@ Generated {datetime}
         elif blog.category == 'Software tools & optimizations' and len(software_grid_items) < max_category:
               
           software_grid_items.append(grid_item)
-      
-    eco_grid_items = """
-:::{grid-item-card}
-:padding: 1
-:link: ./ecosystems-and-partners/stone-ridge/README
-:link-type: doc
-:img-top: ./images/stone-ridge.jpg
-:class-img-top: small-sd-card-img-top
-:class-body: small-sd-card
-:class: small-sd-card
 
-+++
-<a href=".\ecosystems-and-partners\stone-ridge\README.html" class="card-header-link">
-  <h2 class="card-header">Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators</h2>
-</a>
-<p class="paragraph">Stone Ridge Technology (SRT) pioneered the use of GPUs for high performance reservoir simulation (HPC) nearly a decade ago with ECHELON...</p>
-<div class="date">June 10, 2024</div>
-:::
-
-:::{grid-item-card}
-:padding: 1
-:link: ./ecosystems-and-partners/university-of-michigan/README
-:link-type: doc
-:img-top: ./images/university-of-michigan-bioinformatics.jpg
-:class-img-top: small-sd-card-img-top
-:class-body: small-sd-card
-:class: small-sd-card
-
-+++
-<a href="./ecosystems-and-partners/university-of-michigan/README.html" class="card-header-link">
-  <h2 class="card-header">AMD Collaboration with the University of Michigan!</h2>
-</a>
-<p class="paragraph">Long read DNA sequencing technology is revolutionizing genetic diagnostics and precision medicine by helping us discover structural variants and assem... </p>
-<div class="date">May 16, 2024</div>
-:::
-
-:::{grid-item-card}
-:padding: 1
-:link: ./ecosystems-and-partners/Siemens/README
-:link-type: doc
-:img-top: ./images/siemens.jpg
-:class-img-top: small-sd-card-img-top
-:class-body: small-sd-card
-:class: small-sd-card
-
-+++
-<a href="./ecosystems-and-partners/Siemens/README.html" class="card-header-link">
-  <h2 class="card-header">Explore AMD Collaboration with Siemens on Simcenter STAR-CCM+</h2>
-</a>
-<p class="paragraph">Siemens recently announced that its Simcenter STAR-CCM+ multi-physics computational fluid dynamics (CFD) software now supports AMD Instinct™ GPUs... </p>
-<div class="date">May 16, 2024</div>
-:::
-"""
+        elif blog.category == 'Ecosystems and Partners' and len(eco_grid_items) < max_category:
+          
+          eco_grid_items.append(grid_item)
+    
 
     print(f"{software_grid_items}")
 
