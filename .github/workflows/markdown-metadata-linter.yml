@@ -11,6 +11,7 @@ on:
     - main
     paths-ignore:
     - './blogs/authors'
+    - './blogs/ecosystems-and-partners'
 
 jobs:
   check-markdown-metadata:
