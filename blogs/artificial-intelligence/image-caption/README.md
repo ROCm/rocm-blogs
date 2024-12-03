@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Transformer based Encoder-Decoder models for image-captioning on AMD GPUs'
-date: December 3, 2024
+date: 3 December 2024
 thumbnail: 'tabby-cat.PNG'
 author: Vara Lakshmi Bayanagari
 tags: PyTorch, AI/ML, GenAI
