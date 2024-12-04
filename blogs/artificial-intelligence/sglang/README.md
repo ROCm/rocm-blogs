@@ -15,13 +15,13 @@ myst:
     "property=og:locale": "en_US"
 ---
 
-# SGLang: Fast Serving Framework for Large Language and Vision-Language Models on AMD GPUs
+# SGLang: Fast Serving Framework for Large Language and Vision-Language Models on AMD Instinct GPUs
 
 In the rapidly evolving landscape of artificial intelligence, the ability to deploy large language models (LLMs) and vision-language models (VLMs) efficiently is crucial for real-time applications. [SGLang](https://github.com/sgl-project/sglang) is an open-source framework designed to meet these demands by delivering fast backend runtime, a flexible frontend language, and extensive model support for a variety of LLMs and VLMs.
 
 This blog will dive into the core features of SGLang, highlight its performance-optimized backend, and showcase its flexible serving capabilities—giving you the tools to maximize the potential of generative AI models in your applications using ROCm on AMD GPUs.
 
-Here’s what you will learn in this blog: we will first introduce you to SGLang, highlighting its use cases and key features and advantages. We will then show you how to setup and deploy SGLang using ROCm on AMD GPUs. Following, you will learn how SGLang can help you optimize your inference speed and efficiency using quantized models, and how to use SGLang with multi-modal models like LLaVA NeXT. We will then cover the SGLang frontend language, its support of JSON Decoding, tensor parallelism (TP), data parallelism (DP), and various quantization options.
+Here’s what you will learn in this blog: we will first introduce you to SGLang, highlighting its use cases and key features and advantages. We will then show you how to setup and deploy SGLang using ROCm on Instinct GPUs. Following, you will learn how SGLang can help you optimize your inference speed and efficiency using quantized models, and how to use SGLang with multi-modal models like LLaVA NeXT. We will then cover the SGLang frontend language, its support of JSON Decoding, tensor parallelism (TP), data parallelism (DP), and various quantization options.
 
 ## What is SGLang?
 
@@ -83,17 +83,17 @@ SGLang is suitable for a wide range of applications, including:
 
 For more detailed information, see [SGLang blog post](https://lmsys.org/blog/2024-01-17-sglang/).
 
-## Docker Setup on AMD GPUs
+## Docker Setup on Instinct GPUs
 
-To run SGLang on AMD GPUs, you will need:
+To run SGLang on Instinct GPUs, you will need:
 
-- [AMD GPU Accelerators](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html)
+- [Instinct GPU](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html)
 
 - [ROCm 6.2+](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 
 - [PyTorch](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html)
 
-The simplest way to deploy SGLang on AMD GPUs is by using the prebuilt Docker image. Latest instructions are available in the [SGLang Installation Guide](https://sgl-project.github.io/start/install.html#method-3-using-docker).
+The simplest way to deploy SGLang on Instinct GPUs is by using the prebuilt Docker image. Latest instructions are available in the [SGLang Installation Guide](https://sgl-project.github.io/start/install.html#method-3-using-docker).
 
 ### Generic Build Steps for ROCm Docker Image
 
@@ -644,15 +644,15 @@ SGLang offers various quantization options to optimize model performance and eff
 
 ## Summary
 
-In this blog post we introduced you to SGLang and its features, and showed you how to setup SGLang using ROCm on AMD GPUs. We demonstrated how you can use SGLang to optimize your inference using quantized models, and how to use SGLang with the LLaVA NeXT multi-modal model. We also presented the SGLang frontend language, its support of JSON Decoding, tensor parallelism (TP), data parallelism (DP), and various quantization options.
+In this blog post we introduced you to SGLang and its features, and showed you how to setup SGLang using ROCm on Instinct GPUs. We demonstrated how you can use SGLang to optimize your inference using quantized models, and how to use SGLang with the LLaVA NeXT multi-modal model. We also presented the SGLang frontend language, its support of JSON Decoding, tensor parallelism (TP), data parallelism (DP), and various quantization options.
 
-SGLang provides a highly optimized and scalable solution for serving large language models and vision-language models on AMD GPUs. Its powerful runtime and flexible frontend simplify the deployment of large-scale AI models and reduce complexity and cost. This makes SGLang an excellent tool for developers aiming to bring generative AI capabilities to production using AMD hardware.
+SGLang provides a highly optimized and scalable solution for serving large language models and vision-language models on Instinct GPUs. Its powerful runtime and flexible frontend simplify the deployment of large-scale AI models and reduce complexity and cost. This makes SGLang an excellent tool for developers aiming to bring generative AI capabilities to production using AMD hardware.
 
 ## Resources
 
 - [SGLang GitHub Repository](https://github.com/sgl-project/sglang)
 - [SGLang Documentation](https://sgl-project.github.io/)
-- [AMD ROCm Platform](https://rocm.docs.amd.com/)
+- [AMD ROCm](https://rocm.docs.amd.com/)
 
 ## Disclaimer
 
