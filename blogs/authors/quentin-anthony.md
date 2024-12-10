@@ -8,7 +8,7 @@
 
 # Quentin Anthony
 
-```{image} ./data/quentin-anthony.jpg
+```{image} ./data/Quentin-Anthony.jpg
 :alt: Quentin
 :class: bg-primary
 :height: 250px
