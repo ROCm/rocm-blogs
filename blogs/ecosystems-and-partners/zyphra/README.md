@@ -17,13 +17,13 @@ myst:
 
 # Training Transformers and Hybrid models on AMD Instinct MI300X Accelerators
 
-## Harnessing the MI300 Hardware Specs
-
 This blog is contributed by [Zyphra](https://www.zyphra.com/): a Palo Alto-based AI research lab and AMD Instinct Partner.
 
 Zyphra is designing MaiaOS, a multimodal agent system that combines next-gen neural network architectures (SSM hybrids), long-term memory, and reinforcement learning.
 
 In this blog we motivate our vision of training transformers and hybrid models at a lower cost using AMD technology. We explain how Zyphra harnessed the hardware advantages of the MI300x hardware for training both dense transformers and Zyphra's hybrid models. Specifically, the model blocks of interest are Mamba2 and Flash Attention v2. We conclude the blog by sharing benchmarks results showing the speedups we achieved on the MI300X using ROCm, compared to the competition.
+
+## Harnessing the MI300 Hardware Specs
 
 On paper, the AMD Instinct MI300X GPU accelerators contain some of the best hardware specifications on the market. The key hardware specs where the MI300X surpasses its main competitor, the NVIDIA H100 GPU, are High Bandwidth Memory (HBM) capacity and bandwidth.
 
