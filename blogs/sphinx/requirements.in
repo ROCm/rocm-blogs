@@ -1,3 +1,4 @@
 ablog
 rocm-docs-core==1.9.1
 sphinx-hoverxref
+markdown

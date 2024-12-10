@@ -170,3 +170,4 @@ watchdog==4.0.1
     # via ablog
 wrapt==1.16.0
     # via deprecated
+markdown

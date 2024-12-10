@@ -16,8 +16,6 @@ myst:
 
 # Getting to Know Your GPU: A Deep Dive into AMD SMI
 
-<span style="font-size:0.7em;">17 Sep, 2024 by {hoverxref}`Matt Elliott<mael>` </span>
-
 For system administrators and power users working with AMD hardware, performance optimization and efficient monitoring of resources is paramount. The AMD System Management Interface command-line tool, `amd-smi`, addresses these needs.
 
 `amd-smi` is a versatile command-line utility designed to manage and monitor AMD hardware, with a primary focus on GPUs. As the future replacement for `rocm-smi`, `amd-smi` is poised to become the primary tool for AMD hardware management across a wide range of devices. For those new to hardware management or transitioning from other tools, `amd-smi` provides an extensive set of features to help optimize AMD hardware usage.
