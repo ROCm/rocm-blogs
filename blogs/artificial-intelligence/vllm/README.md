@@ -16,8 +16,6 @@ myst:
 
 # Inferencing and serving with vLLM on AMD GPUs
 
-<span style="font-size:0.7em;">19 September, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
-
 ## Introduction
 
 In the rapidly evolving field of artificial intelligence, Large Language Models (LLMs) have emerged as powerful tools for understanding and generating human-like text. However, deploying these models efficiently at scale presents significant challenges. This is where vLLM comes into play. vLLM is an innovative open-source library designed to optimize the serving of LLMs using advanced techniques. Central to vLLM is PagedAttention, a novel algorithm that enhances the efficiency of the model's attention mechanism by managing it as virtual memory. This approach optimizes GPU memory utilization, facilitating the processing of longer sequences and enabling more efficient handling of large models within existing hardware constraints. Additionally, vLLM incorporates continuous batching to maximize throughput and minimize latency. By leveraging these cutting-edge techniques, vLLM significantly improves the performance and scalability of LLM deployment, allowing organizations to harness the power of state-of-the-art AI models more effectively and economically.

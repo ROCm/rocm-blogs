@@ -170,7 +170,4 @@ watchdog==4.0.1
     # via ablog
 wrapt==1.16.0
     # via deprecated
-zipp==3.17.0
-    # via
-    #   importlib-metadata
-    #   importlib-resources
+markdown

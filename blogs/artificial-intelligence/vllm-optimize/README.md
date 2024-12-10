@@ -16,8 +16,6 @@ myst:
 
 # Enhancing vLLM Inference on AMD GPUs
 
-<span style="font-size:0.7em;">11 October, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
-
 In this blog, we’ll demonstrate the latest performance enhancements in vLLM inference on AMD Instinct accelerators using ROCm. In a nutshell, vLLM optimizes GPU memory utilization, allowing more efficient handling of large language models (LLMs) within existing hardware constraints, maximizing throughput and minimizing latency. We start the blog by briefly explaining how causal language models like Llama 3 and ChatGPT generate text, motivating the need to enhance throughput and reduce latency. If you’re new to vLLM, we also recommend reading our introduction to [Inferencing and serving with vLLM on AMD GPUs](https://rocm.blogs.amd.com/artificial-intelligence/vllm/README.html).
 ROCm 6.2 introduces support for the following vLLM features which we will use in this blog post.
 
