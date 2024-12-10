@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 20 Nov 2024
+date: 9 Dec 2024
 blog_title: 'Deep Dive Into the MI300’s Compute and Memory Partition Modes'
 thumbnail: './images/thumbnail.png'
 author: Muhammad Osama, Ryan Swann, Karthik Sangaiah, Sonali Singh, Ganesh Dasika
