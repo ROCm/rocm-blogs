@@ -1,6 +1,8 @@
 ---
 blogpost: true
 date: 26 Jan 2024
+blog_title: 'Accelerating XGBoost with Dask using multiple AMD GPUs'
+thumbnail: 'cat.jpeg'
 author: Clint Greene
 tags: LLM, AI/ML
 category: Applications & models
@@ -39,7 +41,7 @@ git submodule update --init --recursive
 ```
 
 Next, build XGBoost from source. We're building on MI 200 Instinct Series GPUs, so we set
-`DCMAK_HIP_ARCHITECTURES` to `gfx90a`. If you're using different architecture, modify this
+`DCMAKE_HIP_ARCHITECTURES` to `gfx90a`. If you're using different architecture, modify this
 accordingly. You can look up your architecture using: `rocminfo | grep gfx`.
 
 ```bash
@@ -166,3 +168,7 @@ increasing the number of GPUs from 1 to 4 results in a 2.6x decrease in training
 decrease relative to a CPU training run.
 
 ![Training speedup](./images/xgboost-bench.png)
+
+## Disclaimer
+
+Third-party content is licensed to you directly by the third party that owns the content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
