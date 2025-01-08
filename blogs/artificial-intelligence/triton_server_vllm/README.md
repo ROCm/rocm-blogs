@@ -1,4 +1,5 @@
 ---
+blogpost: true
 blog_title: 'Triton Inference Server with vLLM on AMD GPUs'
 thumbnail: '232285500_AMD_EPYC_Siena_beautyshot_02.png'
 date: 8 January 2025
