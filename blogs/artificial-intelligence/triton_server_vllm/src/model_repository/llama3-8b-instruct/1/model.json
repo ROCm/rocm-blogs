@@ -1,0 +1,9 @@
+{
+    "model":"meta-llama/Meta-Llama-3-8B-Instruct",
+    "gpu_memory_utilization": 0.8,
+    "tensor_parallel_size": 2,
+    "trust_remote_code": true,
+    "disable_log_requests": true,
+    "enforce_eager": true,
+    "max_model_len": 2048
+}

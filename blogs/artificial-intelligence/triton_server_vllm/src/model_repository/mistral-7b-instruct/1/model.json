@@ -1,0 +1,9 @@
+{
+    "model":"mistralai/Mistral-7B-Instruct-v0.1",
+    "gpu_memory_utilization": 0.8,
+    "tensor_parallel_size": 2,
+    "trust_remote_code": true,    
+    "disable_log_requests": true,
+    "enforce_eager": true,
+    "max_model_len": 2048
+}
