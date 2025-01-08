@@ -1,6 +1,6 @@
 ---
 blog_title: 'Triton Inference Server with vLLM on AMD GPUs'
-thumbnail: './images/${232285500_AMD_EPYC_Siena_beautyshot_02.png}'
+thumbnail: '232285500_AMD_EPYC_Siena_beautyshot_02.png'
 date: 8 January 2025
 author: Fabricio Flores, Tiffany Mintz, Eliot Li, Yao Liu, Ted Themistokleous, Brian Pickrell, Vish Vadlamani
 tags: LLM, AI/ML
