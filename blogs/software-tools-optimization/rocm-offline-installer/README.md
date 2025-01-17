@@ -19,6 +19,8 @@ myst:
 
 <span style="font-size:0.7em;">10 Sep, 2024 by {hoverxref}`Matt Elliott<mattelli>` </span>
 
+<iframe width="760" height="410" src="https://www.youtube.com/embed/-9kB24A_xm4?si=4ywM3US_j104ZBmQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 In the fast-paced world of deep learning and high-performance computing, efficient deployment of drivers and software is crucial. AMD's ROCm™ platform has become a cornerstone for developers and researchers leveraging the power of AMD Instinct Accelerators. However, deploying ROCm at scale in air-gapped or high-security environments without internet access has been a challenge – until now.
 
 AMD presents the ROCm Offline Installer Creator, a practical tool designed to simplify the deployment of ROCm in disconnected environments. This solution addresses a common challenge, offering a straightforward approach to creating customized offline installation packages. By providing this tool, AMD is taking another step towards enabling AI at scale, ensuring efficient ROCm deployment across various environments, including those with limited or no internet access. This blog post will show you how to deploy the ROCm Offline Installer Creator to generate and use an installation package for ROCm and the AMDGPU linux kernel driver in an offline environment.
