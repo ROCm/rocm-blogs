@@ -230,7 +230,7 @@ docker build \
     -f /path/to/Dockerfile \
     --build-arg IMAGE=rocm_gpu:6.2 \
     --build-arg FLUENT_TAR=fluent.24.2.lnamd64.tgz \
-    --build-arg FLUENT_VERSION=232 \
+    --build-arg FLUENT_VERSION=242 \
     --build-arg ANSYSLMD_LICENSE_FILE=1055@127.0.0.1 \
     .  
 ```
@@ -307,8 +307,8 @@ Repeat above steps for each individual case packages.
 
 ```shell
 ansys_inc/v242/commonfiles/CPython/3_10/linx64/Release/python/bin/python
-ansys_inc/v232/fluent/bench/bin/fluent_benchmark_gpu.py -gpu.amd -cores 8 -cases
-sedan_4m,aircraft_wing_14m,exhaust_system_33m,f1_racecar_140m 
+ansys_inc/v242/fluent/bench/bin/fluent_benchmark_gpu.py -gpu.amd -cores 8 -cases
+sedan_4m,aircraft_wing_14m,exhaust_system_33m,f1_racecar_140m -reorder_by_partition 1024 -mpi=openmpi
 ```
 
 - Utilize 8 H100 GPUs to run the use cases sedan_4m, aircraft_wing_14m, exhaust_system_33m, and f1_racecar_140m:
@@ -316,7 +316,7 @@ sedan_4m,aircraft_wing_14m,exhaust_system_33m,f1_racecar_140m
 ```shell
 ansys_inc/v242/commonfiles/CPython/3_10/linx64/Release/python/bin/python
 ansys_inc/v242/fluent/bench/bin/fluent_benchmark_gpu.py -gpu -cores 8 -cases
-sedan_4m,aircraft_wing_14m,exhaust_system_33m,f1_racecar_140m 
+sedan_4m,aircraft_wing_14m,exhaust_system_33m,f1_racecar_140m -reorder_by_partition 1024 -mpi=openmpi
 ```
 
 ### Troubleshooting
