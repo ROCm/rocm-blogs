@@ -17,6 +17,8 @@ def check_metadata(file: str) -> None:
         "tags",
         "category",
         "language",
+        "target_audience",
+        "key_value_propositions"
     }
 
     # read the markdown file
