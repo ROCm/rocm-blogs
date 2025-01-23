@@ -9,6 +9,8 @@ category:
 language: English
 myst:
 html_meta:
+target_audience:
+key_value_propositions:
 "author": "Danny Guan"
 "description lang=en": "Guide to ROCm Blogs Metadata"
 "keywords": ""
