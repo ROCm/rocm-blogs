@@ -1,0 +1,18 @@
+name: Adds all issues that don't include the 'bug' or 'needs-triage' labels to project board
+
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  add-to-project:
+    name: Add issue to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          project-url: https://github.com/orgs/ROCm/projects/63
+          github-token: ${{ secrets.ADD_TO_PROJECT_PAT }}
+          labeled: backend
+          label-operator: NOT
