@@ -2,3 +2,4 @@ ablog
 rocm-docs-core==1.13.0
 sphinx-hoverxref
 markdown
+Pillow
