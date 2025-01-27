@@ -1,13 +1,15 @@
 # Index.md Generator
-# Updated 2024 November 13
-# Version 1.3
+# Updated 2025 January 27
+# Version 1.4
 
 
 import os
 import re
 import yaml
+import time
 import shutil
 from datetime import datetime
+from PIL import Image, ImageOps
 
 
 class Blog:
@@ -139,13 +141,45 @@ def create_blog_objects(readme_files):
     return blog_objects
 
 
+def quicksort_desc(arr, low, high):
+    if low < high:
+        pivot_index = partition(arr, low, high)
+        quicksort_desc(arr, low, pivot_index - 1)
+        quicksort_desc(arr, pivot_index + 1, high)
+
+
+def partition(arr, low, high):
+    pivot = arr[high]["date_epoch"]
+    x = low - 1
+    for y in range(low, high):
+        if arr[y]["date_epoch"] > pivot:
+            x += 1
+            arr[x], arr[y] = arr[y], arr[x]
+    arr[x + 1], arr[high] = arr[high], arr[x + 1]
+    return x + 1
+
+
 def sort_blogs_by_date(blogs):
 
-    # Filter out blogs without valid dates and sort by date
+    blogs_with_date = []
+    for blog in blogs:
+        if hasattr(blog, "date") and blog.date is not None:
 
-    blogs_with_date = [blog for blog in blogs if blog.date is not None]
+            blog_date_record = {
+                "original_blog": blog,
+                "date_epoch": int(blog.date.timestamp()),
+                "date_str": blog.date.strftime("%Y-%m-%d"),
+            }
+            blogs_with_date.append(blog_date_record)
+    quicksort_desc(blogs_with_date, 0, len(blogs_with_date) - 1)
 
-    return sorted(blogs_with_date, key=lambda blog: blog.date, reverse=True)
+    sorted_blogs = []
+    for entry in blogs_with_date:
+        # Perform extra complication by re-validating the date
+
+        if hasattr(entry["original_blog"], "date"):
+            sorted_blogs.append(entry["original_blog"])
+    return sorted_blogs
 
 
 def grab_authors(authors_list):
@@ -189,6 +223,105 @@ def grab_authors(authors_list):
 
             author_links.append(author.strip())
     return ", ".join(author_links) if author_links else ""
+
+
+def optimize_image(image):
+
+    os.chdir("blogs")
+    try:
+        with Image.open(image) as img:
+
+            print(img.format, img.size, img.mode)
+
+            before_size = os.path.getsize(image)
+
+            img = img.resize((480, 270), resample=Image.LANCZOS)
+
+            img.save(image, optimize=True, quality=80)
+
+            after_size = os.path.getsize(image)
+
+            print(
+                f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size-after_size)/before_size)*100} percent"
+            )
+
+            with open("optimize.txt", "a") as f:
+
+                f.write(
+                    f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size-after_size)/before_size)*100} percent\n on {image}\n"
+                )
+    except Exception as error:
+
+        print(f"Error optimizing image {image}: {error}")
+    os.chdir("..")
+
+
+def grab_image(blog, href):
+    # Generate an image or use default
+
+    image = blog.thumbnail if hasattr(blog, "thumbnail") else "./images/generic.jpg"
+
+    # check if image path is in the correct format
+
+    if not image.startswith("./images/"):
+
+        image = "./images/" + image
+    # remove README.html
+
+    image_href = "./blogs" + ((href[1:].replace("/README.html", image[1:])))
+    image_href = image_href.replace("\\", "/")
+
+    # check if image is in images directory (blogs/images)
+
+    temp_image = image.replace("//", "/").replace("./", "blogs/")
+
+    print("\n-------------------------------------------------------------------\n")
+    # print image size
+
+    print(f"Link: {href}")
+
+    if not os.path.exists(temp_image):
+
+        print(f"Image {image} does not exist.")
+
+        image = "./images/generic.jpg"
+
+        if os.path.exists(image_href):
+
+            print(f"Image {image_href} exists.")
+            image = image_href.replace("./blogs", ".")
+
+            print("The current working directory is: ", os.getcwd())
+
+            optimize_image(image)
+        else:
+
+            print(f"Image {image_href} does not exist.")
+            image = "./images/generic.jpg"
+    # check if images are in the relative blog directory
+
+    elif os.path.exists(href.replace(".html", ".md").replace("blogs", ".")):
+
+        print(href.replace(".html", ".md").replace("blogs", "."))
+    else:
+
+        print(f"Image {image} exists.")
+
+        print("The current working directory is: ", os.getcwd())
+
+        optimize_image(image)
+    return image
+
+
+def grab_href(blog):
+    href = blog.file_path.replace(".md", ".html")
+    href = href.replace("blogs", ".")
+
+    # swap href \ to / for windows
+
+    href = href.replace("\\", "/")
+
+    return href
 
 
 def generate_blog_grid(
@@ -470,60 +603,10 @@ Generated {datetime}
 
         authors_list = getattr(blog, "author", "").split(",")
 
-        # Create href by replacing the .md extension with .html
+        href = grab_href(blog)
 
-        href = blog.file_path.replace(".md", ".html")
-        href = href.replace("blogs", ".")
+        image = grab_image(blog, href)
 
-        # swap href \ to / for windows
-
-        href = href.replace("\\", "/")
-
-        # Generate an image or use default
-
-        image = blog.thumbnail if hasattr(blog, "thumbnail") else "./images/generic.jpg"
-
-        # check if image path is in the correct format
-
-        if not image.startswith("./images/"):
-
-            image = "./images/" + image
-        # remove README.html
-
-        image_href = "./blogs" + ((href[1:].replace("/README.html", image[1:])))
-        image_href = image_href.replace("\\", "/")
-
-        # check if image is in images directory (blogs/images)
-
-        temp_image = image.replace("//", "/").replace("./", "blogs/")
-
-        print(f"Date: {date}")
-
-        print("\n-------------------------------------------------------------------\n")
-        print(f"Link: {href}")
-
-        if not os.path.exists(temp_image):
-
-            print(f"Image {image} does not exist.")
-
-            image = "./images/generic.jpg"
-
-            if os.path.exists(image_href):
-
-                print(f"Image {image_href} exists.")
-                image = image_href.replace("./blogs", ".")
-            else:
-
-                print(f"Image {image_href} does not exist.")
-                image = "./images/generic.jpg"
-        # check if images are in the relative blog directory
-
-        elif os.path.exists(href.replace(".html", ".md").replace("blogs", ".")):
-
-            print(href.replace(".html", ".md").replace("blogs", "."))
-        else:
-
-            print(f"Image {image} exists.")
         # Join author links with commas
 
         if authors_list:
@@ -720,6 +803,8 @@ def main():
 
     root_directory = "blogs"  # Specify the root directory
 
+    start_time = time.time()
+
     print(os.getcwd())
 
     # change cwd to parent directory
@@ -760,6 +845,11 @@ def main():
     generate_blog_grid(sorted_blogs)
 
     author_attribution(sorted_blogs)
+
+    with open("time.txt", "w") as f:
+
+        f.write(f"Time taken: {time.time() - start_time} seconds")
+    print(f"Time taken: {time.time() - start_time} seconds")
 
     # change back working directory
 
