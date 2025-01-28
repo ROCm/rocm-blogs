@@ -9,9 +9,14 @@ import os
 # check_metadata(file: str) -> None
 def check_metadata(file: str) -> None:
 
-     # Check if the file is in the authors subfolder or contributor-bios.md
-     if 'authors' in pathlib.Path(file).parts or 'contributor-bios.md' in pathlib.Path(file).parts:
-        print(f'Skipping metadata check for {file} in authors subfolder or contributor-bios.md.')
+    # Check if the file is in the authors subfolder or contributor-bios.md
+    if (
+        "authors" in pathlib.Path(file).parts
+        or "contributor-bios.md" in pathlib.Path(file).parts
+    ):
+        print(
+            f"Skipping metadata check for {file} in authors subfolder or contributor-bios.md."
+        )
         return
 
     metadata_fields = {
@@ -23,7 +28,7 @@ def check_metadata(file: str) -> None:
         "category",
         "language",
         "target_audience",
-        "key_value_propositions"
+        "key_value_propositions",
     }
 
     # read the markdown file
@@ -42,14 +47,19 @@ def check_metadata(file: str) -> None:
     for field in metadata_fields:
         if field not in md.Meta:
             missing.append(field)
-            if 'ecosystems-and-partners' in pathlib.Path(file).parts and missing == "author":
-                 print("Author exempt from ecosystems and partners")
-                 pass
+            if (
+                "ecosystems-and-partners" in pathlib.Path(file).parts
+                and missing == "author"
+            ):
+                print("Author exempt from ecosystems and partners")
+                pass
             else:
-                 error = 1
+                error = 1
 
     missing_text = " ".join(missing)
-    print(f"{file} is missing a metadata field: {missing_text} with error {error}, please take a look at guide-to-blogs-metadata.md")
+    print(
+        f"{file} is missing a metadata field: {missing_text} with error {error}, please take a look at guide-to-blogs-metadata.md"
+    )
     exit(error)
 
 
