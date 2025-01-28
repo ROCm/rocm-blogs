@@ -1,14 +1,14 @@
 ---
 blogpost: true
-blog_title: Distributed fine-tuning of MPT-30B using Composer on AMD GPUs
+blog_title: 'Distributed fine-tuning of MPT-30B using Composer on AMD GPUs'
 date: 28 Jan 2025
 author: Vara Lakshmi Bayanagari
-thumbnail: ../images/thumbnail-390.JPG
+thumbnail: 'thumbnail-390.jpg'
 tags: LLM, PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
-target_audience: machine learning engineers
-key_value_propositions: This blog is an introduction to a new distributed training framework, Composer, by MosaicML. It shows how seamlessly Composer can be launched on AMD GPUs using SLURM on multinode setup and using docker for single node experiments
+target_audience: 'machine learning engineers'
+key_value_propositions: 'This blog is an introduction to a new distributed training framework, Composer, by MosaicML. It shows how seamlessly Composer can be launched on AMD GPUs using SLURM on multinode setup and using docker for single node experiments'
 myst:
   html_meta:
     "author": "Vara Lakshmi Bayanagari"
