@@ -1,6 +1,6 @@
 # Index.md Generator
 # Updated 2025 January 27
-# Version 1.4
+# Version 1.4.1
 
 
 import os
@@ -235,7 +235,17 @@ def optimize_image(image):
 
             before_size = os.path.getsize(image)
 
-            img = img.resize((480, 270), resample=Image.LANCZOS)
+            # scaling_factor = 0.3
+
+            original_width, original_height = img.size
+
+            max_width, max_height = (720, 480)
+            scaling_factor = min(max_width / original_width, max_height / original_height)
+
+            new_width = int(original_width * scaling_factor)
+            new_height = int(original_height * scaling_factor)
+
+            img = img.resize((new_width, new_height), resample=Image.LANCZOS)
 
             img.save(image, optimize=True, quality=80)
 
