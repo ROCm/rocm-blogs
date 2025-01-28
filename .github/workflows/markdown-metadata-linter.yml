@@ -10,8 +10,14 @@ on:
     - release
     - main
     paths-ignore:
+    - '../blogs/authors'
+    - '../blogs/ecosystems-and-partners'
     - './blogs/authors'
     - './blogs/ecosystems-and-partners'
+    - 'blogs/authors'
+    - 'blogs/ecosystems-and-partners'
+    - 'authors'
+    - 'ecosystem-and-partners'
 
 jobs:
   check-markdown-metadata:

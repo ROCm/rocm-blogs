@@ -9,6 +9,11 @@ import os
 # check_metadata(file: str) -> None
 def check_metadata(file: str) -> None:
 
+     # Check if the file is in the authors subfolder or contributor-bios.md
+     if 'authors' in pathlib.Path(file).parts or 'contributor-bios.md' in pathlib.Path(file).parts:
+        print(f'Skipping metadata check for {file} in authors subfolder or contributor-bios.md.')
+        return
+
     metadata_fields = {
         "blog_title",
         "thumbnail",
@@ -33,10 +38,15 @@ def check_metadata(file: str) -> None:
     # you want it to print out all the errors, so you shouldnt exit on the first one
     missing = []
     error = 0
+
     for field in metadata_fields:
         if field not in md.Meta:
             missing.append(field)
-            error = 1
+            if 'ecosystems-and-partners' in pathlib.Path(file).parts and missing == "author":
+                 print("Author exempt from ecosystems and partners")
+                 pass
+            else:
+                 error = 1
 
     missing_text = " ".join(missing)
     print(f"{file} is missing a metadata field: {missing_text} with error {error}, please take a look at guide-to-blogs-metadata.md")
