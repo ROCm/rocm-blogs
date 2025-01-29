@@ -69,6 +69,12 @@ Senior Member of Technical Staff at AMD
 Senior Machine Learning Engineer at AMD
 :::
 
+:::{grid-item-card} [Farshad Ghodsian](./authors/farshad-ghodsian.md)
+:padding: 1
+
+Senior Product Manager at AMD
+:::
+
 :::{grid-item-card} [Gina Sitaraman](./authors/gina-sitaraman.md)
 :padding: 1
 
