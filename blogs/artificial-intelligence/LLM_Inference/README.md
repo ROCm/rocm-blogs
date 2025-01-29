@@ -64,47 +64,11 @@ Figure 1:Roofline plot of LLM inference[1]
 
 The table below, showcases AMD Instinct™ MI300X GPU benefits in terms of HBM capacity and memory bandwidth which are key parameters for efficient LLM serving. However, under various operating conditions like when running key memory bandwidth intensive operations, compute, and communication operations maximum performance delivered may vary.
 
-<table>
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 20%" />
-<col style="width: 22%" />
-<col style="width: 15%" />
-<col style="width: 31%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;"></th>
-<th style="text-align: left;"></th>
-<th style="text-align: left;">MI300X</th>
-<th style="text-align: left;">H100 SXM</th>
-<th style="text-align: left;"><p>MI300X Advantage</p>
-<p>(MI300X/ H100)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th style="text-align: left;">Power</th>
-<td style="text-align: left;">TDP</td>
-<td style="text-align: left;">750W</td>
-<td style="text-align: left;">700W</td>
-<td style="text-align: left;">1.07x</td>
-</tr>
-<tr>
-<th rowspan="2" style="text-align: left;">Memory</th>
-<td style="text-align: left;">HBM Capacity</td>
-<td style="text-align: left;">192 GB</td>
-<td style="text-align: left;">80 GB</td>
-<td style="text-align: left;"><strong>2.40x</strong></td>
-</tr>
-<tr>
-<td style="text-align: left;">HBM Bandwidth</td>
-<td style="text-align: left;">5.325 TB/s</td>
-<td style="text-align: left;">3.35 TB/s</td>
-<td style="text-align: left;"><strong>1.59x</strong></td>
-</tr>
-</tbody>
-</table>
+|               |              | MI300X    | H100 SXM | MI300X Advantage<br>(MI300X/ H100) |
+|---------------|--------------|-----------|----------|------------------------------------|
+| Power         | TDP          | 750W      | 700W     | 1.07x                              |
+| Memory        | HBM Capacity | 192 GB    | 80 GB    | 2.40x                              |
+|               | HBM Bandwidth | 5.325 TB/s   | 3.35 TB/s | 1.59x    |
 
 *Endnote: MI300-05A.*
 
@@ -158,40 +122,13 @@ hipBLAStLt, OpenAI Triton Kernels and AMD Composable Kernels (CK).
 
 The table below outlines the configuration for the following container: rocm/vllm-dev:20250117
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Component</th>
-<th style="text-align: left;">Version</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th style="text-align: left;">vLLM</th>
-<td style="text-align: left;">0.6.7.dev121+gc5a9406b.rocm630</td>
-</tr>
-<tr>
-<th style="text-align: left;">Python</th>
-<td style="text-align: left;">3.12.8</td>
-</tr>
-<tr>
-<th style="text-align: left;">Torch</th>
-<td style="text-align: left;">2.6.0a0+git8d4926e</td>
-</tr>
-<tr>
-<th style="text-align: left;">Triton</th>
-<td style="text-align: left;">3.2.0+gite5be006a</td>
-</tr>
-<tr>
-<th style="text-align: left;">ROCm</th>
-<td style="text-align: left;">6.3.0-39</td>
-</tr>
-</tbody>
-</table>
+| Component | Version                        |
+|-----------|--------------------------------|
+| vLLM      | 0.6.7.dev121+gc5a9406b.rocm630 |
+| Python    | 3.12.8                         |
+| Torch     | 2.6.0a0+git8d4926e             |
+| Triton    | 3.2.0+gite5be006a              |
+| ROCm      | 6.3.0-39                       |
 
 The container currently supports the following key features:
 
@@ -281,74 +218,12 @@ testing for two scenarios:
 
 (*TTFT* – Time to First Token, *TPOT* – Time per output token)
 
-<table>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 9%" />
-<col style="width: 8%" />
-<col style="width: 7%" />
-<col style="width: 8%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 27%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Precision</th>
-<th style="text-align: left;">TP Size</th>
-<th style="text-align: left;">CPU</th>
-<th style="text-align: left;">GPU</th>
-<th style="text-align: left;">Server (tps)</th>
-<th style="text-align: left;">Offline (tps)</th>
-<th style="text-align: left;">MI300X / H100 (Higher is better)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th rowspan="2" style="text-align: left;">Llama 2 70B</th>
-<td rowspan="2" style="text-align: left;">FP8</td>
-<td rowspan="2" style="text-align: left;">8</td>
-<td style="text-align: left;">EPYC</td>
-<td style="text-align: left;">MI300X</td>
-<td style="text-align: left;">22021</td>
-<td style="text-align: left;"></td>
-<td rowspan="2" style="text-align: left;">1.01</td>
-</tr>
-<tr>
-<td style="text-align: left;">Xeon</td>
-<td style="text-align: left;">H100</td>
-<td style="text-align: left;">21605</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<th style="text-align: left;"></th>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<th rowspan="2" style="text-align: left;">Llama 3.1 405B</th>
-<td rowspan="2" style="text-align: left;">FP8</td>
-<td rowspan="2" style="text-align: left;">8</td>
-<td style="text-align: left;">EPYC</td>
-<td style="text-align: left;">MI300X</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">24110</td>
-<td rowspan="2" style="text-align: left;">0.98</td>
-</tr>
-<tr>
-<td style="text-align: left;">Xeon</td>
-<td style="text-align: left;">H100</td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;">24525</td>
-</tr>
-</tbody>
-</table>
+| Model          | Precision | TP Size | CPU  | GPU    | Server (tps) | Offline (tps) | MI300X / H100 (Higher is better) |
+|----------------|-----------|---------|------|--------|--------------|---------------|----------------------------------
+| Llama 2 70B    | FP8       | 8       | EPYC | MI300X | 22021        |               | 1.01                             |
+|                |           |         | Xeon | H100   | 21605        |               |                                  |
+| Llama 3.1 405B | FP8       | 8       | EPYC | MI300X |              | 24110         | 0.98                             |
+|                |           |         | Xeon | H100   |              | 24525         |                                  |
 
 *Source:* [*Benchmark MLPerf Inference: Datacenter | MLCommons
 V4.1*](https://mlcommons.org/benchmarks/inference-datacenter/)
@@ -374,117 +249,18 @@ The table below shows performance data where a local inference client is
 fed requests at an infinite rate (no delay between messages) and shows
 the output token throughput in client-server scenario under maximum load
 with no latency constraints.
-
-<table>
-<colgroup>
-<col style="width: 11%" />
-<col style="width: 8%" />
-<col style="width: 8%" />
-<col style="width: 7%" />
-<col style="width: 7%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 16%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Precision</th>
-<th style="text-align: left;">TP Size</th>
-<th style="text-align: left;">Input</th>
-<th style="text-align: left;">Output</th>
-<th style="text-align: left;"><p>Output token throughput</p>
-<p>(tok/sec), MI300X [2]</p></th>
-<th style="text-align: left;"><p>Output token throughput</p>
-<p>(tok/sec), H100 [2]<a class="footnote-ref"
-role="doc-noteref"></a></p></th>
-<th style="text-align: left;"><p>MI300X Advantage</p>
-<p>MI300X / H100 (Higher is better)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th rowspan="5" style="text-align: left;">Llama 3.1 70B</th>
-<td rowspan="5" style="text-align: left;">FP8</td>
-<td rowspan="5" style="text-align: left;">8</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">15105</td>
-<td style="text-align: left;">15810</td>
-<td style="text-align: left;">0.96</td>
-</tr>
-<tr>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">4096</td>
-<td style="text-align: left;">10505</td>
-<td style="text-align: left;">11435</td>
-<td style="text-align: left;">0.92</td>
-</tr>
-<tr>
-<td style="text-align: left;">500</td>
-<td style="text-align: left;">2000</td>
-<td style="text-align: left;">12664</td>
-<td style="text-align: left;">14481</td>
-<td style="text-align: left;">0.87</td>
-</tr>
-<tr>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">8239</td>
-<td style="text-align: left;">8245</td>
-<td style="text-align: left;">1.00</td>
-</tr>
-<tr>
-<td colspan="4" style="text-align: left;">Geomean</td>
-<td style="text-align: left;">0.94</td>
-</tr>
-<tr>
-<th style="text-align: left;"></th>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-<td style="text-align: left;"></td>
-</tr>
-<tr>
-<th rowspan="5" style="text-align: left;">Llama 3.1 405B</th>
-<td rowspan="5" style="text-align: left;">FP8</td>
-<td rowspan="5" style="text-align: left;">8</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">4065</td>
-<td style="text-align: left;">3265</td>
-<td style="text-align: left;">1.25</td>
-</tr>
-<tr>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">4096</td>
-<td style="text-align: left;">3171</td>
-<td style="text-align: left;">1957</td>
-<td style="text-align: left;">1.62</td>
-</tr>
-<tr>
-<td style="text-align: left;">500</td>
-<td style="text-align: left;">2000</td>
-<td style="text-align: left;">2985</td>
-<td style="text-align: left;">2639</td>
-<td style="text-align: left;">1.13</td>
-</tr>
-<tr>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">1999</td>
-<td style="text-align: left;">1563</td>
-<td style="text-align: left;">1.28</td>
-</tr>
-<tr>
-<td colspan="4" style="text-align: left;">Geomean</td>
-<td style="text-align: left;">1.31</td>
-</tr>
-</tbody>
-</table>
+| Model          | Precision | TP Size | Input   | Output | Output token throughput<br>(tok/sec), MI300X [2] | Output token throughput<br>(tok/sec), H100 [2] | MI300X Advantage<br>MI300X / H100 (Higher is better) |
+|----------------|-----------|---------|---------|--------|--------------------------------------------------|------------------------------------------------|------------------------------------------------------|
+| Llama 3.1 70B  | FP8       | 8       | 128     | 2048   | 15105                                            | 15810                                          | 0.96                                                 |
+|                |           |         | 128     | 4096   | 10505                                            | 11435                                          | 0.92                                                 |
+|                |           |         | 500     | 2000   | 12664                                            | 14481                                          | 0.87                                                 |
+|                |           |         | 2048    | 2048   | 8239                                             | 8245                                           | 1.00                                                 |
+| Geomean               |           |         |  |        |                                                  |                                                | 0.94                                                 |
+| Llama 3.1 405B | FP8       | 8       | 128     | 2048   | 4065                                             | 3265                                           | 1.25                                                 |
+|                |           |         | 128     | 4096   | 3171                                             | 1957                                           | 1.62                                                 |
+|                |           |         | 500     | 2000   | 2985                                             | 2639                                           | 1.13                                                 |
+|                |           |         | 2048    | 2048   | 1999                                             | 1563                                           | 1.28                                                 |
+| Geomean               |           |         | |        |                                                  |                                                | 1.31                                                 |
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
@@ -513,341 +289,47 @@ The table below presents the end-to-end latency (measured in milliseconds), also
 
 TTLT measures the total time from input to the generation of all output tokens. While TTFT is useful for assessing initial response time, it doesn’t account for the time required to generate longer outputs—an important factor in tasks like code generation and translation. TTLT, therefore, provides a more comprehensive view of end-to-end inference performance.
 
-<table>
-<colgroup>
-<col style="width: 13%" />
-<col style="width: 9%" />
-<col style="width: 8%" />
-<col style="width: 10%" />
-<col style="width: 6%" />
-<col style="width: 7%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 15%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Precision</th>
-<th style="text-align: left;">TP Size</th>
-<th style="text-align: left;">Batch Size</th>
-<th style="text-align: left;">Input</th>
-<th style="text-align: left;">Output</th>
-<th style="text-align: left;"><p>Latency (ms),</p>
-<p>MI300X</p></th>
-<th style="text-align: left;"><p>Latency (ms),</p>
-<p>H100</p></th>
-<th style="text-align: left;"><p>MI300X / H100</p>
-<p>(Higher is better)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="16" style="text-align: left;">Llama 3.1 70B</td>
-<td rowspan="16" style="text-align: left;">FP8</td>
-<td rowspan="16" style="text-align: left;">8</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">19089</td>
-<td style="text-align: center;">20923</td>
-<td style="text-align: center;">1.10</td>
-</tr>
-<tr>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">19610</td>
-<td style="text-align: center;">20352</td>
-<td style="text-align: center;">1.04</td>
-</tr>
-<tr>
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">19911</td>
-<td style="text-align: center;">21134</td>
-<td style="text-align: center;">1.06</td>
-</tr>
-<tr>
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">21859</td>
-<td style="text-align: center;">22102</td>
-<td style="text-align: center;">1.01</td>
-</tr>
-<tr>
-<td style="text-align: left;">16</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">23538</td>
-<td style="text-align: center;">23961</td>
-<td style="text-align: center;">1.02</td>
-</tr>
-<tr>
-<td style="text-align: left;">32</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">25343</td>
-<td style="text-align: center;">26543</td>
-<td style="text-align: center;">1.02</td>
-</tr>
-<tr>
-<td style="text-align: left;">64</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">32548</td>
-<td style="text-align: center;">29599</td>
-<td style="text-align: center;">0.91</td>
-</tr>
-<tr>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">45216</td>
-<td style="text-align: center;">42398</td>
-<td style="text-align: center;">0.94</td>
-</tr>
-<tr>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">19154</td>
-<td style="text-align: center;">21105</td>
-<td style="text-align: center;">1.10</td>
-</tr>
-<tr>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">19671</td>
-<td style="text-align: center;">21449</td>
-<td style="text-align: center;">1.09</td>
-</tr>
-<tr>
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">19976</td>
-<td style="text-align: center;">22201</td>
-<td style="text-align: center;">1.11</td>
-</tr>
-<tr>
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">22486</td>
-<td style="text-align: center;">23453</td>
-<td style="text-align: center;">1.04</td>
-</tr>
-<tr>
-<td style="text-align: left;">16</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">25246</td>
-<td style="text-align: center;">26056</td>
-<td style="text-align: center;">1.03</td>
-</tr>
-<tr>
-<td style="text-align: left;">32</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">28967</td>
-<td style="text-align: center;">30501</td>
-<td style="text-align: center;">1.05</td>
-</tr>
-<tr>
-<td style="text-align: left;">64</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">39920</td>
-<td style="text-align: center;">36313</td>
-<td style="text-align: center;">0.91</td>
-</tr>
-<tr>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">59514</td>
-<td style="text-align: center;">54202</td>
-<td style="text-align: center;">0.91</td>
-</tr>
-<tr>
-<td colspan="8" style="text-align: left;">Geomean</td>
-<td style="text-align: center;">1.02</td>
-</tr>
-</tbody>
-</table>
+| Model         | Precision | TP Size | Batch Size | Input | Output | Latency (ms),<br>MI300X | Latency (ms),<br>H100 | MI300X / H100<br>(Higher is better) |
+|---------------|-----------|---------|------------|-------|--------|-------------------------|-----------------------|-------------------------------------|
+| Llama 3.1 70B | FP8       | 8       | 1          | 128   | 2048   | 19089                   | 20923                 | 1.10                                |
+|               |           |         | 2          | 128   | 2048   | 19610                   | 20352                 | 1.04                                |
+|               |           |         | 4          | 128   | 2048   | 19911                   | 21134                 | 1.06                                |
+|               |           |         | 8          | 128   | 2048   | 21859                   | 22102                 | 1.01                                |
+|               |           |         | 16         | 128   | 2048   | 23538                   | 23961                 | 1.02                                |
+|               |           |         | 32         | 128   | 2048   | 25343                   | 26543                 | 1.02                                |
+|               |           |         | 64         | 128   | 2048   | 32548                   | 29599                 | 0.91                                |
+|               |           |         | 128        | 128   | 2048   | 45216                   | 42398                 | 0.94                                |
+|               |           |         | 1          | 2048  | 2048   | 19154                   | 21105                 | 1.10                                |
+|               |           |         | 2          | 2048  | 2048   | 19671                   | 21449                 | 1.09                                |
+|               |           |         | 4          | 2048  | 2048   | 19976                   | 22201                 | 1.11                                |
+|               |           |         | 8          | 2048  | 2048   | 22486                   | 23453                 | 1.04                                |
+|               |           |         | 16         | 2048  | 2048   | 25246                   | 26056                 | 1.03                                |
+|               |           |         | 32         | 2048  | 2048   | 28967                   | 30501                 | 1.05                                |
+|               |           |         | 64         | 2048  | 2048   | 39920                   | 36313                 | 0.91                                |
+|               |           |         | 128        | 2048  | 2048   | 59514                   | 54202                 | 0.91                                |
+| Geomean       |           |         |            |       |        |                         |                       | 1.02                                |
 
 *Endnote MI300-074.*
 
-<table>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 9%" />
-<col style="width: 8%" />
-<col style="width: 10%" />
-<col style="width: 6%" />
-<col style="width: 7%" />
-<col style="width: 13%" />
-<col style="width: 13%" />
-<col style="width: 15%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Model</th>
-<th style="text-align: left;">Precision</th>
-<th style="text-align: left;">TP Size</th>
-<th style="text-align: left;">Batch Size</th>
-<th style="text-align: left;">Input</th>
-<th style="text-align: left;">Output</th>
-<th style="text-align: left;"><p>Latency (ms),</p>
-<p>MI300X</p></th>
-<th style="text-align: left;"><p>Latency (ms),</p>
-<p>H100</p></th>
-<th style="text-align: left;"><p>MI300X / H100</p>
-<p>(Higher is better)</p></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td rowspan="16" style="text-align: left;">Llama 3.1 405B</td>
-<td rowspan="16" style="text-align: left;">FP8</td>
-<td rowspan="16" style="text-align: left;">8</td>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">51740</td>
-<td style="text-align: center;">58916</td>
-<td style="text-align: left;">1.14</td>
-</tr>
-<tr>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">52769</td>
-<td style="text-align: center;">58130</td>
-<td style="text-align: left;">1.1</td>
-</tr>
-<tr>
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">54557</td>
-<td style="text-align: center;">59730</td>
-<td style="text-align: left;">1.09</td>
-</tr>
-<tr>
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">56902</td>
-<td style="text-align: center;">62833</td>
-<td style="text-align: left;">1.1</td>
-</tr>
-<tr>
-<td style="text-align: left;">16</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">60432</td>
-<td style="text-align: center;">66537</td>
-<td style="text-align: left;">1.1</td>
-</tr>
-<tr>
-<td style="text-align: left;">32</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">67353</td>
-<td style="text-align: center;">71742</td>
-<td style="text-align: left;">1.07</td>
-</tr>
-<tr>
-<td style="text-align: left;">64</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">81085</td>
-<td style="text-align: center;">87298</td>
-<td style="text-align: left;">1.08</td>
-</tr>
-<tr>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">116139</td>
-<td style="text-align: center;">99911</td>
-<td style="text-align: left;">0.86</td>
-</tr>
-<tr>
-<td style="text-align: left;">1</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">52218</td>
-<td style="text-align: center;">59511</td>
-<td style="text-align: left;">1.14</td>
-</tr>
-<tr>
-<td style="text-align: left;">2</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">53227</td>
-<td style="text-align: center;">60554</td>
-<td style="text-align: left;">1.14</td>
-</tr>
-<tr>
-<td style="text-align: left;">4</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">55512</td>
-<td style="text-align: center;">62048</td>
-<td style="text-align: left;">1.12</td>
-</tr>
-<tr>
-<td style="text-align: left;">8</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">59931</td>
-<td style="text-align: center;">66082</td>
-<td style="text-align: left;">1.1</td>
-</tr>
-<tr>
-<td style="text-align: left;">16</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">66890</td>
-<td style="text-align: center;">72055</td>
-<td style="text-align: left;">1.08</td>
-</tr>
-<tr>
-<td style="text-align: left;">32</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">80688</td>
-<td style="text-align: center;">82687</td>
-<td style="text-align: left;">1.02</td>
-</tr>
-<tr>
-<td style="text-align: left;">64</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">108503</td>
-<td style="text-align: center;">106951</td>
-<td style="text-align: left;">0.99</td>
-</tr>
-<tr>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: center;">168846</td>
-<td style="text-align: center;">195622</td>
-<td style="text-align: left;">1.16</td>
-</tr>
-<tr>
-<td colspan="8" style="text-align: left;">Geomean</td>
-<td style="text-align: left;">1.08</td>
-</tr>
-</tbody>
-</table>
+| Model          | Precision | TP Size | Batch Size | Input | Output | Latency (ms),<br>MI300X | Latency (ms),<br>H100 | MI300X / H100<br>(Higher is better) |
+|----------------|-----------|---------|------------|-------|--------|-------------------------|-----------------------|-------------------------------------|
+| Llama 3.1 405B | FP8       | 8       | 1          | 128   | 2048   | 51740                   | 58916                 | 1.14                                |
+|                |           |         | 2          | 128   | 2048   | 52769                   | 58130                 | 1.1                                 |
+|                |           |         | 4          | 128   | 2048   | 54557                   | 59730                 | 1.09                                |
+|                |           |         | 8          | 128   | 2048   | 56902                   | 62833                 | 1.1                                 |
+|                |           |         | 16         | 128   | 2048   | 60432                   | 66537                 | 1.1                                 |
+|                |           |         | 32         | 128   | 2048   | 67353                   | 71742                 | 1.07                                |
+|                |           |         | 64         | 128   | 2048   | 81085                   | 87298                 | 1.08                                |
+|                |           |         | 128        | 128   | 2048   | 116139                  | 99911                 | 0.86                                |
+|                |           |         | 1          | 2048  | 2048   | 52218                   | 59511                 | 1.14                                |
+|                |           |         | 2          | 2048  | 2048   | 53227                   | 60554                 | 1.14                                |
+|                |           |         | 4          | 2048  | 2048   | 55512                   | 62048                 | 1.12                                |
+|                |           |         | 8          | 2048  | 2048   | 59931                   | 66082                 | 1.1                                 |
+|                |           |         | 16         | 2048  | 2048   | 66890                   | 72055                 | 1.08                                |
+|                |           |         | 32         | 2048  | 2048   | 80688                   | 82687                 | 1.02                                |
+|                |           |         | 64         | 2048  | 2048   | 108503                  | 106951                | 0.99                                |
+|                |           |         | 128        | 2048  | 2048   | 168846                  | 195622                | 1.16                                |
+| Geomean        |           |         |            |       |        |                         |                       | 1.08                                |
 
 *Endnote MI300-074.*
 
@@ -893,47 +375,11 @@ results are below. The MI300X data was benchmarked with
 vllm-dev:20250112 docker image and H100 data was benchmarked with vLLM
 0.6.6.post1.
 
-<table>
-<colgroup>
-<col style="width: 20%" />
-<col style="width: 17%" />
-<col style="width: 19%" />
-<col style="width: 19%" />
-<col style="width: 22%" />
-</colgroup>
-<thead>
-<tr>
-<th style="text-align: left;">Models</th>
-<th style="text-align: left;">Precision</th>
-<th style="text-align: left;">Input Length</th>
-<th style="text-align: left;">Output Length</th>
-<th style="text-align: left;">Use case</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th style="text-align: left;">Llama 3.1 405B*</th>
-<td style="text-align: left;">FP8</td>
-<td style="text-align: left;">5000</td>
-<td style="text-align: left;">500</td>
-<td style="text-align: left;">Summarization</td>
-</tr>
-<tr>
-<th style="text-align: left;">Llama 3.1 70B</th>
-<td style="text-align: left;">FP16, FP8</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">Translation</td>
-</tr>
-<tr>
-<th style="text-align: left;">Mistral 7B v0.3</th>
-<td style="text-align: left;">FP16, FP8</td>
-<td style="text-align: left;">128</td>
-<td style="text-align: left;">2048</td>
-<td style="text-align: left;">Chat</td>
-</tr>
-</tbody>
-</table>
+ Models          | Precision | Input Length | Output Length | Use case      |
+-----------------|-----------|--------------|---------------|---------------|
+ Llama 3.1 405B* | FP8       | 5000         | 500           | Summarization |
+ Llama 3.1 70B   | FP16, FP8 | 2048         | 2048          | Translation   |
+ Mistral 7B v0.3 | FP16, FP8 | 128          | 2048          | Chat          |
 
 > **NOTE**: The table above, shows the three combinations of input and output lengths that were used to represent
 > different inference use cases.
