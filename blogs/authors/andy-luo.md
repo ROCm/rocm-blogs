@@ -4,9 +4,9 @@
   <meta name="keywords" content="AMD GPU, ROCm, blog, contributor, blog author">
 </head>
 
-(alexvoic)=
+(andyluo)=
 
-# Alex Voicu
+# Andy Luo
 
 ```{image} ./data/Andy-Luo.jpeg
 :alt: Andy Luo
