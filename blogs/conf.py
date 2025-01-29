@@ -90,6 +90,10 @@ blog_authors = {
         "Alex Voicu",
         "http://rocm.blogs.amd.com/authors/alex-voicu.html",
 ),
+"Andy Luo": (
+        "Anton Smirnov",
+        "http://rocm.blogs.amd.com/authors/andy-luo.html",
+),    
 "Anton Smirnov": (
         "Anton Smirnov",
         "http://rocm.blogs.amd.com/authors/anton-smirnov.html",
