@@ -136,12 +136,12 @@ In this section, we will go through the steps of how to recognize a register pre
 problem and how to mitigate it.
 
 First of all, the number of registers used by GPU kernels can be detected in two
-ways: 1) compiling the file containing the kernels with the `-Rpass-analyze=kernel-resource-usage`
+ways: 1) compiling the file containing the kernels with the `-Rpass-analysis=kernel-resource-usage`
 flag, which will print to screen the resource usage of each kernel in the file at
 compile time; some of this information include SGPRs, VGPRs, ScratchSize, VGPR/SGPR
 spills, Occupancy, and LDS usage. 2) Compiling with `--save-temps` and looking in
 the `hip-amdgcn-amd-amdhsa-gfx90a.s` file for `.vgpr_spill_count`. All the information
-reported by the `-Rpass-analyze=kernel-resource-usage` flag are also in this file.
+reported by the `-Rpass-analysis=kernel-resource-usage` flag are also in this file.
 
 Once the register pressure situation has been assessed/confirmed, there are a few
 techniques that can be applied to the code to reduce register pressure.
