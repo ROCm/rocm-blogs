@@ -10,11 +10,11 @@ target_audience:
 key_value_propositions:
 language: English
 myst:
-html_meta:
-"author": "Danny Guan"
-"description lang=en": "Guide to ROCm Blogs Metadata"
-"keywords": ""
-"property=og:locale": "en_US"
+  html_meta:
+    "author": "Danny Guan"
+    "description lang=en": "Guide to ROCm Blogs Metadata"
+    "keywords": ""
+    "property=og:locale": "en_US"
 ---
 
 # Guide to Blogs Metadata
