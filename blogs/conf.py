@@ -130,6 +130,10 @@ blog_authors = {
         "Fabricio Flores",
         "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
 ),
+"Farshad Ghodsian": (
+        "Farshad Ghodsian",
+        "http://rocm.blogs.amd.com/authors/farshad-ghodsian.html",
+),
 "George Markomanolis": (
         "George Markomanolis",
         "http://rocm.blogs.amd.com/authors/george-markomanolis.html",
