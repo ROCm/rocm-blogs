@@ -126,6 +126,10 @@ blog_authors = {
         "Eliot Li",
         "http://rocm.blogs.amd.com/authors/eliot-li.html",
 ),
+"Emad Barsoum": (
+        "Emad Barsoum",
+        "http://rocm.blogs.amd.com/authors/emad-barsoum.html",
+),
 "Fabricio Flores": (
         "Fabricio Flores",
         "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
