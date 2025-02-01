@@ -19,6 +19,9 @@ myst:
 
 # Enhancing AI Training with AMD ROCm Software
 
+Updated on Jan 31, 2025: We acknowledge SemiAnalysis LLC, whose benchmarking code
+served as the foundation for our setup to generate the data above.
+
 ROCm™ has emerged as a premier open software stack designed to address
 the evolving needs of AI and machine learning workloads. Built for
 inference and training, ROCm delivers leadership performance, empowering
