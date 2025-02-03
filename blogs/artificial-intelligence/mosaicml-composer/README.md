@@ -220,7 +220,7 @@ We can see that Composer scaled across two nodes as expected as seen in the outp
 ## Summary
 
 In this blog, we showed you how to fine-tune the MPT-30B model for an instruction tuning task using MosaicML's distributed Composer framework. More specifically, we discussed two approaches in which Composer can perform and scale - distributed framework using SLURM, and single node framework. To observe Composer's behavior on two nodes framework we used SLURM scripts for resource allocations across nodes. Where as for a hassle free Composer experiment without any additional framework setup we demonstrated that a single node section can work perfectly. This blog also highlighted the ease of use of Composer with the docker image from AMD's [Infinity Hub](https://account.amd.com/en/member/infinity_hub_containers.html) and a simple training script launch inside the container.
-If you want to know more about AI development on AMD GPUs, visit the AI developer hub here ([www.amd.com/gpu-ai-developer](http://www.amd.com/gpu-ai-developer))
+If you want to know more about AI development on AMD GPUs, visit the [AI developer hub](https://www.amd.com/rocm-ai-developer).
 
 ## Disclaimers
 

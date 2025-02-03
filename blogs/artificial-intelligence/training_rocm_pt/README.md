@@ -148,7 +148,8 @@ to accessibility through open-source, public containers, ROCm is paving
 the way for researchers and AI engineers to unlock AI breakthroughs.
 
 Explore the latest tools and join the growing community of ROCm
-developers to realize the full the potential of AI innovation. If you want to know more about AI development on AMD GPUs, visit the [AI developer hub](https://www.amd.com/gpu-ai-developer).
+developers to realize the full the potential of AI innovation.
+If you want to know more about AI development on AMD GPUs, visit the [AI developer hub](https://www.amd.com/rocm-ai-developer).
 
 ```{update} Jan 31, 2025
 We acknowledge SemiAnalysis LLC, whose benchmarking code
