@@ -63,7 +63,7 @@ html_theme_options = {
     "flavor": "rocm-blogs"
 }
 
-extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx", 'hoverxref.extension', 'myst_parser']
+extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx", 'hoverxref.extension']
 external_toc_path = "./sphinx/_toc.yml"
 
 hoverxref_api_host = "/_"

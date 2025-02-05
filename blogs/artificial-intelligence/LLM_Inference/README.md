@@ -690,6 +690,8 @@ To conclude, here are few key points:
  LLM models with multiple instances of TP1 for LLMs &lt;=72B as
  demonstrated in AMD’s MLPerf 4.1 submission.[3]
 
+If you want to know more about AI development on AMD GPUs, visit the [AI developer hub](https://www.amd.com/rocm-ai-developer).
+
 Endnotes:
 
 MI300-05A: Calculations conducted by AMD Performance Labs as of November
