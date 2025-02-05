@@ -161,7 +161,8 @@ END NOTES
 [1, 2]: Testing conducted on 01/29/20025 by AMD. The overall training text
 generation throughput was measured in Tflops/s/GPU for Llama-3.1 8B
 using FP8 & BF16 with a sequence length of 4096 tokens and batch size 6
-for MI300X and 1 for H100. Mistral 7B using FP8 & BF16 using a sequence
+for MI300X, batch size 1 for FP8 and batch size 2 for BF16 on H100 .
+Mistral 7B using FP8 & BF16 using a sequence
 length of 8192 using a batch size of 3 for BF16 and 4 for FP8 on MI300X
 and batch size 1 for H100. FLUX.1-dev using BF16 and batch size 10 for
 MI300X and 3 for H100.
@@ -186,7 +187,7 @@ DDR5 memory with 8x NVIDIA H100 80GB HBM3 \[PB1\] (80GiB, 700W) GPUS,
 Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic,  System
 BIOS 3.5.0, CUDA® 12.6
 
-Dell PowerEdge XE9680 with 2x Intel Xeon Platinum 8480+ Processors, 4096
+Server with 2x Intel Xeon Platinum 8480+ Processors, 4096
 GiB (32 DIMMS, 4400 mts, 128 GiB/DIMM), 8x AMD Instinct MI325X (256GiB,
 1000W) GPUs, Ubuntu 22.04.2 LTS with Linux kernel 5.15.0-122-generic,
 and a pre-release build of ROCm 6.3
