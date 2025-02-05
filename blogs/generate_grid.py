@@ -798,6 +798,27 @@ def author_attribution(blogs, minimum_date="September 1, 2024"):
 
                 lines.insert(line_number + 2, f"\n{authors_html}\n")
 
+                lines.append("""
+<div>
+    <script src="https://giscus.app/client.js"
+            data-repo="ROCm/rocm-blogs"
+            data-repo-id="R_kgDOLJ0omA"
+            data-category="General"
+            data-category-id="DIC_kwDOLJ0omM4Cc_fT"
+            data-mapping="title"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="light"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
+</div>
+"""
+                )
+
                 with open(readme_file, "w", encoding="utf-8") as file:
 
                     # add date class style
