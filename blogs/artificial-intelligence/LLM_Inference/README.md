@@ -742,3 +742,21 @@ Utilization) of LLM Inference roofline. Courtesy of
 [3] <sup>Users  are  recommended  to  use  the  latest  version  of  the  docker,  for  the  testing  in  this  document  rocm/vllm-dev:20250112  has  been  used.</sup>
 
 [4] <sup>The  online  serving  benchmark  in  this  article  uses  common  configs  without  vLLM  parameter  tuning.  It  does  not  use  specific  GEMM  tuning  like  TunableOps.  With  specific  tuning  based  on  model  config,  the  performance  could  be  further  improved.  TensorRT-LLM  employs  the  custom  configs  to  build  engine  for  its  published performance.</sup>
+
+<div>
+  <script src="https://giscus.app/client.js"
+          data-repo="ROCm/rocm-blogs"
+          data-repo-id="R_kgDOLJ0omA"
+          data-category="General"
+          data-category-id="DIC_kwDOLJ0omM4Cc_fT"
+          data-mapping="title"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="bottom"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          crossorigin="anonymous"
+          async>
+  </script>
+</div>
