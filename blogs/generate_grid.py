@@ -799,58 +799,21 @@ def author_attribution(blogs, minimum_date="September 1, 2024"):
                 lines.insert(line_number + 2, f"\n{authors_html}\n")
 
                 lines.append("""
-<div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            function getGiscusTheme() {
-                const theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
-                return theme === 'dark' ? 'noborder_dark' : 'noborder_light';
-            }
-        
-            function setGiscusTheme() {
-                function sendMessage(message) {
-                    const iframe = document.querySelector('iframe.giscus-frame');
-                    if (!iframe) return;
-                    iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-                }
-                sendMessage({
-                    setConfig: {
-                        theme: getGiscusTheme(),
-                    },
-                });
-            }
-        
-            const giscusAttributes = {
-                "src": "https://giscus.app/client.js",
-                "data-repo": "ROCm/rocm-blogs",
-                "data-repo-id": "R_kgDOLJ0omA",
-                "data-category": "General",
-                "data-category-id": "DIC_kwDOLJ0omM4Cc_fT",
-                "data-mapping": "title",
-                "data-reactions-enabled": "1",
-                "data-emit-metadata": "0",
-                "data-theme": giscusTheme,
-                "data-lang": "en",
-                "crossorigin": "anonymous",
-                "async": "",
-            };
-        
-            // Dynamically create script tag
-            const giscusScript = document.createElement("script");
-            Object.entries(giscusAttributes).forEach(([key, value]) => giscusScript.setAttribute(key, value));
-        
-            // Append the script tag to the <article> element
-            document.querySelector('article').appendChild(giscusScript);
-        
-            // Update giscus theme when theme switcher is clicked
-            const toggle = document.querySelector('label[for="switch_default"]');
-            if (toggle) {
-                toggle.addEventListener('click', setGiscusTheme);
-            }
-        });
-        
-    </script>
-</div>
+<script src="https://giscus.app/client.js"
+    data-repo="ROCm/rocm-blogs"
+    data-repo-id="R_kgDOLJ0omA"
+    data-category="General"
+    data-category-id="DIC_kwDOLJ0omM4Cc_fT"
+    data-mapping="title"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="bottom"
+    data-theme="preferred_color_scheme"
+    data-lang="en"
+    crossorigin="anonymous"
+    async>
+</script>
 """
                 )
 
