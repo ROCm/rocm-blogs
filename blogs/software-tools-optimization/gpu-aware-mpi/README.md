@@ -127,17 +127,18 @@ with ROCm support.
 For building GPU-Aware OpenMPI with ROCm support, first, you need to install Unified
 Communication X ([UCX](https://openucx.org/)). UCX is a communication framework for
 high-bandwidth and low-latency networks. Use the following commands to build UCX
-(version 1.14):
+(version 1.15):
 
 ```bash
 git clone https://github.com/openucx/ucx.git
 cd ucx
-git checkout v1.14.x
+git checkout v1.15.x
 ./autogen.sh
 ./configure --prefix=$HOME/.local --with-rocm=/opt/rocm --without-knem --without-cuda --enable-gtest --enable-examples
 make -j
 make install
 ```
+Refer to the [Compatibility matrix](https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html) for compatible UCX and ROCm versions.
 
 After successful installation, UCX will be available in `$HOME/.local` directory.
 Now, we can install GPU-Aware OpenMPI with ROCm support with the following commands:
