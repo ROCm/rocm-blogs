@@ -138,6 +138,7 @@ git checkout v1.15.x
 make -j
 make install
 ```
+
 Refer to the [Compatibility matrix](https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html) for compatible UCX and ROCm versions.
 
 After successful installation, UCX will be available in `$HOME/.local` directory.
