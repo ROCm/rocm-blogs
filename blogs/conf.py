@@ -146,6 +146,10 @@ blog_authors = {
         "George Markomanolis",
         "http://rocm.blogs.amd.com/authors/george-markomanolis.html",
 ),
+"George Wang": (
+        "George Wang",
+        "http://rocm.blogs.amd.com/authors/george-wang.html",
+),
 "Gina Sitaraman": (
         "Gina Sitaraman",
         "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
@@ -177,6 +181,10 @@ blog_authors = {
 "Nicholas Malaya": (
         "Nicholas Malaya",
         "http://rocm.blogs.amd.com/authors/nicholas-malaya.html",
+),
+"Ning Zhang": (
+        "Ning Zhang",
+        "http://rocm.blogs.amd.com/authors/ning-zhang.html",
 ),
 "Noah Wolfe": (
         "Noah Wolfe",
