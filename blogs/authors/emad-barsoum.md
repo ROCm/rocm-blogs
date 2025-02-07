@@ -9,7 +9,7 @@
 # Emad Barsoum
 
 ```{image} ./data/emad-barsoum.jpeg
- :alt: Andy Luo
+ :alt: Emad Barsoum
  :class: bg-primary
  :height: 250px
  :align: left
