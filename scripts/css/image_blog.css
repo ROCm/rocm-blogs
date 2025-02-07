@@ -1,0 +1,16 @@
+.image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.responsive-image {
+    width: 100%;
+
+    height: 480px;
+
+    object-fit: cover;  /* Crops the image to fill the area while preserving aspect ratio */
+    border: 5px solid #333;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}

@@ -24,7 +24,7 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 templates = []
 
 # blogs.generate_grid.main()
-os.system("python generate_grid.py")
+os.system("python ../scripts/core.py")
 
 latex_engine = "xelatex"
 latex_elements = {

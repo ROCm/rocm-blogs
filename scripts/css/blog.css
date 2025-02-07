@@ -1,0 +1,8 @@
+.author_string {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 22.5px;
+    text-transform: none;
+    margin-bottom: 10px;
+    font-family: var(--pst-font-family-base);
+}
