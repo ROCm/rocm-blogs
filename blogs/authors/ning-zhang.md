@@ -16,6 +16,6 @@
  ```
 
 Ning Zhang is AI software architect in the AI Group at AMD, well experienced in software development
-and performance optimization on CPU, GPU, and DSP platforms. He has about 15 years of experience in 
+and performance optimization on CPU, GPU, and DSP platforms. He has about 15 years of experience in
 the technology industry, with two US patents issued, and holds Bachelor's degree from Nanjing university and a
-Master’s degree from Chinese Academy of Sciences. 
+Master’s degree from Chinese Academy of Sciences.
