@@ -158,7 +158,7 @@ served as the foundation for our setup to generate the data above.
 
 END NOTES
 
-[1, 2]: Testing conducted on 01/29/20025 by AMD. The overall training text
+[1, 2]: Testing conducted on 01/29/2025 by AMD. The overall training text
 generation throughput was measured in Tflops/s/GPU for Llama-3.1 8B
 using FP8 & BF16 with a sequence length of 4096 tokens and batch size 6
 for MI300X, batch size 1 for FP8 and batch size 2 for BF16 on H100 .
@@ -167,7 +167,7 @@ length of 8192 using a batch size of 3 for BF16 and 4 for FP8 on MI300X
 and batch size 1 for H100. FLUX.1-dev using BF16 and batch size 10 for
 MI300X and 3 for H100.
 
-[1, 2]: Testing conducted on 01/29/20025 by AMD. The overall training text
+[1, 2]: Testing conducted on 01/29/2025 by AMD. The overall training text
 generation throughput was measured in Tflops/s/GPU for Llama-3.1 8B
 using FP8 & BF16 with a sequence length of 4096 tokens and batch size 8
 for BF16 and 10 for FP8 for MI325X and 4 for H1200. Mistral 7B using FP8
