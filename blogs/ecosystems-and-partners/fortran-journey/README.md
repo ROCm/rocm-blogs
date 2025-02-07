@@ -620,7 +620,7 @@ FC_FLAGS    = -O3 -fopenmp --offload-arch=${ROCM_GPU}
 LD_FLAGS    = -O3 -L${ROCM_PATH}/lib -lamdhip64 -lstdc++
 
 all:
-  ${CXX} ${HIP_FLAGS} -c kernel.cpp -o kernel.o
+  ${CXX} ${CXX_FLAGS} -c kernel.cpp -o kernel.o
   ${FC} ${FC_FLAGS} -c driver.f90 -o driver.o
   ${FC} ${FC_FLAGS} ${LD_FLAGS} -o driver driver.o kernel.o
 ```
