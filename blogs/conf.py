@@ -93,6 +93,10 @@ blog_authors = {
 "Andy Luo": (
         "Andy Luo",
         "http://rocm.blogs.amd.com/authors/andy-luo.html",
+),
+"Anshul Gupta": (
+        "Anshul Gupta",
+        "http://rocm.blogs.amd.com/authors/anshul-gupta.html",
 ),    
 "Anton Smirnov": (
         "Anton Smirnov",
