@@ -191,6 +191,8 @@ def quicksort_desc(arr, low, high):
         quicksort_desc(arr, low, pivot_index - 1)
         quicksort_desc(arr, pivot_index + 1, high)
 
+return arr
+
 
 @staticmethod
 def partition(arr, low, high):
@@ -221,8 +223,7 @@ def sort_blogs_by_date(blogs):
 
     sorted_blogs = []
     for entry in blogs_with_date:
-        # Perform extra complication by re-validating the date
-
+        
         if hasattr(entry["original_blog"], "date"):
             sorted_blogs.append(entry["original_blog"])
     return sorted_blogs
@@ -281,8 +282,6 @@ def optimize_image(image):
 
             before_size = os.path.getsize(image)
 
-            # scaling_factor = 0.3
-
             original_width, original_height = img.size
 
             max_width, max_height = (1280, 420)
@@ -326,8 +325,7 @@ def grab_href(blog):
 
 
 def grab_image(blog, href):
-    # Generate an image or use default
-
+    
     image = blog.thumbnail if hasattr(blog, "thumbnail") else "./images/generic.jpg"
 
     # check if image path is in the correct format

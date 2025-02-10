@@ -8,11 +8,27 @@ IMAGE_HTML_PATH = "./scripts/html/image_blog.html"
 BLOG_CSS_PATH = "./scripts/css/blog.css"
 
 
-def author_attribution(blogs, minimum_date="September 1, 2024"):
+def blog_generation(blogs, minimum_date="September 1, 2024"):
 
     blogs_to_process = []
 
     for blog in blogs:
+
+        readme_file = blog.file_path
+
+        with open(readme_file, "r", encoding="utf-8") as file:
+
+                lines = file.readlines()
+
+        giscus_comment = giscus()
+
+        lines.append(giscus_comment)
+
+        with open(readme_file, "w", encoding="utf-8") as file:
+
+            # add date class style
+
+            file.writelines(lines)
 
         if blog.date < datetime.strptime(minimum_date, "%B %d, %Y"):
 
@@ -105,21 +121,21 @@ def author_attribution(blogs, minimum_date="September 1, 2024"):
                     "{TITLE}", blog.blog_title
                 )
 
-                lines.insert(line_number + 1, f"\n{blog_template}\n")
-
-                lines.insert(line_number + 2, f"\n{image_template}\n")
-
-                lines.insert(line_number + 3, f"\n{authors_html}\n")
-
+                lines.insert(line_number + 1, f"\n{blog_template}\n")
+
+
+
+                lines.insert(line_number + 2, f"\n{image_template}\n")
+
+
+
+                lines.insert(line_number + 3, f"\n{authors_html}\n")
+
+
+
                 # add the image to html
 
                 lines.insert(line_number + 4, f"\n{quickshare_button}\n")
-
-                giscus_comment = giscus()
-
-                # insert at the end of the file
-
-                lines.append(giscus_comment)
 
                 with open(readme_file, "w", encoding="utf-8") as file:
 
