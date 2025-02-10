@@ -2,7 +2,7 @@ import os
 import time
 
 from blog import *
-from blog_generation import author_attribution
+from blog_generation import blog_generation
 from grid_generation import generate_blog_grid
 from quick_share import quickshare
 
@@ -51,7 +51,7 @@ def main():
 
     generate_blog_grid(sorted_blogs)
 
-    author_attribution(sorted_blogs)
+    blog_generation(sorted_blogs)
 
     with open("time.txt", "w") as f:
 
