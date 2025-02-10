@@ -86,6 +86,10 @@ blog_authors = {
         "Alessandro Fanfarillo",
         "http://rocm.blogs.amd.com/authors/alessandro-fanfarillo.html",
 ),
+"Alex He": (
+        "Alex He",
+        "http://rocm.blogs.amd.com/authors/alex-he.html",
+),
 "Alex Voicu": (
         "Alex Voicu",
         "http://rocm.blogs.amd.com/authors/alex-voicu.html",
