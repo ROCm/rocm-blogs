@@ -191,7 +191,7 @@ def quicksort_desc(arr, low, high):
         quicksort_desc(arr, low, pivot_index - 1)
         quicksort_desc(arr, pivot_index + 1, high)
 
-return arr
+    return arr
 
 
 @staticmethod
