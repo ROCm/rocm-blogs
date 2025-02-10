@@ -329,9 +329,6 @@ In this introductory blog post, you have conceptualized the APU programming mode
 In addition, this post also highlights how AMD ROCm; software stack supports the APU programming model
 and illustrates accelerating a simple benchmark using HIP and OpenMP target offloading.
 
-If you have any questions please reach out to us on GitHub
-[Discussions](https://github.com/rocm/rocm-blogs/discussions).
-
 [1]: https://www.amd.com/en/products/accelerators/instinct/mi300/mi300a.html
 [2]: https://www.amd.com/en/technologies/zen-core.html
 [3]: https://www.amd.com/en/products/processors/server/epyc/4th-generation-9004-and-8004-series.html
