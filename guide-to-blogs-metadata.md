@@ -5,6 +5,8 @@ date: December 3, 2024
 author: Danny Guan
 thumbnail: ''
 tags: 
+target_audience:
+key_value_propositions:
 category: 
 language: English
 myst:
@@ -19,7 +21,12 @@ html_meta:
 
 ## Metadata Structure
 
-Ensure that you have all of the metadata fields as listed below. Correct metadata is required for internal linting and scraping tools, proper metadata is also key for internal and external search optimizations. Please note that the description field under html_meta, "description lang=en": "blog snippet text/abstract" will need to be changed with the description provided by the author, usually a brief synopsis of the blog (150 characters max), anything additional characters after the 150 mark will be cut.
+Ensure that you have all of the metadata fields as listed below. Correct metadata is required
+for internal linting and scraping tools, proper metadata is also key for internal and external
+search optimizations. Please note that the description field under html_meta,
+"description lang=en": "blog snippet text/abstract" will need to be changed with the description
+provided by the author, usually a brief synopsis of the blog (150 characters max), any
+additional characters after the 150 mark will be cut off.
 
 ```markdown
 ---
@@ -29,20 +36,27 @@ date: Date of blog
 author: Author(s) of blog
 thumbnail: 'Image name'
 tags: LLM, PyTorch, AI/ML, Fine-Tuning
+target_audience:
+key_value_propositions:
 category: Applications & models
 language: English
 myst:
-html_meta:
-"author": "Author(s) of blog"
-"description lang=en": "blog snippet text/abstract 150 Characters MAX"
-"keywords": "Tag(s) associated with blog content"
-"property=og:locale": "en_US"
+  html_meta:
+    "author": "Author(s) of blog"
+    "description lang=en": "blog snippet text/abstract 150 Characters MAX"
+    "keywords": "Tag(s) associated with blog content"
+    "property=og:locale": "en_US"
 ---
 ```
 
 ## Adding Images to Blogs
 
-When adding images to your blog, you need to ensure that you are placing it in the correct area, this area will be looked at by automated processes. If you are planning on adding an image to your blog file, ensure there is an images folder, if there isn't an images folder within your blog directory, you must add one. Image name is the name of the image including the image type. Do not add any paths, just add the image name, the automated tool will take care of everything. **We recommend authors place their images in their respective blog directory.**
+When adding images to your blog, you need to ensure that you are placing it in the correct folder structure,
+this tree structure will be validated by an automated processes. If you are planning on adding an image to
+your blog file, ensure there is an images folder, if there isn't an images folder within your
+blog directory, you must add one (*image* is case-sensitive). Image name is the name of the image including the image type.
+Do not add any paths, just add the image name, the automated tool will take care of everything.
+**We recommend authors place their images in their respective blog directory.**
 
 Images can be placed in TWO places, these places are the following:
 
