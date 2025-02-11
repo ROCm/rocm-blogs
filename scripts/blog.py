@@ -1,6 +1,7 @@
 import io
 import os
 import re
+import shutil
 import yaml
 
 from PIL import Image
@@ -354,19 +355,13 @@ def grab_image(blog, href):
 
         print(f"Image1 {image} does not exist.")
 
-        blog.save_image_path(image)
-
         image = "./images/generic.jpg"
 
         if os.path.exists(image_href):
 
             print(f"Image2 {image_href} exists.")
 
-            blog.save_image_path(image_href)
-
             image = image_href.replace("./blogs", ".")
-
-            blog.save_image_path(image)
 
             print("The current working directory is: ", os.getcwd())
 
@@ -381,12 +376,44 @@ def grab_image(blog, href):
 
         print(f"Image4 {image} exists.")
 
-        blog.save_image_path(image)
-
         print("The current working directory is: ", os.getcwd())
     optimize_image(image)
 
     print("-------------------------------------------------------------------\n")
     print(image)
+
+    blog_title = blog.blog_title.replace(" ", "_").replace("/", "_")
+
+    blog_date = blog.date.strftime("%Y-%m-%d")
+
+    if not os.path.exists("images"):
+        os.mkdir("images")
+
+    print(f"Migrating {image} to images/{blog_date}_{blog_title}.jpg")
+
+    print(os.getcwd())
+
+    os.chdir("blogs")
+
+    original_dir = os.getcwd()
+    full_image_path = os.path.join(original_dir, image.lstrip("./"))
+
+    print(f"FULL IMAGE PATH: {full_image_path}")
+
+    try:
+        os.system(f"cp {full_image_path} images/{blog_date}_{blog_title}.jpg")
+    except Exception as e:
+        print(f"Error copying image: {e} Attempt One")
+
+    try:
+        shutil.copy(full_image_path, f"images/{blog_date}_{blog_title}.jpg")
+    except Exception as e:
+        print(f"Error copying image: {e} Attempt Two")
+
+    image_name = f"{blog_date}_{blog_title}.jpg"
+
+    blog.save_image_path(image_name)
+
+    os.chdir("..")
 
     return image
