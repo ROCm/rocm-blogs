@@ -115,7 +115,7 @@ def blog_generation(blogs, minimum_date="September 1, 2024"):
 
                 if blog.image_paths:
 
-                    blog_image = "../../_" + blog.image_paths[0][2:]
+                    blog_image = "../../_static/" + blog.image_paths[0]
 
                 image_template = image_template.replace("{IMAGE}", blog_image).replace(
                     "{TITLE}", blog.blog_title
