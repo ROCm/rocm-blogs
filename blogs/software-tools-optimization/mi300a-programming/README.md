@@ -26,7 +26,7 @@ We will then show you how AMD [ROCm&trade;][12] enables the APU Programming Mode
 We will demonstrate how you can implement the APU Programming Model following different offloading strategies, using
 [HIP][25] API, [OpenMP&trade;][33], and by exploring other abstraction layers.
 
-Let's start exploring the fficiency, flexibility, and programmability advantages of the MI300A APU!
+Let's start exploring the efficiency, flexibility, and programmability advantages of the MI300A APU!
 
 ## The MI300A APU’s shared physical memory architecture
 
