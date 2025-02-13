@@ -147,6 +147,7 @@ kubectl get nodes -o custom-columns=NAME:.metadata.name,"GPUs Total:.status.capa
             - name: shm
             mountPath: /dev/shm
     ```
+>> NOTE: The container image referenced in the deployment manifest may not be the latest version or the highest-performing build available at the time you view it. The latest vLLM image can be found in the "Getting Started" section of our [Instinct Performance Validation Documentation Page](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/inference/vllm-benchmark.html)
 
 3. Define the `service.yaml`
 
