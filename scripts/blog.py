@@ -16,6 +16,7 @@ class Blog:
         self.metadata = metadata
         self.image = image
         self.image_paths = []
+        self.word_count = 0
 
         # Dynamically set attributes based on metadata
 
@@ -30,6 +31,10 @@ class Blog:
         else:
 
             self.date = None
+
+    def set_word_count(self, word_count):
+
+        self.word_count = word_count
 
     def normalize_date_string(self, date_str):
 
@@ -182,6 +187,14 @@ def create_blog_objects(readme_files):
         else:
 
             print(f"Skipping {file_path}: No valid metadata found.")
+
+        with open(file_path, "r", encoding="utf-8") as file:
+
+            content = file.read()
+
+            words = content.split()
+
+            blog.set_word_count(len(words))
     return blog_objects
 
 
@@ -403,12 +416,14 @@ def grab_image(blog, href):
     try:
         os.system(f"cp {full_image_path} images/{blog_date}_{blog_title}.jpg")
     except Exception as e:
-        print(f"Error copying image: {e} Attempt One")
+        print(f"Error copying image: {e} Attempt One")
+
 
     try:
         shutil.copy(full_image_path, f"images/{blog_date}_{blog_title}.jpg")
     except Exception as e:
-        print(f"Error copying image: {e} Attempt Two")
+        print(f"Error copying image: {e} Attempt Two")
+
 
     image_name = f"{blog_date}_{blog_title}.jpg"
 

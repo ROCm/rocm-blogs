@@ -1,8 +1,29 @@
-a.navbar-brand.logo {
-    font-size: 2em !important;
+@media (min-width: 9999px) {
+    .search-button {
+        display: none !important;
+    }
+    .search-button-field {
+        display: flex;
+    }
 }
 
-a.recent-posts {
-    color: #579bcb !important;
-    font-size: 1.25em !important;
+@media (max-width: 9999px) {
+    .search-button {
+        display: flex !important;
+    }
+    .search-button-field {
+        display: flex;
+    }
+}
+
+@media (min-width: 1200px) {
+    label.sidebar-toggle.secondary-toggle {
+        display:none
+    }
+}
+
+@media (max-width: 1200px) {
+    label.sidebar-toggle.secondary-toggle {
+        margin-bottom:0
+    }
 }
