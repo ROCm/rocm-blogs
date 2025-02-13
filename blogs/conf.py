@@ -60,8 +60,10 @@ if os.environ.get("READTHEDOCS", "") == "True":
 html_title = "ROCm Blogs"
 html_theme = "rocm_docs_theme"
 html_theme_options = {
-    "flavor": "rocm-blogs"
+    "flavor": "rocm-blogs",
+    "show_prev_next": False,
 }
+post_show_prev_next = False
 
 extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx", 'hoverxref.extension', 'myst_parser']
 external_toc_path = "./sphinx/_toc.yml"

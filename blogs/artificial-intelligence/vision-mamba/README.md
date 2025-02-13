@@ -66,9 +66,8 @@ docker run -it --name vision_mamba --rm --ipc=host \
 Build and install Vision Mamba on AMD GPU with ROCm.
 
 ```bash
-git clone https://github.com/AMD-AI/Vim.git
+git clone https://github.com/hustvl/Vim
 cd Vim 
-git checkout add_rocm_support
 
 pip install -r vim/vim_requirements.txt
 # Install hipified packages required by Vision Mamba
