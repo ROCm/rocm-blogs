@@ -11,7 +11,7 @@ INDEX_HTML = "./scripts/html/index.html"
 
 
 def generate_blog_grid(
-    blogs, output_file="latest_blogs.md", max_blogs=9, max_category=3
+    blogs, output_file="latest_blogs.md", max_blogs=8, max_category=4
 ):
 
     index_template = """

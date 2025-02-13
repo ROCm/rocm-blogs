@@ -62,6 +62,7 @@ html_theme = "rocm_docs_theme"
 html_theme_options = {
     "flavor": "rocm-blogs",
     "show_prev_next": False,
+    "navbar_presistent": ["navbar-icon-links.html", "search-field.html"]
 }
 post_show_prev_next = False
 
@@ -71,17 +72,6 @@ external_toc_path = "./sphinx/_toc.yml"
 hoverxref_api_host = "/_"
 
 templates_path = ["."]
-
-html_sidebars = {
-    "**": [
-        "search-field.html",
-        "postcard.html",
-        "recentposts.html",
-        "tagcloud.html",
-        "categories.html",
-        "archives.html",
-    ]
-}
 
 blog_authors = {
 "Alessandro Fanfarillo": (
@@ -323,6 +313,7 @@ def parse_event(env, sig, signode):
 
 def setup(app):
     app.connect("autodoc-process-docstring", cut_lines(4, what=["module"]))
+    app.add_css_file('css/custom.css')
     app.add_object_type(
         "confval",
         "confval",
