@@ -106,6 +106,10 @@ blog_authors = {
         "Bob Robey",
         "http://rocm.blogs.amd.com/authors/bob-robey.html",
 ),
+"Ben Sander": (
+        "Bob Sander",
+        "http://rocm.blogs.amd.com/authors/bob-sander.html",
+),
 "Clint Greene": (
         "Clint Greene",
         "http://rocm.blogs.amd.com/authors/clint-greene.html",
