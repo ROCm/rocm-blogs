@@ -602,11 +602,12 @@ studies considered are:
 1. A Parallel Stream Microbenchmark
 2. A General Matrix Multiplication (GEMM) Benchmark
 
--> [!IMPORTANT]
--> The presented simple Stream and GEMM kernels are implemented using Triton
--> and HIP, they are not intended to represent the peak performance
--> achievable using MI300X. There might be more throughput/bandwidth left that
--> is further extractable through performance engineering.
+::::{important}
+The presented simple Stream and GEMM kernels are implemented using Triton
+and HIP, they are not intended to represent the peak performance
+achievable using MI300X. There might be more throughput/bandwidth left that
+is further extractable through performance engineering.
+::::
 
 ### Stream microbenchmark
 
