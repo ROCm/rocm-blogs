@@ -1,0 +1,40 @@
+name: Auto Format Code
+
+on: push
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5.4.0
+      with:
+        python-version: "3.13"
+        architecture: "x64"
+    - name: install packages
+      run: pip install black[jupyter] autopep8 isort
+    - name: Auto format code
+      run: |
+        black .
+        autopep8 --recursive --in-place --aggressive --aggressive .
+        isort .
+    - name: Get branch name
+      run: |
+        branch_name="${{ github.head_ref }}"
+        echo "Branch name is ${branch_name}"
+        echo "Branch name is ${{ github.event.pull_request.title }}"
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7.0.6
+      env:
+        TITLE: ${{ github.event.pull_request.title }}      
+      with:
+        token: ${{ secrets.ROCM_BLOG_PAT }}
+        commit-message: Auto Code Format
+        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>   
+        title:  Black Auto format for ${{ env.TITLE }}
+        body: Auto-Generated Pull Request 
+        reviewers: "Saad Rahim (AMD) <44449863+saadrahim@users.noreply.github.com>"
+        maintainer-can-modify: true
+        labels: Backend
+        branch: python-code-format${{ github.event.pull_request.number }}
+
