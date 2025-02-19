@@ -12,7 +12,7 @@ jobs:
         python-version: "3.13"
         architecture: "x64"
     - name: install packages
-      run: pip install black[jupyter] autopep8 isort
+      run: pip install black autopep8 isort
     - name: Auto format code
       run: |
         black .
