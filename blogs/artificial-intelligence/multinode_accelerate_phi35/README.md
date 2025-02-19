@@ -24,7 +24,7 @@ myst:
 
 In this blog you will learn the process of fine-tuning the [`Phi-3.5-mini-instruct`](https://huggingface.co/microsoft/Phi-3.5-mini-instruct-onnx) Large Language Model (LLM) from Microsoft, using PyTorch in a multinode environment. The setup leverages the [Hugging Face Accelerate](https://huggingface.co/docs/accelerate/index) library to handle the complexities of multi-GPU and multinode synchronization. [Slurm](https://slurm.schedmd.com/overview.html) is used to schedule and coordinate the job as a workload manager for high-performance computing environments.  A custom Slurm Bash script launches the Docker containers on each node, ensuring the training environment is consistent across all machines. Inside the containers, PyTorch and the Accelerate library split the training data, synchronize the model updates, and optimize performance across the multinode setup. This approach lets you efficiently fine-tune large-scale models and reduce training time while maximizing hardware utilization across the entire cluster.
 
-You can find the necessary files and resources related to this blog post in this [GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/multinode_accelerate_phi3). Let's get started!
+You can find the necessary files and resources related to this blog post in this [GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/multinode_accelerate_phi35). Let's get started!
 
 ## Understanding multinode training, Hugging Face Accelerate, and Slurm
 
@@ -48,7 +48,7 @@ The Hugging Face Accelerate library simplifies the process of implementing distr
 
 This section focuses on the implementation details needed for fine-tuning the [`Phi-3.5-mini-instruct`](https://huggingface.co/microsoft/Phi-3.5-mini-instruct) LLM, for the task of classification using the [`yelp_review_full`](https://huggingface.co/datasets/Yelp/yelp_review_full) dataset. The `yelp_review_full` dataset is a text classification dataset that consists of customer reviews sourced from [Yelp](https://www.yelp.com/) and its primary purpose is to train models for sentiment analysis or text classification tasks. The fine-tuning process described here uses the Hugging Face Accelerate library which is designed to simplify the process of training in multiple devices. By leveraging Accelerate's multinode training capabilities, you can scale the fine-tuning process efficiently across multiple nodes and GPUs.
 
-This [classification_finetuning_phi35.py](`./src/classification_finetuning_phi35.py`) Python script covers the essential steps such as dataset preparation, model initialization, and optimizer setup, all orchestrated through the Accelerate's API. To use Accelerate, the `Accelerator` class needs to be initialized, automatically detecting the available hardware and setting up the environment accordingly. Then, the model, optimizer, and data loaders are passed to the `Accelerator` instance, which handles their distribution across the nodes.
+This [classification_finetuning_phi35.py](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/multinode_accelerate_phi35/src/classification_finetuning_phi35.py) Python script covers the essential steps such as dataset preparation, model initialization, and optimizer setup, all orchestrated through the Accelerate's API. To use Accelerate, the `Accelerator` class needs to be initialized, automatically detecting the available hardware and setting up the environment accordingly. Then, the model, optimizer, and data loaders are passed to the `Accelerator` instance, which handles their distribution across the nodes.
 
 ```python
 import torch
@@ -199,7 +199,7 @@ You can verify that the image was pushed to the repository by visiting: [https:/
 
 To request and allocate the resources needed for the fine-tuning task, you need to create a Slurm job script. This is a bash script that defines the resources needed, such as the number of nodes, GPUs, CPUs, and memory. The Slurm script also includes Slurm directives that tell the scheduler what resources to allocate and how to manage the job. This script also includes the actual commands to run the training task.
 
-The following file [`./src/multinode_finetuning_phi35_job.sh`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/multinode_accelerate_phi3/src/multinode_finetuning_phi35_job.sh) is the Slurm bash script used for multinode fine-tuning. You have to modify the script with the appropriate values for your environment and system, such as `your-dockerhub-username`, `your-personal-access-token`, the number of nodes, GPUs and CPUs, partition, and the path on the login node for your local folder `HOST_MOUNT`.
+The following file [`./src/multinode_finetuning_phi35_job.sh`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/multinode_accelerate_phi35/src/multinode_finetuning_phi35_job.sh) is the Slurm bash script used for multinode fine-tuning. You have to modify the script with the appropriate values for your environment and system, such as `your-dockerhub-username`, `your-personal-access-token`, the number of nodes, GPUs and CPUs, partition, and the path on the login node for your local folder `HOST_MOUNT`.
 
 ```bash
 #!/bin/bash
@@ -309,7 +309,7 @@ The Slurm bash script includes:
 
 * Slurm environment variables: The Slurm bash script also specifies the commands needed to login into Docker Hub (with your `username` and `token`), and defines several environment variables such as the IP address of the master node, the port used for communication, the name of the Docker image that will be pulled from the Docker Hub registry and the volume to be mounted when executing the `docker run` command.
 
-* Slurm command to launch the task: The [Slurm bash script](./src/multinode_finetuning_phi35_job.sh) uses the `srun` command. In this case, `srun` is used to launch the job allocation task by executing the `docker run` command while passing the previous environment variables, defining several Docker arguments, and executing the `accelerate launch` command:
+* Slurm command to launch the task: The [Slurm bash script](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/multinode_accelerate_phi35/src/multinode_finetuning_phi35_job.sh) uses the `srun` command. In this case, `srun` is used to launch the job allocation task by executing the `docker run` command while passing the previous environment variables, defining several Docker arguments, and executing the `accelerate launch` command:
 
     ```bash
     accelerate launch \

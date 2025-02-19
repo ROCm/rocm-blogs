@@ -155,7 +155,7 @@ to the existing CUDA APIs. Consider the following snippet as an example:
 ...
 ```
 
-Here is a [header file](https://github.com/rocm/rocm-blogs/tree/release/blogs/software-tools-optimization/hipify/src/gpu_macros.h)
+Here is a [header file](https://github.com/amd/HPCTrainingExamples/blob/main/rocm-blogs-codes/hipify/gpu_macros.h)
 that you can use as a starting point for your porting project.
 
 Alternatively, one can also use macro definitions to build a unified wrapper as
