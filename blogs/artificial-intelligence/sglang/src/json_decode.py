@@ -6,27 +6,25 @@ python json_decode.py
 
 from enum import Enum
 
-from pydantic import BaseModel
-
 import sglang as sgl
+from pydantic import BaseModel
 from sglang.srt.constrained import build_regex_from_object
 
 character_regex = (
-    r"""\{\n"""
-    + r"""    "name": "[\w\d\s]{1,16}",\n"""
-    + r"""    "house": "(Gryffindor|Slytherin|Ravenclaw|Hufflepuff)",\n"""
-    + r"""    "blood status": "(Pure-blood|Half-blood|Muggle-born)",\n"""
-    + r"""    "occupation": "(student|teacher|auror|ministry of magic|death eater|order of the phoenix)",\n"""
-    + r"""    "wand": \{\n"""
-    + r"""        "wood": "[\w\d\s]{1,16}",\n"""
-    + r"""        "core": "[\w\d\s]{1,16}",\n"""
-    + r"""        "length": [0-9]{1,2}\.[0-9]{0,2}\n"""
-    + r"""    \},\n"""
-    + r"""    "alive": "(Alive|Deceased)",\n"""
-    + r"""    "patronus": "[\w\d\s]{1,16}",\n"""
-    + r"""    "bogart": "[\w\d\s]{1,16}"\n"""
-    + r"""\}"""
-)
+    r"""\{\n""" +
+    r"""    "name": "[\w\d\s]{1,16}",\n""" +
+    r"""    "house": "(Gryffindor|Slytherin|Ravenclaw|Hufflepuff)",\n""" +
+    r"""    "blood status": "(Pure-blood|Half-blood|Muggle-born)",\n""" +
+    r"""    "occupation": "(student|teacher|auror|ministry of magic|death eater|order of the phoenix)",\n""" +
+    r"""    "wand": \{\n""" +
+    r"""        "wood": "[\w\d\s]{1,16}",\n""" +
+    r"""        "core": "[\w\d\s]{1,16}",\n""" +
+    r"""        "length": [0-9]{1,2}\.[0-9]{0,2}\n""" +
+    r"""    \},\n""" +
+    r"""    "alive": "(Alive|Deceased)",\n""" +
+    r"""    "patronus": "[\w\d\s]{1,16}",\n""" +
+    r"""    "bogart": "[\w\d\s]{1,16}"\n""" +
+    r"""\}""")
 
 
 @sgl.function

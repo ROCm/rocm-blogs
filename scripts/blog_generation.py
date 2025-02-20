@@ -1,26 +1,29 @@
-from blog import grab_authors, grab_image
+import re
 from datetime import datetime
+
+from blog import grab_authors, grab_image
 from giscus import giscus
 from quick_share import quickshare
-import re
-
 
 IMAGE_CSS_PATH = "./scripts/css/image_blog.css"
 IMAGE_HTML_PATH = "./scripts/html/image_blog.html"
 BLOG_CSS_PATH = "./scripts/css/blog.css"
 AUTHOR_HTML_PATH = "./scripts/html/author_attribution.html"
 
+
 def calculate_read_time(words: int) -> int:
 
     return round(words / 245)
+
 
 def truncate_string(input_string: str) -> str:
     # remove special characters
     cleaned_string = re.sub(r"[!@#$%^&*?/|]", "", input_string)
     # remove spaces
     transformed_string = re.sub(r"\s+", "-", cleaned_string)
-    
+
     return transformed_string.lower()
+
 
 def blog_generation(blogs, minimum_date="September 1, 2024"):
 
@@ -76,7 +79,11 @@ def blog_generation(blogs, minimum_date="September 1, 2024"):
         category_link = truncate_string(category)
         category = category.strip()
         category = f'<a href="https://rocm.blogs.amd.com/blog/category/{category_link}.html">{category}</a>'
-        blog_read_time = str(calculate_read_time(blog.word_count)) if hasattr(blog, "word_count") else "No Read Time"
+        blog_read_time = (
+            str(calculate_read_time(blog.word_count))
+            if hasattr(blog, "word_count")
+            else "No Read Time"
+        )
 
         if authors_list:
 
@@ -101,7 +108,8 @@ def blog_generation(blogs, minimum_date="September 1, 2024"):
 
             for i, line in enumerate(lines):
 
-                # only check for # , do not check if there are more than one # in the line
+                # only check for # , do not check if there are more than one #
+                # in the line
 
                 if line.startswith("#") and line.count("#") == 1:
 
@@ -144,7 +152,14 @@ def blog_generation(blogs, minimum_date="September 1, 2024"):
                     .replace("{category}", category)
                     .replace("{tags}", tags)
                     .replace("{read_time}", blog_read_time)
-                    .replace("{word_count}", str(blog.word_count) if hasattr(blog, "word_count") else "No Word Count")
+                    .replace(
+                        "{word_count}",
+                        (
+                            str(blog.word_count)
+                            if hasattr(blog, "word_count")
+                            else "No Word Count"
+                        ),
+                    )
                 )
                 blog_template = f"""
 <style>
@@ -163,9 +178,9 @@ def blog_generation(blogs, minimum_date="September 1, 2024"):
 
                     blog_image = "../../_static/" + blog.image_paths[0]
 
-                image_template = image_template.replace("{IMAGE}", blog_image).replace(
-                    "{TITLE}", blog.blog_title
-                )
+                image_template = image_template.replace(
+                    "{IMAGE}", blog_image).replace(
+                    "{TITLE}", blog.blog_title)
 
                 lines.insert(line_number + 1, f"\n{blog_template}\n")
 

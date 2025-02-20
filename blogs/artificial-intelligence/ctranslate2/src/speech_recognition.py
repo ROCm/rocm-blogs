@@ -6,7 +6,8 @@ import transformers
 audio, _ = librosa.load("src/sample2.flac", sr=16000, mono=True)
 
 # Compute the features of the first 30 seconds of audio.
-processor = transformers.WhisperProcessor.from_pretrained("openai/whisper-tiny")
+processor = transformers.WhisperProcessor.from_pretrained(
+    "openai/whisper-tiny")
 inputs = processor(audio, return_tensors="np", sampling_rate=16000)
 features = ctranslate2.StorageView.from_array(inputs.input_features)
 

@@ -32,7 +32,8 @@
 #
 # As models increase in size, the time and memory needed to train them--and consequently, the cost--also increases. Therefore, any measures we take to reduce training time and memory usage can be highly beneficial. This is where Automatic Mixed Precision (AMP) comes in.
 #
-# In this blog, we will discuss the basics of AMP, how it works, and how it can improve training efficiency on AMD GPUs.
+# In this blog, we will discuss the basics of AMP, how it works, and how
+# it can improve training efficiency on AMD GPUs.
 
 # %% [markdown]
 # ## Prerequisites
@@ -83,7 +84,9 @@
 #
 # ### Build your own Python environment
 #
-# Alternatively, if you do not wish to use a Docker contain, see [running on host](#running-on-host) section in the Appendix for instructions on building your own Python environment.
+# Alternatively, if you do not wish to use a Docker contain, see [running
+# on host](#running-on-host) section in the Appendix for instructions on
+# building your own Python environment.
 
 # %% [markdown]
 # Great! Now we're ready to dig into Automatic Mixed Precision!
@@ -109,7 +112,8 @@
 # * Use half-precision operations where possible, but fallback to full-precision operations when precision is important, such as in accumulation operations.
 # * Use gradient scaling to combat gradient underflow.
 #
-# Next, we will see how `torch.autocast` can be used to train a network with automatic mixed precision.
+# Next, we will see how `torch.autocast` can be used to train a network
+# with automatic mixed precision.
 
 # %% [markdown]
 # First, we import the following packages:
@@ -117,17 +121,18 @@
 # %%
 import gc
 import time
+
+import matplotlib.pyplot as plt
 import numpy as np
 import torch
-import matplotlib.pyplot as plt
-
 
 # %% [markdown]
 # ## Torch autocast
 #
 # [`torch.autocast`](https://pytorch.org/docs/stable/amp.html#torch.autocast) is a context manager that allows the wrapped region of code to run in automatic mixed precision. Wrapped operations will automatically downcast to lower precision, depending on the operation type, in order to improve speed and decrease memory usage.
 #
-# First, let's take a look and what `torch.autocast` does in a very simple example:
+# First, let's take a look and what `torch.autocast` does in a very simple
+# example:
 
 
 # %%
@@ -146,7 +151,11 @@ def test_amp():
         b = x + y  # Not eligible
 
     # Print resulting data types
-    print(f"Output dtypes:\n  Multiplication: {a.dtype}\n  Addition: {b.dtype}")
+    print(
+        f"Output dtypes:\n  Multiplication: {
+            a.dtype}\n  Addition: {
+            b.dtype}"
+    )
 
 
 test_amp()
@@ -229,7 +238,8 @@ test_amp()
 #
 # Lets bring it all together and demonstrate training with Automatic Mixed Precision and Gradient Scaling.
 #
-# First, let's create a context manager to help us measure both run time and max memory usage:
+# First, let's create a context manager to help us measure both run time
+# and max memory usage:
 
 
 # %%
@@ -284,7 +294,9 @@ def generate_quantized_sin(grid, frequency, n_bins=4):
     Given a 2D grid and frequency, compute a sinusoid at each point on the grid. Then quantize the output
     into the desired number of bins
     """
-    out = np.cos(grid[0, :] * frequency[0] * 2 * np.pi) + np.cos(grid[1, :] * frequency[1] * 2 * np.pi)
+    out = np.cos(grid[0, :] * frequency[0] * 2 * np.pi) + np.cos(
+        grid[1, :] * frequency[1] * 2 * np.pi
+    )
 
     bins = np.linspace(out.min(), out.max(), n_bins + 1)[:n_bins]
 
@@ -323,7 +335,11 @@ plt.show()
 # %% [markdown]
 # ### The network
 #
-# Next, let's define a simple convolutional neural network. The input is a 2D "image", where the channels are the (x, y) coordinates at a given location, and the outputs are the value of the sinusoid at each point. The model is composed of a series of convolutional layers, batch normalization, and activation functions.
+# Next, let's define a simple convolutional neural network. The input is a
+# 2D "image", where the channels are the (x, y) coordinates at a given
+# location, and the outputs are the value of the sinusoid at each point.
+# The model is composed of a series of convolutional layers, batch
+# normalization, and activation functions.
 
 
 # %%
@@ -353,11 +369,18 @@ class ConvModel(torch.nn.Module):
 #
 # ### Standard training loop
 #
-# First, let's define a "standard" training loop. We initialize our model, loss and optimizer, and then perform a standard loop for `n_epochs` (for simplicity, epoch is just a single example).
+# First, let's define a "standard" training loop. We initialize our model,
+# loss and optimizer, and then perform a standard loop for `n_epochs` (for
+# simplicity, epoch is just a single example).
 
 
 # %%
-def test_standard_training(n_epochs, inputs, targets, hidden_size, n_hidden_layers):
+def test_standard_training(
+        n_epochs,
+        inputs,
+        targets,
+        hidden_size,
+        n_hidden_layers):
     """Test a standard training loop"""
     model = ConvModel(hidden_size, n_hidden_layers).cuda()
     loss_fn = torch.nn.MSELoss()
@@ -400,7 +423,9 @@ def test_amp_training(n_epochs, inputs, targets, hidden_size, n_hidden_layers):
     with TorchMemProfile() as profile:
         for i in range(n_epochs):
             opt.zero_grad()
-            with torch.autocast(device_type="cuda"):  # Wrap only the forward pass and loss in autocast
+            with torch.autocast(
+                device_type="cuda"
+            ):  # Wrap only the forward pass and loss in autocast
                 outputs = model(inputs)
                 loss = loss_fn(outputs, targets)
             scaler.scale(loss).backward()  # Scale loss, then call backward
@@ -413,7 +438,8 @@ def test_amp_training(n_epochs, inputs, targets, hidden_size, n_hidden_layers):
 # %% [markdown]
 # ### Standard vs AMP performance
 #
-# Finally, lets test the relative performance of our standard vs AMP training loops.
+# Finally, lets test the relative performance of our standard vs AMP
+# training loops.
 
 # %%
 # Define training parameters
@@ -422,29 +448,47 @@ hidden_size = 256
 n_hidden_layers = 2
 
 # Run standard training
-profile, loss, outputs = test_standard_training(n_epochs, inputs, targets, hidden_size, n_hidden_layers)
+profile, loss, outputs = test_standard_training(
+    n_epochs, inputs, targets, hidden_size, n_hidden_layers
+)
 
 # Run AMP training
-profile_amp, loss_amp, outputs_amp = test_amp_training(n_epochs, inputs, targets, hidden_size, n_hidden_layers)
+profile_amp, loss_amp, outputs_amp = test_amp_training(
+    n_epochs, inputs, targets, hidden_size, n_hidden_layers
+)
 
 # %%
 print("Standard training:")
 print(f"  Total time: {profile.duration:0.4f}s")
 print(f"  Loss: {loss:0.4g}")
-print(f"  Max memory allocated: {profile.max_memory_allocated/1024**2:0.4g} MB")
+print(
+    f"  Max memory allocated: {
+        profile.max_memory_allocated /
+        1024**2:0.4g} MB"
+)
 
 print("\nAMP training:")
 print(f"  Total time: {profile_amp.duration:0.4f}s")
 print(f"  Loss: {loss_amp:0.4g}")
-print(f"  Max memory allocated: {profile_amp.max_memory_allocated/1024**2:0.4g} MB")
+print(
+    f"  Max memory allocated: {
+        profile_amp.max_memory_allocated /
+        1024**2:0.4g} MB"
+)
 
-print(f"\nTraining speedup: {(1-profile_amp.duration/profile.duration)*100:0.2f}%")
-print(f"Memory savings: {(1-profile_amp.max_memory_allocated/profile.max_memory_allocated)*100:0.2f}%")
+print(
+    f"\nTraining speedup: {(1 - profile_amp.duration / profile.duration) * 100:0.2f}%"
+)
+print(
+    f"Memory savings: {(1 - profile_amp.max_memory_allocated / profile.max_memory_allocated) * 100:0.2f}%"
+)
 
 # %% [markdown]
 # **Training with AMP increased training speed by 46% and reduced memory usage by nearly 50%!** Furthermore, we did not experience loss in performance; indeed, our AMP-enabled training resulted in slightly lower loss.
 #
-# We can also visualize the outputs of both models to check that they are learning as we expect. We see that both standard and AMP training are successfully approximating our discretized 2D sinusoid.
+# We can also visualize the outputs of both models to check that they are
+# learning as we expect. We see that both standard and AMP training are
+# successfully approximating our discretized 2D sinusoid.
 
 # %%
 fig, ax = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(10, 4))
@@ -462,7 +506,10 @@ plt.show()
 #
 # We can also speed up inference using AMP by wrapping the inference forward pass.
 #
-# To demonstrate, we'll define both a standard and an AMP inference function. Note that we do _not_ need a `GradScaler` for AMP inference (as there are no gradients!), we only need to wrap the forward pass in `torch.autocast`:
+# To demonstrate, we'll define both a standard and an AMP inference
+# function. Note that we do _not_ need a `GradScaler` for AMP inference
+# (as there are no gradients!), we only need to wrap the forward pass in
+# `torch.autocast`:
 
 
 # %%
@@ -493,25 +540,42 @@ def test_amp_inference(n_epochs, inputs, hidden_size, n_hidden_layers):
 
 # %%
 # Run standard training
-inf_profile = test_standard_inference(n_epochs, inputs, hidden_size, n_hidden_layers)
+inf_profile = test_standard_inference(
+    n_epochs, inputs, hidden_size, n_hidden_layers)
 
 # Run AMP training
-inf_profile_amp = test_amp_inference(n_epochs, inputs, hidden_size, n_hidden_layers)
+inf_profile_amp = test_amp_inference(
+    n_epochs, inputs, hidden_size, n_hidden_layers)
 
 # %%
 print("Standard inference:")
 print(f"  Total time: {inf_profile.duration:0.4f}s")
-print(f"  Max memory allocated: {inf_profile.max_memory_allocated/1024**2:0.4g} MB")
+print(
+    f"  Max memory allocated: {
+        inf_profile.max_memory_allocated /
+        1024**2:0.4g} MB"
+)
 
 print("\nAMP inference:")
 print(f"  Total time: {inf_profile_amp.duration:0.4f}s")
-print(f"  Max memory allocated: {inf_profile_amp.max_memory_allocated/1024**2:0.4g} MB")
+print(
+    f"  Max memory allocated: {
+        inf_profile_amp.max_memory_allocated /
+        1024**2:0.4g} MB"
+)
 
-print(f"\nSpeedup: {(1-inf_profile_amp.duration/inf_profile.duration)*100:0.2f}%")
-print(f"Memory savings: {(1-inf_profile_amp.max_memory_allocated/inf_profile.max_memory_allocated)*100:0.2f}%")
+print(
+    f"\nSpeedup: {(1 - inf_profile_amp.duration / inf_profile.duration) * 100:0.2f}%")
+print(
+    f"Memory savings: {(1 - inf_profile_amp.max_memory_allocated / inf_profile.max_memory_allocated) * 100:0.2f}%"
+)
 
 # %% [markdown]
-# Again, we see a nearly 50% reduction in maximum memory usage. However, the speedup during inference is only 32%, compared to the 46% observed during training. This difference is because a portion of the speedup is achieved during the backward pass, which is not applicable during inference.
+# Again, we see a nearly 50% reduction in maximum memory usage. However,
+# the speedup during inference is only 32%, compared to the 46% observed
+# during training. This difference is because a portion of the speedup is
+# achieved during the backward pass, which is not applicable during
+# inference.
 
 # %% [markdown]
 # ## References

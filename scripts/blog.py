@@ -2,10 +2,10 @@ import io
 import os
 import re
 import shutil
-import yaml
-
-from PIL import Image
 from datetime import datetime
+
+import yaml
+from PIL import Image
 
 
 class Blog:
@@ -58,7 +58,8 @@ class Blog:
 
                 self.image = buffer.getvalue()
 
-                print(f"Image loaded into memory; size: {len(self.image)} bytes.")
+                print(
+                    f"Image loaded into memory; size: {len(self.image)} bytes.")
         except Exception as e:
 
             print(f"Error loading image to memory: {e}")
@@ -237,7 +238,7 @@ def sort_blogs_by_date(blogs):
 
     sorted_blogs = []
     for entry in blogs_with_date:
-        
+
         if hasattr(entry["original_blog"], "date"):
             sorted_blogs.append(entry["original_blog"])
     return sorted_blogs
@@ -265,7 +266,8 @@ def grab_authors(authors_list):
 
         if os.path.exists(author_file):
 
-            # If the author file exists, create a clickable link to the author's page
+            # If the author file exists, create a clickable link to the
+            # author's page
 
             author_page = author_file.replace(
                 ".md", ".html"
@@ -275,7 +277,10 @@ def grab_authors(authors_list):
 
             author_page = author_page.replace("blogs", ".")
 
-            author_links.append(f'<a href="{author_page}">{author.strip()}</a>')
+            author_links.append(
+                f'<a href="{author_page}">{
+                    author.strip()}</a>'
+            )
         else:
 
             # If no author page exists, display the author's name as plain text
@@ -313,14 +318,16 @@ def optimize_image(image):
             after_size = os.path.getsize(image)
 
             print(
-                f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size-after_size)/before_size)*100} percent"
-            )
+                f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {
+                    (
+                        (before_size - after_size) / before_size) * 100} percent")
 
             with open("optimize.txt", "a") as f:
 
                 f.write(
-                    f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size-after_size)/before_size)*100} percent\n on {image}\n"
-                )
+                    f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {
+                        (
+                            (before_size - after_size) / before_size) * 100} percent\n on {image}\n")
     except Exception as error:
 
         print(f"Error optimizing image {image}: {error}")
@@ -339,8 +346,9 @@ def grab_href(blog):
 
 
 def grab_image(blog, href):
-    
-    image = blog.thumbnail if hasattr(blog, "thumbnail") else "./images/generic.jpg"
+
+    image = blog.thumbnail if hasattr(
+        blog, "thumbnail") else "./images/generic.jpg"
 
     # check if image path is in the correct format
 
@@ -418,12 +426,10 @@ def grab_image(blog, href):
     except Exception as e:
         print(f"Error copying image: {e} Attempt One")
 
-
     try:
         shutil.copy(full_image_path, f"images/{blog_date}_{blog_title}.jpg")
     except Exception as e:
         print(f"Error copying image: {e} Attempt Two")
-
 
     image_name = f"{blog_date}_{blog_title}.jpg"
 

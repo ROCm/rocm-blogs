@@ -1,23 +1,19 @@
 import logging
-# import torch
-from transformers import AutoModelForCausalLM, AutoTokenizer, AutoConfig
-from transformers import LlamaForCausalLM, LlamaTokenizer
 from dataclasses import dataclass
-
 
 import mlperf_loadgen as lg
 # from vllm_mlperf.dataset import Dataset
 from dataset import Dataset
+# import torch
+from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
+                          LlamaForCausalLM, LlamaTokenizer)
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)-8s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 log = logging.getLogger(__file__)
-
-
-
 
 
 # # Defaults for VLLM EngineArgs
@@ -35,16 +31,17 @@ log = logging.getLogger(__file__)
 #     enable_chunked_prefill: bool = True
 
 
-
 class SUT:
-    """ Use this class to plug in to SUT. The methods are called by main.py for MLPerf tests. """
-    def __init__(self, 
+    """Use this class to plug in to SUT. The methods are called by main.py for MLPerf tests."""
+
+    def __init__(
+        self,
         model_path=None,
         dataset_path=None,
         dtype="float16",
         device="cuda:0",
         total_sample_count=24576,
-        model_max_length = None,
+        model_max_length=None,
         debug=False,
     ):
         log.info(f"Init SUT")
@@ -58,7 +55,7 @@ class SUT:
         self.device = device
         self.model_max_length = model_max_length
         self.total_sample_count = total_sample_count
-        
+
         self.tokenizer = None
         self.data_object = None
         self.qsl = None
@@ -71,11 +68,10 @@ class SUT:
         self.init_tokenizer()
         self.init_qsl()
         self.load()
-    
+
     def init_tokenizer(self):
         pass
 
-    
     def init_qsl(self):
         self.data_object = Dataset(
             # self.tokenizer,
@@ -91,11 +87,11 @@ class SUT:
         )
 
     def start(self):
-        """ Start the SUT before LoadGen initiates the test. """
+        """Start the SUT before LoadGen initiates the test."""
         pass
-    
+
     def stop(self):
-        """ Stop the SUT when LoadGen signals that the test is done. """
+        """Stop the SUT when LoadGen signals that the test is done."""
         self.stop_test = True
 
     def load(self):
@@ -103,15 +99,15 @@ class SUT:
 
     def get_sut(self):
         pass
-    
+
     def get_qsl(self):
         pass
 
     def predict(self):
         pass
 
-    def issue_queries(self,  query_samples):
-        """ LoadGen sends in queries here. """
+    def issue_queries(self, query_samples):
+        """LoadGen sends in queries here."""
         pass
 
     def flush_queries(self):
@@ -119,6 +115,3 @@ class SUT:
 
     def __del__(self):
         pass
-
-
-

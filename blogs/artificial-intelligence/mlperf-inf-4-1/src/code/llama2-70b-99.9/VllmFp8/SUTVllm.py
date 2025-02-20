@@ -1,23 +1,22 @@
-import logging
-import mlperf_loadgen as lg
-import dataclasses
-from dataclasses import dataclass
-import numpy as np
 import array
-
+import dataclasses
+import logging
 import multiprocessing as mp
 import os
 import time
+from dataclasses import dataclass
 from threading import Thread
-from rpd_trace_utils import rpd_trace_range, rpd_trace_range_non_timed
 
+import mlperf_loadgen as lg
+import numpy as np
+from rpd_trace_utils import rpd_trace_range, rpd_trace_range_non_timed
 from SUT import SUT
-from vllm_helpers import llm_tp1, LLM_MODEL_LOAD_DONE, LLM_DONE
+from vllm_helpers import LLM_DONE, LLM_MODEL_LOAD_DONE, llm_tp1
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)-8s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 log = logging.getLogger(__file__)
 
@@ -32,13 +31,14 @@ class SamplingParamsInput:
     repetition_penalty: float = 1
     frequency_penalty: float = 0
     ignore_eos: bool = False
-    detokenize: bool = False    # Check that vllm version supports this
-    early_stopping=False
-    use_beam_search=False
+    detokenize: bool = False  # Check that vllm version supports this
+    early_stopping = False
+    use_beam_search = False
 
 
-class LlmProcTP1():
-    def __init__(self,
+class LlmProcTP1:
+    def __init__(
+        self,
         device,
         dtype,
         model,
@@ -49,8 +49,8 @@ class LlmProcTP1():
         qdata_out,
         llm_kwargs,
     ):
-        self.qdata_in = qdata_in # conn.Connection()
-        self.qdata_out = qdata_out # conn.Connection()
+        self.qdata_in = qdata_in  # conn.Connection()
+        self.qdata_out = qdata_out  # conn.Connection()
         self.qstatus_out = mp.Queue()
         self.device = device
         self.dtype = dtype
@@ -61,11 +61,14 @@ class LlmProcTP1():
         self.init_llm(llm_kwargs)
 
     def init_llm(self, llm_kwargs):
-        llm_kwargs["tensor_parallel_size"] = 1  #self.tp
+        llm_kwargs["tensor_parallel_size"] = 1  # self.tp
         llm_kwargs["dtype"] = self.dtype
         llm_kwargs["model"] = self.model_path
         llm_kwargs["quantization"] = self.quantization
-        llm_kwargs["disable_log_stats"] = True if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else False
+        llm_kwargs["disable_log_stats"] = (
+            True if os.getenv(
+                "HARNESS_DISABLE_VLLM_LOGS",
+                "0") == "1" else False)
         llm_kwargs["skip_tokenizer_init"] = True
 
         if self.quantization_param_path:
@@ -74,13 +77,23 @@ class LlmProcTP1():
             llm_kwargs["quantized_weights_path"] = self.quantized_weights_path
 
         sp_config = SamplingParamsInput()
-        sp_kwargs = dataclasses.asdict( sp_config )
+        sp_kwargs = dataclasses.asdict(sp_config)
 
         log.info(f"llm_kwargs={llm_kwargs}")
         log.info(f"sp_kwargs={sp_kwargs}")
 
         os.environ["HIP_VISIBLE_DEVICES"] = f"{self.device}"
-        self.llm_proc = mp.Process(target=llm_tp1, args=(llm_kwargs, sp_kwargs, self.qdata_in, self.qdata_out, self.qstatus_out, self.device))
+        self.llm_proc = mp.Process(
+            target=llm_tp1,
+            args=(
+                llm_kwargs,
+                sp_kwargs,
+                self.qdata_in,
+                self.qdata_out,
+                self.qstatus_out,
+                self.device,
+            ),
+        )
         self.llm_proc.start()
 
     def check_llm_loaded(self):
@@ -92,24 +105,26 @@ class LlmProcTP1():
 
 
 class SUTVllmFp8Offline_ntp1(SUT):
-    """ Extend SUT for the llama-2-70b N*TP1 VLLM implementation. """
-    def __init__(self,
+    """Extend SUT for the llama-2-70b N*TP1 VLLM implementation."""
+
+    def __init__(
+        self,
         model_path=None,
         dataset_path=None,
         dtype="float16",
         device="cuda:0",
         total_sample_count=24576,
-        model_max_length = None,
+        model_max_length=None,
         debug=False,
-        tp = 1,
+        tp=1,
         quantization: str = None,
         quantization_param_path: str = None,
         quantized_weights_path: str = None,
-        kv_cache_dtype: str = 'auto',
-        dp = 1,
-        warmup_duration = 0,
+        kv_cache_dtype: str = "auto",
+        dp=1,
+        warmup_duration=0,
         sorting: str = None,
-        llm_kwargs = None
+        llm_kwargs=None,
     ):
         log.info(f"Init SUTVllm")
         super().__init__(
@@ -152,9 +167,17 @@ class SUTVllmFp8Offline_ntp1(SUT):
             qdata_out_receiver, qdata_out_sender = mp.Pipe(False)
             self.qdata_in_senders.append(qdata_in_sender)
             self.qdata_out_receivers.append(qdata_out_receiver)
-            llm_obj = LlmProcTP1(device, self.dtype, self.model_path, self.quantization,
-                    self.quantization_param_path, self.quantized_weights_path,
-                    qdata_in_receiver, qdata_out_sender, self.llm_kwargs)
+            llm_obj = LlmProcTP1(
+                device,
+                self.dtype,
+                self.model_path,
+                self.quantization,
+                self.quantization_param_path,
+                self.quantized_weights_path,
+                qdata_in_receiver,
+                qdata_out_sender,
+                self.llm_kwargs,
+            )
             self.llm_objs.append(llm_obj)
 
         for obj in self.llm_objs:
@@ -163,9 +186,9 @@ class SUTVllmFp8Offline_ntp1(SUT):
     @rpd_trace_range_non_timed("SUT:Main")
     def start_completion_threads(self):
         for i in range(self.dp):
-            self.completion_threads.append(Thread(target=self.completion, args=(i,)))
+            self.completion_threads.append(
+                Thread(target=self.completion, args=(i,)))
             self.completion_threads[-1].start()
-
 
     def init_sampling_params(self):
         pass
@@ -200,7 +223,6 @@ class SUTVllmFp8Offline_ntp1(SUT):
         for t in self.completion_threads:
             t.join()
         log.info(f"Total time spent with run: {time.time() - self.start_t}")
-        
 
     @rpd_trace_range_non_timed("SUT:Main")
     def start(self):
@@ -209,7 +231,11 @@ class SUTVllmFp8Offline_ntp1(SUT):
         self.start_completion_threads()
         self.warmup()
         self.infer_start_t = time.time()
-        log.info(f"Time spent from start to inference start: {self.infer_start_t - self.start_t}")
+        log.info(
+            f"Time spent from start to inference start: {
+                self.infer_start_t -
+                self.start_t}"
+        )
 
     @rpd_trace_range("SUT:Main")
     def make_ranges(self, query_samples):
@@ -227,11 +253,16 @@ class SUTVllmFp8Offline_ntp1(SUT):
     def sort_by_length(self, query_samples, weight=1):
         reord_start = time.time_ns()
         ranges = self.make_ranges(query_samples)
-        evened_out_samples = self.even_out_token_count(query_samples, ranges[0][1] - ranges[0][0])
+        evened_out_samples = self.even_out_token_count(
+            query_samples, ranges[0][1] - ranges[0][0]
+        )
         reordered_samples = []
         for start, stop in ranges:
             chunk = evened_out_samples[start:stop]
-            chunk.sort(key=lambda sample: weight * len(self.data_object.input_ids[sample.index]))
+            chunk.sort(
+                key=lambda sample: weight
+                * len(self.data_object.input_ids[sample.index])
+            )
             reordered_samples.extend(chunk)
         reord_dur = (time.time_ns() - reord_start) / 1_000_000
         log.info(f"Reorder took: {reord_dur} ms")
@@ -242,11 +273,14 @@ class SUTVllmFp8Offline_ntp1(SUT):
     def sort_lexicog(self, query_samples):
         reord_start = time.time_ns()
         ranges = self.make_ranges(query_samples)
-        evened_out_samples = self.even_out_token_count(query_samples, ranges[0][1] - ranges[0][0])
+        evened_out_samples = self.even_out_token_count(
+            query_samples, ranges[0][1] - ranges[0][0]
+        )
         reordered_samples = []
         for start, stop in ranges:
             chunk = evened_out_samples[start:stop]
-            chunk.sort(key=lambda sample: self.data_object.input_ids[sample.index])
+            chunk.sort(
+                key=lambda sample: self.data_object.input_ids[sample.index])
             reordered_samples.extend(chunk)
         reord_dur = (time.time_ns() - reord_start) / 1_000_000
         log.info(f"Reorder took: {reord_dur} ms")
@@ -261,8 +295,11 @@ class SUTVllmFp8Offline_ntp1(SUT):
         for sample in query_samples:
             smallest_bucket = bucket_sizes.index(min(bucket_sizes))
             buckets[smallest_bucket].append(sample)
-            bucket_sizes[smallest_bucket] += len(self.data_object.input_ids[sample.index])
-            if len(buckets[smallest_bucket]) == query_chunk_size and len(buckets) > 1:
+            bucket_sizes[smallest_bucket] += len(
+                self.data_object.input_ids[sample.index]
+            )
+            if len(buckets[smallest_bucket]
+                   ) == query_chunk_size and len(buckets) > 1:
                 full_buckets.append(buckets[smallest_bucket])
                 del buckets[smallest_bucket]
                 del bucket_sizes[smallest_bucket]
@@ -270,7 +307,6 @@ class SUTVllmFp8Offline_ntp1(SUT):
         for bucket in full_buckets + buckets:
             reordered_samples.extend(bucket)
         return reordered_samples
-    
 
     @rpd_trace_range("SUT:Main")
     def sort_samples(self, query_samples):
@@ -297,20 +333,28 @@ class SUTVllmFp8Offline_ntp1(SUT):
     @rpd_trace_range("SUT:Main")
     def post_proc(self, response):
         start, end, output_token_ids = response
-        log.info(f"Got item  |  start, end = {start}, {end}  |  n outputs = {len(output_token_ids)}")
+        log.info(
+            f"Got item  |  start, end = {start}, {end}  |  n outputs = {
+                len(output_token_ids)}"
+        )
 
-        output_sample_ids = self.sample_ids[start : end]
+        output_sample_ids = self.sample_ids[start:end]
         assert len(output_sample_ids) == len(output_token_ids)
 
         log.info(f"Signaling LoadGen output")
 
         try:
             for i in range(len(output_token_ids)):
-                response_array = array.array("B", np.array(output_token_ids[i], np.int32).tobytes())
+                response_array = array.array(
+                    "B", np.array(output_token_ids[i], np.int32).tobytes()
+                )
                 bi = response_array.buffer_info()
-                response = [lg.QuerySampleResponse(output_sample_ids[i], bi[0], bi[1], len(output_token_ids[i]))]
+                response = [
+                    lg.QuerySampleResponse(
+                        output_sample_ids[i], bi[0], bi[1], len(
+                            output_token_ids[i]))]
                 lg.QuerySamplesComplete(response)
-        except:
+        except BaseException:
             log.info(f"Error sending completed response to LoadGen")
 
     def completion(self, device):
@@ -321,25 +365,34 @@ class SUTVllmFp8Offline_ntp1(SUT):
                     log.info(f"Query chunk done for GPU {device}")
                     # self.update_gpu_stats(device, time.time())
                     break
-                self.post_proc(response)                
-            except:
+                self.post_proc(response)
+            except BaseException:
                 pass
 
     @rpd_trace_range("SUT:Main")
     def send_tokens(self, sender_id, start, end, prompt_token_ids):
-        self.qdata_in_senders[sender_id].send((start, end, prompt_token_ids[start : end]))
+        self.qdata_in_senders[sender_id].send(
+            (start, end, prompt_token_ids[start:end]))
 
     @rpd_trace_range("SUT:Main")
     def issue_queries(self, query_samples):
         log.info(f"Issue queries  |  number of queries = {len(query_samples)}")
         ranges, query_samples = self.sort_samples(query_samples)
-        self.sample_ids = [query_samples[i].id for i in range(len(query_samples))]
-        prompt_token_ids = [self.data_object.input_ids[query_samples[i].index] for i in range(len(query_samples))]
-        log.info(f"Converted queries to prompt tokens  |  number of queries = {len(prompt_token_ids)}")
+        self.sample_ids = [
+            query_samples[i].id for i in range(
+                len(query_samples))]
+        prompt_token_ids = [
+            self.data_object.input_ids[query_samples[i].index]
+            for i in range(len(query_samples))
+        ]
+        log.info(
+            f"Converted queries to prompt tokens  |  number of queries = {
+                len(prompt_token_ids)}"
+        )
 
         for i, (start, end) in enumerate(ranges):
             self.send_tokens(i, start, end, prompt_token_ids)
             log.info(f"Put prompt tokens in pipe #{i}")
-        
+
         for i in range(self.dp):
             self.qdata_in_senders[i].send(None)

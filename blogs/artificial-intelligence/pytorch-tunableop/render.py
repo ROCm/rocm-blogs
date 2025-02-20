@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
-import jinja2
 import ast
 import inspect
 import subprocess
+
+import jinja2
 
 
 def include_source(name, func=None):
@@ -21,7 +22,9 @@ def include_source(name, func=None):
                 # Retrieve any decorator lines first
                 decorator_lines = ""
                 for decorator in node.decorator_list:
-                    decorator_lines += f"@{ast.get_source_segment(source, decorator)}\n"
+                    decorator_lines += f"@{
+                        ast.get_source_segment(
+                            source, decorator)}\n"
 
                 # Retrieve function body next
                 source = decorator_lines + ast.get_source_segment(source, node)

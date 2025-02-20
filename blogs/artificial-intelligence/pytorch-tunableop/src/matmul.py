@@ -23,7 +23,7 @@ def time_matmul(M, N, K):
     torch.cuda.synchronize()
     dt = t0.elapsed_time(t1) / 1000
 
-    print(f"{n_iter/dt:0.2f} iter/s ({dt:0.4g}s)")
+    print(f"{n_iter / dt:0.2f} iter/s ({dt:0.4g}s)")
 
 
 time_matmul(512, 1024, 2048)

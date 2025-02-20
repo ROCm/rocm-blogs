@@ -249,6 +249,7 @@ The table below shows performance data where a local inference client is
 fed requests at an infinite rate (no delay between messages) and shows
 the output token throughput in client-server scenario under maximum load
 with no latency constraints.
+
 | Model          | Precision | TP Size | Input   | Output | Output token throughput<br>(tok/sec), MI300X [2] | Output token throughput<br>(tok/sec), H100 [2] | MI300X Advantage<br>MI300X / H100 (Higher is better) |
 |----------------|-----------|---------|---------|--------|--------------------------------------------------|------------------------------------------------|------------------------------------------------------|
 | Llama 3.1 70B  | FP8       | 8       | 128     | 2048   | 15105                                            | 15810                                          | 0.96                                                 |
@@ -261,6 +262,7 @@ with no latency constraints.
 |                |           |         | 500     | 2000   | 2985                                             | 2639                                           | 1.13                                                 |
 |                |           |         | 2048    | 2048   | 1999                                             | 1563                                           | 1.28                                                 |
 | Geomean               |           |         | |        |                                                  |                                                | 1.31                                                 |
+
 <section id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />

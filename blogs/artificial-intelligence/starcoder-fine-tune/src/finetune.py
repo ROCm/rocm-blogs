@@ -4,16 +4,19 @@ import os
 import torch
 from accelerate import Accelerator
 from datasets import load_dataset
-from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training, set_peft_model_state_dict
+from peft import (LoraConfig, get_peft_model, prepare_model_for_kbit_training,
+                  set_peft_model_state_dict)
 from torch.utils.data import IterableDataset
 from tqdm import tqdm
-from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments, logging, set_seed
-from transformers import TrainerCallback, TrainingArguments, TrainerState, TrainerControl
+from transformers import (AutoConfig, AutoModelForCausalLM, AutoTokenizer,
+                          Trainer, TrainerCallback, TrainerControl,
+                          TrainerState, TrainingArguments, logging, set_seed)
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 
 """
 Fine-Tune StarCoder on Code Alpaca/SE
 """
+
 
 class SavePeftModelCallback(TrainerCallback):
     def on_save(
@@ -23,11 +26,14 @@ class SavePeftModelCallback(TrainerCallback):
         control: TrainerControl,
         **kwargs,
     ):
-        checkpoint_folder = os.path.join(args.output_dir, f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}")
+        checkpoint_folder = os.path.join(
+            args.output_dir, f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}"
+        )
 
         kwargs["model"].save_pretrained(checkpoint_folder)
 
-        pytorch_model_path = os.path.join(checkpoint_folder, "pytorch_model.bin")
+        pytorch_model_path = os.path.join(
+            checkpoint_folder, "pytorch_model.bin")
         torch.save({}, pytorch_model_path)
         return control
 
@@ -40,18 +46,29 @@ class LoadBestPeftModelCallback(TrainerCallback):
         control: TrainerControl,
         **kwargs,
     ):
-        print(f"Loading best peft model from {state.best_model_checkpoint} (score: {state.best_metric}).")
-        best_model_path = os.path.join(state.best_model_checkpoint, "adapter_model.bin")
+        print(
+            f"Loading best peft model from {
+                state.best_model_checkpoint} (score: {
+                state.best_metric})."
+        )
+        best_model_path = os.path.join(
+            state.best_model_checkpoint,
+            "adapter_model.bin")
         adapters_weights = torch.load(best_model_path)
         model = kwargs["model"]
         set_peft_model_state_dict(model, adapters_weights)
         return control
-    
+
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model_path", type=str, default="bigcode/large-model")
-    parser.add_argument("--dataset_name", type=str, default="HuggingFaceH4/CodeAlpaca_20K")
+    parser.add_argument(
+        "--model_path",
+        type=str,
+        default="bigcode/large-model")
+    parser.add_argument(
+        "--dataset_name", type=str, default="HuggingFaceH4/CodeAlpaca_20K"
+    )
     parser.add_argument("--subset", type=str)
     parser.add_argument("--split", type=str)
     parser.add_argument("--size_valid_set", type=int, default=10000)
@@ -79,7 +96,9 @@ def get_args():
     parser.add_argument("--local_rank", type=int, default=0)
     parser.add_argument("--no_fp16", action="store_false")
     parser.add_argument("--bf16", action="store_true", default=False)
-    parser.add_argument("--no_gradient_checkpointing", action="store_false", default=False)
+    parser.add_argument(
+        "--no_gradient_checkpointing", action="store_false", default=False
+    )
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--num_workers", type=int, default=None)
     parser.add_argument("--output_dir", type=str, default="./checkpoints")
@@ -90,13 +109,21 @@ def get_args():
     return parser.parse_args()
 
 
-def chars_token_ratio(dataset, tokenizer, input_column_name="prompt", output_column_name="completion", nb_examples=400):
+def chars_token_ratio(
+    dataset,
+    tokenizer,
+    input_column_name="prompt",
+    output_column_name="completion",
+    nb_examples=400,
+):
     """
     Estimate the average number of characters per token in the dataset.
     """
     total_characters, total_tokens = 0, 0
-    for _, example in tqdm(zip(range(nb_examples), iter(dataset)), total=nb_examples):
-        text = prepare_sample_text(example, input_column_name, output_column_name)
+    for _, example in tqdm(
+            zip(range(nb_examples), iter(dataset)), total=nb_examples):
+        text = prepare_sample_text(
+            example, input_column_name, output_column_name)
         total_characters += len(text)
         if tokenizer.is_fast:
             total_tokens += len(tokenizer(text).tokens())
@@ -117,13 +144,19 @@ def print_trainable_parameters(model):
         if param.requires_grad:
             trainable_params += param.numel()
     print(
-        f"trainable params: {trainable_params} || all params: {all_param} || trainable%: {100 * trainable_params / all_param}"
-    )
+        f"trainable params: {trainable_params} || all params: {all_param} || trainable%: {
+            100 *
+            trainable_params /
+            all_param}")
 
 
-def prepare_sample_text(example, input_column_name="prompt", output_column_name="completion"):
+def prepare_sample_text(
+    example, input_column_name="prompt", output_column_name="completion"
+):
     """Prepare the text from a sample of the dataset."""
-    text = f"Question: {example[input_column_name]}\n\nAnswer: {example[output_column_name]}"
+    text = f"Question: {
+        example[input_column_name]}\n\nAnswer: {
+        example[output_column_name]}"
     return text
 
 
@@ -148,10 +181,14 @@ class ConstantLengthDataset(IterableDataset):
         num_of_sequences=1024,
         chars_per_token=3.6,
         input_column_name="prompt",
-        output_column_name="completion"
+        output_column_name="completion",
     ):
         self.tokenizer = tokenizer
-        self.concat_token_id = tokenizer.eos_token_id if tokenizer.eos_token_id is not None else args.eos_token_id
+        self.concat_token_id = (
+            tokenizer.eos_token_id
+            if tokenizer.eos_token_id is not None
+            else args.eos_token_id
+        )
         self.dataset = dataset
         self.seq_length = seq_length
         self.infinite = infinite
@@ -169,7 +206,13 @@ class ConstantLengthDataset(IterableDataset):
                 if buffer_len >= self.max_buffer_size:
                     break
                 try:
-                    buffer.append(prepare_sample_text(next(iterator), self.input_column_name, self.output_column_name))
+                    buffer.append(
+                        prepare_sample_text(
+                            next(iterator),
+                            self.input_column_name,
+                            self.output_column_name,
+                        )
+                    )
                     buffer_len += len(buffer[-1])
                 except StopIteration:
                     if self.infinite:
@@ -177,12 +220,13 @@ class ConstantLengthDataset(IterableDataset):
                     else:
                         more_examples = False
                         break
-            tokenized_inputs = self.tokenizer(buffer, truncation=False)["input_ids"]
+            tokenized_inputs = self.tokenizer(
+                buffer, truncation=False)["input_ids"]
             all_token_ids = []
             for tokenized_input in tokenized_inputs:
                 all_token_ids.extend(tokenized_input + [self.concat_token_id])
             for i in range(0, len(all_token_ids), self.seq_length):
-                input_ids = all_token_ids[i : i + self.seq_length]
+                input_ids = all_token_ids[i: i + self.seq_length]
                 if len(input_ids) == self.seq_length:
                     self.current_size += 1
                     yield {
@@ -204,14 +248,24 @@ def create_datasets(tokenizer, args):
         print("Loading the dataset in streaming mode")
         valid_data = dataset.take(args.size_valid_set)
         train_data = dataset.skip(args.size_valid_set)
-        train_data = train_data.shuffle(buffer_size=args.shuffle_buffer, seed=args.seed)
+        train_data = train_data.shuffle(
+            buffer_size=args.shuffle_buffer, seed=args.seed)
     else:
-        valid_data = dataset[:args.size_valid_set]
+        valid_data = dataset[: args.size_valid_set]
         train_data = dataset[args.size_valid_set:]
-        print(f"Size of the train set: {len(train_data)}. Size of the validation set: {len(valid_data)}")
+        print(
+            f"Size of the train set: {
+                len(train_data)}. Size of the validation set: {
+                len(valid_data)}"
+        )
 
-    chars_per_token = chars_token_ratio(train_data, tokenizer, args.input_column_name, args.output_column_name)
-    print(f"The character to token ratio of the dataset is: {chars_per_token:.2f}")
+    chars_per_token = chars_token_ratio(
+        train_data, tokenizer, args.input_column_name, args.output_column_name
+    )
+    print(
+        f"The character to token ratio of the dataset is: {
+            chars_per_token:.2f}"
+    )
 
     train_dataset = ConstantLengthDataset(
         tokenizer,
@@ -220,7 +274,7 @@ def create_datasets(tokenizer, args):
         seq_length=args.seq_length,
         chars_per_token=chars_per_token,
         input_column_name=args.input_column_name,
-        output_column_name=args.output_column_name
+        output_column_name=args.output_column_name,
     )
     valid_dataset = ConstantLengthDataset(
         tokenizer,
@@ -229,7 +283,7 @@ def create_datasets(tokenizer, args):
         seq_length=args.seq_length,
         chars_per_token=chars_per_token,
         input_column_name=args.input_column_name,
-        output_column_name=args.output_column_name
+        output_column_name=args.output_column_name,
     )
     return train_dataset, valid_dataset
 
@@ -252,7 +306,7 @@ def run_training(args, train_data, val_data):
         lora_dropout=args.lora_dropout,
         bias="none",
         task_type="CAUSAL_LM",
-        target_modules = ["c_proj", "c_attn", "q_attn"]
+        target_modules=["c_proj", "c_attn", "q_attn"],
     )
 
     model = get_peft_model(model, lora_config)
@@ -281,17 +335,23 @@ def run_training(args, train_data, val_data):
         warmup_steps=args.num_warmup_steps,
         gradient_accumulation_steps=args.gradient_accumulation_steps,
         gradient_checkpointing=not args.no_gradient_checkpointing,
-        gradient_checkpointing_kwargs={'use_reentrant':False},
+        gradient_checkpointing_kwargs={"use_reentrant": False},
         fp16=not args.no_fp16,
         bf16=args.bf16,
         weight_decay=args.weight_decay,
         run_name="StarCoder-finetuned",
         report_to="wandb",
         ddp_find_unused_parameters=False,
-        deepspeed='finetune/ds_config.json',
+        deepspeed="finetune/ds_config.json",
     )
 
-    trainer = Trainer(model=model, args=training_args, train_dataset=train_data, eval_dataset=val_data, callbacks=[SavePeftModelCallback, LoadBestPeftModelCallback])
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=train_data,
+        eval_dataset=val_data,
+        callbacks=[SavePeftModelCallback, LoadBestPeftModelCallback],
+    )
 
     print("Training...")
     trainer.train()

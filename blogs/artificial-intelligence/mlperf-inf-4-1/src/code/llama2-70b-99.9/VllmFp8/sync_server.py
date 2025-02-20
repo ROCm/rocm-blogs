@@ -1,26 +1,27 @@
-import logging
+import asyncio
 import dataclasses
-from dataclasses import dataclass
-from queue_llm import QueueLLM
-from vllm import SamplingParams
+import gc
+import logging
 import multiprocessing as mp
 import os
-import asyncio
-from SUTVllm import SamplingParamsInput
-import logging
-import numa_helpers as nh
-import threading
-from rpd_trace_utils import rpd_trace_range_async, rpd_trace_range, rpd_trace_range_non_timed
 import queue
-import gc
-import multiprocessing as mp
+import threading
+from dataclasses import dataclass
+
+import numa_helpers as nh
+from queue_llm import QueueLLM
+from rpd_trace_utils import (rpd_trace_range, rpd_trace_range_async,
+                             rpd_trace_range_non_timed)
+from SUTVllm import SamplingParamsInput
+from vllm import SamplingParams
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)-8s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 log = logging.getLogger(__file__)
+
 
 @dataclass
 class SamplingParamsInput:
@@ -31,9 +32,9 @@ class SamplingParamsInput:
     frequency_penalty: float = 0
     ignore_eos: bool = False
     detokenize: bool = False
-    early_stopping=False
-    use_beam_search=False
-    skip_special_tokens=False
+    early_stopping = False
+    use_beam_search = False
+    skip_special_tokens = False
 
 
 class SyncServer:
@@ -75,7 +76,8 @@ class SyncServer:
 
     @rpd_trace_range_non_timed("SUT:Worker")
     def start(self):
-        os.environ["HIP_VISIBLE_DEVICES"] = ",".join([str(d) for d in self.devices])
+        os.environ["HIP_VISIBLE_DEVICES"] = ",".join(
+            [str(d) for d in self.devices])
         self.process = mp.Process(target=self.launch)
         self.process.start()
 
@@ -83,11 +85,14 @@ class SyncServer:
     def launch(self):
         nh.set_affinity_by_device(self.devices[0])
 
-        self.llm_kwargs["tensor_parallel_size"] = 1  #self.tp
+        self.llm_kwargs["tensor_parallel_size"] = 1  # self.tp
         self.llm_kwargs["dtype"] = self.dtype
         self.llm_kwargs["model"] = self.model_path
         self.llm_kwargs["quantization"] = self.quantization
-        self.llm_kwargs["disable_log_stats"] = True if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else False
+        self.llm_kwargs["disable_log_stats"] = (
+            True if os.getenv(
+                "HARNESS_DISABLE_VLLM_LOGS",
+                "0") == "1" else False)
         self.llm_kwargs["kv_cache_dtype"] = self.kv_cache_dtype
         self.llm_kwargs["skip_tokenizer_init"] = True
 
@@ -97,37 +102,37 @@ class SyncServer:
             self.llm_kwargs["quantized_weights_path"] = self.quantized_weights_path
 
         sp_config = SamplingParamsInput()
-        sp_kwargs = dataclasses.asdict( sp_config )
+        sp_kwargs = dataclasses.asdict(sp_config)
 
         self.log(f"llm_kwargs={self.llm_kwargs}")
         self.log(f"sp_kwargs={sp_kwargs}")
 
         sampling_params = SamplingParams(**sp_kwargs)
-        self.engine = QueueLLM(input_queue=self.qdata_in,
-                               first_token_queue=self.qdata_first_token,
-                               result_queue=self.qdata_out,
-                               sampling_params=sampling_params,
-                               **self.llm_kwargs)
+        self.engine = QueueLLM(
+            input_queue=self.qdata_in,
+            first_token_queue=self.qdata_first_token,
+            result_queue=self.qdata_out,
+            sampling_params=sampling_params,
+            **self.llm_kwargs,
+        )
 
         self.signal_running()
-        use_tqdm = False if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else True
+        use_tqdm = False if os.getenv(
+            "HARNESS_DISABLE_VLLM_LOGS",
+            "0") == "1" else True
         self.engine.start(use_tqdm=use_tqdm)
 
     def signal_running(self):
         self.qstatus_out.put_nowait(SyncServer.SIG_RUN)
 
-
     def is_running(self):
         try:
             return self.qstatus_out.get_nowait() == SyncServer.SIG_RUN
-        except:
+        except BaseException:
             return False
-
 
     def log(self, message):
         log.info(f"Server {self.devices} - {message}")
 
-
     def error(self, message):
         log.error(f"Server {self.devices} - {message}")
-

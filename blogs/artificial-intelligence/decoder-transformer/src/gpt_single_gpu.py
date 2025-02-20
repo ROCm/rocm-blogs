@@ -1,5 +1,6 @@
 import os
 import time
+
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
@@ -19,7 +20,8 @@ dropout = 0.2
 # ------------
 
 
-# wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+# wget
+# https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
 with open("input.txt", "r", encoding="utf-8") as f:
     text = f.read()
 
@@ -29,12 +31,18 @@ vocab_size = len(chars)
 # create a mapping from characters to integers
 stoi = {ch: i for i, ch in enumerate(chars)}
 itos = {i: ch for i, ch in enumerate(chars)}
-encode = lambda s: [
-    stoi[c] for c in s
-]  # encoder: take a string, output a list of integers
-decode = lambda l: "".join(
-    [itos[i] for i in l]
-)  # decoder: take a list of integers, output a string
+
+
+def encode(s):
+    return [stoi[c]
+            for c in s]  # encoder: take a string, output a list of integers
+
+
+def decode(l):
+    return "".join(
+        [itos[i] for i in l]
+    )  # decoder: take a list of integers, output a string
+
 
 # Train and test splits
 data = torch.tensor(encode(text), dtype=torch.long)
@@ -48,8 +56,8 @@ def get_batch(split):
     # generate a small batch of data of inputs x and targets y
     data = train_data if split == "train" else val_data
     ix = torch.randint(len(data) - block_size, (batch_size,))
-    x = torch.stack([data[i : i + block_size] for i in ix])
-    y = torch.stack([data[i + 1 : i + block_size + 1] for i in ix])
+    x = torch.stack([data[i: i + block_size] for i in ix])
+    y = torch.stack([data[i + 1: i + block_size + 1] for i in ix])
     x, y = x.to(device), y.to(device)
     return x, y
 
@@ -77,7 +85,10 @@ class Head(nn.Module):
         self.key = nn.Linear(n_embd, head_size, bias=False)
         self.query = nn.Linear(n_embd, head_size, bias=False)
         self.value = nn.Linear(n_embd, head_size, bias=False)
-        self.register_buffer("tril", torch.tril(torch.ones(block_size, block_size)))
+        self.register_buffer(
+            "tril", torch.tril(
+                torch.ones(
+                    block_size, block_size)))
 
         self.dropout = nn.Dropout(dropout)
 
@@ -91,7 +102,8 @@ class Head(nn.Module):
         wei = (
             q @ k.transpose(-2, -1) * k.shape[-1] ** -0.5
         )  # (B, T, hs) @ (B, hs, T) -> (B, T, T)
-        wei = wei.masked_fill(self.tril[:T, :T] == 0, float("-inf"))  # (B, T, T)
+        wei = wei.masked_fill(
+            self.tril[:T, :T] == 0, float("-inf"))  # (B, T, T)
         wei = F.softmax(wei, dim=-1)  # (B, T, T)
         wei = self.dropout(wei)
         # perform the weighted aggregation of the values
@@ -152,7 +164,8 @@ class Block(nn.Module):
 class GPTLanguageModel(nn.Module):
     def __init__(self):
         super().__init__()
-        # each token directly reads off the logits for the next token from a lookup table
+        # each token directly reads off the logits for the next token from a
+        # lookup table
         self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
         self.position_embedding_table = nn.Embedding(block_size, n_embd)
         self.blocks = nn.Sequential(
@@ -161,7 +174,8 @@ class GPTLanguageModel(nn.Module):
         self.ln_f = nn.LayerNorm(n_embd)  # final layer norm
         self.lm_head = nn.Linear(n_embd, vocab_size)
 
-        # better init, not covered in the original GPT video, but important, will cover in followup video
+        # better init, not covered in the original GPT video, but important,
+        # will cover in followup video
         self.apply(self._init_weights)
 
     def _init_weights(self, module):
@@ -177,7 +191,8 @@ class GPTLanguageModel(nn.Module):
 
         # idx and targets are both (B,T) tensor of integers
         tok_emb = self.token_embedding_table(idx)  # (B,T,C)
-        pos_emb = self.position_embedding_table(torch.arange(T, device=device))  # (T,C)
+        pos_emb = self.position_embedding_table(
+            torch.arange(T, device=device))  # (T,C)
         x = tok_emb + pos_emb  # (B,T,C)
         x = self.blocks(x)  # (B,T,C)
         x = self.ln_f(x)  # (B,T,C)
@@ -227,7 +242,9 @@ def main():
         if iter % eval_interval == 0 or iter == max_iters - 1:
             losses = estimate_loss(model)
             print(
-                f"step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}"
+                f"step {iter}: train loss {
+                    losses['train']:.4f}, val loss {
+                    losses['val']:.4f}"
             )
 
         # sample a batch of data
@@ -241,7 +258,8 @@ def main():
 
     print("generating text")
     context = torch.zeros((1, 1), dtype=torch.long, device=device)
-    # because the model is now a ditributed model, we need to unwrap it by adding "module"
+    # because the model is now a ditributed model, we need to unwrap it by
+    # adding "module"
     print(decode(model.generate(context, max_new_tokens=500)[0].tolist()))
 
 

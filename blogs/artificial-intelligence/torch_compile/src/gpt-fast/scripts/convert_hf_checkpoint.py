@@ -1,8 +1,6 @@
 # Copyright (c) Meta Platforms, Inc. and affiliates.
 # All rights reserved.
 
-# This source code is licensed under the license found in the
-# LICENSE file in the root directory of this source tree.
 import json
 import re
 import sys
@@ -10,18 +8,21 @@ from pathlib import Path
 from typing import Optional
 
 import torch
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+from model import ModelArgs
 
 # support running without installing as a package
 wd = Path(__file__).parent.parent.resolve()
 sys.path.append(str(wd))
 
-from model import ModelArgs
-
 
 @torch.inference_mode()
 def convert_hf_checkpoint(
     *,
-    checkpoint_dir: Path = Path("checkpoints/meta-Transformer/Transformer-2-7b-chat-hf"),
+    checkpoint_dir: Path = Path(
+        "checkpoints/meta-Transformer/Transformer-2-7b-chat-hf"
+    ),
     model_name: Optional[str] = None,
 ) -> None:
     if model_name is None:
@@ -44,8 +45,8 @@ def convert_hf_checkpoint(
         "model.layers.{}.self_attn.k_proj.weight": "layers.{}.attention.wk.weight",
         "model.layers.{}.self_attn.v_proj.weight": "layers.{}.attention.wv.weight",
         "model.layers.{}.self_attn.o_proj.weight": "layers.{}.attention.wo.weight",
-        'model.layers.{}.self_attn.rotary_emb.inv_freq': None,
-        'model.layers.{}.mlp.gate_proj.weight': 'layers.{}.feed_forward.w1.weight',
+        "model.layers.{}.self_attn.rotary_emb.inv_freq": None,
+        "model.layers.{}.mlp.gate_proj.weight": "layers.{}.feed_forward.w1.weight",
         "model.layers.{}.mlp.up_proj.weight": "layers.{}.feed_forward.w3.weight",
         "model.layers.{}.mlp.down_proj.weight": "layers.{}.feed_forward.w2.weight",
         "model.layers.{}.input_layernorm.weight": "layers.{}.attention_norm.weight",
@@ -53,7 +54,9 @@ def convert_hf_checkpoint(
         "model.norm.weight": "norm.weight",
         "lm_head.weight": "output.weight",
     }
-    bin_files = {checkpoint_dir / bin for bin in bin_index["weight_map"].values()}
+    bin_files = {
+        checkpoint_dir /
+        bin for bin in bin_index["weight_map"].values()}
 
     def permute(w, n_head):
         dim = config.dim
@@ -65,13 +68,15 @@ def convert_hf_checkpoint(
 
     merged_result = {}
     for file in sorted(bin_files):
-        state_dict = torch.load(str(file), map_location="cpu", mmap=True, weights_only=True)
+        state_dict = torch.load(
+            str(file), map_location="cpu", mmap=True, weights_only=True
+        )
         merged_result.update(state_dict)
     final_result = {}
     for key, value in merged_result.items():
         if "layers" in key:
-            abstract_key = re.sub(r'(\d+)', '{}', key)
-            layer_num = re.search(r'\d+', key).group(0)
+            abstract_key = re.sub(r"(\d+)", "{}", key)
+            layer_num = re.search(r"\d+", key).group(0)
             new_key = weight_map[abstract_key]
             if new_key is None:
                 continue
@@ -95,11 +100,18 @@ def convert_hf_checkpoint(
     print(f"Saving checkpoint to {checkpoint_dir / 'model.pth'}")
     torch.save(final_result, checkpoint_dir / "model.pth")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description='Convert HuggingFace checkpoint.')
-    parser.add_argument('--checkpoint_dir', type=Path, default=Path("checkpoints/meta-llama/llama-2-7b-chat-hf"))
-    parser.add_argument('--model_name', type=str, default=None)
+
+    parser = argparse.ArgumentParser(
+        description="Convert HuggingFace checkpoint.")
+    parser.add_argument(
+        "--checkpoint_dir",
+        type=Path,
+        default=Path("checkpoints/meta-llama/llama-2-7b-chat-hf"),
+    )
+    parser.add_argument("--model_name", type=str, default=None)
 
     args = parser.parse_args()
     convert_hf_checkpoint(

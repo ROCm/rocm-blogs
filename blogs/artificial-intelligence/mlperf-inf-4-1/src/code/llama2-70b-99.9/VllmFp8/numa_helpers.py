@@ -1,13 +1,15 @@
-from collections import defaultdict
-import subprocess
-import logging
 import itertools
-
 import logging
+import os
+import subprocess
+from collections import defaultdict
+
+from numa import info, memory, schedule
+
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s %(levelname)-8s %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
 )
 log = logging.getLogger(__file__)
 
@@ -38,7 +40,7 @@ def get_devices(lines):
     for idx, line in enumerate(lines):
         if DEVICE_INDEX_STR in line:
             device_idx = parse_line(line)
-            if not DEVICE_TYPE_STR in lines[idx + 1]:
+            if DEVICE_TYPE_STR not in lines[idx + 1]:
                 raise Exception(
                     f"Expected '{DEVICE_TYPE_STR}' after '{DEVICE_INDEX_STR}'"
                 )
@@ -52,8 +54,10 @@ def get_numa_matrix(lines, dim: int):
     def str_list_to_int_list(list):
         return [int(num) for num in list]
 
-    numa_info_trimmed = [line.strip().split()[1:] for line in lines if line.strip()]
-    numa_matrix = [str_list_to_int_list(line) for line in numa_info_trimmed[1:]]
+    numa_info_trimmed = [line.strip().split()[1:]
+                         for line in lines if line.strip()]
+    numa_matrix = [str_list_to_int_list(line)
+                   for line in numa_info_trimmed[1:]]
     assert len(numa_matrix) == dim
     for line in numa_matrix:
         assert len(line) == dim
@@ -94,11 +98,12 @@ def create_gpu_to_cpu_mapping(numa_matrix, devices):
     logging.debug(f"GPU to CPU map {gpu_to_cpu_map_aligned}")
     return gpu_to_cpu_map_aligned
 
+
 def run_rocm_bandwidth_test():
-    p = subprocess.run(
-        ["/usr/local/bin/rocm-bandwidth-test", "-t"], capture_output=True, text=True
-    )
+    p = subprocess.run(["/usr/local/bin/rocm-bandwidth-test",
+                        "-t"], capture_output=True, text=True)
     return p.stdout
+
 
 def get_gpu_to_cpu_mapping():
     input = run_rocm_bandwidth_test()
@@ -108,9 +113,6 @@ def get_gpu_to_cpu_mapping():
     numa_matrix = get_numa_matrix(numa_info, len(devices))
     return create_gpu_to_cpu_mapping(numa_matrix, devices)
 
-from numa import schedule, memory, info
-import os
-import itertools
 
 def set_affinity_by_device(device_id):
     gpu_to_cpu_map = get_gpu_to_cpu_mapping()
@@ -124,23 +126,27 @@ def set_affinity_by_device(device_id):
     assert schedule.get_affinitive_nodes().sort() == nodes.sort()
     assert memory.get_membind_nodes().sort() == nodes.sort()
 
+
 def log_device_affinities(device_id):
     log.info(f"GPU: {device_id}")
     log.info(f"Bound node = {memory.get_membind_nodes().sort()}")
+
 
 def set_affinity_by_device_and_pid(device_id, pid):
     gpu_to_cpu_map = get_gpu_to_cpu_mapping()
     nodes = gpu_to_cpu_map[device_id]
 
     numa_hw_info = info.numa_hardware_info()
-    cpu_ids = list(itertools.chain.from_iterable([numa_hw_info['node_cpu_info'][n] for n in nodes]))
+    cpu_ids = list(itertools.chain.from_iterable(
+        [numa_hw_info["node_cpu_info"][n] for n in nodes]))
     log.info(f"GPU: {device_id}")
     log.info(f"CPU ids: {cpu_ids}")
     log.info(f"Nearest nodes = {nodes}")
     schedule.run_on_cpus(pid, *cpu_ids)
     bound_nodes = memory.get_membind_nodes()
     if all(n not in nodes for n in bound_nodes):
-        log.error("All numa nodes out of supported range for device{device_id}")
+        log.error(
+            "All numa nodes out of supported range for device{device_id}")
 
     assert schedule.get_affinitive_cpus(pid).sort() == cpu_ids.sort()
     assert memory.get_membind_nodes().sort() == nodes.sort()

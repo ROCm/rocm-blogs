@@ -1,26 +1,39 @@
+import lightning as L
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader, Dataset
 from datasets import load_dataset
-from transformers import BertTokenizer, BertModel
-import lightning as L
+from torch.utils.data import DataLoader, Dataset
 from torchmetrics import Accuracy
+from transformers import BertModel, BertTokenizer
 
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 class SentimentDataset(Dataset):
     def __init__(self, data, tokenizer, max_length):
-        self.texts = data['text']
-        self.labels = data['label']
+        self.texts = data["text"]
+        self.labels = data["label"]
         self.tokenizer = tokenizer
         self.max_length = max_length
+
     def __len__(self):
         return len(self.texts)
+
     def __getitem__(self, idx):
         text = self.texts[idx]
         label = float(self.labels[idx])
-        encoding = self.tokenizer(text, return_tensors='pt', max_length=self.max_length, padding='max_length', truncation=True)
-        return {'input_ids': encoding['input_ids'].flatten(), 'attention_mask': encoding['attention_mask'].flatten(), 'label': torch.tensor(label)}
+        encoding = self.tokenizer(
+            text,
+            return_tensors="pt",
+            max_length=self.max_length,
+            padding="max_length",
+            truncation=True,
+        )
+        return {
+            "input_ids": encoding["input_ids"].flatten(),
+            "attention_mask": encoding["attention_mask"].flatten(),
+            "label": torch.tensor(label),
+        }
 
 
 class SentimentDataModule(L.LightningDataModule):
@@ -28,27 +41,39 @@ class SentimentDataModule(L.LightningDataModule):
         super().__init__()
         self.batch_size = batch_size
         self.max_length = max_length
-        self.tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+        self.tokenizer = BertTokenizer.from_pretrained("bert-base-uncased")
 
     def prepare_data(self):
         self.dataset = load_dataset("imdb")
 
     def setup(self, stage=None):
-        train_data = self.dataset['train']
-        val_data = self.dataset['test']
+        train_data = self.dataset["train"]
+        val_data = self.dataset["test"]
 
-        self.train_dataset = SentimentDataset(train_data, self.tokenizer, self.max_length)
-        self.val_dataset = SentimentDataset(val_data, self.tokenizer, self.max_length)
+        self.train_dataset = SentimentDataset(
+            train_data, self.tokenizer, self.max_length
+        )
+        self.val_dataset = SentimentDataset(
+            val_data, self.tokenizer, self.max_length)
 
     def train_dataloader(self):
-        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
+        return DataLoader(
+            self.train_dataset,
+            batch_size=self.batch_size,
+            shuffle=True)
 
     def val_dataloader(self):
-        return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=True)
+        return DataLoader(
+            self.val_dataset,
+            batch_size=self.batch_size,
+            shuffle=True)
 
 
 class SentimentClassifier(L.LightningModule):
-    def __init__(self, pretrained_model_name='bert-base-uncased', learning_rate=0.001):
+    def __init__(
+            self,
+            pretrained_model_name="bert-base-uncased",
+            learning_rate=0.001):
         super().__init__()
         self.learning_rate = learning_rate
         self.bert = BertModel.from_pretrained(pretrained_model_name)
@@ -67,29 +92,38 @@ class SentimentClassifier(L.LightningModule):
         return optimizer
 
     def training_step(self, batch):
-        input_ids = batch['input_ids']
-        attention_mask = batch['attention_mask']
-        labels = batch['label']
+        input_ids = batch["input_ids"]
+        attention_mask = batch["attention_mask"]
+        labels = batch["label"]
 
         preds = self(input_ids, attention_mask)
         loss = self.criterion(preds, labels)
-        self.log("train_loss", loss, prog_bar=True, on_step=False, on_epoch=True)
+        self.log(
+            "train_loss",
+            loss,
+            prog_bar=True,
+            on_step=False,
+            on_epoch=True)
         return loss
 
     def validation_step(self, batch):
-        input_ids = batch['input_ids']
-        attention_mask = batch['attention_mask']
-        labels = batch['label']
+        input_ids = batch["input_ids"]
+        attention_mask = batch["attention_mask"]
+        labels = batch["label"]
 
         preds = self(input_ids, attention_mask)
-        accuracy = Accuracy(task='binary').to(torch.device('cuda'))
+        accuracy = Accuracy(task="binary").to(torch.device("cuda"))
         acc = accuracy(preds, labels)
-        self.log('accuracy', acc, prog_bar=True, on_step=False, on_epoch=True)
+        self.log("accuracy", acc, prog_bar=True, on_step=False, on_epoch=True)
         return
+
 
 num_epochs = 5
 model = SentimentClassifier()
 dm = SentimentDataModule()
 
-trainer = L.Trainer(max_epochs=num_epochs, accelerator='gpu',limit_val_batches=0.1)
+trainer = L.Trainer(
+    max_epochs=num_epochs,
+    accelerator="gpu",
+    limit_val_batches=0.1)
 trainer.fit(model, dm)

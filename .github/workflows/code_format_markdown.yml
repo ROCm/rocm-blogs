@@ -1,0 +1,33 @@
+name: Auto Format Markdown
+
+on: pull_request
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v2
+    - uses: actions/setup-python@v5.4.0
+      with:
+        python-version: "3.13"
+        architecture: "x64"
+    - name: Install markdownlint
+      run:
+        npm install -g markdownlint-cli
+    - name: Run markdownlint
+      run:        
+        markdownlint --fix '**/*.md' || true 
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7.0.6  
+      with:
+        commit-message: Auto Code Markdown
+        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>   
+        title:  "Markdown Auto format for ${{ github.event.pull_request.number }}"
+        body: |
+          @${{ github.event.pull_request.user.login }} please merge this PR to fix some markdown linting errors. Not all errors are automatically fixable.
+
+          Relates to #${{ github.event.pull_request.number }}
+        branch: markdown-code-format-${{ github.event.pull_request.number }}
+        base: ${{ github.head_ref }}
+
