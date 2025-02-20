@@ -1,9 +1,10 @@
 # metadata-check.py
 # read .md file and make sure there is correct metadata
-import pathlib
-import markdown
 import csv
 import os
+import pathlib
+
+import markdown
 
 
 # check_metadata(file: str) -> None
@@ -36,11 +37,12 @@ def check_metadata(file: str) -> None:
         data = pathlib.Path(file).read_text(encoding="utf-8")
         md = markdown.Markdown(extensions=["meta"])
         md.convert(data)
-    except:
+    except BaseException:
         return 1
 
     # error flag, 0 = no error, 1 = error
-    # you want it to print out all the errors, so you shouldnt exit on the first one
+    # you want it to print out all the errors, so you shouldnt exit on the
+    # first one
     missing = []
     error = 0
 

@@ -1,0 +1,36 @@
+name: Auto Format Python
+
+on: pull_request
+
+jobs:
+  python-lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5.4.0
+      with:
+        python-version: "3.13"
+        architecture: "x64"
+    - name: install packages
+      run: |
+        pip install black autopep8 isort               
+    - name: Auto format black
+      run: |
+        black .
+        autopep8 --recursive --in-place --aggressive --aggressive .
+        isort .
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7.0.6  
+      with:
+        commit-message: (Python) Auto Code Format
+        author: ${{ github.actor }} <${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com>   
+        title:  "Python Auto format for ${{ github.event.pull_request.number }}"
+        body: |
+          Auto-Generated Pull Request 
+          @${{ github.event.pull_request.user.login }} please merge this PR to fix some python linting errors. Not all errors are automatically fixable.
+          Relates to #${{ github.event.pull_request.number }}
+        reviewers: "Saad Rahim (AMD) <44449863+saadrahim@users.noreply.github.com>"
+        maintainer-can-modify: true
+        labels: Backend
+        branch: python-code-format-${{ github.event.pull_request.number }}
+        base: ${{ github.head_ref }}

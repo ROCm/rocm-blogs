@@ -1,5 +1,5 @@
-import torch
 import numpy as np
+import torch
 
 
 @torch.no_grad()
@@ -12,6 +12,7 @@ def quantize_per_tensor_absmax(t):
     t.div_(scale).round_()
     t_q = t.to(torch.int8)
     return t_q, scale
+
 
 @torch.no_grad()
 def quantize_weight_per_channel_absmax(w):
@@ -60,6 +61,7 @@ def dynamic_quantize_activation_per_token_absmax(t):
     q_act = t.to(torch.int8)
     return q_act, max_val
 
+
 @torch.no_grad()
 def fake_quantize_activation_per_tensor_absmax(t):
     max_val = t.abs().max()
@@ -86,8 +88,10 @@ def dequantize_activation_w_per_channel_a_per_token(q_act, w_scales, a_scales):
     q_act.mul_(w_scales.reshape(1, -1)).mul_(a_scales.reshape(-1, 1))
     return q_act.to(dtype)
 
+
 @torch.no_grad()
-def dequantize_activation_w_per_channel_a_per_tensor(q_act, w_scales, a_scales):
+def dequantize_activation_w_per_channel_a_per_tensor(
+        q_act, w_scales, a_scales):
     # q_act: [..., dim]
     # w_scales: [dim]
     # a_scales: [1]

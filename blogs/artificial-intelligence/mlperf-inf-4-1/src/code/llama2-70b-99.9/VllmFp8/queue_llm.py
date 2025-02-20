@@ -1,9 +1,10 @@
+import multiprocessing as mp
+import queue
 from contextlib import contextmanager
 from typing import ClassVar, List, Optional, Sequence, Union, cast, overload
 
 from tqdm import tqdm
 from transformers import PreTrainedTokenizer, PreTrainedTokenizerFast
-
 from vllm.engine.arg_utils import EngineArgs
 from vllm.engine.llm_engine import LLMEngine
 from vllm.inputs import (PromptInputs, PromptStrictInputs, TextPrompt,
@@ -16,8 +17,6 @@ from vllm.sampling_params import SamplingParams
 from vllm.sequence import MultiModalData
 from vllm.usage.usage_lib import UsageContext
 from vllm.utils import Counter, deprecate_kwargs
-import multiprocessing as mp
-import queue
 
 logger = init_logger(__name__)
 
@@ -81,7 +80,7 @@ class QueueLLM:
         disable_custom_all_reduce: See ParallelConfig
         **kwargs: Arguments for :class:`~vllm.EngineArgs`. (See
             :ref:`engine_args`)
-    
+
     Note:
         This class is intended to be used for offline inference. For online
         serving, use the :class:`~vllm.AsyncLLMEngine` class instead.
@@ -148,7 +147,8 @@ class QueueLLM:
             **kwargs,
         )
         self.llm_engine = LLMEngine.from_engine_args(
-            engine_args, usage_context=UsageContext.LLM_CLASS)
+            engine_args, usage_context=UsageContext.LLM_CLASS
+        )
         self.request_counter = Counter()
 
         self.input_queue = input_queue
@@ -156,7 +156,6 @@ class QueueLLM:
         self.result_queue = result_queue
         self.sampling_params = sampling_params
         self.finish = False
-
 
     def get_tokenizer(
             self) -> Union[PreTrainedTokenizer, PreTrainedTokenizerFast]:
@@ -167,7 +166,7 @@ class QueueLLM:
         self._run_engine(use_tqdm=use_tqdm)
 
     def _pull_all_tokens_from_input_queue(self, block: bool = True):
-       
+
         while self._pull_tokens_from_input_queue(block=False):
             pass
         if block:
@@ -218,23 +217,25 @@ class QueueLLM:
         if prompts is not None:
             num_requests = len(prompts)
         if prompt_token_ids is not None:
-            if (num_requests is not None
-                    and num_requests != len(prompt_token_ids)):
-                raise ValueError("The lengths of prompts and prompt_token_ids "
-                                 "must be the same.")
+            if num_requests is not None and num_requests != len(
+                    prompt_token_ids):
+                raise ValueError(
+                    "The lengths of prompts and prompt_token_ids "
+                    "must be the same.")
 
             num_requests = len(prompt_token_ids)
         if num_requests is None:
-            raise ValueError("Either prompts or prompt_token_ids must be "
-                             "provided.")
+            raise ValueError(
+                "Either prompts or prompt_token_ids must be "
+                "provided.")
 
         inputs: List[PromptInputs] = []
         for i in range(num_requests):
             if prompts is not None:
                 if prompt_token_ids is not None:
                     item = TextTokensPrompt(
-                        prompt=prompts[i],
-                        prompt_token_ids=prompt_token_ids[i])
+                        prompt=prompts[i], prompt_token_ids=prompt_token_ids[i]
+                    )
                 else:
                     item = TextPrompt(prompt=prompts[i])
             else:
@@ -253,8 +254,12 @@ class QueueLLM:
     def _validate_and_add_requests(
         self,
         inputs: Union[PromptStrictInputs, Sequence[PromptStrictInputs]],
-        params: Union[SamplingParams, Sequence[SamplingParams], PoolingParams,
-                      Sequence[PoolingParams]],
+        params: Union[
+            SamplingParams,
+            Sequence[SamplingParams],
+            PoolingParams,
+            Sequence[PoolingParams],
+        ],
         request_id: str,
     ) -> None:
         if isinstance(inputs, (str, dict)):
@@ -264,8 +269,9 @@ class QueueLLM:
         num_requests = len(inputs)
 
         if isinstance(params, list) and len(params) != num_requests:
-            raise ValueError("The lengths of prompts and params "
-                             "must be the same.")
+            raise ValueError(
+                "The lengths of prompts and params "
+                "must be the same.")
 
         # Add requests to the engine.
         for i, request_inputs in enumerate(inputs):
@@ -281,14 +287,10 @@ class QueueLLM:
         params: Union[SamplingParams, PoolingParams],
         request_id: str = None,
     ) -> None:
-        self.llm_engine.add_request(request_id,
-                                    inputs,
-                                    params,
-                                    lora_request=None)
+        self.llm_engine.add_request(
+            request_id, inputs, params, lora_request=None)
 
-    def _run_engine(
-            self, *, use_tqdm: bool
-    ):
+    def _run_engine(self, *, use_tqdm: bool):
         # Initialize tqdm.
         if use_tqdm:
             num_requests = self.llm_engine.get_num_unfinished_requests()
@@ -308,10 +310,19 @@ class QueueLLM:
             for output in step_outputs:
                 output_len = len(output.outputs[0].token_ids)
                 if output_len > 0 and (output.request_id not in request_stats):
-                    self.first_token_queue.put((output.request_id, output.outputs[0].token_ids))
+                    self.first_token_queue.put(
+                        (output.request_id, output.outputs[0].token_ids)
+                    )
                     request_stats[output.request_id] = output_len
                 if request_stats[output.request_id] < output_len:
-                    self.result_queue.put_nowait((output.request_id, output.outputs[0].token_ids[request_stats[output.request_id]: output_len]))
+                    self.result_queue.put_nowait(
+                        (
+                            output.request_id,
+                            output.outputs[0].token_ids[
+                                request_stats[output.request_id]: output_len
+                            ],
+                        )
+                    )
                     if output.finished:
                         # signal end of stream with None
                         self.result_queue.put_nowait((output.request_id, None))
@@ -319,10 +330,11 @@ class QueueLLM:
                         if use_tqdm:
                             if isinstance(output, RequestOutput):
                                 # Calculate tokens only for RequestOutput
-                                total_toks += sum(
-                                    len(stp.token_ids) for stp in output.outputs)
+                                total_toks += sum(len(stp.token_ids)
+                                                  for stp in output.outputs)
                                 spd = total_toks / pbar.format_dict["elapsed"]
-                                pbar.postfix = f"Generation Speed: {spd:.2f} toks/s"
+                                pbar.postfix = f"Generation Speed: {
+                                    spd:.2f} toks/s"
                             pbar.update(1)
                     else:
                         request_stats[output.request_id] = output_len

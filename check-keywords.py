@@ -1,9 +1,10 @@
 # check-tags.py
 # read .md file and check if it has myst
-import pathlib
-import markdown
 import csv
 import os
+import pathlib
+
+import markdown
 
 
 # check_myst(file: str) -> None
@@ -16,7 +17,8 @@ def check_myst(file: str) -> None:
     md.convert(data)
 
     # error flag, 0 = no error, 1 = error
-    # you want it to print out all the errors, so you shouldnt exit on the first one
+    # you want it to print out all the errors, so you shouldnt exit on the
+    # first one
     if "tags" in md.Meta:
         if "myst" in md.Meta:
             return 0

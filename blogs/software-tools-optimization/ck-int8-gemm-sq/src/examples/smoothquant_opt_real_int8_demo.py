@@ -1,11 +1,14 @@
-import torch
-from transformers.models.opt.modeling_opt import OPTForCausalLM
-from transformers import GPT2Tokenizer
-from torch_int.models.opt import Int8OPTForCausalLM
-import sys
-import os
 import gc
+import os
+import sys
+
+import torch
+from datasets import load_dataset
 from torch.nn.functional import pad
+from torch_int.models.opt import Int8OPTForCausalLM
+from transformers import GPT2Tokenizer
+from transformers.models.opt.modeling_opt import OPTForCausalLM
+
 
 class Evaluator:
     def __init__(self, dataset, tokenizer):
@@ -14,11 +17,11 @@ class Evaluator:
 
         # tokenize the dataset
         def tokenize_function(examples):
-            example = self.tokenizer(examples['text'])
+            example = self.tokenizer(examples["text"])
             return example
 
         self.dataset = self.dataset.map(tokenize_function, batched=True)
-        self.dataset.set_format(type='torch', columns=['input_ids'])
+        self.dataset.set_format(type="torch", columns=["input_ids"])
 
     @torch.no_grad()
     def evaluate(self, model):
@@ -32,7 +35,7 @@ class Evaluator:
         for batch in self.dataset:
             print("count: ", count)
             count = count + 1
-            input_ids = batch['input_ids'].cuda().unsqueeze(0)
+            input_ids = batch["input_ids"].cuda().unsqueeze(0)
             # print("input_ids: ", input_ids)
             label = input_ids[:, -1]
             print("label: ", label)
@@ -45,7 +48,7 @@ class Evaluator:
             end.record()
             torch.cuda.synchronize()
             latency += start.elapsed_time(end)
-            last_token_logits = outputs.logits[:, -2-pad_len, :]
+            last_token_logits = outputs.logits[:, -2 - pad_len, :]
             pred = last_token_logits.argmax(dim=-1)
             print("pred: ", pred)
             total += label.size(0)
@@ -69,13 +72,12 @@ def print_model_size(model):
         buffer_size += buffer.nelement() * buffer.element_size()
 
     size_all_mb = (param_size + buffer_size) / 1024**2
-    print('Model size: {:.3f}MB'.format(size_all_mb))
+    print("Model size: {:.3f}MB".format(size_all_mb))
 
 
-from datasets import load_dataset
-fp16_model_id = 'facebook/opt-13b'
+fp16_model_id = "facebook/opt-13b"
 tokenizer = GPT2Tokenizer.from_pretrained(fp16_model_id)
-dataset = load_dataset('lambada', split='validation[:1000]')
+dataset = load_dataset("lambada", split="validation[:1000]")
 evaluator = Evaluator(dataset, tokenizer)
 
 # fp16_model = OPTForCausalLM.from_pretrained(fp16_model_id, torch_dtype=torch.float16, device_map='auto')
@@ -86,7 +88,13 @@ evaluator = Evaluator(dataset, tokenizer)
 # gc.collect()
 # torch.cuda.empty_cache()
 
-model_smoothquant = Int8OPTForCausalLM.from_pretrained('mit-han-lab/opt-13b-smoothquant', torch_dtype=torch.float16, device_map='auto')
+model_smoothquant = Int8OPTForCausalLM.from_pretrained(
+    "mit-han-lab/opt-13b-smoothquant",
+    torch_dtype=torch.float16,
+    device_map="auto")
 print_model_size(model_smoothquant)
 acc_smoothquant, lantecy_smoothquant = evaluator.evaluate(model_smoothquant)
-print(f'SmoothQuant INT8 accuracy: {acc_smoothquant}, per-sample lantecy: {lantecy_smoothquant:.3f}ms')
+print(
+    f"SmoothQuant INT8 accuracy: {acc_smoothquant}, per-sample lantecy: {
+        lantecy_smoothquant:.3f}ms"
+)

@@ -3,8 +3,9 @@
 # Version 1.4.1
 
 
-from blog import grab_authors, grab_href, grab_image
 from datetime import datetime
+
+from blog import grab_authors, grab_href, grab_image
 
 INDEX_CSS = "./scripts/css/index.css"
 INDEX_HTML = "./scripts/html/index.html"
@@ -68,7 +69,8 @@ myst:
             else:
                 # add invisible characters to ensure the card is the same size
 
-                description = description + "..." + " " * (150 - len(description))
+                description = description + "..." + \
+                    " " * (150 - len(description))
         # Get authors from the blog (assuming it's a comma-separated string)
 
         authors_list = getattr(blog, "author", "").split(",")
@@ -144,7 +146,8 @@ myst:
 
     index_template = index_template.replace("{grid_items}", grid_content)
 
-    index_template = index_template.replace("{eco_grid_items}", eco_grid_content)
+    index_template = index_template.replace(
+        "{eco_grid_items}", eco_grid_content)
 
     index_template = index_template.replace(
         "{application_grid_items}", application_grid_content

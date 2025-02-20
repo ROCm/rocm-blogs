@@ -96,23 +96,24 @@
 #
 # First, import required packages
 
+import datetime
 # %%
 import random
-import datetime
 
+import matplotlib.pyplot as plt
 import torch
 import torchvision
-from torchvision.transforms import v2 as transforms
 from datasets import load_dataset
-import matplotlib.pyplot as plt
-
+from torchvision.transforms import v2 as transforms
 
 # %% [markdown]
 # ### Dataset
 #
 # For this task, we will use the [CIFAR10 dataset](https://www.cs.toronto.edu/~kriz/cifar.html), which is available on [huggingface](https://huggingface.co/datasets/cifar10). The CIFAR10 dataset consists of 60,000 32x32 images, in 10 classes.
 #
-# Let's define a function to retrieve train and test dataloaders. In this function, we (1) download the dataset, (2) set the format to torch, and (3) construct train and test data loaders.
+# Let's define a function to retrieve train and test dataloaders. In this
+# function, we (1) download the dataset, (2) set the format to torch, and
+# (3) construct train and test data loaders.
 
 
 # %%
@@ -125,8 +126,11 @@ def get_dataloaders(batch_size=256):
     dataset.set_format("torch")
 
     # Construct train/test loaders
-    train_loader = torch.utils.data.DataLoader(dataset["train"], shuffle=True, batch_size=batch_size)
-    test_loader = torch.utils.data.DataLoader(dataset["test"], batch_size=batch_size)
+    train_loader = torch.utils.data.DataLoader(
+        dataset["train"], shuffle=True, batch_size=batch_size
+    )
+    test_loader = torch.utils.data.DataLoader(
+        dataset["test"], batch_size=batch_size)
 
     return train_loader, test_loader
 
@@ -155,7 +159,8 @@ def get_transform():
 
     transform = transforms.Compose(
         [
-            # This dataset is channels last (B,H,W,C), need to permute to channels first (B,C,H,W)
+            # This dataset is channels last (B,H,W,C), need to permute to
+            # channels first (B,C,H,W)
             transforms.Lambda(lambda x: x.permute(0, 3, 1, 2)),
             # Convert to float
             transforms.ToDtype(torch.float32),
@@ -190,7 +195,10 @@ def build_model():
     loss_fn = torch.nn.CrossEntropyLoss()
 
     # Adam optimizer
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=1e-4)
+    optimizer = torch.optim.Adam(
+        model.parameters(),
+        lr=0.01,
+        weight_decay=1e-4)
 
     return model, loss_fn, optimizer
 
@@ -199,17 +207,22 @@ def build_model():
 # ### Training Loop
 #
 # Lastly, we build a simple training loop in PyTorch. Here, we will train the model for a pre-specified number of epochs. During each epoch, we make a complete
-# pass over the train dataset, and compute the training loss. We then make a complete pass over the test dataset, and compute test loss and accuracy.
+# pass over the train dataset, and compute the training loss. We then make
+# a complete pass over the test dataset, and compute test loss and
+# accuracy.
 
 
 # %%
-def train_model(model, loss_fn, optimizer, train_loader, test_loader, transform, num_epochs):
+def train_model(
+    model, loss_fn, optimizer, train_loader, test_loader, transform, num_epochs
+):
     """
     Perform model training, given the specified number of epochs
     """
     # Declare device to train on
     print(f"Number of GPUs: {torch.cuda.device_count()}")
-    print([torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())])
+    print([torch.cuda.get_device_name(i)
+          for i in range(torch.cuda.device_count())])
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     t0 = datetime.datetime.now()
@@ -219,7 +232,7 @@ def train_model(model, loss_fn, optimizer, train_loader, test_loader, transform,
     accuracy = []
     # Main training loop
     for epoch in range(num_epochs):
-        print(f"Epoch {epoch+1}/{num_epochs}")
+        print(f"Epoch {epoch + 1}/{num_epochs}")
         t0_epoch_train = datetime.datetime.now()
 
         # Iterate over training dataset
@@ -253,7 +266,8 @@ def train_model(model, loss_fn, optimizer, train_loader, test_loader, transform,
 
                 test_losses.append(loss)
                 n_test_examples += batch["img"].shape[0]
-                n_test_correct += (batch["label"] == preds.argmax(axis=1)).sum()
+                n_test_correct += (batch["label"] ==
+                                   preds.argmax(axis=1)).sum()
 
             test_loss = torch.stack(test_losses).mean().item()
             test_accuracy = n_test_correct / n_test_examples
@@ -261,13 +275,17 @@ def train_model(model, loss_fn, optimizer, train_loader, test_loader, transform,
             accuracy.append(test_accuracy.cpu())
 
         # Print metrics
-        print(f"  Epoch time: {t_epoch_train+t_epoch_test}")
-        print(f"  Examples/second (train): {n_examples/t_epoch_train.total_seconds():0.4g}")
-        print(f"  Examples/second (test): {n_test_examples/t_epoch_test.total_seconds():0.4g}")
+        print(f"  Epoch time: {t_epoch_train + t_epoch_test}")
+        print(
+            f"  Examples/second (train): {n_examples / t_epoch_train.total_seconds():0.4g}"
+        )
+        print(
+            f"  Examples/second (test): {n_test_examples / t_epoch_test.total_seconds():0.4g}"
+        )
 
         print(f"  Train loss: {train_loss:0.4g}")
         print(f"  Test loss: {test_loss:0.4g}")
-        print(f"  Test accuracy: {test_accuracy*100:0.4g}%")
+        print(f"  Test accuracy: {test_accuracy * 100:0.4g}%")
 
     total_time = datetime.datetime.now() - t0
     print(f"Total training time: {total_time}")
@@ -292,7 +310,9 @@ model, loss, optimizer = build_model()
 train_loader, test_loader = get_dataloaders()
 transform = get_transform()
 
-test_accuracy = train_model(model, loss, optimizer, train_loader, test_loader, transform, num_epochs=8)
+test_accuracy = train_model(
+    model, loss, optimizer, train_loader, test_loader, transform, num_epochs=8
+)
 
 # %% [markdown]
 # Let's plot the accuracy over the course of training.
@@ -334,7 +354,9 @@ for batch in test_loader:
         ax[i].imshow(batch["img"][i].cpu())
         ax[i].set_xticks([])
         ax[i].set_yticks([])
-        ax[i].set_xlabel(f"Label: {label_dict[labels[i].item()]}\nPred: {label_dict[preds[i].item()]}")
+        ax[i].set_xlabel(
+            f"Label: {label_dict[labels[i].item()]}\nPred: {label_dict[preds[i].item()]}"
+        )
 
     break
 

@@ -6,13 +6,13 @@
 
 import os
 import shutil
+
 import ablog
 import jinja2
 from rocm_docs import ROCmDocs
+from sphinx import addnodes
 from sphinx.ext.autodoc import cut_lines
 from sphinx.util.docfields import GroupedField
-
-from sphinx import addnodes
 
 ablog_builder = "dirhtml"
 ablog_website = "_website"
@@ -52,7 +52,9 @@ external_projects_current_project = "rocm"
 blog_title = "AMD ROCm Blogs"
 blog_baseurl = "https://rocm.blogs.amd.com/"
 
-html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "rocm.blogs.amd.com")
+html_baseurl = os.environ.get(
+    "READTHEDOCS_CANONICAL_URL",
+    "rocm.blogs.amd.com")
 html_context = {}
 if os.environ.get("READTHEDOCS", "") == "True":
     html_context["READTHEDOCS"] = True
@@ -62,11 +64,17 @@ html_theme = "rocm_docs_theme"
 html_theme_options = {
     "flavor": "rocm-blogs",
     "show_prev_next": False,
-    "navbar_presistent": ["navbar-icon-links.html", "search-field.html"]
+    "navbar_presistent": ["navbar-icon-links.html", "search-field.html"],
 }
 post_show_prev_next = False
 
-extensions = ["rocm_docs", "ablog", "sphinx.ext.intersphinx", 'hoverxref.extension', 'myst_parser']
+extensions = [
+    "rocm_docs",
+    "ablog",
+    "sphinx.ext.intersphinx",
+    "hoverxref.extension",
+    "myst_parser",
+]
 external_toc_path = "./sphinx/_toc.yml"
 
 hoverxref_api_host = "/_"
@@ -74,194 +82,194 @@ hoverxref_api_host = "/_"
 templates_path = ["."]
 
 blog_authors = {
-"Alessandro Fanfarillo": (
+    "Alessandro Fanfarillo": (
         "Alessandro Fanfarillo",
         "http://rocm.blogs.amd.com/authors/alessandro-fanfarillo.html",
-),
-"Alex He": (
+    ),
+    "Alex He": (
         "Alex He",
         "http://rocm.blogs.amd.com/authors/alex-he.html",
-),
-"Alex Voicu": (
+    ),
+    "Alex Voicu": (
         "Alex Voicu",
         "http://rocm.blogs.amd.com/authors/alex-voicu.html",
-),
-"Andy Luo": (
+    ),
+    "Andy Luo": (
         "Andy Luo",
         "http://rocm.blogs.amd.com/authors/andy-luo.html",
-),
-"Anshul Gupta": (
+    ),
+    "Anshul Gupta": (
         "Anshul Gupta",
         "http://rocm.blogs.amd.com/authors/anshul-gupta.html",
-),    
-"Anton Smirnov": (
+    ),
+    "Anton Smirnov": (
         "Anton Smirnov",
         "http://rocm.blogs.amd.com/authors/anton-smirnov.html",
-),
-"Asitav Mishra": (
+    ),
+    "Asitav Mishra": (
         "Asitav Mishra",
         "http://rocm.blogs.amd.com/authors/asitav-mishra.html",
-),
-"Bob Robey": (
+    ),
+    "Bob Robey": (
         "Bob Robey",
         "http://rocm.blogs.amd.com/authors/bob-robey.html",
-),
-"Ben Sander": (
+    ),
+    "Ben Sander": (
         "Bob Sander",
         "http://rocm.blogs.amd.com/authors/bob-sander.html",
-),
-"Clint Greene": (
+    ),
+    "Clint Greene": (
         "Clint Greene",
         "http://rocm.blogs.amd.com/authors/clint-greene.html",
-),
-"Damon McDougall": (
+    ),
+    "Damon McDougall": (
         "Damon McDougall",
         "http://rocm.blogs.amd.com/authors/damon-mcdougall.html",
-),
-"David Doscher": (
+    ),
+    "David Doscher": (
         "David Doscher",
         "http://rocm.blogs.amd.com/authors/david-doscher.html",
-),
-"Douglas Jia": (
+    ),
+    "Douglas Jia": (
         "Douglas Jia",
         "http://rocm.blogs.amd.com/authors/douglas-jia.html",
-),
-"Eliot Li": (
+    ),
+    "Eliot Li": (
         "Eliot Li",
         "http://rocm.blogs.amd.com/authors/eliot-li.html",
-),
-"Emad Barsoum": (
+    ),
+    "Emad Barsoum": (
         "Emad Barsoum",
         "http://rocm.blogs.amd.com/authors/emad-barsoum.html",
-),
-"Fabricio Flores": (
+    ),
+    "Fabricio Flores": (
         "Fabricio Flores",
         "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
-),
-"Farshad Ghodsian": (
+    ),
+    "Farshad Ghodsian": (
         "Farshad Ghodsian",
         "http://rocm.blogs.amd.com/authors/farshad-ghodsian.html",
-),
-"George Markomanolis": (
+    ),
+    "George Markomanolis": (
         "George Markomanolis",
         "http://rocm.blogs.amd.com/authors/george-markomanolis.html",
-),
-"George Wang": (
+    ),
+    "George Wang": (
         "George Wang",
         "http://rocm.blogs.amd.com/authors/george-wang.html",
-),
-"Gina Sitaraman": (
+    ),
+    "Gina Sitaraman": (
         "Gina Sitaraman",
         "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
-),
-"Justin Chang": (
+    ),
+    "Justin Chang": (
         "Justin Chang",
         "http://rocm.blogs.amd.com/authors/justin-chang.html",
-),
-"Mahdieh Ghazimirsaeed": (
+    ),
+    "Mahdieh Ghazimirsaeed": (
         "Mahdieh Ghazimirsaeed",
         "http://rocm.blogs.amd.com/authors/mahdieh-ghazimirsaeed.html",
-),
-"Matt Elliott": (
+    ),
+    "Matt Elliott": (
         "Matt Elliott",
         "http://rocm.blogs.amd.com/authors/matt-elliott.html",
-),
-"Maria Ruiz Varela": (
+    ),
+    "Maria Ruiz Varela": (
         "Maria Ruiz Varela",
         "http://rocm.blogs.amd.com/authors/maria-ruiz-varela.html",
-),
-"Michael Zhang": (
+    ),
+    "Michael Zhang": (
         "Michael Zhang",
         "http://rocm.blogs.amd.com/authors/michael-zhang.html",
-),
-"Nicholas Curtis": (
+    ),
+    "Nicholas Curtis": (
         "Nicholas Curtis",
         "https://rocm.blogs.amd.com/authors/nicholas-curtis.html",
-),
-"Nicholas Malaya": (
+    ),
+    "Nicholas Malaya": (
         "Nicholas Malaya",
         "http://rocm.blogs.amd.com/authors/nicholas-malaya.html",
-),
-"Ning Zhang": (
+    ),
+    "Ning Zhang": (
         "Ning Zhang",
         "http://rocm.blogs.amd.com/authors/ning-zhang.html",
-),
-"Noah Wolfe": (
+    ),
+    "Noah Wolfe": (
         "Noah Wolfe",
         "http://rocm.blogs.amd.com/authors/noah-wolfe.html",
-),
-"Noel Chalmers": (
+    ),
+    "Noel Chalmers": (
         "Noel Chalmers",
         "http://rocm.blogs.amd.com/authors/noel-chalmers.html",
-),
-"Ossian O'Reilly": (
+    ),
+    "Ossian O'Reilly": (
         "Ossian O'Reilly",
         "http://rocm.blogs.amd.com/authors/ossian-oreilly.html",
-),
-"Paul Mullowney": (
+    ),
+    "Paul Mullowney": (
         "Paul Mullowney",
         "http://rocm.blogs.amd.com/authors/paul-mullowney.html",
-),
-"Phillip Dang": (
+    ),
+    "Phillip Dang": (
         "Phillip Dang",
         "http://rocm.blogs.amd.com/authors/phillip-dang.html",
-),
-"Rajat Arora": (
+    ),
+    "Rajat Arora": (
         "Rajat Arora",
         "http://rocm.blogs.amd.com/authors/rajat-arora.html",
-),
-"Rene Van Oostrum": (
+    ),
+    "Rene Van Oostrum": (
         "Rene Van Oostrum",
         "http://rocm.blogs.amd.com/authors/rene-van-oostrum.html",
-),
-"Sean Miller": (
+    ),
+    "Sean Miller": (
         "Sean Miller",
         "http://rocm.blogs.amd.com/authors/sean-miller.html",
-),
-"Sean Song": (
+    ),
+    "Sean Song": (
         "Sean Song",
         "http://rocm.blogs.amd.com/authors/sean-song.html",
-),
-"Seungrok Jung": (
+    ),
+    "Seungrok Jung": (
         "Seungrok Jung",
         "http://rocm.blogs.amd.com/authors/seung-rok-jung.html",
-),
-"Suyash Tandon": (
+    ),
+    "Suyash Tandon": (
         "Suyash Tandon",
         "http://rocm.blogs.amd.com/authors/suyash-tandon.html",
-),
-"Thomas Gibson": (
+    ),
+    "Thomas Gibson": (
         "Thomas Gibson",
         "http://rocm.blogs.amd.com/authors/thomas-gibson.html",
-),
-"Vara Lakshmi Bayanagari": (
+    ),
+    "Vara Lakshmi Bayanagari": (
         "Vara Lakshmi Bayanagari",
         "http://rocm.blogs.amd.com/authors/vara-lakshmi-bayanagari.html",
-),
-"Vicky Tsang": (
+    ),
+    "Vicky Tsang": (
         "Vicky Tsang",
         "http://rocm.blogs.amd.com/authors/vicky-tsang.html",
-),
-"Yao Fehlis": (
+    ),
+    "Yao Fehlis": (
         "Yao Fehlis",
         "http://rocm.blogs.amd.com/authors/yao-fehlis.html",
-),
-"Arseny Moskvichev": (
+    ),
+    "Arseny Moskvichev": (
         "Arseny Moskvichev",
         "http://rocm.blogs.amd.com/authors/arseny-moskvichev.html",
-),
-"Adeem Jassani": (
+    ),
+    "Adeem Jassani": (
         "Adeem Jassani",
         "http://rocm.blogs.amd.com/authors/adeem-jassani.html",
-),
-"Lei Shao": (
+    ),
+    "Lei Shao": (
         "Lei Shao",
         "http://rocm.blogs.amd.com/authors/lei-shao.html",
-),
-"Luise Chen": (
+    ),
+    "Luise Chen": (
         "Luise Chen",
         "http://rocm.blogs.amd.com/authors/luise-chen.html",
-)
+    ),
 }
 blog_feed_archives = True
 blog_feed_fulltext = True
@@ -279,14 +287,12 @@ blog_feed_templates = {
 }
 blog_feed_length = 10
 
-html_static_path = ['_static', 'images']
+html_static_path = ["_static", "images"]
 
-html_css_files = [
-    'css/custom.css', 'css/asciinema-player.css'
-]
+html_css_files = ["css/custom.css", "css/asciinema-player.css"]
 
 html_js_files = [
-    'js/asciinema-player.min.js',
+    "js/asciinema-player.min.js",
 ]
 
 nitpicky = True
@@ -317,7 +323,7 @@ def parse_event(env, sig, signode):
 
 def setup(app):
     app.connect("autodoc-process-docstring", cut_lines(4, what=["module"]))
-    app.add_css_file('css/custom.css')
+    app.add_css_file("css/custom.css")
     app.add_object_type(
         "confval",
         "confval",
@@ -328,5 +334,8 @@ def setup(app):
         "parameter", label="Parameters", names=["param"], can_collapse=True
     )
     app.add_object_type(
-        "event", "event", "pair: %s; event", parse_event, doc_field_types=[fdesc]
-    )
+        "event",
+        "event",
+        "pair: %s; event",
+        parse_event,
+        doc_field_types=[fdesc])

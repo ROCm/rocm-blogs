@@ -1,11 +1,14 @@
-import torch
 import sys
-from ..rocm import bmm_abe_i8, bmm_ab_i8_e_f32
+
+import torch
+
+from ..rocm import bmm_ab_i8_e_f32, bmm_abe_i8
+
 
 class BMM_ABE_I8(torch.nn.Module):
     def __init__(self, alpha):
         super().__init__()
-        self.register_buffer('a', torch.tensor(alpha))
+        self.register_buffer("a", torch.tensor(alpha))
 
     @torch.no_grad()
     def forward(self, a, b):
@@ -24,10 +27,11 @@ class BMM_ABE_I8(torch.nn.Module):
         bmm_module.a = alpha
         return bmm_module
 
+
 class BMM_AB_I8_E_F32(torch.nn.Module):
     def __init__(self, alpha):
         super().__init__()
-        self.register_buffer('a', torch.tensor(alpha))
+        self.register_buffer("a", torch.tensor(alpha))
 
     @torch.no_grad()
     def forward(self, a, b):

@@ -1,7 +1,9 @@
 from dataclasses import dataclass
+
 import jmp
 from jax import numpy as jnp
 from jmp._src.policy import _cast_floating_to
+
 
 @dataclass(frozen=True)
 class Policy(jmp.Policy):

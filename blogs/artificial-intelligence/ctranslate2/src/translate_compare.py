@@ -1,6 +1,7 @@
+import time
+
 import ctranslate2
 import sentencepiece as spm
-import time
 
 # Load the SentencePiece model
 sp = spm.SentencePieceProcessor(model_file="sentencepiece.model")
@@ -8,6 +9,7 @@ sp = spm.SentencePieceProcessor(model_file="sentencepiece.model")
 # Input text to translate
 input_text = "Hello world!"
 input_tokens = sp.encode(input_text, out_type=str)
+
 
 # Function to perform translation and measure latency and tokens per second
 def translate_and_time(translator):
@@ -26,11 +28,14 @@ def translate_and_time(translator):
 
     return output_text, latency, tokens_per_second
 
+
 # Load the default (float32) model
 translator_float32 = ctranslate2.Translator(
     "ende_ctranslate2/", device="cuda", compute_type="float32"
 )
-output_text_float32, latency_float32, tps_float32 = translate_and_time(translator_float32)
+output_text_float32, latency_float32, tps_float32 = translate_and_time(
+    translator_float32
+)
 
 # Load the int8 quantized model
 translator_int8 = ctranslate2.Translator(
@@ -51,4 +56,7 @@ print(f"Tokens per second: {tps_int8:.2f}\n")
 
 # Calculate the speedup in tokens per second
 speedup_tps = tps_int8 / tps_float32
-print(f"Speedup in tokens per second with int8 quantization: {speedup_tps:.2f}x faster")
+print(
+    f"Speedup in tokens per second with int8 quantization: {
+        speedup_tps:.2f}x faster"
+)
