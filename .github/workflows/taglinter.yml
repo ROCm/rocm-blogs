@@ -39,4 +39,4 @@ jobs:
           python3 -m pip install markdown
       - name: Check for tags
         run: |
-          python3 check-tags.py
+          python3 linting/check-tags.py

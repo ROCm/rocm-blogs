@@ -12,7 +12,8 @@ import markdown
 # Import the approved tags from the taglist.csv file.
 def import_approved_tags() -> list:
 
-    tags_path = ".taglist.csv"
+    tags_path = "linting/csv/taglist.csv"
+
     approved_tags = []
 
     # read the approved tags from the taglist.csv file
@@ -27,7 +28,8 @@ def import_approved_tags() -> list:
 
 def import_approved_categories() -> list:
 
-    category_path = ".category.csv"
+    category_path = "linting/csv/category.csv"
+
     approved_categories = []
 
     with open(category_path, "r") as f:
@@ -38,6 +40,35 @@ def import_approved_categories() -> list:
             approved_categories = row["categories"]
 
     return approved_categories
+
+
+def import_amd_tags() -> list:
+
+    amd_tags_path = [
+        "amd_applications.csv",
+        "amd_technical_blog_type.csv",
+        "amd_deployment.csv",
+        "amd_developer_tool.csv",
+        "amd_developer_type.csv",
+        "amd_industries.csv",
+        "amd_product_type.csv",
+    ]
+
+    amd_tags = dict()
+
+    for path in amd_tags_path:
+
+        full_path = f"linting/csv/{path}"
+
+        with open(full_path, "r") as f:
+
+            approved_tags = csv.DictReader(f)
+
+            for row in approved_tags:
+
+                amd_tags[path[: len(path) - 4]] = row[path[: len(path) - 4]]
+
+    return amd_tags
 
 
 # check_tags(file: str) -> None
@@ -83,6 +114,43 @@ def check_tags(
                     f"{file} has an unapproved category: {category}. Please ensure the category matches the allowed categories. If needed, please raise a separate PR to update the category file."
                 )
                 error = 1
+
+    amd_tags = import_amd_tags()
+
+    possible_tags = [
+        "amd_technical_blog_type",
+        "amd_deployment",
+        "amd_developer_tool",
+        "amd_developer_type",
+        "amd_industries",
+        "amd_product_type",
+        "amd_applications",
+    ]
+
+    for tag in possible_tags:
+
+        if tag in md.Meta:
+            md_tag = md.Meta[tag][0].split(", ")
+
+            print(f"Checking {file} for {tag}")
+
+            if len(md_tag) < 1:
+                print(
+                    f"{file} has an empty {md_tag} field. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file."
+                )
+                error = 1
+
+            for entry in md_tag:
+
+                if len(entry) < 1:
+                    print(
+                        f"{file} has an empty {entry} field. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file.")
+                    error = 1
+
+                if entry not in amd_tags[tag]:
+                    print(
+                        f"{file} has an unapproved tag: {entry}. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file.")
+                    error = 1
 
     return error
 
