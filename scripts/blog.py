@@ -277,10 +277,7 @@ def grab_authors(authors_list):
 
             author_page = author_page.replace("blogs", ".")
 
-            author_links.append(
-                f'<a href="{author_page}">{
-                    author.strip()}</a>'
-            )
+            author_links.append(f'<a href="{author_page}">{author.strip()}</a>')
         else:
 
             # If no author page exists, display the author's name as plain text
@@ -317,17 +314,11 @@ def optimize_image(image):
 
             after_size = os.path.getsize(image)
 
-            print(
-                f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {
-                    (
-                        (before_size - after_size) / before_size) * 100} percent")
+            print(f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size - after_size) / before_size) * 100} percent")
 
             with open("optimize.txt", "a") as f:
 
-                f.write(
-                    f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {
-                        (
-                            (before_size - after_size) / before_size) * 100} percent\n on {image}\n")
+                f.write(f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size - after_size) / before_size) * 100} percent\n on {image}\n")
     except Exception as error:
 
         print(f"Error optimizing image {image}: {error}")
