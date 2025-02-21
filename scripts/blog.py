@@ -277,10 +277,7 @@ def grab_authors(authors_list):
 
             author_page = author_page.replace("blogs", ".")
 
-            author_links.append(
-                f'<a href="{author_page}">{
-                    author.strip()}</a>'
-            )
+            author_links.append(f'<a href="{author_page}">{author.strip()}</a>')
         else:
 
             # If no author page exists, display the author's name as plain text
