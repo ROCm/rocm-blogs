@@ -314,17 +314,11 @@ def optimize_image(image):
 
             after_size = os.path.getsize(image)
 
-            print(
-                f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {
-                    (
-                        (before_size - after_size) / before_size) * 100} percent")
+            print(f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size - after_size) / before_size) * 100} percent")
 
             with open("optimize.txt", "a") as f:
 
-                f.write(
-                    f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {
-                        (
-                            (before_size - after_size) / before_size) * 100} percent\n on {image}\n")
+                f.write(f"Before optimization: {before_size} - After optimization: {after_size} - Total reduction of {((before_size - after_size) / before_size) * 100} percent\n on {image}\n")
     except Exception as error:
 
         print(f"Error optimizing image {image}: {error}")
