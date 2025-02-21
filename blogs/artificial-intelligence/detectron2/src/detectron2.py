@@ -48,11 +48,11 @@ def inference(
 inference()
 inference(ymlfile="COCO-PanopticSegmentation/panoptic_fpn_R_50_3x.yaml")
 inference(
-    ymlfile="COCO-InstanceSegmentation/mask_rcnn_R_101_C4_3x.yaml",
-    panoptic=False)
+    ymlfile="COCO-InstanceSegmentation/mask_rcnn_R_101_C4_3x.yaml", panoptic=False
+)
 inference(
-    ymlfile="COCO-InstanceSegmentation/mask_rcnn_R_101_DC5_3x.yaml",
-    panoptic=False)
+    ymlfile="COCO-InstanceSegmentation/mask_rcnn_R_101_DC5_3x.yaml", panoptic=False
+)
 inference(
-    ymlfile="COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml",
-    panoptic=False)
+    ymlfile="COCO-InstanceSegmentation/mask_rcnn_R_101_FPN_3x.yaml", panoptic=False
+)

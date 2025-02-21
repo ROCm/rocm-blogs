@@ -52,9 +52,7 @@ external_projects_current_project = "rocm"
 blog_title = "AMD ROCm Blogs"
 blog_baseurl = "https://rocm.blogs.amd.com/"
 
-html_baseurl = os.environ.get(
-    "READTHEDOCS_CANONICAL_URL",
-    "rocm.blogs.amd.com")
+html_baseurl = os.environ.get("READTHEDOCS_CANONICAL_URL", "rocm.blogs.amd.com")
 html_context = {}
 if os.environ.get("READTHEDOCS", "") == "True":
     html_context["READTHEDOCS"] = True
@@ -337,8 +335,5 @@ def setup(app):
         "parameter", label="Parameters", names=["param"], can_collapse=True
     )
     app.add_object_type(
-        "event",
-        "event",
-        "pair: %s; event",
-        parse_event,
-        doc_field_types=[fdesc])
+        "event", "event", "pair: %s; event", parse_event, doc_field_types=[fdesc]
+    )

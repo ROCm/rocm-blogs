@@ -73,8 +73,7 @@ class AsyncServer:
 
     @rpd_trace_range_non_timed("SUT:Worker")
     def start(self):
-        os.environ["HIP_VISIBLE_DEVICES"] = ",".join(
-            [str(d) for d in self.devices])
+        os.environ["HIP_VISIBLE_DEVICES"] = ",".join([str(d) for d in self.devices])
         self.process = mp.Process(target=self.launch)
         self.process.start()
 
@@ -87,13 +86,11 @@ class AsyncServer:
         self.llm_kwargs["model"] = self.model_path
         self.llm_kwargs["quantization"] = self.quantization
         self.llm_kwargs["disable_log_stats"] = (
-            True if os.getenv(
-                "HARNESS_DISABLE_VLLM_LOGS",
-                "0") == "1" else False)
+            True if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else False
+        )
         self.llm_kwargs["disable_log_requests"] = (
-            True if os.getenv(
-                "HARNESS_DISABLE_VLLM_LOGS",
-                "0") == "1" else False)
+            True if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else False
+        )
         self.llm_kwargs["kv_cache_dtype"] = self.kv_cache_dtype
         self.llm_kwargs["skip_tokenizer_init"] = True
 
@@ -175,8 +172,7 @@ class AsyncServer:
             output_token_ids = request_output.outputs[0].token_ids
             if is_first_token:
                 is_first_token = False
-                self.qdata_out.send(
-                    [output_token_ids, request_id, True, is_warm_up])
+                self.qdata_out.send([output_token_ids, request_id, True, is_warm_up])
         self.qdata_out.send([output_token_ids, request_id, False, is_warm_up])
 
     def log(self, message):

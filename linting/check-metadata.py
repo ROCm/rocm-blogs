@@ -77,8 +77,7 @@ def check_metadata(file: str) -> int:
 
     # check only blogs (NOT REDUNDANT)
     if "blogpost" not in md.Meta or md.Meta["blogpost"][0].lower() != "true":
-        print(
-            f"Skipping metadata check for {file} because 'blogpost' is not true")
+        print(f"Skipping metadata check for {file} because 'blogpost' is not true")
         return 0
 
     missing = []

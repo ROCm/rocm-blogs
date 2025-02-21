@@ -66,9 +66,8 @@ class LlmProcTP1:
         llm_kwargs["model"] = self.model_path
         llm_kwargs["quantization"] = self.quantization
         llm_kwargs["disable_log_stats"] = (
-            True if os.getenv(
-                "HARNESS_DISABLE_VLLM_LOGS",
-                "0") == "1" else False)
+            True if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else False
+        )
         llm_kwargs["skip_tokenizer_init"] = True
 
         if self.quantization_param_path:
@@ -186,8 +185,7 @@ class SUTVllmFp8Offline_ntp1(SUT):
     @rpd_trace_range_non_timed("SUT:Main")
     def start_completion_threads(self):
         for i in range(self.dp):
-            self.completion_threads.append(
-                Thread(target=self.completion, args=(i,)))
+            self.completion_threads.append(Thread(target=self.completion, args=(i,)))
             self.completion_threads[-1].start()
 
     def init_sampling_params(self):
@@ -279,8 +277,7 @@ class SUTVllmFp8Offline_ntp1(SUT):
         reordered_samples = []
         for start, stop in ranges:
             chunk = evened_out_samples[start:stop]
-            chunk.sort(
-                key=lambda sample: self.data_object.input_ids[sample.index])
+            chunk.sort(key=lambda sample: self.data_object.input_ids[sample.index])
             reordered_samples.extend(chunk)
         reord_dur = (time.time_ns() - reord_start) / 1_000_000
         log.info(f"Reorder took: {reord_dur} ms")
@@ -298,8 +295,7 @@ class SUTVllmFp8Offline_ntp1(SUT):
             bucket_sizes[smallest_bucket] += len(
                 self.data_object.input_ids[sample.index]
             )
-            if len(buckets[smallest_bucket]
-                   ) == query_chunk_size and len(buckets) > 1:
+            if len(buckets[smallest_bucket]) == query_chunk_size and len(buckets) > 1:
                 full_buckets.append(buckets[smallest_bucket])
                 del buckets[smallest_bucket]
                 del bucket_sizes[smallest_bucket]
@@ -351,8 +347,9 @@ class SUTVllmFp8Offline_ntp1(SUT):
                 bi = response_array.buffer_info()
                 response = [
                     lg.QuerySampleResponse(
-                        output_sample_ids[i], bi[0], bi[1], len(
-                            output_token_ids[i]))]
+                        output_sample_ids[i], bi[0], bi[1], len(output_token_ids[i])
+                    )
+                ]
                 lg.QuerySamplesComplete(response)
         except BaseException:
             log.info(f"Error sending completed response to LoadGen")
@@ -371,16 +368,13 @@ class SUTVllmFp8Offline_ntp1(SUT):
 
     @rpd_trace_range("SUT:Main")
     def send_tokens(self, sender_id, start, end, prompt_token_ids):
-        self.qdata_in_senders[sender_id].send(
-            (start, end, prompt_token_ids[start:end]))
+        self.qdata_in_senders[sender_id].send((start, end, prompt_token_ids[start:end]))
 
     @rpd_trace_range("SUT:Main")
     def issue_queries(self, query_samples):
         log.info(f"Issue queries  |  number of queries = {len(query_samples)}")
         ranges, query_samples = self.sort_samples(query_samples)
-        self.sample_ids = [
-            query_samples[i].id for i in range(
-                len(query_samples))]
+        self.sample_ids = [query_samples[i].id for i in range(len(query_samples))]
         prompt_token_ids = [
             self.data_object.input_ids[query_samples[i].index]
             for i in range(len(query_samples))

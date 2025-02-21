@@ -28,9 +28,7 @@ class TotalBodySegmentation(Application):
         preprocess_op = PreprocessNiftiOperator()
         inference_op = SegInferenceOperator()
 
-        self.add_flow(
-            preprocess_op, inference_op, {
-                "image": "image", "model": "model"})
+        self.add_flow(preprocess_op, inference_op, {"image": "image", "model": "model"})
 
         logging.info(f"End {self.compose.__name__}")
 

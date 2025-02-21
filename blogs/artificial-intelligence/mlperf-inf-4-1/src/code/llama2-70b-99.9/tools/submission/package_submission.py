@@ -84,10 +84,7 @@ def copy_compliance_logs(args, company_dir, tests):
         make_directory(output_dir)
 
         for test in tests:
-            shutil.copytree(
-                f"{input_dir}/{test}/",
-                output_dir,
-                dirs_exist_ok=True)
+            shutil.copytree(f"{input_dir}/{test}/", output_dir, dirs_exist_ok=True)
 
 
 def copy_measurement_logs(args, company_dir, iteration):
@@ -105,8 +102,9 @@ def copy_measurement_logs(args, company_dir, iteration):
         shutil.copy(f"{args.mlperf_inference_dir}/mlperf.conf", output_dir)
 
         # subprocess.run(['touch', f"{output_dir}/README.md"])
-        shutil.copy(f"{os.path.dirname(__file__)}/dummy_README.md",
-                    f"{output_dir}/README.md")
+        shutil.copy(
+            f"{os.path.dirname(__file__)}/dummy_README.md", f"{output_dir}/README.md"
+        )
         shutil.copy(
             f"{os.path.dirname(__file__)}/dummy_measurements_system.json",
             f"{output_dir}/{args.system_name}.json",
@@ -153,15 +151,9 @@ def exec_submission_checker(args):
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--mlperf-inference-dir",
-        type=str,
-        default="/app/mlperf_inference",
-        help="")
-    parser.add_argument(
-        "--mlperf-inference-version",
-        type=str,
-        default="v4.1",
-        help="")
+        "--mlperf-inference-dir", type=str, default="/app/mlperf_inference", help=""
+    )
+    parser.add_argument("--mlperf-inference-version", type=str, default="v4.1", help="")
     parser.add_argument(
         "--code-dir", type=str, default="/lab-mlperf-inference/code", help=""
     )
@@ -173,11 +165,7 @@ def get_args():
         "--scenarios", nargs="+", default=["Offline", "Server"], help=""
     )
     parser.add_argument("--system-name", type=str, default=None, help="")
-    parser.add_argument(
-        "--benchmark",
-        type=str,
-        default="llama2-70b-99.9",
-        help="")
+    parser.add_argument("--benchmark", type=str, default="llama2-70b-99.9", help="")
     args = parser.parse_args()
     return args
 

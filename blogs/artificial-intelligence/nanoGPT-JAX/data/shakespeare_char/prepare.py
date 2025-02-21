@@ -34,8 +34,7 @@ itos = {i: ch for i, ch in enumerate(chars)}
 
 
 def encode(s):
-    return [stoi[c]
-            for c in s]  # encoder: take a string, output a list of integers
+    return [stoi[c] for c in s]  # encoder: take a string, output a list of integers
 
 
 def decode(l):
@@ -47,7 +46,7 @@ def decode(l):
 # create the train and test splits
 n = len(data)
 train_data = data[: int(n * 0.9)]
-val_data = data[int(n * 0.9):]
+val_data = data[int(n * 0.9) :]
 
 # encode both to integers
 train_ids = encode(train_data)

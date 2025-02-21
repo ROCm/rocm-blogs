@@ -10,9 +10,8 @@ def image_qa(s, image_path, question):
 
 def single():
     state = image_qa.run(
-        image_path="images/cat.jpeg",
-        question="What is this?",
-        max_new_tokens=128)
+        image_path="images/cat.jpeg", question="What is this?", max_new_tokens=128
+    )
     print(state["answer"], "\n")
 
 
@@ -47,8 +46,7 @@ if __name__ == "__main__":
     mp.set_start_method("spawn", force=True)
 
     runtime = sgl.Runtime(model_path="lmms-lab/llama3-llava-next-8b")
-    runtime.endpoint.chat_template = get_chat_template(
-        "llama-3-instruct-llava")
+    runtime.endpoint.chat_template = get_chat_template("llama-3-instruct-llava")
 
     # Or you can use the 72B model
     # runtime = sgl.Runtime(model_path="lmms-lab/llava-next-72b", tp_size=8)

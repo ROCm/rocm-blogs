@@ -74,10 +74,7 @@ def import_amd_tags() -> list:
 # check_tags(file: str) -> None
 # Grab the tags from the markdown file and compare them to the approved
 # tags in the taglist.csv file.
-def check_tags(
-        file: str,
-        approved_tags: list,
-        approved_categories: list) -> None:
+def check_tags(file: str, approved_tags: list, approved_categories: list) -> None:
 
     # read the markdown file
     data = pathlib.Path(file).read_text(encoding="utf-8")
@@ -144,12 +141,14 @@ def check_tags(
 
                 if len(entry) < 1:
                     print(
-                        f"{file} has an empty {entry} field. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file.")
+                        f"{file} has an empty {entry} field. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file."
+                    )
                     error = 1
 
                 if entry not in amd_tags[tag]:
                     print(
-                        f"{file} has an unapproved tag: {entry}. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file.")
+                        f"{file} has an unapproved tag: {entry}. Please ensure the tag matches the allowed taglist file. If needed, please raise a separate PR to update the taglist file."
+                    )
                     error = 1
 
     return error

@@ -71,17 +71,11 @@ with Timer() as test_time:
         data={"userID": users, "itemID": items, "prediction": preds}
     )
 
-    merged = pd.merge(
-        train, all_predictions, on=[
-            "userID", "itemID"], how="outer")
+    merged = pd.merge(train, all_predictions, on=["userID", "itemID"], how="outer")
     all_predictions = merged[merged.rating.isnull()]  # .drop('rating', axis=1)
 
 print("Took {} seconds for prediction.".format(test_time))
 
 
-eval_ndcg = ndcg_at_k(
-    test,
-    all_predictions,
-    col_prediction="prediction",
-    k=TOP_K)
+eval_ndcg = ndcg_at_k(test, all_predictions, col_prediction="prediction", k=TOP_K)
 print("NDCG:\t%f" % eval_ndcg)

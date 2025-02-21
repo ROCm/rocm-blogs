@@ -31,15 +31,13 @@ def get_config(args: argparse.Namespace, model_type: str) -> Config:
 
     quant_config = None
     if args.quant_scheme == "w_fp8_a_fp8":
-        quant_config = Config(
-            global_quant_config=DEFAULT_W_FP8_A_FP8_PER_TENSOR_CONFIG)
+        quant_config = Config(global_quant_config=DEFAULT_W_FP8_A_FP8_PER_TENSOR_CONFIG)
     elif args.quant_scheme == "w_fp8_a_fp8_o_fp8":
         quant_config = Config(
             global_quant_config=DEFAULT_W_FP8_A_FP8_OFP8_PER_TENSOR_CONFIG
         )
     elif args.quant_scheme == "w_int4_per_tensor":
-        quant_config = Config(
-            global_quant_config=DEFAULT_W_INT4_PER_TENSOR_CONFIG)
+        quant_config = Config(global_quant_config=DEFAULT_W_INT4_PER_TENSOR_CONFIG)
     elif args.quant_scheme == "w_int4_per_channel_sym":
         quant_config = Config(
             global_quant_config=DEFAULT_W_INT4_PER_CHANNEL_CONFIG,
@@ -97,8 +95,7 @@ def get_config(args: argparse.Namespace, model_type: str) -> Config:
                 "embedding_layers"
             ]
         else:
-            quant_config = Config(
-                global_quant_config=DEFAULT_W_UINT4_PER_GROUP_CONFIG)
+            quant_config = Config(global_quant_config=DEFAULT_W_UINT4_PER_GROUP_CONFIG)
     elif args.quant_scheme == "w_uint4_a_bfloat16_per_group_asym":
         quant_config = Config(
             global_quant_config=DEFAULT_W_UINT4_A_BFLOAT16_PER_GROUP_CONFIG
@@ -127,8 +124,7 @@ def get_config(args: argparse.Namespace, model_type: str) -> Config:
                     weight=FP8_PER_TENSOR_SPEC,
                 ),
             }
-            quant_config = replace(
-                quant_config, layer_quant_config=KV_CACHE_CFG)
+            quant_config = replace(quant_config, layer_quant_config=KV_CACHE_CFG)
 
     if model_type in ["llama", "opt", "qwen2"]:
         EXCLUDE_LAYERS = ["lm_head"]
@@ -185,10 +181,8 @@ def get_model(
         raise ValueError(f"{data_type} not support for current model")
     device = "auto"
     model = AutoModelForCausalLM.from_pretrained(
-        ckpt_path,
-        device_map=device,
-        torch_dtype=model_dtype,
-        trust_remote_code=True)
+        ckpt_path, device_map=device, torch_dtype=model_dtype, trust_remote_code=True
+    )
     model.eval()
     model_dtype = next(model.parameters()).dtype
 
@@ -212,7 +206,8 @@ def get_model_type(model: nn.Module) -> str:
         f"This example script may not support the current model type. Please configure as necessary. The supported models include: {
             ', '.join(
                 [
-                    i for i in MODEL_NAME_PATTERN_MAP.keys()])}.")
+                    i for i in MODEL_NAME_PATTERN_MAP.keys()])}."
+    )
 
 
 @torch.no_grad()
@@ -225,11 +220,12 @@ def ppl_eval(model: nn.Module, testenc: AutoTokenizer, dev: str) -> None:
     testenc = testenc.to(dev)
     nlls = []
     for i in tqdm(range(nsamples)):
-        batch = testenc[:, (i * seqlen_for_eval)
-                            : ((i + 1) * seqlen_for_eval)].to(dev)
+        batch = testenc[:, (i * seqlen_for_eval) : ((i + 1) * seqlen_for_eval)].to(dev)
         lm_logits = model(batch)["logits"]
         shift_logits = lm_logits[:, :-1, :].contiguous()
-        shift_labels = testenc[:, (i * seqlen_for_eval): ((i + 1) * seqlen_for_eval)][:, 1:]
+        shift_labels = testenc[:, (i * seqlen_for_eval) : ((i + 1) * seqlen_for_eval)][
+            :, 1:
+        ]
         loss_fct = torch.nn.CrossEntropyLoss()
         loss = loss_fct(
             shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1)
@@ -336,8 +332,7 @@ def main(args: argparse.Namespace) -> None:
     if not args.skip_evaluation:
         print("\nEvaluating ...")
         if args.eval_metric == "ppl":
-            testdata = load_dataset(
-                "wikitext", "wikitext-2-raw-v1", split="test")
+            testdata = load_dataset("wikitext", "wikitext-2-raw-v1", split="test")
 
             if platform.system() == "Windows":
                 print("testdata use subset 200 on windows")
@@ -345,10 +340,7 @@ def main(args: argparse.Namespace) -> None:
                     "\n\n".join(testdata["text"][:200]), return_tensors="pt"
                 )
             else:
-                testenc = tokenizer(
-                    "\n\n".join(
-                        testdata["text"]),
-                    return_tensors="pt")
+                testenc = tokenizer("\n\n".join(testdata["text"]), return_tensors="pt")
             if args.use_ppl_eval_for_kv_cache:
                 from ppl_compute_for_kv_cache import ppl_eval_for_kv_cache
 
@@ -381,10 +373,7 @@ if __name__ == "__main__":
         help="Specify where the HuggingFace model is. This example support Llama, OPT models",
         required=True,
     )
-    parser.add_argument(
-        "--dataset",
-        help="Dataset for calibration",
-        default="pileval")
+    parser.add_argument("--dataset", help="Dataset for calibration", default="pileval")
     # default="pileval",
     # choices=["pileval", "wikitext", "pileval_for_awq_benchmark",
     # "wikitext_for_gptq_benchmark"])
@@ -411,17 +400,16 @@ if __name__ == "__main__":
         default="ppl",
         choices=["ppl", "rouge"],
     )
-    parser.add_argument("--rouge_eval_pkl_path",
-                        help="Pickle dataset path for rouge evaluation")
+    parser.add_argument(
+        "--rouge_eval_pkl_path", help="Pickle dataset path for rouge evaluation"
+    )
 
     parser.add_argument(
         "--batch_size", help="Batch size for calibration.", type=int, default=1
     )
     parser.add_argument(
-        "--eval_batch_size",
-        help="Batch size for calibration.",
-        type=int,
-        default=1)
+        "--eval_batch_size", help="Batch size for calibration.", type=int, default=1
+    )
     parser.add_argument(
         "--num_calib_data",
         help="Number of samples for calibration.",
@@ -455,12 +443,8 @@ if __name__ == "__main__":
         ],
     )
     parser.add_argument(
-        "--kv_cache_dtype",
-        help="KV Cache dtype.",
-        default=None,
-        choices=[
-            "fp8",
-            None])
+        "--kv_cache_dtype", help="KV Cache dtype.", default=None, choices=["fp8", None]
+    )
     parser.add_argument(
         "--quant_algo",
         help="Quantization Algorithms.",

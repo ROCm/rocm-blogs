@@ -76,8 +76,7 @@ class SyncServer:
 
     @rpd_trace_range_non_timed("SUT:Worker")
     def start(self):
-        os.environ["HIP_VISIBLE_DEVICES"] = ",".join(
-            [str(d) for d in self.devices])
+        os.environ["HIP_VISIBLE_DEVICES"] = ",".join([str(d) for d in self.devices])
         self.process = mp.Process(target=self.launch)
         self.process.start()
 
@@ -90,9 +89,8 @@ class SyncServer:
         self.llm_kwargs["model"] = self.model_path
         self.llm_kwargs["quantization"] = self.quantization
         self.llm_kwargs["disable_log_stats"] = (
-            True if os.getenv(
-                "HARNESS_DISABLE_VLLM_LOGS",
-                "0") == "1" else False)
+            True if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else False
+        )
         self.llm_kwargs["kv_cache_dtype"] = self.kv_cache_dtype
         self.llm_kwargs["skip_tokenizer_init"] = True
 
@@ -117,9 +115,7 @@ class SyncServer:
         )
 
         self.signal_running()
-        use_tqdm = False if os.getenv(
-            "HARNESS_DISABLE_VLLM_LOGS",
-            "0") == "1" else True
+        use_tqdm = False if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else True
         self.engine.start(use_tqdm=use_tqdm)
 
     def signal_running(self):

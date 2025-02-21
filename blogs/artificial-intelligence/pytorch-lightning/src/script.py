@@ -53,27 +53,17 @@ class SentimentDataModule(L.LightningDataModule):
         self.train_dataset = SentimentDataset(
             train_data, self.tokenizer, self.max_length
         )
-        self.val_dataset = SentimentDataset(
-            val_data, self.tokenizer, self.max_length)
+        self.val_dataset = SentimentDataset(val_data, self.tokenizer, self.max_length)
 
     def train_dataloader(self):
-        return DataLoader(
-            self.train_dataset,
-            batch_size=self.batch_size,
-            shuffle=True)
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
 
     def val_dataloader(self):
-        return DataLoader(
-            self.val_dataset,
-            batch_size=self.batch_size,
-            shuffle=True)
+        return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=True)
 
 
 class SentimentClassifier(L.LightningModule):
-    def __init__(
-            self,
-            pretrained_model_name="bert-base-uncased",
-            learning_rate=0.001):
+    def __init__(self, pretrained_model_name="bert-base-uncased", learning_rate=0.001):
         super().__init__()
         self.learning_rate = learning_rate
         self.bert = BertModel.from_pretrained(pretrained_model_name)
@@ -98,12 +88,7 @@ class SentimentClassifier(L.LightningModule):
 
         preds = self(input_ids, attention_mask)
         loss = self.criterion(preds, labels)
-        self.log(
-            "train_loss",
-            loss,
-            prog_bar=True,
-            on_step=False,
-            on_epoch=True)
+        self.log("train_loss", loss, prog_bar=True, on_step=False, on_epoch=True)
         return loss
 
     def validation_step(self, batch):
@@ -122,8 +107,5 @@ num_epochs = 5
 model = SentimentClassifier()
 dm = SentimentDataModule()
 
-trainer = L.Trainer(
-    max_epochs=num_epochs,
-    accelerator="gpu",
-    limit_val_batches=0.1)
+trainer = L.Trainer(max_epochs=num_epochs, accelerator="gpu", limit_val_batches=0.1)
 trainer.fit(model, dm)

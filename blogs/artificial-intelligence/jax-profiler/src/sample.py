@@ -51,7 +51,8 @@ if init_from == "resume":
             ),
         )
     model_args_ckpt, iter_num_ckpt, best_val_loss_ckpt, _, config_ckpt = restored_ckpt[
-        "metadata"]
+        "metadata"
+    ]
     state = restored_ckpt["state"]
     # create the model
     gptconf = GPTConfig(**model_args_ckpt)
@@ -118,8 +119,7 @@ def generate(idx, seed):
     )
 
     def body_fn(i, idx):
-        logits, _ = model.apply(
-            params, idx[:, -model.config.block_size:], train=False)
+        logits, _ = model.apply(params, idx[:, -model.config.block_size :], train=False)
         logits = logits[:, -1, :] / temperature  # shape (b, 1)
         if top_k is not None:
             logits_, _ = jax.lax.top_k(
@@ -128,15 +128,14 @@ def generate(idx, seed):
             logits = jnp.where(
                 logits < jnp.expand_dims(logits_[:, -1], -1), -jnp.inf, logits
             )
-        idx_next = jax.random.categorical(
-            jax.random.PRNGKey(i + seed), logits=logits)
-        idx = jnp.concatenate(
-            [idx[:, 1:], jnp.expand_dims(idx_next, -1)], axis=1)
+        idx_next = jax.random.categorical(jax.random.PRNGKey(i + seed), logits=logits)
+        idx = jnp.concatenate([idx[:, 1:], jnp.expand_dims(idx_next, -1)], axis=1)
         return idx
 
     idx = jax.lax.fori_loop(0, max_new_tokens, body_fn, idx)
-    idx = [ind[(max_context_len - l):]
-           for l, ind in zip(list(sequence_len), list(idx))]
+    idx = [
+        ind[(max_context_len - l) :] for l, ind in zip(list(sequence_len), list(idx))
+    ]
     return idx
 
 
@@ -155,7 +154,8 @@ def main():
         print(
             f"\nGenerated output __{i}__: \n__________________________________\n{
                 decode(
-                    output[0].tolist())}\n__________________________________")
+                    output[0].tolist())}\n__________________________________"
+        )
 
 
 if __name__ == "__main__":

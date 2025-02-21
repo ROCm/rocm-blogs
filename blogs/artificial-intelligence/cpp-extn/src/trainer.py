@@ -9,10 +9,7 @@ import torch
 torch.manual_seed(42)
 
 TIME_SCALES = {"s": 1, "ms": 1000, "us": 1000000}
-TIME_PRINT = {
-    "s": "seconds (s)",
-    "ms": "milliseconds (ms)",
-    "us": "microseconds (us)"}
+TIME_PRINT = {"s": "seconds (s)", "ms": "milliseconds (ms)", "us": "microseconds (us)"}
 
 parser = argparse.ArgumentParser()
 parser.add_argument("example", choices=["py", "cpp"])

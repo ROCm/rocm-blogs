@@ -38,8 +38,7 @@ itos = {i: ch for i, ch in enumerate(chars)}
 
 
 def encode(s):
-    return [stoi[c]
-            for c in s]  # encoder: take a string, output a list of integers
+    return [stoi[c] for c in s]  # encoder: take a string, output a list of integers
 
 
 def decode(l):
@@ -72,8 +71,8 @@ def get_batch(split):
     # generate a small batch of data of inputs x and targets y
     data = train_data if split == "train" else val_data
     ix = torch.randint(len(data) - block_size, (batch_size,))
-    x = torch.stack([data[i: i + block_size] for i in ix])
-    y = torch.stack([data[i + 1: i + block_size + 1] for i in ix])
+    x = torch.stack([data[i : i + block_size] for i in ix])
+    y = torch.stack([data[i + 1 : i + block_size + 1] for i in ix])
     x, y = x.to(device), y.to(device)
     return x, y
 
@@ -101,10 +100,7 @@ class Head(nn.Module):
         self.key = nn.Linear(n_embd, head_size, bias=False)
         self.query = nn.Linear(n_embd, head_size, bias=False)
         self.value = nn.Linear(n_embd, head_size, bias=False)
-        self.register_buffer(
-            "tril", torch.tril(
-                torch.ones(
-                    block_size, block_size)))
+        self.register_buffer("tril", torch.tril(torch.ones(block_size, block_size)))
 
         self.dropout = nn.Dropout(dropout)
 
@@ -118,8 +114,7 @@ class Head(nn.Module):
         wei = (
             q @ k.transpose(-2, -1) * k.shape[-1] ** -0.5
         )  # (B, T, hs) @ (B, hs, T) -> (B, T, T)
-        wei = wei.masked_fill(
-            self.tril[:T, :T] == 0, float("-inf"))  # (B, T, T)
+        wei = wei.masked_fill(self.tril[:T, :T] == 0, float("-inf"))  # (B, T, T)
         wei = F.softmax(wei, dim=-1)  # (B, T, T)
         wei = self.dropout(wei)
         # perform the weighted aggregation of the values
@@ -207,8 +202,7 @@ class GPTLanguageModel(nn.Module):
 
         # idx and targets are both (B,T) tensor of integers
         tok_emb = self.token_embedding_table(idx)  # (B,T,C)
-        pos_emb = self.position_embedding_table(
-            torch.arange(T, device=device))  # (T,C)
+        pos_emb = self.position_embedding_table(torch.arange(T, device=device))  # (T,C)
         x = tok_emb + pos_emb  # (B,T,C)
         x = self.blocks(x)  # (B,T,C)
         x = self.ln_f(x)  # (B,T,C)
@@ -286,11 +280,7 @@ def main(rank: int, world_size: int):
         context = torch.zeros((1, 1), dtype=torch.long, device=device)
         # because the model is now a ditributed model, we need to unwrap it by
         # adding "module"
-        print(
-            decode(
-                model.module.generate(
-                    context,
-                    max_new_tokens=500)[0].tolist()))
+        print(decode(model.module.generate(context, max_new_tokens=500)[0].tolist()))
 
     # once model is trained, destroy processes to cleanly exit
     destroy_process_group()

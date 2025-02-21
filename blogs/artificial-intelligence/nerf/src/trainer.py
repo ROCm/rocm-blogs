@@ -22,8 +22,7 @@ def nerf_forward(rays_o, rays_d, coarse_model, fine_model=None, n_samples=64):
     # Coarse model pass
     ##########################################################################
     # Sample query points along each ray.
-    query_points, z_vals = stratified_sampling(
-        rays_o, rays_d, n_samples=n_samples)
+    query_points, z_vals = stratified_sampling(rays_o, rays_d, n_samples=n_samples)
     encoded_points = encode_pts(query_points)  # (W*H*n_samples, 60)
     encoded_dirs = encode_dirs(rays_d)  # (W*H*n_samples, 24)
     raw = coarse_model(encoded_points, viewdirs=encoded_dirs)
@@ -94,8 +93,9 @@ def main(iters=361, lr=5e-4):
                 f"Iter: {iter}, loss: {
                     loss.item()}, psnr: {psnr}, idx:{idx}"
             )
-        torch.save({"coarse": coarse_model, "fine": fine_model},
-                   f"./checkpoints/{iter}.pt")
+        torch.save(
+            {"coarse": coarse_model, "fine": fine_model}, f"./checkpoints/{iter}.pt"
+        )
         shuffle(lis)
 
         ##### validate #####

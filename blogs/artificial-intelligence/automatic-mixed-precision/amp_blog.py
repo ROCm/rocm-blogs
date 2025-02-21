@@ -375,12 +375,7 @@ class ConvModel(torch.nn.Module):
 
 
 # %%
-def test_standard_training(
-        n_epochs,
-        inputs,
-        targets,
-        hidden_size,
-        n_hidden_layers):
+def test_standard_training(n_epochs, inputs, targets, hidden_size, n_hidden_layers):
     """Test a standard training loop"""
     model = ConvModel(hidden_size, n_hidden_layers).cuda()
     loss_fn = torch.nn.MSELoss()
@@ -540,12 +535,10 @@ def test_amp_inference(n_epochs, inputs, hidden_size, n_hidden_layers):
 
 # %%
 # Run standard training
-inf_profile = test_standard_inference(
-    n_epochs, inputs, hidden_size, n_hidden_layers)
+inf_profile = test_standard_inference(n_epochs, inputs, hidden_size, n_hidden_layers)
 
 # Run AMP training
-inf_profile_amp = test_amp_inference(
-    n_epochs, inputs, hidden_size, n_hidden_layers)
+inf_profile_amp = test_amp_inference(n_epochs, inputs, hidden_size, n_hidden_layers)
 
 # %%
 print("Standard inference:")
@@ -564,8 +557,7 @@ print(
         1024**2:0.4g} MB"
 )
 
-print(
-    f"\nSpeedup: {(1 - inf_profile_amp.duration / inf_profile.duration) * 100:0.2f}%")
+print(f"\nSpeedup: {(1 - inf_profile_amp.duration / inf_profile.duration) * 100:0.2f}%")
 print(
     f"Memory savings: {(1 - inf_profile_amp.max_memory_allocated / inf_profile.max_memory_allocated) * 100:0.2f}%"
 )

@@ -89,9 +89,8 @@ evaluator = Evaluator(dataset, tokenizer)
 # torch.cuda.empty_cache()
 
 model_smoothquant = Int8OPTForCausalLM.from_pretrained(
-    "mit-han-lab/opt-13b-smoothquant",
-    torch_dtype=torch.float16,
-    device_map="auto")
+    "mit-han-lab/opt-13b-smoothquant", torch_dtype=torch.float16, device_map="auto"
+)
 print_model_size(model_smoothquant)
 acc_smoothquant, lantecy_smoothquant = evaluator.evaluate(model_smoothquant)
 print(

@@ -33,10 +33,7 @@ class PreprocessNiftiOperator(Operator):
             return
 
         input_file = files[0]  # ct.nii.gz file
-        nifti_input = nib.load(
-            os.path.join(
-                input_path,
-                input_file)).get_fdata()
+        nifti_input = nib.load(os.path.join(input_path, input_file)).get_fdata()
         op_output.set(nifti_input, "image")
         op_output.set(os.path.join(input_path, "model.pt"), "model")
 
@@ -94,25 +91,18 @@ class SegInferenceOperator(Operator):
         )
         self.post_transforms = Compose(
             [
-                Activationsd(
-                    keys="pred",
-                    sigmoid=True),
-                AsDiscreted(
-                    keys="pred",
-                    argmax=True),
-                Invertd(
-                    keys="pred",
-                    transform=self.pre_transforms,
-                    orig_keys="image"),
+                Activationsd(keys="pred", sigmoid=True),
+                AsDiscreted(keys="pred", argmax=True),
+                Invertd(keys="pred", transform=self.pre_transforms, orig_keys="image"),
                 SaveImaged(
                     keys="pred",
                     output_dir="/home/aac/monai-2/output",
                     meta_keys="pred_meta_dict",
                 ),
-            ])
+            ]
+        )
 
-        dataset = Dataset(data=[{"image": input_image}],
-                          transform=self.pre_transforms)
+        dataset = Dataset(data=[{"image": input_image}], transform=self.pre_transforms)
         dataloader = DataLoader(dataset, batch_size=1)
 
         for i in dataloader:

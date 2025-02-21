@@ -69,8 +69,7 @@ def get_cumulative_logprob(
 
     cumulative_logpro = 0
     for next_token in future_context:
-        model_inputs = model.prepare_inputs_for_generation(
-            input_tokens, **model_kwargs)
+        model_inputs = model.prepare_inputs_for_generation(input_tokens, **model_kwargs)
         outputs = model(
             **model_inputs,
             return_dict=True,
@@ -81,8 +80,9 @@ def get_cumulative_logprob(
         hidden_states = outputs.hidden_states[-1].clone().detach()
 
         # get logits
-        selected_token_indices = (torch.Tensor(
-            [model_inputs["input_ids"].numel() - 1]).to(int).to(dev))
+        selected_token_indices = (
+            torch.Tensor([model_inputs["input_ids"].numel() - 1]).to(int).to(dev)
+        )
         logits = model.lm_head(
             hidden_states[0, :, :].index_select(0, selected_token_indices)
         )
@@ -106,7 +106,8 @@ def get_cumulative_logprob(
             dim=-1,
         )
         model_kwargs = update_model_kwargs_for_generation(
-            outputs, model_kwargs, is_encoder_decoder=model.config.is_encoder_decoder)
+            outputs, model_kwargs, is_encoder_decoder=model.config.is_encoder_decoder
+        )
     return cumulative_logpro.item()
 
 
@@ -156,19 +157,15 @@ def ppl_eval_for_kv_cache(
         f"from the initial context of {context_size} tokens."
     )
     for idx in range(n_patches):
-        context = my_enc[:, idx * n_samples: idx * n_samples + context_size]
-        upper_boundary = min(
-            (idx + 1) * n_samples + context_size,
-            my_enc.numel())
+        context = my_enc[:, idx * n_samples : idx * n_samples + context_size]
+        upper_boundary = min((idx + 1) * n_samples + context_size, my_enc.numel())
         future_context = my_enc[
-            0, idx * n_samples + context_size: upper_boundary
+            0, idx * n_samples + context_size : upper_boundary
         ].tolist()
 
         logprobs = get_cumulative_logprob(
-            model=model,
-            input_tokens=context,
-            future_context=future_context,
-            dev=dev)
+            model=model, input_tokens=context, future_context=future_context, dev=dev
+        )
 
         ppl -= logprobs
         num_tokens_generated += len(future_context)

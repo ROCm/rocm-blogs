@@ -48,9 +48,7 @@ def get_tokenizer(
     return tokenizer
 
 
-def get_model(ckpt_path: str,
-              device: str = "cuda") -> Tuple[nn.Module,
-                                             torch.dtype]:
+def get_model(ckpt_path: str, device: str = "cuda") -> Tuple[nn.Module, torch.dtype]:
 
     model_kwargs = {"torch_dtype": "auto"}
     model = AutoModelForCausalLM.from_pretrained(
@@ -80,10 +78,10 @@ def ppl_eval(model: nn.Module, testenc: AutoTokenizer, dev: str) -> None:
     testenc = testenc.to(dev)
     nlls = []
     for i in tqdm(range(nsamples)):
-        batch = testenc[:, (i * model.seqlen): ((i + 1) * model.seqlen)].to(dev)
+        batch = testenc[:, (i * model.seqlen) : ((i + 1) * model.seqlen)].to(dev)
         lm_logits = model(batch)["logits"]
         shift_logits = lm_logits[:, :-1, :].contiguous()
-        shift_labels = testenc[:, (i * model.seqlen): ((i + 1) * model.seqlen)][:, 1:]
+        shift_labels = testenc[:, (i * model.seqlen) : ((i + 1) * model.seqlen)][:, 1:]
         loss_fct = torch.nn.CrossEntropyLoss()
         loss = loss_fct(
             shift_logits.view(-1, shift_logits.size(-1)), shift_labels.view(-1)
@@ -163,9 +161,8 @@ if __name__ == "__main__":
         ],
     )
     parser.add_argument(
-        "--json_dir",
-        help="Specify the directory of export json file",
-        required=True)
+        "--json_dir", help="Specify the directory of export json file", required=True
+    )
     parser.add_argument(
         "--safetensors_dir",
         help="Specify the directory of export safetensors file",
@@ -183,8 +180,9 @@ if __name__ == "__main__":
         default="ppl",
         choices=["ppl", "rouge"],
     )
-    parser.add_argument("--rouge_eval_pkl_path",
-                        help="Pickle dataset path for rouge evaluation")
+    parser.add_argument(
+        "--rouge_eval_pkl_path", help="Pickle dataset path for rouge evaluation"
+    )
     parser.add_argument(
         "--batch_size", type=int, default=1, help="Batch size for evaluation"
     )

@@ -111,10 +111,8 @@ def main(args):
     preds = list(map(_preproc, output_text_col))
     targets = list(map(_preproc, list(df["output"])))
     rouge_scores = metric.compute(
-        predictions=preds,
-        references=targets,
-        use_stemmer=True,
-        use_aggregator=False)
+        predictions=preds, references=targets, use_stemmer=True, use_aggregator=False
+    )
 
     assert len(rouge_scores["rouge1"]) == 24576
     assert len(rouge_scores["rouge2"]) == 24576

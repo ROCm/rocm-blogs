@@ -38,10 +38,7 @@ def get_args():
         help="Model name",
     )
     parser.add_argument("--dataset-path", type=str, default=None, help="")
-    parser.add_argument(
-        "--accuracy",
-        action="store_true",
-        help="Run accuracy mode")
+    parser.add_argument("--accuracy", action="store_true", help="Run accuracy mode")
     parser.add_argument(
         "--dtype",
         type=str,
@@ -62,10 +59,8 @@ def get_args():
         help="audit config for LoadGen settings during compliance runs",
     )
     parser.add_argument(
-        "--mlperf-conf",
-        type=str,
-        default="mlperf.conf",
-        help="mlperf rules config")
+        "--mlperf-conf", type=str, default="mlperf.conf", help="mlperf rules config"
+    )
     parser.add_argument(
         "--user-conf",
         type=str,
@@ -79,10 +74,8 @@ def get_args():
         help="Number of samples to use in benchmark.",
     )  # TODO: This interpretation of 'total-sample-count' is a little misleading. Fix it
     parser.add_argument(
-        "--output-log-dir",
-        type=str,
-        default="output-logs",
-        help="Where logs are saved")
+        "--output-log-dir", type=str, default="output-logs", help="Where logs are saved"
+    )
     parser.add_argument(
         "--enable-log-trace",
         action="store_true",
@@ -95,12 +88,8 @@ def get_args():
         help="Number of workers to process queries",
     )
     parser.add_argument(
-        "--backend",
-        choices=[
-            "pytorch",
-            "vllm"],
-        default="pytorch",
-        help="Backend")
+        "--backend", choices=["pytorch", "vllm"], default="pytorch", help="Backend"
+    )
     parser.add_argument(
         "-tp",
         "--tensor-parallel-size",
@@ -109,17 +98,10 @@ def get_args():
         help="Tensor parallel size in vllm",
     )
     parser.add_argument(
-        "-dp",
-        "--data-parallel-size",
-        type=int,
-        default=1,
-        help="Data parallel size")
+        "-dp", "--data-parallel-size", type=int, default=1, help="Data parallel size"
+    )
     parser.add_argument("--verbose", action="store_true", help="Verbose mode")
-    parser.add_argument(
-        "--output-len",
-        type=int,
-        default=1024,
-        help="Output length")
+    parser.add_argument("--output-len", type=int, default=1024, help="Output length")
     parser.add_argument(
         "--ignore-eos",
         action="store_true",
@@ -144,10 +126,8 @@ def get_args():
         "--kv-cache-dtype", type=str, default="auto", help="KV cache dtype"
     )
     parser.add_argument(
-        "--warmup-duration",
-        type=int,
-        default=0,
-        help="Warmup duration in minutes")
+        "--warmup-duration", type=int, default=0, help="Warmup duration in minutes"
+    )
 
     # Tunable arguments for hyper parameter tuning
     parser.add_argument(
@@ -275,7 +255,8 @@ def setup_llm_kwargs(args):
         args.max_num_seqs if args.max_num_seqs else llm_config.max_num_seqs
     )
     llm_config.kv_cache_dtype = (
-        args.kv_cache_dtype if args.kv_cache_dtype else llm_config.kv_cache_dtype)
+        args.kv_cache_dtype if args.kv_cache_dtype else llm_config.kv_cache_dtype
+    )
     llm_config.enable_prefix_caching = (
         args.enable_prefix_caching
         if args.enable_prefix_caching
@@ -348,12 +329,7 @@ def main(args):
 
     lgSUT = lg.ConstructSUT(sut.issue_queries, sut.flush_queries)
     log.info("Starting Benchmark run")
-    lg.StartTestWithLogSettings(
-        lgSUT,
-        sut.qsl,
-        settings,
-        log_settings,
-        args.audit_conf)
+    lg.StartTestWithLogSettings(lgSUT, sut.qsl, settings, log_settings, args.audit_conf)
     log.info("Completed benchmark run")
 
     sut.stop()

@@ -129,8 +129,7 @@ def get_dataloaders(batch_size=256):
     train_loader = torch.utils.data.DataLoader(
         dataset["train"], shuffle=True, batch_size=batch_size
     )
-    test_loader = torch.utils.data.DataLoader(
-        dataset["test"], batch_size=batch_size)
+    test_loader = torch.utils.data.DataLoader(dataset["test"], batch_size=batch_size)
 
     return train_loader, test_loader
 
@@ -195,10 +194,7 @@ def build_model():
     loss_fn = torch.nn.CrossEntropyLoss()
 
     # Adam optimizer
-    optimizer = torch.optim.Adam(
-        model.parameters(),
-        lr=0.01,
-        weight_decay=1e-4)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=1e-4)
 
     return model, loss_fn, optimizer
 
@@ -221,8 +217,7 @@ def train_model(
     """
     # Declare device to train on
     print(f"Number of GPUs: {torch.cuda.device_count()}")
-    print([torch.cuda.get_device_name(i)
-          for i in range(torch.cuda.device_count())])
+    print([torch.cuda.get_device_name(i) for i in range(torch.cuda.device_count())])
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     t0 = datetime.datetime.now()
@@ -266,8 +261,7 @@ def train_model(
 
                 test_losses.append(loss)
                 n_test_examples += batch["img"].shape[0]
-                n_test_correct += (batch["label"] ==
-                                   preds.argmax(axis=1)).sum()
+                n_test_correct += (batch["label"] == preds.argmax(axis=1)).sum()
 
             test_loss = torch.stack(test_losses).mean().item()
             test_accuracy = n_test_correct / n_test_examples
