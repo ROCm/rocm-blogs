@@ -37,4 +37,4 @@ jobs:
           python3 -m pip install markdown
       - name: Check for correct MyST field
         run: |
-          python3 check-keywords.py
+          python3 linting/check-keywords.py

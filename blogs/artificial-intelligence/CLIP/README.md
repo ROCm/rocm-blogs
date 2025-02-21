@@ -1,15 +1,31 @@
 ---
 blogpost: true
+blog_title: "Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU"
 date: 16 April 2024
-author: Sean Song
+author: 'Sean Song'
+thumbnail: ''
 tags: AI/ML, GenAI, Computer Vision, Multimodal
 category: Applications & models
+target_audience: None
+key_value_propositions: None
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU"
-    "keywords": "CLIP, Contrastive learning, multimodal model, Computer vision Language-Image, Vision-Text, MI210, MI250, MI300, ROCm, Natural Language Processing"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Sean Song"
+        "description lang=en": "Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU"
+        "keywords": "CLIP, Contrastive learning, multimodal model, Computer vision Language-Image, Vision-Text, MI210, MI250, MI300, ROCm, Natural Language Processing"
+        "property=og:locale": "en_US"
+        "amd_category": 'Developer Resources'
+        "amd_asset_type": 'Blogs'
+        "amd_blog_type": 'Technical Articles & Blogs'
+        "amd_technical_blog_type": 'Applications and models'
+        "amd_developer_type": 'ML/AI Developer, Application Developer'
+        "amd_deployment": 'Servers'
+        "amd_product_type": 'Accelerators'
+        "amd_developer_tool": 'ROCm Software, Open-Source Tools'
+        "amd_applications": 'Computer Vision'
+        "amd_industries": 'Data Center'
+        "amd_blog_releasedate": Tue April 16, 12:00:00 PST 2024
 ---
 
 # Interacting with Contrastive Language-Image Pre-Training (CLIP) model on AMD GPU

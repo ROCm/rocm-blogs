@@ -1,5 +1,3 @@
-# check-tags.py
-# read .md file and check if it has myst
 import csv
 import os
 import pathlib
