@@ -66,6 +66,9 @@ html_theme_options = {
     "show_prev_next": False,
     "navbar_presistent": ["navbar-icon-links.html", "search-field.html"],
 }
+
+html_sidebars = {"**": []}
+
 post_show_prev_next = False
 
 extensions = [
