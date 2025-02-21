@@ -8,12 +8,25 @@ author: Matt Elliott
 tags: AI/ML
 category: Software tools & optimizations
 language: English
+target_audience: ''
+key_value_propositions: ''
 myst:
-  html_meta:
-    "author": "Matt Elliott"
-    "description lang=en": "Getting started with AMD ROCm containers: from base images to custom solutions"
-    "keywords": "AI/ML"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Matt Elliott"
+        "description lang=en": "This post, the second in a series, provides a walkthrough for building a vLLM container that can be used for both inference and benchmarking."
+        "keywords": "AI/ML"
+        "property=og:locale": "en_US"
+        "amd_category": 'Developer Resources'
+        "amd_asset_type": 'Blogs'
+        "amd_blog_type": 'Technical Articles & Blogs'
+        "amd_technical_blog_type": 'Benchmarks and Testing'
+        "amd_developer_type": 'ML/AI Developer'
+        "amd_deployment": 'Servers'
+        "amd_product_type": 'Accelerators'
+        "amd_developer_tool": 'ROCm Software'
+        "amd_applications": 'Large Language Model (LLM)'
+        "amd_industries": 'Data Center'
+        "amd_blog_releasedate": Thu Jan 16, 12:00:00 PST 2025
 ---
 # Getting started with AMD ROCm containers: from base images to custom solutions
 
@@ -212,4 +225,9 @@ docker run -it --device=/dev/kfd --device=/dev/dri \
 
 ## Summary
 
-Containers have transformed how we develop and deploy GPU-accelerated applications. Through this blog, we've explored how to build custom ROCm containers from base images, set up development environments for GPU-accelerated applications, and create specialized containers for ML training workloads. You've learned practical approaches to mounting volumes, managing dependencies, and implementing GPU support in your containers. These examples demonstate how the ROCm container ecosystem provides a robust foundation for both development and production deployments, making it easier than ever to work with AMD GPUs. In the next blog post, I'll walk through an advanced example using [vLLM](https://github.com/vllm-project/vllm "https://github.com/vllm-project/vllm") for both inferencing and benchmarking.
+Containers have transformed how we develop and deploy GPU-accelerated applications. Through this blog, we've explored how to build custom ROCm containers from base images, set up development environments for GPU-accelerated applications, and create specialized containers for ML training workloads. You've learned practical approaches to mounting volumes, managing dependencies, and implementing GPU support in your containers. These examples demonstate how the ROCm container ecosystem provides a robust foundation for both development and production deployments, making it easier than ever to work with AMD GPUs. In the [next blog post](https://rocm.blogs.amd.com/software-tools-optimization/rocm-containers/README.html), I'll walk through an advanced example using [vLLM](https://docs.vllm.ai/) for both inferencing and benchmarking.
+
+<p style="font-size: 14px;">
+Disclaimers<br>
+Third-party content is licensed to you directly by the third party that owns the content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
+</p>
