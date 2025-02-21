@@ -8,11 +8,11 @@ tags: AI/ML
 category: Applications & models
 language: English
 target_audience: MLOps Engineers, vLLM Developers
-key_value_propositions: Kubernetes is crucial for deploying workloads in data centers and even edge computing environments. This blog provides a guide on using the AMD ROCm K8s-device-plugin for deploying vLLM inference with detailed code examples. Developers can use this example as a reference to create other GPU job deployments beyond vLLM, such as those using SGlang or TGI Docker images, depending on their specific requirements.
+key_value_propositions: Kubernetes is crucial for deploying workloads in data centers and even edge computing environments. This blog provides a guide on using the AMD ROCm™ K8s-device-plugin for deploying vLLM inference with detailed code examples. Developers can use this example as a reference to create other GPU job deployments beyond vLLM, such as those using SGlang or TGI Docker images, depending on their specific requirements.
 myst:
   html_meta:
     "author": "Alex He"
-    "description lang=en": "Quick introduction to Kubernetes (K8s) and a step-by-step guide on how to use K8s to deploy vLLM using ROCm on AMD GPUs"
+    "description lang=en": "Quick introduction to Kubernetes (K8s) and a step-by-step guide on how to use K8s to deploy vLLM using ROCm."
     "keywords": "AI/ML"
     "property=og:locale": "en_US"
 ---
@@ -31,19 +31,19 @@ Key features of Kubernetes include:
 
 Kubernetes operates around a master-node architecture, where the master node contains control plane components that manage the cluster's state and the worker nodes run user applications in pods. This structure ensures high availability and reliability, as it allows for redundancy in managing the cluster.
 
-In this blog, we will walk you through deploying a vLLM Inference Service by leveraging the power of ROCm and our [AMD K8s device plugin](https://github.com/ROCm/k8s-device-plugin). By following these steps, you'll be able to take advantage of Kubernetes to manage clusters equipped with powerful AI accelerators like AMD's Instinct MI300X, ideal for flexible AI inference workloads.
+In this blog, we will walk you through deploying a vLLM Inference Service by leveraging the power of ROCm and our [AMD K8s device plugin](https://github.com/ROCm/k8s-device-plugin). By following these steps, you'll be able to take advantage of Kubernetes to manage clusters equipped with powerful AI accelerators like the AMD Instinct™ MI300X, ideal for flexible AI inference workloads.
 
-To learn more about the specifications and performance capabilities of AMD Instinct accelerators, visit [our product page](https://www.amd.com/en/products/accelerators/instinct.html).
+To learn more about the specifications and performance capabilities of AMD Instinct™ accelerators, visit [our product page](https://www.amd.com/en/products/accelerators/instinct.html).
 
 ## Setting up the K8s Cluster and vLLM
 
-This blog is tailored for MLOps engineers experienced in Kubernetes (K8s) cluster deployments with AMD Instinct Accelerators and familiar with vLLM's LLM inference solutions. We assume a deep technical foundation for advanced infrastructure implementations.
+This blog is tailored for MLOps engineers experienced in Kubernetes (K8s) cluster deployments with AMD Instinct™ accelerators and familiar with vLLM's LLM inference solutions. We assume a deep technical foundation for advanced infrastructure implementations.
 
 If you're new to Kubernetes, start your journey by exploring the [K8s official documentation](https://kubernetes.io/docs/home/).
 
 If you're new to vLLM, which is a widely-used LLM inference deployment solution, start learning from its official documentation: https://docs.vllm.ai/en/latest/
 
-As an added benefit of AMD's close collaboration with vLLM, customers can leverage the latest insights and best practices for accelerating AI inference deployments. For the most up-to-date information on ROCm and vLLM, [check out these resources](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/inference/vllm-benchmark.html).
+As an added benefit of the collaboration between AMD and vLLM, customers can leverage the latest insights and best practices for accelerating AI inference deployments. For the most up-to-date information on ROCm and vLLM, [check out these resources](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/inference/vllm-benchmark.html).
 
 This blog assumes you already have an existing Kubernetes cluster setup that is accessible to you to follow along with this tutorial. In addition, you will need to have already installed and loaded the AMD GPU driver on each of your GPU nodes.
 
@@ -214,8 +214,7 @@ You may get response from the K8s vLLM inference service we setup above for your
 
 ## Summary
 
-In this blog we've shown you, step-by-step, how to deploy and verify the vLLM service using Kubernetes (K8s) on AMD Instinct Accelerators. With this foundation in place, you're now ready to begin integrating vLLM into your real-world AI applications.
-While the AMD K8s device plugin used in this tutorial is simple and great for single node or small Kubernetes implementations, for larger Kubernetes deployments please consider using the [AMD GPU Operator](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/) which allows for automated installation of the K8s device plugin, node labeller, and AMD GPU device drivers on all your nodes without having to install them on each node manually. It also provides many other benefits such as GPU metrics reporting.
+In this blog, we've shown you step-by-step how to deploy and verify the vLLM service using Kubernetes (K8s) on AMD Instinct™ accelerators. With this foundation in place, you're now ready to begin integrating vLLM into your real-world AI applications. While the AMD K8s device plugin used in this tutorial is simple and great for single node or small Kubernetes implementations, for larger Kubernetes deployments please consider using the [AMD GPU Operator](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/) which allows for automated installation of the K8s device plugin, node labeller, and AMD GPU device drivers on all your nodes without having to install them on each node manually. It also provides many other benefits such as GPU metrics reporting.
 
 You may explore more examples of using K8s on AMD GPU:
 
