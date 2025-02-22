@@ -178,9 +178,9 @@ def blog_generation(blogs, minimum_date="September 1, 2024"):
 
                     blog_image = "../../_static/" + blog.image_paths[0]
 
-                image_template = image_template.replace(
-                    "{IMAGE}", blog_image).replace(
-                    "{TITLE}", blog.blog_title)
+                image_template = image_template.replace("{IMAGE}", blog_image).replace(
+                    "{TITLE}", blog.blog_title
+                )
 
                 lines.insert(line_number + 1, f"\n{blog_template}\n")
 

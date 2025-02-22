@@ -53,8 +53,7 @@ class SentimentDataModule(L.LightningDataModule):
         self.train_dataset = SentimentDataset(
             train_data, self.tokenizer, self.max_length
         )
-        self.val_dataset = SentimentDataset(
-            val_data, self.tokenizer, self.max_length)
+        self.val_dataset = SentimentDataset(val_data, self.tokenizer, self.max_length)
 
     def train_dataloader(self):
         return DataLoader(
@@ -70,10 +69,7 @@ class SentimentDataModule(L.LightningDataModule):
 
 
 class SentimentClassifier(L.LightningModule):
-    def __init__(
-            self,
-            pretrained_model_name="bert-base-uncased",
-            learning_rate=0.001):
+    def __init__(self, pretrained_model_name="bert-base-uncased", learning_rate=0.001):
         super().__init__()
         self.learning_rate = learning_rate
         self.bert = BertModel.from_pretrained(pretrained_model_name)
@@ -122,8 +118,5 @@ num_epochs = 5
 model = SentimentClassifier()
 dm = SentimentDataModule()
 
-trainer = L.Trainer(
-    max_epochs=num_epochs,
-    accelerator="gpu",
-    limit_val_batches=0.1)
+trainer = L.Trainer(max_epochs=num_epochs, accelerator="gpu", limit_val_batches=0.1)
 trainer.fit(model, dm)

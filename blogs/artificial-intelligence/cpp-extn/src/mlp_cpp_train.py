@@ -10,22 +10,11 @@ torch.manual_seed(42)
 
 class MLPFunction(Function):
     @staticmethod
-    def forward(
-            ctx,
-            input,
-            hidden_weights,
-            hidden_bias,
-            output_weights,
-            output_bias):
+    def forward(ctx, input, hidden_weights, hidden_bias, output_weights, output_bias):
         output = mlp_cpp.forward(
             input, hidden_weights, hidden_bias, output_weights, output_bias
         )
-        variables = [
-            input,
-            hidden_weights,
-            hidden_bias,
-            output_weights,
-            output_bias]
+        variables = [input, hidden_weights, hidden_bias, output_weights, output_bias]
         ctx.save_for_backward(*variables)
 
         return output
@@ -52,8 +41,7 @@ class MLP(nn.Module):
     def __init__(self, input_features=5, hidden_features=15):
         super(MLP, self).__init__()
         self.input_features = input_features
-        self.hidden_weights = nn.Parameter(
-            torch.rand(hidden_features, input_features))
+        self.hidden_weights = nn.Parameter(torch.rand(hidden_features, input_features))
         self.hidden_bias = nn.Parameter(torch.rand(1, hidden_features))
         self.output_weights = nn.Parameter(torch.rand(1, hidden_features))
         self.output_bias = nn.Parameter(torch.rand(1, 1))

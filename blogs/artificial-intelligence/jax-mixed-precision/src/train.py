@@ -106,24 +106,13 @@ def get_batch(split):
     # We recreate np.memmap every batch to avoid a memory leak, as per
     # https://stackoverflow.com/questions/45132940/numpy-memmap-memory-usage-want-to-iterate-once/61472122#61472122
     if split == "train":
-        data = np.memmap(
-            os.path.join(
-                data_dir,
-                "train.bin"),
-            dtype=np.uint16,
-            mode="r")
+        data = np.memmap(os.path.join(data_dir, "train.bin"), dtype=np.uint16, mode="r")
     else:
-        data = np.memmap(
-            os.path.join(
-                data_dir,
-                "val.bin"),
-            dtype=np.uint16,
-            mode="r")
+        data = np.memmap(os.path.join(data_dir, "val.bin"), dtype=np.uint16, mode="r")
     ix = np.random.randint(0, len(data) - block_size, size=(batch_size,))
-    x = jnp.stack([data[i: i + block_size].astype(jnp.int32)
-                  for i in ix], axis=0)
+    x = jnp.stack([data[i : i + block_size].astype(jnp.int32) for i in ix], axis=0)
     y = jnp.stack(
-        [data[i + 1: i + 1 + block_size].astype(jnp.int32) for i in ix], axis=0
+        [data[i + 1 : i + 1 + block_size].astype(jnp.int32) for i in ix], axis=0
     )
     return x, y
 
@@ -188,9 +177,7 @@ def init_train_state(
         betas=(beta1, beta2),
     )
     # Add gradient clipping
-    optimizer = optax.chain(
-        optax.clip_by_global_norm(grad_clip),
-        naive_optimizer)
+    optimizer = optax.chain(optax.clip_by_global_norm(grad_clip), naive_optimizer)
     # Create a State
     return (
         TrainState.create(
@@ -238,8 +225,8 @@ elif init_from == "resume":
         check_path, options=check_options, item_names=("state", "metadata")
     ) as mngr:
         restored_ckpt = mngr.restore(
-            mngr.latest_step(), args=ocp.args.Composite(
-                metadata=ocp.args.JsonRestore()))
+            mngr.latest_step(), args=ocp.args.Composite(metadata=ocp.args.JsonRestore())
+        )
     (
         model_args_ckpt,
         iter_num_ckpt,
@@ -256,13 +243,7 @@ elif init_from == "resume":
     # force these config attributes to be equal otherwise we can't even resume training
     # the rest of the attributes (e.g. dropout) can stay as desired from
     # command line
-    for k in [
-        "n_layer",
-        "n_head",
-        "n_embd",
-        "block_size",
-        "bias",
-            "vocab_size"]:
+    for k in ["n_layer", "n_head", "n_embd", "block_size", "bias", "vocab_size"]:
         model_args[k] = model_args_ckpt[k]
     # create the model
     gptconf = GPTConfig(**model_args)
@@ -278,13 +259,7 @@ elif init_from.startswith("gpt2"):
     model, params = GPT.from_pretrained(init_from, override_args)
     # read off the created config params, so we can store them into checkpoint
     # correctly
-    for k in [
-        "n_layer",
-        "n_head",
-        "n_embd",
-        "block_size",
-        "bias",
-            "vocab_size"]:
+    for k in ["n_layer", "n_head", "n_embd", "block_size", "bias", "vocab_size"]:
         model_args[k] = getattr(model.config, k)
 else:
     raise RuntimeError(f"init_from={init_from} is not supported.")
@@ -348,7 +323,8 @@ def train_step(
     # for mixed precision
     params = policy.cast_to_compute(state.params)
     loss, grads = gradient_fn(
-        params, x, targets=y, rng=key0, train=True, loss_scale=loss_scale, policy=policy)
+        params, x, targets=y, rng=key0, train=True, loss_scale=loss_scale, policy=policy
+    )
     loss = loss_scale.unscale(loss)
     grads = policy.cast_to_param(grads)
     grads = loss_scale.unscale(grads)
@@ -361,9 +337,7 @@ def train_step(
         loss_scale = loss_scale.adjust(grads_finite)
         # Only apply our optimizer if grads are finite, if any element of any
         # gradient is non-finite the whole update is discarded.
-        state = jmp.select_tree(
-            grads_finite, state.apply_gradients(
-                grads=grads), state)
+        state = jmp.select_tree(grads_finite, state.apply_gradients(grads=grads), state)
     else:
         # With static or no loss scaling just apply our optimizer.
         state = state.apply_gradients(grads=grads)

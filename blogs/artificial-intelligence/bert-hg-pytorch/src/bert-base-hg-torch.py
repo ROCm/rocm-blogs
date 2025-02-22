@@ -18,10 +18,7 @@ def train_func():
     )  # 32 is the global batch size, since I use 8 GPUs
     parser.add_argument("--EPOCHS", type=int, default=200)
     parser.add_argument("--train", action="store_true")
-    parser.add_argument(
-        "--dataset_file",
-        type=str,
-        default="./wikiTokenizedValid.hf")
+    parser.add_argument("--dataset_file", type=str, default="./wikiTokenizedValid.hf")
     parser.add_argument("--lr", default=0.00005, type=float)
     parser.add_argument("--output_dir", default="./acc_valid/")
     args = parser.parse_args()
@@ -37,11 +34,9 @@ def train_func():
         tokenizer=tokenizer, mlm=True, mlm_probability=0.15
     )
     tokenized_dataset = datasets.load_from_disk(args.dataset_file)
-    tokenized_dataset_valid = datasets.load_from_disk(
-        "./wikiTokenizedValid.hf")
+    tokenized_dataset_valid = datasets.load_from_disk("./wikiTokenizedValid.hf")
 
-    model = BertForPreTraining(
-        config=BertConfig.from_pretrained("bert-base-cased"))
+    model = BertForPreTraining(config=BertConfig.from_pretrained("bert-base-cased"))
     optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 
     accelerator = Accelerator()

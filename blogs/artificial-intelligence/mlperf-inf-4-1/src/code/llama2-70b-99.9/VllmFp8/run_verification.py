@@ -45,14 +45,8 @@ def get_args():
         required=True,
     )
     parser.add_argument(
-        "--dtype",
-        "-d",
-        default="int64",
-        choices=[
-            "int64",
-            "int32",
-            "int16",
-            "float32"])
+        "--dtype", "-d", default="int64", choices=["int64", "int32", "int16", "float32"]
+    )
     parser.add_argument(
         "--scenario",
         "-s",
@@ -82,10 +76,7 @@ def eos_check(acc_data, dtype):
 def first_token_check(acc_data, dtype):
     for sample in acc_data:
         data = np.frombuffer(bytes.fromhex(sample["data"]), dtype=dtype)
-        token_data = np.frombuffer(
-            bytes.fromhex(
-                sample["token_data"]),
-            dtype=dtype)
+        token_data = np.frombuffer(bytes.fromhex(sample["token_data"]), dtype=dtype)
         for t1, t2 in zip(data, token_data):
             if t1 != t2:
                 return False
@@ -104,9 +95,7 @@ def sample_len_check(acc_data, dtype):
 
 def main():
     args = get_args()
-    accuracy_file = os.path.join(
-        args.compliance_dir,
-        "mlperf_log_accuracy.json")
+    accuracy_file = os.path.join(args.compliance_dir, "mlperf_log_accuracy.json")
 
     with open(accuracy_file, "r") as acc_json:
         acc_data = json.load(acc_json)
@@ -121,8 +110,7 @@ def main():
     first_token_pass = True
     if need_first_token_check:
         try:
-            first_token_pass = first_token_check(
-                acc_data, DTYPE_MAP[args.dtype])
+            first_token_pass = first_token_check(acc_data, DTYPE_MAP[args.dtype])
         except Exception:
             print("Unexpected error occured while doing the first token check")
             first_token_pass = False

@@ -47,7 +47,7 @@ def get_pileval(
     traindataset = []
     for i in range(n_split):
         traindataset.append(
-            {"input_ids": cat_samples[:, i * seqlen: (i + 1) * seqlen]}
+            {"input_ids": cat_samples[:, i * seqlen : (i + 1) * seqlen]}
         )
     return traindataset
 
@@ -75,8 +75,7 @@ def get_wikitext2(
         j = i + seqlen
         inp = trainenc.input_ids[:, i:j]
         attention_mask = torch.ones_like(inp)
-        traindataset.append(
-            {"input_ids": inp, "attention_mask": attention_mask})
+        traindataset.append({"input_ids": inp, "attention_mask": attention_mask})
     return traindataset
 
 
@@ -84,22 +83,19 @@ def process_open_orca(dataset_name, device, tokenizer, seqlen, sample_len):
     from rouge_evaluate import prepare_openorca
     from torch.nn.functional import pad
 
-    source_ids, source_lengths, target_ids, target_text = prepare_openorca(
-        dataset_name)
+    source_ids, source_lengths, target_ids, target_text = prepare_openorca(dataset_name)
     valdataset = []
     for idx in range(sample_len):
         input_length = source_lengths[idx]
         input_ids = torch.tensor(
             source_ids[idx], device=device, dtype=torch.int32
         ).unsqueeze(0)
-        attention_mask = torch.ones_like(
-            input_ids, dtype=torch.int32, device=device)
-        input_ids = pad(input_ids, (seqlen - input_length, 0,
-                                    0, 0), value=tokenizer.pad_token_id)
-        attention_mask = pad(
-            attention_mask, (seqlen - input_length, 0, 0, 0), value=0)
-        valdataset.append(
-            {"input_ids": input_ids, "attention_mask": attention_mask})
+        attention_mask = torch.ones_like(input_ids, dtype=torch.int32, device=device)
+        input_ids = pad(
+            input_ids, (seqlen - input_length, 0, 0, 0), value=tokenizer.pad_token_id
+        )
+        attention_mask = pad(attention_mask, (seqlen - input_length, 0, 0, 0), value=0)
+        valdataset.append({"input_ids": input_ids, "attention_mask": attention_mask})
     return valdataset
 
 
@@ -112,12 +108,7 @@ def get_calib_dataloader_to_list(
     device: str = "cpu",
 ) -> DataLoader[List[Dict[str, torch.Tensor]]]:
     if dataset_name == "pileval_for_awq_benchmark":
-        samples = get_pileval(
-            tokenizer,
-            num_calib_data,
-            seqlen,
-            device,
-            seed=42)
+        samples = get_pileval(tokenizer, num_calib_data, seqlen, device, seed=42)
     elif dataset_name == "wikitext_for_gptq_benchmark":
         samples = get_wikitext2(tokenizer, num_calib_data, seqlen, device)
     elif "open_orca" in dataset_name:
@@ -145,9 +136,7 @@ def get_calib_dataloader_to_tensor(
     device: Optional[str] = None,
 ) -> DataLoader[torch.Tensor]:
     if dataset_name == "pileval":
-        dataset = load_dataset(
-            "mit-han-lab/pile-val-backup",
-            split="validation")
+        dataset = load_dataset("mit-han-lab/pile-val-backup", split="validation")
         text_data = dataset["text"][:num_calib_data]
     elif dataset_name == "cnn_dailymail":
         dataset = load_dataset("cnn_dailymail", name="3.0.0", split="train")
@@ -159,19 +148,13 @@ def get_calib_dataloader_to_tensor(
         raise NotImplementedError
 
     batch_encoded = tokenizer(
-        text_data,
-        return_tensors="pt",
-        padding=True,
-        truncation=True,
-        max_length=seqlen)
+        text_data, return_tensors="pt", padding=True, truncation=True, max_length=seqlen
+    )
     if device:
         batch_encoded = batch_encoded.to(device)
     batch_encoded = batch_encoded["input_ids"]
 
-    calib_dataloader = DataLoader(
-        batch_encoded,
-        batch_size=batch_size,
-        shuffle=False)
+    calib_dataloader = DataLoader(batch_encoded, batch_size=batch_size, shuffle=False)
 
     return calib_dataloader
 
@@ -203,16 +186,13 @@ def get_calib_dataloader_to_dict(
         blocks: List[Dict[str, List[List[str]]]],
     ) -> Dict[str, torch.Tensor]:
         data_batch = {}
-        data_batch["input_ids"] = torch.Tensor(
-            [block["input_ids"] for block in blocks])
+        data_batch["input_ids"] = torch.Tensor([block["input_ids"] for block in blocks])
         if device:
             data_batch["input_ids"] = data_batch["input_ids"].to(device)
         return data_batch
 
     if dataset_name == "pileval":
-        dataset = load_dataset(
-            "mit-han-lab/pile-val-backup",
-            split="validation")
+        dataset = load_dataset("mit-han-lab/pile-val-backup", split="validation")
         prompt_col_name = "text"
     elif dataset_name == "cnn_dailymail":
         dataset = load_dataset("cnn_dailymail", name="3.0.0", split="train")

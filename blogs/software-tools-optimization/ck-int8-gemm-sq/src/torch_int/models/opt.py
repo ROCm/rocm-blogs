@@ -81,8 +81,7 @@ class Int8OPTAttention(nn.Module):
         int8_module.out_proj = Linear_AB_I8_DE_F32.from_float(
             module.out_proj, out_input_scale
         )
-        int8_module.qk_bmm = BMM_AB_I8_E_F32.from_scale(
-            q_output_scale, k_output_scale)
+        int8_module.qk_bmm = BMM_AB_I8_E_F32.from_scale(q_output_scale, k_output_scale)
 
         # alpha = s_prob * s_v / s_out, where s_prob = 1 / 127
         int8_module.pv_bmm = BMM_ABE_I8.from_scale(
@@ -143,9 +142,7 @@ class Int8OPTAttention(nn.Module):
         past_key_value = (key_states, value_states)
 
         proj_shape = (bsz * self.num_heads, -1, self.head_dim)
-        query_states = self._shape(
-            query_states, tgt_len, bsz).view(
-            *proj_shape)
+        query_states = self._shape(query_states, tgt_len, bsz).view(*proj_shape)
         key_states = key_states.view(*proj_shape)
         value_states = value_states.view(*proj_shape)
 
@@ -184,8 +181,7 @@ class Int8OPTAttention(nn.Module):
             attn_weights = torch.max(
                 attn_weights, torch.tensor(torch.finfo(attn_weights.dtype).min)
             )
-            attn_weights = attn_weights.view(
-                bsz * self.num_heads, tgt_len, src_len)
+            attn_weights = attn_weights.view(bsz * self.num_heads, tgt_len, src_len)
 
         attn_probs = nn.functional.softmax(attn_weights, dim=-1)
 
@@ -198,16 +194,14 @@ class Int8OPTAttention(nn.Module):
             attn_probs = layer_head_mask.view(1, -1, 1, 1) * attn_probs.view(
                 bsz, self.num_heads, tgt_len, src_len
             )
-            attn_probs = attn_probs.view(
-                bsz * self.num_heads, tgt_len, src_len)
+            attn_probs = attn_probs.view(bsz * self.num_heads, tgt_len, src_len)
 
         if output_attentions:
             # this operation is a bit awkward, but it's required to
             # make sure that attn_weights keeps its gradient.
             # In order to do so, attn_weights have to be reshaped
             # twice and have to be reused in the following
-            attn_probs_reshaped = attn_probs.view(
-                bsz, self.num_heads, tgt_len, src_len)
+            attn_probs_reshaped = attn_probs.view(bsz, self.num_heads, tgt_len, src_len)
             attn_probs = attn_probs_reshaped.view(
                 bsz * self.num_heads, tgt_len, src_len
             )
@@ -233,14 +227,12 @@ class Int8OPTAttention(nn.Module):
                     attn_output.size()}"
             )
 
-        attn_output = attn_output.view(
-            bsz, self.num_heads, tgt_len, self.head_dim)
+        attn_output = attn_output.view(bsz, self.num_heads, tgt_len, self.head_dim)
         attn_output = attn_output.transpose(1, 2)
 
         # Use the `embed_dim` from the config (stored in the class) rather than `hidden_state` because `attn_output` can be
         # partitioned aross GPUs when using tensor-parallelism.
-        attn_output = attn_output.reshape(
-            bsz, tgt_len, self.embed_dim).contiguous()
+        attn_output = attn_output.reshape(bsz, tgt_len, self.embed_dim).contiguous()
         attn_output = self.out_proj(attn_output)
         # print(attn_output)
         return attn_output, attn_probs_reshaped, past_key_value
@@ -271,9 +263,8 @@ class Int8OPTDecoderLayer(nn.Module):
         fc2_input_scale: float,
     ):
         int8_module = Int8OPTDecoderLayer(
-            module.embed_dim,
-            module.self_attn.num_heads,
-            module.fc1.out_features)
+            module.embed_dim, module.self_attn.num_heads, module.fc1.out_features
+        )
         int8_module.self_attn_layer_norm = LayerNormQ.from_float(
             module.self_attn_layer_norm, attn_input_scale
         )
@@ -291,20 +282,20 @@ class Int8OPTDecoderLayer(nn.Module):
         int8_module.fc1 = Linear_ReLU_ABDE_I8.from_float(
             module.fc1, fc1_input_scale, fc2_input_scale
         )
-        int8_module.fc2 = Linear_AB_I8_DE_F32.from_float(
-            module.fc2, fc2_input_scale)
+        int8_module.fc2 = Linear_AB_I8_DE_F32.from_float(module.fc2, fc2_input_scale)
         return int8_module
 
-    def forward(self,
-                hidden_states: torch.Tensor,
-                attention_mask: Optional[torch.Tensor] = None,
-                layer_head_mask: Optional[torch.Tensor] = None,
-                output_attentions: Optional[bool] = False,
-                use_cache: Optional[bool] = False,
-                past_key_value: Optional[Tuple[torch.Tensor]] = None,
-                ) -> Tuple[torch.FloatTensor,
-                           Optional[Tuple[torch.FloatTensor,
-                                          torch.FloatTensor]]]:
+    def forward(
+        self,
+        hidden_states: torch.Tensor,
+        attention_mask: Optional[torch.Tensor] = None,
+        layer_head_mask: Optional[torch.Tensor] = None,
+        output_attentions: Optional[bool] = False,
+        use_cache: Optional[bool] = False,
+        past_key_value: Optional[Tuple[torch.Tensor]] = None,
+    ) -> Tuple[
+        torch.FloatTensor, Optional[Tuple[torch.FloatTensor, torch.FloatTensor]]
+    ]:
         """
         Args:
             hidden_states (`torch.Int8Tensor`): the output of previous layer's layernorm in INT8
@@ -460,8 +451,7 @@ class Int8OPTDecoder(OPTPreTrainedModel):
         )
         # slice the output to the original length
         if input_len % 16 != 0:
-            output.last_hidden_state = output.last_hidden_state[:,
-                                                                :input_len, :]
+            output.last_hidden_state = output.last_hidden_state[:, :input_len, :]
         return output
 
 
@@ -504,8 +494,7 @@ class Int8OPTForCausalLM(OPTPreTrainedModel):
     @staticmethod
     def from_float(module, decoder_layer_scales):
         int8_module = Int8OPTForCausalLM(module.config)
-        int8_module.model = Int8OPTModel.from_float(
-            module.model, decoder_layer_scales)
+        int8_module.model = Int8OPTModel.from_float(module.model, decoder_layer_scales)
         int8_module.lm_head = module.lm_head
         return int8_module
 

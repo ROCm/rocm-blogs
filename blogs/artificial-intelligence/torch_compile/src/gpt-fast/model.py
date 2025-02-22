@@ -94,12 +94,8 @@ transformer_configs = {
 
 class KVCache(nn.Module):
     def __init__(
-            self,
-            max_batch_size,
-            max_seq_length,
-            n_heads,
-            head_dim,
-            dtype=torch.bfloat16):
+        self, max_batch_size, max_seq_length, n_heads, head_dim, dtype=torch.bfloat16
+    ):
         super().__init__()
         cache_shape = (max_batch_size, n_heads, max_seq_length, head_dim)
         self.register_buffer("k_cache", torch.zeros(cache_shape, dtype=dtype))
@@ -146,10 +142,8 @@ class Transformer(nn.Module):
         self.max_batch_size = max_batch_size
         for b in self.layers:
             b.attention.kv_cache = KVCache(
-                max_batch_size,
-                max_seq_length,
-                self.config.n_local_heads,
-                head_dim)
+                max_batch_size, max_seq_length, self.config.n_local_heads, head_dim
+            )
 
         self.freqs_cis = precompute_freqs_cis(
             self.config.block_size,
@@ -157,15 +151,10 @@ class Transformer(nn.Module):
             self.config.rope_base,
         )
         self.causal_mask = torch.tril(
-            torch.ones(
-                self.max_seq_length,
-                self.max_seq_length,
-                dtype=torch.bool))
+            torch.ones(self.max_seq_length, self.max_seq_length, dtype=torch.bool)
+        )
 
-    def forward(
-            self,
-            idx: Tensor,
-            input_pos: Optional[Tensor] = None) -> Tensor:
+    def forward(self, idx: Tensor, input_pos: Optional[Tensor] = None) -> Tensor:
         assert self.freqs_cis is not None, "Caches must be initialized first"
         mask = self.causal_mask[None, None, input_pos]
         freqs_cis = self.freqs_cis[input_pos]
@@ -193,8 +182,7 @@ class TransformerBlock(nn.Module):
     def forward(
         self, x: Tensor, input_pos: Tensor, freqs_cis: Tensor, mask: Tensor
     ) -> Tensor:
-        h = x + self.attention(self.attention_norm(x),
-                               freqs_cis, mask, input_pos)
+        h = x + self.attention(self.attention_norm(x), freqs_cis, mask, input_pos)
         out = h + self.feed_forward(self.ffn_norm(h))
         return out
 
@@ -204,8 +192,7 @@ class Attention(nn.Module):
         super().__init__()
         assert config.dim % config.n_head == 0
 
-        total_head_dim = (
-            config.n_head + 2 * config.n_local_heads) * config.head_dim
+        total_head_dim = (config.n_head + 2 * config.n_local_heads) * config.head_dim
         # key, query, value projections for all heads, but in a batch
         self.wqkv = nn.Linear(config.dim, total_head_dim, bias=False)
         self.wo = nn.Linear(config.dim, config.dim, bias=False)
@@ -250,8 +237,7 @@ class Attention(nn.Module):
 
         k = k.repeat_interleave(self.n_head // self.n_local_heads, dim=1)
         v = v.repeat_interleave(self.n_head // self.n_local_heads, dim=1)
-        y = F.scaled_dot_product_attention(
-            q, k, v, attn_mask=mask, dropout_p=0.0)
+        y = F.scaled_dot_product_attention(q, k, v, attn_mask=mask, dropout_p=0.0)
 
         y = y.transpose(1, 2).contiguous().view(bsz, seqlen, self.dim)
 
@@ -277,18 +263,14 @@ class RMSNorm(nn.Module):
         self.weight = nn.Parameter(torch.ones(dim))
 
     def _norm(self, x):
-        return x * torch.rsqrt(torch.mean(x * x, dim=-1,
-                               keepdim=True) + self.eps)
+        return x * torch.rsqrt(torch.mean(x * x, dim=-1, keepdim=True) + self.eps)
 
     def forward(self, x: Tensor) -> Tensor:
         output = self._norm(x.float()).type_as(x)
         return output * self.weight
 
 
-def precompute_freqs_cis(
-        seq_len: int,
-        n_elem: int,
-        base: int = 10000) -> Tensor:
+def precompute_freqs_cis(seq_len: int, n_elem: int, base: int = 10000) -> Tensor:
     freqs = 1.0 / (
         base ** (torch.arange(0, n_elem, 2)[: (n_elem // 2)].float() / n_elem)
     )
@@ -302,14 +284,13 @@ def precompute_freqs_cis(
 def apply_rotary_emb(x: Tensor, freqs_cis: Tensor) -> Tensor:
     xshaped = x.float().reshape(*x.shape[:-1], -1, 2)
     freqs_cis = freqs_cis.view(1, xshaped.size(1), 1, xshaped.size(3), 2)
-    x_out2 = torch.stack([xshaped[..., 0] *
-                          freqs_cis[..., 0] -
-                          xshaped[..., 1] *
-                          freqs_cis[..., 1], xshaped[..., 1] *
-                          freqs_cis[..., 0] +
-                          xshaped[..., 0] *
-                          freqs_cis[..., 1], ], -
-                         1, )
+    x_out2 = torch.stack(
+        [
+            xshaped[..., 0] * freqs_cis[..., 0] - xshaped[..., 1] * freqs_cis[..., 1],
+            xshaped[..., 1] * freqs_cis[..., 0] + xshaped[..., 0] * freqs_cis[..., 1],
+        ],
+        -1,
+    )
 
     x_out2 = x_out2.flatten(3)
     return x_out2.type_as(x)

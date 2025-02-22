@@ -28,11 +28,7 @@ class Linear_ABDE_I8(torch.nn.Module):
         )
         self.register_buffer(
             "bias",
-            torch.zeros(
-                (1,
-                 self.out_features),
-                dtype=torch.int8,
-                requires_grad=False),
+            torch.zeros((1, self.out_features), dtype=torch.int8, requires_grad=False),
         )
         self.register_buffer("a", torch.tensor(alpha))
         self.register_buffer("b", torch.tensor(beta))
@@ -47,12 +43,7 @@ class Linear_ABDE_I8(torch.nn.Module):
     def forward(self, x):
         x_shape = x.shape
         x = x.view(-1, x_shape[-1])
-        y = linear_abde_i8(
-            x,
-            self.weight,
-            self.bias,
-            self.a.item(),
-            self.b.item())
+        y = linear_abde_i8(x, self.weight, self.bias, self.a.item(), self.b.item())
         y = y.view(*x_shape[:-1], -1)
         return y
 
@@ -89,11 +80,7 @@ class Linear_ReLU_ABDE_I8(torch.nn.Module):
         )
         self.register_buffer(
             "bias",
-            torch.zeros(
-                (1,
-                 self.out_features),
-                dtype=torch.int8,
-                requires_grad=False),
+            torch.zeros((1, self.out_features), dtype=torch.int8, requires_grad=False),
         )
         self.register_buffer("a", torch.tensor(alpha))
         self.register_buffer("b", torch.tensor(beta))
@@ -108,20 +95,14 @@ class Linear_ReLU_ABDE_I8(torch.nn.Module):
     def forward(self, x):
         x_shape = x.shape
         x = x.view(-1, x_shape[-1])
-        y = linear_relu_abde_i8(
-            x,
-            self.weight,
-            self.bias,
-            self.a.item(),
-            self.b.item())
+        y = linear_relu_abde_i8(x, self.weight, self.bias, self.a.item(), self.b.item())
         y = y.view(*x_shape[:-1], -1)
         return y
 
     @staticmethod
     def from_float(module: torch.nn.Linear, input_scale, output_scale):
         # TODO: add zero-point to prevent the bit waste
-        int8_module = Linear_ReLU_ABDE_I8(
-            module.in_features, module.out_features)
+        int8_module = Linear_ReLU_ABDE_I8(module.in_features, module.out_features)
         int8_weight, weight_scale = quantize_per_tensor_absmax(module.weight)
         int8_bias, bias_scale = quantize_per_tensor_absmax(module.bias)
         alpha = input_scale * weight_scale / output_scale
@@ -152,10 +133,8 @@ class Linear_AB_I8_DE_F32(torch.nn.Module):
         self.register_buffer(
             "bias",
             torch.zeros(
-                (1,
-                 self.out_features),
-                dtype=torch.float32,
-                requires_grad=False),
+                (1, self.out_features), dtype=torch.float32, requires_grad=False
+            ),
         )
         self.register_buffer("a", torch.tensor(alpha))
 
@@ -182,8 +161,7 @@ class Linear_AB_I8_DE_F32(torch.nn.Module):
 
     @staticmethod
     def from_float(module: torch.nn.Linear, input_scale):
-        int8_module = Linear_AB_I8_DE_F32(
-            module.in_features, module.out_features)
+        int8_module = Linear_AB_I8_DE_F32(module.in_features, module.out_features)
         int8_weight, weight_scale = quantize_per_tensor_absmax(module.weight)
         alpha = input_scale * weight_scale
         int8_module.weight = int8_weight

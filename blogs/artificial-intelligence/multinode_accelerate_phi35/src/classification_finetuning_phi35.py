@@ -40,16 +40,12 @@ tokenized_datasets.set_format("torch")
 
 # Create train and evaluation dataloader
 print("Instantiating the Dataloader")
-train_dataloader = DataLoader(
-    tokenized_datasets["train"],
-    shuffle=True,
-    batch_size=8)
+train_dataloader = DataLoader(tokenized_datasets["train"], shuffle=True, batch_size=8)
 eval_dataloader = DataLoader(tokenized_datasets["test"], batch_size=8)
 
 # Load the model for classification
 print("Loading model for classification")
-model = AutoModelForSequenceClassification.from_pretrained(
-    llm_model, num_labels=5)
+model = AutoModelForSequenceClassification.from_pretrained(llm_model, num_labels=5)
 
 # Optimizer
 optimizer = AdamW(model.parameters(), lr=5e-5)
@@ -67,7 +63,8 @@ lr_scheduler = get_scheduler(
 
 # The model, optimizer and data loaders are passed to the Accelerator instance
 train_dataloader, eval_dataloader, model, optimizer, lr_scheduler = accelerator.prepare(
-    train_dataloader, eval_dataloader, model, optimizer, lr_scheduler)
+    train_dataloader, eval_dataloader, model, optimizer, lr_scheduler
+)
 
 print("Begin Training...")
 

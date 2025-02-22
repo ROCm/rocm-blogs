@@ -121,17 +121,23 @@ class ModelArguments:
         },
     )
     trust_remote_code: bool = field(
-        default=False, metadata={
+        default=False,
+        metadata={
             "help": (
                 "Whether or not to allow for custom models defined on the Hub in their own modeling files. This option "
                 "should only be set to `True` for repositories you trust and in which you have read the code, as it will "
-                "execute code present on the Hub on your local machine.")}, )
+                "execute code present on the Hub on your local machine."
+            )
+        },
+    )
     freeze_vision_model: bool = field(
-        default=False, metadata={
-            "help": "Whether to freeze the vision model parameters or not."}, )
+        default=False,
+        metadata={"help": "Whether to freeze the vision model parameters or not."},
+    )
     freeze_text_model: bool = field(
-        default=False, metadata={
-            "help": "Whether to freeze the text model parameters or not."}, )
+        default=False,
+        metadata={"help": "Whether to freeze the text model parameters or not."},
+    )
 
 
 @dataclass
@@ -141,8 +147,9 @@ class DataTrainingArguments:
     """
 
     dataset_name: Optional[str] = field(
-        default=None, metadata={
-            "help": "The name of the dataset to use (via the datasets library)."}, )
+        default=None,
+        metadata={"help": "The name of the dataset to use (via the datasets library)."},
+    )
     dataset_config_name: Optional[str] = field(
         default=None,
         metadata={
@@ -150,8 +157,8 @@ class DataTrainingArguments:
         },
     )
     data_dir: Optional[str] = field(
-        default=None, metadata={
-            "help": "The data directory containing input files."})
+        default=None, metadata={"help": "The data directory containing input files."}
+    )
     image_column: Optional[str] = field(
         default="image_path",
         metadata={
@@ -169,33 +176,48 @@ class DataTrainingArguments:
         metadata={"help": "The input training data file (a jsonlines file)."},
     )
     validation_file: Optional[str] = field(
-        default=None, metadata={
-            "help": "An optional input evaluation data file (a jsonlines file)."}, )
+        default=None,
+        metadata={"help": "An optional input evaluation data file (a jsonlines file)."},
+    )
     test_file: Optional[str] = field(
-        default=None, metadata={
-            "help": "An optional input testing data file (a jsonlines file)."}, )
+        default=None,
+        metadata={"help": "An optional input testing data file (a jsonlines file)."},
+    )
     max_seq_length: Optional[int] = field(
-        default=128, metadata={
+        default=128,
+        metadata={
             "help": (
                 "The maximum total input sequence length after tokenization. Sequences longer "
-                "than this will be truncated, sequences shorter will be padded.")}, )
+                "than this will be truncated, sequences shorter will be padded."
+            )
+        },
+    )
     max_train_samples: Optional[int] = field(
-        default=None, metadata={
+        default=None,
+        metadata={
             "help": (
                 "For debugging purposes or quicker training, truncate the number of training examples to this "
-                "value if set.")}, )
+                "value if set."
+            )
+        },
+    )
     max_eval_samples: Optional[int] = field(
-        default=None, metadata={
+        default=None,
+        metadata={
             "help": (
                 "For debugging purposes or quicker training, truncate the number of evaluation examples to this "
-                "value if set.")}, )
+                "value if set."
+            )
+        },
+    )
     overwrite_cache: bool = field(
         default=False,
         metadata={"help": "Overwrite the cached training and evaluation sets"},
     )
     preprocessing_num_workers: Optional[int] = field(
-        default=None, metadata={
-            "help": "The number of processes to use for the preprocessing."}, )
+        default=None,
+        metadata={"help": "The number of processes to use for the preprocessing."},
+    )
 
     def __post_init__(self):
         if (
@@ -236,15 +258,11 @@ class Transform(torch.nn.Module):
         super().__init__()
         self.transforms = torch.nn.Sequential(
             Resize(
-                [image_size],
-                interpolation=InterpolationMode.BICUBIC,
-                antialias=True),
+                [image_size], interpolation=InterpolationMode.BICUBIC, antialias=True
+            ),
             CenterCrop(image_size),
-            ConvertImageDtype(
-                torch.float),
-            Normalize(
-                mean,
-                std),
+            ConvertImageDtype(torch.float),
+            Normalize(mean, std),
         )
 
     def forward(self, x) -> torch.Tensor:
@@ -255,8 +273,7 @@ class Transform(torch.nn.Module):
 
 
 def collate_fn(examples):
-    pixel_values = torch.stack([example["pixel_values"]
-                               for example in examples])
+    pixel_values = torch.stack([example["pixel_values"] for example in examples])
     input_ids = torch.tensor(
         [example["input_ids"] for example in examples], dtype=torch.long
     )
@@ -343,8 +360,7 @@ def main():
         and not training_args.overwrite_output_dir
     ):
         last_checkpoint = get_last_checkpoint(training_args.output_dir)
-        if last_checkpoint is None and len(
-                os.listdir(training_args.output_dir)) > 0:
+        if last_checkpoint is None and len(os.listdir(training_args.output_dir)) > 0:
             raise ValueError(
                 f"Output directory ({training_args.output_dir}) already exists and is not empty. "
                 "Use --overwrite_output_dir to overcome."
@@ -415,7 +431,8 @@ def main():
     else:
         raise ValueError(
             "You are instantiating a new tokenizer from scratch. This is not supported by this script. "
-            "You can do it from another script, save it, and load it from here, using --tokenizer_name.")
+            "You can do it from another script, save it, and load it from here, using --tokenizer_name."
+        )
 
     # Load image_processor, in this script we only use this to get the mean
     # and std for normalization.
@@ -467,7 +484,8 @@ def main():
     dataset_columns = dataset_name_mapping.get(data_args.dataset_name, None)
     if data_args.image_column is None:
         image_column = (
-            dataset_columns[0] if dataset_columns is not None else column_names[0])
+            dataset_columns[0] if dataset_columns is not None else column_names[0]
+        )
     else:
         image_column = data_args.image_column
         if image_column not in column_names:
@@ -478,7 +496,8 @@ def main():
             )
     if data_args.caption_column is None:
         caption_column = (
-            dataset_columns[1] if dataset_columns is not None else column_names[1])
+            dataset_columns[1] if dataset_columns is not None else column_names[1]
+        )
     else:
         caption_column = data_args.caption_column
         if caption_column not in column_names:
@@ -516,8 +535,7 @@ def main():
             read_image(image_file, mode=ImageReadMode.RGB)
             for image_file in examples[image_column]
         ]
-        examples["pixel_values"] = [
-            image_transformations(image) for image in images]
+        examples["pixel_values"] = [image_transformations(image) for image in images]
         return examples
 
     def filter_corrupt_images(examples):
@@ -536,9 +554,7 @@ def main():
             raise ValueError("--do_train requires a train dataset")
         train_dataset = dataset["train"]
         if data_args.max_train_samples is not None:
-            max_train_samples = min(
-                len(train_dataset),
-                data_args.max_train_samples)
+            max_train_samples = min(len(train_dataset), data_args.max_train_samples)
             train_dataset = train_dataset.select(range(max_train_samples))
 
         train_dataset = train_dataset.filter(
@@ -549,8 +565,7 @@ def main():
         train_dataset = train_dataset.map(
             function=tokenize_captions,
             batched=True,
-            remove_columns=[
-                col for col in column_names if col != image_column],
+            remove_columns=[col for col in column_names if col != image_column],
             num_proc=data_args.preprocessing_num_workers,
             load_from_cache_file=not data_args.overwrite_cache,
             desc="Running tokenizer on train dataset",
@@ -565,9 +580,7 @@ def main():
             raise ValueError("--do_eval requires a train validation")
         eval_dataset = dataset["validation"]
         if data_args.max_eval_samples is not None:
-            max_eval_samples = min(
-                len(eval_dataset),
-                data_args.max_eval_samples)
+            max_eval_samples = min(len(eval_dataset), data_args.max_eval_samples)
             eval_dataset = eval_dataset.select(range(max_eval_samples))
 
         eval_dataset = eval_dataset.filter(
@@ -579,8 +592,7 @@ def main():
             function=tokenize_captions,
             batched=True,
             num_proc=data_args.preprocessing_num_workers,
-            remove_columns=[
-                col for col in column_names if col != image_column],
+            remove_columns=[col for col in column_names if col != image_column],
             load_from_cache_file=not data_args.overwrite_cache,
             desc="Running tokenizer on validation dataset",
         )
@@ -594,9 +606,7 @@ def main():
             raise ValueError("--do_predict requires a test dataset")
         test_dataset = dataset["test"]
         if data_args.max_eval_samples is not None:
-            max_eval_samples = min(
-                len(test_dataset),
-                data_args.max_eval_samples)
+            max_eval_samples = min(len(test_dataset), data_args.max_eval_samples)
             test_dataset = test_dataset.select(range(max_eval_samples))
 
         test_dataset = test_dataset.filter(
@@ -608,8 +618,7 @@ def main():
             function=tokenize_captions,
             batched=True,
             num_proc=data_args.preprocessing_num_workers,
-            remove_columns=[
-                col for col in column_names if col != image_column],
+            remove_columns=[col for col in column_names if col != image_column],
             load_from_cache_file=not data_args.overwrite_cache,
             desc="Running tokenizer on test dataset",
         )

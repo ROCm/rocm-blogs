@@ -46,7 +46,9 @@ class Dataset:
         if not os.path.isfile(self.dataset_path):
             log.warn(
                 "Processed pickle file {} not found. Please check that the path is correct".format(
-                    self.dataset_path))
+                    self.dataset_path
+                )
+            )
 
         log.info("Loading dataset...")
         import pandas as pd

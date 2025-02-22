@@ -115,9 +115,8 @@ def rouge_eval(
         )
         pred_tokens = pred_output_tokens[:, max_seq_len:].cpu().numpy()
         pred_tokens_extend = np.zeros(
-            (pred_tokens.shape[0],
-             pred_tokens.shape[1] * 2),
-            dtype=pred_tokens.dtype)
+            (pred_tokens.shape[0], pred_tokens.shape[1] * 2), dtype=pred_tokens.dtype
+        )
         pred_tokens_extend[:, ::2] = pred_tokens
         gen_tok_len += pred_tokens_extend.size
         preds_token_ids.extend(pred_tokens_extend)
@@ -128,10 +127,8 @@ def rouge_eval(
     preds, targets = postprocess_text(preds_decoded_text, target_required)
 
     result = metric.compute(
-        predictions=preds,
-        references=targets,
-        use_stemmer=True,
-        use_aggregator=False)
+        predictions=preds, references=targets, use_stemmer=True, use_aggregator=False
+    )
     result = {k: round(np.mean(v) * 100, 4) for k, v in result.items()}
     prediction_lens = [len(pred) for pred in preds]
     gen_num = len(preds)

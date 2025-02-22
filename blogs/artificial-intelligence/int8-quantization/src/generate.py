@@ -42,17 +42,10 @@ def multinomial_sample_one_no_sync(
     probs_sort,
 ):  # Does multinomial sampling without a cuda synchronization
     q = torch.empty_like(probs_sort).exponential_(1)
-    return torch.argmax(
-        probs_sort / q,
-        dim=-1,
-        keepdim=True).to(
-        dtype=torch.int)
+    return torch.argmax(probs_sort / q, dim=-1, keepdim=True).to(dtype=torch.int)
 
 
-def logits_to_probs(
-        logits,
-        temperature: float = 1.0,
-        top_k: Optional[int] = None):
+def logits_to_probs(logits, temperature: float = 1.0, top_k: Optional[int] = None):
     logits = logits / max(temperature, 1e-5)
 
     if top_k is not None:
@@ -70,10 +63,8 @@ def sample(logits, temperature: float = 1.0, top_k: Optional[int] = None):
 
 
 def prefill(
-        model: Transformer,
-        x: torch.Tensor,
-        input_pos: torch.Tensor,
-        **sampling_kwargs) -> torch.Tensor:
+    model: Transformer, x: torch.Tensor, input_pos: torch.Tensor, **sampling_kwargs
+) -> torch.Tensor:
     # input_pos: [B, S]
     logits = model(x, input_pos)
     return sample(logits, **sampling_kwargs)[0]
@@ -211,8 +202,7 @@ def generate(
     with torch.device(device):
         model.setup_caches(max_batch_size=1, max_seq_length=max_seq_length)
         if is_speculative and draft_model is not model:
-            draft_model.setup_caches(
-                max_batch_size=1, max_seq_length=max_seq_length)
+            draft_model.setup_caches(max_batch_size=1, max_seq_length=max_seq_length)
 
     # create an empty tensor of the expected final shape and fill in the
     # current tokens
@@ -237,16 +227,12 @@ def generate(
             cur_token = next_token.view(())
 
             next_tokens = speculative_decode(
-                model,
-                draft_model,
-                cur_token,
-                input_pos,
-                speculate_k,
-                **sampling_kwargs)
+                model, draft_model, cur_token, input_pos, speculate_k, **sampling_kwargs
+            )
 
             accept_counts[len(next_tokens) - 1] += 1
             num_added = min(T_new - input_pos - 1, len(next_tokens))
-            seq[input_pos + 1: input_pos + num_added + 1] = next_tokens[:num_added]
+            seq[input_pos + 1 : input_pos + num_added + 1] = next_tokens[:num_added]
             for i in next_tokens[:num_added,]:
                 callback(i)
             input_pos = input_pos + num_added
@@ -260,7 +246,7 @@ def generate(
             callback=callback,
             **sampling_kwargs,
         )
-        seq[T + 1:] = torch.cat(generated_tokens)
+        seq[T + 1 :] = torch.cat(generated_tokens)
 
     generate_stats = {"accept_counts": accept_counts}
     return seq, generate_stats
@@ -368,8 +354,7 @@ def main(
     model = _load_model(checkpoint_path, device, precision, use_tp)
 
     if is_speculative:
-        draft_model = _load_model(
-            draft_checkpoint_path, device, precision, use_tp)
+        draft_model = _load_model(draft_checkpoint_path, device, precision, use_tp)
     else:
         draft_model = None
 
@@ -494,11 +479,8 @@ def main(
     print("==========")
     print(f"==========Model name:{checkpoint_path.parent.name}")
     if is_speculative:
-        counts_aggregated = [
-            sum(i) for i in zip(
-                *aggregate_metrics["accept_counts"])]
-        acceptance_probs = [i / sum(counts_aggregated)
-                            for i in counts_aggregated]
+        counts_aggregated = [sum(i) for i in zip(*aggregate_metrics["accept_counts"])]
+        acceptance_probs = [i / sum(counts_aggregated) for i in counts_aggregated]
         print(f"Acceptance probs: {acceptance_probs}")
         print(
             f"Mean Accepted: {sum([idx *
@@ -540,20 +522,12 @@ if __name__ == "__main__":
         "--num_samples", type=int, default=20, help="Number of samples."
     )
     parser.add_argument(
-        "--max_new_tokens",
-        type=int,
-        default=200,
-        help="Maximum number of new tokens.")
+        "--max_new_tokens", type=int, default=200, help="Maximum number of new tokens."
+    )
+    parser.add_argument("--top_k", type=int, default=200, help="Top-k for sampling.")
     parser.add_argument(
-        "--top_k",
-        type=int,
-        default=200,
-        help="Top-k for sampling.")
-    parser.add_argument(
-        "--temperature",
-        type=float,
-        default=0.8,
-        help="Temperature for sampling.")
+        "--temperature", type=float, default=0.8, help="Temperature for sampling."
+    )
     parser.add_argument(
         "--checkpoint_path",
         type=Path,
@@ -568,16 +542,10 @@ if __name__ == "__main__":
         action="store_true",
         help="Whether to compile the prefill (improves prefill perf, but higher compile times)",
     )
+    parser.add_argument("--profile", type=Path, default=None, help="Profile path.")
     parser.add_argument(
-        "--profile",
-        type=Path,
-        default=None,
-        help="Profile path.")
-    parser.add_argument(
-        "--speculate_k",
-        type=int,
-        default=5,
-        help="Speculative execution depth.")
+        "--speculate_k", type=int, default=5, help="Speculative execution depth."
+    )
     parser.add_argument(
         "--draft_checkpoint_path",
         type=Path,

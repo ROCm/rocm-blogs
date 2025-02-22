@@ -2,8 +2,7 @@ import os
 from functools import wraps
 
 ENABLE_TRACING_RPD = bool(int(os.getenv("ENABLE_TRACING_RPD", 0)))
-ENABLE_TRACING_RPD_NON_TIMED = bool(
-    int(os.getenv("ENABLE_TRACING_RPD_NON_TIMED", 0)))
+ENABLE_TRACING_RPD_NON_TIMED = bool(int(os.getenv("ENABLE_TRACING_RPD_NON_TIMED", 0)))
 
 
 # tracing helper

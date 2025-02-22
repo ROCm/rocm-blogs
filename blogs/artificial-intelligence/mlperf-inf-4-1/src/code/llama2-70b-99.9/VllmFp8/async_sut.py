@@ -154,12 +154,11 @@ class AsyncServerSUT(SUT):
             ):  # max batch or time limit exceed
                 # log.info(f"Formed batch of {len(batched_samples[:self.gpu_batch_size])} samples")
                 self.send_samples(batched_samples[: self.gpu_batch_size])
-                batched_samples = batched_samples[self.gpu_batch_size:]
+                batched_samples = batched_samples[self.gpu_batch_size :]
                 timeout_stamp = time.time()
 
             try:
-                samples = self.batcher_queue.get(
-                    timeout=self.batcher_threshold)
+                samples = self.batcher_queue.get(timeout=self.batcher_threshold)
             except queue.Empty:
                 continue
 
@@ -241,11 +240,8 @@ class AsyncServerSUT(SUT):
         )
         bi = response_array.buffer_info()
         response = [
-            lg.QuerySampleResponse(
-                sample_id,
-                bi[0],
-                bi[1],
-                len(processed_output))]
+            lg.QuerySampleResponse(sample_id, bi[0], bi[1], len(processed_output))
+        ]
         if is_first_token:
             lg.FirstTokenComplete(response)
         else:
@@ -264,8 +260,7 @@ class AsyncServerSUT(SUT):
                     self.log(f"Server [{server_index}] warm-up in progress...")
                 # we receive 2 outputs per sample, first token complete, and
                 # all tokens complete
-                if warm_up_output_counter == (
-                        2 * self.warm_up_sample_count_per_server):
+                if warm_up_output_counter == (2 * self.warm_up_sample_count_per_server):
                     warm_up_done.set()
                     self.log(f"Server [{server_index}] warm-up completed")
                 continue

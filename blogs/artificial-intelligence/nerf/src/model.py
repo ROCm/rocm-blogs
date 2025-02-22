@@ -61,8 +61,7 @@ class NeRF(nn.Module):
 
         # Cannot use viewdirs if instantiated with d_viewdirs = None
         if self.d_viewdirs is None and viewdirs is not None:
-            raise ValueError(
-                "Cannot input x_direction if d_viewdirs was not given.")
+            raise ValueError("Cannot input x_direction if d_viewdirs was not given.")
 
         # Apply forward pass up to bottleneck
         x_input = x

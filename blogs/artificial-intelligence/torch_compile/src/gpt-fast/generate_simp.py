@@ -51,17 +51,10 @@ def multinomial_sample_one_no_sync(
     probs_sort,
 ):  # Does multinomial sampling without a cuda synchronization
     q = torch.empty_like(probs_sort).exponential_(1)
-    return torch.argmax(
-        probs_sort / q,
-        dim=-1,
-        keepdim=True).to(
-        dtype=torch.int)
+    return torch.argmax(probs_sort / q, dim=-1, keepdim=True).to(dtype=torch.int)
 
 
-def logits_to_probs(
-        logits,
-        temperature: float = 1.0,
-        top_k: Optional[int] = None):
+def logits_to_probs(logits, temperature: float = 1.0, top_k: Optional[int] = None):
     logits = logits / max(temperature, 1e-5)
 
     if top_k is not None:
@@ -79,10 +72,8 @@ def sample(logits, temperature: float = 1.0, top_k: Optional[int] = None):
 
 
 def prefill(
-        model: Transformer,
-        x: torch.Tensor,
-        input_pos: torch.Tensor,
-        **sampling_kwargs) -> torch.Tensor:
+    model: Transformer, x: torch.Tensor, input_pos: torch.Tensor, **sampling_kwargs
+) -> torch.Tensor:
     # input_pos: [B, S]
     logits = model(x, input_pos)
     return sample(logits, **sampling_kwargs)[0]
@@ -157,9 +148,7 @@ def generate(
     empty[:T] = prompt
     seq = empty
     input_pos = torch.arange(0, T, device=device)
-    next_token = prefill(
-        model, prompt.view(
-            1, -1), input_pos, **sampling_kwargs)
+    next_token = prefill(model, prompt.view(1, -1), input_pos, **sampling_kwargs)
     seq[T] = next_token
     input_pos = torch.tensor([T], device=device, dtype=torch.int)
     generated_tokens, _ = decode_n_tokens(
@@ -170,7 +159,7 @@ def generate(
         callback=callback,
         **sampling_kwargs,
     )
-    seq[T + 1:] = torch.cat(generated_tokens)
+    seq[T + 1 :] = torch.cat(generated_tokens)
 
     return seq
 
@@ -241,8 +230,7 @@ def main(
         print("Reset and set torch.compile mode as ", compile)
         torch._dynamo.reset()
 
-        decode_one_token = torch.compile(
-            decode_one_token, mode=compile, fullgraph=True)
+        decode_one_token = torch.compile(decode_one_token, mode=compile, fullgraph=True)
 
         # Uncomment to squeeze more perf out of prefill
         if compile_prefill:
@@ -309,26 +297,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "--prompt", type=str, default="Hello, my name is", help="Input prompt."
     )
+    parser.add_argument("--num_samples", type=int, default=5, help="Number of samples.")
     parser.add_argument(
-        "--num_samples",
-        type=int,
-        default=5,
-        help="Number of samples.")
+        "--max_new_tokens", type=int, default=200, help="Maximum number of new tokens."
+    )
+    parser.add_argument("--top_k", type=int, default=200, help="Top-k for sampling.")
     parser.add_argument(
-        "--max_new_tokens",
-        type=int,
-        default=200,
-        help="Maximum number of new tokens.")
-    parser.add_argument(
-        "--top_k",
-        type=int,
-        default=200,
-        help="Top-k for sampling.")
-    parser.add_argument(
-        "--temperature",
-        type=float,
-        default=0.8,
-        help="Temperature for sampling.")
+        "--temperature", type=float, default=0.8, help="Temperature for sampling."
+    )
     parser.add_argument(
         "--checkpoint_path",
         type=Path,
@@ -346,11 +322,7 @@ if __name__ == "__main__":
         action="store_true",
         help="Whether to compile the prefill (improves prefill perf, but higher compile times)",
     )
-    parser.add_argument(
-        "--profile",
-        type=Path,
-        default=None,
-        help="Profile path.")
+    parser.add_argument("--profile", type=Path, default=None, help="Profile path.")
     parser.add_argument(
         "--device", type=str, default=default_device, help="Device to use"
     )

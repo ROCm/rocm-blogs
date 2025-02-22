@@ -9,9 +9,7 @@ from typing import Optional
 from requests.exceptions import HTTPError
 
 
-def hf_download(
-        repo_id: Optional[str] = None,
-        hf_token: Optional[str] = None) -> None:
+def hf_download(repo_id: Optional[str] = None, hf_token: Optional[str] = None) -> None:
     from huggingface_hub import snapshot_download
 
     os.makedirs(f"checkpoints/{repo_id}", exist_ok=True)
@@ -34,8 +32,7 @@ def hf_download(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Download data from HuggingFace Hub.")
+    parser = argparse.ArgumentParser(description="Download data from HuggingFace Hub.")
     parser.add_argument(
         "--repo_id",
         type=str,

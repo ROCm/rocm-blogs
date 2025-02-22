@@ -32,8 +32,7 @@ class SavePeftModelCallback(TrainerCallback):
 
         kwargs["model"].save_pretrained(checkpoint_folder)
 
-        pytorch_model_path = os.path.join(
-            checkpoint_folder, "pytorch_model.bin")
+        pytorch_model_path = os.path.join(checkpoint_folder, "pytorch_model.bin")
         torch.save({}, pytorch_model_path)
         return control
 
@@ -51,9 +50,7 @@ class LoadBestPeftModelCallback(TrainerCallback):
                 state.best_model_checkpoint} (score: {
                 state.best_metric})."
         )
-        best_model_path = os.path.join(
-            state.best_model_checkpoint,
-            "adapter_model.bin")
+        best_model_path = os.path.join(state.best_model_checkpoint, "adapter_model.bin")
         adapters_weights = torch.load(best_model_path)
         model = kwargs["model"]
         set_peft_model_state_dict(model, adapters_weights)
@@ -62,10 +59,7 @@ class LoadBestPeftModelCallback(TrainerCallback):
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--model_path",
-        type=str,
-        default="bigcode/large-model")
+    parser.add_argument("--model_path", type=str, default="bigcode/large-model")
     parser.add_argument(
         "--dataset_name", type=str, default="HuggingFaceH4/CodeAlpaca_20K"
     )
@@ -120,10 +114,8 @@ def chars_token_ratio(
     Estimate the average number of characters per token in the dataset.
     """
     total_characters, total_tokens = 0, 0
-    for _, example in tqdm(
-            zip(range(nb_examples), iter(dataset)), total=nb_examples):
-        text = prepare_sample_text(
-            example, input_column_name, output_column_name)
+    for _, example in tqdm(zip(range(nb_examples), iter(dataset)), total=nb_examples):
+        text = prepare_sample_text(example, input_column_name, output_column_name)
         total_characters += len(text)
         if tokenizer.is_fast:
             total_tokens += len(tokenizer(text).tokens())
@@ -147,7 +139,8 @@ def print_trainable_parameters(model):
         f"trainable params: {trainable_params} || all params: {all_param} || trainable%: {
             100 *
             trainable_params /
-            all_param}")
+            all_param}"
+    )
 
 
 def prepare_sample_text(
@@ -220,13 +213,12 @@ class ConstantLengthDataset(IterableDataset):
                     else:
                         more_examples = False
                         break
-            tokenized_inputs = self.tokenizer(
-                buffer, truncation=False)["input_ids"]
+            tokenized_inputs = self.tokenizer(buffer, truncation=False)["input_ids"]
             all_token_ids = []
             for tokenized_input in tokenized_inputs:
                 all_token_ids.extend(tokenized_input + [self.concat_token_id])
             for i in range(0, len(all_token_ids), self.seq_length):
-                input_ids = all_token_ids[i: i + self.seq_length]
+                input_ids = all_token_ids[i : i + self.seq_length]
                 if len(input_ids) == self.seq_length:
                     self.current_size += 1
                     yield {
@@ -248,11 +240,10 @@ def create_datasets(tokenizer, args):
         print("Loading the dataset in streaming mode")
         valid_data = dataset.take(args.size_valid_set)
         train_data = dataset.skip(args.size_valid_set)
-        train_data = train_data.shuffle(
-            buffer_size=args.shuffle_buffer, seed=args.seed)
+        train_data = train_data.shuffle(buffer_size=args.shuffle_buffer, seed=args.seed)
     else:
         valid_data = dataset[: args.size_valid_set]
-        train_data = dataset[args.size_valid_set:]
+        train_data = dataset[args.size_valid_set :]
         print(
             f"Size of the train set: {
                 len(train_data)}. Size of the validation set: {

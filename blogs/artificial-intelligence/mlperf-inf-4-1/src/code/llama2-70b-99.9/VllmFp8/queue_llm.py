@@ -157,8 +157,7 @@ class QueueLLM:
         self.sampling_params = sampling_params
         self.finish = False
 
-    def get_tokenizer(
-            self) -> Union[PreTrainedTokenizer, PreTrainedTokenizerFast]:
+    def get_tokenizer(self) -> Union[PreTrainedTokenizer, PreTrainedTokenizerFast]:
         return self.llm_engine.tokenizer.tokenizer
 
     def start(self, use_tqdm: bool = True):
@@ -217,17 +216,14 @@ class QueueLLM:
         if prompts is not None:
             num_requests = len(prompts)
         if prompt_token_ids is not None:
-            if num_requests is not None and num_requests != len(
-                    prompt_token_ids):
+            if num_requests is not None and num_requests != len(prompt_token_ids):
                 raise ValueError(
-                    "The lengths of prompts and prompt_token_ids "
-                    "must be the same.")
+                    "The lengths of prompts and prompt_token_ids " "must be the same."
+                )
 
             num_requests = len(prompt_token_ids)
         if num_requests is None:
-            raise ValueError(
-                "Either prompts or prompt_token_ids must be "
-                "provided.")
+            raise ValueError("Either prompts or prompt_token_ids must be " "provided.")
 
         inputs: List[PromptInputs] = []
         for i in range(num_requests):
@@ -269,9 +265,7 @@ class QueueLLM:
         num_requests = len(inputs)
 
         if isinstance(params, list) and len(params) != num_requests:
-            raise ValueError(
-                "The lengths of prompts and params "
-                "must be the same.")
+            raise ValueError("The lengths of prompts and params " "must be the same.")
 
         # Add requests to the engine.
         for i, request_inputs in enumerate(inputs):
@@ -287,8 +281,7 @@ class QueueLLM:
         params: Union[SamplingParams, PoolingParams],
         request_id: str = None,
     ) -> None:
-        self.llm_engine.add_request(
-            request_id, inputs, params, lora_request=None)
+        self.llm_engine.add_request(request_id, inputs, params, lora_request=None)
 
     def _run_engine(self, *, use_tqdm: bool):
         # Initialize tqdm.
@@ -319,7 +312,7 @@ class QueueLLM:
                         (
                             output.request_id,
                             output.outputs[0].token_ids[
-                                request_stats[output.request_id]: output_len
+                                request_stats[output.request_id] : output_len
                             ],
                         )
                     )
@@ -330,8 +323,9 @@ class QueueLLM:
                         if use_tqdm:
                             if isinstance(output, RequestOutput):
                                 # Calculate tokens only for RequestOutput
-                                total_toks += sum(len(stp.token_ids)
-                                                  for stp in output.outputs)
+                                total_toks += sum(
+                                    len(stp.token_ids) for stp in output.outputs
+                                )
                                 spd = total_toks / pbar.format_dict["elapsed"]
                                 pbar.postfix = f"Generation Speed: {
                                     spd:.2f} toks/s"

@@ -41,30 +41,15 @@ class CausalSelfAttention(nn.Module):
         q, k, v = jnp.split(
             nn.Dense(self.config.n_embd * 3, name="c_attn")(x), 3, axis=-1
         )
-        k = k.reshape(
-            B,
-            T,
-            self.config.n_head,
-            C //
-            self.config.n_head).swapaxes(
-            1,
-            2)  # (B, nh, T, hs)
-        q = q.reshape(
-            B,
-            T,
-            self.config.n_head,
-            C //
-            self.config.n_head).swapaxes(
-            1,
-            2)  # (B, nh, T, hs)
-        v = v.reshape(
-            B,
-            T,
-            self.config.n_head,
-            C //
-            self.config.n_head).swapaxes(
-            1,
-            2)  # (B, nh, T, hs)
+        k = k.reshape(B, T, self.config.n_head, C // self.config.n_head).swapaxes(
+            1, 2
+        )  # (B, nh, T, hs)
+        q = q.reshape(B, T, self.config.n_head, C // self.config.n_head).swapaxes(
+            1, 2
+        )  # (B, nh, T, hs)
+        v = v.reshape(B, T, self.config.n_head, C // self.config.n_head).swapaxes(
+            1, 2
+        )  # (B, nh, T, hs)
         att = (
             jnp.einsum("bhts,bhqs->bhtq", q, k, optimize=True)
             if self.config.use_einsum
@@ -101,11 +86,7 @@ class MLP(nn.Module):
         x = nn.Dense(4 * self.config.n_embd, use_bias=self.config.bias)(x)
         x = nn.gelu(x)
         x = nn.Dense(self.config.n_embd, use_bias=self.config.bias)(x)
-        x = nn.Dropout(
-            self.config.dropout,
-            deterministic=not train)(
-            x,
-            rng=rng)
+        x = nn.Dropout(self.config.dropout, deterministic=not train)(x, rng=rng)
         return x
 
 
@@ -247,10 +228,12 @@ class GPT(nn.Module):
         params["params"]["ln_f"] = model_hf.params["transformer"]["ln_f"]
 
         for i in jnp.arange(config.n_layer):
-            params["params"]["h_" +
-                             str(i)]["ln_1"] = model_hf.params["transformer"]["h"][str(i)]["ln_1"]
-            params["params"]["h_" +
-                             str(i)]["ln_2"] = model_hf.params["transformer"]["h"][str(i)]["ln_2"]
+            params["params"]["h_" + str(i)]["ln_1"] = model_hf.params["transformer"][
+                "h"
+            ][str(i)]["ln_1"]
+            params["params"]["h_" + str(i)]["ln_2"] = model_hf.params["transformer"][
+                "h"
+            ][str(i)]["ln_2"]
             params["params"]["h_" + str(i)]["mlp"]["Dense_0"]["bias"] = model_hf.params[
                 "transformer"
             ]["h"][str(i)]["mlp"]["c_fc"]["bias"]
@@ -287,9 +270,7 @@ class GPT(nn.Module):
         # Reference:
         # https://stats.stackexchange.com/questions/576463/why-not-perform-weight-decay-on-layernorm-embedding
         def label_fn(path, value):
-            return "no_decay" if (
-                value.ndim < 2) or (
-                "embedding" in path) else "decay"
+            return "no_decay" if (value.ndim < 2) or ("embedding" in path) else "decay"
 
         # Create optimization groups
         decay_opt = optax.adamw(

@@ -122,8 +122,11 @@ class SyncServerSUT(SUT):
                     daemon=True,
                 )
             )
-            self.output_collector_threads.append(threading.Thread(
-                target=self.send_outputs, args=([qdata_out, False]), daemon=True))
+            self.output_collector_threads.append(
+                threading.Thread(
+                    target=self.send_outputs, args=([qdata_out, False]), daemon=True
+                )
+            )
             self.output_collector_threads[-2].start()
             self.output_collector_threads[-1].start()
 
@@ -160,12 +163,11 @@ class SyncServerSUT(SUT):
             ):  # max batch or time limit exceed
                 # log.info(f"Formed batch of {len(batched_samples[:self.gpu_batch_size])} samples")
                 self.send_samples(batched_samples[: self.gpu_batch_size])
-                batched_samples = batched_samples[self.gpu_batch_size:]
+                batched_samples = batched_samples[self.gpu_batch_size :]
                 timeout_stamp = time.time()
 
             try:
-                samples = self.batcher_queue.get(
-                    timeout=self.batcher_threshold)
+                samples = self.batcher_queue.get(timeout=self.batcher_threshold)
             except queue.Empty:
                 continue
 
@@ -249,15 +251,14 @@ class SyncServerSUT(SUT):
         finished = token_ids is None
         if finished:
             response_array = array.array(
-                "B",
-                np.array(
-                    self.response_buffer[sample_id],
-                    np.int32).tobytes())
+                "B", np.array(self.response_buffer[sample_id], np.int32).tobytes()
+            )
             bi = response_array.buffer_info()
             response = [
                 lg.QuerySampleResponse(
-                    sample_id, bi[0], bi[1], len(
-                        self.response_buffer[sample_id]))]
+                    sample_id, bi[0], bi[1], len(self.response_buffer[sample_id])
+                )
+            ]
             lg.QuerySamplesComplete(response)
             del self.response_buffer[sample_id]
             self.n_finished += 1
@@ -269,16 +270,9 @@ class SyncServerSUT(SUT):
         sample_id = int(response[0])
         token_ids = response[1]
         self.response_buffer[sample_id] = token_ids
-        response_array = array.array(
-            "B", np.array(
-                token_ids, np.int32).tobytes())
+        response_array = array.array("B", np.array(token_ids, np.int32).tobytes())
         bi = response_array.buffer_info()
-        response = [
-            lg.QuerySampleResponse(
-                sample_id,
-                bi[0],
-                bi[1],
-                len(token_ids))]
+        response = [lg.QuerySampleResponse(sample_id, bi[0], bi[1], len(token_ids))]
         lg.FirstTokenComplete(response)
         self.n_finished_first += 1
 

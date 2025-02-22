@@ -11,10 +11,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 parser = argparse.ArgumentParser(description="Generation benchmarking")
-parser.add_argument(
-    "--model-name",
-    type=str,
-    default="state-spaces/mamba-130m")
+parser.add_argument("--model-name", type=str, default="state-spaces/mamba-130m")
 parser.add_argument("--prompt", type=str, default=None)
 parser.add_argument("--promptlen", type=int, default=100)
 parser.add_argument("--genlen", type=int, default=100)
@@ -115,6 +112,5 @@ memory_used = torch.cuda.max_memory_allocated() / (1024.0 * 1024.0 * 1024.0)
 print(
     f"Prompt length: {len(input_ids[0])}, generation length: {len(out.sequences[0]) - len(input_ids[0])}"
 )
-print(
-    f"prompt processing + decoding time: {(time.time() - start) / repeats:.2f}s")
+print(f"prompt processing + decoding time: {(time.time() - start) / repeats:.2f}s")
 print(f"memory used: {memory_used:.0f}GB")

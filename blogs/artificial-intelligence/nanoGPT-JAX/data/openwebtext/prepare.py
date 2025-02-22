@@ -27,8 +27,7 @@ if __name__ == "__main__":
     split_dataset = dataset["train"].train_test_split(
         test_size=0.0005, seed=2357, shuffle=True
     )
-    split_dataset["val"] = split_dataset.pop(
-        "test")  # rename the test split to val
+    split_dataset["val"] = split_dataset.pop("test")  # rename the test split to val
 
     # this results in:
     # >>> split_dataset
@@ -75,16 +74,14 @@ if __name__ == "__main__":
         total_batches = 1024
 
         idx = 0
-        for batch_idx in tqdm(
-                range(total_batches),
-                desc=f"writing {filename}"):
+        for batch_idx in tqdm(range(total_batches), desc=f"writing {filename}"):
             # Batch together samples for faster write
             batch = dset.shard(
                 num_shards=total_batches, index=batch_idx, contiguous=True
             ).with_format("numpy")
             arr_batch = np.concatenate(batch["ids"])
             # Write into mmap
-            arr[idx: idx + len(arr_batch)] = arr_batch
+            arr[idx : idx + len(arr_batch)] = arr_batch
             idx += len(arr_batch)
         arr.flush()
 

@@ -90,8 +90,7 @@ def dequantize_activation_w_per_channel_a_per_token(q_act, w_scales, a_scales):
 
 
 @torch.no_grad()
-def dequantize_activation_w_per_channel_a_per_tensor(
-        q_act, w_scales, a_scales):
+def dequantize_activation_w_per_channel_a_per_tensor(q_act, w_scales, a_scales):
     # q_act: [..., dim]
     # w_scales: [dim]
     # a_scales: [1]

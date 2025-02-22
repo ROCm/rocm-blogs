@@ -20,8 +20,7 @@ class NerfDataset(torch.utils.data.Dataset):
 
     def get_rays(self, pose_c2w, height=100.0, width=100.0, focal_length=138):
         # Apply pinhole camera model to gather directions at each pixel
-        i, j = torch.meshgrid(
-            torch.arange(width), torch.arange(height), indexing="xy")
+        i, j = torch.meshgrid(torch.arange(width), torch.arange(height), indexing="xy")
         directions = torch.stack(
             [
                 (i - width * 0.5) / focal_length,
@@ -73,8 +72,7 @@ def encode_dirs(dirs, n_samples=64, L=4):
 
 def stratified_sampling(rays_o, rays_d, n_samples=64, perturb=0.2):
     # rays_o, rays_d = self.get_rays(pose)
-    z_vals = torch.linspace(2, 6 - perturb, n_samples) + \
-        torch.rand(n_samples) * perturb
+    z_vals = torch.linspace(2, 6 - perturb, n_samples) + torch.rand(n_samples) * perturb
     z_vals = z_vals.expand(list(rays_o.shape[:-1]) + [n_samples]).to(
         "cuda"
     )  # (W,H,n_samples)
@@ -87,10 +85,8 @@ def stratified_sampling(rays_o, rays_d, n_samples=64, perturb=0.2):
 
 
 def sample_pdf(
-        bins: torch.Tensor,
-        weights: torch.Tensor,
-        n_samples: int,
-        perturb: bool = False) -> torch.Tensor:
+    bins: torch.Tensor, weights: torch.Tensor, n_samples: int, perturb: bool = False
+) -> torch.Tensor:
     r"""
     Apply inverse transform sampling to a weighted set of points.
     """
@@ -158,8 +154,7 @@ def hierarchical_sampling(
     )
 
     # Rescale the points using rays_o and rays_d
-    z_vals_combined, _ = torch.sort(
-        torch.cat([z_vals, new_z_samples], dim=-1), dim=-1)
+    z_vals_combined, _ = torch.sort(torch.cat([z_vals, new_z_samples], dim=-1), dim=-1)
     pts = (
         rays_o[..., None, :] + rays_d[..., None, :] * z_vals_combined[..., :, None]
     )  # [N_rays, N_samples + n_samples_hierarchical, 3]

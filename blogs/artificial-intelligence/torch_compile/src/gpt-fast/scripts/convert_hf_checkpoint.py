@@ -54,9 +54,7 @@ def convert_hf_checkpoint(
         "model.norm.weight": "norm.weight",
         "lm_head.weight": "output.weight",
     }
-    bin_files = {
-        checkpoint_dir /
-        bin for bin in bin_index["weight_map"].values()}
+    bin_files = {checkpoint_dir / bin for bin in bin_index["weight_map"].values()}
 
     def permute(w, n_head):
         dim = config.dim
@@ -104,8 +102,7 @@ def convert_hf_checkpoint(
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(
-        description="Convert HuggingFace checkpoint.")
+    parser = argparse.ArgumentParser(description="Convert HuggingFace checkpoint.")
     parser.add_argument(
         "--checkpoint_dir",
         type=Path,

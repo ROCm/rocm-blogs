@@ -26,9 +26,7 @@ def run_vllm(llm, prompt_token_ids, sampling_params):
     return llm.generate(
         prompt_token_ids=prompt_token_ids,
         sampling_params=sampling_params,
-        use_tqdm=False if os.getenv(
-            "HARNESS_DISABLE_VLLM_LOGS",
-            "0") == "1" else True,
+        use_tqdm=False if os.getenv("HARNESS_DISABLE_VLLM_LOGS", "0") == "1" else True,
     )
 
 
@@ -65,8 +63,7 @@ def llm_tp1(
 
             start, end, prompt_token_ids = item
 
-            pred_output_tokens = run_vllm(
-                llm, prompt_token_ids, sampling_params)
+            pred_output_tokens = run_vllm(llm, prompt_token_ids, sampling_params)
             log.info(f"VLLM finished")
 
             processed_output = collect_tokens(pred_output_tokens)

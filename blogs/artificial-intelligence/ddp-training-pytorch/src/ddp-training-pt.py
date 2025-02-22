@@ -56,10 +56,8 @@ def main():
         formatter_class=argparse.ArgumentDefaultsHelpFormatter
     )
     parser.add_argument(
-        "--num_epochs",
-        type=int,
-        help="Number of training epochs.",
-        default=100)
+        "--num_epochs", type=int, help="Number of training epochs.", default=100
+    )
     parser.add_argument(
         "--batch_size", type=int, help="Training batch size.", default=1024
     )
@@ -80,18 +78,10 @@ def main():
     num_epochs = argv.num_epochs
     batch_size = argv.batch_size
     if argv.batch_size_scaled:
-        print(
-            "argv.batch_size_scaled",
-            argv.batch_size_scaled,
-            num_epochs,
-            batch_size)
+        print("argv.batch_size_scaled", argv.batch_size_scaled, num_epochs, batch_size)
         batch_size //= dist.get_world_size()
     else:
-        print(
-            "argv.batch_size_scaled",
-            argv.batch_size_scaled,
-            num_epochs,
-            batch_size)
+        print("argv.batch_size_scaled", argv.batch_size_scaled, num_epochs, batch_size)
     print(batch_size)
     learning_rate = 0.002
     model_dir = "saved_ddp_models"
@@ -144,16 +134,11 @@ def main():
 
     # we will only test on rank 0
     test_loader = DataLoader(
-        dataset=test_dataset,
-        batch_size=batch_size,
-        shuffle=False,
-        num_workers=16)
+        dataset=test_dataset, batch_size=batch_size, shuffle=False, num_workers=16
+    )
 
     criterion = torch.nn.CrossEntropyLoss()
-    optimizer = optim.SGD(
-        ddp_model.parameters(),
-        lr=learning_rate,
-        momentum=0.9)
+    optimizer = optim.SGD(ddp_model.parameters(), lr=learning_rate, momentum=0.9)
 
     log_epoch = 0
     # Training Loop
@@ -177,7 +162,8 @@ def main():
                     (
                         epoch_end_time - epoch_start_time):.4f}s || loss_train - {
                     train_loss:.4f} || accuracy_train - {
-                    train_acc:.4f}")
+                    train_acc:.4f}"
+            )
             if epoch % log_every == 0:
                 test_accuracy = evaluate_on_test_data(
                     model=ddp_model, device=local_rank, test_loader=test_loader
