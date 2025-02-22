@@ -4,7 +4,7 @@ blog_title: 'Unlock DeepSeek-R1 Inference Performance on AMD Instinct™ MI300X 
 date: 21 Feb 2025
 author: Andy Luo
 thumbnail: 'whale.jpg'
-tags: LLM, AI/ML, Fine-Tuning
+tags: LLM, PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English
 target_audience: AI Developers, AI Solutions Architects
@@ -13,7 +13,7 @@ myst:
     html_meta:
         "author": "Andy luo"
         "description lang=en": "This blog introduces the key performance optimizations made to enable DeepSeek-R1 Inference"
-        "keywords": "AI MI300X DeepSeek DeepSeek-R1 Inference SGLang"
+        "keywords": "AI MI300X DeepSeek DeepSeek-R1"
         "property=og:locale": "en_US"
         "amd_category": 'Developer Resources'
         "amd_asset_type": 'Blogs'
@@ -44,7 +44,7 @@ In this blog, we explore how DeepSeek-R1 achieves competitive performance on AMD
 
 ## DeepSeek Model Deployment Challenges
 
-While the need for large-scale deployment is stronger than ever, it also poses significant technical challenges to achieve optimal inference performance. Deepseek-R1 is a large model with over 640 GB of parameters. Even when trained in FP8 precision, it is infeasible to fit in a single node of 8 NVIDIA H100 GPU. Additionally, the Multi-Head Latent Attention (MLA) and Mixture of Experts (MoE) architecture demands highly optimized kernels to ensure efficient scaling and leveraging of custom optimizations. Lastly, adapting FP8 GEMM kernels to support block-wise quantization is crucial for maximizing throughput and performance, making tuning these kernels essential for effective execution.  
+While the need for large-scale deployment is stronger than ever, it also poses significant technical challenges to achieve optimal inference performance. Deepseek-R1 is a large model with over 640 GB of parameters. Even when trained in FP8 precision, it is infeasible to fit in a single node of an NVIDIA H100 GPU. Additionally, the H100 Multi-Head Latent Attention (MLA) and Mixture of Experts (MoE) architecture demands highly optimized kernels to ensure efficient scaling and leveraging of custom optimizations. Lastly, adapting FP8 GEMM kernels to support block-wise quantization is crucial for maximizing throughput and performance, making tuning these kernels essential for effective execution.  
 
 ## Leveraging SGLang on MI300X
 
@@ -65,7 +65,7 @@ Below are a few key takeaways from SGLang serving benchmark on Instinct MI300X:
 Figure 1: Total Throughput (tks) [[1](#endnotes)]
 ```
 
-- For online inference use cases like chat applications requiring low latency, the SGLang serving benchmark on a single Instinct MI300X node (8 GPUs) demonstrates strong performance, maintaining time per output token (TPOT) below 50ms even with concurrency up to 32 requests. For offline workloads, larger concurrency settings can be used to maximize throughput.
+- For online inference use cases like chat applications requiring low latency, the SGLang serving benchmark on a single Instinct MI300X node (8 GPUs) demonstrates strong performance, maintaining time per output token (TPOT) below 50ms even with concurrency up to 16 requests. For offline workloads, larger concurrency settings can be used to maximize throughput.
 
 - From Figure 2, we can see that for max concurrency ranging from 1 to 32, the performance is primarily memory-bound, whereas for max concurrency between 32 and 64, it shifts to being compute-bound.
 
