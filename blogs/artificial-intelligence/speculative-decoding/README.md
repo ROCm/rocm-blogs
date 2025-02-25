@@ -54,7 +54,7 @@ The example of Speculative Sampling outlined in this blog used the following har
 
 * ROCm 6.1.2: Refer to [ROCm installation instructions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/index.html).
 
-* PyTorch 2.1.2: We will use the official ROCm Docker image [rocm6.1.2_ubuntu20.04_py3.9_pytorch_release-2.1.2](https://hub.docker.com/layers/rocm/pytorch/rocm6.1.2_ubuntu20.04_py3.9_pytorch_release-2.1.2/images/sha256-e3c1c3cde0886689b139daad7a62ad24af3f292855f683d7b28806ae9f1d2a7e?context=explore). You can run the following docker command to start a ROCm based pytorch session. Replace ```/YOUR/FOLDER``` with your home location to access local files.
+* PyTorch 2.1.2: We will use the official ROCm Docker image [rocm/vllm-dev:nightly_main_20250204](https://hub.docker.com/layers/rocm/vllm-dev/nightly_main_20250204/images/sha256-995106cf7bd05cf65249e2966ebae101743d711278dce13fc3abb6cdb5da6d11). You can run the following docker command to start a ROCm based pytorch session. Replace ```/YOUR/FOLDER``` with your home location to access local files.
 
   ```bash
   docker run -it --rm --device=/dev/kfd --device=/dev/dri --group-add=video --shm-size 8G -v /YOUR/FODLER:/root rocm/pytorch:rocm6.1.2_ubuntu20.04_py3.9_pytorch_release-2.1.2
@@ -108,7 +108,7 @@ print(f'Time taken is {end-start}s')
 ```
 
 ```bash
-Time taken is 3.85893177986145s
+Time taken is 2.8717610836029053s
 ```
 
 Now benchmark this blog's implementation of Speculative Sampling using the same pair of models. You can uncomment the debug statements in the code to observe the tokens accepted at every iteration.
@@ -263,16 +263,20 @@ K: 47
 torch.Size([49])
 After verification: Difference between a gasoline and hybrid vehicles is that the gasoline vehicle has a fuel tank that is filled with gasoline. The hybrid vehicle has a fuel tank that is filled with a fuel that is a mixture of gasoline and electricity. The electricity is generated battery
 
-Time taken is 2.8490023612976074s
+Time taken is 2.1591832637786865s
 ```
 
-Using a single AMD GPU, Speculative Sampling produced a 1.35x speedup over autoregression for generating 50 tokens. You can choose to replace these models with other existing models such as Google's Gemma(9B & 27B), Meta's Llama(7B & 70B), Mistral's models to analyze the speed up for text generation.
+Using a single AMD GPU, Speculative Sampling produced a 1.25x speedup over autoregression for generating 50 tokens. You can choose to replace these models with other existing models such as Google's Gemma(9B & 27B), Meta's Llama(7B & 70B), Mistral's models to analyze the speed up for text generation.
 
 The implementation of Speculative Sampling in this blog is for demonstration purposes only and has not been optimized for performance analysis. Outputs from Autoregressive Sampling and Speculative Sampling on the same prompt may not be identical, as seen in the above two experiments. This is attributed to different processing of pseudo-random seeds in both strategies, resulting in different numerics. However, the algorithm assures that decoded tokens come from the same distribution.
 
 ## Summary
 
 In this blog post we provided a brief introduction to an assisted text generation methodology called Speculative Sampling. We explained the principles underlying Speculative Sampling, its use of two models from the same family of models to speed up generation inference by approximately 2x for given hardware with guaranteed mathematical accuracy and with no change in training architecture or implementation. We then demonstrated how you can leverage the power of AMD hardware and ROCm to realize Speculative Sampling over a range of models.
+
+```{update} Feb 24, 2025
+Updated the blog to allow usage with ROCm 6.3.
+```
 
 ## Disclaimers
 
