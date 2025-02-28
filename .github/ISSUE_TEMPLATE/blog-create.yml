@@ -3,6 +3,16 @@ description: "Submit this form to automatically create a new blog post"
 title: "[New Post] "
 labels: ["Blog Creation"]
 body:
+  - type: markdown
+    id: markdown_with_multiline_content
+    attributes:
+      value: |
+        ## Thanks for starting a new blog!
+        When you complete the fields below, please ensure that your blog, and the text you provide in the fields, strongly aligns with ROCm Blogs’ mission: quickly disseminating actionable, breaking technical news that reflects the capabilities and strengths of AMD's technology. Use an informal, call-to-action, active voice that speaks the user’s language, and provide accessible, actionable, cutting-edge information on our technology.
+
+        The title of the issue will be the title of the new blog. Choose a blog title that is concise, accessible, and informal as possible.
+    validations:
+      required: false
   - type: input
     id: blog_authors
     attributes:
@@ -57,7 +67,7 @@ body:
     attributes:
       label: "Category"
       description: |
-        Enter in the category of the blog, please look at the approved category list.
+        Enter in the category of the blog, please choose a single option from the approved category list.
         - **Applications & Models** - Blogs related to Applications and/or models.
         - **Ecosystems and Partners** - Blogs related to specific partner or greater ecosystem collaborations.
         - **Software Tools & Optimizations** - Blogs related to Software tools and/or optimizations.
@@ -85,7 +95,7 @@ body:
     id: blog_description
     attributes:
       label: "Description"
-      description: "Enter in the description that best describes your blog (Maximum 150 characters). Used as HTML meta data and sumary on the main page."
+      description: "Enter in the description that best describes your blog (Maximum 150 characters). Used as HTML meta data and summary on the ROCm Blogs portal main page."
       placeholder: |
         Keep description below 150 character cut off
     validations:
@@ -119,7 +129,7 @@ body:
     id: blog_amd_technical_blog_type
     attributes:
       label: "AMD Technical Blog Type"
-      description: "Select the technical blog type for this blog."
+      description: "Select the technical blog type for this blog, please choose a single option from the list."
       options:
         - Applications and models
         - Ecosystems and Partners

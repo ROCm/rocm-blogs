@@ -116,6 +116,24 @@ call-to-action approach.
 
 ## Body
 
+This is where you unleash your creativity. Please follow these general guidelines:
+
+• use actionable, hands-on, conversational approach, guiding your reader through the blog and its content, maintaining engagement. Use active voice, call-to-action (CTA) text (e.g. “Interested in learning more?”, “Run this function by using”, “Try implementing this yourself”)
+
+• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections. 
+
+• Make sure you provide the required background and prerequisites for your blog. Outline any foundational knowledge and tools the reader will likely require.
+
+• When describing a process use step-by-step guide, employ numbered steps or subheadings to guide the reader through the process.
+
+• Integrate examples and use cases: provide real-world applications and scenarios. Reflect on common pitfalls and possible troubleshooting approaches, addressing potential mistakes and solutions.
+
+Leeway into figures, equations, etc.
+
+## Sample markdown
+
+This section covers some markdown techniques commonly used in a blogs.
+
 This is a table.
 
 |      | SPX (MI300X) | CPX (MI300X) |
