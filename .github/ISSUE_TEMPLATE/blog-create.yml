@@ -1,0 +1,218 @@
+name: "Create a new blog post"
+description: "Submit this form to automatically create a new blog post"
+title: "[New Post] "
+labels: ["Blog Creation"]
+body:
+  - type: input
+    id: blog_authors
+    attributes:
+      label: "Author"
+      description: "Please list any author(s) of this blog"
+      placeholder: |
+        Separate Authors with commas, ex. John Smith, John Doe, Danny Guan
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_tags
+    attributes:
+      label: "Tags"
+      multiple: true
+      description: |
+        "Select tag(s) from the dropdown menu, you may select multiple tags."
+      options:
+        - Reinforcement Learning
+        - Partner Applications
+        - AI/ML
+        - Scientific Computing
+        - Fine-Tuning
+        - System-Tuning
+        - C++
+        - GenAI
+        - Linear Algebra
+        - Compiler
+        - Hardware
+        - Computer Vision
+        - HPC
+        - Time Series
+        - Installation
+        - JAX
+        - LLM
+        - Memory
+        - Multimodal
+        - OpenMP
+        - Optimization
+        - Performance
+        - Profiling
+        - PyTorch
+        - Serving
+        - Speech
+        - Diffusion Model
+        - TensorFlow
+        - Recommendation Systems
+        - Kubernetes
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_category
+    attributes:
+      label: "Category"
+      description: |
+        Enter in the category of the blog, please look at the approved category list.
+        - **Applications & Models** - Blogs related to Applications and/or models.
+        - **Ecosystems and Partners** - Blogs related to specific partner or greater ecosystem collaborations.
+        - **Software Tools & Optimizations** - Blogs related to Software tools and/or optimizations.
+      options:
+        - Applications & models
+        - Ecosystems and Partners
+        - Software tools & optimizations
+    validations:
+      required: true
+  - type: input
+    id: blog_target_audience
+    attributes:
+      label: "Audience"
+      description: "Describe the target audience(s) for the blog. Used for internal blog communication only."
+    validations:
+      required: true
+  - type: input
+    id: blog_key_value_proposition
+    attributes:
+      label: "Key Value Proposition"
+      description: "Describe the key value proposition(s) of the blog. Used for internal blog communication only."
+    validations:
+      required: true
+  - type: input
+    id: blog_description
+    attributes:
+      label: "Description"
+      description: "Enter in the description that best describes your blog (Maximum 150 characters). Used as HTML meta data and sumary on the main page."
+      placeholder: |
+        Keep description below 150 character cut off
+    validations:
+      required: true
+      maxLength: 150
+  - type: input
+    id: blog_keywords
+    attributes:
+      label: "Keywords"
+      description: "Enter in the keyword(s) of the blog separated by commas. Used for HTML meta data."
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_amd_product_type
+    attributes:
+      label: "AMD Product Type"
+      description: "Select the product type(s) for this blog. Multiple selections allowed."
+      multiple: true
+      options:
+        - Processors
+        - Accelerators
+        - Adaptive SoCs and FPGAs
+        - Development Tools
+        - Graphics
+        - Networking Infrastructure
+        - Software & Applications
+        - System on Modules (SOMs)
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_amd_technical_blog_type
+    attributes:
+      label: "AMD Technical Blog Type"
+      description: "Select the technical blog type for this blog."
+      options:
+        - Applications and models
+        - Ecosystems and Partners
+        - Tools, Features, and Optimizations
+        - Benchmarks and Testing
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_amd_developer_type
+    attributes:
+      label: "AMD Developer Type"
+      multiple: true
+      description: "Select the developer type(s) for this blog. Multiple selections allowed."
+      options:
+        - ML/AI Developer
+        - Application Developer
+        - Game Developer
+        - Software Developer
+        - HPC Developer
+        - Algorithm Developer
+        - Data & Research Scientists
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_amd_applications
+    attributes:
+      label: "AMD Applications"
+      description: "Select application(s) for this blog. Multiple selections allowed."
+      multiple: true
+      options:
+        - Cloud Computing
+        - Computer Vision
+        - Cybersecurity
+        - Data Analytics
+        - Embedded Computing
+        - Image / Video Generation
+        - High Performance Computing
+        - Large Language Model (LLM)
+        - Natural Language Processing (NLP)
+        - Recommendation System
+        - Reinforcement Learning
+        - Speech Recognition / Synthesis
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_amd_industries
+    attributes:
+      label: "AMD Industries"
+      description: "Select relevant industries. Multiple selections allowed."
+      multiple: true
+      options:
+        - Aerospace & Defense
+        - Architecture, Engineering, & Construction
+        - Automotive
+        - Broadcast & Pro AV
+        - Data Center
+        - Energy
+        - Emulation & Prototyping
+        - Financial Services
+        - Gaming
+        - Healthcare
+        - Home & Lifestyle
+        - Industries & Vision
+        - Manufactoring
+        - Media & Entertainment
+        - Product Design
+        - Public Sector
+        - Retail & E-Commerce
+        - Semiconductor
+        - Supercomputing & Research
+        - Telco & Networking
+        - Test & Management
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_amd_deployment
+    attributes:
+      label: "Deployment Targets"
+      description: "Select deployment target(s)"
+      multiple: true
+      options:
+        - Servers
+        - Embedded Platforms
+        - Laptops
+        - Workstations
+    validations:
+      required: true
+  - type: input
+    id: jira_ticket
+    attributes:
+      label: "Jira Ticket"
+      description: |
+        "Enter in the full link of the Jira ticket for this blog. Skip to file later but publication requires a ticket."
+        **Enter in N/A if not-applicable**
+      placeholder: |
+        Link to Jira Ticket for this blog. Enter in N/A if not-applicable. 

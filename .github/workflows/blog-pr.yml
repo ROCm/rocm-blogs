@@ -1,0 +1,179 @@
+name: Auto Create Blog Post PR
+on:
+  issues:
+    types: [opened, labeled]
+jobs:
+  create-blog-pr:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'Blog Creation')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Extract Inputs from Issue Body and Create Blog Post
+        id: extract
+        shell: bash
+        run: |
+          pip install numpy
+          
+          # Save the issue body into a variable
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          echo "Issue body:"
+          echo "$ISSUE_BODY"
+          
+          extract_field() {
+            local header="$1"
+            # Find the section and extract all content until the next ###
+            echo "$ISSUE_BODY" | awk -v header="### $header" '
+              BEGIN { found=0; content=""; }
+              $0 ~ header { found=1; next; }
+              found && $0 ~ /^###/ { found=0; }
+              found && !/^[0-9]+$/ { gsub(/^[0-9]+/, ""); content=content"\n"$0; }
+              END { gsub(/^\n+/, "", content); gsub(/\n+$/, "", content); print content; }
+            ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+          }
+          
+          # Using the raw issue title
+          BLOG_TITLE="${{ github.event.issue.title }}"
+
+          BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[New Post\][[:space:]]*//')
+          
+          BLOG_AUTHORS=$(extract_field "Author")
+          BLOG_TAGS=$(extract_field "Tags")
+          BLOG_CATEGORY=$(extract_field "Category")
+          BLOG_AUDIENCE=$(extract_field "Audience")
+          BLOG_KVP=$(extract_field "Key Value Proposition")
+          BLOG_KEYWORDS=$(extract_field "Keywords")
+          BLOG_DESCRIPTION=$(extract_field "Description")
+          BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "AMD Technical Blog Type")
+          BLOG_AMD_PRODUCT_TYPE=$(extract_field "AMD Product Type")
+          BLOG_AMD_DEVELOPER_TYPE=$(extract_field "AMD Developer Type")
+          BLOG_AMD_APPLICATIONS=$(extract_field "AMD Applications")
+          BLOG_AMD_INDUSTRIES=$(extract_field "AMD Industries")
+          BLOG_DEPLOYMENT_TARGETS=$(extract_field "Deployment Targets")
+          BLOG_JIRA=$(extract_field "Jira Ticket")
+          
+          echo "Blog Title: $BLOG_TITLE"
+          echo "Blog Author(s): $BLOG_AUTHORS"
+          echo "Blog Tags: $BLOG_TAGS"
+          echo "Blog Category: $BLOG_CATEGORY"
+          echo "Blog Audience: $BLOG_AUDIENCE"
+          echo "Blog Key Value Proposition: $BLOG_KVP"
+          echo "Blog Keywords: $BLOG_KEYWORDS"
+          echo "Blog Description: $BLOG_DESCRIPTION"
+          echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
+          echo "Blog AMD Product Type: $BLOG_AMD_PRODUCT_TYPE"
+          echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
+          echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
+          echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
+          echo "Deployment Targets: $BLOG_DEPLOYMENT_TARGETS"
+
+          CURRENT_DATE=$(date "+%b %d, %Y")
+          echo "Current date: $CURRENT_DATE"
+
+          python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
+          
+          echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
+          echo "current_date=$CURRENT_DATE" >> $GITHUB_OUTPUT
+          echo "jira_ticket=$BLOG_JIRA" >> $GITHUB_OUTPUT
+      
+      - name: Create Pull Request with Blog
+        id: cpr
+        uses: peter-evans/create-pull-request@v7.0.6
+        with:
+          commit-message: "${{ github.event.issue.title }}"
+          author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
+          title: "${{ github.event.issue.title }}"
+          labels: Blog Creation
+          body: |
+            ## 📝 Blog Post Pull Request
+            
+            Hello @${{ github.event.issue.user.login }}, 
+            
+            This is the pull request for your blog post based on [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}). The automated system has created the initial blog structure for you.
+            
+            ### 📋 Next Steps
+            
+            Please continue working on the blog via the pull request. You can:
+            
+            1. **Review the metadata** carefully for any mistakes or adjustments needed
+            2. **Edit the content** in the Markdown files to complete your blog post
+            3. **Request reviews** from team members when ready
+            4. **Address any feedback** before final publication
+            
+            ### ✅ Content Checklist:
+
+            - [ ] Content follows [ROCm Tech Blogs Style Guide](https://confluence.amd.com/display/DCGPUPM/ROCm+Tech+Blogs%3A+Mission%2C+Stakeholders%2C+Processes%2C+Style+and+Metadata)
+            - [ ] Post aligns with [Diataxis framework](https://diataxis.fr/) guidelines
+            - [ ] All images/diagrams are properly attributed and have alt text
+            - [ ] Code samples (if any) are tested and properly formatted
+            - [ ] Technical accuracy verified
+            - [ ] No confidential information included
+            - [ ] Reviewed recently published blog posts and existing Pull Requests to confirm there are no published or in-flight posts on this same topic
+
+            ### ✅ Signoffs and aprovals
+
+            Please complete the steps below to the best of your ability. This section **must be completed** before publishing.
+            
+            - [ ] **Technical reviewer approval**
+            - [ ] **Editorial team approval**
+            - [ ] **Thumbnail:** Thumbnail image for blog post included in PR
+            - [ ] **Post description:** Provide a 2-3 line summary that grabs the reader's attention:
+            
+            ### ✅ Blog author/team signoffs
+            
+            - [ ] **Legal self review:** AMD Employees only – confirm legal self review is complete. [Legal self review traffic lights completed](https://amdcloud.sharepoint.com/sites/amd-legal/Shared%20Documents/Forms/AllItems.aspx?sortField=Modified&isAscending=false&id=%2Fsites%2Famd%2Dlegal%2FShared%20Documents%2FDisclaimer%20and%20Notices%2Epdf&viewid=71efe44a%2D19a2%2D4b81%2D83df%2D05ab2f7ffa73&parent=%2Fsites%2Famd%2Dlegal%2FShared%20Document). Remove this line if not applicable.
+            - [ ] **Legal Review** If the blog contains any performance gains, do you have legal clearance?
+            - [ ] **License check:** Ensure that any licenses included with your content are correct
+            - [ ] **Post-review changes:** Confirm that changes from technical review and editorial feedback have been made
+            - [ ] All sections above are completed
+            - [ ] Content is in final draft state
+            - [ ] Images/assets are optimized and properly placed
+            - [ ] Linter checks are passing
+            
+            ---
+            
+            Generated By: [GitHub Issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }})  
+            Creation Date: ${{ steps.extract.outputs.current_date }}
+            Corresponding Jira Ticket: ${{ steps.extract.outputs.jira_ticket }}
+          branch: ${{ github.actor }}-${{ github.event.issue.number }}
+      
+      - name: Create comment on original issue
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
+            
+            A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
+            
+            ### 📋 Next Steps
+            
+            Please continue working on the blog via the pull request. You can:
+            
+            1. **Review the metadata** carefully for any mistakes or adjustments needed
+            2. **Edit the content** in the Markdown files to complete your blog post
+            3. **Request reviews** from team members when ready
+            4. **Address any feedback** before final publication
+
+            ### 🔍 Helpful Resources:
+            
+            - [GitHub Markdown Guide](https://guides.github.com/features/mastering-markdown/)
+            - [Getting Started with Markdown](https://www.markdownguide.org/getting-started/)
+            - [Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/)
+            - [Markdown Syntax Guide](https://www.markdownguide.org/basic-syntax/)
+            - [MyST Markdown Guide](https://mystmd.org/guide/quickstart-myst-markdown)
+            
+            ### 🔄 Workflow Information:
+            
+            - Review the Markdown file for any mistakes / review the auto-generated content
+            - You can continue to edit files directly in this PR, changes will automatically update in the PR preview
+            - When ready for review, get in contact with the proper reviewers and add the appropriate labels
+            - When the reviewers are done and the blog is ready to go, we will push your blog to live
+            
+            [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
+
+            Please close this issue when you are done.
+            
+            Thank you for your submission!
+          reactions: '+1'
