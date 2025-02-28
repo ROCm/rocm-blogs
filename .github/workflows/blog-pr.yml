@@ -172,8 +172,6 @@ jobs:
             - When the reviewers are done and the blog is ready to go, we will push your blog to live
             
             [View the Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
-
-            Please close this issue when you are done.
             
             Thank you for your submission!
           reactions: '+1'
