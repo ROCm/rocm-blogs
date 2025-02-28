@@ -115,6 +115,10 @@ blog_authors = {
         "Bob Robey",
         "http://rocm.blogs.amd.com/authors/bob-robey.html",
     ),
+    "Babak Poursartip": (
+        "Babak Poursartip",
+        "http://rocm.blogs.amd.com/authors/babak-poursartip.html",
+    ),
     "Ben Sander": (
         "Bob Sander",
         "http://rocm.blogs.amd.com/authors/bob-sander.html",
@@ -143,6 +147,10 @@ blog_authors = {
         "Emad Barsoum",
         "http://rocm.blogs.amd.com/authors/emad-barsoum.html",
     ),
+    "Evan Masters": (
+        "Evan Masters",
+        "http://rocm.blogs.amd.com/authors/emad-masters.html",
+    ),
     "Fabricio Flores": (
         "Fabricio Flores",
         "http://rocm.blogs.amd.com/authors/fabricio-flores.html",
@@ -162,6 +170,10 @@ blog_authors = {
     "Gina Sitaraman": (
         "Gina Sitaraman",
         "http://rocm.blogs.amd.com/authors/gina-sitaraman.html",
+    ),
+    "Henry Ho": (
+        "Henry Ho",
+        "http://rocm.blogs.amd.com/authors/henry-ho.html",
     ),
     "Justin Chang": (
         "Justin Chang",
