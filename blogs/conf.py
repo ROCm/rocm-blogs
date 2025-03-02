@@ -179,6 +179,10 @@ blog_authors = {
         "Justin Chang",
         "http://rocm.blogs.amd.com/authors/justin-chang.html",
     ),
+    "Jayacharan Kolla": (
+        "Jayacharan Kolla",
+        "http://rocm.blogs.amd.com/authors/jayacharan-kolla.html",
+    ),
     "Mahdieh Ghazimirsaeed": (
         "Mahdieh Ghazimirsaeed",
         "http://rocm.blogs.amd.com/authors/mahdieh-ghazimirsaeed.html",
