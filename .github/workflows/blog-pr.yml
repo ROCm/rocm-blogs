@@ -122,7 +122,7 @@ jobs:
             
             ### ✅ Blog author/team signoffs
             
-            - [ ] **Legal self review:** AMD Employees only – confirm legal self review is complete. [Legal self review traffic lights completed](https://amdcloud.sharepoint.com/sites/amd-legal/Shared%20Documents/Forms/AllItems.aspx?sortField=Modified&isAscending=false&id=%2Fsites%2Famd%2Dlegal%2FShared%20Documents%2FDisclaimer%20and%20Notices%2Epdf&viewid=71efe44a%2D19a2%2D4b81%2D83df%2D05ab2f7ffa73&parent=%2Fsites%2Famd%2Dlegal%2FShared%20Document). Remove this line if not applicable.
+            - [ ] **Legal self review:** AMD Employees only – confirm legal self review is complete. [Legal self review traffic lights completed](https://amdcloud.sharepoint.com/sites/amd-legal/SiteAssets/Forms/AllItems.aspx?id=%2Fsites%2Famd%2Dlegal%2FSiteAssets%2FSitePages%2FSoftware%2FLegal%2DRequirements%2Dfor%2DAMD%2DTechnical%2DMaterials%2D%5B2024%5D%2Epdf&parent=%2Fsites%2Famd%2Dlegal%2FSiteAssets%2FSitePages%2FSoftware). Remove this line if not applicable.
             - [ ] **Legal Review** If the blog contains any performance gains, do you have legal clearance?
             - [ ] **License check:** Ensure that any licenses included with your content are correct
             - [ ] **Post-review changes:** Confirm that changes from technical review and editorial feedback have been made
