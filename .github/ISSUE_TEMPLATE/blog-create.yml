@@ -8,9 +8,14 @@ body:
     attributes:
       value: |
         ## Thanks for starting a new blog!
-        When you complete the fields below, please ensure that your blog, and the text you provide in the fields, strongly aligns with ROCm Blogs’ mission: quickly disseminating actionable, breaking technical news that reflects the capabilities and strengths of AMD's technology. Use an informal, call-to-action, active voice that speaks the user’s language, and provide accessible, actionable, cutting-edge information on our technology.
+        When you complete the fields below, please ensure that your blog, and the text you provide in the fields, strongly aligns with ROCm Blogs' mission: quickly disseminating actionable, breaking technical news that reflects the capabilities and strengths of AMD's technology. Use an informal, call-to-action, active voice that speaks the user's language, and provide accessible, actionable, cutting-edge information on our technology.
 
         The title of the issue will be the title of the new blog. Choose a blog title that is concise, accessible, and informal as possible.
+
+        > **IMPORTANT NOTE:** All fields in this form are required to successfully create a blog post. Missing information will cause the automated system to reject your submission. Please complete all sections thoroughly and double check your responses.
+        
+        > **TIP:** If your blog post is rejected, simply edit the issue to add any missing information, and the system will automatically try again.
+
     validations:
       required: false
   - type: input
@@ -225,4 +230,4 @@ body:
         "Enter in the full link of the Jira ticket for this blog. Skip to file later but publication requires a ticket."
         **Enter in N/A if not-applicable**
       placeholder: |
-        Link to Jira Ticket for this blog. Enter in N/A if not-applicable. 
+        Link to Jira Ticket for this blog. Enter in N/A if not-applicable.
