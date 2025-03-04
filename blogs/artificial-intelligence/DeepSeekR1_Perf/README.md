@@ -100,7 +100,7 @@ Below you will find instructions for MI300X and H200. The following instructions
 3. Run serving benchmark:
 
     ```bash
-    HSA_NO_SCRATCH_RECLAIM=1 python3 -m sglang.launch_server --model/workspace/models/DeepSeek-R1/ --tp 8 --trust-remote-code
+    HSA_NO_SCRATCH_RECLAIM=1 python3 -m sglang.launch_server --model /workspace/models/DeepSeek-R1/ --tp 8 --trust-remote-code
     ```
 
     **run client request**
@@ -137,7 +137,7 @@ docker exec -it <container_id> bash
 3. To run the serving benchmark, you can utilize the same bash commands as with MI300x:
 
     ```bash
-    HSA_NO_SCRATCH_RECLAIM=1 python3 -m sglang.launch_server --model/workspace/models/DeepSeek-R1/ --tp 8 --trust-remote-code
+    HSA_NO_SCRATCH_RECLAIM=1 python3 -m sglang.launch_server --model /workspace/models/DeepSeek-R1/ --tp 8 --trust-remote-code
     ```
 
     **run client request:**
