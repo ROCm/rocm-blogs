@@ -1,0 +1,343 @@
+name: Extract Author Image and Create Bio
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  extract-author-info:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'Author Creation')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Set up Git
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          
+      - name: Extract author information
+        id: extract
+        uses: actions/github-script@v7.0.1
+        continue-on-error: false
+        with:
+          github-token: ${{ secrets.ROCM_BLOG_PAT }}
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            
+            const body = issue.data.body;
+            
+            function extractField(body, fieldName) {
+              const regex = new RegExp(`### ${fieldName}\\s*([\\s\\S]*?)(?=###|$)`, 'i');
+              const match = body.match(regex);
+              if (match && match[1]) {
+                return match[1].trim();
+              }
+              return '';
+            }
+            
+            const authorName = extractField(body, 'Author Name');
+            const authorBio = extractField(body, 'Author Bio');
+            
+            // Validate required fields
+            if (!authorName) {
+              console.error('Author Name is missing from the issue');
+              core.setFailed('Author Name is required but was not found in the issue');
+              return null;
+            }
+            
+            if (!authorBio) {
+              console.error('Author Bio is missing from the issue');
+              core.setFailed('Author Bio is required but was not found in the issue');
+              return null;
+            }
+            
+            console.log(`Author Name: ${authorName}`);
+            console.log(`Author Bio: ${authorBio}`);
+            
+            const authorPictureSection = extractField(body, 'Author Picture');
+            
+            // Try multiple patterns to find an image URL
+            let imageUrl = null;
+            
+            // Look for any image markdown format
+            const markdownImage = /!\[(?:.*?)\]\((https:\/\/[^)\s]+)\)/g;
+            const markdownMatch = [...body.matchAll(markdownImage)];
+            if (markdownMatch.length > 0) {
+              imageUrl = markdownMatch[0][1];
+              console.log(`Found image URL (markdown): ${imageUrl}`);
+            }
+            
+            // Grab github image link
+            if (!imageUrl) {
+              const gitImage = /https:\/\/user-images\.githubusercontent\.com\/[^\s)]+/g;
+              const gitMatch = [...body.matchAll(gitImage)];
+              if (gitMatch.length > 0) {
+                imageUrl = gitMatch[0][0];
+                console.log(`Found GitHub image URL: ${imageUrl}`);
+              }
+            }
+            
+            // GitHub's asset URLs
+            if (!imageUrl) {
+              const assetRegex = /https:\/\/github\.com\/[^\/]+\/[^\/]+\/assets\/\d+\/[^\s)]+/g;
+              const assetMatches = [...body.matchAll(assetRegex)];
+              if (assetMatches.length > 0) {
+                imageUrl = assetMatches[0][0];
+                console.log(`Found GitHub asset URL: ${imageUrl}`);
+              }
+            }
+            
+            // Any URL ending with an image extension
+            if (!imageUrl) {
+              const extension = /https?:\/\/[^\s)]+\.(jpg|jpeg|png|gif|webp)/gi;
+              const extMatches = [...body.matchAll(extension)];
+              if (extMatches.length > 0) {
+                imageUrl = extMatches[0][0];
+                console.log(`Found image URL by extension: ${imageUrl}`);
+              }
+            }
+            
+            core.setOutput('author_name', authorName);
+            core.setOutput('author_bio', authorBio);
+            core.setOutput('image_url', imageUrl || '');
+            
+            return {
+              authorName,
+              authorBio,
+              imageUrl
+            };
+            
+      - name: Download Author Image
+        id: download
+        if: steps.extract.outputs.image_url != ''
+        run: |
+          mkdir -p blogs/authors/data
+          
+          # Extract information
+          IMAGE_URL="${{ steps.extract.outputs.image_url }}"
+          AUTHOR_NAME="${{ steps.extract.outputs.author_name }}"
+          
+          echo "Author name: $AUTHOR_NAME"
+          echo "Attempting to download image from: $IMAGE_URL"
+          
+          # Generate a sanitized filename using the author name (with dashes instead of underscores)
+          SANITIZED_NAME=$(echo "$AUTHOR_NAME" | tr -cd '[:alnum:] ._-' | tr ' ' '-' | tr '[:upper:]' '[:lower:]')
+          
+          # Determine file extension from URL or content type
+          EXTENSION="jpg"  # Default
+          
+          if [[ "$IMAGE_URL" =~ \.(jpg|jpeg|png|webp)($|\?) ]]; then
+            EXTENSION="${BASH_REMATCH[1]}"
+            echo "Detected extension from URL: $EXTENSION"
+          else
+            echo "Unapproved Extension Type"
+          fi
+          
+          # Set final filename with extension - Named after the author with proper capitalization
+          FINAL_FILENAME="${SANITIZED_NAME}.${EXTENSION}"
+          echo "Final filename: $FINAL_FILENAME"
+
+          DOWNLOAD_PATH="blogs/authors/data/$FINAL_FILENAME"
+
+          echo "Downloading image with authentication..."
+          curl -L -H "Authorization: token ${{ secrets.ROCM_BLOG_PAT }}" \
+               -H "Accept: image/*" \
+               -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+               "$IMAGE_URL" -o "$DOWNLOAD_PATH"
+          
+          # Verify the download
+          if [ -f "$DOWNLOAD_PATH" ] && [ -s "$DOWNLOAD_PATH" ]; then
+            if file "$DOWNLOAD_PATH" | grep -q "image"; then
+              echo "Successfully downloaded image to: $DOWNLOAD_PATH"
+              echo "image_path=$DOWNLOAD_PATH" >> $GITHUB_OUTPUT
+              echo "image_filename=$FINAL_FILENAME" >> $GITHUB_OUTPUT
+            else
+              echo "Downloaded file is not a valid image. Trying alternative method..."
+              
+              # Alternative download method
+              curl -L -H "Authorization: token ${{ secrets.ROCM_BLOG_PAT }}" \
+                   -H "Accept: application/vnd.github.v3.raw" \
+                   "$IMAGE_URL" -o "$DOWNLOAD_PATH"
+                   
+              if [ -f "$DOWNLOAD_PATH" ] && [ -s "$DOWNLOAD_PATH" ] && file "$DOWNLOAD_PATH" | grep -q "image"; then
+                echo "Alternative download successful!"
+                echo "image_path=$DOWNLOAD_PATH" >> $GITHUB_OUTPUT
+                echo "image_filename=$FINAL_FILENAME" >> $GITHUB_OUTPUT
+              else
+                echo "Both download methods failed to get a valid image"
+                exit 1
+              fi
+            fi
+          else
+            echo "Failed to download image or file is empty"
+            exit 1
+          fi
+      
+      - name: Create Author Bio File Without Image
+        id: create-bio-no-image
+        if: steps.extract.outputs.image_url == ''
+        continue-on-error: false
+        run: |
+          
+          # Get author info
+          AUTHOR_NAME="${{ steps.extract.outputs.author_name }}"
+          AUTHOR_BIO="${{ steps.extract.outputs.author_bio }}"
+          
+          AUTHOR_MARKDOWN=$(echo "$AUTHOR_NAME" | tr -cd '[:alnum:] ._-' | tr ' ' '-' | tr '[:upper:]' '[:lower:]')
+          
+          # Create author bio markdown file without an image
+          cat > "blogs/authors/${AUTHOR_MARKDOWN}.md" << EOF
+          <head>
+            <meta charset="UTF-8">
+            <meta name="description" content="${AUTHOR_NAME}">
+            <meta name="keywords" content="blog, contributor, blog author">
+          </head>
+          
+          (${AUTHOR_MARKDOWN})=
+          
+          # ${AUTHOR_NAME}
+          
+          ${AUTHOR_BIO}
+          EOF
+          
+          echo "Created author bio file without image: blogs/authors/${AUTHOR_MARKDOWN}.md"
+          echo "AUTHOR_MARKDOWN=$AUTHOR_MARKDOWN" >> $GITHUB_OUTPUT
+      
+      - name: Create Author Bio File With Image
+        id: create-bio-with-image
+        if: steps.download.outputs.image_path
+        continue-on-error: false
+        run: |
+          
+          # Get author info
+          AUTHOR_NAME="${{ steps.extract.outputs.author_name }}"
+          AUTHOR_BIO="${{ steps.extract.outputs.author_bio }}"
+          
+          AUTHOR_MARKDOWN=$(echo "$AUTHOR_NAME" | tr -cd '[:alnum:] ._-' | tr ' ' '-' | tr '[:upper:]' '[:lower:]')
+          IMAGE_FILENAME="${{ steps.download.outputs.image_filename }}"
+          
+          # Create author bio markdown file with image
+          cat > "blogs/authors/${AUTHOR_MARKDOWN}.md" << EOF
+          <head>
+            <meta charset="UTF-8">
+            <meta name="description" content="${AUTHOR_NAME}">
+            <meta name="keywords" content="blog, contributor, blog author">
+          </head>
+          
+          (${AUTHOR_MARKDOWN})=
+          
+          # ${AUTHOR_NAME}
+          
+          \`\`\`{image} ./data/${IMAGE_FILENAME}
+          :alt: ${AUTHOR_NAME}
+          :class: bg-primary
+          :height: 250px
+          :align: left
+          \`\`\`
+          
+          ${AUTHOR_BIO}
+          EOF
+          
+          echo "Created author bio file with image: blogs/authors/${AUTHOR_MARKDOWN}.md"
+          echo "AUTHOR_MARKDOWN=$AUTHOR_MARKDOWN" >> $GITHUB_OUTPUT
+      
+      - name: Set Author Markdown Output
+        id: set-output
+        run: |
+          if [ -n "${{ steps.create-bio-with-image.outputs.AUTHOR_MARKDOWN }}" ]; then
+            echo "AUTHOR_MARKDOWN=${{ steps.create-bio-with-image.outputs.AUTHOR_MARKDOWN }}" >> $GITHUB_OUTPUT
+            echo "bio_created=true" >> $GITHUB_OUTPUT
+          elif [ -n "${{ steps.create-bio-no-image.outputs.AUTHOR_MARKDOWN }}" ]; then
+            echo "AUTHOR_MARKDOWN=${{ steps.create-bio-no-image.outputs.AUTHOR_MARKDOWN }}" >> $GITHUB_OUTPUT
+            echo "bio_created=true" >> $GITHUB_OUTPUT
+          else
+            echo "No author markdown file was created"
+            echo "bio_created=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+      
+      - name: Create Pull Request
+        if: steps.set-output.outputs.bio_created == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v7.0.6
+        with:
+          token: ${{ secrets.ROCM_BLOG_PAT }}
+          commit-message: "Add new author: ${{ steps.extract.outputs.author_name }}"
+          title: "Add new author: ${{ steps.extract.outputs.author_name }}"
+          body: |
+            ## New Author Bio
+            
+            This PR adds a new author profile for **${{ steps.extract.outputs.author_name }}**.
+
+             ### 📋 Next Steps
+            
+            - [ ] **Review the Author Bio** carefully for any mistakes or adjustments needed
+            - [ ] **Final Review**, make sure everything is working properly
+            
+            ### 📄 Added Files:
+            - Author bio: `blogs/authors/${{ steps.set-output.outputs.AUTHOR_MARKDOWN }}.md`
+            ${{ steps.download.outputs.image_path && format('- Author image: `{0}`', steps.download.outputs.image_path) || '' }}
+            
+            ### 📝 Author Information:
+            - **Name:** ${{ steps.extract.outputs.author_name }}
+            
+            This PR was automatically generated from [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}).
+          branch: ${{ github.actor }}-${{ github.event.issue.number }}
+      
+      - name: Comment on Issue (Success)
+        if: steps.cpr.outputs.pull-request-number
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.ROCM_BLOG_PAT }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## Author Bio Created ✅
+
+            Hello @${{ github.event.issue.user.login }}, 
+            
+            Thank you for submitting your information! I've created a pull request with your author bio.
+            
+            ### 🔍 Summary:
+            - Created author bio for: **${{ steps.extract.outputs.author_name }}**
+            ${{ steps.download.outputs.image_filename && format('- Saved image as: `blogs/authors/data/{0}`', steps.download.outputs.image_filename) || '- No image was provided or detected' }}
+            - Created Pull Request [#${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
+            
+            The PR with your author bio has been created and is ready for review. Once approved, your profile will be published to the website.
+            If you have any questions, direct them to the ROCm-blogs managers.
+            
+            Thank you for your contribution!
+          reactions: '+1'
+          
+      - name: Comment on Issue (Failure)
+        if: failure()
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.ROCM_BLOG_PAT }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ## ❌ Error Creating Author Bio
+            
+            Hello @${{ github.event.issue.user.login }},
+            
+            There was an error while trying to create your author bio. The workflow encountered an issue during the process.
+            
+            ### Possible reasons:
+            - Missing required information in the issue description
+            - Problem with the image URL or image download
+            - Error during file creation or pull request submission
+            
+            Please check that your issue contains all the required information in the proper format, especially:
+            - Author Name
+            - Author Bio
+            - Author Picture (if applicable)
+            
+            Job URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          reactions: '-1'

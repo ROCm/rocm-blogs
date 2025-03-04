@@ -6,8 +6,6 @@ version: 2
 sphinx:
    configuration: blogs/conf.py
 
-formats: [htmlzip]
-
 python:
    install:
    - requirements: blogs/sphinx/requirements.txt

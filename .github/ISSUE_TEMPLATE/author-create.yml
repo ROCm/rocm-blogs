@@ -1,0 +1,54 @@
+name: "Create a new author bio"
+description: "Submit this form to automatically create a new author bio"
+title: "[New Author] "
+labels: ["Author Creation"]
+body:
+  - type: markdown
+    id: markdown_with_multiline_content
+    attributes:
+      value: |
+        ## Thanks for adding your author bio!
+
+        > **IMPORTANT NOTE:** All fields in this form are required to successfully create an author bio. Missing information will cause the automated system to reject your submission. Please complete all sections thoroughly and double check your responses.
+
+    validations:
+      required: false
+  - type: input
+    id: author_name
+    attributes:
+      label: "Author Name"
+      description: "Full name of the author"
+      placeholder: "Jane Doe"
+    validations:
+      required: true
+  
+  - type: textarea
+    id: author_bio
+    attributes:
+      label: "Author Bio"
+      description: "Short biography (1-3 paragraphs)"
+      placeholder: "Jane is a software engineer with 10 years of experience..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: author_picture
+    attributes:
+      label: "Author Picture"
+      description: |
+        Attach a bio picture if you have one. The image will be renamed to match the author's name.
+        
+        **Instructions:**
+        1. Click in this field
+        2. Drag and drop an image or click to select a file
+        3. Wait for the upload to complete (you'll see a preview)
+        
+        Image requirements:
+        - Square or portrait orientation recommended
+        - Clear, high-quality image
+        
+        Note: The uploaded image will be automatically renamed to match the author's name.
+      placeholder: |
+        Drag and drop your image file here
+    validations:
+      required: false
