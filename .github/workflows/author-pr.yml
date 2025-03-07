@@ -290,7 +290,8 @@ jobs:
             - **Name:** ${{ steps.extract.outputs.author_name }}
             
             This PR was automatically generated from [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}).
-          branch: ${{ github.actor }}-${{ github.event.issue.number }}
+          branch: author-${{ steps.set-output.outputs.AUTHOR_MARKDOWN }}-${{ github.event.issue.number }}
+          base: main
       
       - name: Comment on Issue (Success)
         if: steps.cpr.outputs.pull-request-number
