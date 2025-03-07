@@ -1,5 +1,6 @@
 ablog
 rocm-docs-core==1.15.0
+rocm-blogs-sphinx
 sphinx-hoverxref
 markdown
 Pillow
