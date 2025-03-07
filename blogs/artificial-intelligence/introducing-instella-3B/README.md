@@ -53,7 +53,11 @@ This blog will introduce you to our new family of Instella LMs. You will find ou
 
 ## Instella Models
 
-In this release, we introduce the following Instella models:
+In this release, we introduce the following Instella models (Table 2):
+
+<div align="center">
+Table 1: Instella models and training stages.
+</div>
 
 | Model  | Stage | Training Data (Tokens) | Description |
 | :----: | :----: | :----: | :---- |
@@ -62,10 +66,6 @@ In this release, we introduce the following Instella models:
 | [Instella-3B-SFT](https://huggingface.co/amd/Instella-3B-SFT)  | SFT | 8.902 Billion (x3 epochs) | Supervised Fine-tuning (SFT) to enable instruction-following capabilities. |
 | [Instella-3B-Instruct](https://huggingface.co/amd/Instella-3B-instruct)  | DPO | 760 Million | Alignment to human preferences and strengthen chat capabilities with direct preference optimization (DPO). |
 |  | **Total:** | **4.15 Trillion** |  |
-
-<div align="center">
-Table 1: Instella models and training stages.
-</div>
 
 The Instella models are text-only, autoregressive transformer-based LMs having 3 billion parameters. Architecture-wise, Instella is packed with 36 decoder layers, each having 32 attention heads. These models support a sequence length of up to 4,096 tokens and have a vocabulary size of ~50,000 tokens using the OLMo tokenizer[^2]. During both pre-training and fine-tuning, we utilized FlashAttention-2[^3], Torch Compile, and bfloat16 mixed-precision training to reduce memory usage, leading to computational speedups and optimal resource utilization. To balance inter-node memory efficiency and intra-node communication overhead within our cluster, we employed fully sharded data parallelism (FSDP) with hybrid sharding, with model parameters, gradients, and optimizer states sharded within a node and replicated across the nodes.
 
@@ -157,6 +157,7 @@ In addition to these publicly available datasets, **28.5 million tokens** out of
 </head>
 <body>
 <div class="table-wrapper" align="center">
+    <em><strong>Table 2:</strong> Pre-trained model performance on standard benchmarks. Here <strong>Bold</strong> represents the best performance, and <ins>Underscore</ins> represents the second best performance.</em>
   <table>
     <thead>
       <tr>
@@ -339,14 +340,13 @@ In addition to these publicly available datasets, **28.5 million tokens** out of
       </tr>
     </tbody>
   </table>
-    <em><strong>Table 2:</strong> Pre-trained model performance on standard benchmarks. Here <strong>Bold</strong> represents the best performance, and <ins>Underscore</ins> represents the second best performance.</em>
 </div>
 </body>
 </html>
 
 #### Pre-training Results
 
-- Both Instella-3B-Stage1 & Instella-3B models outperform all the other fully open models over all the benchmarks individually (except PIQA). **Our final pre-trained checkpoint Instella-3B outperforms the existing top performant fully open pre-trained models by a lead of ⬆️8.08% on average**, with significant improvements in `ARC Challenge [+8.02%], ARC Easy [+3.51%], Winnograde [+4.7%], OpenBookQA [+3.88%], MMLU [+13.12%] and ️GSM8K [+48.98%]`.  
+- Both Instella-3B-Stage1 & Instella-3B models outperform all the other fully open models over all the benchmarks individually (except PIQA) (Table 2). **Our final pre-trained checkpoint Instella-3B outperforms the existing top performant fully open pre-trained models by a lead of ⬆️8.08% on average**, with significant improvements in `ARC Challenge [+8.02%], ARC Easy [+3.51%], Winnograde [+4.7%], OpenBookQA [+3.88%], MMLU [+13.12%] and ️GSM8K [+48.98%]`.  
 - **Second stage pre-training elevated the overall average performance relative to stage-1 by ⬆️5.26%**, substantially narrowing the performance gap between Instella-3B model vs the closed-source models, and **outperforming Llama-3.2-3B by ⬆️4.08% on average** (`+5.69% [ARC Challenge], +5.61% [ARC Easy], and +29.72% [GSM8k]`), **Gemma-2-2B by ⬆️7.25% on average** (`+13.38% [ARC Challenge], +11.23% [ARC Easy], +4.5% [Hellaswag], +7.6% [OpenBookQA], +5.03% [MMLU], and +32.45% [GSM8k]`), and is **competitive with Qwen-2.5-3B** on the majority of the benchmarks.  
 - The multi-stage pre-training with diverse and high-quality data mix significantly enhanced Instella-3B’s capabilities, establishing it as a competitive and open alternative in the landscape of comparable size language models.
 
@@ -357,6 +357,7 @@ The supervised fine-tuning stage was done to enhance the Instella-3B base pre-tr
 In the final training stage, we focused on aligning the Instella-3B-SFT model with human preferences to ensure that its outputs are helpful, accurate, and safe. Using Instella-3B-SFT as the base model, **Instella-3B-Instruct was trained with Direct Preference Optimization (DPO)[^19] on 0.76 billion tokens** sourced from [OLMo 2 1124 7B Preference Mix](https://huggingface.co/datasets/allenai/olmo-2-1124-7b-preference-mix)[^2]. This alignment process was essential for tailoring the model’s responses to be more in line with human values and expectations, thereby enhancing the quality and reliability of its outputs.
 
 <div class="table-wrapper" align="center">
+    <em><strong>Table 3:</strong> Instruct model performance on standard benchmarks. Here <strong>Bold</strong> represents the best performance, and <ins>Underscore</ins> represents the second best performance.</em>
   <table>
     <thead>
       <tr>
@@ -489,12 +490,11 @@ In the final training stage, we focused on aligning the Instella-3B-SFT model wi
       </tr>
     </tbody>
   </table>
-    <em><strong>Table 2:</strong> Instruct model performance on standard benchmarks. Here <strong>Bold</strong> represents the best performance, and <ins>Underscore</ins> represents the second best performance.</em>
 </div>
 
 #### Instruction Tuning Results
 
-- **Instella-3B-Instruct model consistently outperforms other fully open models across all evaluated benchmarks with a significant average score lead of ⬆️ 14.37%** w.r.t the next top performing fully open instruction-tuned models. With substantial margins across all the chat benchmarks (`+13% [MMLU], 7.57% [TruthfulQA], 7.43% [BBH], +4.46% [GPQA], +37.15 [IFEval], 10.08% [Alpaca 2], and 1.2% [MT-Bench]`).  
+- **Instella-3B-Instruct model consistently outperforms other fully open models across all evaluated benchmarks with a significant average score lead of ⬆️ 14.37%** w.r.t the next top performing fully open instruction-tuned models (Table 3). With substantial margins across all the chat benchmarks (`+13% [MMLU], 7.57% [TruthfulQA], 7.43% [BBH], +4.46% [GPQA], +37.15 [IFEval], 10.08% [Alpaca 2], and 1.2% [MT-Bench]`).  
 - **Instella-3B-Instruct narrows the performance gap with leading open-weight models.** Instella-3B-Instruct performs **on par with or slightly surpasses existing state-of-the-art open weight instruction-tuned models** such as Llama-3.2-3B-Instruct (`+5.24% [TruthfulQA], 0.45% [GPQA], and +0.1% [MT-Bench]`), and Qwen2.5-3B-Instruct (`+2.01% [GPQA] and +8.87% [IFEval]`), while significantly outperforming Gemma-2-2B-Instruct with an average score lead of ⬆️5.83% (`+0.55% [MMLU], +3.79 [BBH], +4.91 [GPQA], +20.47 [GSM8k], +19.98 [Minerva MATH], and +15.17% [IFEval]`).
 - **Overall, Instella-3B-Instruct excels in instruction following tasks and multi-turn QA tasks like TruthfulQA, GPQA, IFEval and MT-Bench**, while being highly competitive compared to existing state-of-the-art open weight models on other knowledge recall and math benchmarks, while being trained on significantly fewer training tokens.
 
@@ -544,17 +544,19 @@ Please refer to the following blogs to get started with using these techniques o
 
 ## License
 
-- The Instella-3B models are licensed for academic and research purposes under a ReasearchRAIL license.
-- The [amd/Instella-GSM8K-synthetic](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic) dataset used in second stage pre-training is built with Qwen2.5-72B-Instruct, and is licensed for academic and research purposes under a ReasearchRAIL license. Refer to the [LICENSE](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic/blob/main/LICENSE) and [NOTICES](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic/blob/main/NOTICES) in the [amd/Instella-GSM8K-synthetic](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic) dataset card files for more information.
+- The Instella-3B models are licensed for academic and research purposes under a ResearchRAIL license.
+- The [amd/Instella-GSM8K-synthetic](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic) dataset used in second stage pre-training is built with Qwen2.5-72B-Instruct, and is licensed for academic and research purposes under a ResearchRAIL license. Refer to the [LICENSE](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic/blob/main/LICENSE) and [NOTICES](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic/blob/main/NOTICES) in the [amd/Instella-GSM8K-synthetic](https://huggingface.co/datasets/amd/Instella-GSM8K-synthetic) dataset card files for more information.
 - Refer to the [LICENSE](https://huggingface.co/amd/Instella-3B/blob/main/LICENSE) and [NOTICES](https://huggingface.co/amd/Instella-3B/blob/main/NOTICES) files for more information.
 
-## Citations
+## Contributors
 
 > **Core contributors**:
 > Jiang Liu, Jialian Wu, Xiaodong Yu, Prakamya Mishra, Sudhanshu Ranjan, Zicheng Liu
 >
 > **Contributors:**
 > Chaitanya Manem, Yusheng Su, Pratik Prabhanjan Brahma, Gowtham Ramesh, Ximeng Sun, Ze Wang, Emad Barsoum
+
+## Citations
 
 Feel free to cite our Instella-3B models:
 
