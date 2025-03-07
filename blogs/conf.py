@@ -9,6 +9,7 @@ import shutil
 
 import ablog
 import jinja2
+import rocm_blogs
 from rocm_docs import ROCmDocs
 from sphinx import addnodes
 from sphinx.ext.autodoc import cut_lines
@@ -22,9 +23,6 @@ jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader("."))
 
 # Jinja templates to render out.
 templates = []
-
-# blogs.generate_grid.main()
-os.system("python ../scripts/core.py")
 
 latex_engine = "xelatex"
 latex_elements = {
@@ -75,10 +73,12 @@ extensions = [
     "sphinx.ext.intersphinx",
     "hoverxref.extension",
     "myst_parser",
+    "rocm_blogs",
 ]
 external_toc_path = "./sphinx/_toc.yml"
 
 hoverxref_api_host = "/_"
+
 
 templates_path = ["."]
 
