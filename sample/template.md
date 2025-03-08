@@ -13,7 +13,7 @@ myst:
     html_meta:
         "author": "Danny Guan"
         "description lang=en": "Guide to ROCm Blogs Metadata"
-        "keywords": ""
+        "keywords": "Sample Blog 1"
         "property=og:locale": "en_US"
         "amd_category": ""
         "amd_asset_type": ""
