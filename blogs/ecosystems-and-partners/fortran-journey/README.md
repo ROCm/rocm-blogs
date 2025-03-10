@@ -9,7 +9,7 @@ category: Ecosystems and Partners
 language: English
 myst:
   html_meta:
-    "description lang=en": "In this post we present a brief preview of AMD's [Next-Gen Fortran Compiler](https://github.com/amd/InfinityHub-CI/blob/main/fortran/README.md), our new open source Fortran complier optimized for AMD GPUs using OpenMP offloading, offering direct interface to ROCm and HIP."
+    "description lang=en": "In this post we present a brief preview of AMD's Next-Gen Fortran Compiler, our new open source Fortran complier optimized for AMD GPUs using OpenMP offloading, offering direct interface to ROCm and HIP."
     "keywords": "HPC, Fortran, Compiler"
     "property=og:locale": "en_US"
 html_theme.sidebar_secondary.remove: true    
