@@ -69,11 +69,11 @@ post_show_prev_next = False
 
 extensions = [
     "rocm_docs",
-    "ablog",
     "sphinx.ext.intersphinx",
     "hoverxref.extension",
     "myst_parser",
     "rocm_blogs",
+    "ablog",
 ]
 external_toc_path = "./sphinx/_toc.yml"
 
