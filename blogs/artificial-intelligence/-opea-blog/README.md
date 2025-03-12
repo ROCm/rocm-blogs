@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: " AMD Advances Enterprise AI Through OPEA Integration "
 date: 12 Mar 2025
-author: 'Yu Wang and Alex He'
+author: 'Yu Wang, Alex He'
 thumbnail: 'OPEA_THUBMNAIL.jpg'
 tags: AI/ML, GenAI
 category: Ecosystems and Partners
@@ -11,7 +11,7 @@ key_value_propositions: "We announce AMD’s collaboration with Open Platform fo
 language: English
 myst:
     html_meta:
-        "author": "Yu Wang and Alex He"
+        "author": "Yu Wang, Alex He"
         "description lang=en": "We announce AMD’s support of Open Platform for Enterprise AI (OPEA), integrating OPEA’s enterprise GenAI framework with AMD’s computing hardware and ROCm software"
         "keywords": "OPEA, GenAI, AMD, ROCm"
         "property=og:locale": "en_US"
