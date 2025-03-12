@@ -9,7 +9,7 @@ category: Applications & models
 language: English
 myst:
   html_meta:
-    "description lang=en": This blog post demonstrates how to fine-tune and test three state-of-the-art machine learning Automatic Speech Recognition (ASR) models, running on AMD GPUs using ROCm."
+    "description lang=en": "This blog post demonstrates how to fine-tune and test three state-of-the-art machine learning Automatic Speech Recognition (ASR) models, running on AMD GPUs using ROCm."
     "author": "Fabricio Flores"
     "keywords": "PyTorch,  Fine-tuning, Speech Models, Wav2Vec, Spanish, Automatic Speech Recognition, ASR, Audio Spectrogram Transformer, diarization, PyAnnote, AMD, GPU, MI300, MI250, MI210"
     "property=og:locale": "en_US"
