@@ -1,19 +1,31 @@
 ---
 blogpost: true
-date: 07 Feb 2025
-author: Victor Robles
 blog_title: AI Inference Orchestration with Kubernetes on Instinct MI300X, Part 1
+date: 07 February 2025
+author: Victor Robles
+thumbnail: '2025-02-07-k8s-orch-pt1.jpg'
 tags: Kubernetes, LLM, AI/ML, GenAI 
+category: Software tools & optimizations
 target_audience: Datacenter Administrators
 key_value_propositions: This blog walks through setting up a Kubernetes cluster using MicroK8s, configuring Helm for streamlined deployments, implementing persistent storage for model caching, and installing the AMD GPU Operator. This is the first blog in a series that aims to provide a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes, Grafana, Prometheus, vLLM, and the AMD GPU Operator on the AMD Instinct platform.
-category: Software tools & optimizations
 language: English
-thumbnail: '2025-02-07-k8s-orch-pt1.jpg'
 myst:
-  html_meta:
-    "description lang=en": "This blog is part 1 of a series aimed at providing a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes and the AMD GPU Operator on the AMD Instinct platform"
-    "keywords": "Kubernetes, AMD GPU Operator, MLOps, vLLM, Inferencing, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Victor Robles"
+        "description lang=en": "This blog is part 1 of a series aimed at providing a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes and the AMD GPU Operator on the AMD Instinct platform"
+        "keywords": "Kubernetes, AMD GPU Operator, vLLM, MLOps, Inferencing, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blogs"
+        "amd_blog_type": "Technical Articles & Blogs"
+        "amd_technical_blog_type": "Applications and models"
+        "amd_developer_type": "ML/AI Developer, Application Developer, Software Developer"
+        "amd_deployment": "Workstations, Servers"
+        "amd_product_type": "Development Tools, Accelerators, Software & Applications"
+        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_applications": "Cloud Computing, Data Analytics, Large Language Model (LLM), Natural Language Processing (NLP)"
+        "amd_industries": "Data Center"
+        "amd_blog_releasedate": "Thu Mar 13, 12:00:00 PST 2025"
 ---
 
 # AI Inference Orchestration with Kubernetes on Instinct MI300X, Part 1
@@ -22,9 +34,9 @@ As organizations scale their AI inference workloads, they face the challenge of 
 
 In this post, we'll establish the essential infrastructure by setting up a Kubernetes cluster using MicroK8s, configuring Helm for streamlined deployments, implementing persistent storage for model caching, and installing the AMD GPU Operator to seamlessly integrate AMD hardware with Kubernetes.
 
-Part 2 will focus on deploying and scaling the vLLM inference engine, implementing [MetalLB](https://github.com/metallb/metallb) for load balancing, and optimizing multi-GPU deployments to maximize the performance of AMD Instinct accelerators.
+**[Part 2](https://rocm.blogs.amd.com/artificial-intelligence/k8s-orchestration-part2/README.html)** will focus on deploying and scaling the vLLM inference engine, implementing [MetalLB](https://github.com/metallb/metallb) for load balancing, and optimizing multi-GPU deployments to maximize the performance of AMD Instinct accelerators.
 
-The series concludes in Part 3 with implementing Prometheus for metrics collection, Grafana for performance visualization, and [Open WebUI](https://github.com/open-webui/open-webui) for interacting with models deployed with vLLM.
+The series concludes in **[Part 3](https://rocm.blogs.amd.com/artificial-intelligence/k8s-orchestration-part3/README.html)** with implementing Prometheus for metrics collection, Grafana for performance visualization, and [Open WebUI](https://github.com/open-webui/open-webui) for interacting with models deployed with vLLM.
 
 Let's begin with Part 1, where we'll build the foundational components needed for a production-ready AI inference platform.
 
