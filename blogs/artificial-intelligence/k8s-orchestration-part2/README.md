@@ -5,15 +5,27 @@ author: Victor Robles
 blog_title: AI Inference Orchestration with Kubernetes on Instinct MI300X, Part 2
 tags: Kubernetes, LLM, AI/ML, GenAI 
 target_audience: Datacenter Administrators
-key_value_propositions: In this blog, we’ve taken a significant step toward building a scalable and high-performance AI inference solution by deploying and scaling the vLLM inference engine on Kubernetes, configuring MetalLB to provide efficient load balancing for your cluster, and optimizing deployments to fully leverage AMD Instinct multi-GPU capabilities.This is the second blog in a series that aims to provide a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes, Grafana, Prometheus, vLLM, and the AMD GPU Operator on the AMD Instinct platform.
+key_value_propositions: In this blog, we've taken a significant step toward building a scalable and high-performance AI inference solution by deploying and scaling the vLLM inference engine on Kubernetes, configuring MetalLB to provide efficient load balancing for your cluster, and optimizing deployments to fully leverage AMD Instinct multi-GPU capabilities.This is the second blog in a series that aims to provide a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes, Grafana, Prometheus, vLLM, and the AMD GPU Operator on the AMD Instinct platform.
 category: Software tools & optimizations
 language: English
 thumbnail: '2025-02-13-k8s-orch-pt2.jpg'
 myst:
-  html_meta:
-    "description lang=en": "This blog is part 2 of a series aimed at providing a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes and the AMD GPU Operator on the AMD Instinct platform"
-    "keywords": "Kubernetes, AMD GPU Operator, vLLM, MLOps, Inferencing, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Victor Robles"
+        "description lang=en": "This blog is part 2 of a series aimed at providing a comprehensive, step-by-step guide for deploying and scaling AI inference workloads with Kubernetes and the AMD GPU Operator on the AMD Instinct platform"
+        "keywords": "Kubernetes, AMD GPU Operator, vLLM, MLOps, Inferencing, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blogs"
+        "amd_blog_type": "Technical Articles & Blogs"
+        "amd_technical_blog_type": "Applications and models"
+        "amd_developer_type": "ML/AI Developer, Application Developer, Software Developer"
+        "amd_deployment": "Workstations, Servers"
+        "amd_product_type": "Development Tools, Accelerators, Software & Applications"
+        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_applications": "Cloud Computing, Data Analytics, Large Language Model (LLM), Natural Language Processing (NLP)"
+        "amd_industries": "Data Center"
+        "amd_blog_releasedate": "Fri Feb 14, 12:00:00 PST 2025"
 ---
 
 # AI Inference Orchestration with Kubernetes on Instinct MI300X, Part 2
@@ -369,7 +381,7 @@ In this post, we've made significant progress in building a scalable and high-pe
 - Implementing MetalLB for robust load balancing.
 - Optimizing deployments to harness the full power of AMD Instinct multi-GPU capabilities.
 
-Stay tuned for the third and final part of this series, where we'll enhance our setup with advanced monitoring and management tools. We'll walk through configuring Prometheus for GPU performance monitoring, setting up Grafana for insightful visualizations, and implementing Open WebUI for user-friendly model interactions.
+We can now move on to **[Part 3](https://rocm.blogs.amd.com/artificial-intelligence/k8s-orchestration-part3/README.html)** of this series, where we'll enhance our setup with advanced monitoring and management tools. We'll walk through configuring Prometheus for GPU performance monitoring, setting up Grafana for insightful visualizations, and implementing Open WebUI for user-friendly model interactions.
 
 <p style="font-size: 12px;">
 Disclaimers<br>
