@@ -70,7 +70,6 @@ post_show_prev_next = False
 extensions = [
     "rocm_docs",
     "sphinx.ext.intersphinx",
-    "hoverxref.extension",
     "myst_parser",
     "rocm_blogs",
     "ablog",
