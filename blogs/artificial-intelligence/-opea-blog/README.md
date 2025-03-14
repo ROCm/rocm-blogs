@@ -66,7 +66,7 @@ Built on a cloud-native, microservices-based architecture, OPEA allows
 seamless integration across both public and private cloud environments
 using API-driven workflows. With over 50 ecosystem partners supporting
 the full GenAI lifecycle, businesses gain the flexibility to select the
-best tools for their needs. OPEA simplifies GenAI adoption by providing:
+best tools for their needs. OPEA simplifies GenAI adoption by providing.
 
 **Pre-built Reference Workflows** – Deployment-ready blueprints that accelerate AI adoption.
 
@@ -216,8 +216,7 @@ It is recommended to use Docker images that were previously compiled and publish
 export TAG=1.1
 ```
 
-If TAG is not set, -latest is used as default. Alternatively, you can
-build the docker images following the subsequent steps.
+If TAG is not set, -latest is used as default. Alternatively, you can build the docker images following the subsequent steps.
 
 ### Building Docker Images
 
