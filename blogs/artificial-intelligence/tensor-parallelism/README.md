@@ -38,13 +38,19 @@ In this blog, we explore the mechanics of tensor parallelism, its impact on thro
 
 Tensor parallelism is a technique supported by most inference frameworks/engines, where the tensors in the neural network are split along the hidden layer dimension and distributed to multiple GPUs to reduce the per-GPU memory and compute burden. The use of multiple GPUs with TP enables larger batch sizes and larger models that normally would not fit into a single GPU's memory.
 
-![Alt text](./images/tp1.png)
+```{figure} ./images/tp1.png
+:align:"center"
+:name: figure1
 *Figure 1: How Tensor Parallelism Works*
+```
 
 In the example above (Figure 1), the tensor labeled A is split into four parts. As part of a TP=4 configuration, each A1 through A4 is sent to its dedicated processor, yielding Y1 through Y4. After the output of this calculation has been generated for each GPU, the result is aggregated to form Y, which would be equivalent to the output for the non-parallel approach. The aggregation process involves collective communications which add a networking overhead to the process. Later in the blog, we will explore the impact of this networking overhead.
 
-![Alt text](./images/tp2.png)
+```{figure} ./images/tp2.png
+:align:"center"
+:name: figure2
 *Figure 2: How Tensor Parallelism Impacts the size of matrix computations*
+```
 
 The image above (Figure 2) illustrates another impact of TP: the reduction in matrix sizes resulting from splitting up the tensors across GPUs. Modern GPUs are optimized to compute large matrices, but when higher TP values result in smaller matrix computations, the full computing power of the processor might be underutilized. This tends to be when small language models are deployed using TP on large data center GPUs like AMD Instinct. For these use-cases, avoiding parallelism might be more appropriate.
 
@@ -52,8 +58,11 @@ The image above (Figure 2) illustrates another impact of TP: the reduction in ma
 
 At the risk of stating the obvious, when using TP=1, no parallelism is involved, and all of the computation takes place on a single GPU. This configuration, particularly for state of the art (SoTA) LLMs like Llama 70B, has become relatively uncommon due to the memory limitations in some of the most widely used processors on the market. AMD Instinct MI300X and MI325X GPUs make deploying SoTA LLMs on a single GPU possible, reducing the need to make special considerations for networking overhead.
 
-![Alt text](./images/tp3.png)
+```{figure} ./images/tp3.png
+:align:"center"
+:name: figure3
 *Figure 3: Tensor Parallelism settings at TP=2 vs TP=4*
+```
 
 For larger models, like Llama 3.1 405B and DeepSeek-R1 (671B), larger TP configurations of TP=8 are required to achieve acceptable end-to-end (E2E) latencies and throughput. However, for mid-range models like Mixtral 8x22B and Llama 3.1 70B, it might be of interest to explore TP configurations like TP=2 and TP=4:
 
@@ -74,8 +83,11 @@ To further analyze the impact of decreasing TP configurations, we draw insights 
 - When increasing TP from 4 to 8 with a batch size of 16, both latency and throughput improvements are minimal (11% and 12%, respectively), as the small batch size fails to fully utilize the additional four GPUs.
 - With a larger batch size of 256, scaling from TP4 to TP8 yields more substantial gains: latency improves by 36%, and throughput increases by 56%.
 
-![Alt Text](./images/tp4.png)
-*Figure 4: Llama 3.1 70B FP8 Benchmarks showing the changes in E2E latency and Total throughput across different batch size configurations. Arrows have been added to show the changes in latency and throughput as TP configurations change for batch size 256 (left) and batch size 16 (right). See endnote MI300-074*
+```{figure} ./images/tp4.png
+:align:"center"
+:name: figure4
+*Figure 4: Llama 3.1 70B FP8 Benchmarks showing the changes in E2E latency and Total throughput across different batch size configurations. Arrows have been added to show the changes in latency and throughput as TP configurations change for batch size 256 (left) and batch size 16 (right).*[^1]
+```
 
 ### Going from Larger to Smaller TP Configurations
 
@@ -87,8 +99,11 @@ To further analyze the impact of decreasing TP configurations, we draw insights 
 - E2E latency degradation in the TP4 to TP2 transition is significantly higher at 71%. This insight is important when considering the trade-off for online inference use-cases. This likely stems from the reduction in compute capacity and the transition from 4-GPU networking to relying entirely on a single P2P interconnect.
 - The degradation in total throughput when scaling down from TP4 to TP2 and TP2 to TP1 is nearly linear, at 41% and 44%, respectively. For offline use cases, this provides a more stable and predictable performance decline, though careful consideration is still required.
 
-![Alt Text](./images/tp5.png)
-*Figure 5: Llama 3.1 70B FP8 Benchmarks showing the changes in E2E latency and Total throughput across different batch size configurations. Arrows have been added to show the changes in latency and throughput as TP configurations change for batch size 256 (left) and batch size 16 (right). See endnote MI300-074*
+```{figure} ./images/tp5.png
+:align:"center"
+:name: figure5
+*Figure 5: Llama 3.1 70B FP8 Benchmarks showing the changes in E2E latency and Total throughput across different batch size configurations. Arrows have been added to show the changes in latency and throughput as TP configurations change for batch size 256 (left) and batch size 16 (right).*[^1]
+```
 
 Table 1, below, summarizes the percent changes when moving between TP values illustrated in figures 4 and 5. The key takeaway is that batch size is a key consideration when changing TP configurations to prevent aggressive degradation of key metrics like latency and throughput.
 
@@ -108,8 +123,11 @@ The use of parallelism ultimately comes down to the requirements of a specific u
 
 However, memory capacity is a common limitation of going to TP=1. The figure below, aims to illustrate how the memory advantage of AMD Instinct GPUs unlocks non-parallelized deployments. Across two generations of AMD Instinct and NVIDIA GPUs, AMD GPUs retain a 1.8x-2.4x HBM memory advantage. This memory advantage enables models of up to approximately 270B parameters to be hosted on a single GPU, without the need for parallelism.
 
-![Alt Text](./images/tp7.png)
-*Figure 6: A comparison of per GPU HBM memory capacity for AMD Instinct MI300X, AMD Instinct MI325X, NVIDIA H100, and NVIDIA H200. See endnote MI300-05A*
+```{figure} ./images/tp7.png
+:align:"center"
+:name: figure7
+*Figure 6: A comparison of per GPU HBM memory capacity for AMD Instinct MI300X, AMD Instinct MI325X, NVIDIA H100, and NVIDIA H200.*[^2]
+```
 
 Let's explore the benefits that this memory advantage unlocks. The figure below highlights four key opportunities unlocked by TP=1 configurations.
 
@@ -118,8 +136,11 @@ Let's explore the benefits that this memory advantage unlocks. The figure below 
 - **Offline Price/Performance**: Deploying multiple models on a single node—where throughput is not latency-constrained—can maximize processor utilization, ensuring continuous workload execution. This approach enhances price/performance efficiency by optimizing cost per token generated.
 - **Complex Workloads**: Deploying a single model per GPU allows other processors on the node to host additional models. This is particularly beneficial for RAG and agentic applications, which rely on multiple models running in parallel or sequentially within a pipeline.
 
-![Alt Text](./images/tp8.png)
+```{figure} ./images/tp8.png
+:align:"center"
+:name: figure8
 *Figure 7: Analysis of benefits and opportunities of using TP=1 configurations.*
+```
 
 Ultimately, non-parallelism makes the most sense when the remaining processors are fully utilized to fulfill the needs of other components of an application or used to deploy multiple instances of a model on the node.
 
@@ -127,8 +148,11 @@ Ultimately, non-parallelism makes the most sense when the remaining processors a
 
 In many real-world applications, multiple model instances must be hosted on a single node. However, multi-model hosting introduces resource contention, especially when concurrent processes heavily utilize CPU, memory, and compute capacity. Resource allocation must be tailored to model size and workload demands to maximize efficiency, necessitating careful testing and optimization.
 
-![Alt Text](./images/tp6.png)
+```{figure} ./images/tp6.png
+:align:"center"
+:name: figure6
 *Figure 8: Simplified solution architecture, depicting a load balancer distributing requests to a single node with 8 Instinct MI300X GPUs and one model endpoint hosted per GPU.*
+```
 
 Multi-model hosting can be implemented using either containerized deployments with dedicated GPUs or virtual machines. The diagram above illustrates a non-parallelized (TP1) configuration on a single MI300X node, demonstrating how eight instances of the model can be distributed—one per GPU. A load balancer is typically employed to efficiently distribute application request loads across these endpoints.
 
@@ -141,8 +165,11 @@ The figure below highlights the price-performance impact of multi-model hosting.
 - The cost per 1M output tokens in multi-model hosting is a fraction of the TP8 scenario.
 - Specifically, at sub-TP8 configurations, 1M output tokens cost only 31% of the TP8 scenario, resulting in a ~69% cost savings—a direct margin benefit for businesses.
 
-![Alt Text](./images/tp9.png)
+```{figure} ./images/tp9.png
+:align:"center"
+:name: figure9
 *Figure 9: Analysis of costs to generate 1M output tokens normalized to the cost to generate 1M output tokens with a TP=8 configuration. The chart compares scenarios with a single model hosted at TP=1 with the remaining GPUs idle (left) and scenarios where the remaining GPUs on the node are fully utilized by additional deployments of the model (right)*
+```
 
 These savings are driven by a 3.21x increase in output token throughput, as eight model instances concurrently serve requests. However, this improvement comes with a notable latency trade-off. End-to-end latency increases by 2.5x compared to TP8. As a result, careful consideration must be given to the application’s latency tolerance. Workloads that can accommodate higher latency will benefit from the substantial cost reductions and throughput gains.
 
@@ -156,12 +183,11 @@ Looking ahead, future research and blog posts could explore additional factors i
 
 Endnotes:
 
-MI300-05A: Calculations conducted by AMD Performance Labs as of November 17, 2023, for the AMD Instinct™ MI300X OAM accelerator 750W (192 GB HBM3) designed with AMD CDNA™ 3 5nm FinFet process technology resulted in 192 GB HBM3 memory capacity and 5.325 TFLOPS peak theoretical memory bandwidth performance. MI300X memory bus interface is 8,192 and memory data rate is 5.2 Gbps for total peak memory bandwidth of 5.325 TB/s (8,192 bits memory bus interface * 5.2 Gbps memory data rate/8).
-The highest published results on the NVidia Hopper H200 (141GB) SXM GPU accelerator resulted in 141GB HBM3e memory capacity and 4.8 TB/s GPU memory bandwidth performance.
-https://nvdam.widen.net/s/nb5zzzsjdf/hpc-datasheet-sc23-h200-datasheet-3002446
-The highest published results on the NVidia Hopper H100 (80GB) SXM5 GPU accelerator resulted in 80GB HBM3 memory capacity and 3.35 TB/s GPU memory bandwidth performance.
-https://resources.nvidia.com/en-us-tensor-core/nvidia-tensor-core-gpu-datsheet.
+<!-- markdownlint-disable -->
+[^1]: MI300-074: Testing conducted by AMD Performance Labs as of January 15, 2025, on the following two systems: AMD: Supermicro AS - 8125GS-TNMR2 with 2x AMD EPYC 9654 Processors, 8x AMD MI300X (192GB, 750W) GPUs, 1 NUMA node per socket, 2.2 TiB (24 DIMMs, 4800 mts, 96 GiB/DIMM), Root drive + Data drive combined: 2x 960GB Samsung  MZ1L2960HCJR-00A07 4x 3.84TB Samsung MZQL23T8HCLS-00A07, Ubuntu 22.04.4 LTS with Linux kernel 5.15.0-116-generic, host GPU driver 6.2.1, System BIOS 1.8 GPU: SMC FW 00.85.112.142.
+Latency is calculated as elapsed_time for processing input_lenghts + output_lengths. Throughput is calculated as requests \* output lengths / elapsed_time.
 
-MI300-074: Testing conducted by AMD Performance Labs as of January 15, 2025, on the following two systems: AMD: Supermicro AS - 8125GS-TNMR2 with 2x AMD EPYC 9654 Processors, 8x AMD MI300X (192GB, 750W) GPUs, 1 NUMA node per socket, 2.2 TiB (24 DIMMs, 4800 mts, 96 GiB/DIMM), Root drive + Data drive combined: 2x 960GB Samsung  MZ1L2960HCJR-00A07 4x 3.84TB Samsung MZQL23T8HCLS-00A07, Ubuntu 22.04.4 LTS with Linux kernel 5.15.0-116-generic, host GPU driver 6.2.1, System BIOS 1.8 GPU: SMC FW 00.85.112.142.
-
-Latency is calculated as elapsed_time for processing input_lenghts + output_lengths. Throughput is calculated as requests * output lengths / elapsed_time.
+[^2]: MI300-05A: Calculations conducted by AMD Performance Labs as of November 17, 2023, for the AMD Instinct™ MI300X OAM accelerator 750W (192 GB HBM3) designed with AMD CDNA™ 3 5nm FinFet process technology resulted in 192 GB HBM3 memory capacity and 5.325 TFLOPS peak theoretical memory bandwidth performance. MI300X memory bus interface is 8,192 and memory data rate is 5.2 Gbps for total peak memory bandwidth of 5.325 TB/s (8,192 bits memory bus interface * 5.2 Gbps memory data rate/8).
+The highest published results on the NVidia Hopper H200 (141GB) SXM GPU accelerator resulted in 141GB HBM3e memory capacity and 4.8 TB/s GPU memory bandwidth performance.https://nvdam.widen.net/s/nb5zzzsjdf/hpc-datasheet-sc23-h200-datasheet-3002446
+The highest published results on the NVidia Hopper H100 (80GB) SXM5 GPU accelerator resulted in 80GB HBM3 memory capacity and 3.35 TB/s GPU memory bandwidth performance.https://resources.nvidia.com/en-us-tensor-core/nvidia-tensor-core-gpu-datsheet.
+<!-- markdownlint-enable -->
