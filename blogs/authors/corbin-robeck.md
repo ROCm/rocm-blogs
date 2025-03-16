@@ -15,6 +15,7 @@
 :align: left
 ```
 
-Corbin Robeck is a member of AMD Research working on GPU kernel performance analysis and optimization
-of machine learning compilers and HPC frameworks. Prior to AMD, Corbin was a member of the US Department
-of Defense HPC CREATE program and the computational science and engineering division at Argonne National Lab.
+Corbin Robeck is a Senior Member of Technical Staff on the ML Compiler and GPU kernel performance analysis and optimization team within
+AMD Research working on GPU compilers and kernel performance optimization of machine learning compilers and frameworks.
+Prior to AMD, Corbin was a member of the US Department of Defense HPC program and the computer science and engineering
+division at Argonne National Lab.
