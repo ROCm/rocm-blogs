@@ -75,14 +75,14 @@ The ROCm [Pytorch Training docker container](https://hub.docker.com/r/rocm/pytor
 
 ### Megatron-LM Training Docker
 
-The ROCm [Megatron-LM training docker](https://github.com/ROCm/Megatron-LM/tree/megatron_release_v25.3) is designed to enable efficient training of large-scale language models on AMD Instinct MI300X and MI325X GPUs.
+The ROCm [Megatron-LM training docker container](https://hub.docker.com/r/rocm/megatron-lm) is designed to enable efficient training of large-scale language models on AMD Instinct MI300X and MI325X GPUs.
 AMD Megatron-LM delivers enhanced scalability, improved performance and resource utilization for AI workloads. It is purpose-built to support models like Meta’s Llama 2, Llama 3, and Llama 3.1, enabling developers to train next-generation AI models with greater efficiency.
 
  **<u>Key Highlights</u>**
 
 - The Megatron-LM focused Docker image is built on top of the Pytorch 6.1 release training Docker.
 
-- Supports multimode training, DeepseekV2 Lite and FP8 datatypes.
+- Supports multimode training, DeepseekV2-Lite and FP8 datatypes.
   
 ## Finetuning with Torchtune
 
@@ -92,7 +92,7 @@ Using an updated Docker equipped with optimized torchtune, users can have a stre
   
 ```shell
 docker pull rocm/pytorch-training:v25.3
-docker run -it --device /dev/dri --device /dev/kfd --network host --ipc host -- group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined -- privileged -v $HOME:$HOME -v $HOME/.ssh:/root/.ssh --shm-size 64G --name training_env rocm/pytorch-training:v25.3
+docker run -it --device /dev/dri --device /dev/kfd --network host --ipc host --group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined --privileged -v $HOME:$HOME -v $HOME/.ssh:/root/.ssh --shm-size 64G --name training_env rocm/pytorch-training:v25.3
 ```
 
 - Clone ROCm MAD benchmarking repo
@@ -136,8 +136,7 @@ Figure 2. Llama 3.1 8B FP8 Training TFLOPS[^2]
 
 ## MoE support with Megatron-LM training
 
-AMD also offers support for Mixture of Experts (MoE) models—a class of deep learning architectures that leverage multiple specialized sub-models, or "experts." MoE models dynamically route input data to the most relevant experts, enabling the scaling of model capacity
-while maintaining computational efficiency by activating only a subset of experts per input.
+AMD also offers support for Mixture of Experts (MoE) models—a class of deep learning architectures that leverage multiple specialized sub-models, or "experts." MoE models dynamically route input data to the most relevant experts, enabling the scaling of model capacity while maintaining computational efficiency by activating only a subset of experts per input.
 
 We observe that a single node (8x MI300X) delivers about 1.29x better performance vs. single node(8x H100) on DeepSeekV2-Lite training. We also now have an added advantage of being able to train the full model without checkpoint recompute to support larger micro batch size as shown in Figure 3.
 
@@ -184,8 +183,8 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     Docker version: rocm/pytorch-training:v25.3 \
     \
     NVIDIA H100 platform: System Model: Supermicro AS -8125GS-TNHR \
-    CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per pocket, 2 Threads per core) NUMA Config: 1 NUMA node per socket Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
-    Disk: RData drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
+    CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per socket, 2 Threads per core) NUMA Config: 1 NUMA node per socket Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
+    Disk: Data drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
     Root drive: 1.75 TiB Micron MTFDDAK1T9TDS-1AW1ZA \
     GPU: 8x NVIDIA H100 80GB HBM3 700W \
     Host OS: Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic \
@@ -203,7 +202,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     Host OS: Ubuntu 22.04.5 LTS with Linux kernel 5.15.0-122-generic. \
     System BIOS: 5.27 \
     Host GPU Driver: 6.3.0 ROCm 6.3 (Pre-release) \
-    Docker version: rocm/megatron-lmg:v25.3
+    Docker version: rocm/megatron-lm:v25.3
 [^3]: MI300-080 On average, a system with 8x AMD Instinct MI300X GPUs shows up to  1.29x better performance comparing to a similarly configured system with 8x NVIDIA H100 GPUs, in the DeepSeekV2-Lite model training benchmark. Testing done by AMD on 02/014/2025, results may vary. \
     SYSTEM CONFIGURATION: \
     AMD Instinct™ MI300X platform System Model: Supermicro GPU A+ Server AS - 8125GS-TNMR2 \
@@ -215,17 +214,17 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     Host OS: Ubuntu 22.04.5 LTS with Linux kernel 5.15.0-122-generic. \
     System BIOS: 5.27 \
     Host GPU Driver: 6.3.0 ROCm 6.3 (Pre-release) \
-    Docker version: rocm/megatron-lmg:v25.3 \
+    Docker version: rocm/megatron-lm:v25.3 \
     \
     NVIDIA H100 platform: \
     System Model: Supermicro AS -8125GS-TNHR \
     CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per pocket, 2 Threads per core) \
     NUMA Config: 1 NUMA node per socket \
     Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
-    Disk: RData drives: 8x 7 TiB INTEL SSDPF2KX076T1 NVMe SSDs \
+    Disk: Data drives: 8x 7 TiB INTEL SSDPF2KX076T1 NVMe SSDs \
     Root drive: 1.75 TiB Micron MTFDDAK1T9TDS-1AW1ZA \
     GPU: 8x NVIDIA H100 80GB HBM3 700W \
-    Host OS: Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic \
+    Host OS: Ubuntu 22.04.5 LTS with Linux kernel titan 6.8.0-51-generic \
     Host GPU Driver:535.183.01 \
     Firmware System: BIOS 2.1 \
     Docker version: nvcr.io/nvidia/pytorch:24.10-py3  
