@@ -8,7 +8,7 @@
 
 # Seungrok Jung
 
-```{image} ./data/seungrok-jung.png
+```{image} ./data/Seungrok-Jung.png
 :alt: Seungrok
 :class: bg-primary
 :height: 250px
