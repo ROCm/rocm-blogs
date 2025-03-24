@@ -101,7 +101,7 @@ using vLLM
 VLLM_SEED=42 VLLM_MLA_DISABLE=0 VLLM_USE_TRITON_FLASH_ATTN=0 \ 
 VLLM_USE_ROCM_FP8_FLASH_ATTN=0 VLLM_FP8_PADDING=1 VLLM_USE_AITER_MOE=1 \
 VLLM_USE_AITER_BLOCK_GEMM=1 VLLM_USE_AITER_MLA=0 vllm serve \ 
-/workspace/models/DeepSeek-R1 \
+"deepseek-ai/DeepSeek-V3" \
   --host 0.0.0.0 \
   --port 8000 \
   --api-key abc-123 \
@@ -116,7 +116,7 @@ using SGLang
 ```bash
 CK_BLOCK_GEMM=1 SGLANG_ROCM_AITER_BLOCK_MOE=1 RCCL_MSCCL_ENABLE=0 \ 
 DEBUG_HIP_BLOCK_SYN=1024 GPU_FORCE_BLIT_COPY_SIZE=64 \
-python3 -m sglang.launch_server  --model /models/DeepSeek-V3/ \
+python3 -m sglang.launch_server  --model "deepseek-ai/DeepSeek-V3" \
  --tp 8 --trust-remote-code
 
 ```
@@ -147,14 +147,14 @@ from aiter.tuned_gemm import tgemm
 import torch
 
 class LinearLayer(torch.nn.Module):
-	def **init**(self, in_features, out_features):
-		super(LinearLayer, self).**init**()
+	def __init__(self, in_features, out_features):
+		super(LinearLayer, self).__init__()
 		self.weight = torch.nn.Parameter(torch.randn(out_features, in_features).cuda())
 		self.bias = torch.nn.Parameter(torch.randn(out_features).cuda())
 
 	def forward(self, input):
 		input = input.cuda()
-		return [tgemm.mm](http://tgemm.mm/)(input, self.weight, self.bias, None, None)
+		return tgemm.mm(input, self.weight, self.bias, None, None)
 
 # Define input size and layer size
 in_features = 128
