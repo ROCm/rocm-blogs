@@ -80,7 +80,7 @@ AMD Megatron-LM delivers enhanced scalability, improved performance and resource
 
  **<u>Key Highlights</u>**
 
-- The Megatron-LM focused Docker image is built on top of the Pytorch 6.1 release training Docker.
+- The Megatron-LM focused Docker image is built on top of the Pytorch training Docker.
 
 - Supports multimode training, DeepseekV2 Lite and FP8 datatypes.
   
@@ -92,7 +92,7 @@ Using an updated Docker equipped with optimized torchtune, users can have a stre
   
 ```shell
 docker pull rocm/pytorch-training:v25.3
-docker run -it --device /dev/dri --device /dev/kfd --network host --ipc host -- group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined -- privileged -v $HOME:$HOME -v $HOME/.ssh:/root/.ssh --shm-size 64G --name training_env rocm/pytorch-training:v25.3
+docker run -it --device /dev/dri --device /dev/kfd --network host --ipc host --group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined --privileged -v $HOME:$HOME -v $HOME/.ssh:/root/.ssh --shm-size 64G --name training_env rocm/pytorch-training:v25.3
 ```
 
 - Clone ROCm MAD benchmarking repo
@@ -185,7 +185,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     \
     NVIDIA H100 platform: System Model: Supermicro AS -8125GS-TNHR \
     CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per pocket, 2 Threads per core) NUMA Config: 1 NUMA node per socket Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
-    Disk: RData drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
+    Disk: Root drive + Data drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
     Root drive: 1.75 TiB Micron MTFDDAK1T9TDS-1AW1ZA \
     GPU: 8x NVIDIA H100 80GB HBM3 700W \
     Host OS: Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic \
