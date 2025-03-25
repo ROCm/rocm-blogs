@@ -83,6 +83,8 @@ By leveraging AITER’s advanced optimizations, users can experience significant
 - **AITER MLA for decode:** Provides an impressive **up to 17x performance boost**[^4], dramatically enhancing decoding efficiency.
 - **AITER MHA for prefill:** Realizes up to **14x performance boost**[^5], significantly improving Multi-Head Attention (MHA) performance during prefill stages.
 
+> Note: As of this blog's publication, AITER currently provides a performance boost for DeepSeek models on Instinct GPUs via the vLLM and SGLang frameworks. Support for additional       state-of-the-art models is currently under active development and will be added in future vLLM and SGLang Docker releases.
+
 ## AITER's Integration in vLLM/SGLang for DeepSeek V3/R1
 
 The integration of AITER into vLLM/SGLang for the DeepSeek v3/r1 model has led to remarkable improvements in total token throughput (tokens per second, tok/s). Before AITER’s integration, the throughput stood at **6484.76 tok/s**. After incorporating AITER's optimizations, throughput dramatically increased to **13704.36 tok/s**, marking more than a **2x improvement**[^6] in processing speed as shown in Figure 2 below.
@@ -209,6 +211,10 @@ AITER is not just limited to the above mentioned APIs, there are a lot of featur
 ## Summary
 
 In this blog we introduced AMD's AI Tensor Engine for ROCm (AITER), our centralized high performance AI operators repository, designed to significantly accelerate AI workloads on AMD GPUs. AITER has already demonstrated its value by substantially accelerating AI workloads and significantly improving efficiency and performance. AMD remains committed to continuous innovation, with numerous further enhancements and optimization efforts currently underway. The roadmap includes even greater advancements, which promise to set new standards in AI computation. Stay tuned as AMD continues to push the boundaries of performance, ensuring machine learning engineers can consistently achieve faster, more efficient, and more powerful AI solutions.
+
+```{update} 24 March 2025
+A note around the current scope of AITER was added under the [Performance Gains with AITER](#performance-gains-with-aiter) section.
+```
 
 ## Additional Resources
 
