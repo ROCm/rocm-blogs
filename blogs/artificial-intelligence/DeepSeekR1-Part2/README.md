@@ -185,7 +185,7 @@ docker run -it \
 
 ```shell
 python3 -m sglang.launch_server \
-    --model \model \
+    --model \
     --tp 8 \
     --trust-remote-code \
     --chunked-prefill-size 131072 \
@@ -233,7 +233,7 @@ docker run -it \
 ```shell
 export SGL_ENABLE_JIT_DEEPGEMM=1
 python3 -m sglang.launch_server \
-    --model \model \
+    --model \
     --trust-remote-code \
     --tp 8 \
     --mem-fraction-static 0.9 \
@@ -282,11 +282,11 @@ MI300X GPUs:
 
 ## Additional Resources
 
-- ROCm AI Developer Hub:(https://www.amd.com/en/developer/resources/rocm-hub/dev-ai.html)
-- SGLang Docker Images:(https://hub.docker.com/r/lmsysorg/sglang/)
-- SGLang Docker files for production deployment (https://sglang/docker/Dockerfile.rocm%20at%20main%20·%20sgl-project/sglang)
-- GITHUB FOR AITER <https://github.com/ROCm/aiter>.
-- AITER Blog <https://rocm.blogs.amd.com/software-tools-optimization/aiter:-ai-tensor-engine-for-rocm%E2%84%A2/README.html>
+- [ROCm AI Developer Hub](https://www.amd.com/en/developer/resources/rocm-hub/dev-ai.html)
+- [SGLang Docker Images](https://hub.docker.com/r/lmsysorg/sglang/tags)
+- SGLang Docker files for production deployment: [Dockerfile](https://github.com/sgl-project/sglang/blob/main/docker/Dockerfile.rocm)
+- GitHub For AITER: <https://github.com/ROCm/aiter>.
+- [AITER Blog](https://rocm.blogs.amd.com/software-tools-optimization/aiter:-ai-tensor-engine-for-rocm™/README.html)
 
 [^1]: On average, a system configured with an AMD Instinct™ MI300X GPU running  DeepSeek R1 with SGLang offers 2X–5X higher throughput at the same latency, 75% better throughput and 60% lower latency for same batch size than Nvidia HGX H200. Testing done by AMD on 03/13/2025, results may vary based on configuration, usage, software version, and optimizations.
 
