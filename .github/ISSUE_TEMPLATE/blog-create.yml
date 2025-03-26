@@ -19,6 +19,15 @@ body:
     validations:
       required: false
   - type: input
+    id: file_path_name
+    attributes:
+      label: "File Path Name"
+      description: "Please enter the name of your directory name (MAXIMUM 50 CHARACTERS)"
+      placeholder: |
+        Suggested format: word1-word2-word3. Please keep the directory name to maximum three words separated by a hyphen.
+    validations:
+      required: true
+  - type: input
     id: blog_authors
     attributes:
       label: "Author"

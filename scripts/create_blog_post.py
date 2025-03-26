@@ -28,19 +28,20 @@ def create_blog_post_from_args():
 
     args = gather_args()
     blog_title = args[0]
-    blog_authors = args[1]
-    blog_tags = args[2]
-    blog_category = args[3]
-    blog_audience = args[4]
-    blog_key_value_proposition = args[5]
-    blog_keywords = args[6]
-    blog_amd_technical_blog_type = args[7]
-    blog_amd_product_type = args[8]
-    blog_amd_developer_type = args[9]
-    blog_amd_applications = args[10]
-    blog_amd_industries = args[11]
-    blog_description = args[12]
-    blog_amd_deployment = args[13]
+    blog_file_path = args[1]
+    blog_authors = args[2]
+    blog_tags = args[3]
+    blog_category = args[4]
+    blog_audience = args[5]
+    blog_key_value_proposition = args[6]
+    blog_keywords = args[7]
+    blog_amd_technical_blog_type = args[8]
+    blog_amd_product_type = args[9]
+    blog_amd_developer_type = args[10]
+    blog_amd_applications = args[11]
+    blog_amd_industries = args[12]
+    blog_description = args[13]
+    blog_amd_deployment = args[14]
 
     # check all of the date formats
 
@@ -191,7 +192,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         note="{note}",
     )
 
-    dir_blog_name = truncate_string(blog_title)
+    dir_blog_name = truncate_string(blog_file_path[:50])
     dir_category_name = truncate_string(blog_category)
 
     if dir_category_name == "applications-models":
