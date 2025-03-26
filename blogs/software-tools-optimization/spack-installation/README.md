@@ -226,7 +226,23 @@ To install, again we just use `spack install hipblas amdgpu_target=gfx942`, this
 
 
 ## Spack environments
-Compared to a simple `spack install`, explicitly creating an environment provides some advantages. Environments can be set up using `spack.yaml` files. Below is an example `spack.yaml` that installs `hipblas` (and all of its dependencies) targeting `gfx942`.
+A Spack environment is used to group a set of specs intended for some purpose to be built, rebuilt, and deployed in a coherent fashion. You can think of an environment as a blueprint for a set of related software specifications (specs). It defines: 
+
+* Which packages to install
+* How each package is configured
+* Where everything gets installed
+
+Instead of installing packages one-by-one and manually loading modules, environments let you group specs together for a specific purpose - e.g. for creating virtual machine or Docker images for deployment in a [cloud environment](https://www.amd.com/en/solutions/data-center/cloud-computing.html) targeting a specific AMD GPU architecutre.
+
+With a single command, you can concretize, install, or activate the entire environment. In concretization, Spack resolves all dependencies and configuration options across your environment. This step prepares everything for installation in a consistent and reproducible way—far more robust than cobbling together ad-hoc scripts. You may have noticed in our previous `spack install hipblas` example above, specifying `amdgpu_target=gfx942` only applied that configuration to the `hipblas` package; this variant does not necessarily propagate to its dependencies. To ensure the `amdgpu_target` option propagates to all packages that have this variant, we can use the `packages.all.prefer: ["amdgpu_target=gfx942"]` option. 
+
+Environments also provide stability. Even if upstream Spack packages change, your environment remains unchanged until you choose to re-concretize. That makes it easy to reproduce builds and maintain consistency over time.
+
+By specifying install paths, environments give you a clear filesystem view of what's been installed. Under the hood, Spack still uses a single, deduplicated software installation that can be shared across multiple environments—saving space and reducing rebuilds. With an environment, we can specify a filesystem view Spack Environments can have an associated filesystem view, which is a directory with a more traditional structure, e.g.  `<view>/bin`, `<view>/lib`, `<view>/include` in which all files of the installed packages in the environment are linked.
+
+Finally, activating an environment loads only the modules you need for that specific workflow. Spack can even generate shell scripts to automate module loading for the environment—keeping your software environment lean, relevant, and predictable.
+
+As an example, we can set up an environment using a yaml file that defines what packages we want to install, how to install them, and where to install them. Below is an example environment file that installs `hipblas` and all of its dependencies targeting the `gfx942` AMD GPU architecture.
 
 ```yaml
 spack:
@@ -238,17 +254,100 @@ spack:
     all:
       prefer:
       - "amdgpu_target=gfx942"
-  config:
-    install_tree: $HOME/opt/spack-rocm
-    view: $HOME/opt/rocm
+  view: /opt/rocm
 ```
 
-Notice how even specifying `amdgpu_target=gfx942` after `spack install hipblas` only applies that configuration to the `hipblas` package; it does not propagate to its dependencies. The `packages.all.prefer:` lines in the `spack.yaml` propagate the `amdgpu_target=gfx942` requirement to all dependencies that accept `amdgpu_target` as an argument. We can also specify an install location through the spack `view` that creates a directory tree that is similar to the `/opt/rocm` directory tree you get from `apt`, `dnf`, or `yum` package managers. Finally, environment files give you a clear way to version control ROCm software environments for your VMs, Docker container images, etc. Since many applications that depend on ROCm packages utilize the `ROCM_PATH` environment variable, specifying a build location via `config.install_tree` can alleviate potential headaches related to build paths.
+In this example, hipBLAS and all of it's dependencies will be installed in a single Spack managed location and the filesystem view of the packages will be available at `/opt/rocm`. In essence, once this environment is installed, this would provide a hipBLAS installation much in the same way that `apt install hipblas` would.
 
-Moreover, we can quickly clean up build dependencies with Spack using `spack gc`, leaving our environment with only runtime dependencies.
+To work with environments, suppose this example environment file is stored in `$HOME/spack-env/spack.yaml`. You can activate this environment and concretize the build with the following command
+
+```sh
+spack env activate $HOME/spack-env
+spack concretize -f
+```
+
+To install this environment, you can run 
+```sh
+spack install
+spack gc -y
+```
+The last step here performs "garbage collection", removing packages that are only build-time dependencies. This can help lighten up the final installation.
+
 
 Read more about Spack environments [here](https://spack.readthedocs.io/en/latest/environments.html).
 
+### Using Spack environments to create Docker image recipes
+Another major benefit of using Spack environments is that you can easily create a Dockerfile to install just the ROCm packages you care about for the specific architectures you'd like to target. In continuing with our previous example, we can create a Dockerfile by doing the following :
+
+```sh
+# Navigate to the directory where your spack.yaml file is located
+cd $HOME/spack-env
+spack containerize > Dockerfile
+```
+This creates a two-stage build recipe that starts from Spack managed container images. In the first stage of the build (the "builder" stage), the environment is concretized and installed in the container and build-time dependencies are removed. Following this, all the binary files (executables, shared libraries, and static archives) found under the filesystem view are stripped of their debugging symbols and other non-essential metadata to further reduce the image size. The second build stage builds on a compatible base OS image without spack installed.  The file system view and installation tree are copied from the "builder stage" and the entrypoint is set to a shell that is preconfigured with the spack view paths defined in the environment.
+
+The full contents of the Dockerfile generated from this example are shown below.
+<details><summary>Output of <code>spack containerize > Dockerfile</code></summary>
+# Build stage with Spack pre-installed and ready to be used
+FROM spack/ubuntu-jammy:develop AS builder
+
+
+# What we want to install and how we want to install it
+# is specified in a manifest file (spack.yaml)
+RUN mkdir -p /opt/spack-environment && \
+set -o noclobber \
+&&  (echo spack: \
+&&   echo '  specs:' \
+&&   echo '  - hipblas@6.3.2' \
+&&   echo '  concretizer:' \
+&&   echo '    unify: true' \
+&&   echo '  packages:' \
+&&   echo '    all:' \
+&&   echo '      prefer:' \
+&&   echo '      - amdgpu_target=gfx942' \
+&&   echo '  view: /opt/views/view' \
+&&   echo '' \
+&&   echo '  config:' \
+&&   echo '    install_tree: /opt/software') > /opt/spack-environment/spack.yaml
+
+# Install the software, remove unnecessary deps
+RUN cd /opt/spack-environment && spack env activate . && spack install --fail-fast && spack gc -y
+
+# Strip all the binaries
+RUN find -L /opt/views/view/* -type f -exec readlink -f '{}' \; | \
+    xargs file -i | \
+    grep 'charset=binary' | \
+    grep 'x-executable\|x-archive\|x-sharedlib' | \
+    awk -F: '{print $1}' | xargs strip
+
+# Modifications to the environment that are necessary to run
+RUN cd /opt/spack-environment && \
+    spack env activate --sh -d . > activate.sh
+
+
+# Bare OS image to run the installed executables
+FROM ubuntu:22.04
+
+COPY --from=builder /opt/spack-environment /opt/spack-environment
+COPY --from=builder /opt/software /opt/software
+
+# paths.view is a symlink, so copy the parent to avoid dereferencing and duplicating it
+COPY --from=builder /opt/views /opt/views
+
+RUN { \
+      echo '#!/bin/sh' \
+      && echo '.' /opt/spack-environment/activate.sh \
+      && echo 'exec "$@"'; \
+    } > /entrypoint.sh \
+&& chmod a+x /entrypoint.sh \
+&& ln -s /opt/views/view /opt/view
+
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+CMD [ "/bin/bash" ]
+</details>
+
+Learn more about [creating containers with Spack](https://spack.readthedocs.io/en/latest/containers.html)
 
 ## Using Spack to understand ROCm dependencies
 
