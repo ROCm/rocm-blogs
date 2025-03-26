@@ -185,7 +185,7 @@ docker run -it \
 
 ```shell
 python3 -m sglang.launch_server \
-    --model \
+    --model /model \
     --tp 8 \
     --trust-remote-code \
     --chunked-prefill-size 131072 \
@@ -233,7 +233,7 @@ docker run -it \
 ```shell
 export SGL_ENABLE_JIT_DEEPGEMM=1
 python3 -m sglang.launch_server \
-    --model \
+    --model /model \
     --trust-remote-code \
     --tp 8 \
     --mem-fraction-static 0.9 \
