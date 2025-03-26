@@ -232,13 +232,13 @@ A Spack environment is used to group a set of specs intended for some purpose to
 * How each package is configured
 * Where everything gets installed
 
-Instead of installing packages one-by-one and manually loading modules, environments let you group specs together for a specific purpose - e.g. for creating virtual machine or Docker images for deployment in a [cloud environment](https://www.amd.com/en/solutions/data-center/cloud-computing.html) targeting a specific AMD GPU architecutre.
+Instead of installing packages one-by-one and manually loading modules, environments let you group specs together for a specific purpose; e.g. for creating virtual machine or Docker images for deployment in a [cloud environment](https://www.amd.com/en/solutions/data-center/cloud-computing.html) targeting a specific AMD GPU architecture.
 
 With a single command, you can concretize, install, or activate the entire environment. In concretization, Spack resolves all dependencies and configuration options across your environment. This step prepares everything for installation in a consistent and reproducible way—far more robust than cobbling together ad-hoc scripts. You may have noticed in our previous `spack install hipblas` example above, specifying `amdgpu_target=gfx942` only applied that configuration to the `hipblas` package; this variant does not necessarily propagate to its dependencies. To ensure the `amdgpu_target` option propagates to all packages that have this variant, we can use the `packages.all.prefer: ["amdgpu_target=gfx942"]` option. 
 
 Environments also provide stability. Even if upstream Spack packages change, your environment remains unchanged until you choose to re-concretize. That makes it easy to reproduce builds and maintain consistency over time.
 
-By specifying install paths, environments give you a clear filesystem view of what's been installed. Under the hood, Spack still uses a single, deduplicated software installation that can be shared across multiple environments—saving space and reducing rebuilds. With an environment, we can specify a filesystem view Spack Environments can have an associated filesystem view, which is a directory with a more traditional structure, e.g.  `<view>/bin`, `<view>/lib`, `<view>/include` in which all files of the installed packages in the environment are linked.
+By specifying install paths, environments give you a clear filesystem view of what's been installed. Under the hood, Spack still uses a single, deduplicated software installation that can be shared across multiple environments—saving space and reducing rebuilds. Spack Environments can have an associated filesystem view, which is a directory with a more traditional structure, e.g. `<view>/bin`, `<view>/lib`, `<view>/include` in which all files of the installed packages in the environment are linked.
 
 Finally, activating an environment loads only the modules you need for that specific workflow. Spack can even generate shell scripts to automate module loading for the environment—keeping your software environment lean, relevant, and predictable.
 
@@ -257,16 +257,16 @@ spack:
   view: /opt/rocm
 ```
 
-In this example, hipBLAS and all of it's dependencies will be installed in a single Spack managed location and the filesystem view of the packages will be available at `/opt/rocm`. In essence, once this environment is installed, this would provide a hipBLAS installation much in the same way that `apt install hipblas` would.
+In this example, hipBLAS and all of its dependencies will be installed in a single Spack managed location and the filesystem view of the packages will be available at `/opt/rocm`. In essence, once this environment is installed, this would provide a hipBLAS installation in much the same way that `apt install hipblas` would.
 
-To work with environments, suppose this example environment file is stored in `$HOME/spack-env/spack.yaml`. You can activate this environment and concretize the build with the following command
+To work with environments, suppose this example environment file is stored in `$HOME/spack-env/spack.yaml`. You can activate this environment and concretize the build with the following command:
 
 ```sh
 spack env activate $HOME/spack-env
 spack concretize -f
 ```
 
-To install this environment, you can run 
+To install this environment, simply run:
 ```sh
 spack install
 spack gc -y
@@ -288,6 +288,8 @@ This creates a two-stage build recipe that starts from Spack managed container i
 
 The full contents of the Dockerfile generated from this example are shown below.
 <details><summary>Output of <code>spack containerize > Dockerfile</code></summary>
+
+```
 # Build stage with Spack pre-installed and ready to be used
 FROM spack/ubuntu-jammy:develop AS builder
 
@@ -345,9 +347,10 @@ RUN { \
 
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/bin/bash" ]
+```
 </details>
 
-Learn more about [creating containers with Spack](https://spack.readthedocs.io/en/latest/containers.html)
+Learn more about [creating containers with Spack](https://spack.readthedocs.io/en/latest/containers.html).
 
 ## Using Spack to understand ROCm dependencies
 
