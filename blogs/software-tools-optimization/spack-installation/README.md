@@ -11,7 +11,7 @@ target_audience: AI/ML and HPC Developers.
 key_value_propositions: Users can utilize the Spack package manager to easily install ROCm components from source.
 myst:
     html_meta:
-        "author": "Author(s) of blog"
+        "author": "Garrett Byrd, Joe Schoonover"
         "description lang=en": "This blog post explains how to install ROCm and PyTorch from source using the Spack package manager."
         "keywords": "Scientific Computing, HPC, PyTorch"
         "property=og:locale": "en_US"
@@ -37,8 +37,7 @@ From the [Spack website](https://spack.io):
 
 Spack began as a from-source package manager, and while the team at Spack are working to provide [binaries for all Spack packages](https://spack.io/spack-binary-packages/), this is still the package manager's greatest strength.
 
-## What is a from-source package manager?
-A from-source package manager is just that—a package manager that builds its package from source (when available). Compare this to a tradtional package manager (e.g., `dpkg`/`apt` for Debian-based distros, or `yum`/`dnf` for RHEL-based distros) which installs pre-compiled binaries for each package. Put (extremely) simply can think of locally compiled binaries as being "fine-tuned" for the particular machine being used. Often, this results in greater performance. Compared to package manager-provided binaries, this also often results in a lower storage cost. 
+A from-source package manager is just that—a package manager that builds its package from source code (when available). Compare this to a tradtional package manager (e.g., `dpkg`/`apt` for Debian-based distros, or `yum`/`dnf` for RHEL-based distros) which installs pre-compiled binaries for each package. Put (extremely) simply, you can think of locally compiled binaries as being "fine-tuned" for the particular machine being used. Because spack allows you to select the compilers and build optimizations when compiling source code, their is potential to achieve greater performance. Additionally, for GPU accelerated tools and libraries like thos included in ROCm, building from source allows you to target specific GPU platforms rather than building for all supported architectures. This can result in reduction in storage costs for installing ROCm, which can be beneficial for creating lightweight container images that depend on ROCm. 
 
 ## Why install ROCm from source?
 If you are installing pre-compiled binaries on a supported operating system (e.g., [using `apt` to install ROCm on Ubuntu 24.04](https://rocm.docs.amd.com/projects/install-on-linux/en/docs-6.3.3/install/quick-start.html)), ROCm and its components come pre-built for [any ROCm-supported GPU](https://rocm.docs.amd.com/projects/install-on-linux/en/docs-6.3.3/reference/system-requirements.html). These builds are ideal for most linux package manager installs, so that everyday users need not worry about specific `gfx` versions.
@@ -46,22 +45,41 @@ If you are installing pre-compiled binaries on a supported operating system (e.g
 When installed through a traditional package manager, every component is built against every (supported) `gfx` version. For example, [rocBLAS builds against fourteen different `gfx` versions](https://github.com/ROCm/ROCm/blob/29ba151b48c34fa2129a87097936200ab5b494d8/tools/rocm-build/build_rocblas.sh#L34) (including `xnack` variants).
 As an example, if you are developing a ROCm-dependent application for a cluster of AMD Instinct™ MI300X Accelerators; you would only need ROCm components and kernels built against `gfx942`.
 
-There are are a few different methods by which you can install ROCm from source, such as [`make`](https://github.com/ROCm/ROCm/blob/develop/tools/rocm-build/README.md)  and [TheRock](https://github.com/ROCm/TheRock), AMD's lightweight open source build system for HIP and ROCm. The advantage of Spack is that it provides incredible ease-of-use. Continuing with our MI300X example, we can just `spack install hipblas` to install `hipBLAS`. (We can further influence the specifics of this build process using environments, as we will see below.)
+There are are a few different methods by which you can install ROCm from source, such as [`make`](https://github.com/ROCm/ROCm/blob/develop/tools/rocm-build/README.md)  and [TheRock](https://github.com/ROCm/TheRock), AMD's lightweight open source build system for HIP and ROCm. The advantage of Spack is that it provides incredible ease-of-use. With each release of ROCm, AMD has consistently kept the corresponding Spack packages up to dateContinuing with our MI300X example, we can just `spack install hipblas` to install `hipBLAS`. (We can further influence the specifics of this build process using environments, as we will see below.)
 
 Beyond even specific `gfx` versions, your application might not even require all default ROCm components.
 
-## Spack environments
+## Install ROCm accelerated packages with Spack
 The ROCm Documentation provides a [detailed guide on using Spack](https://rocm.docs.amd.com/projects/install-on-linux/en/docs-6.3.3/how-to/spack.html).
 
-As a quick refresher, getting started with Spack is quite easy. To install Spack, simply clone the repository and source `setup-env.sh`:
+Getting started with Spack is quite easy. To install Spack, simply clone the repository and source `setup-env.sh`:
 
 ```sh
-git clone https://github.com/spack/spack.git
-cd spack
-source share/spack/setup-env.sh
+git clone https://github.com/spack/spack.git ~/spack/
+source ~/spack/share/spack/setup-env.sh
 ```
 
-You must also have C, C++, and Fortran compilers installed.
+You must also have C, C++, and Fortran compilers installed. To help spack find your compilers, you can run the following
+
+```sh
+spack compiler find
+```
+
+To install hipblas targeting CDNA3 architectures, you can start by previewing what spack will install by using `spack spec`
+
+```sh
+spack spec hipblas amdgpu_target=gfx942
+ -- sample output
+```
+
+To install, use `spack install` ...
+
+
+
+## Spack environments
+Compared to a simple `spack install`, explicitly creating an environment like this provides two immediate advantages. -- 
+
+First, the `all.prefer:` lines `amdgpu_target=gfx942` propagates this requirement to all dependencies. Second, we can specify an install location through the spack `view` that creates a directory tree that is similar to the `/opt/rocm` directory tree you get from `apt`, `dnf`, or `yum` package managers. Last, environment files give you a clear way to version control ROCm software environments for your VMs, Docker container images, etc..... Since many applications that depend on ROCm packages utilize the `ROCM_PATH` environment variable, specifying a build location can alleviate potential headaches related to build paths.
 
 Environments can be set up using `spack.yaml` files. Below is a `spack.yaml` that installs `hipBLAS` (and all of its dependencies) targeting `gfx942`.
 
@@ -76,17 +94,20 @@ spack:
       prefer:
       - "amdgpu_target=gfx942"
   config:
-    install_tree: $HOME/opt/rocm
+    install_tree: $HOME/opt/spack-rocm
+    view: $HOME/opt/rocm
 ```
 
-Compared to a simple `spack install`, explicitly creating an environment like this provides two immediate advantages. First, the `all:`/`prefer:` lines `amdgpu_target=gfx942` propagates this requirement to all dependencies. Second, we can specify an install location. Since many ROCm packages utilize the `ROCM_PATH` environment variable, specifying a build location can alleviate potential headaches related to build paths.
+
 
 Read more about Spack environments [here](https://spack.readthedocs.io/en/latest/environments.html).
 
 Yet another advantage of Spack is that we can quickly clean up build dependencies using `spack gc`, leaving our environment with only runtime dependencies.
 
 
-## Understanding ROCm Components
+## Using Spack to understand ROCm dependencies
+
+### Understanding ROCm Components
 ROCm is not one piece of software. It is a collection of interconnected, focused components, such the [HIP](https://rocm.docs.amd.com/projects/HIP/en/docs-develop/what_is_hip.html) runtime API for heterogenous systems, [rocBLAS](https://rocm.docs.amd.com/projects/rocBLAS/en/latest/how-to/what-is-rocblas.html) (AMD's BLAS implementation for AMD GPUs), [hipFORT](https://rocm.docs.amd.com/projects/hipfort/en/latest/) (the HIP Fortran library), [various compilers](https://rocm.docs.amd.com/projects/llvm-project/en/latest/index.html), and many more application-specific tools and libraries.
 
 ROCm offically supports roughly 60 components. The exact list of component varies across multiple sources. Here are a few:
@@ -304,6 +325,9 @@ spack:
 ```
 
 ## Drivers
+Introduce why this is important here... With spack, we are creating an environment to build applications.. drivers are required to run those applications...
+
+
 See: [Linux Drivers for AMD Radeon Graphics](https://www.amd.com/en/support/download/linux-drivers.html)
 
 At this point it might be good to remind ourselves that the purpose of the ROCm software stack is to provide developers with the tools to program on (primarily) AMD GPUs. Under the hood, the developer stills needs the AMDGPU drivers to meaningfully interface with their AMD GPU. 
