@@ -184,11 +184,11 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     Docker version: rocm/pytorch-training:v25.3 \
     \
     NVIDIA H100 platform: System Model: Supermicro AS -8125GS-TNHR \
-    CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per pocket, 2 Threads per core) NUMA Config: 1 NUMA node per socket Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
+    CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per socket, 2 Threads per core) NUMA Config: 1 NUMA node per socket Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
     Disk: Root drive + Data drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
     Root drive: 1.75 TiB Micron MTFDDAK1T9TDS-1AW1ZA \
     GPU: 8x NVIDIA H100 80GB HBM3 700W \
-    Host OS: Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic \
+    Host OS: Ubuntu 22.04.5 LTS with Linux kernel titan 6.8.0-51-generic \
     Host GPU Driver:535.183.01 \
     Firmware System: BIOS 2.1 \
     Docker version:nvcr.io/nvidia/pytorch:25.01-py3
@@ -203,7 +203,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     Host OS: Ubuntu 22.04.5 LTS with Linux kernel 5.15.0-122-generic. \
     System BIOS: 5.27 \
     Host GPU Driver: 6.3.0 ROCm 6.3 (Pre-release) \
-    Docker version: rocm/megatron-lmg:v25.3
+    Docker version: rocm/megatron-lm:v25.3
 [^3]: MI300-080 On average, a system with 8x AMD Instinct MI300X GPUs shows up to  1.29x better performance comparing to a similarly configured system with 8x NVIDIA H100 GPUs, in the DeepSeekV2-Lite model training benchmark. Testing done by AMD on 02/014/2025, results may vary. \
     SYSTEM CONFIGURATION: \
     AMD Instinct™ MI300X platform System Model: Supermicro GPU A+ Server AS - 8125GS-TNMR2 \
@@ -215,17 +215,17 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     Host OS: Ubuntu 22.04.5 LTS with Linux kernel 5.15.0-122-generic. \
     System BIOS: 5.27 \
     Host GPU Driver: 6.3.0 ROCm 6.3 (Pre-release) \
-    Docker version: rocm/megatron-lmg:v25.3 \
+    Docker version: rocm/megatron-lm:v25.3 \
     \
     NVIDIA H100 platform: \
     System Model: Supermicro AS -8125GS-TNHR \
     CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per pocket, 2 Threads per core) \
     NUMA Config: 1 NUMA node per socket \
     Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
-    Disk: RData drives: 8x 7 TiB INTEL SSDPF2KX076T1 NVMe SSDs \
+    Disk: Data drives: 8x 7 TiB INTEL SSDPF2KX076T1 NVMe SSDs \
     Root drive: 1.75 TiB Micron MTFDDAK1T9TDS-1AW1ZA \
     GPU: 8x NVIDIA H100 80GB HBM3 700W \
-    Host OS: Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic \
+    Host OS: Ubuntu 22.04.5 LTS with Linux kernel titan 6.8.0-51-generic \
     Host GPU Driver:535.183.01 \
     Firmware System: BIOS 2.1 \
     Docker version: nvcr.io/nvidia/pytorch:24.10-py3  
