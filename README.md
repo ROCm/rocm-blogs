@@ -20,3 +20,5 @@ experiment with. Our intention is to provide content that targets domain experts
 computational/data scientists alike. While our optimization strategies may be specific to a particular
 application/model, we believe that the content can serve as a guideline and an effective starting point to help
 you get the best experience out of your AMD GPUs.
+
+We welcome external contributions but keep in mind that we do exercise our editorial discretion on all content.

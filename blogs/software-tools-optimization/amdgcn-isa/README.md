@@ -534,7 +534,7 @@ buffer_store_dword v1, off, s[0:3], 0 offset:16
 buffer_store_dword v1, off, s[0:3], 0 offset:80
 ```
 
-Note that the spillage of regsiters to scratch memory is heavily dependent on the GPU architecture and version of ROCm&trade;.
+Note that the spillage of registers to scratch memory is heavily dependent on the GPU architecture and version of ROCm&trade;.
 
 ### Shifted copy
 

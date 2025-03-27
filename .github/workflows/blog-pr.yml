@@ -52,7 +52,7 @@ jobs:
           BLOG_TITLE="${{ github.event.issue.title }}"
 
           BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[New Post\][[:space:]]*//')
-          
+          BLOG_FILE_PATH=$(extract_field "File Path Name")
           BLOG_AUTHORS=$(extract_field "Author")
           BLOG_TAGS=$(extract_field "Tags")
           BLOG_CATEGORY=$(extract_field "Category")
@@ -69,6 +69,7 @@ jobs:
           BLOG_JIRA=$(extract_field "Jira Ticket")
           
           echo "Blog Title: $BLOG_TITLE"
+          echo "Blog File Path: $BLOG_FILE_PATH"
           echo "Blog Author(s): $BLOG_AUTHORS"
           echo "Blog Tags: $BLOG_TAGS"
           echo "Blog Category: $BLOG_CATEGORY"
@@ -127,7 +128,7 @@ jobs:
           echo "Current date: $CURRENT_DATE"
 
           if [ "$VALIDATION_PASSED" = "true" ]; then
-            python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
+            python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_FILE_PATH" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
           fi
           
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
