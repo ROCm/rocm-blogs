@@ -38,7 +38,7 @@ From the [Spack website](https://spack.io):
 
 Spack began as a from-source package manager, and while the team at Spack are working to provide [binaries for all Spack packages](https://spack.io/spack-binary-packages/), this is still the package manager's greatest strength.
 
-A *from-source* package manager is just that—a package manager that builds its packages from source code (when available). Compare this to a tradtional package manager (e.g., `dpkg`/`apt` for Debian-based distros, or `yum`/`dnf` for RHEL-based distros) which installs pre-compiled binaries for each package. Put (extremely) simply, you can think of locally compiled binaries as being "fine-tuned" for the particular machine being used. Because Spack allows you to select the compilers and build optimizations when compiling source code, there is potential to achieve greater performance. Additionally, for GPU accelerated tools and libraries like thos included in ROCm, building from source allows you to target specific GPU platforms rather than building for all supported architectures. This can result in reduction in storage costs for installing ROCm, which can be beneficial for creating lightweight container images that depend on ROCm. 
+A *from-source* package manager is just that—a package manager that builds its packages from source code (when available). Compare this to a traditional package manager (e.g., `dpkg`/`apt` for Debian-based distros, or `yum`/`dnf` for RHEL-based distros) which installs pre-compiled binaries for each package. Put (extremely) simply, you can think of locally compiled binaries as being "fine-tuned" for the particular machine being used. Because Spack allows you to select the compilers and build optimizations when compiling source code, there is potential to achieve greater performance. Additionally, for GPU accelerated tools and libraries like those included in ROCm, building from source allows you to target specific GPU platforms rather than building for all supported architectures. This can result in reduction in storage costs for installing ROCm, which can be beneficial for creating lightweight container images that depend on ROCm. 
 
 
 ## Why install ROCm from source?
@@ -357,9 +357,8 @@ Learn more about [creating containers with Spack](https://spack.readthedocs.io/e
 ### Understanding ROCm Components
 ROCm is not one piece of software. It is a collection of interconnected, focused components, such the [HIP](https://rocm.docs.amd.com/projects/HIP/en/docs-develop/what_is_hip.html) runtime API for heterogenous systems, [rocBLAS](https://rocm.docs.amd.com/projects/rocBLAS/en/latest/how-to/what-is-rocblas.html) (AMD's BLAS implementation for AMD GPUs), [hipFORT](https://rocm.docs.amd.com/projects/hipfort/en/latest/) (the HIP Fortran library), [various compilers](https://rocm.docs.amd.com/projects/llvm-project/en/latest/index.html), and many more application-specific tools and libraries.
 
-ROCm offically supports roughly 70 components, but the exact list of component varies across multiple sources. Here are a few:
+ROCm officially supports roughly 70 components, but the exact list of component varies across multiple sources. Here are a few:
 
-#### Lists of ROCm Components
 - [What is ROCm?](https://rocm.docs.amd.com/en/latest/what-is-rocm.html) $^{[1]}$
 - [`ROCm/default.xml`](https://github.com/ROCm/ROCm/blob/develop/default.xml) $^{[2]}$
 - [ROCm Documentation for Spack](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/spack.html#rocm-packages-in-spack) $^{[1]}$
@@ -378,11 +377,11 @@ The landscape of ROCm components is best laid out by the following graphic, take
 Figure 1: The ROCm software stack
 </p>
 
-The ROCm stack relies on lower layers of runtimes and compilers which are generally essential for most ROCm components; i.e., these are the "meat and potatoes" of ROCm. Above these layers are **Tools**, which are quite handy for developers, but are also used by some ROCm components. The ROCm stack becomes particularly discrete at the **Library** level. E.g., `rocJPEG` does not depend on `hipTensor` and vice versa. This motivates the question, "Why should we install all of ROCm?" if we are just 
+The ROCm stack relies on lower layers of runtimes and compilers which are generally essential for most ROCm components; i.e., these are the "meat and potatoes" of ROCm. Above these layers are **Tools**, which are quite handy for developers, but are also used by some ROCm components. The ROCm stack becomes particularly discrete at the **Library** level. E.g., `rocJPEG` does not depend on `hipTensor` and vice versa. This motivates the question, "Why should we install all of ROCm?" if we just need a specific component, and drives us to understand specific dependencies within the ROCm stack.
 
 ### ROCm Component Dependencies
 
-Spack is useful as a from-source package manager; as such, it also serves as a great system for understanding the dependencies of the ROCm stack. The following graphic has been generated using the outputs of `spack spec <package>`.
+As a package manager, Spack is also a great system for understanding the dependencies of the ROCm stack. The following graphic has been generated using the outputs of `spack spec <package>`.
 
 <img src="./images/dep_matrix.png">
 
@@ -392,9 +391,9 @@ Figure 2: Dependency matrix for ROCm 6.3.2.
 
 Light squares indicate that the package on the Y-axis does not depend on the given package on the X-axis. Dark squares indicate that there is a dependency. E.g., `hip` depends on `aqlprofile`, `hipcc`, `hipify-clang`, `hsa-rocr-dev`, `llvm-amdgpu`, `rocm-cmake`, `rocm-core`, `rocminfo`, and `rocprofiler-register`.
 
-Note: Package names are presented as they are in `spack`. Exact names may differ from `apt`/`dnf` packages and GitHub repositories.
+Note: Package names are presented as they are in Spack. Exact names may differ from `apt`/`dnf` packages and GitHub repositories.
 
-This graphic covers all of the major ROCm components that are packaged for Spack. We have also included a version of PyTorch + ROCm for reference.
+This graphic covers all of the major ROCm components that are packaged for Spack. We have also included a version of PyTorch + ROCm for reference. The edge here is the verbosity of `spack spec` lets us quickly understand the dependencies of tools that use ROCm, not just the interdependencies of ROCm components.
 
 
 ## Using Spack to install ROCm
@@ -469,7 +468,7 @@ However, AMD also offers PRO drivers for Radeon PRO and Instinct cards. These dr
 ## The Broader ROCm Ecosystem
 So far we have described ~70 components (either as `dnf`/`apt`/Spack packages or GitHub repositories) that compose the ROCm software stack. However, if you go to the [ROCm GitHub page](https://github.com/ROCm), you'll find that the ROCm organization has over 300 repositories. Why so many repositories if ROCm only has ~70 components?
 
-This is the beauty of open-source development. AMD is continuously maintaining ROCm integrations, compatibilty, backends, etc. for major GPU computing tools, such as PyTorch, JAX, Tensorflow, transformers, Triton, VLLM, just to list a few. In fact **110** of AMD's ROCm repositories are forks (as of publication). 
+This is the beauty of open-source development. AMD is continuously maintaining ROCm integrations, compatibility, backends, etc. for major GPU computing tools, such as PyTorch, JAX, Tensorflow, transformers, Triton, VLLM, just to list a few. In fact **110** of AMD's ROCm repositories are forks (as of publication). 
 
 Beyond forks, AMD actively creates new tools for ROCm. Some of these developing tools are  `AITER` (AI Tensor Engine for ROCm), `rocsift` (a C99 debugging API for ROCm), `rocRoller` (a software library for generating AMDGPU kernels), `mxDataGenerator` (a library for data generation indifferent floating point formats), and `TheRock` (a build system for HIP and ROCm).
 
