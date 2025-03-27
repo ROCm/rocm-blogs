@@ -8,7 +8,7 @@
 
 # Bruce Xue
 
-```{image} ./data/Bruce-Xue.png
+```{image} ./data/Bruce-Xue.jpg
 :alt: yigex
 :class: bg-primary
 :height: 250px
