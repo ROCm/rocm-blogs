@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "AMD Instinct<sup>TM</sup> MI325X Produces Strong Performance in MLPerf Inference v5.0"
 date: 2 April 2025
-author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, Eliot Li, AMD Quark Team and AMD Shark Team'
+author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, Eliot Li, AMD Quark Team, AMD Brevitas Team, and AMD Shark Team'
 thumbnail: "mlperf_blog_image2.jpeg"
 tags: GenAI, AI/ML, LLM, Optimization, Performance
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Provide potential customers and partners insight on how 
 language: English
 myst:
     html_meta:
-        "author": "Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, AMD Quark Team, Ean Garvey, Eliot Li"
+        "author": "Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, Eliot Li, AMD Quark Team, AMD Brevitas Team, and AMD Shark Team"
         "description lang=en": "We showcase MI325X GPU optimizations that power our MLPerf v5.0 results on Llama 2 70B, highlighting performance tuning, quantization, and vLLM advancements."
         "keywords": "MLPerf, Llama 2, Inference, Optimization"
         "property=og:locale": "en_US"
