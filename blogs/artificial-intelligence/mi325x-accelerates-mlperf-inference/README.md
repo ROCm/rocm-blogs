@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "AMD Instinct<sup>TM</sup> MI325X Produces Strong Performance in MLPerf Inference v5.0"
 date: 2 April 2025
-author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, Eliot Li, AMD Quark Team and AMD Shark team'
+author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, Eliot Li, AMD Quark Team and AMD Shark Team'
 thumbnail: "mlperf_blog_image2.jpeg"
 tags: GenAI, AI/ML, LLM, Optimization, Performance
 category: Applications & models
@@ -145,10 +145,10 @@ Our MLPerf Inference v5.0 submissions established performance leadership of the 
 
 |Host CPU   |   GPU    |
 |:-:|:--------:|
-|2X AMD EPYC 9575F (128 cores) |8X AMD Instinct MI325X  |
-|128 MiB L2, 512 MiB L3 caches |AMD Infinity Cache 256 MB|
+|2X AMD EPYC 9575F (128 cores) | 8X AMD Instinct MI325X  |
+|128 MiB L2, 512 MiB L3 caches | AMD Infinity Cache 256 MB|
 |2.21 TB DDR | 256 GB HBM3e Device Memory |
-|1500 – 5008 MHz |500-2100 MHz |
+|1500 – 5008 MHz | 500 – 2100 MHz |
 
 **Table 1:** The system configuration used in measuring the performance of Llama 2 70B benchmark
 
@@ -247,10 +247,10 @@ Table 2 summarizes the host CPU and GPU configurations that were used for runnin
 
 |Host CPU   |   GPU    |
 |:-:|:--------:|
-|2xAMD EPYC 9655 (192 cores) |8X AMD Instinct Mi325X (CPX/NPS1 Mode)  |
-|192 MiB L2, 768 Mib L3 caches |AMD Infinity Cache 256 MB|
+|2X AMD EPYC 9655 (192 cores) | 8X AMD Instinct Mi325X (CPX/NPS1 Mode) |
+|192 MiB L2, 768 MiB L3 caches | AMD Infinity Cache 256 MB|
 |2.21 TB DDR | 256 GB HBM3e Device Memory |
-|1500 – 5192 MHz |500-2100 MHz |
+|1500 – 5192 MHz | 500 – 2100 MHz |
 
 **Table 2:** The system configuration used in measuring the performance of stable-diffusion-xl on MI325X.
 
