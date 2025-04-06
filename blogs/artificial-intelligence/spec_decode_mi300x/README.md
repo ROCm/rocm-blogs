@@ -4,7 +4,7 @@ blog_title: "Accelerating LLM Inference: Up to 3x Speedup on MI300X with Specula
 date: 27 March 2025
 
 thumbnail: "thumbnail2.png"
-author: Sonali Singh, Karthik Sangaiah, Ryan Swann, Ganesh Dasika
+author: Sonali Singh, Karthik Sangaiah, Shenrun Zhang, Ryan Swann, Ganesh Dasika
 tags: AI/ML, LLM, GenAI
 category: Applications & models
 language: English
@@ -12,7 +12,7 @@ target_audience: AI developers, AI practitioners
 key_value_propositions: "Out-of-the-box performance improvement in LLM inference using speculative decoding on MI300X"
 myst:
     html_meta:
-        "author": "Sonali Singh, Karthik Sangaiah, Ryan Swann, Ganesh Dasika"
+        "author": "Sonali Singh, Karthik Sangaiah, Shenrun Zhang, Ryan Swann, Ganesh Dasika"
         "description lang=en": "This blog demonstrates out-of-the-box performance improvement in LLM inference using speculative decoding on MI300X."
         "keywords": "MI300X, Speculative Decoding, AMD, GPU, LLM, Inference"
         "property=og:locale": "en_US"
