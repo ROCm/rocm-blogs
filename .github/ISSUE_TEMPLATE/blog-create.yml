@@ -22,7 +22,14 @@ body:
     id: file_path_name
     attributes:
       label: "File Path Name"
-      description: "Please enter the name of your directory name (MAXIMUM 50 CHARACTERS)"
+      description: |
+        "Please enter the name of your directory name"
+
+        > **IMPORTANT NOTE:** The directory name must be unique and not already exist in the repository. If you are unsure, please check the repository before submitting this form.
+        > **WARNING**: The directory name must be in lowercase and contain no spaces or special characters. Use hyphens to separate words.
+        > **EXAMPLE**: If your blog is about "AMD ROCm", the directory name could be "amd-rocm". Please keep the directory name to a maximum of three words separated by a hyphen.
+
+        > **WARNING**: MAXIMUM OF 20 CHARACTERS AND 3 WORDS, ANY ADDITIONAL CHARACTERS WILL BE TRUNCATED.
       placeholder: |
         Suggested format: word1-word2-word3. Please keep the directory name to maximum three words separated by a hyphen.
     validations:
