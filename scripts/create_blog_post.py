@@ -55,6 +55,12 @@ def create_blog_post_from_args():
 
     day, month, year = today.split(" ")
 
+    images_template = """
+Upload your blog thumbnail here. Please delete this file after uploading image.
+
+delete me before publishing blog
+"""
+
     blog_template = """---
 blogpost: true
 blog_title: "{blog_title}"
@@ -192,7 +198,8 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         note="{note}",
     )
 
-    dir_blog_name = truncate_string(blog_file_path[:50])
+    blog_file_path = truncate_string(blog_file_path[:20])
+    dir_blog_name = "-".join(blog_file_path.split("-")[:3])
     dir_category_name = truncate_string(blog_category)
 
     if dir_category_name == "applications-models":
@@ -201,10 +208,14 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         dir_category_name = "software-tools-optimization"
 
     os.makedirs(f"blogs/{dir_category_name}/{dir_blog_name}", exist_ok=True)
+    os.makedirs(f"blogs/{dir_category_name}/{dir_blog_name}/images", exist_ok=True)
 
     # create README.md
     with open(f"blogs/{dir_category_name}/{dir_blog_name}/README.md", "w") as f:
         f.write(blog_template)
+
+    with open(f"blogs/{dir_category_name}/{dir_blog_name}/images/README.md", "w") as f:
+        f.write(images_template)
 
     return None
 
