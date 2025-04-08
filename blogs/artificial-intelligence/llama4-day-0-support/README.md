@@ -51,7 +51,7 @@ SOFTWARE.
 
 # Power Up Llama 4 with AMD Instinct: A Developer’s Day 0 Quickstart
 
-AMD is excited to announce Day 0 support for Meta’s latest leading multimodal intelligence Models — the Llama 4 Maverick and Scout models — on our AMD Instinct™ MI300X and MI325X GPU accelerators using vLLM. In this blog we will walk you through a step-by-step guide on deploying Meta’s Llama4 model using vLLM, docker setup, dependencies, and inference testing.
+AMD is excited to announce Day 0 support for Meta’s latest leading multimodal intelligence Models — the [Llama 4 Maverick and Scout models](https://ai.meta.com/blog/llama-4-multimodal-intelligence/) — on our AMD Instinct™ MI300X and MI325X GPU accelerators using vLLM. In this blog we will walk you through a step-by-step guide on deploying Meta’s Llama4 model using vLLM, docker setup, dependencies, and inference testing.
 
 ## Brief Introduction to Llama 4 Multimodal Models
 
@@ -81,38 +81,91 @@ Before you start, ensure:
 
 - You have **AMD Instinct GPUs** and the **ROCm** drivers set up.
 - Pull the Prebuilt [**Docker**](https://hub.docker.com/layers/rocm/vllm-dev/llama4-20250405/images/sha256-6da44b24235e47480f5ee1f7f9aff630c4233d6620047b3eefadb2097be686e3).
-  - docker pull **rocm/vllm-dev:llama4-20250405**
-- Download Llama models through Hugging face: “ [Llama 4 - a meta-llama Collection](https://huggingface.co/collections/meta-llama/llama-4-67f0c30d9fe03840bc9d0164)"
-  - huggingface-cli login
-  - huggingface-cli download meta-llama/Llama-4-Scout-17B-16E --local-dir $LLAMA_DIR
+
+```bash
+docker pull rocm/vllm-dev:llama4-20250407
+```
+
+- Download Llama models through Hugging face: [Llama 4 - a meta-llama Collection](https://huggingface.co/collections/meta-llama/llama-4-67f0c30d9fe03840bc9d0164)
+  
+```bash
+huggingface-cli login
+huggingface-cli download meta-llama/Llama-4-Scout-17B-16E --local-dir $LLAMA_DIR
+```
 
 ### Step 1. Launch docker container
 
 To run Llama4 efficiently on MI300x, launch docker container as below
 
-```shell
-docker run -it --device /dev/dri --device /dev/kfd --network host --ipc host --group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined -v /home:/workspace --shm-size 64G rocm/vllm-dev:llama4-20250405 /bin/bash
+```bash
+docker run -it \
+  --device /dev/dri \
+  --device /dev/kfd \
+  --network host \
+  --ipc host \
+  --group-add video \
+  --security-opt seccomp=unconfined \
+  -v /home:/workspace \
+  --shm-size 64G rocm/vllm-dev:llama4-20250407 /bin/bash
 ```
 
-### Step2. Start vLLM online server
+### Step 2. Start vLLM online server
 
 Once the container is launched , start the vllm online server
 
 ```shell
-VLLM_WORKER_MULTIPROC_METHOD=spawn  VLLM_USE_MODELSCOPE=False VLLM_USE_TRITON_FLASH_ATTN=0 vllm serve $LLAMA_DIR --disable-log-requests -tp 8 --max-num-seqs 64 --no-enable-prefix-caching --max_num_batched_tokens=320000 --max_model_len 32000
+export VLLM_WORKER_MULTIPROC_METHOD=spawn 
+export VLLM_USE_MODELSCOPE=False 
+export VLLM_USE_TRITON_FLASH_ATTN=0 
+vllm serve $LLAMA_DIR \
+  --disable-log-requests -tp 8 \
+  --max-num-seqs 64 \
+  --no-enable-prefix-caching \
+  --max_num_batched_tokens=320000 \
+  --max_model_len 32000
 ```
 
-Note: LLAMA_DIR is your model location, by default it is vLLM v0 mode, to enable V1 mode, add VLLM_USE_V1=1 in front
+```{note}
+`$LLAMA_DIR` is your model location. By default, it is vLLM v0 mode. To enable V1 mode, add `export VLLM_USE_V1=1` before running `vllm serve`. More information on vLLM v1 is available in this blog post: [https://blog.vllm.ai/2025/01/27/v1-alpha-release.html](https://blog.vllm.ai/2025/01/27/v1-alpha-release.html)
+```
 
 ### Step3. Runing Inference using benchmark script
 
 Once the vLLM server is up and running, open a new terminal, start the same docker, and execute the benchmark script as shown below.
 
-```shell
-VLLM_WORKER_MULTIPROC_METHOD=spawn VLLM_USE_TRITON_FLASH_ATTN=0 python /app/vllm/benchmarks/benchmark_serving.py --backend vllm --model $LLAMA_DIR --dataset-name random --random-input-len $ISL --random-output-len $OSL --num-prompts 320 --ignore-eos --max-concurrency $concurrency --percentile-metrics ttft,tpot,itl,e2el
+```bash
+export VLLM_WORKER_MULTIPROC_METHOD=spawn 
+export VLLM_USE_TRITON_FLASH_ATTN=0 
+python /app/vllm/benchmarks/benchmark_serving.py \
+  --backend vllm \
+  --model $LLAMA_DIR \
+  --dataset-name random \
+  --random-input-len $ISL \
+  --random-output-len $OSL \
+  --num-prompts 320 \
+  --ignore-eos \
+  --max-concurrency $concurrency \
+  --percentile-metrics ttft,tpot,itl,e2el
 ```
 
-Note: $ISL is input sequence length, $OSL is output sequence length, $concurrency is # of users
+```{note}
+`$ISL` is input sequence length, `$OSL` is output sequence length, `$concurrency` is number of users
+```
+
+### Step 4. Running Inference with real world use case
+
+The following command sends two images and text, and determines whether the images are similar or different.
+
+```shell
+curl http://localhost:8000/v1/completions \
+    -H "Content-Type: application/json" \
+    -d '{
+        "model": "/models/Llama-4-Maverick-17B-128E-Instruct",
+        "prompt": "<image>https://huggingface.co/datasets/huggingface/documentation-images/resolve/0052a70beed5bf71b92610a43a52df6d286cd5f3/diffusers/rabbit.jpg</image><image>https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/datasets/cat_style_layout.png</image> Can you describe how these two images are similar, and how they differ?",
+        "max_tokens": 256,
+        "temperature": 0
+    }'
+```
 
 ## Summary
 
@@ -122,6 +175,10 @@ This blog provided a step-by-step Day 0 guide allowing you to explore the power 
 
 AMD team members who contributed to this effort: Peng Sun, Hongxia Yang, James Jiang, Carlus Huang, Divakar Verma, Aleksandr Malyshev, Shengnan Xu, Joe Shajrawi, Shekhar Pandey, Niles Burbank, and Guruprasad MP.
 This work would not have been possible without the strong collaboration and support of the Meta, vLLM, and Hugging Face teams.
+
+```{update} Apr 8, 2025
+Updated the blog with the latest vllm upstream on MI300X and a basic multi-modality example
+```
 
 ## Additional Resources
 
