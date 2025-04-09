@@ -4,7 +4,7 @@ date: 26 Mar 2025
 blog_title: "Installing ROCm from source with Spack"
 author: 'Garrett Byrd, Joseph Schoonover'
 tags: Scientific Computing, HPC, Installation
-thumbnail: 'spack-thumbnail.jpg'
+thumbnail: 'spack-thumbnail.png'
 category: Software tools & optimizations
 language: English
 target_audience: AI/ML and HPC Developers.
@@ -455,13 +455,9 @@ spack:
 
 ## Drivers
 
-It is good to remind ourselves that the purpose of the ROCm software stack is to provide developers with the tools to program on (primarily) AMD GPUs. Under the hood, the developer stills needs the AMDGPU drivers to meaningfully interface with their AMD GPU and actually run programs. I.e., Spack and ROCm are used to build applications, drivers are used to run them.
+It is good to remind ourselves that the purpose of the ROCm software stack is to provide developers with the tools to program on (primarily) AMD GPUs. Under the hood, the developer still utilizes drivers to meaningfully interface with their AMD GPU and actually run programs. I.e., Spack and ROCm are used to build applications, drivers are used to run them.
 
-See: [Linux Drivers for AMD Radeon Graphics](https://www.amd.com/en/support/download/linux-drivers.html)
-
-For developers on Radeon systems, these drivers are [fully open source](https://github.com/ROCm/ROCK-Kernel-Driver) and are [included in the Linux kernel](https://www.kernel.org/doc/html/latest/gpu/amdgpu/index.html).
-
-However, AMD also offers PRO drivers for Radeon PRO and Instinct cards. These drivers are not open source, but are included with ROCm. (PRO drivers are also [available for manual install](https://www.amd.com/en/support/download/linux-drivers.html).)
+All drivers required for ROCm are fully open source at [`github.com/ROCm/ROCK-Kernel-Driver`](github.com/ROCm/ROCK-Kernel-Driver).
 
 ## The Broader ROCm Ecosystem
 
@@ -502,3 +498,4 @@ PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CON
 IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO
 YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE
 FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
+
