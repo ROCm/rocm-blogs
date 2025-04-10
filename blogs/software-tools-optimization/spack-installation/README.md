@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 26 Mar 2025
+date: 10 April 2025
 blog_title: "Installing ROCm from source with Spack"
 author: 'Garrett Byrd, Joseph Schoonover'
 tags: Scientific Computing, HPC, Installation
@@ -25,7 +25,7 @@ myst:
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
         "amd_applications": "High Performance Computing"
         "amd_industries": "Data Center"
-        "amd_blog_releasedate": Friday Mar 28, 12:00:00 PST 2025
+        "amd_blog_releasedate": Thurs Apr 10, 12:00:00 PST 2025
 ---
 
 # Installing ROCm from source with Spack
