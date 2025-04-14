@@ -5,7 +5,6 @@ from datetime import datetime
 
 from numpy import remainder as rem
 
-
 def gather_args():
     args = sys.argv[1:]
     if len(args) < 14:
@@ -14,7 +13,6 @@ def gather_args():
 
     return args
 
-
 def truncate_string(input_string: str) -> str:
 
     cleaned_string = re.sub(r"[!@#$%^&*?/|]", "", input_string)
@@ -22,7 +20,6 @@ def truncate_string(input_string: str) -> str:
     transformed_string = re.sub(r"\s+", "-", cleaned_string)
 
     return transformed_string.lower()
-
 
 def create_blog_post_from_args():
 
@@ -36,12 +33,11 @@ def create_blog_post_from_args():
     blog_key_value_proposition = args[6]
     blog_keywords = args[7]
     blog_amd_technical_blog_type = args[8]
-    blog_amd_product_type = args[9]
-    blog_amd_developer_type = args[10]
-    blog_amd_applications = args[11]
-    blog_amd_industries = args[12]
-    blog_description = args[13]
-    blog_amd_deployment = args[14]
+    blog_amd_applications = args[9]
+    blog_description = args[10]
+    blog_hardware_amd_deployment = args[11]
+    blog_software_amd_deployment = args[12]
+    blog_amd_category_topic = args[13]
 
     # check all of the date formats
 
@@ -82,12 +78,11 @@ myst:
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "{blog_amd_technical_blog_type}"
-        "amd_developer_type": "{blog_amd_developer_type}"
-        "amd_deployment": "{blog_amd_deployment}"
-        "amd_product_type": "{blog_amd_product_type}"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_hardware_deployment": "{blog_hardware_amd_deployment}"
+        "amd_deployment_tools": "{blog_software_amd_deployment}"
         "amd_applications": "{blog_amd_applications}"
-        "amd_industries": "{blog_amd_industries}"
+        "amd_blog_category_topic": "{blog_amd_category_topic}"
+        "amd_blog_authors": {blog_authors}"
         "amd_blog_releasedate": {weekday} {month} {day}, 12:00:00 PST {year}
 ---
 <!---
@@ -185,16 +180,15 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         blog_key_value_proposition=blog_key_value_proposition,
         blog_keywords=blog_keywords,
         blog_amd_technical_blog_type=blog_amd_technical_blog_type,
-        blog_amd_product_type=blog_amd_product_type,
-        blog_amd_developer_type=blog_amd_developer_type,
         blog_amd_applications=blog_amd_applications,
-        blog_amd_industries=blog_amd_industries,
         weekday=weekday,
         month=month,
         day=day,
         year=year,
         blog_description=blog_description,
-        blog_amd_deployment=blog_amd_deployment,
+        blog_hardware_amd_deployment=blog_hardware_amd_deployment,
+        blog_software_amd_deployment=blog_software_amd_deployment,
+        blog_amd_category_topic=blog_amd_category_topic,
         note="{note}",
     )
 
@@ -218,7 +212,6 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         f.write(images_template)
 
     return None
-
 
 if __name__ == "__main__":
     create_blog_post_from_args()

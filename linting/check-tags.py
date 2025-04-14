@@ -45,13 +45,10 @@ def import_approved_categories() -> list:
 def import_amd_tags() -> list:
 
     amd_tags_path = [
-        "amd_applications.csv",
+        "amd_blog_applications.csv",
+        "amd_blog_development_tools.csv",
+        "amd_blog_hardware_platforms.csv",
         "amd_technical_blog_type.csv",
-        "amd_deployment.csv",
-        "amd_developer_tool.csv",
-        "amd_developer_type.csv",
-        "amd_industries.csv",
-        "amd_product_type.csv",
     ]
 
     amd_tags = dict()
@@ -115,13 +112,10 @@ def check_tags(file: str, approved_tags: list, approved_categories: list) -> Non
     amd_tags = import_amd_tags()
 
     possible_tags = [
+        "amd_blog_applications",
+        "amd_blog_development_tools",
+        "amd_blog_hardware_platforms",
         "amd_technical_blog_type",
-        "amd_deployment",
-        "amd_developer_tool",
-        "amd_developer_type",
-        "amd_industries",
-        "amd_product_type",
-        "amd_applications",
     ]
 
     for tag in possible_tags:
