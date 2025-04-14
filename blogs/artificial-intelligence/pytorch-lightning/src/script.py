@@ -56,16 +56,10 @@ class SentimentDataModule(L.LightningDataModule):
         self.val_dataset = SentimentDataset(val_data, self.tokenizer, self.max_length)
 
     def train_dataloader(self):
-        return DataLoader(
-            self.train_dataset,
-            batch_size=self.batch_size,
-            shuffle=True)
+        return DataLoader(self.train_dataset, batch_size=self.batch_size, shuffle=True)
 
     def val_dataloader(self):
-        return DataLoader(
-            self.val_dataset,
-            batch_size=self.batch_size,
-            shuffle=True)
+        return DataLoader(self.val_dataset, batch_size=self.batch_size, shuffle=True)
 
 
 class SentimentClassifier(L.LightningModule):
@@ -94,12 +88,7 @@ class SentimentClassifier(L.LightningModule):
 
         preds = self(input_ids, attention_mask)
         loss = self.criterion(preds, labels)
-        self.log(
-            "train_loss",
-            loss,
-            prog_bar=True,
-            on_step=False,
-            on_epoch=True)
+        self.log("train_loss", loss, prog_bar=True, on_step=False, on_epoch=True)
         return loss
 
     def validation_step(self, batch):
