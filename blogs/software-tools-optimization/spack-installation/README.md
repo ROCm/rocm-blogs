@@ -75,7 +75,7 @@ spack spec hipblas amdgpu_target=gfx942
 <details><summary>Output of <code>spack spec hipblas amdgpu_target=gfx942</code></summary>
 
 <!-- markdownlint-disable -->
-```
+```lang-shell
  -   hipblas@6.3.2~asan~cuda~ipo+rocm amdgpu_target=gfx942 build_system=cmake build_type=Release generator=make patches=8d71578,b05b34b arch=linux-rocky9-zen4
  -       ^cmake@3.31.6~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release arch=linux-rocky9-zen4
  -           ^curl@8.11.1~gssapi~ldap~libidn2~librtmp~libssh~libssh2+nghttp2 build_system=autotools libs=shared,static tls=openssl arch=linux-rocky9-zen4
