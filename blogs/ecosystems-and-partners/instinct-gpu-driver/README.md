@@ -18,11 +18,14 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
+        "amd_blog_topic_categories": "Software & Ecosystem"
+        "amd_blog_hardware_platforms": "Instinct GPU Accelerators"
+        "amd_blog_applications": ""
         "amd_technical_blog_type": "Ecosystems and Partners"
         "amd_developer_type": "Software Developer"
         "amd_deployment": "Servers"
         "amd_product_type": "Accelerators"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_applications": "Cloud Computing"
         "amd_industries": "Data Center"
         "amd_blog_releasedate": Tues Mar 18, 12:00:00 PST 2025
@@ -109,18 +112,13 @@ at the new Software Life Cycle in Figure 2.
 :alt: Software Support Matrix
 :align: center
 
-Figure 2: Instinct Driver and ROCm toolkit support matrix
+Figure 2: Instinct Driver and ROCm toolkit support life matrix. The vertical axis shows the different ROCm toolkit release versions, the horizontal axis shows the Instinct driver release versions. The label “GA” on the graph represents the general availability release. The colored bars illustrate the computability window for each ROCm toolkit version and its corresponding Instinct driver version, their length represents the duration of the software support window.
 ```
 
 ```{note}
 Future ROCm toolkit and Instinct driver release timelines are not finalized. This figure illustrates 
 the support policy and compatibility but does not confirm the exact future release schedule or naming conventions, which are subject to change.
 ```
-
-The vertical axis represents the different ROCm toolkit release versions and the horizontal
-axis represents the Instinct driver release versions. The label "GA" on the graph represents the general availability
-release. The colored bars illustrate the computability window for each ROCm toolkit version and it's
-corresponding Instinct driver version, the length represents the duration of the software support window.
 
 ### Support Policy Changes
 
