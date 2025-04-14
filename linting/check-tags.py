@@ -4,9 +4,7 @@
 import csv
 import os
 import pathlib
-
 import markdown
-
 
 # import_approved_tags() -> list
 # Import the approved tags from the taglist.csv file.
@@ -25,7 +23,6 @@ def import_approved_tags() -> list:
 
     return approved_tags
 
-
 def import_approved_categories() -> list:
 
     category_path = "linting/csv/category.csv"
@@ -40,7 +37,6 @@ def import_approved_categories() -> list:
             approved_categories = row["categories"]
 
     return approved_categories
-
 
 def import_amd_tags() -> list:
 
@@ -66,7 +62,6 @@ def import_amd_tags() -> list:
                 amd_tags[path[: len(path) - 4]] = row[path[: len(path) - 4]]
 
     return amd_tags
-
 
 # check_tags(file: str) -> None
 # Grab the tags from the markdown file and compare them to the approved
@@ -146,7 +141,6 @@ def check_tags(file: str, approved_tags: list, approved_categories: list) -> Non
                     error = 1
 
     return error
-
 
 def main():
     approved_tags = import_approved_tags()
