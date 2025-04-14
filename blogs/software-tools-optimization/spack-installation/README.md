@@ -496,7 +496,7 @@ This post also highlights the landscape of the ROCm ecosystem and provides an ov
 
 Special thanks to [Garrett Byrd](https://github.com/garrettbyrd) and [Dr. Joe Schoonover](https://github.com/fluidnumerics-joe) at [Fluid Numerics](https://www.fluidnumerics.com/) for contributing this blog. The ROCm software ecosystem is strengthened by community projects that enable you to use AMD GPUs in new ways. If you have a project you would like to share here, [please raise an issue or PR](https://github.com/ROCm/rocm-blogs).
 
-### Find Fluid Numerics online at:
+### Find Fluid Numerics online
 
 <!-- markdownlint-disable -->
 - [fluidnumerics.com](www.fluidnumerics.com)
