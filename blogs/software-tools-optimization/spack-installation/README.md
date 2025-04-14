@@ -350,6 +350,7 @@ RUN { \
 ENTRYPOINT [ "/entrypoint.sh" ]
 CMD [ "/bin/bash" ]
 ```
+
 </details>
 
 Learn more about [creating containers with Spack](https://spack.readthedocs.io/en/latest/containers.html).
@@ -482,10 +483,12 @@ Beyond forks, AMD actively creates new tools for ROCm. Some of these developing 
 
 This blog provides a basic introduction to the Spack package manager and how to install ROCm components using Spack. Specific advantages of Spack have been discussed, such as
 
+<!-- markdownlint-disable -->
 - Easily building ROCm components from source.
 - Installing Spack packages (such as PyTorch) targeting specific `gfx` architectures.
 - Using Spack for cleaning up build dependencies.
 - Utilizing `spack spec` to understand ROCm dependencies.
+<!-- markdownlint-restore -->
 
 This post also highlights the landscape of the ROCm ecosystem and provides an overview of standard and upcoming ROCm components.
 
@@ -495,11 +498,13 @@ Special thanks to [Garrett Byrd](https://github.com/garrettbyrd) and [Dr. Joe Sc
 
 ### Find Fluid Numerics online at:
 
+<!-- markdownlint-disable -->
 - [fluidnumerics.com](www.fluidnumerics.com)
 - [YouTube](https://www.youtube.com/@FluidNumerics)
 - [GitHub](https://github.com/FluidNumerics)
 - [LinkedIn](https://www.linkedin.com/company/fluidnumerics)
 - [Reddit](https://www.reddit.com/r/FluidNumerics/)
+<!-- markdownlint-restore -->
 
 ## Disclaimers
 
