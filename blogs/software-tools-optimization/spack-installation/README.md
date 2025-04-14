@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 10 April 2025
+date: 14 April 2025
 blog_title: "Installing ROCm from source with Spack"
 author: 'Garrett Byrd, Joseph Schoonover'
 tags: Scientific Computing, HPC, Installation
@@ -74,6 +74,7 @@ spack spec hipblas amdgpu_target=gfx942
 
 <details><summary>Output of <code>spack spec hipblas amdgpu_target=gfx942</code></summary>
 
+<!-- markdownlint-disable -->
 ```
  -   hipblas@6.3.2~asan~cuda~ipo+rocm amdgpu_target=gfx942 build_system=cmake build_type=Release generator=make patches=8d71578,b05b34b arch=linux-rocky9-zen4
  -       ^cmake@3.31.6~doc+ncurses+ownlibs~qtgui build_system=generic build_type=Release arch=linux-rocky9-zen4
@@ -221,6 +222,7 @@ spack spec hipblas amdgpu_target=gfx942
  -               ^rocprim@6.3.2~asan~ipo amdgpu_target=auto build_system=cmake build_type=Release generator=make arch=linux-rocky9-zen4
 ```
 </details>
+<!-- markdownlint-restore -->
 
 To install, again we just use `spack install hipblas amdgpu_target=gfx942`, this time specifying a `gfx` version.
 
@@ -267,10 +269,12 @@ spack concretize -f
 ```
 
 To install this environment, simply run:
+
 ```sh
 spack install
 spack gc -y
 ```
+
 The last step here performs "garbage collection", removing packages that are only build-time dependencies. This reduces image size by removing packages that are not required at runtime and helps lighten up the final installation.
 
 Read more about Spack environments [here](https://spack.readthedocs.io/en/latest/environments.html).
@@ -284,12 +288,13 @@ Another major benefit of using a Spack environment is that you can easily contai
 cd $HOME/spack-env
 spack containerize > Dockerfile
 ```
+
 This creates a two-stage build recipe that starts from Spack managed container images. In the first stage of the build (the "builder" stage), the environment is concretized and installed in the container and build-time dependencies are removed. Following this, all the binary files (executables, shared libraries, and static archives) found under the filesystem view are stripped of their debugging symbols and other non-essential metadata to further reduce the image size. The second build stage builds on a compatible base OS image without Spack installed.  The file system view and installation tree are copied from the "builder stage" and the entrypoint is set to a shell that is preconfigured with the Spack view paths defined in the environment.
 
 The full contents of the Dockerfile generated from this example are shown below.
 <details><summary>Output of <code>spack containerize > Dockerfile</code></summary>
 
-```
+```sh
 # Build stage with Spack pre-installed and ready to be used
 FROM spack/ubuntu-jammy:develop AS builder
 
@@ -357,11 +362,13 @@ ROCm is not one piece of software. It is a collection of interconnected, focused
 
 ROCm officially supports roughly 70 components, but the exact list of component varies across multiple sources. Here are a few:
 
+<!-- markdownlint-disable -->
 - [What is ROCm?](https://rocm.docs.amd.com/en/latest/what-is-rocm.html) $^{[1]}$
 - [`ROCm/default.xml`](https://github.com/ROCm/ROCm/blob/develop/default.xml) $^{[2]}$
 - [ROCm Documentation for Spack](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/spack.html#rocm-packages-in-spack) $^{[1]}$
 - [ROCm Compatibility Matrix](https://rocm.docs.amd.com/en/latest/compatibility/compatibility-matrix.html) $^{[1]}$
 - [Version release notes](https://rocm.docs.amd.com/en/latest/about/release-notes.html#rocm-components) $^{[1]}$
+<!-- markdownlint-restore -->
 
 $^{[1]}$ Pages from ROCm Documentation
 
@@ -399,6 +406,7 @@ Beyond even specific `gfx` versions, your application might not even require all
 
 Unlike `apt` or `dnf`, Spack does NOT maintain a package for a generic `rocm`/`rocm-dev` package. Instead, ROCm components are packaged individually. The following `spack.yaml` approximates an installation of `rocm-dev`. (Note: none of these packages can be built for specific `gfx` versions.)
 
+<!-- markdownlint-disable -->
 `spack.yaml`:
 ```yaml
 spack:
@@ -430,6 +438,7 @@ spack:
     install_tree: $HOME/opt/rocm
     view: $HOME/opt/rocm
 ```
+<!-- markdownlint-restore -->
 
 It's worth noting that some packages related to ROCm that are available through `dnf`/`apt` are not available in Spack, e.g., `rocm-utils`. Also, some packages such as `aqlprofile` are not open source, and instead these are installed by grabbing the `.deb` from [repo.radeon.com](repo.radeon.com).
 
@@ -437,6 +446,7 @@ It's worth noting that some packages related to ROCm that are available through 
 
 Beyond ROCm, Spack also provides numerous Python packages, including PyTorch. Below is a `spack.yaml` that my be used to build PyTorch and its dependencies specifically for MI300X/MI300A.
 
+<!-- markdownlint-disable -->
 `spack.yaml`:
 ```yaml
 spack:
@@ -452,6 +462,7 @@ spack:
     install_tree: $HOME/opt/rocm
     view: $HOME/opt/rocm
 ```
+<!-- markdownlint-restore -->
 
 ## Drivers
 
