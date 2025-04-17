@@ -149,7 +149,7 @@ body:
       description: "Select hardware deployment target(s)"
       options:
         - EPYC Server Processors
-        - Instinct GPU Accelerators
+        - Instinct GPUs
         - Radeon Graphics
         - Ryzen Processors
         - Versal & Zynq Adaptive SoCs
