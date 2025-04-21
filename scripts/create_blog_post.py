@@ -73,17 +73,13 @@ myst:
         "author": "{blog_authors}"
         "description lang=en": "{blog_description}"
         "keywords": "{blog_keywords}"
-        "property=og:locale": "en_US"
-        "amd_category": "Developer Resources"
-        "amd_asset_type": "Blogs"
-        "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "{blog_amd_technical_blog_type}"
-        "amd_hardware_deployment": "{blog_hardware_amd_deployment}"
-        "amd_deployment_tools": "{blog_software_amd_deployment}"
-        "amd_applications": "{blog_amd_applications}"
-        "amd_blog_category_topic": "{blog_amd_category_topic}"
+        "amd_blog_hardware_platforms" "{blog_hardware_amd_deployment}"
+        "amd_blog_development_tools": "{blog_software_amd_deployment}"
+        "amd_blog_applications": "{blog_amd_applications}"
+        "amd_blog_topic_categories": "{blog_amd_category_topic}"
         "amd_blog_authors": {blog_authors}"
-        "amd_blog_releasedate": {weekday} {month} {day}, 12:00:00 PST {year}
+        "amd_release_date": {weekday} {month} {day}, 12:00:00 PST {year}
 ---
 <!---
 Copyright (c) {year} Advanced Micro Devices, Inc. (AMD)
