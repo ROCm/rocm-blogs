@@ -231,4 +231,22 @@ Member of Technical Staff at AMD
 Senior Software Development Engineer
 :::
 
+:::{grid-item-card} [Mohammad Mahdi Kamani](./authors/mohammad-mahdi-kamani.md) *
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Parsa Fashi](./authors/parsa-fashi.md) *
+:padding: 1
+
+Senior Software Development Engineer
+:::
+
+:::{grid-item-card} [Vikram Appia](./authors/vikram-appia.md) *
+:padding: 1
+
+Director Software Development
+:::
+
 ::::
