@@ -20,7 +20,7 @@ myst:
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
         "amd_developer_type": "ML/AI Developer, Application Developer, HPC Developer"
-        "amd_deployment": "Servers"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Development Tools, Software & Applications"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
         "amd_applications": "High Performance Computing"
