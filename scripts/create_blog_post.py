@@ -73,14 +73,16 @@ myst:
         "author": "{blog_authors}"
         "description lang=en": "{blog_description}"
         "keywords": "{blog_keywords}"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
         "amd_technical_blog_type": "{blog_amd_technical_blog_type}"
-        "amd_blog_hardware_platforms" "{blog_hardware_amd_deployment}"
+        "amd_blog_hardware_platforms": "{blog_hardware_amd_deployment}"
         "amd_blog_development_tools": "{blog_software_amd_deployment}"
         "amd_blog_applications": "{blog_amd_applications}"
         "amd_blog_topic_categories": "{blog_amd_category_topic}"
         "amd_blog_authors": {blog_authors}"
-        "amd_release_date": {weekday} {month} {day}, 12:00:00 PST {year}
 ---
+
 <!---
 Copyright (c) {year} Advanced Micro Devices, Inc. (AMD)
 
@@ -118,7 +120,7 @@ This is where you unleash your creativity. Please follow these general guideline
 
 • use actionable, hands-on, conversational approach, guiding your reader through the blog and its content, maintaining engagement. Use active voice, call-to-action (CTA) text (e.g. “Interested in learning more?”, “Run this function by using”, “Try implementing this yourself”)
 
-• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections. 
+• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections.
 
 • Make sure you provide the required background and prerequisites for your blog. Outline any foundational knowledge and tools the reader will likely require.
 
