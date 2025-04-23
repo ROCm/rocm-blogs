@@ -109,9 +109,9 @@ node   0   1   2   3   4   5   6   7
 
 ### GPU information - `rocm-smi`
 
-The `rocm-smi` tool is distributed as part of the ROCm&trade; stack. `rocm-smi` can be
+The `rocm-smi` tool is distributed as part of the ROCm™; stack. `rocm-smi` can be
 used to display details about the GPUs on the system. Look at this output of `rocm-smi`
-below. It shows that there are 8 AMD Instinct&trade; MI210 GPUs on the system.
+below. It shows that there are 8 AMD Instinct™; MI210 GPUs on the system.
 
 ```bash
 ====================================== ROCm System Management Interface ======================================

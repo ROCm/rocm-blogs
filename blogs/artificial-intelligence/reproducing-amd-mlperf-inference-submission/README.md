@@ -49,7 +49,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# Reproducing the AMD Instinct<sup>TM</sup> GPUs MLPerf Inference v5.0 Submission
+# Reproducing the AMD Instinct™ GPUs MLPerf Inference v5.0 Submission
 
 Building upon the success of our [MLPerf Inference v4.1 submission](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-inf-4-1/README.html), AMD has submitted results for two popular models -- Llama 2 70B and Stable Diffusion XL (SDXL) -- in the MLPerf Inference v5.0 round.  This blog post provides a comprehensive, step-by-step guide on reproducing the results of AMD’s MLPerf submission using [ROCm](https://rocm.docs.amd.com/en/latest/index.html) and the AMD Instinct™ MI325X GPUs. Please follow along to independently verify these results and gain hands-on experience with the benchmarking process.  If you are interested in learning more about the advanced optimization strategies behind our Llama 2 70B and SDXL inference, from quantization and General Matrix Multiplication (GEMM) tuning to cutting-edge vLLM scheduling and platform enhancements, check out our blog on [MLPerf Inference v5.0 optimization strategies](https://rocm.blogs.amd.com/artificial-intelligence/mi325x-accelerates-mlperf-inference/README.html).
 

@@ -41,7 +41,7 @@ SOFTWARE.
 
 # SmoothQuant model inference on AMD Instinct MI300X using Composable Kernel
 
-The AMD ROCm&trade; Composable Kernel (CK) library provides a programming model for writing performance-critical kernels for machine learning workloads. It generates a general-purpose kernel during the compilation phase through a C++ template, enabling developers to achieve operation fusions on different data precisions.
+The AMD ROCm™; Composable Kernel (CK) library provides a programming model for writing performance-critical kernels for machine learning workloads. It generates a general-purpose kernel during the compilation phase through a C++ template, enabling developers to achieve operation fusions on different data precisions.
 
 This article gives a high-level overview of CK General Matrix Multiplication (GEMM) kernel based on CK’s design example of `03_gemm_bias_relu`. It also outlines the steps to construct the kernel and run it. Moreover, the article provides a detailed implementation of running SmoothQuant quantized INT8 models on AMD Instinct MI300X accelerators using CK.
 

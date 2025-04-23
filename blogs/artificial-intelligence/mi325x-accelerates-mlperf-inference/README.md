@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "AMD Instinct&trade; MI325X Produces Strong Performance in MLPerf Inference v5.0"
+blog_title: "AMD Instinct™; MI325X Produces Strong Performance in MLPerf Inference v5.0"
 date: 2 April 2025
 author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Poovaiah Palangappa, Eliot Li, AMD Quark Team, AMD Brevitas Team, and AMD Shark Team'
 thumbnail: "mlperf_blog_image2.jpeg"
@@ -49,7 +49,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# AMD Instinct&trade; MI325X GPUs Produce Strong Performance in MLPerf Inference v5.0
+# AMD Instinct™; MI325X GPUs Produce Strong Performance in MLPerf Inference v5.0
 
 AI transformation and its ever-increasing demands of GenAI, LLMs, reasoning models and new advances in inference and training emphasize the need for innovative GPU architectures and products designed and delivered at an accelerated pace. Understanding the performance of AI models on these GPUs is critical for continuous advances in AI deployments and adoption. However, benchmarking AI models is challenging due to their inherent complexity and variety of possible deployments and tasks. Approaching this problem from a cross-industry perspective is preferable to have a benchmark that is comparable across different platforms and vendors. MLPerf is such a benchmark created by a cross-industry  [MLCommons consortium](https://mlcommons.org/) of which AMD is a founding member.
 
