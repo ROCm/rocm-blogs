@@ -6,7 +6,7 @@ blog_title: 'Using LoRA for efficient fine-tuning: Fundamental principles'
 tags: LLM, AI/ML, GenAI, Fine-Tuning, PyTorch
 category: Applications & models
 language: English
-thumbnail: './images/image.jpg'
+thumbnail: 'image.jpg'
 myst:
   html_meta:
     "description lang=en": "This blog demonstrate how to use Lora to efficiently fine-tune Llama model on AMD GPUs with ROCm."

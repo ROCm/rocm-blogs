@@ -4,7 +4,7 @@ blog_title: 'Developing Triton Kernels on AMD GPUs'
 date: 15 April 2024
 author: Clint Greene
 tags: AI/ML
-thumbnail: ./images/thumbnail_AdobeStock_184095331.jpeg
+thumbnail: thumbnail_AdobeStock_184095331.jpeg
 category: Applications & models
 language: English
 target_audience: AI Developers, AI Solutions Architects, AI practitioners

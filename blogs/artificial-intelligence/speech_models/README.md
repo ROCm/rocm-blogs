@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Fine-tuning and Testing Cutting-Edge Speech Models using ROCm on AMD GPUs'
-thumbnail: './images/${thumb_speech_models.jpeg}'
+thumbnail: 'thumb_speech_models.jpeg'
 date: 27 Jun 2024
 author: Fabricio Flores
 tags: AI/ML, LLM, PyTorch, Speech

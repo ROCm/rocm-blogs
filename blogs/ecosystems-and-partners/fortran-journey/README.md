@@ -4,7 +4,7 @@ date: 13 Nov 2024
 blog_title: "Introducing AMD's Next-Gen Fortran Compiler"
 author: Justin Chang, Brian Cornille, Michael Klemm, Johanna Potyka
 tags: Compiler, HPC, Performance
-thumbnail: './images/Next-Gen-Fortran.jpeg'
+thumbnail: 'Next-Gen-Fortran.jpeg'
 category: Ecosystems and Partners
 language: English
 myst:

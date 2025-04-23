@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Getting started with AMD ROCm containers: from base images to custom solutions'
-thumbnail: './images/2025-01-09-containers.png'
+thumbnail: '2025-01-09-containers.png'
 description: 'This blog post provides an overview of the ROCm container ecosystem along with examples of extending these containers for custom use cases.'
 date: 16 Jan 2025
 author: Matt Elliott

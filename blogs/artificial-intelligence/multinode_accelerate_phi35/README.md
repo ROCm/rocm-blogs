@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Fine-tuning Phi-3.5-mini LLM at scale: Harnessing Accelerate and Slurm for multinode training.'
-thumbnail: ./images/multinode_training_thumbnail_AdobeStock_184095331.jpeg
+thumbnail: multinode_training_thumbnail_AdobeStock_184095331.jpeg
 date: 19 Feb 2025
 author: Fabricio Flores
 tags: AI/ML, LLM, PyTorch

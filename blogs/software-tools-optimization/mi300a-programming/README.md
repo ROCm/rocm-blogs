@@ -4,7 +4,7 @@ date: 9 Feb 2025
 blog_title: "MI300A - Exploring the APU advantage"
 author: Suyash Tandon, Justin Chang
 tags: Compiler, Memory, HPC, OpenMP
-thumbnail: ./images/mi300a-die-package.jpg
+thumbnail: mi300a-die-package.jpg
 category: Software tools & optimizations
 language: English
 target_audience: "HPC Core Developers, HPC Solutions Architects"

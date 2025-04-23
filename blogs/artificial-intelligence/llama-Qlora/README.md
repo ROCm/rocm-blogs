@@ -6,7 +6,7 @@ blog_title: 'Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tu
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
-thumbnail: './images/image.jpg'
+thumbnail: 'image.jpg'
 myst:
   html_meta:
     "description lang=en": "This blog demonstrate how to use QLora to efficiently fine-tune Llama model on a single AMD GPU with ROCm."

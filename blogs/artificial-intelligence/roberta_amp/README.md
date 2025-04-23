@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD'
-thumbnail: './images/roberta_amp_thumbnail.jpeg'
+thumbnail: 'roberta_amp_thumbnail.jpeg'
 date: 29 July 2024
 blog_title: 'Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD'
 thumbnail: '20204-10-10-roberta.jpg'
