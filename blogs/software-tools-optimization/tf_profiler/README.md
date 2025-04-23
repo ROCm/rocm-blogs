@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'TensorFlow Profiler in practice: Optimizing TensorFlow models on AMD GPUs.'
-thumbnail: './images/tf_profiler_thumbnail.jpeg'
+thumbnail: 'tf_profiler_thumbnail.jpeg'
 date: 18 Jun 2024
 author: Fabricio Flores
 tags: AI/ML, Profiling, HPC

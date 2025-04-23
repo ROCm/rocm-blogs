@@ -3,7 +3,7 @@ blogpost: true
 blog_title: 'Fine-tuning Llama 3 with Axolotl using ROCm on AMD GPUs'
 date: Sep 23 2024
 author: Clint Greene
-thumbnail: ./images/2024-06-18-tensorflow.jpg
+thumbnail: 2024-06-18-tensorflow.jpg
 tags: AI/ML, PyTorch, LLM
 category: Applications & models
 language: English
