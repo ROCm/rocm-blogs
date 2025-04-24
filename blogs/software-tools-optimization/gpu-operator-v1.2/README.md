@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "What's New in the AMD GPU Operator v1.2.0 Release"
 date: 28 Mar 2025
 author: 'Farshad Ghodsian'
-thumbnail: '../../images/2025-03-28-gpu-operator-v1.2.jpg'
+thumbnail: '2025-03-28-gpu-operator-v1.2.jpg'
 tags: Kubernetes
 category: Software tools & optimizations
 target_audience: For General Audience, but mainly targeted towards Kubernetes users
