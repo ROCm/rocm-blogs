@@ -23,7 +23,7 @@ myst:
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Accelerators"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Image / Video Generation"
+        "amd_applications": "Generative AI"
         "amd_industries": "Data Center"
         "amd_blog_releasedate": Wed Mar 19, 12:00:00 PST 2025
 ---

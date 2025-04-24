@@ -23,7 +23,7 @@ myst:
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Software & Applications"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "High Performance Computing, Large Language Model (LLM), Cloud Computing, Image / Video Generation"
+        "amd_applications": "High Performance Computing, Large Language Model (LLM), Cloud Computing, Generative AI"
         "amd_industries": "Data Center"
         "amd_blog_releasedate": Thu Mar 28, 12:00:00 PST 2025
 ---
