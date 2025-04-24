@@ -23,7 +23,7 @@ myst:
         "amd_deployment": "Servers"
         "amd_product_type": "Accelerators"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Large Language Model (LLM), Image / Video Generation"
+        "amd_applications": "Large Language Model (LLM), Generative AI"
         "amd_industries": "Data Center"
         "amd_blog_releasedate": Tues Mar 25, 12:00:00 PST 2025
 ---

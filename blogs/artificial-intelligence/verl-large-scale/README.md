@@ -20,7 +20,7 @@ myst:
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Applications and models"
         "amd_blog_topic_categories": "Applications and models"
-        "amd_blog_hardware_platforms": "Instinct GPU Accelerators"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
         "amd_hardware_deployment": "Instinct GPUs"
         "amd_deployment_tools": "ROCm Software"
