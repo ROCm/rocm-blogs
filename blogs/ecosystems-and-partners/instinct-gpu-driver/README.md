@@ -21,7 +21,7 @@ myst:
         "amd_blog_topic_categories": "Software & Ecosystem"
         "amd_blog_hardware_platforms": "Instinct GPU Accelerators"
         "amd_blog_applications": ""
-        "amd_technical_blog_type": "Ecosystems and Partners"
+        "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_developer_type": "Software Developer"
         "amd_deployment": "Servers"
         "amd_product_type": "Accelerators"
