@@ -19,7 +19,7 @@ myst:
         "amd_asset_type": "Blogs"
         "amd_blog_development_tools": "ROCm"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_hardware_platforms": "Instinct GPU Accelerators"
+        "amd_blog_hardware_platforms": "Instinct GPU"
         "amd_blog_applications": "AI Inference"
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
