@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Deep dive into the MI300 compute and memory partition modes"
 date: 9 Feb 2025
-thumbnail: "./images/thumbnail.png"
+thumbnail: "thumbnail.png"
 author: Muhammad Osama, Ryan Swann, Karthik Sangaiah, Sonali Singh, Ganesh Dasika, Rajneesh Bhardwaj
 tags: HPC, Installation, Performance, Scientific Computing
 category: Software tools & optimizations
