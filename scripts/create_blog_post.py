@@ -80,7 +80,7 @@ myst:
         "amd_blog_development_tools": "{blog_software_amd_deployment}"
         "amd_blog_applications": "{blog_amd_applications}"
         "amd_blog_topic_categories": "{blog_amd_category_topic}"
-        "amd_blog_authors": {blog_authors}"
+        "amd_blog_authors": "{blog_authors}"
 ---
 
 <!---

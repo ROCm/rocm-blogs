@@ -18,7 +18,7 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_blog_topic_categories": "'AI & Intelligent Systems"
+        "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_blog_development_tools": "ROCm Software"

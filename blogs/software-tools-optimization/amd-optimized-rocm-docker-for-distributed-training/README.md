@@ -18,7 +18,7 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Applications and models"
+        "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Development Tools"

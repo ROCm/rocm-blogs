@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: " AMD Advances Enterprise AI Through OPEA Integration "
+blog_title: "AMD Advances Enterprise AI Through OPEA Integration "
 date: 12 Mar 2025
 author: 'Yu Wang, Alex He'
 thumbnail: 'OPEA_THUBMNAIL.jpg'
@@ -18,12 +18,13 @@ myst:
         "amd_category": "Ecosystem & Partners"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Ecosystem & Partners"
+        "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_developer_type": "Application Developer, ML/AI Developer"
+        "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Accelerators"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Large Language Model (LLM)"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "Conversational AI"
         "amd_industries": "Data Center"
         "amd_blog_releasedate": Tues Mar 04, 12:00:00 PST 2025
 ---
