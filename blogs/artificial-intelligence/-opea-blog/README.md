@@ -20,12 +20,8 @@ myst:
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_developer_type": "Application Developer, ML/AI Developer"
-<<<<<<< HEAD
-        "amd_deployment": "Servers"
-=======
         "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_hardware_platforms": "Instinct GPUs"
->>>>>>> ccb9b37e (Update Tag Linter (#965))
         "amd_product_type": "Accelerators"
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "Conversational AI"
