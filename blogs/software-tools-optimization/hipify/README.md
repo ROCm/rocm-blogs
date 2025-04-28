@@ -46,7 +46,7 @@ to a few weeks and largely depends on the complexity of the original source code
 Figure 1 shows several examples of applications that have been ported and the
 corresponding porting effort.
 
-In this post, we introduce the HIP portability layer, the tools in the AMD ROCm™;
+In this post, we introduce the HIP portability layer, the tools in the AMD ROCm™
 stack that can be used to automatically convert CUDA code to HIP, and show how
 we can run the same code in both AMD and NVIDIA GPUs with a portable HIP build system.
 
@@ -57,7 +57,7 @@ we can run the same code in both AMD and NVIDIA GPUs with a portable HIP build s
 <img src="images/apps-ported.jpg" width="90%">
 
 <p style="text-align:center">
-Figure 1: Porting scientific applications to support AMD Instinct™; GPUs wih HIP
+Figure 1: Porting scientific applications to support AMD Instinct™ GPUs wih HIP
 </p>
 
 ## HIP API
@@ -109,7 +109,7 @@ Figure 3: GPU programming abstraction levels.
 Manually converting large and complex existing CUDA code projects to HIP is an
 error-prone and time-consuming process. Given the syntactic similarity between HIP and
 CUDA, it is possible to build automated conversion tools to translate CUDA code to
-portable HIP C++. The AMD ROCm™; stack has translation utilities and scripts
+portable HIP C++. The AMD ROCm™ stack has translation utilities and scripts
 that significantly speed up the process. These utilities can be used in isolation or combined
 as part of an iterative process to port larger, more complex CUDA applications, thus reducing
 manual effort and time to deployment of CUDA applications on AMD-based systems.
@@ -191,7 +191,7 @@ code using the HIP compiler on an AMD GPU.
 
 ### Hipify tools
 
-AMD's ROCm™; software stack includes utilities that can help translate CUDA APIs
+AMD's ROCm™ software stack includes utilities that can help translate CUDA APIs
 into HIP APIs. The following two utilities can be found:
 
 - [*hipify-clang*](#hipify-clang): a preprocessor that operates within the
@@ -377,7 +377,7 @@ One of the most powerful features of HIP is that, if the original code is using
 [HIP supported CUDA API](https://rocm.docs.amd.com/projects/HIPIFY/en/latest/supported_apis.html),
 then the HIP translated code can run on both AMD and NVIDIA GPUs. Currently,
 many applications that target both platforms have dual repositories and a build
-system for HIP and CUDA, respectively. With ROCm™; we can have a portable HIP
+system for HIP and CUDA, respectively. With ROCm™ we can have a portable HIP
 build system to avoid maintaining two separate code bases for the same project.
 
 In a portable HIP build system, it is possible to select either an `amd` or an `nvidia`
@@ -431,7 +431,7 @@ clean:
 	rm -f $(EXECUTABLE)
 ```
 
-For code that will run on an AMD platform, we need to have ROCm™; installed, and
+For code that will run on an AMD platform, we need to have ROCm™ installed, and
 set the `CXX` variable to the recommended clang++, e.g.
 `export CXX=${ROCM_PATH}/llvm/bin/clang++`, then build with `make` and run the same
 [vectorAdd](https://github.com/olcf-tutorials/simple_HIP_examples/blob/master/vector_addition/vector_addition.cu)
@@ -443,7 +443,7 @@ make
 ```
 
 For code that will run on an NVIDIA platform, we need to install both CUDA and
-ROCm™;, which provides the HIP portability layer, and set `HIP_PLATFORM=nvidia`
+ROCm™, which provides the HIP portability layer, and set `HIP_PLATFORM=nvidia`
 to override the default and instead compile for NVIDIA GPUs.
 
 ```bash
@@ -503,7 +503,7 @@ elseif (${GPU_RUNTIME} MATCHES "CUDA")
 endif ()
 ```
 
-Provided that ROCm™; and CMake are installed, the code can be configured to run on AMD GPUs
+Provided that ROCm™ and CMake are installed, the code can be configured to run on AMD GPUs
 with `cmake` and the executable can be built and launched by running the following commands:
 
 ```bash
@@ -513,7 +513,7 @@ make
 ./vectoradd
 ```
 
-For code intended to run on NVIDIA GPUs, both CUDA and ROCm™; stacks must be installed in
+For code intended to run on NVIDIA GPUs, both CUDA and ROCm™ stacks must be installed in
 addition to CMake. Similar to the Make example, `HIP_PLATFORM` must be setup and the code
 must be configured with the `CUDA` GPU runtime instead:
 
@@ -556,7 +556,7 @@ systems are found in the [HIP training series repository](https://github.com/olc
 
 ## Conclusion
 
-We have shown a variety of ROCm™; tools that developers can leverage to convert
+We have shown a variety of ROCm™ tools that developers can leverage to convert
 their codes from CUDA to HIP. These tools speed up and ease the conversion process
 significantly. We have also illustrated one of the most powerful features of HIP, which
 is its ability to run on both AMD and NVIDIA GPUs, by showing examples of portable
