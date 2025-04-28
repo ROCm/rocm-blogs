@@ -43,16 +43,16 @@ optimization of the application.
 
 In this blog post, we will discuss how to read and understand the
 ISA for AMD's Graphics Core Next (AMDGCN)
-architecture used in the AMD Instinct™; and AMD Radeon™; line of GPUs.
+architecture used in the AMD Instinct™ and AMD Radeon™ line of GPUs.
 AMDGCN ISA contains the instructions that AMDGCN architecture
 processes to perform compute tasks.
 While we will cover several important topics and examples in this post,
 for more details the readers are encouraged to refer to the relevant ISA
 documentation,
-e.g., [CDNA2™; ISA](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/instruction-set-architectures/instinct-mi200-cdna2-instruction-set-architecture.pdf)
-for AMD Instinct™; MI200™; GPUs, or
-[RDNA2™; ISA](https://www.amd.com/content/dam/amd/en/documents/radeon-tech-docs/instruction-set-architectures/rdna2-shader-instruction-set-architecture.pdf)
-for AMD NAVI™; 20s GPUs.
+e.g., [CDNA2™ ISA](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/instruction-set-architectures/instinct-mi200-cdna2-instruction-set-architecture.pdf)
+for AMD Instinct™ MI200™ GPUs, or
+[RDNA2™ ISA](https://www.amd.com/content/dam/amd/en/documents/radeon-tech-docs/instruction-set-architectures/rdna2-shader-instruction-set-architecture.pdf)
+for AMD NAVI™ 20s GPUs.
 We will discuss the following:
 
 - AMDGCN architecture overview.
@@ -75,7 +75,7 @@ processors system software and how those operations are mapped to execution
 on the hardware. x86, ARM, RISC-V, GCN are all processor specific ISAs.
 
 - **AMD Graphics Core Next (AMDGCN)**: The ISA specific to AMD GPUs. Southern Islands,
-Vega™;, RDNA™; (Radeon™;) are all architecture specific implementations of
+Vega™, RDNA™ (Radeon™) are all architecture specific implementations of
 **AMDGCN ISA**.
 
 Generally, ISA refers to all possible instructions that the specific processor
@@ -126,13 +126,13 @@ The execute (`EXEC`) mask is a 64-bit mask which determines which threads
 All vector instructions support an execute mask. In GPU kernels this mask is
 often used to handle process branching, where only a subset of threads are active in each branch.
 More details can be read from Sec 3.3 from
-[CDNA2™; ISA](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/instruction-set-architectures/instinct-mi200-cdna2-instruction-set-architecture.pdf).
+[CDNA2™ ISA](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/instruction-set-architectures/instinct-mi200-cdna2-instruction-set-architecture.pdf).
 
 ## Processor subunits
 
-A kernel is run on a wavefront with 64 threads in lockstep in CDNA2™;
+A kernel is run on a wavefront with 64 threads in lockstep in CDNA2™
 ISA. The wavefront size can switch between 32 and 64 threads in
-[RDNA2™; ISA (Sec 2.1)](https://www.amd.com/content/dam/amd/en/documents/radeon-tech-docs/instruction-set-architectures/rdna2-shader-instruction-set-architecture.pdf).
+[RDNA2™ ISA (Sec 2.1)](https://www.amd.com/content/dam/amd/en/documents/radeon-tech-docs/instruction-set-architectures/rdna2-shader-instruction-set-architecture.pdf).
 The processor operates on the kernels using the following subunits:
 
 - **Scalar arithmetic logic unit (SALU)**:
@@ -234,7 +234,7 @@ data from memory and store it back to memory from registers where arithmetic
 operations are performed. For example, the scalar load instructions (`s_load_dword`)
 loads a single double word of data from memory into a SGPR. Similarly, the vector
 load instructions `global_load_dword` loads a double word of data per thread
-from HBM into vector registers. See [CDNA2™; ISA](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/instruction-set-architectures/instinct-mi200-cdna2-instruction-set-architecture.pdf) for more details.
+from HBM into vector registers. See [CDNA2™ ISA](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/instruction-set-architectures/instinct-mi200-cdna2-instruction-set-architecture.pdf) for more details.
 
 ## Instructions and their relation to memory
 
@@ -534,7 +534,7 @@ buffer_store_dword v1, off, s[0:3], 0 offset:16
 buffer_store_dword v1, off, s[0:3], 0 offset:80
 ```
 
-Note that the spillage of registers to scratch memory is heavily dependent on the GPU architecture and version of ROCm™;.
+Note that the spillage of registers to scratch memory is heavily dependent on the GPU architecture and version of ROCm™.
 
 ### Shifted copy
 
@@ -778,4 +778,4 @@ please reach out to us on GitHub
 - [LLVM-AMDGPU-Assembler-Extra](https://github.com/ROCm-Developer-Tools/LLVM-AMDGPU-Assembler-Extra)
 - [Assembly cross lane operation](https://gpuopen.com/learn/amd-gcn-assembly-cross-lane-operations/)
 - [AMD ISA Doc](https://gpuopen.com/amd-isa-documentation/)
-- [RDNA3™; ISA guide](https://gpuopen.com/rdna3-isa-guide-now-available/)
+- [RDNA3™ ISA guide](https://gpuopen.com/rdna3-isa-guide-now-available/)

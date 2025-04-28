@@ -53,7 +53,7 @@ SOFTWARE.
 
 Profiling is the backbone of performance optimization in AI and HPC
 workloads, enabling developers to extract maximum efficiency from AMD
-Instinct™; GPUs. With ROCm's rapid evolution, the need for a unified,
+Instinct™ GPUs. With ROCm's rapid evolution, the need for a unified,
 scalable, and extensible profiling framework has never been more
 critical. The new **ROCprofiler-SDK** framework represents a significant
 step forward in profiling capabilities, offering enhanced features,

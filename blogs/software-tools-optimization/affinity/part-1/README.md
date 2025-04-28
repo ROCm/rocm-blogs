@@ -153,14 +153,14 @@ computing sites.
 
 Oak Ridge National Laboratory (ORNL)'s
 [Frontier supercomputer](https://www.olcf.ornl.gov/frontier/)
-is a system based on HPE Cray's EX architecture with optimized 3rd Gen AMD EPYC™;
-CPUs and AMD Instinct™; MI250X GPUs. In the figure depicting the topology of a
+is a system based on HPE Cray's EX architecture with optimized 3rd Gen AMD EPYC™
+CPUs and AMD Instinct™ MI250X GPUs. In the figure depicting the topology of a
 Frontier node below, we see that the 64-core CPU is connected with 4 MI250X GPUs via
-high speed Infinity Fabric™; links. We also observe that each MI250X GPU consists
+high speed Infinity Fabric™ links. We also observe that each MI250X GPU consists
 of two Graphics Compute Dies (GCDs), each with 64 GB of High Bandwidth Memory (HBM).
 The CPU is connected to 512 GB of DDR4 memory. The two GCDs in each GPU have four
-Infinity Fabric™; links between them. GCDs between different GPUs are also
-connected via Infinity Fabric™; links, but fewer of them. We see that there are 4
+Infinity Fabric™ links between them. GCDs between different GPUs are also
+connected via Infinity Fabric™ links, but fewer of them. We see that there are 4
 NICs connected directly to odd numbered GCDs. Lastly, we see that the CPU is configured
 in NPS4 mode, so every 16 cores belong to a NUMA domain. Simultaneous Multi-Threading
 (SMT) is enabled, so there are two HWTs per physical core.
@@ -183,7 +183,7 @@ Host-to-Device (H2D) and Device-to-Host (D2H) transfers.
 
 ### Consideration 2 - Memory bandwidth is highest between GCDs of the same MI250X GPU
 
-As seen in the figure below, we have four Infinity Fabric™; links between the two
+As seen in the figure below, we have four Infinity Fabric™ links between the two
 GCDs of a MI250X GPU for a combined 200 GB/s peak bandwidth in each direction. This can
 be advantageous for reducing communication latency if we place pairs of ranks that
 communicate the most on GCDs of the same GPU. Note that even though bandwidths are

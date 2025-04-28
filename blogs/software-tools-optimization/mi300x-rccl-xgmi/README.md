@@ -28,7 +28,7 @@ myst:
         "amd_blog_releasedate": "Mon Feb 24 07:00:00 PST 2025"
 ---
 
-# Understanding RCCL Bandwidth and xGMI Performance on AMD Instinct™; MI300X
+# Understanding RCCL Bandwidth and xGMI Performance on AMD Instinct™ MI300X
 
 Efficient inter-GPU communication is the backbone of high-performance AI
 and HPC workloads, where technologies like RCCL and xGMI play pivotal

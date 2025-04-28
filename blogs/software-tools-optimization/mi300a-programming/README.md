@@ -5,7 +5,7 @@ blog_title: "MI300A - Exploring the APU advantage"
 author: Suyash Tandon, Justin Chang
 tags: Compiler, Memory, HPC, OpenMP
 thumbnail: mi300a-die-package.jpg
-category: Software tools & optimizations
+category: ™ tools & optimizations
 language: English
 target_audience: "HPC Core Developers, HPC Solutions Architects"
 key_value_propositions: "APU style programming model - application optimization without explicit data movement."
@@ -18,19 +18,19 @@ myst:
 
 # MI300A - Exploring the APU advantage
 
-This blog post will introduce you to the advantages of AMD Instinct™; [MI300A][1] accelerated processing unit (APU),
+This blog post will introduce you to the advantages of AMD Instinct™ [MI300A][1] accelerated processing unit (APU),
 discussing the hardware architecture and how to leverage its GPU programming capabilities.
 
 We will discuss the main technical gains of the MI300A’s shared physical memory architecture and its programming advantages.
-We will then show you how AMD [ROCm™;][12] enables the APU Programming Model and how to handle its memory allocations.
+We will then show you how AMD [ROCm™][12] enables the APU Programming Model and how to handle its memory allocations.
 We will demonstrate how you can implement the APU Programming Model following different offloading strategies, using
-[HIP][25] API, [OpenMP™;][33], and by exploring other abstraction layers.
+[HIP][25] API, [OpenMP™][33], and by exploring other abstraction layers.
 
 Let's start exploring the efficiency, flexibility, and programmability advantages of the MI300A APU!
 
 ## The MI300A APU’s shared physical memory architecture
 
-In [MI300A][1] - the AMD ["Zen"][2] [4 EPYC™;][3] cores and third generation [CDNA™;][4] compute units share the
+In [MI300A][1] - the AMD ["Zen"][2] [4 EPYC™][3] cores and third generation [CDNA™][4] compute units share the
 same high-bandwidth memory (HBM). The MI300A implements the unified memory model by copackaging the CPU and GPU cores and
 directly attaching the CPU cores to the GPU's infinity fabric memory architecture. Figure 1 shows schematic representations
 of a socket with an APU versus a discrete system like the [MI200][5]. The unified memory architecture of the MI300A provided by
@@ -114,7 +114,7 @@ The dependency on third-party libraries was eliminated, and OpenFOAM code could 
   
 ## How ROCm enables the APU programming model
 
-[ROCm™;][12] is an open software stack including drivers, development tools, and APIs
+[ROCm™][12] is an open software stack including drivers, development tools, and APIs
 that enable GPU programming from low-level kernel to end-user applications. [ROCm 6.0][13] and newer releases
 have support for MI300A architecture ([`gfx942`][14]). To understand how the APU Programming Model is enabled
 by ROCm, let's take a quick look at GPU memory allocations and how they are handled.
@@ -243,7 +243,7 @@ covered in greater detail in a follow-up post.
 
 ### Directive-based offloading with OpenMP
 
-Many HPC applications also use directive-based approaches with [OpenMP™;][33] to parallelize regions of code.
+Many HPC applications also use directive-based approaches with [OpenMP™][33] to parallelize regions of code.
 With [OpenMP 4.0][34], [target-based offloading][35] has enabled programmers to accelerate code on GPUs. On the
 APU, the [unified shared memory][36] support in AMD [ROCm][12]; and unified physically shared HBM allows OpenMP
 to support the APU programming model, where the developers do not have to worry about the complexity of data management.
@@ -312,7 +312,7 @@ and developers can use target offloading with the APU programming model.
 
 ### Other abstractions
 
-Acceleration on AMD Instinct™; GPUs is also available through other abstraction layers, like
+Acceleration on AMD Instinct™ GPUs is also available through other abstraction layers, like
 [Kokkos][42], [Raja][43], [SYCL][44], and numerical libraries like [PETSc][10], [Gingko][45],
 [OCCA][46]. However, the level of support for the APU programming model is at the discretion
 of the developers and users, and advised to read their respective user manuals for details.

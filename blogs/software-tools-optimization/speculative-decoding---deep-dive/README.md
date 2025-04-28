@@ -56,7 +56,7 @@ and responses generated and sent back to clients all over the world. The perform
 has grabbed attention from both of the industry and academia.
 
 In this blog, we take vLLM, one of the most commonly-used open-source LLM frameworks, as the serving engine. We then investigate the effectiveness of a feature,
-speculative decoding, designed for speeding up the serving performance. We conduct all the benchmark and analysis on AMD Instinct™; MI300X GPUs and AMD software stack.
+speculative decoding, designed for speeding up the serving performance. We conduct all the benchmark and analysis on AMD Instinct™ MI300X GPUs and AMD software stack.
 
 As you will see, our results show that vLLM achieves up to 2.31x speedup when enabled with speculative decoding. In the post, we first demonstrate the performance of two common-used models, i.e., Llama 3.1-70B and Llama 3.1-405B,
 without and with speculative decoding enabled. Then, we provide detailed steps to reproduce the results on AMD MI300X GPUs.
