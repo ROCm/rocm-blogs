@@ -135,8 +135,8 @@ body:
       label: "AMD Technical Blog Type"
       description: "Select the technical blog type for this blog, please choose a single option from the list."
       options:
-        - Applications and models
-        - Ecosystems and Partners
+        - Applications and Models
+        - Ecosystem and Partners
         - Tools, Features, and Optimizations
         - Benchmarks and Testing
     validations:

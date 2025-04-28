@@ -37,6 +37,7 @@ jobs:
         run: |
           python3 -m pip install --upgrade pip
           python3 -m pip install markdown
+          python3 -m pip install PyYAML
       - name: Check for tags
         run: |
           python3 linting/check-tags.py
