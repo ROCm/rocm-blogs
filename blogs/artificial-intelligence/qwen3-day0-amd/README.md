@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Power Up Qwen 3 with AMD Instinct: A Developer’s Day 0 Quickstart"
-date: 18 Apr 2025
+date: 28 Apr 2025
 author: 'Andy Luo, Bill He, Seungrok Jung, Mahdi Ghodsi'
 thumbnail: 'qwen.jpg'
 tags: AI/ML
@@ -18,16 +18,15 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Applications and models"
+        "amd_technical_blog_type": "Applications and Models"
         "amd_hardware_deployment": "Instinct GPUs"
-        "amd_blog_development_tools": "ROCm"
+        "amd_blog_development_tools": "ROCm Software"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_hardware_platforms": "Instinct GPU Accelerators"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_applications": "AI Inference"
         "amd_deployment_tools": "ROCm Software"
         "amd_applications": "AI Inference"
         "amd_blog_category_topic": "Software & Ecosystem"
-        "amd_technical_blog_type": "Applications and models"
         "amd_developer_type": "ML/AI Developer"
         "amd_deployment": "Servers"
         "amd_product_type": "Accelerators"
