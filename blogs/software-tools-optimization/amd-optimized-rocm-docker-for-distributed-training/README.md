@@ -75,14 +75,14 @@ The ROCm [Pytorch Training docker container](https://hub.docker.com/r/rocm/pytor
 
 ### Megatron-LM Training Docker
 
-The ROCm [Megatron-LM training docker container](https://hub.docker.com/r/rocm/megatron-lm) is designed to enable efficient training of large-scale language models on AMD Instinct MI300X and MI325X GPUs.
+The ROCm [Megatron-LM training docker](https://github.com/ROCm/Megatron-LM/tree/megatron_release_v25.3) is designed to enable efficient training of large-scale language models on AMD Instinct MI300X and MI325X GPUs.
 AMD Megatron-LM delivers enhanced scalability, improved performance and resource utilization for AI workloads. It is purpose-built to support models like Meta’s Llama 2, Llama 3, and Llama 3.1, enabling developers to train next-generation AI models with greater efficiency.
 
  **<u>Key Highlights</u>**
 
 - The Megatron-LM focused Docker image is built on top of the Pytorch training Docker.
 
-- Supports multimode training, DeepseekV2-Lite and FP8 datatypes.
+- Supports multimode training, DeepseekV2 Lite and FP8 datatypes.
   
 ## Finetuning with Torchtune
 
@@ -136,7 +136,8 @@ Figure 2. Llama 3.1 8B FP8 Training TFLOPS[^2]
 
 ## MoE support with Megatron-LM training
 
-AMD also offers support for Mixture of Experts (MoE) models—a class of deep learning architectures that leverage multiple specialized sub-models, or "experts." MoE models dynamically route input data to the most relevant experts, enabling the scaling of model capacity while maintaining computational efficiency by activating only a subset of experts per input.
+AMD also offers support for Mixture of Experts (MoE) models—a class of deep learning architectures that leverage multiple specialized sub-models, or "experts." MoE models dynamically route input data to the most relevant experts, enabling the scaling of model capacity
+while maintaining computational efficiency by activating only a subset of experts per input.
 
 We observe that a single node (8x MI300X) delivers about 1.29x better performance vs. single node(8x H100) on DeepSeekV2-Lite training. We also now have an added advantage of being able to train the full model without checkpoint recompute to support larger micro batch size as shown in Figure 3.
 
