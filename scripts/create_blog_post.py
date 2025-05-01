@@ -5,7 +5,6 @@ from datetime import datetime
 
 from numpy import remainder as rem
 
-
 def gather_args():
     args = sys.argv[1:]
     if len(args) < 14:
@@ -13,7 +12,6 @@ def gather_args():
         sys.exit(1)
 
     return args
-
 
 def truncate_string(input_string: str) -> str:
 
@@ -23,24 +21,23 @@ def truncate_string(input_string: str) -> str:
 
     return transformed_string.lower()
 
-
 def create_blog_post_from_args():
 
     args = gather_args()
     blog_title = args[0]
-    blog_authors = args[1]
-    blog_tags = args[2]
-    blog_category = args[3]
-    blog_audience = args[4]
-    blog_key_value_proposition = args[5]
-    blog_keywords = args[6]
-    blog_amd_technical_blog_type = args[7]
-    blog_amd_product_type = args[8]
-    blog_amd_developer_type = args[9]
-    blog_amd_applications = args[10]
-    blog_amd_industries = args[11]
-    blog_description = args[12]
-    blog_amd_deployment = args[13]
+    blog_file_path = args[1]
+    blog_authors = args[2]
+    blog_tags = args[3]
+    blog_category = args[4]
+    blog_audience = args[5]
+    blog_key_value_proposition = args[6]
+    blog_keywords = args[7]
+    blog_amd_technical_blog_type = args[8]
+    blog_amd_applications = args[9]
+    blog_description = args[10]
+    blog_hardware_amd_deployment = args[11]
+    blog_software_amd_deployment = args[12]
+    blog_amd_category_topic = args[13]
 
     # check all of the date formats
 
@@ -53,6 +50,12 @@ def create_blog_post_from_args():
     weekday = weekday_names[datetime.today().weekday()]
 
     day, month, year = today.split(" ")
+
+    images_template = """
+Upload your blog thumbnail here. Please delete this file after uploading image.
+
+delete me before publishing blog
+"""
 
     blog_template = """---
 blogpost: true
@@ -70,19 +73,16 @@ myst:
         "author": "{blog_authors}"
         "description lang=en": "{blog_description}"
         "keywords": "{blog_keywords}"
-        "property=og:locale": "en_US"
         "amd_category": "Developer Resources"
-        "amd_asset_type": "Blogs"
-        "amd_blog_type": "Technical Articles & Blogs"
+        "amd_asset_type": "Blog"
         "amd_technical_blog_type": "{blog_amd_technical_blog_type}"
-        "amd_developer_type": "{blog_amd_developer_type}"
-        "amd_deployment": "{blog_amd_deployment}"
-        "amd_product_type": "{blog_amd_product_type}"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "{blog_amd_applications}"
-        "amd_industries": "{blog_amd_industries}"
-        "amd_blog_releasedate": {weekday} {month} {day}, 12:00:00 PST {year}
+        "amd_blog_hardware_platforms": "{blog_hardware_amd_deployment}"
+        "amd_blog_development_tools": "{blog_software_amd_deployment}"
+        "amd_blog_applications": "{blog_amd_applications}"
+        "amd_blog_topic_categories": "{blog_amd_category_topic}"
+        "amd_blog_authors": "{blog_authors}"
 ---
+
 <!---
 Copyright (c) {year} Advanced Micro Devices, Inc. (AMD)
 
@@ -120,7 +120,7 @@ This is where you unleash your creativity. Please follow these general guideline
 
 • use actionable, hands-on, conversational approach, guiding your reader through the blog and its content, maintaining engagement. Use active voice, call-to-action (CTA) text (e.g. “Interested in learning more?”, “Run this function by using”, “Try implementing this yourself”)
 
-• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections. 
+• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections.
 
 • Make sure you provide the required background and prerequisites for your blog. Outline any foundational knowledge and tools the reader will likely require.
 
@@ -178,20 +178,20 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         blog_key_value_proposition=blog_key_value_proposition,
         blog_keywords=blog_keywords,
         blog_amd_technical_blog_type=blog_amd_technical_blog_type,
-        blog_amd_product_type=blog_amd_product_type,
-        blog_amd_developer_type=blog_amd_developer_type,
         blog_amd_applications=blog_amd_applications,
-        blog_amd_industries=blog_amd_industries,
         weekday=weekday,
         month=month,
         day=day,
         year=year,
         blog_description=blog_description,
-        blog_amd_deployment=blog_amd_deployment,
+        blog_hardware_amd_deployment=blog_hardware_amd_deployment,
+        blog_software_amd_deployment=blog_software_amd_deployment,
+        blog_amd_category_topic=blog_amd_category_topic,
         note="{note}",
     )
 
-    dir_blog_name = truncate_string(blog_title)
+    blog_file_path = truncate_string(blog_file_path[:20])
+    dir_blog_name = "-".join(blog_file_path.split("-")[:3])
     dir_category_name = truncate_string(blog_category)
 
     if dir_category_name == "applications-models":
@@ -200,13 +200,16 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         dir_category_name = "software-tools-optimization"
 
     os.makedirs(f"blogs/{dir_category_name}/{dir_blog_name}", exist_ok=True)
+    os.makedirs(f"blogs/{dir_category_name}/{dir_blog_name}/images", exist_ok=True)
 
     # create README.md
     with open(f"blogs/{dir_category_name}/{dir_blog_name}/README.md", "w") as f:
         f.write(blog_template)
 
-    return None
+    with open(f"blogs/{dir_category_name}/{dir_blog_name}/images/README.md", "w") as f:
+        f.write(images_template)
 
+    return None
 
 if __name__ == "__main__":
     create_blog_post_from_args()

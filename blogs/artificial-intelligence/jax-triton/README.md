@@ -1,7 +1,7 @@
 ---
 blogpost: true
 date: 9 October 2024
-thumbnail: './images/AdobeStock_485944399.jpeg'
+thumbnail: 'AdobeStock_485944399.jpeg'
 blog_title: 'Supercharging JAX with Triton Kernels on AMD GPUs'
 author: Clint Greene
 tags: AI/ML, JAX, LLM

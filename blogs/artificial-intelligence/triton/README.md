@@ -1,22 +1,34 @@
 ---
 blogpost: true
-date: 15 Apr 2024
+blog_title: 'Developing Triton Kernels on AMD GPUs'
+date: 15 April 2024
 author: Clint Greene
 tags: AI/ML
+thumbnail: generic.jpg
 category: Applications & models
 language: English
+target_audience: AI Developers, AI Solutions Architects, AI practitioners
+key_value_propositions: Showcase the development of high-performance Triton kernels on ROCm
 myst:
-  html_meta:
-    "description lang=en": "Developing Triton Kernels on AMD GPUs"
-    "keywords": "Triton, Kernel, Triton kernels, ROCm, AMD GPUs, GPU Programming"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog shows users how to develop and benchmark a custom Triton kernel"
+        "keywords": "Triton, Kernel, Triton kernels, ROCm, AMD GPUs, GPU Programming"
+        "property=og:locale": "en_US"
+        "author": "Clint Greene"
+        "amd_category": 'Developer Resources'
+        "amd_asset_type": 'Blogs'
+        "amd_blog_type": 'Technical Articles & Blogs'
+        "amd_technical_blog_type": 'Benchmarks and Testing'
+        "amd_developer_type": 'ML/AI Developer'
+        "amd_deployment": 'Servers'
+        "amd_product_type": 'Accelerators'
+        "amd_developer_tool": 'ROCm Software'
+        "amd_applications": 'Large Language Model (LLM)'
+        "amd_industries": 'Data Center'
+        "amd_blog_releasedate": Mon April 15, 12:00:00 PST 2024
 ---
 
 # Developing Triton Kernels on AMD GPUs
-
-<span style="font-size:0.7em;">15 Apr, 2024 by {hoverxref}`Clint Greene<clingree>`. </span>
-
-## Introduction
 
 OpenAI has developed a powerful GPU focused programming language and compiler called [Triton](https://triton-lang.org) that works seamlessly with AMD GPUs. The goal of Triton is to enable AI engineers and scientists to write high-performant GPU code with minimal expertise. Triton kernels are performant because of their blocked program representation, allowing them to be compiled into highly optimized binary code. Triton also leverages Python for kernel development, making it both familiar and accessible. And the kernels can be easily compiled by simply declaring the `triton.jit` python decorator before the kernel.
 
@@ -68,6 +80,7 @@ def gelu_kernel(
     input_row_stride,
     output_row_stride,
     n_cols,
+    k: tl.constexpr,
     block_size: tl.constexpr,
 ):
     """
@@ -80,6 +93,7 @@ def gelu_kernel(
     input_row_stride (int): Stride (number of elements to skip) between rows in the input tensor.
     output_row_stride (int): Stride (number of elements to skip) between rows in the output tensor.
     n_cols (int): Number of columns in both the input and output tensors.
+    k (tl.constexpr int): Constant for GELU calculation.
     block_size (tl.constexpr int): Block size for efficient processing of the tensors (known at compile time).
 
     Returns: None, output tensor buffer is modified in-place.
@@ -125,7 +139,7 @@ def gelu(x: torch.Tensor):
         num_warps = 8
     
     # Further increase to 16 warps for even larger blocks
-    elif block_size >= 4096:
+    if block_size >= 4096:
         num_warps = 16
 
     y = torch.empty_like(x)
@@ -137,6 +151,7 @@ def gelu(x: torch.Tensor):
       y.stride(0),  # Stride between rows in the output tensor
       n_cols,  # Number of columns in the tensors
       num_warps=num_warps,  # Number of warps for parallel execution
+      k=k, # Constant for GELU calculation
       block_size=block_size,  # Block size for efficient processing
     )
 
@@ -211,3 +226,9 @@ Third-party content is licensed to you directly by the third party that owns the
 YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR
 ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY
 DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
+
+```{update} 19 Mar 2025
+Code updates:
+1. Updated elif to if to ensure that when the block size is larger than 4096, the number of warps are increased
+2. Explicitly pass in k to the GELU Triton kernel  
+```

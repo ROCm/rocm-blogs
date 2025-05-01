@@ -18,12 +18,12 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Applications and models"
+        "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "Data & Research Scientists, Algorithm Developer, Software Developer, ML/AI Developer"
         "amd_deployment": "Servers, Workstations"
         "amd_product_type": "Accelerators"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Large Language Model (LLM), Image / Video Generation"
+        "amd_applications": "Large Language Model (LLM), Generative AI"
         "amd_industries": "Data Center"
         "amd_blog_releasedate": Fri Mar 7, 12:00:00 PST 2025
 ---

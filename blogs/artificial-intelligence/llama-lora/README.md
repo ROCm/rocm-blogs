@@ -6,7 +6,7 @@ blog_title: 'Fine-tune Llama model with LoRA: Customizing a large language model
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
-thumbnail: './images/image.jpg'
+thumbnail: 'image.jpg'
 myst:
   html_meta:
     "description lang=en": "This blog demonstrate how to use Lora to efficiently fine-tune Llama model on a single AMD GPU with ROCm.

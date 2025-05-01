@@ -18,9 +18,9 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Tools, Features and Optimizations"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
         "amd_developer_type": "ML/AI Developer"
-        "amd_deployment": "Servers"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Accelerators"
         "amd_developer_tool": "ROCm Software"
         "amd_applications": "High Performance Computing"
@@ -28,7 +28,7 @@ myst:
         "amd_blog_releasedate": "Mon Feb 24 07:00:00 PST 2025"
 ---
 
-# Understanding RCCL Bandwidth and xGMI Performance on AMD Instinct&trade; MI300X
+# Understanding RCCL Bandwidth and xGMI Performance on AMD Instinct™ MI300X
 
 Efficient inter-GPU communication is the backbone of high-performance AI
 and HPC workloads, where technologies like RCCL and xGMI play pivotal

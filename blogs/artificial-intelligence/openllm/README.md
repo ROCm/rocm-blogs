@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Step-by-Step Guide to Use OpenLLM on AMD GPUs'
-thumbnail: './images/openllm_thumbnail.jpg'
+thumbnail: 'openllm_thumbnail.jpg'
 date: 1 May 2024
 author: Fabricio Flores
 tags: AI/ML, LLM, Serving

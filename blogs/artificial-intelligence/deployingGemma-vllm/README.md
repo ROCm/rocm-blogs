@@ -18,9 +18,9 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Applications and models"
+        "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer, Software Developer, Data & Research Scientists"
-        "amd_deployment": "Servers"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Accelerators"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
         "amd_applications": "Large Language Model (LLM)"
@@ -49,7 +49,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
-# Deploying Google’s Gemma 3 Model with vLLM on AMD Instinct&trade; MI300X GPUs: A Step-by-Step Guide
+# Deploying Google’s Gemma 3 Model with vLLM on AMD Instinct™ MI300X GPUs: A Step-by-Step Guide
 
 AMD is excited to announce the integration of Google’s Gemma 3 models with AMD Instinct MI300X GPUs, optimized for high-performance inference using the vLLM framework. This collaboration empowers developers to harness advanced AMD AI hardware for scalable, efficient deployment of state-of-the-art language models. In this blog we will walk you through a step-by-step guide on deploying Google’s Gemma 3 model using [vLLM](https://github.com/vllm-project/vllm) on AMD Instinct GPUs, covering Docker setup, dependencies, authentication, and inference testing. Remember, the Gemma 3 model is gated—ensure you request access before beginning deployment.
 

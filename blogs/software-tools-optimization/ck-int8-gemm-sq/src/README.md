@@ -5,7 +5,7 @@
 The testing was done in a publicly available Docker image from Docker Hub:
 [`rocm/pytorch:rocm6.1_ubuntu22.04_py3.10_pytorch_2.1.2`](https://hub.docker.com/layers/rocm/pytorch/rocm6.1_ubuntu22.04_py3.10_pytorch_2.1.2/images/sha256-f6ea7cee8aae299c7f6368187df7beed29928850c3929c81e6f24b34271d652b)
 
-### Install ROCm&trade; Composable Kernel
+### Install ROCm™ Composable Kernel
 
 ```bash
 git clone https://github.com/ROCm/composable_kernel.git

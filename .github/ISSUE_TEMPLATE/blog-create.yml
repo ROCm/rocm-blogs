@@ -19,6 +19,22 @@ body:
     validations:
       required: false
   - type: input
+    id: file_path_name
+    attributes:
+      label: "File Path Name"
+      description: |
+        "Please enter the name of your directory name"
+
+        > **IMPORTANT NOTE:** The directory name must be unique and not already exist in the repository. If you are unsure, please check the repository before submitting this form.
+        > **WARNING**: The directory name must be in lowercase and contain no spaces or special characters. Use hyphens to separate words.
+        > **EXAMPLE**: If your blog is about "AMD ROCm", the directory name could be "amd-rocm". Please keep the directory name to a maximum of three words separated by a hyphen.
+
+        > **WARNING**: MAXIMUM OF 20 CHARACTERS AND 3 WORDS, ANY ADDITIONAL CHARACTERS WILL BE TRUNCATED.
+      placeholder: |
+        Suggested format: word1-word2-word3. Please keep the directory name to maximum three words separated by a hyphen.
+    validations:
+      required: true
+  - type: input
     id: blog_authors
     attributes:
       label: "Author"
@@ -114,48 +130,33 @@ body:
     validations:
       required: true
   - type: dropdown
-    id: blog_amd_product_type
-    attributes:
-      label: "AMD Product Type"
-      description: "Select the product type(s) for this blog. Multiple selections allowed."
-      multiple: true
-      options:
-        - Processors
-        - Accelerators
-        - Adaptive SoCs and FPGAs
-        - Development Tools
-        - Graphics
-        - Networking Infrastructure
-        - Software & Applications
-        - System on Modules (SOMs)
-    validations:
-      required: true
-  - type: dropdown
     id: blog_amd_technical_blog_type
     attributes:
       label: "AMD Technical Blog Type"
       description: "Select the technical blog type for this blog, please choose a single option from the list."
       options:
-        - Applications and models
-        - Ecosystems and Partners
+        - Applications and Models
+        - Ecosystem and Partners
         - Tools, Features, and Optimizations
         - Benchmarks and Testing
     validations:
       required: true
   - type: dropdown
-    id: blog_amd_developer_type
+    id: amd_blog_hardware_platforms
     attributes:
-      label: "AMD Developer Type"
+      label: "AMD Hardware Deployment Platforms"
       multiple: true
-      description: "Select the developer type(s) for this blog. Multiple selections allowed."
+      description: "Select hardware deployment target(s)"
       options:
-        - ML/AI Developer
-        - Application Developer
-        - Game Developer
-        - Software Developer
-        - HPC Developer
-        - Algorithm Developer
-        - Data & Research Scientists
+        - EPYC Server Processors
+        - Instinct GPUs
+        - Radeon Graphics
+        - Ryzen Processors
+        - Versal & Zynq Adaptive SoCs
+        - Virtex, Kintex & Artix FPGAs
+        - Alveo Adaptive SoC Accelerators
+        - Kria SOMs
+        - Pensando Network Infrastructure
     validations:
       required: true
   - type: dropdown
@@ -165,61 +166,52 @@ body:
       description: "Select application(s) for this blog. Multiple selections allowed."
       multiple: true
       options:
-        - Cloud Computing
+        - AI Inference
+        - AI Training
         - Computer Vision
-        - Cybersecurity
-        - Data Analytics
-        - Embedded Computing
-        - Image / Video Generation
-        - High Performance Computing
-        - Large Language Model (LLM)
-        - Natural Language Processing (NLP)
-        - Recommendation System
-        - Reinforcement Learning
-        - Speech Recognition / Synthesis
+        - Content Creation / Rendering
+        - Conversational AI
+        - Data Science
+        - Design, Simulation & Modeling
+        - Deploying AI at Scale
+        - Edge Computing
+        - Generative AI
+        - Industrial / Robotics
+        - Predictive Analytics
+        - Video Analytics
     validations:
       required: true
   - type: dropdown
-    id: blog_amd_industries
+    id: amd_blog_development_tools
     attributes:
-      label: "AMD Industries"
-      description: "Select relevant industries. Multiple selections allowed."
+      label: "AMD Software Deployment Platforms"
+      description: "Select software deployment target(s)"
       multiple: true
       options:
-        - Aerospace & Defense
-        - Architecture, Engineering, & Construction
-        - Automotive
-        - Broadcast & Pro AV
-        - Data Center
-        - Energy
-        - Emulation & Prototyping
-        - Financial Services
-        - Gaming
-        - Healthcare
-        - Home & Lifestyle
-        - Industries & Vision
-        - Manufactoring
-        - Media & Entertainment
-        - Product Design
-        - Public Sector
-        - Retail & E-Commerce
-        - Semiconductor
-        - Supercomputing & Research
-        - Telco & Networking
-        - Test & Management
+        - Vitis AI Software
+        - ROCm Software
+        - Ryzen AI Software
+        - ZenDNN Library
+        - Vitis Software
+        - Vivado Software
+        - Zen Software Studio
+        - Radeon Pro Render
+        - Open-Source Tools
     validations:
       required: true
   - type: dropdown
-    id: blog_amd_deployment
+    id: amd_blog_topic_categories
     attributes:
-      label: "Deployment Targets"
-      description: "Select deployment target(s)"
-      multiple: true
+      label: "AMD Blog Topic Categories"
+      description: "Select Blog Topic Category which best fit your blog"
+      multiple: false
       options:
-        - Servers
-        - Embedded Platforms
-        - Laptops
-        - Workstations
+        - Adaptive & Embedded Computing
+        - AI & Intelligent Systems
+        - Enterprise & Data Center Trends
+        - HPC & Scientific Computing
+        - Industry Applications & Use Cases
+        - Software & Ecosystem
     validations:
       required: true
   - type: input

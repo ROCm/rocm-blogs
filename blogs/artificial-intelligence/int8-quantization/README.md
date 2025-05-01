@@ -6,7 +6,7 @@ blog_title: Leaner LLM Inference with INT8 Quantization on AMD GPUs using PyTorc
 tags: AI/ML, GenAI, PyTorch, LLM, Optimization, Performance
 category: Applications & models
 language: English
-thumbnail: './images/image_int8.jpg'
+thumbnail: 'image_int8.jpg'
 myst:
   html_meta:
     "description lang=en": "This blog demonstrates how to use AMD GPUs to implement and evaluate INT8 quantization, and the derived inference speed-up of Llama family and Mistral LLM models."

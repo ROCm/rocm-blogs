@@ -52,7 +52,7 @@ jobs:
           BLOG_TITLE="${{ github.event.issue.title }}"
 
           BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[New Post\][[:space:]]*//')
-          
+          BLOG_FILE_PATH=$(extract_field "File Path Name")
           BLOG_AUTHORS=$(extract_field "Author")
           BLOG_TAGS=$(extract_field "Tags")
           BLOG_CATEGORY=$(extract_field "Category")
@@ -61,14 +61,14 @@ jobs:
           BLOG_KEYWORDS=$(extract_field "Keywords")
           BLOG_DESCRIPTION=$(extract_field "Description")
           BLOG_AMD_TECHNICAL_BLOG_TYPE=$(extract_field "AMD Technical Blog Type")
-          BLOG_AMD_PRODUCT_TYPE=$(extract_field "AMD Product Type")
-          BLOG_AMD_DEVELOPER_TYPE=$(extract_field "AMD Developer Type")
           BLOG_AMD_APPLICATIONS=$(extract_field "AMD Applications")
-          BLOG_AMD_INDUSTRIES=$(extract_field "AMD Industries")
-          BLOG_DEPLOYMENT_TARGETS=$(extract_field "Deployment Targets")
+          BLOG_HARDWARE_DEPLOYMENT_TARGETS=$(extract_field "AMD Hardware Deployment Platforms")
+          BLOG_SOFTWARE_DEPLOYMENT_TARGETS=$(extract_field "AMD Software Deployment Platforms")
+          BLOG_AMD_CATEGORY_TOPIC=$(extract_field "AMD Blog Topic Categories")
           BLOG_JIRA=$(extract_field "Jira Ticket")
           
           echo "Blog Title: $BLOG_TITLE"
+          echo "Blog File Path: $BLOG_FILE_PATH"
           echo "Blog Author(s): $BLOG_AUTHORS"
           echo "Blog Tags: $BLOG_TAGS"
           echo "Blog Category: $BLOG_CATEGORY"
@@ -77,11 +77,10 @@ jobs:
           echo "Blog Keywords: $BLOG_KEYWORDS"
           echo "Blog Description: $BLOG_DESCRIPTION"
           echo "Blog AMD Technical Blog Type: $BLOG_AMD_TECHNICAL_BLOG_TYPE"
-          echo "Blog AMD Product Type: $BLOG_AMD_PRODUCT_TYPE"
-          echo "Blog AMD Developer Type: $BLOG_AMD_DEVELOPER_TYPE"
           echo "Blog AMD Applications: $BLOG_AMD_APPLICATIONS"
-          echo "Blog AMD Industries: $BLOG_AMD_INDUSTRIES"
-          echo "Deployment Targets: $BLOG_DEPLOYMENT_TARGETS"
+          echo "Hardware Deployment Targets: $BLOG_HARDWARE_DEPLOYMENT_TARGETS"
+          echo "Software Deployment Targets: $BLOG_SOFTWARE_DEPLOYMENT_TARGETS"
+          echo "Blog AMD Category Topic: $BLOG_AMD_CATEGORY_TOPIC"
 
           # Check for empty required fields
           VALIDATION_ERRORS=""
@@ -127,7 +126,7 @@ jobs:
           echo "Current date: $CURRENT_DATE"
 
           if [ "$VALIDATION_PASSED" = "true" ]; then
-            python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_PRODUCT_TYPE" "$BLOG_AMD_DEVELOPER_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_AMD_INDUSTRIES" "$BLOG_DESCRIPTION" "$BLOG_DEPLOYMENT_TARGETS"
+            python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_FILE_PATH" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_DESCRIPTION" "$BLOG_HARDWARE_DEPLOYMENT_TARGETS" "$BLOG_SOFTWARE_DEPLOYMENT_TARGETS" "$BLOG_AMD_CATEGORY_TOPIC"
           fi
           
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
@@ -225,6 +224,7 @@ jobs:
         if: steps.extract.outputs.validation_passed == 'true' && steps.extract.outputs.create_pr == 'true'
         uses: peter-evans/create-pull-request@v7.0.6
         with:
+          token: "${{ secrets.ROCM_BLOG_PAT }}"
           commit-message: "${{ github.event.issue.title }}"
           author: "${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>"
           title: "${{ github.event.issue.title }}"

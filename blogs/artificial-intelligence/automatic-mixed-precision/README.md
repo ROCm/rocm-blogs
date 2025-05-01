@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Automatic mixed precision in PyTorch using AMD GPUs.'
-thumbnail: './images/amp_thumbnail.jpg'
+thumbnail: 'amp_thumbnail.jpg'
 date: 29 March 2024
 author: Logan Grado
 tags: PyTorch, AI/ML

@@ -57,9 +57,9 @@ The following terms are used in this blog post:
 
 | Term        | Description |
 | ----------- | ----------- |
-| [AMD "Zen" Core](https://www.amd.com/en/technologies/zen-core)| AMD's x86-64 processor core architecture design. Used by the AMD EPYC&trade;, AMD Ryzen&trade;, AMD Ryzen&trade; PRO, and AMD Threadripper&trade; PRO processor series.|
-| [RDNA&trade;](https://www.amd.com/en/technologies/rdna) | AMD's Traditional GPU architecture optimized for graphically demanding workloads like gaming and visualization. Includes the RX 5000, 6000 and 7000 GPUs. |
-| [CDNA&trade;](https://www.amd.com/en/technologies/cdna) | AMD's Compute dedicated GPU architecture optimized for accelerating HPC, ML/AI, and data center type workloads. Includes the AMD Instinct™ MI50/60, MI100, and MI200 series accelerators.|
+| [AMD "Zen" Core](https://www.amd.com/en/technologies/zen-core)| AMD's x86-64 processor core architecture design. Used by the AMD EPYC™, AMD Ryzen™, AMD Ryzen™ PRO, and AMD Threadripper™ PRO processor series.|
+| [RDNA™](https://www.amd.com/en/technologies/rdna) | AMD's Traditional GPU architecture optimized for graphically demanding workloads like gaming and visualization. Includes the RX 5000, 6000 and 7000 GPUs. |
+| [CDNA™](https://www.amd.com/en/technologies/cdna) | AMD's Compute dedicated GPU architecture optimized for accelerating HPC, ML/AI, and data center type workloads. Includes the AMD Instinct™ MI50/60, MI100, and MI200 series accelerators.|
 | [HIP](https://rocm.docs.amd.com/projects/HIP/en/latest/understand/programming_model.html) | A C++ Runtime API and kernel language that allows developers to create portable compute kernels/applications for AMD and NVIDIA GPUs from a single source code |
 | [Timeline Trace](https://rocm.github.io/omnitrace/output.html#perfetto-output) | A profiling approach where durations of compute kernels and data transfers between devices are collected and visualized |
 | [Roofline Analysis](https://rocm.github.io/omniperf/profiling.html#standalone-roofline) | Hardware agnostic methodology for quantifying a workload's ability to saturate the given compute architecture in terms of floating-point compute and memory bandwidth |
@@ -72,22 +72,22 @@ to collect traces on the CPU, GPU, or both, understand kernel behavior, or asses
 access patterns, performing such an analysis might appear daunting for new users of AMD hardware.
 We begin by identifying the architecture and operating systems supported by each of the profiling tools
 provided by AMD. Almost all the tools in Table 1 support Linux&reg; distros and with the gaining popularity of
-Instinct&trade; GPUs, every tool has some capability to profile codes running on CDNA&trade; architecture. However,
+Instinct™ GPUs, every tool has some capability to profile codes running on CDNA™ architecture. However,
 those who prefer Windows will be limited to using [AMD <greek>u</greek>Prof](#amd-uprof)
-to profile CPU and GPU codes targeting AMD "Zen"-based processors and AMD Instinct&trade; GPUs, and
-[Radeon&trade; GPU Profiler](#radeon-gpu-profiler) that can provide great insights to optimize applications'
-use of the graphics pipeline (rasterization, shaders, etc.) on RDNA&trade;-based GPUs.
+to profile CPU and GPU codes targeting AMD "Zen"-based processors and AMD Instinct™ GPUs, and
+[Radeon™ GPU Profiler](#radeon-gpu-profiler) that can provide great insights to optimize applications'
+use of the graphics pipeline (rasterization, shaders, etc.) on RDNA™-based GPUs.
 
 <!--
 ================
  ### Table 1
 ================ -->
-| AMD Profiling Tools | AMD "Zen" Core | RDNA&trade; | CDNA&trade; | Windows | Linux&reg; |
+| AMD Profiling Tools | AMD "Zen" Core | RDNA™ | CDNA™ | Windows | Linux&reg; |
 | :------------------ | :------------: | :---------: | :---------: | :-----: | :---: |
 | ROC-profiler               |<sub><sup>Not supported</sup></sub>|    &star;                         |    &starf;  |<sub><sup>Not supported</sup></sub>|&starf;|
 | Omniperf                   |<sub><sup>Not supported</sup></sub>|<sub><sup>Not supported</sup></sub>|    &starf;  |<sub><sup>Not supported</sup></sub>|&starf;|
 | Omnitrace                  |     &starf;                       |    &star;                         |    &starf;  |<sub><sup>Not supported</sup></sub>|&starf;|
-| Radeon&trade; GPU Profiler |<sub><sup>Not supported</sup></sub>|    &starf;                        |    &star;   |   &starf;                         |&star; |
+| Radeon™ GPU Profiler |<sub><sup>Not supported</sup></sub>|    &starf;                        |    &star;   |   &starf;                         |&star; |
 | AMD <greek>u<greek>Prof    |     &starf;                       |<sub><sup>Not supported</sup></sub>|    &star;   |   &starf;                         |&star; |
 
 &starf; Full support | &star; Partial support
@@ -103,20 +103,20 @@ that has not yet been profiled, it is recommended to first identify hotspots in 
 benefit from quick optimization. In such a scenario, it is best if users start by collecting
 timelines and traces of their application. On Linux&reg; platforms, [Omnitrace](#omnitrace) enables the collection of CPU and GPU traces,
 and call stack samples to help identify major hotspots. However, on Windows, one may have to choose
-between [AMD <greek>u</greek>Prof](#amd-uprof) and [Radeon&trade; GPU
+between [AMD <greek>u</greek>Prof](#amd-uprof) and [Radeon™ GPU
 Profiler](#radeon-gpu-profiler) depending on the targeted architecture.
 2. _How well am I using the hardware_?: The first step is to obtain a characterization of workloads that can provide a glimpse into how
 well the hardware is being utilized. For example, identifying what parts of your application are memory or compute bound.
 This can be accomplished through roofline profiling. Typically, hotspots are well understood and
 interest is usually in identifying the performance of a few key kernels or subroutines. At present, roofline profiling is
-only available through [Omniperf](#omniperf) on AMD Instinct&trade; GPUs and [AMD <greek>u</greek>Prof](#amd-uprof) on AMD "Zen"-based processors.
+only available through [Omniperf](#omniperf) on AMD Instinct™ GPUs and [AMD <greek>u</greek>Prof](#amd-uprof) on AMD "Zen"-based processors.
 3. _Why am I seeing this performance_?: Once hotspots are identified and the initial assessment of performance
 on a particular hardware is completed, the next phase likely involves profiling and collecting the hardware metrics to
 understand where the observed performance is coming from. On AMD GPUs, tools such as [Omnitrace](#omnitrace), [Omniperf](#omniperf)
 and [AMD <greek>u</greek>Prof](#amd-uprof) interface with the low-level  [ROC-profiler](#roc-profiler) API and/or uses
 `rocprof` under-the-hood to gather GPU metrics. We do not recommend using rocprof directly because of the extra overhead in
 dealing with text/CSV files and hardware-specific metrics unless there is a specific need. On Windows systems, one will have to rely
-on using either [AMD <greek>u</greek>Prof](#amd-uprof) or [Radeon&trade; GPU Profiler](#radeon-gpu-profiler).
+on using either [AMD <greek>u</greek>Prof](#amd-uprof) or [Radeon™ GPU Profiler](#radeon-gpu-profiler).
 
 > **Quick Tip**:  The Omni\* suite of tools ([Omniperf](#omniperf) and [Omnitrace](#omnitrace)), available
 on Linux&reg; platforms, provide an easy-to-use interface for studying performance of the code across AMD hardware and
@@ -142,10 +142,10 @@ In this section, we provide a brief overview of the above-mentioned AMD tools an
 ### Omnitrace
 
 [Omnitrace](https://rocm.github.io/omnitrace/) is a comprehensive profiling and tracing tool for parallel
-applications, including HPC and ML packages, written in C, C++, Fortran, HIP, OpenCL&trade;, and Python&trade; which execute
+applications, including HPC and ML packages, written in C, C++, Fortran, HIP, OpenCL™, and Python™ which execute
 on the CPU or CPU+GPU. It is capable of gathering the performance information
 of functions through any combination of binary instrumentation, call-stack
-sampling, user-defined regions, and Python&trade; interpreter hooks. Omnitrace
+sampling, user-defined regions, and Python™ interpreter hooks. Omnitrace
 supports interactive visualization of comprehensive traces in the web browser
 in addition to high-level summary profiles with mean/min/max/stddev statistics.
 Beyond runtime information, Omnitrace supports the collection of system-level
@@ -177,10 +177,10 @@ any additional feedback.
 ### Omniperf
 
 [Omniperf](https://rocm.github.io/omniperf/) is a system performance profiler
-for High-Performance Computing (HPC) and Machine-Learning (ML) workloads using AMD Instinct&trade; GPUs.
+for High-Performance Computing (HPC) and Machine-Learning (ML) workloads using AMD Instinct™ GPUs.
 Omniperf utilizes [AMD ROC-profiler](#roc-profiler) to collect hardware
 performance counters. The Omniperf tool performs system profiling based on all approved hardware
-counters for AMD Instinct&trade; MI200 and MI100 architectures. It provides high level performance analysis features
+counters for AMD Instinct™ MI200 and MI100 architectures. It provides high level performance analysis features
 including System Speed-of-Light, IP block Speed-of-Light, Memory Chart
 Analysis, Roofline Analysis, Baseline Comparisons, and more.
 
@@ -189,7 +189,7 @@ text input files with lists of counters to collect and analyze raw CSV output
 files as is the case with ROC-profiler. Instead, Omniperf automates the
 collection of all available hardware counters in one command and provides a
 graphical interface to help users understand and analyze bottlenecks
-and stressors for their computational workloads on AMD Instinct&trade; GPUs.
+and stressors for their computational workloads on AMD Instinct™ GPUs.
 Note that Omniperf collects hardware counters in multiple passes,
 and will therefore re-run the application during each pass to collect different sets of metrics.
 
@@ -231,31 +231,31 @@ provide a raw view of the data and puts the onus on the user to parse and
 analyze. Therefore, `rocprof` gives the user full access and control of raw performance profiling data,
 but requires extra effort to analyze the collected data.
 
-### Radeon&trade; GPU Profiler
+### Radeon™ GPU Profiler
 
-The [Radeon&trade; GPU Profiler](https://radeon-gpuprofiler.readthedocs.io/en/latest/) is a performance tool that can be used by traditional
-gaming and visualization developers to optimize DirectX 12 (DX12) and Vulkan&trade; for AMD
-RDNA&trade; hardware. The Radeon&trade; GPU Profiler (RGP) is a ground-breaking
+The [Radeon™ GPU Profiler](https://radeon-gpuprofiler.readthedocs.io/en/latest/) is a performance tool that can be used by traditional
+gaming and visualization developers to optimize DirectX 12 (DX12) and Vulkan™ for AMD
+RDNA™ hardware. The Radeon™ GPU Profiler (RGP) is a ground-breaking
 low-level optimization tool from AMD. It provides detailed timing information
-on Radeon&trade; Graphics using custom, built-in, hardware thread-tracing, allowing
+on Radeon™ Graphics using custom, built-in, hardware thread-tracing, allowing
 the developer deep inspection of GPU workloads.  This unique tool generates
-easy to understand visualizations of how your DX12 and Vulkan&trade; games
+easy to understand visualizations of how your DX12 and Vulkan™ games
 interact with the GPU at the hardware level. Profiling a game is both a quick
-and simple process using the Radeon&trade; Developer Panel together with the public display
+and simple process using the Radeon™ Developer Panel together with the public display
 driver.
 
-Note Radeon&trade; GPU Profiler does have support for OpenCL&trade; and HIP applications but
-it requires running on AMD RDNA&trade; GPUs in the Windows environment. Running
-HIP and OpenCL&trade; in the Windows environment is a whole blog series in itself and
+Note Radeon™ GPU Profiler does have support for OpenCL™ and HIP applications but
+it requires running on AMD RDNA™ GPUs in the Windows environment. Running
+HIP and OpenCL™ in the Windows environment is a whole blog series in itself and
 outside the current recommendation for HPC applications. For HPC workloads, we
-recommend programming with HIP in a Linux&reg; environment on AMD Instinct&trade; GPUs and
+recommend programming with HIP in a Linux&reg; environment on AMD Instinct™ GPUs and
 using [Omniperf](#omniperf), [Omnitrace](#omnitrace) or [ROC-profiler](#roc-profiler) profiling tools on them.
 
 ### AMD uProf
 
 [AMD <greek>u</greek>Prof](https://www.amd.com/en/developer/uprof.html) (AMD MICRO-prof) is a software profiling analysis tool for x86
 applications running on Windows, Linux&reg; and FreeBSD operating systems and provides event information unique to
-the AMD "Zen"-based processors and AMD Instinct&trade; MI Series accelerators. AMD <greek>u<greek>Prof enables the developer to better
+the AMD "Zen"-based processors and AMD Instinct™ MI Series accelerators. AMD <greek>u<greek>Prof enables the developer to better
 understand the limiters of application performance and evaluate improvements.
 
 AMD <greek>u</greek>Prof offers:
@@ -267,11 +267,11 @@ AMD <greek>u</greek>Prof offers:
 * Energy Analysis to identify energy hotspots in the application (Windows only)
 * Remote Profiling to connect to remote Linux&reg; systems (from a Windows host system), trigger
 collection/translation of data on the remote system and report it in local GUI
-* Initial support for AMD CDNA&trade; accelerators is provided in AMD uProf 3.6 for AMD Instinct&trade; MI100 and MI200 Series devices and new features are under development
+* Initial support for AMD CDNA™ accelerators is provided in AMD uProf 3.6 for AMD Instinct™ MI100 and MI200 Series devices and new features are under development
 
 ### Other third-party tools
 
-In the High Performance Computing space, a number of third-party profiling tools have enabled support for ROCm&trade; and AMD Instinct&trade;
+In the High Performance Computing space, a number of third-party profiling tools have enabled support for ROCm™ and AMD Instinct™
 GPUs. This provides a platform for users to maintain a vendor independent approach to profiling, providing an easy-to-use and
 high level suite of functionality, that can potentially provide a unified profiling experience across numerous architectures.
 For users already familiar with these tools, it makes for another easy entry point into understanding performance of their

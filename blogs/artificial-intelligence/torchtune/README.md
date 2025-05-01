@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Torchtune on AMD GPUs How-To Guide: Fine-tuning and Scaling LLMs with Multi-GPU Power'
-thumbnail: './images/torchtune_blog.jpeg'
+thumbnail: 'torchtune_blog.jpeg'
 date: 24 October 2024
 author: Fabricio Flores
 tags: PyTorch, AI/ML, LLM

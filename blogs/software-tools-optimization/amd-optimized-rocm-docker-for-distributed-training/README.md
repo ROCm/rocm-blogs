@@ -18,9 +18,9 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
-        "amd_technical_blog_type": "Applications and models"
+        "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
-        "amd_deployment": "Servers"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Development Tools"
         "amd_developer_tool": "ROCm Software, Open-Source Tools"
         "amd_applications": "Large Language Model (LLM)"
@@ -80,7 +80,7 @@ AMD Megatron-LM delivers enhanced scalability, improved performance and resource
 
  **<u>Key Highlights</u>**
 
-- The Megatron-LM focused Docker image is built on top of the Pytorch 6.1 release training Docker.
+- The Megatron-LM focused Docker image is built on top of the Pytorch training Docker.
 
 - Supports multimode training, DeepseekV2-Lite and FP8 datatypes.
   
@@ -184,10 +184,10 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
     \
     NVIDIA H100 platform: System Model: Supermicro AS -8125GS-TNHR \
     CPU: 2x AMD EPYC 9654 96-Core Processor (2 Sockets, 96 cores per socket, 2 Threads per core) NUMA Config: 1 NUMA node per socket Memory: 2304 GB (24 DIMMS, 4800 mts, 96 GB/DIMM) \
-    Disk: Data drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
+    Disk: Root drive + Data drives: 8x 7 TiB INTELSSDPF2KX076T1NVMe SSDs \
     Root drive: 1.75 TiB Micron MTFDDAK1T9TDS-1AW1ZA \
     GPU: 8x NVIDIA H100 80GB HBM3 700W \
-    Host OS: Ubuntu 22.04.5 LTD with Linux kernel titan 6.8.0-51-generic \
+    Host OS: Ubuntu 22.04.5 LTS with Linux kernel titan 6.8.0-51-generic \
     Host GPU Driver:535.183.01 \
     Firmware System: BIOS 2.1 \
     Docker version:nvcr.io/nvidia/pytorch:25.01-py3

@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: 'Enhancing vLLM Inference on AMD GPUs'
 date: 11 October 2024
-thumbnail: './images/2024-07-29-roberta.jpg'
+thumbnail: '2024-07-29-roberta.jpg'
 author: Clint Greene
 tags: AI/ML, LLM, Serving
 category: Applications & models

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: Quantized 8-bit LLM training and inference using bitsandbytes on AMD GPUs
 date: 13 November 2024
 author: Vara Lakshmi Bayanagari
-thumbnail: './images/precision.jpg'
+thumbnail: 'precision.jpg'
 tags: LLM, PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
 language: English

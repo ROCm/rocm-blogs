@@ -3,7 +3,7 @@ blogpost: true
 date: 15 Oct, 2024
 blog_title: 'Speed Up Text Generation with Speculative Sampling on AMD GPUs'
 author: Vara Lakshmi Bayanagari
-thumbnail: './images/thumbnail.jpg'
+thumbnail: 'thumbnail.jpg'
 tags: PyTorch, AI/ML, GenAI
 category: Applications & models
 language: English

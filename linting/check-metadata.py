@@ -56,15 +56,11 @@ def check_metadata(file: str) -> int:
     amd_metadata_fields = {
         "amd_category",
         "amd_asset_type",
-        "amd_blog_type",
+        "amd_blog_topic_categories",
         "amd_technical_blog_type",
-        "amd_developer_type",
-        "amd_deployment",
-        "amd_product_type",
-        "amd_developer_tool",
-        "amd_applications",
-        "amd_industries",
-        "amd_blog_releasedate",
+        "amd_blog_hardware_platforms",
+        "amd_blog_development_tools",
+        "amd_blog_applications",
     }
 
     try:
