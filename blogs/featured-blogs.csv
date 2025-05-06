@@ -1,4 +1,4 @@
 Unlock DeepSeek-R1 Inference Performance on AMD Instinct™ MI300X GPUs
-ROCm 6.4: Breaking Barriers in AI, HPC, and Modular GPU Software
+SGLang: Fast Serving Framework for Large Language and Vision-Language Models on AMD Instinct GPUs
 Hands-On with CK-Tile: Develop and Run Optimized GEMM on AMD GPUs
-ROCm Gets Modular: Meet the Instinct Datacenter GPU Driver
+Deep dive into the MI300 compute and memory partition modes
