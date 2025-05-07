@@ -17,15 +17,16 @@ myst:
         "property=og:locale": "en_US"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
+        "amd_blog_topic_categories": "Software & Ecosystem"
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
         "amd_deployment": "Servers, Workstations"
         "amd_product_type": "Accelerators"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_applications": "Large Language Model (LLM)"
-        "amd_industries": "Data Center"
-        "amd_blog_releasedate": Thu Mar 5, 12:00:00 PST 2025
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_applications": "AI Inference"
 ---
 
 # Introducing Instella: New State-of-the-art Fully Open 3B Language Models
@@ -40,7 +41,7 @@ Our journey with Instella builds upon the foundation laid by our previous 1-bill
 Figure 1: Comparing Instella Performance: Pareto frontier of pre-training tokens vs average performance for pre-trained and instruction-tuned models.
 ```
 
-By training Instella from scratch on Instinct MI300X GPUs, we highlight our hardware’s capability and scalability in handling demanding large-scale AI training workloads, offering a viable alternative in the AI hardware landscape. In line with AMD's commitment to open source, we are releasing all artifacts related to Instella models [here](#additional-resources), including the model weights, detailed training configurations, datasets, and code, enabling the AI community to collaborate, replicate, and innovate, thereby accelerating progress.
+By training Instella from scratch on Instinct MI300X GPUs, we highlight our hardware’s capability and scalability in handling demanding AI training workloads, offering a viable alternative in the AI hardware landscape. In line with AMD's commitment to open source, we are releasing all artifacts related to Instella models [here](#additional-resources), including the model weights, detailed training configurations, datasets, and code, enabling the AI community to collaborate, replicate, and innovate, thereby accelerating progress.
 
 This blog will introduce you to our new family of Instella LMs. You will find out how to access these new models, learn, in details, how we trained them, and see how AMD's new Instella LMs benchmark with other models. Follow the [Additional Resources](#additional-resources) section to get started with using Instella models.
 
@@ -500,7 +501,7 @@ In the final training stage, we focused on aligning the Instella-3B-SFT model wi
 
 ## Summary
 
-The release of the Instella family of models represents a significant stride in advancing open-source AI and demonstrating the capabilities of AMD hardware in large-scale language model training. The 3 billion parameter models from Instella family significantly outperform present fully open comparable size models in key benchmarks while also being competitive to comparable open-weight models, which we attribute to the high-quality data-mix selection, multi-stage training pipeline, and the use of high-performance Instinct MI300X GPUs for large scale training.
+The release of the Instella family of models represents a significant stride in advancing open-source AI and demonstrating the capabilities of AMD hardware in language model training. The 3 billion parameter models from Instella family significantly outperform present fully open comparable size models in key benchmarks while also being competitive to comparable open-weight models, which we attribute to the high-quality data-mix selection, multi-stage training pipeline, and the use of high-performance Instinct MI300X GPUs for training.
 
 By fully open sourcing the Instella models, including weights, training configurations, datasets, and code, we aim to foster innovation and collaboration within the AI community. We believe that transparency, reproducibility and accessibility are key drivers of progress in AI research and development. We invite developers, researchers, and AI enthusiasts to explore Instella, contribute to its ongoing improvement, and join us in pushing the boundaries of what is possible with language models.
 
