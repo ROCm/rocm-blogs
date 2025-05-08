@@ -165,7 +165,7 @@ Figure 1 below shows the performance boost when using Triton distribution vs Roc
 ```{figure} ./images/TB1.png
 :align: center
 :alt: Scaling performance
-Figure 1: GEMM ReduceScatter Performance on Single Node  [^1](#endnotes)
+Figure 1: Performance of Intra-node GEMM ReduceScatter on AMD GPUs [^1](#endnotes)
 ```
 
 ### AllGather GEMM on Single Node
@@ -195,7 +195,7 @@ Figure 2 below shows the performance boost when using Triton distribution vs Roc
 ```{figure} ./images/TB2.png
 :align: center
 :alt: Scaling performance
-Figure 2: AllGather GEMM Performance on Single Node other AMD GPUs [^2](#endnotes)
+Figure 2: Performance of Intra-node AllGather GEMM on AMD GPUs [^2](#endnotes)
 ```
 
 ## Summary
