@@ -160,7 +160,7 @@ for shape in "${SHAPES[@]}"; do
 done 
 ```
 
-Figure 1 below shows the performance boost when using Triton distribution vs RocmBlas+RCCL. On tuned cases, we see a 30% better with this approach.
+Figure 1 below shows the performance boost when using Triton distribution vs PyTorch+RCCL. On tuned cases, we see a 30% better with this approach.
 
 ```{figure} ./images/TB1.png
 :align: center
@@ -190,7 +190,7 @@ for shape in "${SHAPES[@]}"; do
 done
 ```
 
-Figure 2 below shows the performance boost when using Triton distribution vs RocmBlas+RCCL. On tuned cases, we see a 30 -40% better with this approach.
+Figure 2 below shows the performance boost when using Triton distribution vs PyTorch+RCCL. On tuned cases, we see a 30 -40% better with this approach.
 
 ```{figure} ./images/TB2.png
 :align: center
