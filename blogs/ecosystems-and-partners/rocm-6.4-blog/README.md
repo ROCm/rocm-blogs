@@ -78,10 +78,15 @@ The latest ecosystem updates introduce prebuilt, optimized Docker containers tha
   - Access Megatron-LM Docker and training resources: [Docker Container](https://hub.docker.com/r/rocm/megatron-lm), [User Guide](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/training/benchmark-docker/megatron-lm.html), [Performance Numbers](https://www.amd.com/en/developer/resources/rocm-hub/dev-ai/performance-results.html#tabs-a8deaeb413-item-21cea50186-tab), [Performance Validation](https://github.com/ROCm/MAD/blob/develop/benchmark/megatron_lm/README.md).
   - To learn more about training a model with Megatron-LM for ROCm refer to this [blog](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/training/benchmark-docker/megatron-lm.html).
 
-#### JAX & OpenXLA
+#### JAX
 
-- **JAX RNN Support**: Enables efficient processing of sequential data, improving applications like speech recognition and time-series forecasting.
-- **OpenXLA MLIR Fusion Path**: Reduces **kernel execution overhead** and optimizes GEMM operations, enabling lower latency inference for improved AI model performance.
+- **RNN Support**: Enables efficient processing of sequential data, improving applications like speech recognition and time-series forecasting.
+
+#### OpenXLA
+
+- **MLIR Fusion Path**: Reduces **kernel execution overhead** and optimizes GEMM operations, enabling lower latency inference for improved AI model performance.
+- **Cross Target GEMM Fusion**: Combines appropriate GEMM operations to optimize matrix multiplication on AMD GPUs.
+- **Triton Autotuning**: Automatically identifies optimal configurations of Triton kernels leading to maximized utilization of Instinct hardware, resulting in improved out-of-box performance on AI workloads.
 
 ### Inference Solutions
 
