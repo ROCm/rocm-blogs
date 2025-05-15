@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Reproducing AMD Instinct GPUs MLPerf Inference v5.0 Submission"
 date: 2 April 2025
-author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Karan Verma, Ean Garvey, Kumar Deepak, Eliot Li, AMD Quark team'
+author: 'Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Karan Verma, Ean Garvey, Kumar Deepak, Giuseppe Franco, Eliot Li, AMD Quark team'
 thumbnail: "mlperf_blog_image1.jpeg"
 tags: GenAI, AI/ML, LLM, Performance, Optimization
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Provide instructions to potential customers and partners
 language: English
 myst:
     html_meta:
-        "author": "Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Karan Verma, Ean Garvey, Kumar Deepak, Eliot Li, AMD Quark team"
+        "author": "Meena Arunachalam, Miro Hodak, Wei-Ting Liao, Karan Verma, Ean Garvey, Kumar Deepak, Giuseppe Franco, Eliot Li, AMD Quark team"
         "description lang=en": "A step-by-step guide to reproducing AMD’s MLPerf v5.0 results for Llama 2 70B & SDXL using ROCm on MI325X"
         "keywords": "MLPerf, Llama 2, SDXL, Inference, Optimization, MI325X"
         "property=og:locale": "en_US"
