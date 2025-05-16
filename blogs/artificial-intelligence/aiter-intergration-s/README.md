@@ -765,7 +765,7 @@ if _is_hip and get_bool_env_var("AITER_MOE"):
 <!-- markdownlint-restore -->
 The Customer All-Reduce implementation in AITER is functionally
 equivalent to the one used in vLLM, supporting out-of-place operations.
-However, the AITER version is specifically optimized for AMD\'s MI300X
+However, the AITER version is specifically optimized for AMD MI300X
 architecture, enabling enhanced performance on that platform.
 
 APIs entry point: aiter/ops/custom_all_reduce.py
@@ -941,7 +941,7 @@ Total. latency: 2.379 s, throughput: 14635.98 token/s
 
 ## Summary
 
-This blog presents a step-by-step guide for integrating AITER—AMD’s high-performance AI operator library—into SGLang to optimize DeepSeek-R1 inference. By replacing key components such as MoE layers, attention mechanisms, GEMM kernels, and all-reduce operations with AITER-optimized implementations, developers can significantly boost throughput and reduce latency on AMD MI300X GPUs. The AITER library provides a robust set of optimized operators with
+This blog presents a step-by-step guide for integrating AITER—AMD high-performance AI operator library—into SGLang to optimize DeepSeek-R1 inference. By replacing key components such as MoE layers, attention mechanisms, GEMM kernels, and all-reduce operations with AITER-optimized implementations, developers can significantly boost throughput and reduce latency on AMD MI300X GPUs. The AITER library provides a robust set of optimized operators with
 well-documented APIs, making it easy to integrate into various
 frameworks. It offers clear operator APIs, tensor layout specifications,
 and defined integration points, facilitating smooth adoption. AITER also
