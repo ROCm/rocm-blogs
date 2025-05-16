@@ -1,8 +1,9 @@
 ---
 blogpost: true
 date: 16 Apr 2024
+blog_title: Programming AMD GPUs with Julia
 author: Anton Smirnov
-tags: HPC, AI/ML, Scientific Computing
+tags: HPC, AI/ML, Scientific Computing, Developers
 category: Ecosystems and Partners
 language: English
 myst:
