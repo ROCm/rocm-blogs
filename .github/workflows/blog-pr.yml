@@ -234,7 +234,7 @@ jobs:
             
             Hello @${{ github.event.issue.user.login }}, 
             
-            This is the pull request for your blog post based on [issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }}). The automated system has created the initial blog structure for you.
+            This is the pull request for your blog post and closes #${{ github.event.issue.number }}. The automated system has created the initial blog structure for you.
             
             ### 📋 Next Steps
             
