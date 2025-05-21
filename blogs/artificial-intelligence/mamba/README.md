@@ -1,15 +1,27 @@
 ---
 blogpost: true
+blog_title: "Mamba on AMD GPUs with ROCm"
 date: 28 Jun 2024
-author: Sean Song, Jassani Adeem, Moskvichev Arseny
-tags: LLM, AI/ML, GenAI, PyTorch
+author: 'Sean Song, Jassani Adeem, Moskvichev Arseny'
+thumbnail: '2024-07-29-roberta.jpg'
+tags: LLM, GenAI, Performance
 category: Applications & models
+target_audience: AI practitioners
+key_value_propositions: Provide guidance to users of LLM
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Mamba on AMD GPUs with ROCm"
-    "keywords": "Mamba, PyTorch, S4, S6, Selective SSM, SSM, RNN, LLM, Optimization, Hardware-aware, Transformer, Attention, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Sean Song"
+        "description lang=en": "Best practices of using Mamba on AMD GPUs with ROCm"
+        "keywords": "Mamba, SSM, LLM, Optimization, Selective SSM"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem"
+        "amd_blog_authors": "Sean Song"
 ---
 
 # Mamba on AMD GPUs with ROCm
@@ -142,7 +154,7 @@ Install Mamba on AMD GPU with ROCm.
 ```bash
 git clone https://github.com/state-spaces/mamba.git
 cd mamba
-pip install .
+pip install --no-build-isolation .
 ```
 
 ### Mamba Inference
