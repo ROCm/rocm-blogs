@@ -177,7 +177,7 @@ The input matrices, $A$ and $B$, have dimensions $16\times4$ and $4\times16$ res
 and the matrices $C$ and $D$ have $16\times16$ elements. It is convenient to map a $16\times4$
 thread block to the elements of both input matrices. Here, the thread block has one wavefront
 with 16 threads in the $x$ dimension and 4 threads in the $y$ dimension. We represent the
-matrices in row major format: `A[i][j] = j + i*N` where `i` is the row and `j` is
+matrices in row major format: `A[i][j] = j + i*K` where `i` is the row and `j` is
 the column. Using this representation, a thread at position `x, y` in the block would
 load entry `A[x][y]` and `B[y][x]`. The output matrix has $16\times16$ elements, so
 each thread would have 4 elements to store as illustrated in the figure and code snippet below.
@@ -283,7 +283,7 @@ __global__ void sgemm_16x16x1(const float *A, const float *B, float *D)
   for (int l = 0; l < 4; ++l) {
     for (int i = 0; i < 4; ++i) {
       const int idx = threadIdx.x + i * N  + threadIdx.y * 4 * N + l * M * N;
-      D[idx] = dmnl[i];
+      D[idx] = dmnl[i + l*4]
     }
   }
 }
