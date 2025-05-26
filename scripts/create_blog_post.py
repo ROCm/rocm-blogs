@@ -190,7 +190,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         note="{note}",
     )
 
-    blog_file_path = truncate_string(blog_file_path[:20])
+    blog_file_path = truncate_string(blog_file_path[:30])
     dir_blog_name = "-".join(blog_file_path.split("-")[:3])
     dir_category_name = truncate_string(blog_category)
 
