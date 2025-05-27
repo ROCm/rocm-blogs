@@ -3,14 +3,26 @@ blogpost: true
 date: 16 Apr 2024
 blog_title: Programming AMD GPUs with Julia
 author: Anton Smirnov
-tags: HPC, AI/ML, Scientific Computing, Developers
+thumbnail: ''
+tags: HPC, AI/ML, Scientific Computing, Developers, Data Science
 category: Ecosystems and Partners
+target_audience: AI/ML Developers, System Administrators
+key_value_propositions: A community contributed blog showcasing Julia's support of ROCm
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Programming AMD GPUs with Julia"
-    "keywords": "Julia, AMDGPU, GPGPU, HPC, AI, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Programming AMD GPUs with Julia"
+        "keywords": "Julia, AMDGPU, GPGPU, HPC, AI, ROCm"
+        "property=og:locale": "en_US"
+        "vertical": "AI, HPC, Developers, Data Science"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Ecosystem and Partners"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Generative AI, AI Inference, AI Training, Data Science, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem"
+        "amd_blog_authors": "Anton Smirnov"    
 ---
 
 # Programming AMD GPUs with Julia
