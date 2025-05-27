@@ -1,16 +1,26 @@
 ---
 blogpost: true
 date: 16 May 2024
-tags: Partner Applications
+tags: Partner Applications, Data Science
 blog_title: 'Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+'
 thumbnail: 'siemens.jpg'
 category: Ecosystems and Partners
 language: English
+target_audience: "Scientific computing application users"
+key_value_propositions: "Showcase AMD's partnership with Siemens"
 myst:
-  html_meta:
-    "description lang=en": "Siemens recently announced that its Simcenter STAR-CCM+ multi-physics computational fluid dynamics (CFD) software now supports AMD Instinct™ GPUs for GPU-native computation. This move addresses its users' needs for computational efficiency, reduced simulation costs and energy usage, and greater hardware choice."
-    "keywords": "Siemens, MI200, Instinct GPU, STAR-CCM+, ROCm, AMDMI200, MI250, HPC, AI, High Performance Computing, Deep Learning, (Computational Fluid Dynamics) CFD"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Siemens recently announced that its Simcenter STAR-CCM+ multi-physics computational fluid dynamics (CFD) software now supports AMD Instinct™ GPUs for GPU-native computation. This move addresses its users' needs for computational efficiency, reduced simulation costs and energy usage, and greater hardware choice."
+        "keywords": "Siemens, MI200, Instinct GPU, STAR-CCM+, ROCm, AMDMI200, MI250, HPC, AI, High Performance Computing, Deep Learning, (Computational Fluid Dynamics) CFD"
+        "property=og:locale": "en_US"
+        "vertical": "Developers, Data Science"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Ecosystem and Partners"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Data Science, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem"       
 ---
 
 # Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+

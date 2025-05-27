@@ -26,7 +26,7 @@ myst:
         "amd_blog_applications": "Data Science"
         "amd_industries": "Data Center"
         "amd_blog_development_tools": "Open-Source Tools"
-        "amd_blog_topic_categories": "Software & Ecosystem"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_releasedate": Wed Mar 05, 12:00:00 PST 2025
 ---

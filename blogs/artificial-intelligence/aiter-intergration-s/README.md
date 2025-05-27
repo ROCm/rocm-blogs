@@ -20,7 +20,7 @@ myst:
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
-        "amd_blog_topic_categories": "Enterprise & Data Center Trends"
+        "amd_blog_topic_categories": "Enterprise & Data Center Trends, AI & Intelligent Systems"
         "amd_blog_authors": "Bruce Xue, George Wang"
 ---
 

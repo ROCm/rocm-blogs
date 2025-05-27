@@ -26,7 +26,7 @@ myst:
         "amd_blog_applications": "AI Inference"
         "amd_deployment_tools": "ROCm Software"
         "amd_applications": "AI Inference"
-        "amd_blog_category_topic": "Software & Ecosystem"
+        "amd_blog_category_topic": "Software & Ecosystem, AI & Intelligent Systems"
         "amd_developer_type": "ML/AI Developer"
         "amd_deployment": "Servers"
         "amd_product_type": "Accelerators"
