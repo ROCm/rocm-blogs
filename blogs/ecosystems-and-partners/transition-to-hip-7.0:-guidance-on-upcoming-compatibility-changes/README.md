@@ -63,7 +63,7 @@ for 6.4 intended for non-production use, enabling users to write code with the n
 
 ## How will you be impacted?
 
-HIP 7.0 will be available with our next major ROCm in the second half 2025. Code compiled for HIP version 6 series of releases may not
+HIP 7.0 will be available with our next major ROCm release in the second half of 2025. Code compiled for HIP version 6 series of releases may not
 work with HIP version 7.0 without recompilation. In some cases, updates to the source code are required.
 Planned API changes reduce behavior differences between CUDA C++ and HIP C++ to simplify writing portable GPU code. API calls in HIP now align more closely to their equivalent CUDA calls. In addition,
 header files are cleaned up to remove namespace collisions and have a clear separation between hipRTC and the HIP runtime.
@@ -374,4 +374,4 @@ Users porting CUDA code no longer needed to modify their error handling code. Ho
 HIP 7.0 is designed to enhance GPU code portability and simplify cross-vendor GPU development. By aligning HIP more closely with CUDA semantics,
 refining error handling, and streamlining header structures, the HIP 7.0 release reduces the effort needed to maintain portable codebases. This blog
  outlines the key updates and provides guidance to help developers prepare their code for HIP 7.0. You are encouraged to begin testing with the HIP
- 7.0 preview to ensure a seamless transition and smooth upgrade path when we go live later second half 2025.
+ 7.0 preview to ensure a seamless transition and smooth upgrade path when we go live later during the second half of 2025.
