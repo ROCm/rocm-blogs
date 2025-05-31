@@ -70,7 +70,7 @@ header files are cleaned up to remove namespace collisions and have a clear sepa
 
 ## How to get the HIP runtime preview?
 
-The preview is available as source delta on top of the ROCm 6.4.0 release. Please see the source code on the [HIP](https://github.com/ROCm/hip/tree/rocm-6.4.x-with-7.0-preview) and [CLR](https://github.com/ROCm/clr/tree/rocm-6.4.x-with-7.0-preview) repositories on Github. The binary build is also available on [Github](https://github.com/ROCm/clr/releases/tag/untagged-0a7b04212da4ba003539). Please build it from source yourself or download the prebuilt package. This release is intended for development purposes only and not for production workloads. Only the HIP runtime build is provided with this tag.
+The preview is available as source delta on top of the ROCm 6.4.0 release. Please see the source code on the [HIP](https://github.com/ROCm/hip/tree/rocm-6.4.x-with-7.0-preview) and [CLR](https://github.com/ROCm/clr/tree/rocm-6.4.x-with-7.0-preview) repositories on Github. The binary build is also available on [Github](https://github.com/ROCm/clr/releases/tag/rocm-6.4.0-with-7.0-preview). Please build it from source yourself or download the prebuilt package. This release is intended for development purposes only and not for production workloads. Only the HIP runtime build is provided with this tag.
 
 ## Changes in the HIP Runtime API
 
