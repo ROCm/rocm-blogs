@@ -280,7 +280,6 @@ More conditional checks are added in the API implementation, the return errors a
 * If the input stream handle is invalid, the returned error is changed to ```hipErrorContextIsDestroyed``` from ```hipErrorInvalidValue```.
 * Adds grid dimension check, if any of them is zero, any input global work size dimension is zero, returns ```hipErrorInvalidValue```.
 * Adds extra shared memory size check, if exceeds the size limit, returns ```hipErrorInvalidValue```.
-* Adds extra shared memory size check, if exceeds the size limit, returns ```hipErrorInvalidValue```.
 * If the total number of threads per block exceeds the maximum work group limit during a kernel launch, the return value is changed to```hipErrorInvalidConfiguration``` from ```hipErrorInvalidValue```.
 
 ##### ```hipModuleLaunchCooperativeKernel```]
