@@ -1,0 +1,81 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0" version="27.0.6">
+  <diagram name="Blog image" id="OMOR1f537lhsIhcWZvA0">
+    <mxGraphModel dx="1860" dy="903" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-0" />
+        <mxCell id="74TftWeNV2bUTyfI7oLk-1" parent="74TftWeNV2bUTyfI7oLk-0" />
+        <mxCell id="Q0Ch1OxTSnEMdf3esubj-5" value="Partner ecosystem" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=3;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="260" y="45" width="415" height="215" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-2" value="New Toolkits" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=3;fillColor=#f8cecc;gradientColor=#ea6b66;strokeColor=#b85450;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="85" y="40" width="150" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-3" value="Instinct Systems Software" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=3;fillColor=#f5f5f5;gradientColor=#b3b3b3;strokeColor=#666666;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="100" y="600" width="350" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-4" value="ROCm Core Toolkit" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeWidth=3;fillColor=light-dark(#94e9eb, #ededed);" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="90" y="280" width="360" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-6" value="GPU Driver" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="140" y="750" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-8" value="Runtimes including libraries" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="130" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-9" value="SMI&lt;div&gt;Monitoring&lt;/div&gt;&lt;div&gt;Telemetry (Open Source)&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="130" y="620" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-10" value="Compilers&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="120" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-11" value="&lt;div&gt;DevTools&lt;/div&gt;Profiling&lt;div&gt;Debugging&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="220" y="480" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-15" value="ROCm-DS" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="120" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-19" value="AI/ML Prereqs" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#dae8fc;strokeColor=#6c8ebf;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="260" y="310" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-20" value="PyTorch + ecosystem" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="400" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-21" value="Tensorflow" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="400" y="60" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-22" value="Jax" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="290" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-23" value="HPC applications" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="290" y="60" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-24" value="Container&lt;div&gt;Orchestration tools&lt;/div&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="240" y="750" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-25" value="Cluster job scheduling" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="255" y="620" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="74TftWeNV2bUTyfI7oLk-38" value="Validation tools" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;strokeColor=#82b366;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="340" y="750" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Q0Ch1OxTSnEMdf3esubj-1" value="Instinct GPU/APU" style="rounded=1;whiteSpace=wrap;html=1;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="115" y="880" width="350" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Q0Ch1OxTSnEMdf3esubj-2" value="ISV applications" style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="74TftWeNV2bUTyfI7oLk-1" vertex="1">
+          <mxGeometry x="500" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Q0Ch1OxTSnEMdf3esubj-3" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;" parent="74TftWeNV2bUTyfI7oLk-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="20" y="840" as="sourcePoint" />
+            <mxPoint x="20" y="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Q0Ch1OxTSnEMdf3esubj-4" value="ROCm Ecosytem&amp;nbsp;&lt;div&gt;for GPU Computation&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="Q0Ch1OxTSnEMdf3esubj-3" vertex="1" connectable="0">
+          <mxGeometry x="0.1084" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
