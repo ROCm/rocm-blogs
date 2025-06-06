@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "ROCm Revisited: AMD's GPU Computing Ecosystem"
 date: 6 Jun 2025
 author: 'Liam Berry, Saad Rahim'
-thumbnail: 'image.png'
+thumbnail: 'rocm-revisited-ecosy.png'
 tags: AI/ML, HPC, Kubernetes, Compiler, Developers, Systems
 category: Ecosystems and Partners
 target_audience: AI/HPC Developers, System Administrators
