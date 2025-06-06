@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "ROCm Revisited: Getting Started with HIP"
 date: 6 Jun 2025
 author: 'Liam Berry, Mohammed Faraaz Mustafa, Saad Rahim'
-thumbnail: 'image.png'
+thumbnail: 'rocm-revisited-hip.png'
 tags: HPC, Installation, C++
 category: Ecosystems and Partners
 target_audience: AI/ML Developers, System Administrators
