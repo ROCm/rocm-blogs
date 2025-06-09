@@ -3,16 +3,48 @@ blogpost: true
 blog_title: 'Inferencing and serving with vLLM on AMD GPUs'
 thumbnail: '2024-10-31-inferencing-and-serving-with-vLLM-on-AMD-GPUs.jpeg'
 date: Sep 19 2024
-author: Clint Greene
+author: 'Clint Greene'
 tags: AI/ML, LLM, Serving
 category: Applications & models
 language: English
+target_audience: AI Developers, AI Solutions Architects, AI practitioners
+key_value_propositions: Demonstrate how to serve models with vLLM on AMD GPUs 
 myst:
-  html_meta:
-    "description lang=en": "Inferencing and Serving with vLLM on AMD GPUs"
-    "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Clint Greene"
+        "description lang=en": "Learn step-by-step how to leverage vLLM for high-performance inferencing and model serving on AMD GPUs"
+        "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Conversational AI, Deploying AI at Scale"
+        "amd_blog_topic_categories": "AI & Intelligent Systems"
+        "amd_blog_authors": "Clint Greene"
 ---
+
+<!---
+Copyright (c) 2025 Advanced Micro Devices, Inc. (AMD)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+--->
 
 # Inferencing and serving with vLLM on AMD GPUs
 
@@ -34,20 +66,14 @@ To run this blog, you'll need:
 * **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html)
 * **AMD GPUs**: see the [list of compatible GPUs](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html#supported-gpus)
 
-## Installation
+## Getting Started
 
-To access the latest vLLM features on ROCm, clone the vLLM repository and build the Docker image using the commands below. Depending on your system, the build process might take a significant amount of time.
+The ROCm vLLM Docker image offers a prebuilt, optimized environment for LLM inference performance on AMD Instinct™ MI300X series accelerators. This image integrates vLLM and PyTorch, tailored specifically for MI300X series accelerators, ensuring efficient and seamless deployment.
 
-```bash
-git clone https://github.com/vllm-project/vllm.git
-cd vllm
-DOCKER_BUILDKIT=1 docker build -f Dockerfile.rocm -t vllm-rocm .
-```
-
-Once you've successfully built the vLLM ROCm Docker image, you can run it using the following command. If you have a folder containing multiple LLMs that you'd like to access within the container, simply replace <path/to/model> with the actual path to that folder to mount and utilize your LLMs seamlessly within the container; if not, just remove `-v <path/to/model>:/app/models` from the command below.
+To run the prebuilt `rocm/vllm:latest` Docker image, use the following command. If you have a folder containing multiple LLMs, replace `<path/to/model>` with the actual path to that folder to mount and utilize your LLMs within the container; otherwise, omit `-v <path/to/model>:/app/models`.
 
 ```bash
-docker run -it --network=host --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --device /dev/kfd --device /dev/dri -v <path/to/model>:/app/models vllm-rocm
+docker run -it --network=host --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --device /dev/kfd --device /dev/dri -v <path/to/model>:/app/models rocm/vllm:latest
 ```
 
 ## Inferencing
@@ -220,6 +246,10 @@ This generates the following output:
     "completion_tokens": 24
   }
 }
+```
+
+```{update} Jun 09, 2025
+Updated the Docker instructions to use our prebuilt ROCm optimized vLLM Docker containers.
 ```
 
 ```{Note}
