@@ -58,7 +58,7 @@ ROCm’s open-source suite of tools, libraries, and frameworks is not just power
 
 Dive deeper into how ROCm is shaping the future of engineering, science, and AI/ML. Explore the full story and see how ROCm enables us to push the boundaries of what’s possible.
 
-Full blog coming soon!
+Read the full blog: [AMD ROCm: Powering the World’s Fastest Supercomputers](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-revisited-power/README.html)
 
 ## The High-Performance Computing Ecosystem
 
