@@ -1,22 +1,54 @@
 ---
 blogpost: true
 blog_title: 'Enhancing vLLM Inference on AMD GPUs'
-date: 11 October 2024
-thumbnail: '2024-07-29-roberta.jpg'
-author: Clint Greene
+thumbnail: '2024-10-31-inferencing-and-serving-with-vLLM-on-AMD-GPUs.jpeg'
+date: Sep 19 2024
+author: 'Clint Greene'
 tags: AI/ML, LLM, Serving
 category: Applications & models
 language: English
+target_audience: AI Developers, AI Solutions Architects, AI practitioners
+key_value_propositions: Demonstrate the latest performance enhancements in vLLM inference on AMD Instinct accelerators with ROCm 6.2 
 myst:
-  html_meta:
-    "description lang=en": "In this blog, we’ll demonstrate the latest performance enhancements in vLLM inference on AMD Instinct accelerators using ROCm. In a nutshell, vLLM optimizes GPU memory utilization, allowing more efficient handling of large language models (LLMs) within existing hardware constraints, maximizing throughput and minimizing latency."
-    "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Clint Greene"
+        "description lang=en": "Showcases the latest performance enhancements in vLLM inference on AMD Instinct accelerators using ROCm 6.2, including FP8 KV-Cache, quantization, and GEMM tuning"
+        "keywords": "LLM, vLLM, Inference, Serving, ROCm, AMD GPUs, MI250, MI210, MI300"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Conversational AI, Deploying AI at Scale"
+        "amd_blog_topic_categories": "AI & Intelligent Systems"
+        "amd_blog_authors": "Clint Greene"
 ---
+
+<!---
+Copyright (c) 2025 Advanced Micro Devices, Inc. (AMD)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+--->
 
 # Enhancing vLLM Inference on AMD GPUs
 
-In this blog, we’ll demonstrate the latest performance enhancements in vLLM inference on AMD Instinct accelerators using ROCm. In a nutshell, vLLM optimizes GPU memory utilization, allowing more efficient handling of large language models (LLMs) within existing hardware constraints, maximizing throughput and minimizing latency. We start the blog by briefly explaining how causal language models like Llama 3 and ChatGPT generate text, motivating the need to enhance throughput and reduce latency. If you’re new to vLLM, we also recommend reading our introduction to [Inferencing and serving with vLLM on AMD GPUs](https://rocm.blogs.amd.com/artificial-intelligence/vllm/README.html).
+In this blog, we’ll demonstrate the latest performance enhancements in vLLM inference on AMD Instinct accelerators using ROCm 6.2. In a nutshell, vLLM optimizes GPU memory utilization, allowing more efficient handling of large language models (LLMs) within existing hardware constraints, maximizing throughput and minimizing latency. We start the blog by briefly explaining how causal language models like Llama 3 and ChatGPT generate text, motivating the need to enhance throughput and reduce latency. If you’re new to vLLM, we also recommend reading our introduction to [Inferencing and serving with vLLM on AMD GPUs](https://rocm.blogs.amd.com/artificial-intelligence/vllm/README.html).
 ROCm 6.2 introduces support for the following vLLM features which we will use in this blog post.
 
 - [**FP8 KV Cache**](#fp8-kv-cache): Store Key-Value (KV) pair data in FP8 (8-bit floating point) to enhance efficiency.
@@ -41,20 +73,14 @@ To follow along with this blog, you'll need:
 - **ROCm**: see the [installation instructions](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html).
 - **MI300+ GPUs**: FP8 support is only available on MI300 series.
 
-## Installation
+## Getting Started
 
-To access the latest vLLM features in ROCm 6.2, clone the vLLM repository, modify the `BASE_IMAGE` variable in Dockerfile.rocm to `rocm/pytorch:rocm6.2_ubuntu20.04_py3.9_pytorch_release_2.3.0`, and build the Docker image using the commands below. Depending on your system, the build process might take a significant amount of time.
+The ROCm vLLM Docker image provides a prebuilt, optimized environment for LLM inference on AMD Instinct™ MI300X series accelerators with ROCm 6.2. This image integrates vLLM and PyTorch, tailored specifically for MI300X series accelerators, ensuring efficient and seamless deployment.
 
-```bash
-git clone https://github.com/vllm-project/vllm.git
-cd vllm
-DOCKER_BUILDKIT=1 docker build -f Dockerfile.rocm -t vllm-rocm .
-```
-
-After building the vLLM ROCm Docker image, you can run it using the following command. To use a folder of LLMs in the container, replace `<path/to/model>` with the actual folder path. If you don't have any models to mount, remove the `-v <path/to/model>:/app/models` option.
+To run the prebuilt `rocm/vllm:latest` Docker image, use the following command. If you have a folder containing multiple LLMs, replace `<path/to/model>` with the actual path to that folder to mount and utilize your LLMs within the container; otherwise, omit `-v <path/to/model>:/app/models`.
 
 ```bash
-docker run -it --network=host --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --device /dev/kfd --device /dev/dri -v <path/to/model>:/app/models vllm-rocm
+docker run -it --network=host --group-add=video --ipc=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --privileged --device /dev/kfd --device /dev/dri -v <path/to/model>:/app/models rocm/vllm:latest
 ```
 
 ## FP8 KV cache
@@ -170,6 +196,10 @@ With GEMM tuning, the average latency now drops to under 3.40 seconds, represent
 ## Summary
 
 In this blog post, we briefly discussed how LLMs like Llama 3 and ChatGPT generate text, motivating the role vLLM plays in enhancing throughput and reducing latency. We covered how to store values in FP8 format in the KV cache, optimize matrix multiplies for even faster computations, and perform full inference in FP8. With these latest enhancements, we showed how ROCm 6.2 can significantly accelerate your vLLM workloads.
+
+```{update} Jun 09, 2025
+Updated the Docker instructions to use our prebuilt ROCm optimized vLLM Docker containers.
+```
 
 ## Disclaimers
 

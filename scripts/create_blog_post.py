@@ -38,6 +38,7 @@ def create_blog_post_from_args():
     blog_hardware_amd_deployment = args[11]
     blog_software_amd_deployment = args[12]
     blog_amd_category_topic = args[13]
+    blog_market_vertical = args[14]
 
     # check all of the date formats
 
@@ -73,6 +74,7 @@ myst:
         "author": "{blog_authors}"
         "description lang=en": "{blog_description}"
         "keywords": "{blog_keywords}"
+        "vertical": "{blog_market_vertical}"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "{blog_amd_technical_blog_type}"
@@ -187,6 +189,7 @@ FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
         blog_hardware_amd_deployment=blog_hardware_amd_deployment,
         blog_software_amd_deployment=blog_software_amd_deployment,
         blog_amd_category_topic=blog_amd_category_topic,
+        blog_market_vertical=blog_market_vertical,
         note="{note}",
     )
 
