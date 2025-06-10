@@ -49,7 +49,7 @@ body:
       label: "Tags"
       multiple: true
       description: |
-        "Select tag(s) from the dropdown menu, you may select multiple tags."
+        "Select tag(s) which best fit this blog. You may select multiple tags."
       options:
         - Reinforcement Learning
         - Partner Applications
@@ -96,6 +96,20 @@ body:
         - Applications & models
         - Ecosystems and Partners
         - Software tools & optimizations
+    validations:
+      required: true
+  - type: dropdown
+    id: blog_market_vertical
+    attributes:
+      label: "Market Vertical"
+      multiple: true
+      description: "Select the market vertical(s) that best suits this blog. You may select multiple tags."
+      options:
+        - AI
+        - HPC
+        - Developers
+        - Systems
+        - Data Science
     validations:
       required: true
   - type: input
@@ -146,7 +160,7 @@ body:
     attributes:
       label: "AMD Hardware Deployment Platforms"
       multiple: true
-      description: "Select hardware deployment target(s)"
+      description: "Select hardware deployment target(s). You may select multiple tags."
       options:
         - EPYC Server Processors
         - Instinct GPUs
@@ -163,7 +177,7 @@ body:
     id: blog_amd_applications
     attributes:
       label: "AMD Applications"
-      description: "Select application(s) for this blog. Multiple selections allowed."
+      description: "Select application(s) for this blog. You may select multiple tags."
       multiple: true
       options:
         - AI Inference
@@ -185,7 +199,7 @@ body:
     id: amd_blog_development_tools
     attributes:
       label: "AMD Software Deployment Platforms"
-      description: "Select software deployment target(s)"
+      description: "Select software deployment target(s). You may select multiple tags."
       multiple: true
       options:
         - Vitis AI Software

@@ -66,6 +66,7 @@ jobs:
           BLOG_SOFTWARE_DEPLOYMENT_TARGETS=$(extract_field "AMD Software Deployment Platforms")
           BLOG_AMD_CATEGORY_TOPIC=$(extract_field "AMD Blog Topic Categories")
           BLOG_JIRA=$(extract_field "Jira Ticket")
+          BLOG_MARKET_VERTICAL=$(extract_field "Market Vertical")
           
           echo "Blog Title: $BLOG_TITLE"
           echo "Blog File Path: $BLOG_FILE_PATH"
@@ -81,6 +82,7 @@ jobs:
           echo "Hardware Deployment Targets: $BLOG_HARDWARE_DEPLOYMENT_TARGETS"
           echo "Software Deployment Targets: $BLOG_SOFTWARE_DEPLOYMENT_TARGETS"
           echo "Blog AMD Category Topic: $BLOG_AMD_CATEGORY_TOPIC"
+          echo "Blog Market Vertical: $BLOG_MARKET_VERTICAL"
 
           # Check for empty required fields
           VALIDATION_ERRORS=""
@@ -126,7 +128,7 @@ jobs:
           echo "Current date: $CURRENT_DATE"
 
           if [ "$VALIDATION_PASSED" = "true" ]; then
-            python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_FILE_PATH" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_DESCRIPTION" "$BLOG_HARDWARE_DEPLOYMENT_TARGETS" "$BLOG_SOFTWARE_DEPLOYMENT_TARGETS" "$BLOG_AMD_CATEGORY_TOPIC"
+            python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_FILE_PATH" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_DESCRIPTION" "$BLOG_HARDWARE_DEPLOYMENT_TARGETS" "$BLOG_SOFTWARE_DEPLOYMENT_TARGETS" "$BLOG_AMD_CATEGORY_TOPIC" "$BLOG_MARKET_VERTICAL"
           fi
           
           echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
