@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "Introducing the ROCm Revisited Series"
+blog_title: "The ROCm Revisited Series"
 date: 6 Jun 2025
 author: 'Mohammed Faraaz Mustafa, Liam Berry, Saad Rahim'
 thumbnail: 'navigationblog.png'
@@ -46,7 +46,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# Introducing the ROCm Revisited Series
+# The ROCm Revisited Series
 
 The ROCm Revisited series aims to revisit key concepts of the AMD ROCm software platform, tools, and optimizations, tailored for beginner and intermediate developers. This series shares our journey through the evolution of ROCm, highlighting the milestones, innovative technologies, and challenges we've overcome to establish leadership in the supercomputing space. Each post explores different aspects of ROCm’s development, focusing on how it has transformed industries, particularly in AI, machine learning, and high-performance computing (HPC). Through these blog posts, we’ll also discuss our commitment to open-source development and the future potential of distributed and energy-efficient computing. Below are the three blogs included in the series:
 
