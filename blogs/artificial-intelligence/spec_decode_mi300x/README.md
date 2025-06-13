@@ -2,7 +2,6 @@
 blogpost: true
 blog_title: "Accelerating LLM Inference: Up to 3x Speedup on MI300X with Speculative Decoding"
 date: 27 March 2025
-
 thumbnail: "thumbnail2.png"
 author: Sonali Singh, Karthik Sangaiah, Shenrun Zhang, Ryan Swann, Ganesh Dasika
 tags: AI/ML, LLM, GenAI
@@ -22,10 +21,10 @@ myst:
         "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Accelerators"
-        "amd_developer_tool": "ROCm Software"
-        "amd_applications": "Large Language Model (LLM)"
-        "amd_industries": "Supercomputing & Research"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": 'HPC & Scientific Computing'
         "amd_blog_releasedate": "Fri Mar 21 08:52:00 PST 2025" 
 ---
 

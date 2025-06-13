@@ -4,12 +4,23 @@ date: 8 Feb 2024
 author: Phillip Dang
 tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
+blog_title: "Simplifying deep learning: A guide to PyTorch Lightning"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Simplifying deep learning: A guide to PyTorch Lightning"
-    "keywords": "PyTorch, PyTorch Lightning, train models, Tuning, Fine-Tuning"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Simplifying deep learning: A guide to PyTorch Lightning"
+        "keywords": "PyTorch, PyTorch Lightning, train models, Tuning, Fine-Tuning"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Simplifying deep learning: A guide to PyTorch Lightning

@@ -10,11 +10,18 @@ language: English
 target_audience: 'machine learning engineers'
 key_value_propositions: 'This blog is an introduction to a new distributed training framework, Composer, by MosaicML. It shows how seamlessly Composer can be launched on AMD GPUs using SLURM on multinode setup and using docker for single node experiments'
 myst:
-  html_meta:
-    "author": "Vara Lakshmi Bayanagari"
-    "description lang=en": "This blog uses Composer, a distributed framework, on AMD GPUs to fine-tune MPT-30B in single node as well as multinode"
-    "keywords": "mosaicml, LLM, mpt30b, AMD GPU, MI250, MI300, Natural Language Processing"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Vara Lakshmi Bayanagari"
+        "description lang=en": "This blog uses Composer, a distributed framework, on AMD GPUs to fine-tune MPT-30B in single node as well as multinode"
+        "keywords": "mosaicml, LLM, mpt30b, AMD GPU, MI250, MI300, Natural Language Processing"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Distributed fine-tuning of MPT-30B using Composer on AMD GPUs

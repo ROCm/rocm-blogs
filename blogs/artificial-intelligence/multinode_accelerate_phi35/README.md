@@ -10,11 +10,18 @@ language: English
 target_audience: AI developers, AI practitioners
 key_value_propositions: Demonstrate how to perform multinode/distributed training-fine-tuning of deep learning models on AMD hardware using Hugging Face's accelerate along with the Slurm job scheduler.
 myst:
-  html_meta:
-    "description lang=en": "Fine-tuning Phi-3.5-mini-instruct LLM using multinode distributed training with Hugging Face Accelerate, Slurm, and Docker for scalable efficiency."
-    "author": "Fabricio Flores"
-    "keywords": "PyTorch,  Accelerate, Docker, Phi-3.5-mini-instruct, Multinode, distributed training, multinode training, fine-tuning AMD, LLM, GPU, MI300, MI250, MI210"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Fine-tuning Phi-3.5-mini-instruct LLM using multinode distributed training with Hugging Face Accelerate, Slurm, and Docker for scalable efficiency."
+        "author": "Fabricio Flores"
+        "keywords": "PyTorch,  Accelerate, Docker, Phi-3.5-mini-instruct, Multinode, distributed training, multinode training, fine-tuning AMD, LLM, GPU, MI300, MI250, MI210"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 

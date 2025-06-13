@@ -4,12 +4,23 @@ date: 24 Apr 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, PyTorch
 category: Applications & models
+blog_title: "Transforming Words into Motion: A Guide to Video Generation with AMD GPU"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Transforming Words into Motion: A Guide to Video Generation with AMD GPU"
-    "keywords": "Video Generation, ModelScopeT2V, text-to-video, AMD, GPU, MI300, MI250, ROCm, Generative AI, Videos"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Transforming Words into Motion: A Guide to Video Generation with AMD GPU"
+        "keywords": "Video Generation, ModelScopeT2V, text-to-video, AMD, GPU, MI300, MI250, ROCm, Generative AI, Videos"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Transforming Words into Motion: A Guide to Video Generation with AMD GPU

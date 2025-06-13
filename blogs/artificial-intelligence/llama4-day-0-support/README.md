@@ -21,10 +21,10 @@ myst:
         "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Accelerators"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Large Language Model (LLM)"
-        "amd_industries": "Data Center"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "Generative AI, Deploying AI at Scale"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Sun Apr 06, 12:00:00 PST 2025
 ---
 <!---

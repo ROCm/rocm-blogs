@@ -8,24 +8,24 @@ author: Matt Elliott
 tags: AI/ML
 category: Software tools & optimizations
 language: English
-target_audience: ''
-key_value_propositions: ''
+target_audience: ""
+key_value_propositions: ""
 myst:
     html_meta:
         "author": "Matt Elliott"
         "description lang=en": "This post, the second in a series, provides a walkthrough for building a vLLM container that can be used for both inference and benchmarking."
         "keywords": "AI/ML"
         "property=og:locale": "en_US"
-        "amd_category": 'Developer Resources'
-        "amd_asset_type": 'Blogs'
-        "amd_blog_type": 'Technical Articles & Blogs'
-        "amd_technical_blog_type": 'Benchmarks and Testing'
-        "amd_developer_type": 'ML/AI Developer'
-        "amd_deployment": 'Servers'
-        "amd_product_type": 'Accelerators'
-        "amd_developer_tool": 'ROCm Software'
-        "amd_applications": 'Large Language Model (LLM)'
-        "amd_industries": 'Data Center'
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blogs"
+        "amd_blog_type": "Technical Articles & Blogs"
+        "amd_technical_blog_type": "Benchmarks and Testing"
+        "amd_developer_type": "ML/AI Developer"
+        "amd_deployment": "Servers"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, AI Training"
+        "amd_blog_topic_categories": "Software & Ecosystem"
         "amd_blog_releasedate": Thu Jan 16, 12:00:00 PST 2025
 ---
 # Getting started with AMD ROCm containers: from base images to custom solutions

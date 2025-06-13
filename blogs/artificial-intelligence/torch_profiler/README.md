@@ -4,13 +4,25 @@ date: 29 May 2024
 author: Phillip Dang
 tags: PyTorch, AI/ML, Tuning
 category: Applications & models
+blog_title: "Unveiling performance insights with PyTorch Profiler on an AMD GPU"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Unveiling Performance Insights with PyTorch Profiler on an AMD GPU"
-    "author": "Phillip Dang"
-    "keywords": "PyTorch, Profiler, AMD, GPU, MI300, MI210, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Unveiling Performance Insights with PyTorch Profiler on an AMD GPU"
+        "author": "Phillip Dang"
+        "keywords": "PyTorch, Profiler, AMD, GPU, MI300, MI210, ROCm"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Unveiling performance insights with PyTorch Profiler on an AMD GPU

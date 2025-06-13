@@ -25,11 +25,11 @@ myst:
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_applications": "AI Inference"
         "amd_deployment_tools": "ROCm Software"
-        "amd_applications": "AI Inference"
+        "amd_blog_applications": "AI Inference"
         "amd_blog_category_topic": "Software & Ecosystem, AI & Intelligent Systems"
         "amd_developer_type": "ML/AI Developer"
         "amd_deployment": "Servers"
-        "amd_product_type": "Accelerators"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
         "amd_blog_authors": Peng Sun, Jacky Zhao, Carlus Huang, Bill He, Seungrok Jung, Mahdi Ghodsi."
         "amd_blog_releasedate": Fri Apr 18, 12:00:00 PST 2025
 ---

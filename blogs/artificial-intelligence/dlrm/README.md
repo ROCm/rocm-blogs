@@ -1,16 +1,26 @@
 ---
 blogpost: true
 date: 28 Jun 2024
-
 author: Phillip Dang
 tags: PyTorch
 category: Applications & models
+blog_title: "Deep Learning Recommendation Models on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Deep Learning Recommendation Model on AMD GPU"
-    "keywords": "PyTorch, Deep Learning, Recommendation, DLRM, AMD, GPU, MI300, MI250"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Deep Learning Recommendation Model on AMD GPU"
+        "keywords": "PyTorch, Deep Learning, Recommendation, DLRM, AMD, GPU, MI300, MI250"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Deep Learning Recommendation Models on AMD GPUs

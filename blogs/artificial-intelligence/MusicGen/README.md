@@ -5,17 +5,26 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
 language: English
+blog_title: "Music Generation With MusicGen on an AMD GPU"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Music Generation With MusicGen on an AMD GPU"
-    "author": "Phillip Dang"
-    "keywords": "PyTorch, MusicGen, train models, Tuning, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Music Generation With MusicGen on an AMD GPU"
+        "author": "Phillip Dang"
+        "keywords": "PyTorch, MusicGen, train models, Tuning, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Music Generation With MusicGen on an AMD GPU
-
-<span style="font-size:0.7em;">8, Mar 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 MusicGen is an autoregressive, transformer-based model that predicts the next segment of a piece of
 music based on previous segments. This is a similar approach to language models predicting the next

@@ -3,18 +3,25 @@ blogpost: true
 blog_title: 'Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD'
 thumbnail: 'roberta_amp_thumbnail.jpeg'
 date: 29 July 2024
-blog_title: 'Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD'
-thumbnail: '20204-10-10-roberta.jpg'
 author: Fabricio Flores
 tags: PyTorch, AI/ML, LLM, Optimization
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "In this blog we explore how to fine-tune the Robustly Optimized BERT Pretraining Approach RoBERTa large language model, with emphasis on PyTorch's mixed precision capabilities. Specifically, we explore using AMD GPUs for mixed precision fine-tuning to achieve faster model training without any major impacts on accuracy."
-    "author": "Fabricio Flores"
-    "keywords": "PyTorch, Mixed Precision, AMP, RoBERTa, BERT, LLM, Fine-tuning, ROCm, AMD, GPU, MI300, MI250, MI210"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "In this blog we explore how to fine-tune the Robustly Optimized BERT Pretraining Approach RoBERTa large language model, with emphasis on PyTorch's mixed precision capabilities. Specifically, we explore using AMD GPUs for mixed precision fine-tuning to achieve faster model training without any major impacts on accuracy."
+        "author": "Fabricio Flores"
+        "keywords": "PyTorch, Mixed Precision, AMP, RoBERTa, BERT, LLM, Fine-tuning, ROCm, AMD, GPU, MI300, MI250, MI210"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Optimizing RoBERTa: Fine-Tuning with Mixed Precision on AMD

@@ -5,11 +5,23 @@ author: Yao Fehlis
 tags: AI/ML, Installation, PyTorch, TensorFlow
 category: Software tools & optimizations
 language: English
+blog_title: "Creating a PyTorch/TensorFlow code environment on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Creating a PyTorch TensorFlow environment on AMD GPUs"
-    "keywords": "AI, PyTorch, TensorFlow, docker, hipify, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Creating a PyTorch TensorFlow environment on AMD GPUs"
+        "keywords": "AI, PyTorch, TensorFlow, docker, hipify, ROCm"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Creating a PyTorch/TensorFlow code environment on AMD GPUs

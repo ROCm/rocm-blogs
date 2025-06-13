@@ -5,11 +5,22 @@ author: Fabricio Flores
 tags: Profiling, HPC 
 category: Software tools & optimizations
 language: English
+blog_title: "AMD in Action: Unveiling the Power of Application Tracing and Profiling"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "AMD in Action: Unveiling the Power of Application Tracing and Profiling"
-    "keywords": "Profiling, Tracing, HPC, HIP, HSA, AMD, GPU, MI300, MI250, MI210"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "AMD in Action: Unveiling the Power of Application Tracing and Profiling"
+        "keywords": "Profiling, Tracing, HPC, HIP, HSA, AMD, GPU, MI300, MI250, MI210"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # AMD in Action: Unveiling the Power of Application Tracing and Profiling

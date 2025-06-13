@@ -7,11 +7,20 @@ author: Thomas Gibson, Muhammad Osama
 tags: HPC, Installation, Performance, Scientific Computing
 category: Applications & models
 language: English
+key_value_propositions: ""
+target_audience: ""
 myst:
-  html_meta:
-    "description lang=en": "Graph analytics on AMD GPUs using Gunrock"
-    "keywords": "HPC, graph analytics, AMD GPUs, BFS, Gunrock"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Graph analytics on AMD GPUs using Gunrock"
+        "keywords": "HPC, graph analytics, AMD GPUs, BFS, Gunrock"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Data Science"
+        "amd_blog_topic_categories": "Software & Ecosystem, HPC & Scientific Computing"
+        "property=og:locale": "en_US"
 ---
 <!---
 Copyright (c) 2024 Advanced Micro Devices, Inc. (AMD)

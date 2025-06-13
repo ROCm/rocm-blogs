@@ -6,12 +6,21 @@ author: Vara Lakshmi Bayanagari
 thumbnail: 'thumbnail.jpg'
 tags: PyTorch, AI/ML, GenAI
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "This blog will introduce you to assisted text generation using Speculative Sampling. We briefly explain the principles underlying Speculative Sampling and demonstrate its implementation on AMD GPUs using ROCm."
-    "keywords": "AI/ML, GenAI, LLM, TGI, Speculative Decoding"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog will introduce you to assisted text generation using Speculative Sampling. We briefly explain the principles underlying Speculative Sampling and demonstrate its implementation on AMD GPUs using ROCm."
+        "keywords": "AI/ML, GenAI, LLM, TGI, Speculative Decoding"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Speed Up Text Generation with Speculative Sampling on AMD GPUs

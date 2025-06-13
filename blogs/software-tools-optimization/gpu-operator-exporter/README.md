@@ -11,10 +11,17 @@ language: English
 target_audience: Platform Engineers
 key_value_propositions: 'Simplifies the deployment and management of AMD Instinct Accelerators on Kubernetes'
 myst:
-  html_meta:
-    "description lang=en": "This post announces the AMD GPU Operator for Kubernetes and and the Device Metrics Exporter, including instructions for getting started with these new releases."
-    "keywords": "Kubernetes"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This post announces the AMD GPU Operator for Kubernetes and and the Device Metrics Exporter, including instructions for getting started with these new releases."
+        "keywords": "Kubernetes"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+        "property=og:locale": "en_US"
 ---
 
 # Announcing the AMD GPU Operator and Metrics Exporter

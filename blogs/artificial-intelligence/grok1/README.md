@@ -6,12 +6,22 @@ thumbnail: '2024-10-10-grok1.jpeg'
 author: Eliot Li, Luise Chen, Lei Shao
 tags: AI/ML, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "We demonstrate that the massive Grok-1 Model from xAI can run seamlessly on the AMD MI300X GPU accelerator by leveraging the ROCm software platform."
-    "keywords": "MOE, Mixture of Experts, Mixtral, AMD, GPU, MI300, MI250, LLM"
-    "property=og:locale": "en_US"
+        html_meta:
+                "description lang=en": "We demonstrate that the massive Grok-1 Model from xAI can run seamlessly on the AMD MI300X GPU accelerator by leveraging the ROCm software platform."
+                "keywords": "MOE, Mixture of Experts, Mixtral, AMD, GPU, MI300, MI250, LLM"
+                "property=og:locale": "en_US"
+                "amd_category": "Developer Resources"
+                "amd_asset_type": "Blog"
+                "amd_technical_blog_type": "Applications and Models"
+                "amd_blog_hardware_platforms": "Instinct GPUs"
+                "amd_blog_development_tools": "ROCm Software"
+                "amd_blog_applications": "AI Inference, Generative AI"
+                "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Inferencing with Grok-1 on AMD GPUs

@@ -4,12 +4,23 @@ date: 1 Apr 2024
 author: Vicky Tsang, Logan Grado, Eliot Li
 tags: LLM, AI/ML, GenAI, Fine-Tuning, Diffusion Model
 category: Applications & models
+blog_title: "Scale AI applications with Ray"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Scale AI applications with Ray"
-    "keywords": "AMD GPU, ROCm, Model Serving, Ray, ML Platform, Workload Orchestration, Generative AI, Tuning, Stable Diffusion, Fine-Tuning, GenAI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Scale AI applications with Ray"
+        "keywords": "AMD GPU, ROCm, Model Serving, Ray, ML Platform, Workload Orchestration, Generative AI, Tuning, Stable Diffusion, Fine-Tuning, GenAI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Deploying AI at Scale"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Scale AI applications with Ray

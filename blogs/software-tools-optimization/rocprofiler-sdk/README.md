@@ -2,12 +2,12 @@
 blogpost: true
 blog_title: "Introducing ROCprofiler SDK - The Latest Toolkit for Performance Profiling."
 date: 25 Mar 2025
-author: 'Jayacharan Kolla, Ammar Elwazir, Gina Sitaraman'
-thumbnail: 'profiler.png'
+author: "Jayacharan Kolla, Ammar Elwazir, Gina Sitaraman"
+thumbnail: "profiler.png"
 tags: Profiling, Performance, AI/ML, System-Tuning, HPC
 category: Software tools & optimizations
-target_audience: AI/ML and HPC Developers.
-key_value_propositions: ROCprofiler SDK is a new profiling toolkit that solves multiple issues that exist with legacy profiler interfaces. All the third-party tools and ML Framework Profilers are built on top of legacy profilers, this blog will motivate more third-party tools developers to adopt ROCprofiler SDK profiling interfaces.
+target_audience: "AI/ML and HPC Developers"
+key_value_propositions: "ROCprofiler SDK is a new profiling toolkit that solves multiple issues that exist with legacy profiler interfaces. All the third-party tools and ML Framework Profilers are built on top of legacy profilers, this blog will motivate more third-party tools developers to adopt ROCprofiler SDK profiling interfaces."
 language: English
 myst:
     html_meta:
@@ -21,10 +21,10 @@ myst:
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
         "amd_developer_type": "ML/AI Developer, Application Developer, HPC Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Development Tools, Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "High Performance Computing"
-        "amd_industries": "Data Center"
+        "amd_product_type": "Software & Applications"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem"
         "amd_blog_releasedate": Thursday Mar 27, 12:00:00 PST 2025
 ---
 <!---

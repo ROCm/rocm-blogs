@@ -5,18 +5,27 @@ author: Phillip Dang
 tags: PyTorch, AI/ML, LLM
 category: Applications & models
 language: English
+blog_title: "Using the ChatGLM-6B bilingual language model with AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Bilingual language model ChatGLM-6B"
-    "author": "Phillip Dang"
-    "keywords": "PyTorch, LLMs, Large Language Models, AMD, GPU, MI300,
-   MI250"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Bilingual language model ChatGLM-6B"
+        "author": "Phillip Dang"
+        "keywords": "PyTorch, LLMs, Large Language Models, AMD, GPU, MI300, MI250"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+   
 ---
 
 # Using the ChatGLM-6B bilingual language model with AMD GPUs
-
-<span style="font-size:0.7em;">4, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 ChatGLM-6B is an open bilingual (Chinese-English) language model with 6.2 billion parameters. It's
 optimized for Chinese conversation based on General Language Model (GLM) architecture. GLM is a

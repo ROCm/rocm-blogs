@@ -4,13 +4,24 @@ date: 2 July 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, JAX, PyTorch, LLM
 category: Applications & models
+blog_title: "A Guide to Implementing and Training Generative Pre-trained Transformers (GPT) in JAX on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "A Guide to Implementing and Training Generative Pre-trained Transformers (GPT) in JAX on AMD GPUs"
-    "author": "Douglas Jia"
-    "keywords": "nanoGPT, JAX, Flax, Pre-train, Fine-tuning, Self attention, AMD, GPU, MI300, MI250, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "A Guide to Implementing and Training Generative Pre-trained Transformers (GPT) in JAX on AMD GPUs"
+        "author": "Douglas Jia"
+        "keywords": "nanoGPT, JAX, Flax, Pre-train, Fine-tuning, Self attention, AMD, GPU, MI300, MI250, ROCm"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # A Guide to Implementing and Training Generative Pre-trained Transformers (GPT) in JAX on AMD GPUs

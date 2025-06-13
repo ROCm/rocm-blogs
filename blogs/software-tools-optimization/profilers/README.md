@@ -5,11 +5,22 @@ author: Thomas Gibson, Noah Wolfe, Gina Sitaraman, Suyash Tandon
 tags: HPC, Memory, Profiling
 category: Software tools & optimizations
 language: English
+blog_title: "Introduction to profiling tools for AMD hardware"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Profiling tools"
-    "keywords": "HPC, MI250, MI300, Omniperf, Omnitrace, rocprof"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Profiling tools"
+        "keywords": "HPC, MI250, MI300, Omniperf, Omnitrace, rocprof"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Introduction to profiling tools for AMD hardware

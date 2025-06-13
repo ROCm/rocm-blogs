@@ -4,13 +4,24 @@ date: 15 Mar 2024
 author: Seungrok Jung
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
+blog_title: "Large language model inference optimizations on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "LLM Inference optimizations on AMD Instinct (TM) GPUs"
-    "author": "Seungrok Jung"
-    "keywords": "LLM, optimization, inference, AMD, GPU, MI210, MI250, Generative AI, Tuning, Fine-Tuning"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "LLM Inference optimizations on AMD Instinct (TM) GPUs"
+        "author": "Seungrok Jung"
+        "keywords": "LLM, optimization, inference, AMD, GPU, MI210, MI250, Generative AI, Tuning, Fine-Tuning"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Large language model inference optimizations on AMD GPUs

@@ -22,7 +22,7 @@ myst:
         "amd_developer_type": "ML/AI Developer"
         "amd_deployment": "Servers"
         "amd_product_type": "Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "Computer Vision"
         "amd_industries": "Industries & Vision"
         "amd_blog_development_tools": "ROCm Software"

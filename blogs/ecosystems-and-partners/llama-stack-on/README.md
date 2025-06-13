@@ -23,6 +23,7 @@ myst:
         "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
+        
 ---
 # A Step-by-Step Guide On How To Deploy Llama Stack on AMD Instinct™ GPU
 

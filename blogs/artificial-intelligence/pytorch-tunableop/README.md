@@ -4,13 +4,24 @@ date: 3 July 2024
 author: Logan Grado
 tags: Optimization, LLM, GenAI, Linear Algebra, PyTorch
 category: Applications & models
+blog_title: "Accelerating models on ROCm using PyTorch TunableOp"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Accelerating models on ROCm using PyTorch TunableOp"
-    "author": "Logan Grado"
-    "keywords": "Optimization, LLM, GenAI, Linear Algebra, PyTorch"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Accelerating models on ROCm using PyTorch TunableOp"
+        "author": "Logan Grado"
+        "keywords": "Optimization, LLM, GenAI, Linear Algebra, PyTorch"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Accelerating models on ROCm using PyTorch TunableOp

@@ -15,6 +15,14 @@ myst:
         "description lang=en": "Guide to how GEMMs can be tuned for optimal performance of AI models on AMD GPUs"
         "keywords": "GEMM, LLMs, ROCm, AMD GPUs, MI300"
         "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # GEMM Kernel Optimization For AMD GPUs

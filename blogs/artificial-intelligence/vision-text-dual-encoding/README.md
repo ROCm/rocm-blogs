@@ -4,12 +4,23 @@ date: 24 Apr 2024
 author: Sean Song
 tags: LLM, AI/ML, GenAI, Fine-Tuning, PyTorch, Computer Vision
 category: Applications & models
+blog_title: "Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model"
-    "keywords": "CLIP, Contrastive learning, multimodal learning, AMD Instinct GPU, MI300, Training, Language-Image, Vision-Text, ROCm, Training, Generative AI, Tuning"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model"
+        "keywords": "CLIP, Contrastive learning, multimodal learning, AMD Instinct GPU, MI300, Training, Language-Image, Vision-Text, ROCm, Training, Generative AI, Tuning"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Unlocking Vision-Text Dual-Encoding: Multi-GPU Training of a CLIP-Like Model

@@ -4,12 +4,23 @@ date: 11 Apr 2024
 author: Douglas Jia
 tags: AI/ML, PyTorch, Reinforcement Learning
 category: Applications & models
+blog_title: "GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment"
-    "keywords": "Reinforcement Learning, Stable Baselines3, Deep Reinforcement Learning, Gymnasium, DQN, Deep Q-Network, CarRacing, AMD, GPU, MI300, MI250, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment"
+        "keywords": "Reinforcement Learning, Stable Baselines3, Deep Reinforcement Learning, Gymnasium, DQN, Deep Q-Network, CarRacing, AMD, GPU, MI300, MI250, ROCm"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment

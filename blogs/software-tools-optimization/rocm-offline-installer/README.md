@@ -8,16 +8,23 @@ author: Matt Elliott
 tags: HPC, Installation
 category: Software tools & optimizations
 language: English
+key_value_propositions: ""
+target_audience: ""
 myst:
-  html_meta:
-    "description lang=en": "Presenting and demonstrating the use of the ROCm Offline Installer Creator, a tool enabling simple deployment of ROCm in disconnected environments in high-security environments and air-gapped networks."
-    "keywords": "HPC, ROCm, MI300, libraries, installation"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Presenting and demonstrating the use of the ROCm Offline Installer Creator, a tool enabling simple deployment of ROCm in disconnected environments in high-security environments and air-gapped networks."
+        "keywords": "HPC, ROCm, MI300, libraries, installation"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 ## Introducing the AMD ROCm™ Offline Installer Creator: Simplifying Deployment for AI and HPC
-
-<span style="font-size:0.7em;">10 Sep, 2024 by {hoverxref}`Matt Elliott<mattelli>` </span>
 
 <iframe width="760" height="410" src="https://www.youtube.com/embed/-9kB24A_xm4?si=4ywM3US_j104ZBmQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
