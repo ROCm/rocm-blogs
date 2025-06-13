@@ -4,13 +4,23 @@ date: 4 Apr 2024
 author: Fabricio Flores
 tags: LLM, AI/ML, GenAI, Computer Vision
 category: Applications & models
+blog_title: "Building semantic search with SentenceTransformers on AMD"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Building semantic search with SentenceTransformers on AMD"
-    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, SentenceTransformers
-    semantic Search, text embeddings, BERT, transformers, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Building semantic search with SentenceTransformers on AMD"
+        "keywords": "AMD GPU, MI300, MI250, ROCm, blog, SentenceTransformers, semantic Search, text embeddings, BERT, transformers, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Building semantic search with SentenceTransformers on AMD

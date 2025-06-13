@@ -1,6 +1,8 @@
 ---
 blogpost: true
 blog_title: 'Boosting Computational Fluid Dynamics Performance with AMD Instinct™ MI300X'
+key_value_propositions: ""
+target_audience: ""
 date: 14 Jan 2025
 thumbnail: 'Ansys_Fluent_benchmarks_Blog.jpg'
 author: Martin Huarte
@@ -8,10 +10,17 @@ tags: HPC
 category: Ecosystems and Partners
 language: English
 myst:
-  html_meta:
-    "description lang=en": "The blog introduces CFD Ansys Fluent benchmarks and provides hands-on guide on installing and running four different Fluent models on AMD GPUs using ROCm."
-    "keywords": "HPC, CFD"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "The blog introduces CFD Ansys Fluent benchmarks and provides hands-on guide on installing and running four different Fluent models on AMD GPUs using ROCm."
+        "keywords": "HPC, CFD"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models, Ecosystem and Partners, Benchmarks and Testing"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "HPC & Scientific Computing, Industry Applications & Use Cases, Software & Ecosystem"
 ---
 
 # Boosting Computational Fluid Dynamics Performance with AMD Instinct™ MI300X

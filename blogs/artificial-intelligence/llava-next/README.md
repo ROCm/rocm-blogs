@@ -4,12 +4,24 @@ date: 26 Apr 2024
 author: Phillip Dang
 tags: PyTorch, AI/ML, Multimodal, Fine-Tuning, LLM
 category: Applications & models
+blog_title: "Multimodal (Visual and Language) understanding with LLaVA-NeXT"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Multimodal instruction-following data with LLaVA-NeXT on AMD GPU"
-    "keywords": "PyTorch, llava, llm, visual, multimodal, instruction, AMD, GPU, MI300, MI250"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Multimodal instruction-following data with LLaVA-NeXT on AMD GPU"
+        "keywords": "PyTorch, llava, llm, visual, multimodal, instruction, AMD, GPU, MI300, MI250"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Multimodal (Visual and Language) understanding with LLaVA-NeXT

@@ -4,13 +4,23 @@ date: 7 Feb 2024
 author: Vara Lakshmi Bayanagari
 tags: PyTorch, AI/ML, GenAI
 category: Applications & models
+blog_title: "Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Two-dimensional images to three-dimensional scene mapping
-  using NeRF on an AMD GPU"
-    "keywords": "AI/ML, GenAI, images, NeRF, PyTorch"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU"
+        "keywords": "AI/ML, GenAI, images, NeRF, PyTorch"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Two-dimensional images to three-dimensional scene mapping using NeRF on an AMD GPU

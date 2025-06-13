@@ -6,13 +6,22 @@ date: 6 Sept 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, JAX, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Guide to modify our JAX-based nanoGPT model for mixed-precision training, optimizing speed and efficiency on AMD GPUs with ROCm."
-    "author": "Douglas Jia"
-    "keywords": "nanoGPT, JAX, Flax, Pre-train, mixed precision, AMD, GPU, MI300, MI250, ROCm, fp16, fp32"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Guide to modify our JAX-based nanoGPT model for mixed-precision training, optimizing speed and efficiency on AMD GPUs with ROCm."
+        "author": "Douglas Jia"
+        "keywords": "nanoGPT, JAX, Flax, Pre-train, mixed precision, AMD, GPU, MI300, MI250, ROCm, fp16, fp32"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Optimize GPT Training: Enabling Mixed Precision Training in JAX using ROCm on AMD GPUs

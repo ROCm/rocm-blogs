@@ -6,13 +6,22 @@ date: 29 March 2024
 author: Logan Grado
 tags: PyTorch, AI/ML
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "In this blog, we will discuss the basics of AMP, how it works, and how it can improve training efficiency on AMD GPUs. As models increase in size, the time and memory needed to train them--and consequently, the cost--also increases. Therefore, any measures we take to reduce training time and memory usage can be highly beneficial. This is where Automatic Mixed Precision (AMP) comes in."
-    "author": "Logan Grado"
-    "keywords": "AI/ML, PyTorch, Mi201, MI250, MI300, ROCm, AMP, Automatic Mixed Precision, Precision"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "In this blog, we will discuss the basics of AMP, how it works, and how it can improve training efficiency on AMD GPUs. As models increase in size, the time and memory needed to train them--and consequently, the cost--also increases. Therefore, any measures we take to reduce training time and memory usage can be highly beneficial. This is where Automatic Mixed Precision (AMP) comes in."
+        "author": "Logan Grado"
+        "keywords": "AI/ML, PyTorch, Mi201, MI250, MI300, ROCm, AMP, Automatic Mixed Precision, Precision"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Automatic mixed precision in PyTorch using AMD GPUs

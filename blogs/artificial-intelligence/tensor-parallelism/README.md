@@ -13,7 +13,7 @@ myst:
     html_meta:
         "author": "Eduardo Alvarez"
         "description lang=en": "This blog analyzes how tensor parallelism impacts TCO and Scale for LLM deployments in production."
-        "keywords": "Tensor Parallelism for LLM Inference Optimization"
+        "keywords": "Tensor, Parallelism, LLM, Inference, Optimization"
         "property=og:locale": "en_US"
         "amd_category": 'Developer Resources'
         "amd_asset_type": 'Blogs'
@@ -21,11 +21,10 @@ myst:
         "amd_technical_blog_type": 'Benchmarks and Testing'
         "amd_developer_type": 'ML/AI Developer'
         "amd_deployment": 'Servers'
-        "amd_product_type": 'Accelerators'
-        "amd_developer_tool": 'ROCm Software'
-        "amd_applications": 'Large Language Model (LLM)'
-        "amd_industries": 'Data Center'
-        "amd_blog_releasedate": 
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
+        "amd_blog_development_tools": 'ROCm Software'
+        "amd_blog_applications": 'AI Inference, Generative AI'
+        "amd_blog_topic_categories": 'Software & Ecosystem'
 ---
 
 # Analyzing the Impact of Tensor Parallelism Configurations on LLM Inference Performance

@@ -4,12 +4,23 @@ date: 16 Apr 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, PyTorch, Fine-Tuning
 category: Applications & models
+blog_title: "Instruction fine-tuning of StarCoder with PEFT on multiple AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs"
-    "keywords": "Instruction fine-tuning, StarCoder, StarCoder2, PEFT, Parameter-efficient tine-tuning, LoRA, Fine-tuning, AMD, GPU, MI300, MI250, ROCm, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Instruction fine tuning of StarCoder with PEFT on multiple AMD GPUs"
+        "keywords": "Instruction fine-tuning, StarCoder, StarCoder2, PEFT, Parameter-efficient tine-tuning, LoRA, Fine-tuning, AMD, GPU, MI300, MI250, ROCm, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Instruction fine-tuning of StarCoder with PEFT on multiple AMD GPUs

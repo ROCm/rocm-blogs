@@ -5,13 +5,22 @@ author: Sean Song
 blog_title: Inference with Llama 3.2 Vision LLMs on AMD GPUs Using ROCm
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 thumbnail: '2024-10-31-inference-with-llama-3.2-vision.jpg'
 myst:
-  html_meta:
-    "description lang=en": "Meta's Llama 3.2 Vision models bring multimodal capabilities for vision-text tasks. This blog explores leveraging them on AMD GPUs with ROCm for efficient AI workflows."
-    "keywords": "Llama 3.2, Vision, multimodal, Inference, LLM, visual question answering, mathematical reasoning with visuals, image captioning, charts and graphs understanding, AMD GPUs, ROCm, PyTorch, Generative AI, AMD GPUs, MI250, MI210, MI300, MI300X"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Meta's Llama 3.2 Vision models bring multimodal capabilities for vision-text tasks. This blog explores leveraging them on AMD GPUs with ROCm for efficient AI workflows."
+        "keywords": "Llama 3.2, Vision, multimodal, Inference, LLM, visual question answering, mathematical reasoning with visuals, image captioning, charts and graphs understanding, AMD GPUs, ROCm, PyTorch, Generative AI, AMD GPUs, MI250, MI210, MI300, MI300X"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Inference with Llama 3.2 Vision LLMs on AMD GPUs Using ROCm

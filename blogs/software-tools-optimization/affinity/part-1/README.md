@@ -4,12 +4,23 @@ date: 16 Apr 2024
 author: Gina Sitaraman, Bob Robey, George Markomanolis 
 tags: HPC, Memory, OpenMP, Performance, System-Tuning
 category: Software tools & optimizations
+blog_title: " Affinity part 1 - Affinity, placement, and order"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Affinity Part 1"
-    "keywords": "Affinity, HPC, hardware, memory, MPI, OpenMP, performance, tuning, NUMA"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Affinity Part 1"
+        "keywords": "Affinity, HPC, hardware, memory, MPI, OpenMP, performance, tuning, NUMA"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems, HPC & Scientific Computing"
+        "property=og:locale": "en_US"
 ---
 
 # Affinity part 1 - Affinity, placement, and order

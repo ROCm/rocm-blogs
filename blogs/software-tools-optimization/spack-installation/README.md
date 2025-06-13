@@ -22,9 +22,9 @@ myst:
         "amd_developer_type": "ML/AI Developer, Application Developer, HPC Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Development Tools, Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "High Performance Computing"
-        "amd_industries": "Data Center"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "Design, Simulation & Modeling"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Thurs Apr 10, 12:00:00 PST 2025
 ---
 

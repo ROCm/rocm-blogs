@@ -25,7 +25,7 @@ myst:
         "amd_technical_blog_type": "Applications and Models"
         "amd_hardware_deployment": "Instinct GPU Accelerators"
         "amd_deployment_tools": "ROCm Software"
-        "amd_applications": "AI Inference"
+        "amd_blog_applications": "AI Inference"
         "amd_blog_category_topic": "Enterprise & Data Center Trends"
         "amd_blog_authors": Mohammad Mahdi Kamani, Parsa Fashi, Vikram Appia, Emad Barsoum"
         "amd_blog_releasedate": Tues Apr 15, 12:00:00 PST 2025

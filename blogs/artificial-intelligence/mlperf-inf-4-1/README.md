@@ -6,12 +6,21 @@ thumbnail: "2024-10-03-mlperf.jpeg"
 author: Meena Arunachalam, Miro Hodak, Jeremy Arnold, Eliot Li
 tags: AI/ML, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Benchmarking Machine Learning using ROCm and AMD GPUs: Reproducing Our MLPerf Inference Submission"
-    "keywords": "MLPerf, Inferencing, AMD, GPU, MI300, LLM, Llama2"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Benchmarking Machine Learning using ROCm and AMD GPUs: Reproducing Our MLPerf Inference Submission"
+        "keywords": "MLPerf, Inferencing, AMD, GPU, MI300, LLM, Llama2"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Benchmarking Machine Learning using ROCm and AMD GPUs: Reproducing Our MLPerf Inference Submission

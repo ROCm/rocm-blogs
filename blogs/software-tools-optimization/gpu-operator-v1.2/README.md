@@ -22,9 +22,9 @@ myst:
         "amd_developer_type": "Software Developer, ML/AI Developer, HPC Developer, Data & Research Scientists"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "High Performance Computing, Large Language Model (LLM), Cloud Computing, Generative AI"
-        "amd_industries": "Data Center"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "AI Inference, AI Training, Design, Simulation & Modeling, Deploying AI at Scale, Edge Computing, Generative AI"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Thu Mar 28, 12:00:00 PST 2025
 ---
 <!---

@@ -4,12 +4,24 @@ date: 15 May 2024
 author: Clint Greene
 tags: AI/ML, PyTorch, LLM
 category: Applications & models
+blog_title: "Accelerating Large Language Models with Flash Attention on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Accelerating Large Language Models with Flash Attention on AMD GPUs"
-    "keywords": "Flash Attention, LLMs, ROCm, AMD GPUs, MI250, MI210, MI300"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Accelerating Large Language Models with Flash Attention on AMD GPUs"
+        "keywords": "Flash Attention, LLMs, ROCm, AMD GPUs, MI250, MI210, MI300"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Accelerating Large Language Models with Flash Attention on AMD GPUs

@@ -10,11 +10,18 @@ language: English
 target_audience: "AI Core Developers, HPC Core Developers, AI Solutions Architects"
 key_value_propositions: "Performance optimizations of workloads via compute and memory management close to the silicon layer"
 myst:
-  html_meta:
-    "author": "Muhammad Osama, Ryan Swann, Karthik Sangaiah, Sonali Singh, Ganesh Dasika"
-    "description lang=en": "This blog explains how to use the MI300 compute and memory partitioning modes to optimize your performance-critical applications. "
-    "keywords": "HPC, HIP, HSA, AMD, GPU, MI300, NPS, CPX, TPX, SPX, NUMA, Memory, Partition"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Muhammad Osama, Ryan Swann, Karthik Sangaiah, Sonali Singh, Ganesh Dasika"
+        "description lang=en": "This blog explains how to use the MI300 compute and memory partitioning modes to optimize your performance-critical applications. "
+        "keywords": "HPC, HIP, HSA, AMD, GPU, MI300, NPS, CPX, TPX, SPX, NUMA, Memory, Partition"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+        "property=og:locale": "en_US"
 ---
 
 <!---

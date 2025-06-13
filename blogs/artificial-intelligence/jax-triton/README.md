@@ -6,12 +6,21 @@ blog_title: 'Supercharging JAX with Triton Kernels on AMD GPUs'
 author: Clint Greene
 tags: AI/ML, JAX, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "In this blog post we guide you through developing a fused dropout activation kernel for matrices in Triton, calling the kernel from JAX, and benchmarking its performance."
-    "keywords": "Triton, Kernel, JAX, ROCm, AMD GPUs, MI250, MI210, MI300"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "In this blog post we guide you through developing a fused dropout activation kernel for matrices in Triton, calling the kernel from JAX, and benchmarking its performance."
+        "keywords": "Triton, Kernel, JAX, ROCm, AMD GPUs, MI250, MI210, MI300"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Supercharging JAX with Triton Kernels on AMD GPUs

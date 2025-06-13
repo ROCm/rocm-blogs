@@ -5,16 +5,23 @@ date: 14 Feb, 2025
 author: Ben Sander
 thumbnail: 'maf_bg.JPG'
 tags: AI/ML, Hardware
-target_audience: AI Core Developer, HPC Core Developer
-key_value_propositions:
+target_audience: "AI Core Developer, HPC Core Developer"
+key_value_propositions: ""
 category: Software tools & optimizations
 language: English
 myst:
     html_meta:
-        "author": "Ben Sander"
-        "description lang=en": "Understanding Peak, Max-Achievable & Delivered FLOPs"
-        "keywords": "AI, HPC, Optimization, MI300X"
-        "property=og:locale": "en_US"
+            "author": "Ben Sander"
+            "description lang=en": "Understanding Peak, Max-Achievable & Delivered FLOPs"
+            "keywords": "AI, HPC, Optimization, MI300X"
+            "amd_category": "Developer Resources"
+            "amd_asset_type": "Blog"
+            "amd_technical_blog_type": "Benchmarks and Testing"
+            "amd_blog_hardware_platforms": "Instinct GPUs"
+            "amd_blog_development_tools": "ROCm Software"
+            "amd_blog_applications": "Design, Simulation & Modeling"
+            "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems, HPC & Scientific Computing"
+            "property=og:locale": "en_US"
 ---
 
 # Understanding Peak, Max-Achievable & Delivered FLOPs, Part 1

@@ -4,12 +4,23 @@ date: 18 Apr 2024
 author: Alessandro Fanfarillo, Alex Voicu 
 tags: C++, Compiler, HPC, Memory, Performance
 category: Software tools & optimizations
+blog_title: "C++17 parallel algorithms and HIPSTDPAR #"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "C++17 parallel algorithms and HIPSTDPAR"
-    "keywords": "XC++, Compiler, HPC, Memory, Performance, Programming Language"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "C++17 parallel algorithms and HIPSTDPAR"
+        "keywords": "XC++, Compiler, HPC, Memory, Performance, Programming Language"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, HPC & Scientific Computing"
 ---
 
 # C++17 parallel algorithms and HIPSTDPAR #

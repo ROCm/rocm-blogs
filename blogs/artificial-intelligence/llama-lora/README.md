@@ -5,15 +5,22 @@ author: Sean Song
 blog_title: 'Fine-tune Llama model with LoRA: Customizing a large language model for question-answering'
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 thumbnail: 'image.jpg'
 myst:
-  html_meta:
-    "description lang=en": "This blog demonstrate how to use Lora to efficiently fine-tune Llama model on a single AMD GPU with ROCm.
-  model for question-answering"
-    "keywords": "LoRA, Low-rank Adaptation, fine-tuning, large language model,
-  Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog demonstrate how to use Lora to efficiently fine-tune Llama model on a single AMD GPU with ROCm. model for question-answering"
+        "keywords": "LoRA, Low-rank Adaptation, fine-tuning, large language model, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Fine-tune Llama model with LoRA: Customizing a large language model for question-answering

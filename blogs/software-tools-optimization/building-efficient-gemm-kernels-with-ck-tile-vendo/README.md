@@ -25,9 +25,9 @@ myst:
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
         "amd_developer_type": "ML/AI Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Accelerators"
-        "amd_applications": "Large Language Model (LLM)"
-        "amd_industries": "Data Center"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
+        "amd_blog_applications": "AI Inference, AI Training"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Tue Apr 15, 12:00:00 PST 2025
 ---
 

@@ -4,12 +4,23 @@ date: 26 Apr 2024
 author: Suyash Tandon, Maria Ruiz Varela, Gina Sitaraman, Bob Robey
 tags: Compiler, Installation, HPC, Optimization
 category: Software tools & optimizations
+blog_title: "Application portability with HIP"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Application portability with HIP"
-    "keywords": "Compiler, Installation, HPC, Optimization"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Application portability with HIP"
+        "keywords": "Compiler, Installation, HPC, Optimization, GPU"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+        "property=og:locale": "en_US"
 ---
 
 <!---

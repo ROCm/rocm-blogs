@@ -6,13 +6,21 @@ thumbnail: "2024-10-10-seismic.jpeg"
 author: Justin Chang, Ossian O'Reilly
 tags: HPC, Memory, Performance, Profiling, Optimization, Scientific Computing
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Seismic Stencil Codes - Part 3: In the last two blog posts, we developed a HIP kernel capable of computing
-high order finite differences commonly needed in seismic wave propagation."
-    "keywords": "HPC, finite difference, Seismic, PDE, MI250, performance"
-    "property=og:locale": "en_US"
+    html_meta:
+            "description lang=en": "Seismic Stencil Codes - Part 3: In the last two blog posts, we developed a HIP kernel capable of computing high order finite differences commonly needed in seismic wave propagation."
+            "keywords": "HPC, finite difference, Seismic, PDE, MI250, performance"
+            "amd_category": "Developer Resources"
+            "amd_asset_type": "Blog"
+            "amd_technical_blog_type": "Applications and Models"
+            "amd_blog_hardware_platforms": "Instinct GPUs"
+            "amd_blog_development_tools": "ROCm Software"
+            "amd_blog_applications": "Data Science, Design, Simulation & Modeling"
+            "amd_blog_topic_categories": "HPC & Scientific Computing"
+            "property=og:locale": "en_US"
 ---
 
 # Seismic stencil codes - part 3

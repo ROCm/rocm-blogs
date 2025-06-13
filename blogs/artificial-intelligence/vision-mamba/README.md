@@ -10,11 +10,18 @@ language: English
 target_audience: This is an alternative to the Transformer architecture. The target audience includes those exploring new architectures for deep learning models and seeking solutions that are faster and more memory-efficient than Transformers.
 key_value_propositions: Vision mamba is the state of the art work for the vision model. AMD GPU with ROCm worked seamlessly with these latest model architecture.
 myst:
-  html_meta:
-    "author": "Sean Song"
-    "description lang=en": "This blog explores Vision Mamba (Vim), an innovative and efficient backbone for vision tasks and evaluate its performance on AMD GPUs with ROCm."
-    "keywords": "Vision Mamba, Mamba, Computer Vision, PyTorch, Selective SSM, SSM, RNN, LLM, Optimization, Hardware-aware, Transformer, Attention, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Sean Song"
+        "description lang=en": "This blog explores Vision Mamba (Vim), an innovative and efficient backbone for vision tasks and evaluate its performance on AMD GPUs with ROCm."
+        "keywords": "Vision Mamba, Mamba, Computer Vision, PyTorch, Selective SSM, SSM, RNN, LLM, Optimization, Hardware-aware, Transformer, Attention, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Computer Vision"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Vision Mamba on AMD GPU with ROCm

@@ -21,10 +21,10 @@ myst:
         "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_developer_type": "Software Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Accelerators"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "Design, Simulation & Modeling"
-        "amd_industries": "Supercomputing & Research"
+        "amd_blog_topic_categories": "HPC & Scientific Computing"
 ---
 <!---
 Copyright (c) 2025 Advanced Micro Devices, Inc. (AMD)

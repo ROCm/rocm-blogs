@@ -6,12 +6,21 @@ thumbnail: '2024-10-03-llm-tasks.jpeg'
 author: Eliot Li
 tags: AI/ML, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Performing natural language processing tasks with LLMs on ROCm running on AMD GPUs"
-    "keywords": "GenAI, Question Answering, Summarization, Information Retrieval, Sentiment Analysis, AMD, GPU, MI300, MI250, LLM, C4AI Command-R, Qwen, OPT, MPT, DistilBERT, Longformer, DistilRoBERTa, FinBERT, BART, Pegasus, Contriever, Phi-3"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Performing natural language processing tasks with LLMs on ROCm running on AMD GPUs"
+        "keywords": "GenAI, Question Answering, Summarization, Information Retrieval, Sentiment Analysis, AMD, GPU, MI300, MI250, LLM, C4AI Command-R, Qwen, OPT, MPT, DistilBERT, Longformer, DistilRoBERTa, FinBERT, BART, Pegasus, Contriever, Phi-3"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Performing natural language processing tasks with LLMs on ROCm running on AMD GPUs

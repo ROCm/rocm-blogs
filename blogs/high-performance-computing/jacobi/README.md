@@ -4,12 +4,23 @@ date: 15 Sep 2023
 author: Asitav Mishra, Rajat Arora, Justin Chang
 tags: HPC, Linear Algebra, OpenMP, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
+blog_title: "Jacobi Solver with HIP and OpenMP offloading"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Finite difference method - Laplacian Part 1"
-    "keywords": "HPC, jacobi, OpenMP, PDE, MI250, performance"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Finite difference method - Laplacian Part 1"
+        "keywords": "HPC, jacobi, OpenMP, PDE, MI250, performance"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blogs"
+        "amd_technical_blog_type": "Applications and Models, Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Data Science, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "HPC & Scientific Computing"
+        "property=og:locale": "en_US"
 ---
 
 # Jacobi Solver with HIP and OpenMP offloading

@@ -5,17 +5,25 @@ author: Douglas Jia
 tags: AI/ML, GenAI, PyTorch, Diffusion Model, LLM
 category: Applications & models
 language: English
+blog_title: "Inferencing with AI2's OLMo model on AMD GPU"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Inferencing with AI2's OLMo model on AMD GPU"
-    "keywords": "OLMo, AI2, Allen Institute for AI, GPU,
-  AMD, MI300, MI250, LLM, ROCm, Open Source"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Douglas Jia"
+        "description lang=en": "Inferencing with AI2's OLMo model on AMD GPU"
+        "keywords": "OLMo, AI2, Allen Institute for AI, GPU, AMD, MI300, MI250, LLM, ROCm, Open Source"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Inferencing with AI2's OLMo model on AMD GPU
-
-<span style="font-size:0.7em;">17 Apr, 2024 by {hoverxref}`Douglas Jia<djia>`. </span>
 
 In this blog, we will show you how to generate text using AI2's OLMo model on AMD GPU.
 

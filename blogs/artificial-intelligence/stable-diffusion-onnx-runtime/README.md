@@ -4,14 +4,23 @@ date: 23 Feb 2024
 author: Douglas Jia
 tags: AI/ML, GenAI, PyTorch, Diffusion Model
 category: Applications & models
+blog_title: "Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Efficient image generation with Stable Diffusion models and
-    ONNX Runtime using AMD GPUs"
-    "keywords": "Stable Diffusion, ONNX, image-to-image, text-to-image,
-    inpainting, AMD, GPU, MI300, MI250, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs"
+        "keywords": "Stable Diffusion, ONNX, image-to-image, text-to-image, inpainting, AMD, GPU, MI300, MI250, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Efficient image generation with Stable Diffusion models and ONNX Runtime using AMD GPUs
