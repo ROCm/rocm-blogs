@@ -236,7 +236,17 @@ sgemm_16x16x4 <<< grid, block >>> (d_A, d_B, d_D);
 
 As previously noted, the input $C$ matrix is assumed to contain zeroes.
 
-## Example 2 - V_MFMA_F32_16x16x1F32
+## Example 2 - V_MFMA_F64_16x16x4F64
+
+Consider the same dimension matrix multiplication as in the previous example,
+however, now with double precision floats, using the compiler intrinsic `__builtin_amdgcn_mfma_f64_16x16x4f64`. 
+In this case, the input matrices layouts remain the same. On the other hand,
+the output matrix layout is now different. Each lane now holds four elements 
+spaced away from each other by four row lengths.
+
+![!](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+
+## Example 3 - V_MFMA_F32_16x16x1F32
 
 Consider the case of multiplying matrices of dimensions $M=N=16$ and $K=1$
 using the compiler intrinsic `__builtin_amdgcn_mfma_f32_16x16x1f32`. In this
@@ -244,7 +254,7 @@ case, the input values could be held just by 16 lanes of the wavefront.
 In fact, this instruction could simultaneously multiply 4 such matrices
 thereby having each lane hold values from one of those 4 matrices.
 
-We can re-use the figure from the previous example to illustrate the data
+We can re-use the figure from the previous example of `V_MFMA_F32_16x16x4F32` to illustrate the data
 layout for this operation too. The input $A$ is not a $16 \times 4$ matrix in
 this case but four $16 \times 1$ matrices. But the way they are laid out, and
 the elements that are owned by each lane in the wavefront is the same. The
@@ -298,7 +308,7 @@ dim3 block(16, 4, 1);
 sgemm_16x16x1 <<< grid, block >>> (d_A, d_B, d_D);
 ```
 
-## Example 3 - V_MFMA_F64_4x4x4F64
+## Example 4 - V_MFMA_F64_4x4x4F64
 
 Consider the `V_MFMA_F64_4x4x4F64` instruction, which computes the MFMA of
 four independent blocks of matrices of size $4\times4$. The operation performed
