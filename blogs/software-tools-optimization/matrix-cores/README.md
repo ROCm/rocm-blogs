@@ -186,17 +186,17 @@ The following two figures show 1) the shape and size of the $A$ and $B$ inputs; 
 2) how the elements of $A$ and $B$ map to lanes in the register owned by the
 wavefront.
 
-![the shape and size of the A and B inputs](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+![the shape and size of the A and B inputs](images/v_mfma_f32_16x16x4f32_matrix_layout.svg)
 
-![how the elements of A and B map to lanes in the register owned by the wavefront](images/v_mfma_f64_16x16x4f64_lane_layout.svg)
+![how the elements of A and B map to lanes in the register owned by the wavefront](images/v_mfma_f32_16x16x4f32_lane_layout.svg)
 
 The following two figures show 1) the shape and size of the output matrix $D$; and
 2) how the elements of $D$ map to lanes in the registers owned by the
 wavefront:
 
-![shape and size of the output matrix D](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
+![shape and size of the output matrix D](images/v_mfma_f32_16x16x4f32_output_matrix_layout.svg)
 
-![how the elements of $D$ map to lanes in the registers owned by the wavefront](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
+![how the elements of $D$ map to lanes in the registers owned by the wavefront](images/v_mfma_f32_16x16x4f32_output_lane_layout.svg)
 
 An example kernel performing this MFMA operation is given below.
 
@@ -251,9 +251,9 @@ the elements that are owned by each lane in the wavefront is the same. The
 "columns" of $A$ are distinct $16 \times 1$ matrices. The input $B$ is
 similar.
 
-![!](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+![!](images/v_mfma_f32_16x16x4f32_matrix_layout.svg)
 
-![!](images/v_mfma_f64_16x16x4f64_lane_layout.svg)
+![!](images/v_mfma_f32_16x16x4f32_lane_layout.svg)
 
 The output of a given matrix multiplication has exactly the same data layout
 as in the previous example. The difference is that now there are four
