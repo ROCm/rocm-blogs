@@ -244,7 +244,7 @@ In this case, the input matrices layouts remain the same. On the other hand,
 the output matrix layout is now different. Each lane now holds four elements 
 spaced away from each other by four row lengths.
 
-![!](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+![!](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
 
 ## Example 3 - V_MFMA_F32_16x16x1F32
 
