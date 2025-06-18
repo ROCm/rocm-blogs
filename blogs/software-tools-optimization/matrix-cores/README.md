@@ -280,7 +280,7 @@ This kernel is launched as follows.
 dim3 grid (1, 1, 1);
 dim3 block(16, 4, 1);
  
-sgemm_16x16x4 <<< grid, block >>> (d_A, d_B, d_D);
+dgemm_16x16x4 <<< grid, block >>> (d_A, d_B, d_D);
 ```
 
 ## Example 3 - V_MFMA_F32_16x16x1F32
