@@ -246,6 +246,43 @@ The input matrices $A$ and $B$ maintain the same data layout as in the FP32 case
 
 ![!](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
 
+An example kernel performing this MFMA operation is given below.
+
+```cuda
+#define M 16
+#define N 16
+#define K 4
+
+using double4 = __attribute__( (__vector_size__(K * sizeof(double)) )) double;
+
+
+__global__ void dgemm_16x16x4(const double* A, const double* B, double* D)
+{
+  double4 dmn = {0}; // zero out 4 * 2 vanilla VGPRs
+
+  int mk = threadIdx.y + K * threadIdx.x;
+  int kn = threadIdx.x + N * threadIdx.y;
+
+  double amk = A[mk];
+  double bkn = B[kn];
+  dmn = __builtin_amdgcn_mfma_f64_16x16x4f64(amk, bkn, dmn, 0, 0, 0);
+
+  for(int i = 0; i < 4; ++i){
+    const int idx = threadIdx.x + 4 * N * i + N * threadIdx.y;   
+    D[idx] = dmn[i];
+  }
+}
+
+```
+This kernel is launched as follows.
+
+```cuda
+dim3 grid (1, 1, 1);
+dim3 block(16, 4, 1);
+ 
+sgemm_16x16x4 <<< grid, block >>> (d_A, d_B, d_D);
+```
+
 ## Example 3 - V_MFMA_F32_16x16x1F32
 
 Consider the case of multiplying matrices of dimensions $M=N=16$ and $K=1$
