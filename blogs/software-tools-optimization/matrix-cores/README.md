@@ -238,13 +238,13 @@ As previously noted, the input $C$ matrix is assumed to contain zeroes.
 
 ## Example 2 - V_MFMA_F64_16x16x4F64
 
-Consider the same dimension matrix multiplication as in the previous example,
-however, now with double precision floats, using the compiler intrinsic `__builtin_amdgcn_mfma_f64_16x16x4f64`. 
-In this case, the input matrices layouts remain the same. On the other hand,
-the output matrix layout is now different. Each lane now holds four elements 
-spaced away from each other by four row lengths.
+This example performs a matrix multiplication with the same dimensions as in Example 1: a 16×4 matrix multiplied by a 4×16 matrix, producing a 16×16 output matrix. However, in this case, **double-precision floating-point (FP64)** elements are used, and the computation is carried out via the intrinsic `__builtin_amdgcn_mfma_f64_16x16x4f64`. 
+
+The input matrices $A$ and $B$ maintain the same data layout as in the FP32 case. However, due to differences in the architecture of double precision MFMA unites, the output matrix $D$ is **packed differently**, the FP64 layout spreads the four elements across every 4th row in the same column group. This means the elements owned by a single lane are separated by four row strides, which is clearly visible in the output matrix and lane layout visualizations below.
 
 ![!](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
+
+![!](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
 
 ## Example 3 - V_MFMA_F32_16x16x1F32
 
