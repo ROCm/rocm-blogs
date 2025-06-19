@@ -2,8 +2,7 @@
 blogpost: true
 blog_title: "Continued Pretraining: A Practical Playbook for Language-Specific LLM Adaptation"
 date: 18 Jun 2025
-author: 'Jonathan Burdge, Elaine Zosa, Jouni Louma, Kai Hakala'
-author: 'Elaine Zosa, Jouni Louma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge'
+author: 'Elaine Zosa, Jouni Luoma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge'
 thumbnail: 'images/thumbnail.jpg'
 tags: AI/ML, LLM, Fine-Tuning
 category: Applications & models
@@ -12,7 +11,7 @@ key_value_propositions: Demonstrates how to adapt an English language LLM model 
 language: English
 myst:
     html_meta:
-        "author": "Elaine Zosa, Jouni Louma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge"
+        "author": "Elaine Zosa, Jouni Luoma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge"
         "description lang=en": "A step by step guide to adapting LLMs to new languages via continued pretraining, with Poro 2 boosting Finnish performance using Llama 3.1 and AMD GPUs"
         "keywords": "llm, ai, llama, continued pretraining, synthetic data, finetuning post-training"
         "vertical": "AI"
@@ -23,7 +22,7 @@ myst:
         "amd_blog_development_tools": "Open-Source Tools"
         "amd_blog_applications": "AI Training"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_author": "Elaine Zosa, Jouni Louma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge"
+        "amd_blog_author": "Elaine Zosa, Jouni Luoma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge"
 ---
 
 <!---
@@ -700,7 +699,7 @@ The release of the Poro 2 models is an important milestone, but the work doesn't
 
 ### Complete 70B posttraining results
 
-|  | Llama-3.1-70B-Instruct | Llama-3.3-70B-Instruct | Poro2-8B-SFT | Poro2-8B-DPO |
+|  | Llama-3.1-70B-Instruct | Llama-3.3-70B-Instruct | Poro2-70B-SFT | Poro2-70B-DPO |
 | :---- | ----- | ----- | ----- | ----- |
 | IFEval\_fi | 63.95 | **71.71** | 70.05 | 70.79 |
 | MTBench\_fi | 7.06 | 7.4 | 7.2 | **7.77** |
