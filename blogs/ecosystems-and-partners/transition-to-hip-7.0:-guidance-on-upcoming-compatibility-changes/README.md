@@ -282,7 +282,7 @@ More conditional checks are added in the API implementation, the return errors a
 * Adds extra shared memory size check, if exceeds the size limit, returns ```hipErrorInvalidValue```.
 * If the total number of threads per block exceeds the maximum work group limit during a kernel launch, the return value is changed to```hipErrorInvalidConfiguration``` from ```hipErrorInvalidValue```.
 
-##### ```hipModuleLaunchCooperativeKernel```]
+##### ```hipModuleLaunchCooperativeKernel```
 
 More conditions are added in the API implementation, the returned errors are added in the following scenarios:
 
@@ -367,6 +367,10 @@ In order to match the CUDA runtime behavior more closely, functions with streams
   * ```hipEventRecordWithFlags```
 
 Users porting CUDA code no longer needed to modify their error handling code. However, users that have come to expect the current functionality where the runtime returns the error code ```hipErrorContextDestroyed``` will have to adjust.
+
+### ```warpSize``` Change
+
+In order to match the CUDA specification, the `warpSize` variable is no longer `constexpr`. In general, this should be a transparent change; however, if an application was using `warpSize` as a compile-time constant, its code will have to be updated to handle the new definition. For more details and suggestions, please consult either the discussion of the `warpSize` change wihtin the ROCm 6.4.1 [deprecation notice](https://rocm.docs.amd.com/en/latest/about/release-notes.html#amdgpu-wavefront-size-compiler-macro-deprecation) or the [HIP C++ language extensions](https://rocm.docs.amd.com/projects/HIP/en/latest/how-to/hip_cpp_language_extensions.html#warpsize).
 
 ## Summary
 
