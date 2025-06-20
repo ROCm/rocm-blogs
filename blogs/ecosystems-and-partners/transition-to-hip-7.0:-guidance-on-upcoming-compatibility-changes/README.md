@@ -58,8 +58,8 @@ differences between our implementation of the HIP C++ programming model and CUDA
 additional work for software developers targeting GPU families from both providers. We understand this and are making
 changes to ROCm to reduce this friction based on customer requests. We also know adopting changes in our programming model requires
 early notification. We don't take API breaking changes lightly and for your benefit, we are making an early prototype available to assist in porting to the new HIP 7.0 API.
-The preview release is based on ROCm 6.4 release for functionality but contains 7.0 API previews. It is intended as a drop-in replacement
-for 6.4 intended for non-production use, enabling users to write code with the new API and adopt HIP 7.0 more smoothly. In this blog, you will learn how HIP 7.0 aligns more closely with CUDA, what API and behavior changes to expect, and how to prepare your codebase to ensure compatibility and portability across GPU platforms. Let's delve into the details of the API changes.
+The preview release is based on ROCm 6.4.1 release for functionality but contains 7.0 API previews. It is intended as a drop-in replacement
+for 6.4.1 intended for non-production use, enabling users to write code with the new API and adopt HIP 7.0 more smoothly. In this blog, you will learn how HIP 7.0 aligns more closely with CUDA, what API and behavior changes to expect, and how to prepare your codebase to ensure compatibility and portability across GPU platforms. Let's delve into the details of the API changes.
 
 ## How will you be impacted?
 
@@ -70,7 +70,7 @@ header files are cleaned up to remove namespace collisions and have a clear sepa
 
 ## How to get the HIP runtime preview?
 
-The preview is available as source delta on top of the ROCm 6.4.0 release. Please see the source code on the [HIP](https://github.com/ROCm/hip/tree/rocm-6.4.x-with-7.0-preview) and [CLR](https://github.com/ROCm/clr/tree/rocm-6.4.x-with-7.0-preview) repositories on Github. The binary build is also available on [Github](https://github.com/ROCm/clr/releases/tag/rocm-6.4.0-with-7.0-preview). Please build it from source yourself or download the prebuilt package. This release is intended for development purposes only and not for production workloads. Only the HIP runtime build is provided with this tag.
+The preview is available as source delta on top of the ROCm 6.4.1 release. Please see the source code on the [HIP](https://github.com/ROCm/hip/tree/rocm-6.4.x-with-7.0-preview) and [CLR](https://github.com/ROCm/clr/tree/rocm-6.4.x-with-7.0-preview) repositories on Github. The binary build is also available on [Github](https://github.com/ROCm/clr/releases/tag/rocm-6.4.1-with-7.0-preview). Please build it from source yourself or download the prebuilt package. This release is intended for development purposes only and not for production workloads. Only the HIP runtime build is provided with this tag.
 
 ## Changes in the HIP Runtime API
 
@@ -378,3 +378,7 @@ HIP 7.0 is designed to enhance GPU code portability and simplify cross-vendor GP
 refining error handling, and streamlining header structures, the HIP 7.0 release reduces the effort needed to maintain portable codebases. This blog
  outlines the key updates and provides guidance to help developers prepare their code for HIP 7.0. You are encouraged to begin testing with the HIP
  7.0 preview to ensure a seamless transition and smooth upgrade path when we go live later during the second half of 2025.
+
+```{update} 20 Jun 2025
+The link to the preview version of the 7.0 HIP API is now updated for the ROCm 6.4.1 release.
+```
