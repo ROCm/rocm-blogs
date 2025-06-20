@@ -1,0 +1,23 @@
+{
+  "mcpServers": {  
+    "weather": {
+      "command": "npx",
+      "args": ["-y", "@timlukahorstmann/mcp-weather"],
+      "env": {
+        "ACCUWEATHER_API_KEY": "<YOUR_ACCUWEATHER_API_TOKEN>"
+      }
+    },
+    "airbnb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@openbnb/mcp-server-airbnb",
+        "--ignore-robots-txt"        
+      ]
+    },
+    "sqlite": {
+      "command": "mcp-server-sqlite",
+      "args": ["--db-path", "./test.db"]
+    }
+  }
+}
