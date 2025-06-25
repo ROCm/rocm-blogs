@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Fine-Tuning LLMs with GRPO on AMD MI300X: Scalable RLHF with Hugging Face TRL and ROCm"
 date: 18 Jun 2025
 author: 'Zhu Shan, George Wang'
-thumbnail: 'thumbnail.jpg'
+thumbnail: 'llm-grpo-rocm_thumbnail.jpg'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: AI Developers and Enthusiasts
