@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Continued Pretraining: A Practical Playbook for Language-Specific LLM Adaptation"
 date: 18 Jun 2025
 author: 'Elaine Zosa, Jouni Luoma, Kai Hakala, Antti Virtanen, Mika Koistinen, Jonathan Burdge'
-thumbnail: 'images/thumbnail.jpg'
+thumbnail: 'multilingual-continued-pretraining_thumbnail.jpg'
 tags: AI/ML, LLM, Fine-Tuning
 category: Applications & models
 target_audience: Anyone interested in continued post-training, fine tuning, synthetic data, or multilingual support in language models
