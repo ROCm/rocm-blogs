@@ -60,6 +60,8 @@ George
 Markomanolis
 George
 Wang
+Giacomo
+Capodaglio
 Gina
 Sitaraman
 Gowtham
@@ -68,6 +70,8 @@ Hari
 Sadasivan
 Henry
 Ho
+Hongxia
+Yang
 Jassani
 Adeem
 Jayacharan
@@ -96,6 +100,8 @@ Liz
 Li
 Logan
 Grado
+Luca
+Stanisic
 Luise
 Chen
 Mahdieh
