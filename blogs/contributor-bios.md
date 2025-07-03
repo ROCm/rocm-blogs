@@ -9,6 +9,12 @@
 ::::{grid} 2
 :margin: 1
 
+:::{grid-item-card} [Abhishek Patil](./authors/abhishek-patil.md)
+:padding: 1
+
+Senior Technical Product Manager at AMD
+:::
+
 :::{grid-item-card} [Alessandro Fanfarillo](./authors/alessandro-fanfarillo.md)
 :padding: 1
 
