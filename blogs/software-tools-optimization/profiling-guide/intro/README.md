@@ -103,15 +103,21 @@ offloaded kernels, memory copies, scratch memory, marker API, etc.)
 robust functionality. We strongly urge you to use `rocprofv3` as the legacy
 tools will be deprecated in future ROCm releases.
 
+Please note that in ROCm 7.0, we will begin decoupling the profiling tool data collection
+and analysis. In ROCm 7.0, rocprofv3 will default to writing all data to a database, and a new
+tool called `rocpd` will be made available to generate CSV, OTF2, and/or Perfetto trace files
+similar to the ones we see in ROCm 6.x versions. rocprofv3 will retain the capability for directly
+writing CSV/OTF2/Perfetto output in ROCm 7.0 but with the expectation that this support will
+be dropped in ROCm 7.1. Other tools such as ROCm Systems Profiler and ROCm Compute Profiler
+are expected to start a similar decoupling transition in ROCm 7.1.
+
 ## `rocprof-sys` for holistic application tracing
 
 The ROCm systems profiler, also known as `rocprof-sys`, is best suited to collect
 host, device, and communication (MPI) activity in one comprehensive,
-unified trace of your application's run. `rocprof-sys` extends the
-capabilities of `rocprofv3` by using tools such
-as [AMDuProf](https://www.amd.com/en/developer/uprof.html),
+unified trace of your application's run. `rocprof-sys` uses libraries that tools like
 [`amd-smi`](https://rocm.docs.amd.com/projects/amdsmi/en/latest/),
-[`perf`](https://perfwiki.github.io/main/) and others to provide a comprehensive
+[`perf`](https://perfwiki.github.io/main/) are built upon to provide a comprehensive
 view of the system where your application ran.
 
 With configurable runtime options, you can use it for call-stack sampling,
