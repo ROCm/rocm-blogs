@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Unlocking GPU-Accelerated Containers with the AMD Container Toolkit"
 date: 03 July 2025
 author: 'Abhishek Patil'
-thumbnail: 'blogs/images/2025-05-21-container-toolkit.jpg'
+thumbnail: '2025-05-21-container-toolkit.jpg'
 tags: Optimization, Performance, AI/ML, Kubernetes
 category: Software tools & optimizations
 target_audience: GPU developers, DevOps engineers, ML/AI practitioners, and software engineers working with containerized workflows on AMD Instinct platforms.
