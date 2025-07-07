@@ -5,7 +5,7 @@ date: 03 July 2025
 author: 'Abhishek Patil'
 thumbnail: '2025-05-21-container-toolkit.jpg'
 tags: Optimization, Performance, AI/ML, Kubernetes
-category: Software tools & optimizations
+category: Ecosystems and Partners
 target_audience: GPU developers, DevOps engineers, ML/AI practitioners, and software engineers working with containerized workflows on AMD Instinct platforms.
 key_value_propositions: The blog highlights how the AMD Container Toolkit simplifies and streamlines the deployment of ROCm-based GPU workloads in containerized environments. It demonstrates how the toolkit provides a consistent and optimized developer experience across Docker platforms, automates container image building and runtime configuration, and enables better integration with AMD Instinct GPUs.
 language: English
@@ -14,7 +14,7 @@ myst:
         "author": "Abhishek Patil"
         "description lang=en": "Simplify GPU acceleration in containers with the AMD Container Toolkit—streamlined setup, runtime hooks, and full ROCm integration."
         "keywords": "AMD Container Toolkit, ROCm, Docker GPU, GPU container runtime, MI300, MI250, AMD GPUs, ROCm stack, AI/ML workloads, HPC, GPU containerization, AMD Instinct"
-        "vertical": "AI, Developers, HPC, Data Science"
+        "vertical": "AI, Developers, HPC, Data Science, Systems"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
