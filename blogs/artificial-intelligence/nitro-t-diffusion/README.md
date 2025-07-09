@@ -47,6 +47,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
+<style>
+.responsive-image {
+    width: 100%;
+    height: auto !important;
+    object-fit: cover;
+    border: 5px solid #333;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+</style>
+
 # Nitro-T: Training a Text-to-Image Diffusion Model from Scratch in 1 Day
 
 AMD is excited to release Nitro-T, a family of text-to-image diffusion
