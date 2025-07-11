@@ -70,6 +70,7 @@ post_show_prev_next = False
 extensions = [
     "rocm_docs",
     "sphinx.ext.intersphinx",
+    "sphinxcontrib.video",
     "myst_parser",
     "rocm_blogs",
     "ablog",
@@ -83,7 +84,7 @@ templates_path = ["."]
 
 blog_feed_length = 10
 
-html_static_path = ["_static", "images"]
+html_static_path = ["_static", "images", "videos"]
 
 html_css_files = ["css/custom.css", "css/asciinema-player.css"]
 

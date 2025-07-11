@@ -261,6 +261,8 @@ sphinxcontrib-qthelp==1.0.7
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.10
     # via sphinx
+sphinxcontrib-video==0.4.*
+    # via sphinx
 sqlalchemy==2.0.37
     # via jupyter-cache
 stack-data==0.6.3
