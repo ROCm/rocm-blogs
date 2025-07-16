@@ -304,14 +304,7 @@ Table 1. Decode Phase Kernel Level Breakdown of Latency of H200 and
 MI300X.
 ```
 
-The pie chart below (figure 5) illustrates the distribution of compute time across
-different components for both **Prefill** and **Decode** stages on
-MI300X GPU. In the **Prefill** phase, attention and GEMM operations
-consume the majority of time, with noticeable contributions from MoE and
-miscellaneous tasks. In contrast, during the **Decode** phase, GEMM
-becomes the most dominant, while attention takes a smaller share, and
-the rest of the time is spread across MoE, all_reduce, and miscellaneous
-operations.
+The pie chart below (Figure 5) illustrates the distribution of compute time across different components for both Prefill and Decode stages on MI300X GPUs. In the Prefill phase, attention and MoE operations consume the majority of time, with noticeable contributions from GEMM and miscellaneous tasks. In contrast, during the Decode phase, MoE becomes the most dominant, while attention takes a smaller share, and the rest of the time is spread across GEMM, all_reduce, and miscellaneous operations.
 
 ```{figure} ./images/FIGURE16.png
 :align: center
