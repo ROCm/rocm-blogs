@@ -6,6 +6,13 @@
 
 (dominic-widdows)=
 
+```{image} ./data/dominic-widdows.jpg
+:alt: Dominic
+:class: bg-primary
+:height: 250px
+:align: left
+```
+
 # Dominic Widdows
 
 Dominic is a Principal Deep Learning Data Scientist at AMD, where he works on adapting and optimizing
