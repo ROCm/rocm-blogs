@@ -74,7 +74,9 @@ The preview is available as source delta on top of the ROCm 6.4.1 release. Pleas
 
 ## Changes in the HIP Runtime API
 
-### hipGetLastError
+### Behavior changes
+
+#### hipGetLastError
 
 Before ROCm 7.0, ```hipGetLastError``` was not fully compliant with CUDA’s behavior. The purpose of the change is to get the error code returned by ```hipGetLastError``` which should be the last actual error caught in the current thread during the application execution, neither ```hipSuccess``` nor ```hipErrorNotReady``` is considered an error.
 
@@ -90,7 +92,7 @@ The current behavior prior to ROCm 7.0 is as follows.  At line 1, ```hipMalloc``
 
 To use the old functionality, we have a function called ```hipExtGetLastError```. Note that the function starts with ```hipExt```. This denotes a function call that is unique to AMD and extends the CUDA Runtime API. This function is available today (and was introduced with ROCm 6.0).
 
-### Cooperative Groups
+#### Cooperative Groups
 
 For ```hipLaunchCooperativeKernelMultiDevice``` function, AMD added additional input parameter validation checks.
 
@@ -100,15 +102,19 @@ For ```hipLaunchCooperativeKernelMultiDevice``` function, AMD added additional i
 
 The ```hipLaunchCooperativeKernel``` function now checks the input stream handle. If it’s invalid, the returned error is changed to ```hipErrorInvalidHandle``` from ```hipErrorContextIsDestroyed```.
 
-### ```hipPointerGetAttributes```
+#### ```hipPointerGetAttributes```
 
 ```hipPointerGetAttributes``` now matches the functionality of ```cudaPointerGetAttributes``` which changed with CUDA 11 and above. If a NULL host or attribute pointer is passed as input parameter, ```hipPointerGetAttributes``` now returns ```hipSuccess``` instead of the error code ```hipErrorInvalidValue```.
 
 Any application which is expecting the API to return an error instead of success could be impacted and code change may need to handle the error properly.
 
-### ```hipFree```
+#### ```hipFree```
 
 ```hipFree``` currently has an implicit wait which is applicable for all memory allocations, for synchronization purpose. This wait will be disabled for allocations made with hipMallocAsync and hipMallocFromPoolAsync to match the behavior of CUDA API ```cudaFree```
+
+#### ```hipFreeAsync```
+
+The API will return ```hipSuccess``` when the input pointer is NULL, instead of `hipErrorInvalidValue` , to be consistent with ```hipFree```.
 
 ### hipRTC
 
@@ -250,6 +256,7 @@ During stream capture, the following HIP APIs should return specific error ```hi
 * ```hipMemPoolDestroy```
 * ```hipDeviceSetSharedMemConfig```
 * ```hipDeviceSetCacheConfig```
+* ```hipMemcpyWithStream```
 
 The usage of these APIs is restricted during stream capture. No impact if stream capture is working fine on CUDA.
 
