@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Reinforcement Learning from Human Feedback on AMD GPUs with verl and ROCm Integration"
 date: 24 Apr 2025
-author: 'Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu'
+author: 'Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu'
 thumbnail: 'verl.jpg'
 tags: Fine-Tuning, Reinforcement Learning, AI/ML
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: verl, an efficient RLHF framework designed for scalable 
 language: English
 myst:
     html_meta:
-        "author": "Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu"
+        "author": "Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu"
         "description lang=en": "Deploy verl on AMD GPUs for fast, scalable RLHF training with ROCm optimization, Docker scripts, and impressive throughput-convergence results"
         "keywords": "verl, Training, AMD GPUs."
         "property=og:locale": "en_US"
@@ -317,7 +317,7 @@ As RLHF becomes a cornerstone in fine-tuning LLMs, verl offers a scalable, open-
 
 Core contributors: Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu
 
-Contributors: Xiaodong Yu, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Vish Vadlamani, Emad Barsoum
+Contributors: Xiaodong Yu, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Phani Vaddadi, Vish Vadlamani, Emad Barsoum
 
 Thanks to the IT AI Sys team for providing cluster support and system configuration: Kobawala, Arhat
 
