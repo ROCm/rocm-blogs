@@ -159,6 +159,12 @@ Member of Technical Staff at AMD
 Principal Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Phani Vaddadi](./authors/phani-vaddadi.md)
+:padding: 1
+
+Principal Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Phillip Dang](./authors/phillip-dang.md)
 :padding: 1
 
@@ -219,10 +225,22 @@ Machine Learning Engineer at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Vish Vadlamani](./authors/vish-vadlamani.md)
+:padding: 1
+
+Senior Director of Software Engineering at AMD
+:::
+
 :::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md)
 :padding: 1
 
 Machine Learning Researcher at AMD
+:::
+
+:::{grid-item-card} [Yao Liu](./authors/yao-liu.md)
+:padding: 1
+
+Senior Software Development Manager at AMD
 :::
 
 :::{grid-item-card} [Arseny Moskvichev](./authors/arseny-moskvichev.md) *
