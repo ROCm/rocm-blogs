@@ -220,10 +220,10 @@ Ensure you have access to the models below.
 
 ```shell
 # gpt-oss-120b
-huggingface-cli download openai/gpt-oss-120b --include "original/*" --local-dir gpt-oss-120b/
+huggingface-cli download openai/gpt-oss-120b
 
 # gpt-oss-20b
-huggingface-cli download openai/gpt-oss-20b --include "original/*" --local-dir gpt-oss-20b/
+huggingface-cli download openai/gpt-oss-20b 
 ```
 
 
@@ -244,7 +244,6 @@ implementation, and the "full_cuda_graph" mode is turned on.
 
 ```shell
 #!/bin/bash
-MODEL=”gpt-oss-20b”
 TP=1
 # To enable AITER, set below to 1. Otherwise, set it to 0.
 export VLLM_ROCM_USE_AITER=1
@@ -252,7 +251,7 @@ export VLLM_ROCM_USE_AITER=1
 export VLLM_USE_AITER_UNIFIED_ATTENTION=1
 # below is required in order to enable AITER unified attention by disabling AITER MHA
 export VLLM_ROCM_USE_AITER_MHA=0
-vllm serve $MODEL \
+vllm serve openai/gpt-oss-120b \
   --tensor-parallel  $TP \
   --no-enable-prefix-caching \
   --disable-log-requests \
@@ -285,7 +284,7 @@ a test prompt:
 curl http://localhost:8000/v1/completions \
     -H "Content-Type: application/json" \
     -d '{
-        ""model": "${MODEL}"
+        "model": "openai/gpt-oss-120b",
         "prompt": "The future of AI is",
         "max_tokens": 100,
         "temperature": 0
