@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Day 0 Developer Guide: Running the First Open GPT Models from OpenAI on AMD AI Hardware"
-date: 02 Aug 2025
+date: 05 Aug 2025
 author: 'Andy Luo, Shekhar Pandey, Hongxia Yang, Mahdi Ghodsi, Charles Yang, Niles Burbank, George Wang, Kailash Gogineni,Xun Wang, Zhenyu Gu, Yao Fu, Yanyuan Qin, Anshul Gupta'
 thumbnail: 'OpenAI.jpg'
 tags: AI/ML
@@ -48,13 +48,14 @@ SOFTWARE.
 --->
 
 # Day 0 Developer Guide: Running the Latest Open Models from OpenAI on AMD AI Hardware
+
 OpenAI has officially released its open models: gpt-oss-120b and gpt-oss-20b. AMD now provides out-of-the-box, day 0 support for the latest open models from OpenAI, enabling developers to easily fine-tune and deploy across cloud to client environments using AMD hardware, the AMD ROCm™  and AMD Ryzen™ AI software stack, and seamless open source integrations. At AMD, we’re excited to announce day 0 support across our AI hardware, including our flagship AMD Instinct™ MI355X and MI300X GPUs, AMD Radeon™ AI PRO R9700  GPUs, and AMD Ryzen™ AI processors.  
 
-We are also thrilled to introduce a Hugging Face Space featuring a chatbot powered by OpenAI models running on AMD Instinct GPUs. This interactive platform allows users to engage with our models effortlessly, showcasing the capabilities of AMD hardware in real-world applications. 
+We are also thrilled to introduce a Hugging Face Space featuring a chatbot powered by OpenAI models running on AMD Instinct GPUs. This interactive platform allows users to engage with our models effortlessly, showcasing the capabilities of AMD hardware in real-world applications.
 
 In this blog, we’ll walk developers through the process of fine-tuning models and running fast, efficient inference on AMD hardware. Built in collaboration with the open source community, our workflow leverages  vLLM for inference and PyTorch for fine-tuning OpenAI models. We’ll cover everything from a simple Docker setup to installing dependencies and running tests—ensuring the entire process is smooth and developer-friendly.
 
-## Uniqueness of OpenAI Models 
+## Uniqueness of OpenAI Models
 
 The new open models from OpenAI gpt-oss-120b and gpt-oss-20b are
 designed with flexibility and real-world applicability in mind. We're
