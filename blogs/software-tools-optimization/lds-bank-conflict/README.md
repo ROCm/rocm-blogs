@@ -75,7 +75,7 @@ For `ds_write_b128`, when there is no bank conflict in 8 lane groups: lane0~lane
 
 ### ds_read_b128
 
-For `ds_read_b128`, when there is no bank conflict in these 8 lane groups:  3:0 + 23:20; 7:4 + 19:16; 11:8, 31:28; 15:12, 27:24; 35:32, 55:52; 39:36, 51:48; 43:40, 63:60; 47:44, 59:56, then it’s bank conflict-free for LDS reading.
+For `ds_read_b128`, when there is no bank conflict in these 8 lane groups:  0:3+20:23; 4:7+16:19; 8:11+28:31; 12:15+24:27; 32:35+52:55; 36:39+48:51; 40:43+60:63; 44:47+56:59; then it’s bank conflict-free for LDS reading.
 
 ## Naïve Solution
 
