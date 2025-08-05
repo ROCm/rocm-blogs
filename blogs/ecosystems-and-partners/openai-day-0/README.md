@@ -245,11 +245,8 @@ implementation, and the "full_cuda_graph" mode is turned on.
 ```shell
 #!/bin/bash
 TP=1
-# To enable AITER, set below to 1. Otherwise, set it to 0.
 export VLLM_ROCM_USE_AITER=1
-# To enable AITER Triton unified attention
 export VLLM_USE_AITER_UNIFIED_ATTENTION=1
-# below is required in order to enable AITER unified attention by disabling AITER MHA
 export VLLM_ROCM_USE_AITER_MHA=0
 vllm serve openai/gpt-oss-120b \
   --tensor-parallel  $TP \
@@ -267,7 +264,7 @@ export VLLM_USE_AITER_TRITON_FUSED_ADD_RMSNORM_PAD=1
 export TRITON_HIP_PRESHUFFLE_SCALES=1
 export VLLM_USE_AITER_TRITON_GEMM=1
  
-vllm serve /data/gpt-oss-120b-hf-converted/ \
+vllm serve openai/gpt-oss-120b \
 --tensor-parallel 1 \
 --no-enable-prefix-caching --disable-log-requests \
 --compilation-config '{"compile_sizes": [1, 2, 4, 8, 16, 24, 32, 64, 128, 256, 4096, 8192], "full_cuda_graph": true}' \
