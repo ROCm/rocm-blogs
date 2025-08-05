@@ -5,7 +5,7 @@
 </head>
 
 # Kailash Gogineni
- 
+
 ```{image} ./data/Kailash-Gogineni.JPG
 :alt: Kailash
 :class: bg-primary
