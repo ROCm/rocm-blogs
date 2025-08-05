@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Day 0 Developer Guide: Running the First Open GPT Models from OpenAI on AMD AI Hardware"
 date: 05 Aug 2025
 author: 'Andy Luo, Shekhar Pandey, Hongxia Yang, Mahdi Ghodsi, Charles Yang, Niles Burbank, George Wang, Kailash Gogineni,Xun Wang, Zhenyu Gu, Yao Fu, Yanyuan Qin, Anshul Gupta'
-thumbnail: 'OpenAI1.jpg'
+thumbnail: 'OpenAI.jpg'
 tags: AI/ML
 category: Ecosystems and Partners
 target_audience: ai developers and enthusiasts
