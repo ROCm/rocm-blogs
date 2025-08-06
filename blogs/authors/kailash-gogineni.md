@@ -6,7 +6,7 @@
 
 # Kailash Gogineni
 
-```{image} ./data/Kailash-Gogineni.JPG
+```{image} ./data/Kailash-Gogineni.jpg
 :alt: Kailash
 :class: bg-primary
 :height: 250px
