@@ -132,7 +132,9 @@ training or local prototyping, without roadblocks, putting the latest generative
 
 ### Inference on AMD Ryzen™ AI MAX+ and AMD Ryzen™ AI 300 Series Processors
 
--   The AMD Ryzen™ AI 300 and AMD Ryzen™ AI Max+ series processors with 32GB memory or more can run the OpenAI models using LM Studio.
+-   The AMD Ryzen™ AI Max+ 395 (128GB) is the world’s first consumer AI PC processor to run OpenAI GPT-OSS 120B.
+-   The AMD Ryzen™ AI 300 processors with 32GB memory or more can run the OpenAI GPT-OSS 20B models using LM Studio.
+-   See how to run it today and learn more: [How To Run OpenAI’s GPT-OSS 20B and 120B Models on AMD Ryzen™ AI Processors and Radeon™ Graphics Cards](https://statics.teams.cdn.office.net/evergreen-assets/safelinks/2/atp-safelinks.html)
 
 ## Day-0 Access on Hugging Face Spaces
 
