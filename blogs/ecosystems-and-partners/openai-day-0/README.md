@@ -11,7 +11,7 @@ key_value_propositions: Day 0 enablement of AMD HW on Open AI Models
 language: English
 myst:
     html_meta:
-        "author": "Andy Luo, Shekhar Pandey, Hongxia Yang, Mahdi Ghodsi, Charles Yang, Niles Burbank, George Wang, Kailash Gogineni, Hongxia Yang, Xun Wang, Zhenyu Gu, Yao Fu, Yanyuan Qin,Anshul Gupta"
+        "author": "Andy Luo, Shekhar Pandey, Hongxia Yang, Mahdi Ghodsi, Charles Yang, Niles Burbank, George Wang, Kailash Gogineni, Hongxia Yang, Xun Wang, Zhenyu Gu, Yao Fu, Yanyuan Qin, Ali Zaidy, Lukasz Burzawa, Mehmet Cagri, Shao-Chun Lee, Anshul Gupta"
         "description lang=en": "Day 0 support across our AI hardware ecosystem from our flagship AMD InstinctTM MI355X and MI300X GPUs, AMD Radeon™ AI PRO R700 GPUs and AMD Ryzen™ AI Processors"
         "keywords": "OpenAI, Day0, AMD Instinct, AMD Radeon, AMD Ryzen, ROCm"
         "vertical": "Developers, AI, Data Science"
