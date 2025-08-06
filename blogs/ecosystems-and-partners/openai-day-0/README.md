@@ -414,6 +414,10 @@ everything developers need to succeed, including robust open source
 community collaboration. In this blog, we walked you through the steps for fine-tuning and running inference with OpenAI’s gpt-oss models on AMD hardware using ROCm, vLLM, and Hugging Face tools. With day 0 support for OpenAI models, we are
 excited to see how the community will leverage these innovative capabilities.
 
+## Acknowledgements
+
+We extend our sincere thanks to the kernel team — Lukasz Burzawa, Mehmet Cagri Kaymak, Shao-Chun Lee, Ali Zaidy, and Vinayak Gokhale — and the compiler team — Kyle Wang, Jungwook Park, and Lei Zhang — for their outstanding contributions in enabling OpenAI models on AMD hardware. Their hard work, expertise, and dedication were instrumental to publishing this blog.
+ 
 ## Additional Resources 
 
 To get started, explore the following resources:
