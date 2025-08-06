@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Day 0 Developer Guide: Running the First Open GPT Models from OpenAI on AMD AI Hardware"
 date: 05 Aug 2025
 author: 'Andy Luo, Shekhar Pandey, Hongxia Yang, Mahdi Ghodsi, Charles Yang, Niles Burbank, George Wang, Kailash Gogineni,Xun Wang, Zhenyu Gu, Yao Fu, Yanyuan Qin, Anshul Gupta'
-thumbnail: 'OpenAI.jpg'
+thumbnail: 'OpenAI12.jpg'
 tags: AI/ML
 category: Ecosystems and Partners
 target_audience: ai developers and enthusiasts
@@ -104,7 +104,7 @@ training or local prototyping, without roadblocks, putting the latest generative
 
 ### Inference and Fine-tuning on AMD Instinct GPUs
 
--   We provide a reference example for fine-tuning the OpenAI gpt-oss-20b model using PyTorch and Hugging Face-PEFT LoRA on AMD Instinct MI300X and MI355X GPUs leveraging the HuggingFaceH4/ultrachat_200k dataset with minimal  computational overhead.
+-   We provide a reference example for fine-tuning the [OpenAI](https://openai.com/) gpt-oss-20b model using PyTorch and Hugging Face-PEFT LoRA on AMD Instinct MI300X and MI355X GPUs leveraging the HuggingFaceH4/ultrachat_200k dataset with minimal  computational overhead.
 
 -   For inference, we use vLLM and ROCm software support and the
     underlying kernels that are optimized, ensuring lightning-fast speed
