@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "AMD Hummingbird Image to Video: A Lightweight Feedback-Driven Model for Efficient Image-to-Video Generation"
 date: 3 Aug 2025
-author: 'Takashi isobe, Dong zhou, He Cui,Mengmeng Ge,Dong Li,Emad Barsoum'
+author: 'Takashi Isobe, Dong zhou, He Cui,Mengmeng Ge,Dong Li,Emad Barsoum'
 thumbnail: 'hummingbird.jpg'
 tags: AI/ML
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: The key value proposition is delivering high-performance
 language: English
 myst:
     html_meta:
-        "author": "Takashi isobe, Dong zhou, He Cui,Mengmeng Ge , Dong Li, Emad Barsoum"
+        "author": "Takashi Isobe, Dong zhou, He Cui,Mengmeng Ge , Dong Li, Emad Barsoum"
         "description lang=en": "We present AMD Hummingbird, offering a two-stage distillation framework for efficient, high-quality text-to-video generation using compact models."
         "keywords": "AI Infrastructure, Training & Inference, Image to Video"
         "vertical": "Developers, AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Training"
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
-        "amd_blog_authors": "Takashi isobe, Dong zhou, He Cui,Mengmeng Ge , Dong Li, Emad Barsoum"
+        "amd_blog_authors": "Takashi Isobe, Dong zhou, He Cui,Mengmeng Ge , Dong Li, Emad Barsoum"
 ---
 # AMD Hummingbird Image to Video: A Lightweight Feedback-Driven Model for Efficient Image-to-Video Generation
 
@@ -66,7 +66,7 @@ Figure 2. Illustration of the proposed two-stage distillation pipeline for I2V d
 
 ### Stage I: Aligning Feature Distributions Between Compact and Original Models
 
-In this stage, we first initialize the compact model by mapping the corresponding parameters from the original U-Net. To align the behavior of the compact model with the original, we minimize a distillation loss that enforces consistency across two aspects: (1) the intermediate feature representations at each corresponding layer, and (2) the final v-prediction outputs. This helps the compact model retain the motion modeling and texture generation capabilities of the original despite its reduced capacity. In Stage I, we distill the knowledge from the original, large U-Net into a smaller, more efficient compact U-Net by minimizing a carefully designed distillation loss function. \( F_s^{(l)} \) and \( F_t^{(l)} \) denote the features at layer \( l \) extracted from the original and pruned and models, respectively. Likewise, \( v_s \) and \( v_t \) correspond to their final v-prediction outputs. L_dist represents the distillation loss, where λ1 and λ2 are the corresponding weighting coefficients.
+In this stage, we first initialize the compact model by mapping the corresponding parameters from the original U-Net. To align the behavior of the compact model with the original, we minimize a distillation loss that enforces consistency across two aspects: (1) the intermediate feature representations at each corresponding layer, and (2) the final v-prediction outputs. This helps the compact model retain the motion modeling and texture generation capabilities of the original despite its reduced capacity. In Stage I, we distill the knowledge from the original, large U-Net into a smaller, more efficient compact U-Net by minimizing a carefully designed distillation loss function. $F_s^{(l)}$ and $F_t^{(l)}$ denote the features at layer $l$ extracted from the original and pruned and models, respectively. Likewise, $v_s$ and $v_t$ correspond to their final v-prediction outputs. ${L}_{dist}$ represents the distillation loss, where $\lambda_1$ and $\lambda_2$ are the corresponding weighting coefficients.
 
 $$
 \mathcal{L}_{dist} = \lambda_1 \sum_l \left| F_s^{(l)} - F_t^{(l)} \right|^2 + \lambda_2 \left| v_s - v_t \right|^2
@@ -82,7 +82,7 @@ Additionally, we jointly train the image projector with the compact U-Net to ens
 
 Although the compact model trained in Stage I can produce results comparable to the original model, three key issues remain: (1) the generated videos lack high-frequency details; (2) when given complex prompts, the model struggles to capture the intended semantics, leading to misalignment between the prompt and the generated content; and (3) the model still requires a relatively large number of inference steps to produce visually pleasing results.
 
-To address these challenges, we introduce a second-stage distillation process that reduces inference steps while improving visual quality and prompt alignment using reward-based feedback. Specifically, we follow the Latent Consistency Model (LCM) framework, which minimizes the difference between adjacent points along a probability flow Ordinary Differential Equation (ODE) trajectory using a pre-trained diffusion model. LCM leverages fast ODE-based samplers (e.g., DDIM, DPM-Solver) to construct training pairs (Zn,Zn+k) by k steps, enabling efficient distillation of the generative trajectory.
+To address these challenges, we introduce a second-stage distillation process that reduces inference steps while improving visual quality and prompt alignment using reward-based feedback. Specifically, we follow the Latent Consistency Model (LCM) framework, which minimizes the difference between adjacent points along a probability flow Ordinary Differential Equation (ODE) trajectory using a pre-trained diffusion model. LCM leverages fast ODE-based samplers (e.g., DDIM, DPM-Solver) to construct training pairs $(z_n, z_{n+k})$ by k steps, enabling efficient distillation of the generative trajectory.
 
 However, the performance of the distilled model is inherently constrained by the quality of the teacher. To overcome this limitation and better align generations with human preferences, we further integrate reward-based feedback into the distillation process, following the approach of T2V-Turbo-v2 [6]. Our method incorporates a mixture of reward models, including both image-text and video-text reward models, to jointly enhance prompt alignment, visual quality, and temporal consistency. The stepwise distillation strategy also enables us to reduce the number of inference steps from 50 to 16.
 
@@ -144,8 +144,9 @@ We evaluate the proposed SR model on video generation tasks. The performance of 
 | **Original Videos** | 81.32                   | 74.51             | 79.96          | 99.86                   | 6.34             | 75.49       |
 | **SR Videos**       | **82.38**               | **75.43**         | **80.99**      | **99.98**               | **11.42**        | **89.2**    |
 
-Table 2. VBench-T2V Benchmark and DOVER Benchmark. The best result in each column is highlighted in bold. The “Final Score” reflects the overall performance across all metrics.
-
+<p align="center">
+    Table 2. VBench-T2V Benchmark and DOVER Benchmark. The best result in each column is highlighted in bold. The “Final Score” reflects the overall performance across all metrics.
+</p>
 Meanwhile, we also evaluated the performance of several text-to-video generation models when enhanced by our super-resolution model. As shown in Table 3, our model consistently improves the results of these generation models on both the VBench-T2V Benchmark and the DOVER Benchmark, demonstrating its effectiveness in enhancing video quality in downstream tasks.
 
 | **Model**          |         | **VBench**             |                   |                | **DOVER**             |                  |             |
@@ -160,7 +161,9 @@ Meanwhile, we also evaluated the performance of several text-to-video generation
 | **videocrafter2**  | Original Videos | 82.19                 | 73.42             | 80.44          | 99.38                 | 7.47             | 69.12       |
 |                    | SR Videos      | **83.3**              | **75.37**         | **81.71**      | **99.83**             | **9.22**         | **82.29**   |
 
+<p align="center">
 Table 3. Quantitative Evaluation of Super-Resolution Enhancement on Text-to-Video Models.
+</p>
 
 ### Effectiveness of ReNeg in Enhancing Visual Quality
 
@@ -183,6 +186,7 @@ Full training code: [AMD-AIG-AIMA/Hummingbird](https://github.com/AMD-AIG-AIMA/A
 Related work on diffusion models by the AMD team:
 
 - [AMD Hummingbird-0.9B: An Efficient Text-to-Video Diffusion Model with 4-Step Inferencing](https://rocm.blogs.amd.com/artificial-intelligence/image-to-video/README.html)
+- [ReNeg: Learning Negative Embedding with Reward Guidance](https://arxiv.org/abs/2412.19637)
 - [AMD Nitro Diffusion: One-Step Text-to-Image Generation Models](https://www.amd.com/en/developer/resources/technical-articles/amd-nitro-diffusion-one-step-text-to-image-generation-models.html)
 
 Please refer to the following resources to get started with training on AMD ROCm™ software:
