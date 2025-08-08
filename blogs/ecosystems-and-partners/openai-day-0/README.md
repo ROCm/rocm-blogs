@@ -49,7 +49,7 @@ SOFTWARE.
 
 # Day 0 Developer Guide: Running the Latest Open Models from OpenAI on AMD AI Hardware
 
-OpenAI has officially released its open models: gpt-oss-120b and gpt-oss-20b. AMD now provides out-of-the-box, day 0 support for the latest open models from OpenAI, enabling developers to easily fine-tune and deploy across cloud to client environments using AMD hardware, the AMD ROCm™  and AMD Ryzen™ AI software stack, and seamless open source integrations. At AMD, we’re excited to announce day 0 support across our AI hardware, including our flagship AMD Instinct™ MI355X and MI300X GPUs, AMD Radeon™ AI PRO R9700  GPUs, and AMD Ryzen™ AI processors.  
+OpenAI has officially released its open models: [gpt-oss-120b](https://statics.teams.cdn.office.net/evergreen-assets/safelinks/2/atp-safelinks.html) and [gpt-oss-20b](https://platform.openai.com/docs/models/gpt-oss-20b). AMD now provides out-of-the-box, day 0 support for the latest open models from OpenAI, enabling developers to easily fine-tune and deploy across cloud to client environments using AMD hardware, the AMD ROCm™  and AMD Ryzen™ AI software stack, and seamless open source integrations. At AMD, we’re excited to announce day 0 support across our AI hardware, including our flagship AMD Instinct™ MI355X and MI300X GPUs, AMD Radeon™ AI PRO R9700  GPUs, and AMD Ryzen™ AI processors.  
 
 We are also thrilled to introduce a Hugging Face Space featuring a chatbot powered by OpenAI models running on AMD Instinct GPUs. This interactive platform allows users to engage with our models effortlessly, showcasing the capabilities of AMD hardware in real-world applications.
 
