@@ -8,4 +8,4 @@
 
 # Yao Liu
 
-Yao Liu is a senior software development manager at AMD. He focuses on building high-performance software solutions and is deeply passionate about artificial intelligence, open-source software, and the evolving machine learning ecosystem.
+[Yao Liu](https://github.com/yaoliu13) is a senior software development manager at AMD. He focuses on building high-performance software solutions and is deeply passionate about artificial intelligence, open-source software, and the evolving machine learning ecosystem.
