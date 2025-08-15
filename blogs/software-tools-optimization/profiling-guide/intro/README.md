@@ -319,7 +319,7 @@ Additionally, we introduced key profiling tools available within the ROCm ecosys
 Finally, we provided clear installation instructions, recommended testing methodologies, and pointed readers toward useful resources to support effective GPU profiling.
 In the upcoming posts in the series, we will demonstrate how to apply these tools to real-world profiling scenarios, progressively advancing from basic analysis to advanced multi-GPU profiling.
 
-Read [Part 2](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/intro/README.html).
+Read [Part 2](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/novice/README.html).
 
 ## Disclaimers
 
