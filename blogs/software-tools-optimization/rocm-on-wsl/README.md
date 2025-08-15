@@ -126,7 +126,7 @@ an unsuccessful driver installation. This part may take a few minutes to
 complete.
 
 ```console
-amdgpu-install -y \--usecase=wsl,rocm \--no-dkms
+amdgpu-install -y --usecase=wsl,rocm --no-dkms
 ```
 
 Verify your installation and check if the GPU is listed as an agent with
@@ -152,7 +152,7 @@ rest of the system and avoids conflicts with other Python projects that
 users may have. Type in the following command one line at a time:
 
 ```console
-python3 -m venv venv \--system-site-packages
+python3 -m venv venv --system-site-packages
 
 source venv/bin/activate
 ```
@@ -169,7 +169,7 @@ sudo apt install python3-pip -y
 Enter this command to update the pip wheel.
 
 ```console
-pip3 install \--upgrade pip wheel
+pip3 install --upgrade pip wheel
 ```
 
 Enter all the following lines to install Torch and Torchvision for ROCm
@@ -177,32 +177,29 @@ AMD GPU support *(get latest links from:
 https://rocm.docs.amd.com/projects/radeon/en/latest/docs/install/wsl/install-pytorch.html)*
 
 ```console
-wget <https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/torch-2.6.0%2Brocm6.4.2.git76481f7c-cp312-cp312-linux_x86_64.whl>
+wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/torch-2.6.0%2Brocm6.4.2.git76481f7c-cp312-cp312-linux_x86_64.whl
 
-wget <https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/torchvision-0.21.0%2Brocm6.4.2.git4040d51f-cp312-cp312-linux_x86_64.whl>
+wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/torchvision-0.21.0%2Brocm6.4.2.git4040d51f-cp312-cp312-linux_x86_64.whl
 
-wget <https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/pytorch_triton_rocm-3.2.0%2Brocm6.4.2.git7e948ebf-cp312-cp312-linux_x86_64.whl>
+wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/pytorch_triton_rocm-3.2.0%2Brocm6.4.2.git7e948ebf-cp312-cp312-linux_x86_64.whl
 
-wget <https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/torchaudio-2.6.0%2Brocm6.4.2.gitd8831425-cp312-cp312-linux_x86_64.whl>
+wget https://repo.radeon.com/rocm/manylinux/rocm-rel-6.4.2/torchaudio-2.6.0%2Brocm6.4.2.gitd8831425-cp312-cp312-linux_x86_64.whl
 
 pip3 uninstall torch torchvision pytorch-triton-rocm
 
-pip3 install
-torch-2.6.0+rocm6.4.2.git76481f7c-cp312-cp312-linux_x86_64.whl
-torchvision-0.21.0+rocm6.4.2.git4040d51f-cp312-cp312-linux_x86_64.whl
-torchaudio-2.6.0+rocm6.4.2.gitd8831425-cp312-cp312-linux_x86_64.whl
-pytorch_triton_rocm-3.2.0+rocm6.4.2.git7e948ebf-cp312-cp312-linux_x86_64.whl
+pip3 install \
+torch-2.6.0+rocm6.4.2.git76481f7c-cp312-cp312-linux_x86_64.whl \
+torchvision-0.21.0+rocm6.4.2.git4040d51f-cp312-cp312-linux_x86_64.whl \
+torchaudio-2.6.0+rocm6.4.2.gitd8831425-cp312-cp312-linux_x86_64.whl \
+pytorch_triton_rocm-3.2.0+rocm6.4.2.git7e948ebf-cp312-cp312-linux_x86_64.whl \
 ```
 
 Update to compatible WSL runtime library.
 
 ```console
-location=\$(pip show torch \| grep Location \| awk -F \": \" \'{print
-\$2}\')
-
-cd \${location}/torch/lib/
-
-rm libhsa-runtime64.so\
+location=$(pip show torch | grep Location | awk -F ": " '{print $2}')
+cd ${location}/torch/lib/
+rm libhsa-runtime64.so*
 ```
 
 Once this is completed, [verify your PyTorch
@@ -235,14 +232,14 @@ Figure 5: The image above shows torch, torchaudio and torchvision commented out.
 Install ComfyUI requirements:
 
 ```console
-***pip install -r requirements.txt***
+pip install -r requirements.txt
 ```
 
 Load any model you'd like to use locally, such as Stable Diffusion 3,
 into the following directory:
 
 ```console
-***cd ComfyUI/models/checkpoints***
+cd ComfyUI/models/checkpoints
 ```
 
 As an example,
@@ -257,7 +254,7 @@ repository in order to run main.py. Once you are there, type the
 following command:
 
 ```console
-***python3 main.py***
+python3 main.py
 ```
 
 Once entered, you will receive a link that you can open in a web browser (See figure 6 and 7, below)
@@ -318,6 +315,12 @@ WSL](https://rocm.docs.amd.com/projects/radeon/en/latest/docs/install/wsl/instal
 
 [Install ComfyUI and MIGraphX
 Extension](https://rocm.docs.amd.com/projects/radeon/en/latest/docs/advanced/comfyui/installcomfyui.html)
+
+```{note}
+Blog was updated on: Aug 15, 2025
+
+- Corrected formatting.
+```
 
 ## Disclaimers
 
