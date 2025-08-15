@@ -48,7 +48,11 @@ Let's start by demystifying what it means to "profile" a GPU application and how
 
 To help explain the profiling process at novice level, we will rely on the flow chart shown in figure 1.
 
+<p style="text-align:center">
+
 <img src="../figs/NoviceBlog-2025-04-04-191126.png" width="300px">
+
+</p>
 
 <p style="text-align:center">
 Figure 1: Beginner Profiling Flow Chart.
@@ -108,7 +112,7 @@ We will follow this guideline as we go through a performance analysis and possib
 As a working example, we will use the following example code: [HPCTrainingExamples/HIP/jacobi](https://github.com/amd/HPCTrainingExamples/tree/main/HIP/jacobi).
 This is a distributed Jacobi solver, using GPUs to perform the computation and MPI for halo exchanges. It uses a 2D domain decomposition scheme to allow for a better computation-to-communication ratio than just 1D domain decomposition.
 
-The Jacobi solver is an MPI application capable of running on both multiple GPUs and nodes; however, this post will not cover profiling techniques for multi-GPU configurations.
+The Jacobi solver is an MPI application capable of running on both multiple GPUs and nodes; however, this post will not cover profiling techniques for multi-GPU configurations. A follow-up post for a more advanced reader will dive into profiling techniques for multi-process runs.
 
 Typical build and run steps are shown below. We need to make sure `rocm/6.3.0` or greater is loaded to be able
 to use the latest rocprofiler tools. Note that although MPI is required to build the application, for simplicity, we will limit our
