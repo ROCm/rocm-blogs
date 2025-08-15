@@ -213,6 +213,12 @@ Senior Member of Technical Staff at AMD
 Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Tiffany Mintz](./authors/tiffany-mintz.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Vara Lakshmi Bayanagari](./authors/vara-lakshmi-bayanagari.md)
 :padding: 1
 
