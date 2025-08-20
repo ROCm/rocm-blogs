@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Running ComfyUI on AMD Instinct"
 date: 19 Aug 2025
 author: 'Albin Toft'
-thumbnail: 'thumbnail.png'
+thumbnail: 'comfyui-on-amd-thumbnail.png'
 tags: AI/ML, Serving, Diffusion Model, GenAI
 category: Software tools & optimizations
 target_audience: AI researchers and engineers working on video generation and diffusion models
