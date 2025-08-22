@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Primus: A Lightweight, Unified Training Framework for Large Models on AMD GPUs"
 date: 22 Aug 2025
-author: 'Yao Fu, Wen Xie, Peng Wen, Chen Xiaoming, Li Xiaobo, Liz Li, Vidushi Goyal, Anshul Gupta'
+author: 'Wen Xie ,Yao Fu, Xiaoming Peng, Xiaobo Chen, Liz Li, Vidushi Goyal, Anshul Gupta'
 thumbnail: 'primus.jpg'
 tags: AI/ML
 category: Software tools & optimizations
@@ -195,8 +195,7 @@ You can try Primus today using two workflows: Docker Interactive Mode or Quick S
 Use the official ROCm Megatron Docker image for a consistent runtime:
 
 ```bash
-docker pull docker.io/rocm/megatron-lm-training-private:20250813
-# IMP NOTE change docker image to docker.io/rocm/megatron-lm:v25.7_py310 before release
+docker pull docker.io/rocm/megatron-lm:v25.7_py310
 ```
 
 ### Interactive Mode
@@ -205,8 +204,7 @@ You will enter the container and execute training inside.
 
 ```bash
 # Launch the container
-docker run -it --device /dev/dri --device /dev/kfd --device /dev/infiniband --network host --ipc host --group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined --privileged -v $HOME:$HOME -v  $HOME/.ssh:/root/.ssh --shm-size 128G --name primus_training_env rocm/megatron-lm-training-private:20250813
-# IMP NOTE change docker image to docker.io/rocm/megatron-lm:v25.7_py310 before release
+docker run -it --device /dev/dri --device /dev/kfd --device /dev/infiniband --network host --ipc host --group-add video --cap-add SYS_PTRACE --security-opt seccomp=unconfined --privileged -v $HOME:$HOME -v  $HOME/.ssh:/root/.ssh --shm-size 128G --name primus_training_env rocm/megatron-lm:v25.7_py310
 
 # Install dependencies
 pip install -r requirements.txt
@@ -246,8 +244,7 @@ Use the run_local_pretrain.sh script to start training.
 
 ```bash
 # Export DOCKER IMAGE
-export DOCKER_IMAGE=rocm/megatron-lm-training-private:20250813
-# IMP NOTE change docker image to docker.io/rocm/megatron-lm:v25.7_py310 before release
+export DOCKER_IMAGE=rocm/megatron-lm:v25.7_py310
 
 # Export your HF_TOKEN in the workspace
 export HF_TOKEN=<your_hftoken>
