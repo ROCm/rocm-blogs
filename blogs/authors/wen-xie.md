@@ -15,4 +15,4 @@
 :align: left
 ```
 
-Xie Wen is currently a PMTS Software Development Engineer in the Training at Scale team. His work focuses on developing and optimizing distributed training frameworks for large-scale models. He has more than 10 years of experience in performance optimization for both training and inference of image models and large language models, and is highly familiar with deep learning engineering optimization techniques.
+Wen Xie is currently a PMTS Software Development Engineer in the Training at Scale team. His work focuses on developing and optimizing distributed training frameworks for large-scale models. He has more than 10 years of experience in performance optimization for both training and inference of image models and large language models, and is familiar with deep learning engineering optimization techniques.
