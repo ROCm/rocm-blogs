@@ -456,7 +456,7 @@ Stay tuned for more features and optimizations in upcoming releases!
 1. [AMD’s AI Tensor Engine for ROCm (AITER)](https://rocm.blogs.amd.com/software-tools-optimization/aiter-ai-tensor-engine/README.html)
 2. [Deepseek V3 technical report](https://arxiv.org/abs/2412.19437)
 
-## Configuration Details 
+## Configuration Details
 
 1. Hardware: AMD Instinct™ MI300X GPUs. Software: AITER v0.1.4, ROCm v6.4.0, PyTorch v2.6.0. Input configuration: batch size = [1,64,128,256,512], context length = 1024
 
