@@ -56,6 +56,7 @@ large models like Stable Diffusion for local use or exploring creative
 AI applications, this setup offers unprecedented accessibility and power
 right at your fingertips.
 In this blog, we provide a step-by-step guide for configuring a WSL-based ROCm environment to run ComfyUI, including driver installation, dependency management, and PyTorch integration optimized for AMD GPUs (see figure 1).
+
 <figure>
 <iframe width="960" height="540" src="https://www.youtube.com/embed/N1Kykpr5Gio" title="Install ComfyUI in Windows running on ROCm with WSL" frameborder="2" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
 </iframe>
@@ -152,6 +153,8 @@ rest of the system and avoids conflicts with other Python projects that
 users may have. Type in the following command one line at a time:
 
 ```console
+sudo apt install python3.12-venv
+
 python3 -m venv venv \--system-site-packages
 
 source venv/bin/activate
@@ -305,6 +308,11 @@ python3 main.py
 ## Summary
 
 By following the steps outlined, you can successfully run ComfyUI using ROCm on Windows through the Windows Subsystem for Linux, taking full advantage of AMD Radeon™ graphics. This setup transforms your Windows PC into a powerful computing hub, enabling seamless use of large models like Stable Diffusion and facilitating creative AI applications with unprecedented ease. Be sure to come back for more tutorial blogs like this one, or visit our [AMD Developer Central](https://www.youtube.com/user/AMDDevCentral) and learn how you can unlock the full potential of your system.
+
+```{note}
+Blog was updated on: Aug 11, 2025
+- Added extra line to step #4 to include correct PIP installation version.
+```
 
 ### Useful Links
 
