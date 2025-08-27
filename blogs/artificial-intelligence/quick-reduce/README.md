@@ -199,9 +199,9 @@ This blog post summarizes efforts from several members of the AMD Quark team. We
 
 ## Endnotes
 
-[1] Integrate QuickReduce into vLLM
+[1] [Integrate QuickReduce into vLLM](https://github.com/vllm-project/vllm/pull/19744)
 
-[2] Integrate QuickReduce into SGLang
+[2] [Integrate QuickReduce into SGLang](https://github.com/sgl-project/sglang/pull/6619)
 
 [3] Configuration details
 
