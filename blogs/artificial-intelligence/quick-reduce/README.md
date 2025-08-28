@@ -89,13 +89,13 @@ vLLM server launch command
 
 ```shell
 VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT4 
-vLLM serve /model_path/Qwen/Qwen2.5-72B 
-// --no-enable-prefix-caching 	
-// --block_size=32
-// --disable-log-requests
-// tensor-parallel-size 2
-vLLM client benchmark command
+vLLM serve /model_path/Qwen/Qwen2.5-72B \
+  --no-enable-prefix-caching \
+  --block_size=32 \
+  --disable-log-requests
 ```
+
+vLLM client benchmark command
 
 ```shell
 python /app/vllm/benchmarks/benchmark_serving.py \
