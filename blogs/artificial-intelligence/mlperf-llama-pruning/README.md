@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Slim Down Your Llama: Pruning & Fine-Tuning for Maximum Performance"
-date: 12 Aug 2025
+date: 9 Sep 2025
 author: 'Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Fulu Li, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Clint Greene, Eliot Li'
 thumbnail: 'prune_llama_thumbnail.png'
 tags: Fine-Tuning, AI/ML, GenAI, Optimization, Performance, MLPerf Inference, MLPerf
