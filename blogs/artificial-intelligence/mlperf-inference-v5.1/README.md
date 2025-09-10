@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Technical Dive into AMD's MLPerf Inference v5.1 Submission"
 date: 09 Sep 2025
-author: 'Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Wei-Ting Liao, Uma Kannikanti, Fulu Li, Ean Garvey, Kumar Deepak, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Zhao Lin, Wei Luo, Bowen Bao, Spandan Tiwari, Clint Greene, Eliot Li'
+author: 'Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Wei-Ting Liao, Uma Kannikanti, Fulu Li, Neha Mathews, Rajesh Poornachandran, Ean Garvey, Kumar Deepak, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Zhao Lin, Wei Luo, Bowen Bao, Spandan Tiwari, Niels Zhang, Vinayak Gokhale, Clint Greene, Eliot Li'
 thumbnail: 'mlperf_inf_v5.1_technical_thumbnail.png'
 tags: AI/ML, GenAI, Performance, Optimization, MLPerf Inference, MLPerf
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Share the technical details of how we accomplish the res
 language: English
 myst:
     html_meta:
-        "author": "Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Wei-Ting Liao, Uma Kannikanti, Fulu Li, Neha Mathews, Rajesh Poornachandran, Ean Garvey, Kumar Deepak, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Zhao Lin, Wei Luo, Bowen Bao, Spandan Tiwari, Clint Greene, Eliot Li"
+        "author": "Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Wei-Ting Liao, Uma Kannikanti, Fulu Li, Neha Mathews, Rajesh Poornachandran, Ean Garvey, Kumar Deepak, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Zhao Lin, Wei Luo, Bowen Bao, Spandan Tiwari, Niels Zhang, Vinayak Gokhale, Clint Greene, Eliot Li"
         "description lang=en": "In this blog, we share the technical details of how we accomplish the results in our MLPerf Inference v5.1 submission."
         "keywords": "MLPerf, Inference, Optimization, Llama 2, SDXL, Mixtral"
         "vertical": "AI"
@@ -338,6 +338,10 @@ The MLPerf Inference v5.1 submission highlights the growing strength of the AMD 
 ## Summary
 
 This blog provides a technical dive into the optimizations of AMD's MLPerf Inference v5.1 submission. The flagship GPU in the AMD Instinct series, MI355x, was used for the Llama 2 70B and Llama 3.1 405B models. The MI325x was used for Llama 2 70B and Mixtral 8x7B models. For hands-on guidance on replicating these results, visit [Reproducing the AMD Instinct™ GPUs MLPerf Inference v5.1 Submission](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-inference5.1-repro/README.html). To explore our pruning and fine-tuning strategies for Llama 3.1 405B, see [Slim Down Your Llama: Pruning & Fine-Tuning for Maximum Performance](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-llama-pruning/README.html).
+
+## Acknowledgements
+
+We would like to sincerely thank Ali Zaidy, Willa Zhu, Huan Zheng, Lingpeng Jin and Carlus Huang for their valuable contributions.
 
 ## Disclaimers
 
