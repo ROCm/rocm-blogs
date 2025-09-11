@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Slim Down Your Llama: Pruning & Fine-Tuning for Maximum Performance"
 date: 9 Sep 2025
-author: 'Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Fulu Li, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Clint Greene, Eliot Li'
+author: 'Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Fulu Li, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Karan Verma, Clint Greene, Eliot Li'
 thumbnail: 'prune_llama_thumbnail.png'
 tags: Fine-Tuning, AI/ML, GenAI, Optimization, Performance, MLPerf Inference, MLPerf
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Share the technical details of how we prune and fine tun
 language: English
 myst:
     html_meta:
-        "author": "Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Fulu Li, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Clint Greene, Eliot Li"
+        "author": "Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Fulu Li, Yixing Xu, Zhe Li, Guanchen Li, Xuanwu Yin, Dong Li, Karan Verma, Clint Greene, Eliot Li"
         "description lang=en": "This blog describes the technical details of how we prune and fine tune the Llama 3.1 405B model in our MLPerf Inference v5.1 submission."
         "keywords": "MLPerf, Inference, Optimization, Llama 2, Llama 3.1, SDXL, Mixtral"
         "vertical": "AI"

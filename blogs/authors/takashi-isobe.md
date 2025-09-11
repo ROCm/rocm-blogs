@@ -8,7 +8,7 @@
 
 # Takashi Isobe
 
-```{image} ./data/Takashi-Isobe.jpg
+```{image} ./data/Takashi-Isobe.png
 :alt: Takashi Isobe
 :class: bg-primary
 :height: 250px
