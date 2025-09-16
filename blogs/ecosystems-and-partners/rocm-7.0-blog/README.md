@@ -82,7 +82,7 @@ Figure 1. The ROCm 7.0 AI framework ecosystem
 :width: 800px
 :alt: ROCm 7
 :class: only-dark
-Figure 1. ROCm 7.0 AI framework ecosystem (Partial)
+Figure 1. ROCm 7.0 AI framework ecosystem
 ```
 <!-- markdownlint-restore -->
 ### AI Frameworks
@@ -127,7 +127,7 @@ To further AMD’s focus on delivering state-of-the-art pre and post training so
 
 Primus is the one-stop shop for model training on Instinct, offering end-to-end solutions for pre-training and fine-tuning, with reinforcement learning coming soon.
 
-Primus combines the unique benefits of Instinct GPUs’ current training solutions into ONE optimized interface with multiple backends. This includes key operators, parallelism techniques, and kernels from Instinct’s various training dockers, now all consolidated and optimized within Primus.
+Primus combines the unique benefits of Instinct GPUs’ current training solutions into ONE optimized interface with multiple backends. This includes key operators, parallelism techniques, and kernels from various training dockers, now all consolidated and optimized within Primus.
 
 Primus is currently in an early access state and will be incrementally improved with important new features such as reinforcement learning in future ROCm 7.x releases.
 
