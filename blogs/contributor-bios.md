@@ -279,4 +279,24 @@ Senior Software Development Engineer
 Director Software Development
 :::
 
+
+
+:::{grid-item-card} [Mingyu Yang](./authors/mingyu-yang.md) *
+:padding: 1
+
+Member of Technical Staff
+:::
+
+:::{grid-item-card} [Guihong Li](./authors/guihong-li.md) *
+:padding: 1
+
+Member of Technical Staff
+:::
+
+:::{grid-item-card} [Mehdi Rezagholizadeh](./authors/mehdi-rezagholizadeh.md) *
+:padding: 1
+
+Principal Member of Technical Staff
+:::
+
 ::::
