@@ -287,6 +287,16 @@ Partitioning modes allow dividing of Instinct GPUs into up to multiple compute a
 - SRIOV SPX / NPS1 (1 compute / 1 memory partition per GPU) on MI350X and MI355X
 - VMWare ESXi 8U3 now supports Passthrough virtualization on MI300X and MI325X
 
+### AMD GPU Operator
+
+GPU Operator 1.3.1, released in August 26, added support to OpenShift v4.19 and for GPU partitioning on MI300 series GPUs. Refer to the [release notes](https://instinct.docs.amd.com/projects/gpu-operator/en/latest/releasenotes.html) for additional details.
+
+**The GPU operator 1.4.0 release, available soon, will add the following features:**
+
+- Full ROCm 7.0 Support: Seamless compatibility with the latest runtime and software stack
+- Support for Instinct MI350 Series GPUs: Expanding hardware compatibility
+- AGFHC Integration: Built-in AMD GPU Field Health Check for runtime diagnostics and monitoring
+
 ## Summary
 
 As we’ve shown in this blog, ROCm 7.0 is far more than a version bump—it’s a major leap forward for AI on AMD GPUs and across the broader AI framework ecosystem. With hardware enablement for the Instinct™ MI350X and MI355X at its foundation, this release brings new FP4/FP6/FP8 precision formats, AITER’s pre-optimized operators, and production-ready models from AMD Quark. Combined with day-0 support for frameworks like PyTorch, TensorFlow, and JAX, ROCm 7.0 ensures developers can work seamlessly with the tools they already rely on while gaining faster training, lower-latency inference, and higher efficiency at every scale.
