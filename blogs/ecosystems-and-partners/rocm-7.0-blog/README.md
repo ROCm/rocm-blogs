@@ -65,7 +65,7 @@ designed to help you build, train, and deploy the next generation of AI applicat
 
 ## AI Ecosystem Highlights
 
-As part of the ROCm 7.0 SDK, we have enabled and optimized leading AI frameworks  atop the ROCm stack, enabling state-of-the-art (SOTA) model
+Alongside ROCm 7.0, we have enabled and optimized leading AI frameworks running atop the ROCm software stack, enabling state-of-the-art (SOTA) model
 training and inference on Instinct GPUs (see Figure 1, below). Developers can immediately run PyTorch and other leading frameworks with ROCm 7.0,
 while taking advantage of performance optimizations and tighter integrations across the stack. In the following subsections, we detail the key
 updates that make this release more robust and scalable for modern AI workloads.
@@ -109,7 +109,7 @@ MoE models. Read more about how to enable this feature on your cluster in this [
 
 ### AI Model Optimization
 
-ROCm 7.0 expands Instinct’s model support far beyond LLMs, with [Day-0](https://rocm.blogs.amd.com/ecosystems-and-partners/openai-day-0/README.html) support for OpenAI’s open models—[gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) and [gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b).
+ROCm 7.0 expands Instinct GPUs' model support far beyond LLMs, with [Day-0](https://rocm.blogs.amd.com/ecosystems-and-partners/openai-day-0/README.html) support for OpenAI’s open models—[gpt-oss-120b](https://huggingface.co/openai/gpt-oss-120b) and [gpt-oss-20b](https://huggingface.co/openai/gpt-oss-20b).
 
 In addition, we are releasing production-ready large-scale MXFP4, FP8 models—including [DeepSeek R1](https://rocm.docs.amd.com/en/docs-7.0-rc1/preview/benchmark-docker/inference-sglang-deepseek-r1-fp4.html),  [Llama 3.3 70B](https://rocm.docs.amd.com/en/docs-7.0-rc1/preview/benchmark-docker/inference-vllm-llama-3.3-70b-fp8.html), [Llama 4 Maverick, Llama 4 Scout](https://rocm.blogs.amd.com/artificial-intelligence/llama4-day-0-support/README.html), [Qwen3 235B, 32B, 30B](https://rocm.blogs.amd.com/artificial-intelligence/qwen3-day0-amd/README.html), and [more](https://rocm.docs.amd.com/en/docs-7.0-rc1/preview/benchmark-docker/index.html) -- optimized for seamless deployment on widely used frameworks, such as vLLM and SGLang. These models are quantized by [AMD Quark](https://github.com/amd/Quark), our open-source model optimization toolkit.
 
@@ -127,11 +127,11 @@ To further AMD’s focus on delivering state-of-the-art pre and post training so
 
 Primus is the one-stop shop for model training on Instinct, offering end-to-end solutions for pre-training and fine-tuning, with reinforcement learning coming soon.
 
-Primus combines the unique benefits of Instinct’s current training solutions into ONE optimized interface with multiple backends. This includes key operators, parallelism techniques, and kernels from Instinct’s various training dockers, now all consolidated and optimized within Primus.
+Primus combines the unique benefits of Instinct GPUs’ current training solutions into ONE optimized interface with multiple backends. This includes key operators, parallelism techniques, and kernels from Instinct’s various training dockers, now all consolidated and optimized within Primus.
 
 Primus is currently in an early access state and will be incrementally improved with important new features such as reinforcement learning in future ROCm 7.x releases.
 
-Looking ahead to these enhancements, we examine the hardware advancements that will drive Primus and Instinct’s cutting-edge capabilities.
+Looking ahead to these enhancements, we examine the hardware advancements that will drive Primus and Instinct GPUs' cutting-edge capabilities.
 
 ## Hardware Enablement: AMD Instinct MI350 Series GPUs
 
@@ -214,7 +214,7 @@ Beyond communication efficiency, ROCm 7.0 also brings greater reliability and de
 
 ### Computer Vision and Image Processing
 
-ROCm 7.0 delivers a comprehensive upgrade to AMD's computer vision stack, enabling faster, more flexible, and production-ready vision workflows for AI and HPC developers. This release focuses on accelerating the entire image processing pipeline, enhancing data loading and decoding as well as expanding augmentation and transformation operations. Keep an eye out for upcoming additions to our Computer Vision libraries, including the consolidation of new and existing vision libraries into a targeted, easy-to-use toolkit.
+ROCm 7.0 delivers a comprehensive upgrade to our computer vision stack, enabling faster, more flexible, and production-ready vision workflows for AI and HPC developers. This release focuses on accelerating the entire image processing pipeline, enhancing data loading and decoding as well as expanding augmentation and transformation operations. Keep an eye out for upcoming additions to our Computer Vision libraries, including the consolidation of new and existing vision libraries into a targeted, easy-to-use toolkit.
 
 - ***rocAL:*** Data loading and decoding support in [rocAL](https://github.com/ROCm/rocAL) has been expanded to include hardware decoding support for both the video and image loaders, support for reading NumPy and webdataset file formats, and support for simultaneously loading multiple datasets in parallel from the same pipeline. Additionally, log1p augmentation functionality, as well as support for normalization and transpose operations are included in this update.
 - ***RPP:*** The ROCm Performance Primitives ([RPP](https://github.com/ROCm/rpp)) suite is enhanced with support for bitwise logical operations, tensor concatenation augmentation, JPEG-compression-distortion augmentation, and log1p tensor augmentation. Further enhancements include optimized load/store operations for FP16, as well as expanding support for the F32 data-type to additional augmentation functions. Some API updates have been made to conform with industry standards to consolidate functionality for a more intuitive user experience.
@@ -225,7 +225,7 @@ ROCm 7.0 expands profiling and debugging capabilities with upgrades across [ROCP
 
 The ROCprofiler-SDK integrated the SQTT decoder, adds APIs for dynamic derived counters, Hyper-V support, API-buffer tracing with argument context, and high-throughput channels (NPS2 + DPX). Tools now generate database-style outputs, merge traces, and export Perfetto-compatible traces, while new features like agent-ID selection and ASCII-based memory charts improve usability. Debugging advances include [ROCgdb](https://github.com/ROCm/ROCgdb) support for host traps, LLVM-specific DWARF encodings, and automated test configuration based on detected GPUs, delivering a more robust, flexible toolkit for performance analysis and troubleshooting.
 
-## Instinct Datacenter Infrastructure and Enterprise AI Tools
+## AMD Datacenter Infrastructure and Enterprise AI Tools
 
 This section highlights support added for datacenter infrastructure such as Operating Systems, Virtualization, Containers and Orchestration—alongside tools and capabilities designed to accelerate enterprise AI adoption. Read about these in the [Instinct documentation](https://instinct.docs.amd.com/latest/).
 
@@ -265,13 +265,13 @@ Figure 5. AMD AI Workbench is a unified platform for training and fine-tuning pi
 ```
 <!-- markdownlint-restore -->
 
-You can learn more about how AMD’s enterprise AI tools support scalable deployment and management in diverse production environments by [accessing and exploring our Enterprise AI portal](https://account.amd.com/en/forms/registration/enterpriseai-ea.html).
+You can learn more about how AMD enterprise AI tools support scalable deployment and management in diverse production environments by [accessing and exploring our Enterprise AI portal](https://account.amd.com/en/forms/registration/enterpriseai-ea.html).
 
 ### AMD GPU Drivers & Operating System Support
 
 - [Installation docs](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/index.html) and release notes are now split between the AMD GPU Driver and ROCm SDK, letting users choose combinations of the two during installation. This allows users to update the AMD GPU Drivers and the ROCm toolkit independently.
 
-- [Instinct driver 30.10.0]( https://advanced-micro-devices-dcgpu-documentation--35.com.readthedocs.build/projects/amdgpu-docs/en/35/documentation/change-logs/30.10.0.html) adds support for the  MI350X and MI355X.
+- [AMD GPU driver 30.10.0]( https://advanced-micro-devices-dcgpu-documentation--35.com.readthedocs.build/projects/amdgpu-docs/en/35/documentation/change-logs/30.10.0.html) adds support for the  MI350X and MI355X.
   - enables bare-metal SPX+NPS1 and DPX + NPS2 partitioning modes on the MI350X and MI355X.
 
 Partitioning modes allow dividing of Instinct GPUs into up to multiple compute and memory partitions, smaller "virtual GPUs" for improved GPU utilization and performance when running workloads that do not need the entire GPU.
@@ -298,7 +298,7 @@ And this is only the start. We are planning to refresh the UX of our profiler to
 ## Additional Resources
 
 - [ROCm Announcement Blog](https://www.amd.com/en/developer/resources/technical-articles/2025/amd-rocm-7-built-for-developers-ready-for-enterprises.html)
-- [Instinct Driver Release Notes](https://instinct.docs.amd.com/projects/amdgpu-docs/en/30.10.0/documentation/change-logs/30.10.0.html)
-- [Instinct 30.10.0 Documentation](https://instinct.docs.amd.com/projects/amdgpu-docs/en/30.10.0/)
+- [AMD GPU Driver Release Notes](https://instinct.docs.amd.com/projects/amdgpu-docs/en/30.10.0/documentation/change-logs/30.10.0.html)
+- [AMD GPU 30.10.0 Documentation](https://instinct.docs.amd.com/projects/amdgpu-docs/en/30.10.0/)
 - [ROCm SDK Release Notes](https://rocm.docs.amd.com/en/docs-7.0.0/about/release-notes.html)
 - [ROCm 7.0 Documentation](https://rocm.docs.amd.com)
