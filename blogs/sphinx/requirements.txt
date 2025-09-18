@@ -205,7 +205,7 @@ requests==2.32.2
     # via
     #   pygithub
     #   sphinx
-rocm-blogs-sphinx @ git+https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/ROCm/rocm-blogs-sphinx@v1.11.2
+rocm-blogs-sphinx @ git+https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/ROCm/rocm-blogs-sphinx@v1.12.0
 rocm-docs-core @ git+https://github.com/Danny213123/rocm-docs-core@remove-nav-bar-items
     # via -r requirements.in
 rpds-py==0.22.3
