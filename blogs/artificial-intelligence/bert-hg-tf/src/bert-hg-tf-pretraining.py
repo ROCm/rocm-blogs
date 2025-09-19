@@ -37,8 +37,10 @@ tokenized_dataset_valid = datasets.load_from_disk("./wikiTokenizedValid.hf")
 tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 
 collater = DataCollatorForLanguageModeling(
-    tokenizer=tokenizer, mlm=True, mlm_probability=MLM_PROB, return_tensors="tf"
-)
+    tokenizer=tokenizer,
+    mlm=True,
+    mlm_probability=MLM_PROB,
+    return_tensors="tf")
 
 valid = tokenized_dataset_valid.to_tf_dataset(
     columns=["input_ids", "token_type_ids", "attention_mask"],

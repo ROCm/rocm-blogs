@@ -8,6 +8,13 @@
 
 # Phillip Dang
 
+```{image} ./data/Phillip-Dang.jpg
+:alt: Phillip
+:class: bg-primary
+:height: 250px
+:align: left
+```
+
 Phillip is a Senior Machine Learning Engineer at AMD, where he specializes in the evaluation and
 enhancement of cutting-edge machine learning (ML) models. His role involves rigorous testing of the
 latest state-of-the-art ML models through inference and fine-tuning processes, ensuring seamless

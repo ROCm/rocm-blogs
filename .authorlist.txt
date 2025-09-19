@@ -108,8 +108,6 @@ Gina
 Sitaraman
 Gowtham
 Ramesh
-Guihong
-Li
 Haocong
 Wang
 Haoyang
@@ -180,8 +178,6 @@ Maria
 Varela
 Matt
 Elliott
-Mehdi
-Rezagholizadeh
 Menghsuan
 Yang
 Mengmeng
@@ -190,8 +186,6 @@ Michael
 Klemm
 Michael
 Zhang
-Mingyu
-Yang
 Mohammad
 Kamani
 Mohammed
@@ -218,8 +212,6 @@ Parsa
 Fashi
 Paul
 Mullowney
-Pei
-Zhang
 Phani
 Vaddadi
 Phillip
@@ -250,8 +242,6 @@ Seung
 Jung
 Seungrok
 Jung
-Shaghayegh
-Roohi
 Shekhar
 Pandey
 Sonali
