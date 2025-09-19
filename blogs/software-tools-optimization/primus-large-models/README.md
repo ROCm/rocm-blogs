@@ -50,6 +50,7 @@ SOFTWARE.
 # An Introduction to Primus-Turbo: A Library for Accelerating Transformer Models on AMD GPUs
 
 With the rapid growth of large-scale models, acceleration libraries are facing higher demands: they must deliver exceptional performance, offer comprehensive functionality, and remain easy to use. To meet these needs, we introduce **Primus-Turbo** — part of the **Primus** product family (see our [previous blog](https://rocm.blogs.amd.com/software-tools-optimization/primus/README.html) for background). Primus-Turbo is designed around three core principles: **performance, completeness, and ease of use**. It supports training, inference, and a wide range of application scenarios, providing developers with a solid foundation to efficiently build and optimize large models on the ROCm platform. See Figure 1 below for a comprehensive stack coverage of Primus-Turbo.
+
 ```{figure} ./images/figure1.png
 :align: center
 :alt: Scaling performance
