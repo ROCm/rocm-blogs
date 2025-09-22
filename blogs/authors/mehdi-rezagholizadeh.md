@@ -1,12 +1,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Mehdi Rezagholizadeh">
-  <meta name="keywords" content="AMD GPU, AI, MI300, MI250, ROCm, blog, contributor, blog author">
+  <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author, Hybrid Models, AMD HybridLM">
 </head>
+
+(mrezagho)=
 
 # Mehdi Rezagholizadeh
 
-```{image} ./data/Mehdi-Rezagholizadeh1.jpg
+```{image} ./data/Mehdi-Rezagholizadeh.png
 :alt: Mehdi Rezagholizadeh
 :class: bg-primary
 :height: 250px
