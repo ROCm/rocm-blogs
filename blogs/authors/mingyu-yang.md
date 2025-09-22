@@ -1,12 +1,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Mingyu Yang">
-  <meta name="keywords" content="AMD GPU, AI, MI300, MI250, ROCm, blog, contributor, blog author">
+  <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author, Hybrid Models, AMD HybridLM">
 </head>
+
+(mingyyan)=
 
 # Mingyu Yang
 
-```{image} ./data/Mingyu-Yang1.jpg
+```{image} ./data/Mingyu-Yang.png
 :alt: Mingyu Yang
 :class: bg-primary
 :height: 250px
