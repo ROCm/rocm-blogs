@@ -676,7 +676,7 @@ In this approach we start with the original BF16 model: which is pruned with the
 Pull the Docker image containing the required scripts and code, and start the container for the benchmark.
 
 ```bash
-docker pull rocm/amd-mlperf:mi355x_llama3_405b_inference_5.1
+docker pull rocm/amd-mlperf:mi355x_llama3_1_405b_inference_5.1
 ```
 
 Start the Docker container for the setup and move to the root folder:
@@ -685,7 +685,7 @@ Start the Docker container for the setup and move to the root folder:
 docker run -it --ipc=host --network=host --privileged --cap-add=CAP_SYS_ADMIN \
 --device=/dev/kfd --device=/dev/dri --device=/dev/mem \
 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
-rocm/amd-mlperf:mi355x_llama3_405b_inference_5.1
+rocm/amd-mlperf:mi355x_llama3_1_405b_inference_5.1
 cd /
 ```
 
@@ -822,7 +822,7 @@ The quantized model is saved at `/model/MLPerf-Pruned-Llama-3.1-405B-Instruct-lo
 Pull the Docker image containing the required scripts and codes, and start the container for the benchmark.
 
 ```bash
-docker pull rocm/amd-mlperf:mi355x_llama3_405b_inference_5.1
+docker pull rocm/amd-mlperf:mi355x_llama3_1_405b_inference_5.1
 ```
 
 Start the Docker container for the setup and move to the root folder:
@@ -831,7 +831,7 @@ Start the Docker container for the setup and move to the root folder:
 docker run -it --ipc=host --network=host --privileged --cap-add=CAP_SYS_ADMIN \
 --device=/dev/kfd --device=/dev/dri --device=/dev/mem \
 --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
-rocm/amd-mlperf:mi355x_llama3_405b_inference_5.1
+rocm/amd-mlperf:mi355x_llama3_1_405b_inference_5.1
 cd /
 ```
 
@@ -994,7 +994,7 @@ In this variant, Llama 2 70B is quantized to MXFP4 and evaluated on MI355X in 1-
 #### Inference Docker Container Setup
 
 ```bash
-docker pull rocm/mlperf-inference:mi355x_llama2_70b_inference_5.1
+docker pull rocm/amd-mlperf:mi355x_llama2_70b_inference_5.1
 ```
 
 #### Single Node Submission
@@ -1105,13 +1105,6 @@ The output of accuracy evaluation should resemble the following:
 ```bash
 {'rouge1': 44.4931, 'rouge2': 22.1416, 'rougeL': 28.9048, 'rougeLsum': 42.0484, 'gen_len': 28125378, 'gen_num': 24576, 'gen_tok_len': 7155345, 'tokens_per_sample': 291.2}
 ```
-
-#### Multi-Node Submissions
-
-- Demonstrate efficient scale out inferencing
-- Partnership with MangoBoost
-- 4 nodes
-- 8 nodes
 
 ## Summary
 

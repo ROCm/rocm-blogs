@@ -44,6 +44,8 @@ Bruce
 Xue
 Chaitanya
 Manem
+Chandan-Sharma
+
 Chang-liu
 
 Chao
@@ -154,6 +156,8 @@ Ke
 Wang
 Kenny
 Roche
+Kevin
+Joseph
 Lei
 Shao
 Liam
@@ -218,6 +222,8 @@ Parsa
 Fashi
 Paul
 Mullowney
+Pauli
+Pihajoki
 Pei
 Zhang
 Phani
@@ -230,6 +236,8 @@ Prakamya
 Mishra
 Pratik
 Brahma
+Rahul
+Biswas
 Rajat
 Arora
 Rajneesh
