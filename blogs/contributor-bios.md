@@ -279,8 +279,6 @@ Senior Software Development Engineer
 Director Software Development
 :::
 
-
-
 :::{grid-item-card} [Mingyu Yang](./authors/mingyu-yang.md) *
 :padding: 1
 

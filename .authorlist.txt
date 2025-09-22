@@ -110,6 +110,8 @@ Gina
 Sitaraman
 Gowtham
 Ramesh
+Guihong
+Li
 Haocong
 Wang
 Haoyang
@@ -182,6 +184,8 @@ Maria
 Varela
 Matt
 Elliott
+Mehdi
+Rezagholizadeh
 Menghsuan
 Yang
 Mengmeng
@@ -190,6 +194,8 @@ Michael
 Klemm
 Michael
 Zhang
+Mingyu
+Yang
 Mohammad
 Kamani
 Mohammed
@@ -216,13 +222,10 @@ Parsa
 Fashi
 Paul
 Mullowney
-<<<<<<< HEAD
-=======
 Pauli
 Pihajoki
 Pei
 Zhang
->>>>>>> f528521f73b519d36eb3abc274d8b98f400fca31
 Phani
 Vaddadi
 Phillip
@@ -233,6 +236,8 @@ Prakamya
 Mishra
 Pratik
 Brahma
+Quentin
+Anthony
 Rahul
 Biswas
 Rajat
@@ -255,6 +260,8 @@ Seung
 Jung
 Seungrok
 Jung
+Shaghayegh
+Roohi
 Shekhar
 Pandey
 Sonali

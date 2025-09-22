@@ -1,28 +1,29 @@
 ---
 blogpost: true
-date: 1 Feb 2024
-author: Sean Song
-tags: LLM, AI/ML, GenAI, Fine-Tuning
+blog_title: "Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering"
+date: 01 Feb 2024
+author: 'Sean Song'
 thumbnail: ''
+tags: AI/ML, LLM, GenAI, Fine-Tuning
 category: Applications & models
 target_audience: ai enthusiasts and developers
 key_value_propositions: Fine-tune Llama 2 with LoRA
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering"
-    "keywords": "LoRA, Low-rank Adaptation, fine-tuning, large language model, Generative AI"
-    "property=og:locale": "en_US"
-    "amd_category": "Developer Resources"
-    "amd_asset_type": "Blogs"
-    "amd_blog_type": "Technical Articles & Blogs"
-    "amd_technical_blog_type": "Applications and Models"
-    "amd_developer_type": "ML/AI Developer"
-    "amd_blog_hardware_platforms": "Instinct GPUs"
-    "amd_blog_hardware_platforms": 'Instinct GPUs'
-    "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
-    "amd_blog_applications": "Generative AI, Deploying AI at Scale"
-    "amd_blog_topic_categories": 'Software & Ecosystem'
+    html_meta:
+        "author": "Sean Song"
+        "description lang=en": "Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering"
+        "keywords": "LoRA, Low-rank Adaptation, fine-tuning, large language model, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blogs"
+        "amd_blog_type": "Technical Articles & Blogs"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_developer_type": "ML/AI Developer"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Generative AI, Deploying AI at Scale"
+        "amd_blog_topic_categories": 'AI & Intelligent Systems'
 ---
 
 # Fine-tune Llama 2 with LoRA: Customizing a large language model for question-answering
