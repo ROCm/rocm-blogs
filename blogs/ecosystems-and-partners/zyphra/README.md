@@ -1,17 +1,29 @@
 ---
 blogpost: true
-date: 10 December 2024
+date: 10 Dec 2024
 blog_title: "Zyphra Introduces Frontier Training Kernels for Transformers and SSMs on AMD Instinct MI300X Accelerators"
 thumbnail: 'amd_zyphra.jpg'
 author: Quentin Anthony
 tags: LLM, AI/ML, GenAI, PyTorch
 category: Ecosystems and Partners
+target_audience: ai enthusiasts and developers
+key_value_propositions: new training kernels for transformers and hybrid models
 language: English
 myst:
   html_meta:
     "description lang=en": "This blog shows Zyphra's new training kernels for transformers and hybrid models on AMD Instinct MI300X accelerators, surpassing the H100s performance"
     "keywords": "Mamba, PyTorch, S4, S6, Mamba2, Transformer, Flash Attention, Optimization, Hardware-aware, Transformer, Attention, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
     "property=og:locale": "en_US"
+    "amd_category": "Developer Resources"
+    "amd_asset_type": "Blogs"
+    "amd_blog_type": "Technical Articles & Blogs"
+    "amd_technical_blog_type": "Applications and Models"
+    "amd_developer_type": "ML/AI Developer"
+    "amd_blog_hardware_platforms": "Instinct GPUs"
+    "amd_blog_hardware_platforms": 'Instinct GPUs'
+    "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+    "amd_blog_applications": "Generative AI, Deploying AI at Scale"
+    "amd_blog_topic_categories": 'Software & Ecosystem'
 ---
 
 
