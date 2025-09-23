@@ -1,0 +1,73 @@
+name: Docs Linting
+
+on:
+  push:
+    branches: [develop, main, spelling]
+  pull_request:
+    branches: [develop, main, spelling]
+
+concurrency:
+  group: ${{ github.ref }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  lint-md:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get changed markdown files
+        id: changed-md
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.md
+
+      - name: Run markdownlint
+        if: steps.changed-md.outputs.any_changed == 'true'
+        uses: DavidAnson/markdownlint-cli2-action@v10.0.1
+        with:
+          config: .markdownlint.yaml
+          globs: ${{ steps.changed-md.outputs.all_changed_files }}
+
+  spelling:
+    name: Spelling Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get changed markdown files
+        id: changed-md
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/*.md
+
+      - name: Check for local overrides
+        id: check_local_spelling
+        run: |
+          if [ -f .spellcheck.local.yaml ]; then
+            echo "check_result=true" >> $GITHUB_OUTPUT
+          else
+            echo "check_result=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Merge local and main YAML files
+        if: steps.check_local_spelling.outputs.check_result == 'true'
+        run: |
+          python3 .github/workflows/yaml_merger.py .spellcheck.yaml .spellcheck.local.yaml .spellcheck.yaml
+
+      - name: Run spellcheck
+        if: steps.changed-md.outputs.any_changed == 'true'
+        uses: rojopolis/spellcheck-github-actions@0.46.0
+        with:
+          task_name: Markdown
+          source_files: ${{ steps.changed-md.outputs.all_changed_files }}
+
+      - name: On fail
+        if: failure()
+        run: |
+          echo "Please check for spelling mistakes or add them to '.wordlist.txt'."
