@@ -8,6 +8,13 @@
 
 # Soumitra Chatterjee
 
+```{image} ./data/Soumitra-Chaterjee.png
+:alt: Soumitra Chaterjee
+:class: bg-primary
+:height: 250px
+:align: left
+```
+
 Soumitra Chatterjee is a system software specialist with a deep-rooted passion for enabling cutting-edge platforms through robust, high-impact solutions.
 
 At AMD, Soumitra is currently focused on building and scaling the AI/ML software ecosystem for AMD Instinct GPUs, with an emphasis on expanding the ROCm stack and accelerating adoption in performance-critical domains.
