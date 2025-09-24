@@ -1,0 +1,13 @@
+opencv-python>=4.9.0.80
+diffusers>=0.31.0
+transformers>=4.49.0 # 4.46.3
+imageio[ffmpeg]
+easydict
+ftfy
+dashscope
+imageio-ffmpeg
+redis
+av
+decord
+peft>=0.17.0
+numpy>=1.23.5,<2
