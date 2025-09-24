@@ -1,0 +1,18 @@
+services:
+  web:
+    container_name: fastapi-web
+    build: .
+    ports:
+      - "8000:8000"
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+  videogen:
+    container_name: videogen-torchrun
+    image: "rocm/pytorch-training:v25.6"
+    devices: 
+      - /dev/dri/:/dev/dri/
+      - /dev/kfd:/dev/kfd
+    volumes: 
+      - ${PWD}/mountpoint:/workspace/mountpoint
+    tty: true 
