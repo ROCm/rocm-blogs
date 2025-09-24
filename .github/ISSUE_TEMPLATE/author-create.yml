@@ -34,7 +34,7 @@ body:
   - type: textarea
     id: author_picture
     attributes:
-      label: "Author Picture"
+      label: "Author Picture (Ignore this field for now and add the picture to the ./blogs/authors/data file in the PR)"
       description: |
         Attach a bio picture if you have one. The image will be renamed to match the author's name.
         

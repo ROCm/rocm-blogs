@@ -10,6 +10,8 @@ Alex
 He
 Alex
 Voicu
+Amanzhol
+Salykov
 Anik
 Chaudhuri
 Anil
@@ -182,6 +184,8 @@ Marco
 Grond
 Maria
 Varela
+Mark
+Granroth-Wilding
 Matt
 Elliott
 Mehdi
@@ -230,6 +234,8 @@ Phani
 Vaddadi
 Phillip
 Dang
+Pier
+Dovesi
 Poovaiah
 Palangappa
 Prakamya
@@ -274,6 +280,10 @@ Spandan
 Tiwari
 Sudhanshu
 Ranjan
+Sujin
+Philip
+Sukriti
+Choudhary
 Suyash
 Tandon
 Takashi
