@@ -30,6 +30,8 @@ Asitav
 Mishra
 Babak
 Poursartip
+Baiqiang
+XIA
 Balazs
 Toth
 Ben
@@ -130,6 +132,8 @@ Ish
 Kool
 James
 Smith
+Jarkko
+Lehtiranta
 Jassani
 Adeem
 Jayacharan
@@ -154,6 +158,8 @@ Justin
 Chang
 Kailash
 Gogineni
+Karthik
+Thatipamula
 Ke
 Wang
 Kenny
