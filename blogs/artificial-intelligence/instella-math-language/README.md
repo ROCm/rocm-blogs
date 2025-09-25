@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Introducing Instella-Math: Fully Open Language Model with Reasoning Capability"
 date: 9 Aug 2025
 author: 'Xiaodong Yu, Jiang Liu, Yusheng Su, Gowtham Ramesh, Zicheng Liu, Prakamya Mishra, Sudhanshu Ranjan, Jialian Wu, Ximeng Sun, Ze Wang, Emad Barsoum'
-thumbnail: 'thumbnail.png'
+thumbnail: 'instella-math-thumbnail.png'
 tags: AI/ML
 category: Applications & models
 target_audience: ai developers and enthusiast
