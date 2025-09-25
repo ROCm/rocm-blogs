@@ -178,7 +178,7 @@ Feel free to cite this blog if you find it helpful to your work:
 ```bibtex
 @misc{slime_rocm,
   title = {Day-0 Support for the SGLang-Native RL Framework - slime on AMD Instinct™ GPUs},
-  url = {this blog url},
+  url = {https://rocm.blogs.amd.com/artificial-intelligence/slime/README.html},
   author = {Yusheng Su, Yuzhen Zhou, Jin Pan, Gowtham Ramesh, Xiaodong Yu, Jialian Wu, Ze Wang, Ximeng Sun, Jiang Liu, Hao Chen, Zicheng Liu, Emad Barsoum},
   month = {Sep},
   year = {2025}
