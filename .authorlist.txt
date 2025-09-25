@@ -132,6 +132,8 @@ Ish
 Kool
 James
 Smith
+Jarkko
+Lehtiranta
 Jassani
 Adeem
 Jayacharan
