@@ -366,7 +366,7 @@ breakthroughs in real-world scientific applications.
 
 ## Acknowledgements
 
-The authors would also like to acknowledge the broader AMD team whose contributions were instrumental in enabling DGL: *Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James Smith, Vicky Tsang, Tiffany Mintz, Pei Zhang, Debasis Mandal, Yao Liu, Phani Vaddadi, Vish Vadlamani, Ritesh Hiremath, Bhavesh Lad, Radha Srimanthula, Mohan Kumar Mithur, Phaneendr-kumar Lanka, Jayshree Soni, Amit Kumar, Leo Paoletti, Anisha Sankar, Ram Seenivasan, Aditya Bhattacharji, Marco Grond, Anshul Gupta, Saad Rahim*
+The authors would also like to acknowledge the broader AMD team whose contributions were instrumental in enabling DGL: *Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James Smith, Vicky Tsang, Tiffany Mintz, Pei Zhang, Debasis Mandal, Yao Liu, Phani Vaddadi, Vish Vadlamani, Ritesh Hiremath, Bhavesh Lad, Radha Srimanthula, Mohan Kumar Mithur, Phaneendr-kumar Lanka, Jayshree Soni, Amit Kumar, Leo Paoletti, Anisha Sankar, Ram Seenivasan, Aditya Bhattacharji, Marco Grond, Anshul Gupta, Ehud Sharlin, Saad Rahim, Aakash Sudhanwa*
 
 ## Additional Resources
 
