@@ -1052,7 +1052,7 @@ In this blog, you learned how to use Ray to easily scale your AI applications fr
 
 ## Acknowledgements
 
-The authors wish to acknowledge the AMD teams that supported this work, whose contributions were instrumental in enabling Ray: Logan Grado, Ritesh Hiremath, Amit Kumar, Eliot Li, Radha Srimanthula and Yusheng Su.
+The authors wish to acknowledge the AMD teams that supported this work, whose contributions were instrumental in enabling Ray: Logan Grado, Ritesh Hiremath, Amit Kumar, Ram Seenivasan, Eliot Li, Radha Srimanthula, Yusheng Su, Aakash Sudhanwa, Aditya Bhattacharji, Ehud Sharlin, Saad Rahim.
 
 ## Disclaimers
 
