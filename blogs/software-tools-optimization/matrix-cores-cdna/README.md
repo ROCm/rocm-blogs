@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Matrix Core Programming on AMD CDNA™3 and CDNA™4 architecture"
 date: 30 Sep 2025
 author: 'Amanzhol Salykov, Andy Luo, Carlus Huang, Peng Sun'
-thumbnail: 'thumbnail.png'
+thumbnail: 'MatrixCoresCDNAThumbnail.png'
 tags: AI/ML, C++, Linear Algebra, HPC, Performance, Optimization, Hardware
 category: Software tools & optimizations
 target_audience: AI/ML/HPC engineers, researchers, developers
@@ -66,7 +66,6 @@ The performance gains from using Matrix Cores are especially significant in mixe
 | Matrix FP16 | 1307.4 TF | ~8x |
 | Matrix FP8 | 2614.9 TF | ~16x |
 
-
 | Type | AMD Instinct™ MI355X (CDNA™4) | Speedup vs. FP32 |
 | -------- | ------ | ------- |
 | Matrix FP64  | 78.6 TF  | ~0.5x
@@ -77,7 +76,6 @@ The performance gains from using Matrix Cores are especially significant in mixe
 | Matrix FP4   | 10 PF    | ~64x
 
 </p>
-
 
 ## Low-Precision Floating-Point Types
 
@@ -201,6 +199,7 @@ The table above specifies cycle count for each MFMA operation. Given a known cyc
 ``
 
 where
+
 1. `num_matrix_cores` is total number of matrix cores in a GPU (specified in white paper)
 2. `max_engine_clock` is max engine clock (peak) in MHz (specified in white paper)
 3. `cycle_count` is cycle count of corresponding MFMA instruction
@@ -210,7 +209,6 @@ Using this formula and the MFMA instruction `32x32x8 FP16` as an example, we can
 
 `2*32*32*8 * 1216 * (2100 / 32) / 10^6 = 1307.4 TFLOP/s`.
 
-
 ## Compiler Intrinsics
 
 To use Matrix Core instructions in HIP kernels, LLVM provides built-in compiler intrinsic functions. The list of all available compiler intrinsics can be found in the [LLVM Github repository](https://github.com/llvm/llvm-project/blob/main/clang/include/clang/Basic/BuiltinsAMDGPU.def). The syntax of the MFMA intrinsics has the following format:
@@ -218,6 +216,7 @@ To use Matrix Core instructions in HIP kernels, LLVM provides built-in compiler 
 `d_reg = __builtin_amdgcn_mfma_ODType_MxNxKInDType(a_reg, b_reg, c_reg, cbsz, abid, blgp)`,
 
 where
+
 1. `MxNxK` specifies the shapes of the matrices `A`, `B`, `C`, `D`,
 2. `ODType` is data type of the matrices `C` and `D`,
 3. `InDType` is data type of the input matrices `A` and `B`,
@@ -290,6 +289,7 @@ mfma_fp32_32x32x2_fp32(const float* A, const float* B, float* C) {
     }
 }
 ```
+
 The GPU kernel can then be invoked on the host using a single wavefront:
 
 ```cpp
@@ -395,8 +395,8 @@ mfma_fp32_32x32x16_fp8_fp8(const fp8_t* A, const fp8_t* B, float* C) {
     }
 }
 ```
-To define FP8, we use `__hip_fp8_storage_t` type from `hip_fp8.h`. Note that the intrinsic function expects its first two operands to be of type `long`. To compile the code, the operands `a` and `b` are, therefore, converted to `long`.
 
+To define FP8, we use `__hip_fp8_storage_t` type from `hip_fp8.h`. Note that the intrinsic function expects its first two operands to be of type `long`. To compile the code, the operands `a` and `b` are, therefore, converted to `long`.
 
 ### __builtin_amdgcn_mfma_scale_f32_32x32x64_f8f8
 
@@ -497,6 +497,7 @@ mfma_fp32_32x32x64_fp8_fp8(const fp8_t* A, const fp8_t* B, float* C) {
     }
 }
 ```
+
 Please note that in this example we use `__amd_fp8_storage_t` type defined in `hip_ext_ocp.h` to represent FP8. This library provides extensions APIs for low-precision and micro-scaling formats, and compared to `hip_fp8.h`, exposes a wider capability set. `gfx950` provides hardware acceleration for these APIs. Most of the APIs are 1 to 1 mapping of hardware instruction. Additionally, we use `uint8_t` type to represent `E8M0` scale factors. Since `scale_a` and `scale_b` encode exponent values, the corresponding actual scale factors are `2^(scale_a - 127)` and `2^(scale_b - 127)`. If `scale_a = scale_b = 127`, the actual scale factors are equal to `1` and no scaling is applied.
 
 ### __builtin_amdgcn_mfma_scale_f32_32x32x64_f4f4
@@ -571,6 +572,7 @@ uint8_t __amd_extract_fp4(const __amd_fp4x2_storage_t x, const size_t index) {
 ```
 
 Two FP4 values are then combined into `__amd_fp4x2_storage_t` using `__amd_create_fp4x2`:
+
 ```cpp
 __amd_fp4x2_storage_t __amd_create_fp4x2(const uint8_t x, const uint8_t y) {
     __amd_fp4x2_storage_t ret = 0;
