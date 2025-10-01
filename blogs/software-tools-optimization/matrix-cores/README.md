@@ -267,7 +267,6 @@ An example kernel performing this MFMA operation is given below.
 
 using double4 = __attribute__( (__vector_size__(K * sizeof(double)) )) double;
 
-
 __global__ void dgemm_16x16x4(const double* A, const double* B, double* D)
 {
   double4 dmn = {0};
