@@ -10,11 +10,18 @@ language: English
 target_audience: The targeted audience(s) of this blog (AI developers,AI practionners, etc.)
 key_value_propositions: Inference data
 myst:
- html_meta:
-  "author": "Andy Luo"
-  "description lang=en": "Learn how to optimize large language model inference using vLLM on AMD's MI300X GPUs for enhanced performance and efficiency."
-  "keywords": "LLM, PyTorch, AI/ML, Fine-Tuning"
-  "property=og:locale": "en_US"
+    html_meta:
+        "author": "Andy Luo"
+        "description lang=en": "Learn how to optimize large language model inference using vLLM on AMD's MI300X GPUs for enhanced performance and efficiency."
+        "keywords": "LLM, PyTorch, AI/ML, Fine-Tuning"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"  
 ---
 
 # Best practices for competitive inference optimization on AMD Instinct™ MI300X GPUs

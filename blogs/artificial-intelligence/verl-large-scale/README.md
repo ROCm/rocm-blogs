@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Reinforcement Learning from Human Feedback on AMD GPUs with verl and ROCm Integration"
 date: 24 Apr 2025
-author: 'Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu'
+author: 'Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu'
 thumbnail: 'verl.jpg'
 tags: Fine-Tuning, Reinforcement Learning, AI/ML
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: verl, an efficient RLHF framework designed for scalable 
 language: English
 myst:
     html_meta:
-        "author": "Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu"
+        "author": "Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu"
         "description lang=en": "Deploy verl on AMD GPUs for fast, scalable RLHF training with ROCm optimization, Docker scripts, and impressive throughput-convergence results"
         "keywords": "verl, Training, AMD GPUs."
         "property=og:locale": "en_US"
@@ -19,16 +19,10 @@ myst:
         "amd_asset_type": "Blogs"
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Applications and Models"
-        "amd_blog_topic_categories": "AI & Intelligent Systems"
+        "amd_blog_topic_categories": "AI & Intelligent Systems, Enterprise & Data Center Trends"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
-        "amd_hardware_deployment": "Instinct GPUs"
-        "amd_deployment_tools": "ROCm Software"
         "amd_blog_applications": "AI Training"
-        "amd_deployment_tools": "ROCm Software"
-        "amd_applications": "AI Training"
-        "amd_blog_category_topic": "Enterprise & Data Center Trends"
-        "amd_blog_authors": Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu"
 ---
 <!---
 
@@ -323,7 +317,7 @@ As RLHF becomes a cornerstone in fine-tuning LLMs, verl offers a scalable, open-
 
 Core contributors: Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu
 
-Contributors: Xiaodong Yu, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Vish Vadlamani, Emad Barsoum
+Contributors: Xiaodong Yu, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Phani Vaddadi, Vish Vadlamani, Emad Barsoum
 
 Thanks to the IT AI Sys team for providing cluster support and system configuration: Kobawala, Arhat
 

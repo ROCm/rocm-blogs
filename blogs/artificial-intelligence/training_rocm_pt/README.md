@@ -6,15 +6,22 @@ author: Emad Barsoum
 thumbnail: 'Training2.jpg'
 tags: AI/ML, GenAI, PyTorch
 category: Applications & models
-target_audience: AI developers, AI practionners
-key_value_propositions: 
+target_audience: "AI developers, AI practionners"
+key_value_propositions: ""
 language: English
 myst:
-  html_meta:
-    "author": "Emad Barsoum"
-    "description lang=en": "AMD's GPU training optimizations deliver peak performance for advanced AI models through ROCm software stack."
-    "keywords": "AMD, ROCm, Training, LLM, Open Source"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Emad Barsoum"
+        "description lang=en": "AMD's GPU training optimizations deliver peak performance for advanced AI models through ROCm software stack."
+        "keywords": "AMD, ROCm, Training, LLM, Open Source"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Enhancing AI Training with AMD ROCm Software

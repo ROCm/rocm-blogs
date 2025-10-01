@@ -22,9 +22,9 @@ myst:
         "amd_developer_type": "ML/AI Developer, Application Developer, Software Developer, HPC Developer, Algorithm Developer, Data & Research Scientists"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Computer Vision, High Performance Computing, Large Language Model (LLM), Speech Recognition / Synthesis"
-        "amd_industries": "Data Center"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "Computer Vision"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Thu Apr 10, 12:00:00 PST 2025
 ---
 <!---

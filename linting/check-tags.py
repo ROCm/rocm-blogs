@@ -226,7 +226,31 @@ def check_tags(files: list[str], approved_tags: list, approved_categories: list)
                 if tag in md["myst"]["html_meta"]:
 
                     log_file_handle.write(f"🔵 Found tag: {tag} in {file}, checking for correct values.\n")
-                    md_tag = re.split("(?<!Design)(?<!Tools)(?<!Features)(?<!Virtex), ", md["myst"]["html_meta"][tag])
+                    tag_value = md["myst"]["html_meta"][tag]
+                    
+                    # Special split patterns for specific multi-part values
+                    special_patterns = {
+                        "Design, Simulation & Modeling": "Design, Simulation & Modeling",
+                        "Virtex, Kintex & Artix FPGAs": "Virtex, Kintex & Artix FPGAs",
+                        "Tools, Features, and Optimizations": "Tools, Features, and Optimizations"
+                    }
+                    
+                    md_tag = []
+                    remaining = tag_value
+                    
+                    # First, extract any special patterns
+                    for pattern in special_patterns.values():
+                        if pattern in remaining:
+                            md_tag.append(pattern)
+                            remaining = remaining.replace(pattern, "###PLACEHOLDER###")
+                    
+                    # Then split the remaining parts
+                    if remaining:
+                        parts = [item.strip() for item in remaining.split(", ")]
+                        # ignore ###PLACEHOLDER###
+                        for part in parts:
+                            if part != "###PLACEHOLDER###" and part:
+                                md_tag.append(part)
 
                     log_file_handle.write(f"🟡 {tag} for {file}: {md_tag}\n")
 
@@ -257,20 +281,25 @@ def check_tags(files: list[str], approved_tags: list, approved_categories: list)
                             closest_match = difflib.get_close_matches(entry, amd_tags[tag], n=1, cutoff=0.4)
                             print(f"Closest matches: {closest_match}")
 
-                            closest_match_str = " ".join(closest_match)
-
-                            match_found = f"Did you mean ({closest_match_str}?)" if closest_match else "No matches found."
+                            if closest_match:
+                                suggested = closest_match[0]
+                                # Check if the suggested value is valid
+                                if suggested in amd_tags[tag]:
+                                    match_found = f"Please use '{suggested}' instead."
+                                else:
+                                    match_found = f"Did you mean '{suggested}'?"
+                            else:
+                                match_found = "No matches found."
                             
                             print(f"Entry (detailed): {repr(entry)}")
                             for t in amd_tags[tag]:
                                 if len(t) == len(entry) or abs(len(t) - len(entry)) <= 2:
                                     print(f"Potential match (detailed): {repr(t)}")
                             
-                            print(f"🔴 {file} has an unapproved {tag}: {entry}. {match_found}")
+                            print(f"🔴 {file} has an unapproved {tag}: '{entry}'. {match_found}")
                             log_file_handle.write(
-                                f"🔴 {file} has an unapproved {tag}: {entry}. {match_found}\n"
+                                f"🔴 {file} has an unapproved {tag}: '{entry}'. {match_found}\n"
                             )
-                            log_file_handle.write(f"🔴 {file} has an unapproved {tag}: {entry}.\n")
                             error = 1
                 else:
                     log_file_handle.write(

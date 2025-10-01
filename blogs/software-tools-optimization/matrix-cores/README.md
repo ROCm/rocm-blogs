@@ -1,16 +1,27 @@
 ---
 blogpost: true
-date: 14 Nov 2022
+date: 1 Oct 2025
 author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel Chalmers, Ossian O'Reilly, Daniel Velicka
 tags: Compiler, Linear Algebra, Memory, HPC, Optimization
 category: Software tools & optimizations
 language: English
 bio: "Daniel Velicka is a contributor to ROCm matrix cores, focusing on double-precision GEMM, and its differences from single-precision GEMM."
+blog_title: "AMD matrix cores"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Matrix cores"
-    "keywords": "HPC, GEMM, MI250, intrinsics, performance, Mathematical Operations"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Matrix cores"
+        "keywords": "HPC, GEMM, MI250, intrinsics, performance, Mathematical Operations"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # AMD matrix cores

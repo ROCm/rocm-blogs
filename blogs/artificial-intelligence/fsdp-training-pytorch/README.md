@@ -10,11 +10,19 @@ language: English
 target_audience: AI Core Developers, AI Solutions Architect.
 key_value_propositions: FSDP is a highly efficient and widely adopted method for parallel training. AMD GPUs with ROCm deliver seamless compatibility and performance for advanced training techniques like FSDP.
 myst:
-  html_meta:
-    "author": "Sean Song"
-    "description lang=en": "This blog guides you through the process of using PyTorch FSDP to fine-tune LLMs efficiently on AMD GPUs."
-    "keywords": "Llama, LLM, FSDP, Inference, Fine-Tuning, Distributed training, Memory Efficient training, Slurm, Data Parallel, ROCm, PyTorch, GenAI, AMD GPUs, MI250, MI210, MI300, MI300X"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Sean Song"
+        "description lang=en": "This blog guides you through the process of using PyTorch FSDP to fine-tune LLMs efficiently on AMD GPUs."
+        "keywords": "Llama, LLM, FSDP, Inference, Fine-Tuning, Distributed training, Memory Efficient training, Slurm, Data Parallel, ROCm, PyTorch, GenAI, AMD GPUs, MI250, MI210, MI300, MI300X"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # PyTorch Fully Sharded Data Parallel (FSDP) on AMD GPUs with ROCm

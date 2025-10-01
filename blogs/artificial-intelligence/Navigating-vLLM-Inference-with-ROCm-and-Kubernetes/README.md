@@ -10,11 +10,18 @@ language: English
 target_audience: MLOps Engineers, vLLM Developers
 key_value_propositions: Kubernetes is crucial for deploying workloads in data centers and even edge computing environments. This blog provides a guide on using the AMD ROCm™ K8s-device-plugin for deploying vLLM inference with detailed code examples. Developers can use this example as a reference to create other GPU job deployments beyond vLLM, such as those using SGlang or TGI Docker images, depending on their specific requirements.
 myst:
-  html_meta:
-    "author": "Alex He"
-    "description lang=en": "Quick introduction to Kubernetes (K8s) and a step-by-step guide on how to use K8s to deploy vLLM using ROCm."
-    "keywords": "AI/ML"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Alex He"
+        "description lang=en": "Quick introduction to Kubernetes (K8s) and a step-by-step guide on how to use K8s to deploy vLLM using ROCm."
+        "keywords": "AI/ML"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Navigating vLLM Inference with ROCm and Kubernetes

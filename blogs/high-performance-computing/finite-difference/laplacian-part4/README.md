@@ -1,16 +1,26 @@
 ---
 blogpost: true
 date: 18 Jul 2023
+blog_title: "Finite difference method - Laplacian part 4"
 author: Justin Chang, Thomas Gibson, Sean Miller
 tags: HPC, Memory, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Finite difference method - Laplacian Part 4"
-    "keywords": "HPC, finite difference, PDE, MI50, MI100, MI210,
-    RX 6900 XT, RX 7900 XTX, MI250, performance"
-    "property=og:locale": "en_US"
+    html_meta:
+            "description lang=en": "Finite difference method - Laplacian Part 4"
+            "keywords": "HPC, finite difference, PDE, MI50, MI100, MI210, RX 6900 XT, RX 7900 XTX, MI250, GPU"
+            "amd_category": "Developer Resources"
+            "amd_asset_type": "Blog"
+            "amd_technical_blog_type": "Applications and Models"
+            "amd_blog_hardware_platforms": "Instinct GPUs"
+            "amd_blog_development_tools": "ROCm Software"
+            "amd_blog_applications": "Data Science, Design, Simulation & Modeling"
+            "amd_blog_topic_categories": "Software & Ecosystem"
+            "property=og:locale": "en_US"
 ---
 
 # Finite difference method - Laplacian part 4

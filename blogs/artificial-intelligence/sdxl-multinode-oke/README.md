@@ -6,13 +6,22 @@ date: 15 October 2024
 author: Douglas Jia
 tags: AI/ML, Fine-Tuning, GenAI, Diffusion Model
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "This blog demonstrates how to set-up and fine-tune a Stable Diffusion XL (SDXL) model in a multinode Oracle Cloud Infrastructure’s (OCI) Kubernetes Engine (OKE) on a cluster of AMD GPUs using ROCm"
-    "author": "Douglas Jia"
-    "keywords": "Fine-tuning, Stable Diffusion XL, Multinode training, OCI, OKE, Kubernetes, Accelerate, RoCE, Distributed training, Generative AI, AMD, GPU, MI300, MI210, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog demonstrates how to set-up and fine-tune a Stable Diffusion XL (SDXL) model in a multinode Oracle Cloud Infrastructure’s (OCI) Kubernetes Engine (OKE) on a cluster of AMD GPUs using ROCm"
+        "author": "Douglas Jia"
+        "keywords": "Fine-tuning, Stable Diffusion XL, Multinode training, OCI, OKE, Kubernetes, Accelerate, RoCE, Distributed training, Generative AI, AMD, GPU, MI300, MI210, ROCm"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Multinode Fine-Tuning of Stable Diffusion XL on AMD GPUs with Hugging Face Accelerate and OCI's Kubernetes Engine (OKE)

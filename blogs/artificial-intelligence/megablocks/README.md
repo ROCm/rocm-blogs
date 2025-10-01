@@ -3,7 +3,7 @@ blogpost: true
 blog_title: 'Efficient MoE training on AMD ROCm: How-to use Megablocks on AMD GPUs'
 thumbnail: 'megablocks.jpeg'
 date: 23 March 2025
-author: Fabricio Flores, Rishi Madduri, Yao Liu
+author: Fabricio Flores, Rishi Madduri, Yao Liu, Phani Vaddadi, Vish Vadlamani
 tags: PyTorch, AI/ML, LLM
 category: Applications & models
 language: English
@@ -11,7 +11,7 @@ target_audience: AI developers, AI practitioners
 key_value_propositions: Demonstrate how to perform Mixture of Experts training on AMD hardware using Megablocks.
 myst:
     html_meta:
-        "author": "Fabricio Flores, Rishi Madduri, Yao Liu"
+        "author": "Fabricio Flores, Rishi Madduri, Yao Liu, Phani Vaddadi, Vish Vadlamani"
         "description lang=en": "Learn how to use Megablocks to pre-train GPT2 Mixture of Experts (MoE) model, helping you scale your deep learning models effectiveness on AMD GPUs using ROCm"
         "keywords": "Megablocks, Megatron-LM, PyTorch, MoE, LLM, Fine-tuning, distributed training, ROCm, AMD, GPU, MI300"
         "property=og:locale": "en_US"
@@ -21,10 +21,10 @@ myst:
         "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Accelerators"
-        "amd_developer_tool": "ROCm Software"
-        "amd_applications": "Large Language Model (LLM)"
-        "amd_industries": "Supercomputing & Research"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Training, Deploying AI at Scale"
+        "amd_blog_topic_categories": 'HPC & Scientific Computing'
         "amd_blog_releasedate": "Fri Mar 21 08:52:00 PST 2025"    
 ---
 

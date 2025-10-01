@@ -7,12 +7,23 @@ author: Fabricio Flores
 tags: AI/ML, Profiling, HPC
 category: Software tools & optimizations
 language: English
+blog_title: "TensorFlow Profiler in practice: Optimizing TensorFlow models on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "TensorFlow Profiler measures resource use and performance of models, helping identify bottlenecks for optimization. This blog demonstrates the use of the TensorFlow Profiler tool on AMD hardware."
-    "author": "Fabricio Flores"
-    "keywords": "TensorFlow, Profiler, Profiling, Tracing, HPC, AMD, GPU, MI300, MI250, MI210"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "TensorFlow Profiler measures resource use and performance of models, helping identify bottlenecks for optimization. This blog demonstrates the use of the TensorFlow Profiler tool on AMD hardware."
+        author": "Fabricio Flores"
+        "keywords": "TensorFlow, Profiler, Profiling, Tracing, HPC, AMD, GPU, MI300, MI250, MI210"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # TensorFlow Profiler in practice: Optimizing TensorFlow models on AMD GPUs

@@ -5,11 +5,22 @@ author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
 tags: Compiler, HPC, Memory, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
+blog_title: 'Finite difference method - Laplacian part 3'
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Finite difference method - Laplacian Part 3"
-    "keywords": "HPC, finite difference, PDE, MI250, performance"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Finite difference method - Laplacian Part 3"
+        "keywords": "HPC, finite difference, PDE, MI250, performance"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Data Science, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem"
+        "property=og:locale": "en_US"
 ---
 
 # Finite difference method - Laplacian part 3

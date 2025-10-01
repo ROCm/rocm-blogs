@@ -6,13 +6,22 @@ blog_title: Leaner LLM Inference with INT8 Quantization on AMD GPUs using PyTorc
 tags: AI/ML, GenAI, PyTorch, LLM, Optimization, Performance
 category: Applications & models
 language: English
+key_value_propositions: ""
+target_audience: ""
 thumbnail: 'image_int8.jpg'
 myst:
-  html_meta:
-    "description lang=en": "This blog demonstrates how to use AMD GPUs to implement and evaluate INT8 quantization, and the derived inference speed-up of Llama family and Mistral LLM models."
-    "author": "Douglas Jia"
-    "keywords": "LLM inference, INT8 quantization, PyTorch, gpt-fast, torch.compile, optimization, performance, Llama, Mistral, AMD, GPU, MI300, MI250, MI210, ROCm, fp16, fp32"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog demonstrates how to use AMD GPUs to implement and evaluate INT8 quantization, and the derived inference speed-up of Llama family and Mistral LLM models."
+        "author": "Douglas Jia"
+        "keywords": "LLM inference, INT8 quantization, PyTorch, gpt-fast, torch.compile, optimization, performance, Llama, Mistral, AMD, GPU, MI300, MI250, MI210, ROCm, fp16, fp32"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Leaner LLM Inference with INT8 Quantization on AMD GPUs using PyTorch

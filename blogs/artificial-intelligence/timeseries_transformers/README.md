@@ -6,13 +6,22 @@ date: 19 Aug 2024
 author: Fabricio Flores
 tags: AI/ML, LLM, PyTorch, Time Series
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Time series forecasting (TSF) predicts future behavior using past data. This guide focuses on implementing Transformers for TSF, covering preprocessing to evaluation using AMD hardware."
-    "author": "Fabricio Flores"
-    "keywords": "PyTorch, Time Series Data, Transformers, Time Series Transformer, Autoformer, Informer, ROCm, AMD, GPU, MI300, MI250, MI210"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Time series forecasting (TSF) predicts future behavior using past data. This guide focuses on implementing Transformers for TSF, covering preprocessing to evaluation using AMD hardware."
+        "author": "Fabricio Flores"
+        "keywords": "PyTorch, Time Series Data, Transformers, Time Series Transformer, Autoformer, Informer, ROCm, AMD, GPU, MI300, MI250, MI210"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Using AMD GPUs for Enhanced Time Series Forecasting with Transformers

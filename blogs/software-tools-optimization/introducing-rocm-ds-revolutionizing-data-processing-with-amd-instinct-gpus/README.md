@@ -22,9 +22,9 @@ myst:
         "amd_developer_type": "Data & Research Scientists"
         "amd_deployment": "Servers"
         "amd_product_type": "Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "Data Science"
-        "amd_industries": "Data Center"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_development_tools": "Open-Source Tools"
         "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
         "amd_blog_hardware_platforms": "Instinct GPUs"

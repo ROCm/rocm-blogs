@@ -5,13 +5,22 @@ author: Sean Song
 blog_title: 'Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama Model on a single AMD GPU'
 tags: LLM, AI/ML, GenAI, Fine-Tuning
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 thumbnail: 'image.jpg'
 myst:
-  html_meta:
-    "description lang=en": "This blog demonstrate how to use QLora to efficiently fine-tune Llama model on a single AMD GPU with ROCm."
-    "keywords": "LoRA, Low-rank Adaptation, QLoRA, peft, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog demonstrate how to use QLora to efficiently fine-tune Llama model on a single AMD GPU with ROCm."
+        "keywords": "LoRA, Low-rank Adaptation, QLoRA, peft, Quantization, Fine-tuning, Large Language Model, MI210, MI250, MI300, ROCm  Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Enhancing LLM Accessibility: A Deep Dive into QLoRA Through Fine-tuning Llama Model on a single AMD GPU

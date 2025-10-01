@@ -4,12 +4,23 @@ date: 3 Nov 2023
 author: Paul Mullowney
 tags: HPC, Linear Algebra, Performance, Scientific Computing
 category: Applications & models
+blog_title: "Sparse matrix vector multiplication - part 1"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Sparse matrix vector multiplication - Part 1"
-    "keywords": "HPC, spmv, rocblas, linear algebra, PDE, MI250, performance"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Sparse matrix vector multiplication - Part 1"
+        "keywords": "HPC, spmv, rocblas, linear algebra, PDE, MI250, performance"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Data Science"
+        "amd_blog_topic_categories": "HPC & Scientific Computing"
+        "property=og:locale": "en_US"
 ---
 
 # Sparse matrix vector multiplication - part 1

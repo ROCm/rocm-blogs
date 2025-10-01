@@ -1,0 +1,76 @@
+name: Update Author List on Branch Push with Open PR
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'blogs/authors/**'
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  update-authorlist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install PyGithub
+        run: pip install PyGithub
+
+      - name: Check for open PR on this branch
+        id: pr_check
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          python -c "
+          import os
+          from github import Github
+
+          g = Github(os.environ['GITHUB_TOKEN'])
+          repo = g.get_repo(os.environ['REPO'])
+          branch = os.environ['BRANCH']
+
+          open_prs = repo.get_pulls(state='open', head=f'{repo.owner.login}:{branch}')
+          if open_prs.totalCount > 0:
+              with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+                fh.write('has_pr=true\n')
+          else:
+            with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+              fh.write('has_pr=false\n')
+                  "
+
+      - name: Generate author list
+        if: steps.pr_check.outputs.has_pr == 'true'
+        run: python scripts/generate_author_list.py
+
+      - name: Show .authorlist.txt
+        if: steps.pr_check.outputs.has_pr == 'true'
+        run: cat .authorlist.txt
+
+      - name: Commit and push if changed
+        if: steps.pr_check.outputs.has_pr == 'true'
+        run: |
+          if git diff --quiet .authorlist.txt; then
+            echo "No changes detected."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .authorlist.txt
+            git commit -m "Update .authorlist.txt on branch with open PR"
+            git push
+          fi

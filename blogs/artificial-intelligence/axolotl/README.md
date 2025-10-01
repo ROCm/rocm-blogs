@@ -6,12 +6,21 @@ author: Clint Greene
 thumbnail: 2024-06-18-tensorflow.jpg
 tags: AI/ML, PyTorch, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "This blog demonstrates how to fine-tune Llama 3 with Axolotl using ROCm on AMD GPUs, and how to evaluate the performance of your LLM before and after fine-tuning."
-    "keywords": "Training, Fine-tuning, instruction tuning, LLama, LLMs, ROCm, AMD GPUs, MI250, MI210, MI300"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog demonstrates how to fine-tune Llama 3 with Axolotl using ROCm on AMD GPUs, and how to evaluate the performance of your LLM before and after fine-tuning."
+        "keywords": "Training, Fine-tuning, instruction tuning, LLama, LLMs, ROCm, AMD GPUs, MI250, MI210, MI300"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Fine-tuning Llama 3 with Axolotl using ROCm on AMD GPUs

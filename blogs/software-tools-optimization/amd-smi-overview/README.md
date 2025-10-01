@@ -2,16 +2,25 @@
 blogpost: true
 blog_title: 'Getting to Know Your GPU: A Deep Dive into AMD SMI'
 thumbnail: '2024-10-31-amd-smi.jpeg'
+key_value_propositions: ""
+target_audience: ""
 date: 17 Sep 2024
 author: Matt Elliott
 tags: HPC, Optimization, Performance, System-Tuning
 category: Software tools & optimizations
 language: English
 myst:
-  html_meta:
-    "description lang=en": "This post introduces AMD System Management Interface (amd-smi), explaining how you can use it to access your GPU’s performance and status data"
-    "keywords": "HPC, Optimization, Performance, MI300, libraries"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This post introduces AMD System Management Interface (amd-smi), explaining how you can use it to access your GPU’s performance and status data"
+        "keywords": "HPC, Optimization, Performance, MI300, libraries"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Benchmarks and Testing"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, HPC & Scientific Computing"
+        "property=og:locale": "en_US"
 ---
 
 # Getting to Know Your GPU: A Deep Dive into AMD SMI

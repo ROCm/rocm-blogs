@@ -1,5 +1,6 @@
 AAC
 ABI
+agentic
 ALU
 AMD
 AMDGPU
@@ -272,6 +273,7 @@ SLES
 SMEM
 SMI
 SMT
+SMTS
 SPI
 SQs
 SRAM

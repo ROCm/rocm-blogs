@@ -2,17 +2,26 @@
 blogpost: true
 date: 13 Nov 2024
 blog_title: "Introducing AMD's Next-Gen Fortran Compiler"
+key_value_propositions: ""
+target_audience: ""
 author: Justin Chang, Brian Cornille, Michael Klemm, Johanna Potyka
 tags: Compiler, HPC, Performance
 thumbnail: 'Next-Gen-Fortran.jpeg'
 category: Ecosystems and Partners
 language: English
 myst:
-  html_meta:
-    "description lang=en": "In this post we present a brief preview of AMD's Next-Gen Fortran Compiler, our new open source Fortran complier optimized for AMD GPUs using OpenMP offloading, offering direct interface to ROCm and HIP."
-    "keywords": "HPC, Fortran, Compiler"
-    "property=og:locale": "en_US"
-html_theme.sidebar_secondary.remove: true    
+     html_meta:
+        "description lang=en": "In this post we present a brief preview of AMD's Next-Gen Fortran Compiler, our new open source Fortran complier optimized for AMD GPUs using OpenMP offloading, offering direct interface to ROCm and HIP."
+        "keywords": "HPC, Fortran, Compiler"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models, Ecosystem and Partners"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, Industry Applications & Use Cases"
+        html_theme.sidebar_secondary.remove: true    
 ---
 
 # Introducing AMD's Next-Gen Fortran Compiler

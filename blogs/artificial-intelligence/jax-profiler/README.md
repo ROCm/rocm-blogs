@@ -4,13 +4,25 @@ date: 22 July 2024
 author: Douglas Jia
 tags: JAX, AI/ML, Optimization, Profiling
 category: Applications & models
+blog_title: "Using statistical methods to reliably compare algorithm performance in large generative AI models with JAX Profiler on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Using Statistical Methods to Reliably Compare Algorithm Performance in Large Generative AI Models with JAX Profiler on AMD GPUs"
-    "author": "Douglas Jia"
-    "keywords": "JAX, Profiler, Optimization, Performance, Statistical Analysis, Testing, GPT, LLM, AMD, GPU, MI300, MI210, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Using Statistical Methods to Reliably Compare Algorithm Performance in Large Generative AI Models with JAX Profiler on AMD GPUs"
+        "author": "Douglas Jia"
+        "keywords": "JAX, Profiler, Optimization, Performance, Statistical Analysis, Testing, GPT, LLM, AMD, GPU, MI300, MI210, ROCm"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Using statistical methods to reliably compare algorithm performance in large generative AI models with JAX Profiler on AMD GPUs

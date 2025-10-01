@@ -94,7 +94,7 @@ The full optimization cycle, as illustrated in Figure 2, consists of several key
     insights, key bottlenecks are identified, and targeted optimizations
     are applied iteratively to reach peak performance.
 
-```{figure} ./images/FIGURE12.png
+```{figure} ./images/3618650_Kernel_Analysis_Blog_Charts_1.jpg
 :align: center
 :alt: Scaling performance
 Figure 2. Performance Optimization Cycle
@@ -213,7 +213,7 @@ runTracer.sh python3 -m SGLang.launch_server \
  osl=800
  
 # Run the client
- python3 -m SGLang.bench_serving \
+ python3 -m sglang.bench_serving \
    --backend SGLang \
    --dataset-name random \
    --random-range-ratio 1 \
@@ -259,7 +259,7 @@ Run the server: bash server.sh
 ```shell
 curl http://localhost:30000/start_profile
  
-python3 -m SGLang.bench_serving \
+python3 -m sglang.bench_serving \
    --backend SGLang \
    --dataset-name random \
    --random-range-ratio 1 \
@@ -267,6 +267,7 @@ python3 -m SGLang.bench_serving \
    --max-concurrency 128 \
    --random-input 3200 \
    --random-output 5
+   --profile
  
 curl http://localhost:30000/stop_profile
 ```
@@ -297,23 +298,16 @@ is 3x less vs Nvidia H200. Updating the attention and Mixture-of-Experts
 (MoE) kernels played a big role in cutting down GPU time which we will
 cover in a future blog.
 
-```{figure} ./images/FIGURE15.png
+```{figure} ./images/3618650_Kernel_Analysis_Blog_Charts_4.jpg
 :align: center
 :alt: Scaling performance
 Table 1. Decode Phase Kernel Level Breakdown of Latency of H200 and
 MI300X.
 ```
 
-The pie chart below (figure 5) illustrates the distribution of compute time across
-different components for both **Prefill** and **Decode** stages on
-MI300X GPU. In the **Prefill** phase, attention and GEMM operations
-consume the majority of time, with noticeable contributions from MoE and
-miscellaneous tasks. In contrast, during the **Decode** phase, GEMM
-becomes the most dominant, while attention takes a smaller share, and
-the rest of the time is spread across MoE, all_reduce, and miscellaneous
-operations.
+The pie chart below (Figure 5) illustrates the distribution of compute time across different components for both Prefill and Decode stages on MI300X GPUs. In the Prefill phase, attention and MoE operations consume the majority of time, with noticeable contributions from GEMM and miscellaneous tasks. In contrast, during the Decode phase, MoE becomes the most dominant, while attention takes a smaller share, and the rest of the time is spread across GEMM, all_reduce, and miscellaneous operations.
 
-```{figure} ./images/FIGURE16.png
+```{figure} ./images/MI300x-3134x2089.jpg
 :align: center
 :alt: Scaling performance
 Figure 5.  Compute time(seconds) for Prefill and Decode for MI300X GPU

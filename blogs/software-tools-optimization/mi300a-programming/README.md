@@ -10,23 +10,17 @@ language: English
 target_audience: "HPC Core Developers, HPC Solutions Architects"
 key_value_propositions: "APU style programming model - application optimization without explicit data movement."
 myst:
-  html_meta:
-    "description lang=en": "This blog post introduces the MI300 APU hardware, how it differs from other discrete systems, and how to leverage its GPU programming"
-    "keywords": "HPC, OpenMP, Memory, OpenMP"
-    "property=og:locale": "en_US"
-    "amd_category": "Developer Resources"
-    "amd_asset_type": "Blogs"
-    "amd_blog_type": "Technical Articles & Blogs"
-    "amd_blog_topic_categories": "Software & Ecosystem"
-    "amd_blog_hardware_platforms": "Instinct GPUs"
-    "amd_blog_applications": "Deploying AI at Scale"
-    "amd_technical_blog_type": "Ecosystem and Partners"
-    "amd_developer_type": "Software Developer"
-    "amd_blog_hardware_platforms": "Instinct GPUs"
-    "amd_product_type": "Accelerators"
-    "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
-    "amd_applications": "Cloud Computing"
-    "amd_industries": "Data Center"    
+    html_meta:
+        "description lang=en": "This blog post introduces the MI300 APU hardware, how it differs from other discrete systems, and how to leverage its GPU programming"
+        "keywords": "HPC, OpenMP, Memory, OpenMP"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"  
 ---
 
 # MI300A - Exploring the APU advantage

@@ -9,6 +9,12 @@
 ::::{grid} 2
 :margin: 1
 
+:::{grid-item-card} [Abhishek Patil](./authors/abhishek-patil.md)
+:padding: 1
+
+Senior Technical Product Manager at AMD
+:::
+
 :::{grid-item-card} [Alessandro Fanfarillo](./authors/alessandro-fanfarillo.md)
 :padding: 1
 
@@ -153,6 +159,12 @@ Member of Technical Staff at AMD
 Principal Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Phani Vaddadi](./authors/phani-vaddadi.md)
+:padding: 1
+
+Principal Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Phillip Dang](./authors/phillip-dang.md)
 :padding: 1
 
@@ -201,6 +213,12 @@ Senior Member of Technical Staff at AMD
 Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Tiffany Mintz](./authors/tiffany-mintz.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Vara Lakshmi Bayanagari](./authors/vara-lakshmi-bayanagari.md)
 :padding: 1
 
@@ -213,10 +231,22 @@ Machine Learning Engineer at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Vish Vadlamani](./authors/vish-vadlamani.md)
+:padding: 1
+
+Senior Director of Software Engineering at AMD
+:::
+
 :::{grid-item-card} [Yao Fehlis](./authors/yao-fehlis.md)
 :padding: 1
 
 Machine Learning Researcher at AMD
+:::
+
+:::{grid-item-card} [Yao Liu](./authors/yao-liu.md)
+:padding: 1
+
+Senior Software Development Manager at AMD
 :::
 
 :::{grid-item-card} [Arseny Moskvichev](./authors/arseny-moskvichev.md) *
@@ -247,6 +277,24 @@ Senior Software Development Engineer
 :padding: 1
 
 Director Software Development
+:::
+
+:::{grid-item-card} [Mingyu Yang](./authors/mingyu-yang.md) *
+:padding: 1
+
+Member of Technical Staff
+:::
+
+:::{grid-item-card} [Guihong Li](./authors/guihong-li.md) *
+:padding: 1
+
+Member of Technical Staff
+:::
+
+:::{grid-item-card} [Mehdi Rezagholizadeh](./authors/mehdi-rezagholizadeh.md) *
+:padding: 1
+
+Principal Member of Technical Staff
 :::
 
 ::::

@@ -4,12 +4,24 @@ date: 13 May 2024
 author: Asitav Mishra, Corbin Robeck
 tags: Compiler, HPC, Memory
 category: Software tools & optimizations
+blog_title: "Reading AMD GPU ISA"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Reading AMDGCN ISA"
-    "keywords": "Compiler, HPC, Memory"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Reading AMDGCN ISA"
+        "keywords": "Compiler, HPC, Memory"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, HPC & Scientific Computing"
+        "property=og:locale": "en_US"
+        "property=og:locale": "en_US"
 ---
 
 <!---

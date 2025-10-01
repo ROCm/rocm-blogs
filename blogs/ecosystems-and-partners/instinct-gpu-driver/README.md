@@ -24,10 +24,10 @@ myst:
         "amd_technical_blog_type": "Ecosystem and Partners"
         "amd_developer_type": "Software Developer"
         "amd_blog_hardware_platforms": "Instinct GPUs"
-        "amd_product_type": "Accelerators"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Cloud Computing"
-        "amd_industries": "Data Center"
+        "amd_blog_applications": "AI Inference, AI Training"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Tues Mar 18, 12:00:00 PST 2025
 ---
 <!---

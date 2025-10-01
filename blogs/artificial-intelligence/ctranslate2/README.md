@@ -6,13 +6,22 @@ date: 24 October 2024
 author: Michael Zhang
 tags: AI/ML, GenAI, LLM, PyTorch 
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Optimizing Transformer models with CTranslate2 for efficient inference on AMD GPUs"
-    "author": "Michael Zhang"
-    "keywords": "GenAI, CTranslate2, Transformer, NLP, translation, summarization, inference, quantization, optimization, AMD, GPU, MI300, MI250, ROCm, OpenNMT, PyTorch, LLM, gpt, whisper, llama"
-    "property=og:locale": "en_US"
+    html_meta:
+        "author": "Michael Zhang"
+        "description lang=en": "Optimizing Transformer models with CTranslate2 for efficient inference on AMD GPUs"
+        "keywords": "GenAI, CTranslate2, Transformer, NLP, translation, summarization, inference, quantization, optimization, AMD, GPU, MI300, MI250, ROCm, OpenNMT, PyTorch, LLM, gpt, whisper, llama"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # CTranslate2: Efficient Inference with Transformer Models on AMD GPUs

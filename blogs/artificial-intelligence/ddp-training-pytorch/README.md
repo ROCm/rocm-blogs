@@ -7,11 +7,20 @@ tags: LLM, AI/ML, GenAI, PyTorch
 category: Applications & models
 language: English
 thumbnail: 'ddp-amd.jpg'
+key_value_propositions: ""
+target_audience: ""
 myst:
-  html_meta:
-    "description lang=en": "This blog demonstrates how to speed up the training of a ResNet model on the CIFAR-100 classification task using PyTorch DDP on AMD GPUs with ROCm."
-    "keywords": "DDP, PyTorch, Distributed Data Parallel, DDP, Training, Multi-node training, multi-GPU training, Resnet, CNN, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "This blog demonstrates how to speed up the training of a ResNet model on the CIFAR-100 classification task using PyTorch DDP on AMD GPUs with ROCm."
+        "keywords": "DDP, PyTorch, Distributed Data Parallel, DDP, Training, Multi-node training, multi-GPU training, Resnet, CNN, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Distributed Data Parallel Training on AMD GPU with ROCm

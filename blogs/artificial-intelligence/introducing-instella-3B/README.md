@@ -22,9 +22,9 @@ myst:
         "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer"
         "amd_deployment": "Servers, Workstations"
-        "amd_product_type": "Accelerators"
+        "amd_blog_hardware_platforms": 'Instinct GPUs'
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Large Language Model (LLM)"
+        "amd_blog_applications": "Large Language Model (LLM)"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_applications": "AI Inference"
 ---

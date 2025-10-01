@@ -21,11 +21,11 @@ myst:
         "amd_blog_type": "Technical Articles & Blogs"
         "amd_technical_blog_type": "Applications and Models"
         "amd_developer_type": "ML/AI Developer, Application Developer, Software Developer"
-        "amd_deployment": "Workstations, Servers"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_product_type": "Development Tools, Accelerators, Software & Applications"
-        "amd_developer_tool": "ROCm Software, Open-Source Tools"
-        "amd_applications": "Cloud Computing, Data Analytics, Large Language Model (LLM), Natural Language Processing (NLP)"
-        "amd_industries": "Data Center"
+        "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
+        "amd_blog_applications": "AI Inference, Generative AI, Data Science, Deploying AI at Scale"
+        "amd_blog_topic_categories": 'Software & Ecosystem'
         "amd_blog_releasedate": Thu Mar 13, 12:00:00 PST 2025
 ---
 

@@ -87,7 +87,7 @@ ROCm offers a comprehensive suite of tools for profiling, debugging, and system 
 
 Key tools include:
 
-- **Profiling:** `rocProfiler` and `rocTracer` for GPU execution, memory, and API tracing.
+- **Profiling:** ROCprofiler-SDK and `rocprofv3` for GPU execution, memory, and API tracing.
 - **Debugging:** `ROCdbgapi` and `ROCgdb` for low-level GPU state access and source-level debugging.
 - **Portability:** HIPIFY for CUDA-to-HIP code conversion and CMake modules for platform-agnostic builds.
 - **System Management:** AMD SMI (monitoring/control), rocminfo (system/GPU topology), and ROCm Validation Suite (hardware validation).
@@ -133,6 +133,10 @@ This expanding partner ecosystem ensures that ROCm users benefit from a rich set
 ## Summary
 
 Since its initial launch, ROCm has evolved into a comprehensive, high-performance computing ecosystem—offering robust compilers, optimized libraries, powerful developer tools, flexible scheduling, and broad application support. This journey reflects AMD’s commitment to empowering developers and researchers with scalable, open-source GPU solutions for AI, HPC, and beyond. Explore what else ROCm has to offer by looking through the [ROCm documentation](https://rocm.docs.amd.com/en/latest/index.html)[^9]. To continue learning about ROCm’s evolution and ecosystem, be sure to follow upcoming posts on the [ROCm Revisited series](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-revisited/README.html)[^1].
+
+```{update} Jun 9, 2025
+Changed the names of the profiling tools from deprecated products to actively supported products.
+```
 
 ## Disclaimers
 

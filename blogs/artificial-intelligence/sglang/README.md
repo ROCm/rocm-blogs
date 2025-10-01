@@ -6,13 +6,22 @@ date: 13 November 2024
 author: Michael Zhang, Hai Xiao, Hui Liu, Yineng Zhang
 tags: AI/ML, GenAI, LLM, PyTorch
 category: Software tools & optimizations
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Discover SGLang, a fast serving framework designed for large language and vision-language models on AMD GPUs, supporting efficient runtime and a flexible programming interface."
-    "author": "Michael Zhang"
-    "keywords": "LLM, vision-language models, backend optimization, SGLang, RadixAttention, Tensor Parallelism, multi-GPU, PyTorch, AI models, AMD, GPU, MI300, MI250, ROCm, gpt, llama"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Discover SGLang, a fast serving framework designed for large language and vision-language models on AMD GPUs, supporting efficient runtime and a flexible programming interface."
+        "author": "Michael Zhang"
+        "keywords": "LLM, vision-language models, backend optimization, SGLang, RadixAttention, Tensor Parallelism, multi-GPU, PyTorch, AI models, AMD, GPU, MI300, MI250, ROCm, gpt, llama"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # SGLang: Fast Serving Framework for Large Language and Vision-Language Models on AMD Instinct GPUs

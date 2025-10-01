@@ -4,12 +4,23 @@ date: 11 July 2024
 author: Sean Song
 tags: LLM, AI/ML, GenAI, Computer Vision, Compiler, PyTorch
 category: Applications & models
+blog_title: "Accelerate PyTorch Models using torch.compile on AMD GPUs with ROCm"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Accelerate PyTorch Models using torch.compile on AMD GPUs with ROCm"
-    "keywords": "torch.compile, PyTorch, Compiler, Compilation, LLM, Computer Vision, Classification, Acceleration, Transformer, Convolutional Neural Networks, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Accelerate PyTorch Models using torch.compile on AMD GPUs with ROCm"
+        "keywords": "torch.compile, PyTorch, Compiler, Compilation, LLM, Computer Vision, Classification, Acceleration, Transformer, Convolutional Neural Networks, ROCm, Mi210, MI250, MI300, AI/ML, Generative AI"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Computer Vision"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Accelerate PyTorch Models using torch.compile on AMD GPUs with ROCm

@@ -1,15 +1,26 @@
 ---
 blogpost: true
 date: 4 Jan 2023
+blog_title: 'Finite difference method - Laplacian part 2'
 author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
 tags: HPC, Memory, Optimization, Performance, Profiling, Scientific Computing
 category: Applications & models
 language: English
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "Finite difference method - Laplacian Part 2"
-    "keywords": "HPC, finite difference, PDE, MI250, performance"
-    "property=og:locale": "en_US"
+    html_meta:
+          "description lang=en": "Finite difference method - Laplacian Part 2"
+          "keywords": "HPC, finite difference, PDE, MI250, performance"
+          "amd_category": "Developer Resources"
+          "amd_asset_type": "Blog"
+          "amd_technical_blog_type": "Applications and Models, Benchmarks and Testing"
+          "amd_blog_hardware_platforms": "Instinct GPUs"
+          "amd_blog_development_tools": "ROCm Software"
+          "amd_blog_applications": "Data Science, Design, Simulation & Modeling"
+          "amd_blog_topic_categories": "HPC & Scientific Computing"
+          "property=og:locale": "en_US"
 ---
 
 # Finite difference method - Laplacian part 2

@@ -4,14 +4,23 @@ date: 26 Jan 2024
 author: Vara Lakshmi Bayanagari
 tags: LLM, GenAI, PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
+blog_title: "Pre-training BERT using Hugging Face & PyTorch on an AMD GPU"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Pre-training BERT using Hugging Face & PyTorch on an
-  AMD GPU"
-    "keywords": "BERT, language representation model, fine-tuning, Masked
-  Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300, Natural Language Processing"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Pre-training BERT using Hugging Face & PyTorch on an AMD GPU"
+        "keywords": "BERT, language representation model, fine-tuning, Masked Language Modelling, MLM, Generative AI, AMD GPU, MI250, MI300, Natural Language Processing"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Pre-training BERT using Hugging Face & PyTorch on an AMD GPU

@@ -1,20 +1,30 @@
 ---
 blogpost: true
+blog_title: "Text Summarization with FLAN-T5"
 date: 16 April 2024
 author: Phillip Dang
 tags: PyTorch, AI/ML, Fine-Tuning
 category: Applications & models
+thumbnail: ''
+key_value_propositions: ''
+target_audience: ''
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Text Summarization with FLAN-T5 on AMD GPU"
-    "keywords": "PyTorch, FLAN-T5, LLM, fine-tune, summarization, AMD, GPU, MI300, MI250"
-    "property=og:locale": "en_US"
+    html_meta:
+       "description lang=en": "Text Summarization with FLAN-T5 on AMD GPU"
+       "keywords": "PyTorch, FLAN-T5, LLM, fine-tune, summarization, AMD, GPU, MI300, MI250"
+       "property=og:locale": "en_US"
+       "vertical": "AI"
+       "amd_category": "Developer Resources"
+       "amd_asset_type": "Blog"
+       "amd_technical_blog_type": "Ecosystem and Partners"
+       "amd_blog_hardware_platforms": "Instinct GPUs"
+       "amd_blog_development_tools": "ROCm Software"
+       "amd_blog_applications": "Generative AI, AI Inference, AI Training, Data Science, Design, Simulation & Modeling"
+       "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"    
 ---
 
 # Text Summarization with FLAN-T5
-
-<span style="font-size:0.7em;">16, Apr 2024 by {hoverxref}`Phillip Dang<phildang>`. </span>
 
 In this blog, we showcase the language model FLAN-T5 and how to fine-tune it on a summarization task with HuggingFace in an AMD GPUs + ROCm system.
 

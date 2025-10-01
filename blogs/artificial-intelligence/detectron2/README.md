@@ -4,15 +4,24 @@ date: 23 May 2024
 author: Vara Lakshmi Bayanagari
 tags: PyTorch, AI/ML, Reinforcement Learning, Computer Vision
 category: Applications & models
+blog_title: "Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Object Detection and Image Segmentation with Detectron2 on AMD GPU"
-    "author": "Vara Lakshmi Bayanagari"
-    "keywords": "PyTorch, AI/ML, AMD GPU, Detectron2, object detection, semantic segmentation,
-    Panoptic Segmentation, Mask-RCNN, ROCm, AMD GPU, MI300X, MI250, MI210, Reinforcement Learning,
-    Computer Vision"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Object Detection and Image Segmentation with Detectron2 on AMD GPU"
+        "author": "Vara Lakshmi Bayanagari"
+        "keywords": "PyTorch, AI/ML, AMD GPU, Detectron2, object detection, semantic segmentation, Panoptic Segmentation, Mask-RCNN, ROCm, AMD GPU, MI300X, MI250, MI210, Reinforcement Learning, Computer Vision"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Panoptic segmentation and instance segmentation with Detectron2 on AMD GPUs

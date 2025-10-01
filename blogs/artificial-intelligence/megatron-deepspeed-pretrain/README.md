@@ -4,15 +4,23 @@ date: 24 Jan 2024
 author: Douglas Jia
 tags: LLM, AI/ML, Fine-Tuning, PyTorch
 category: Applications & models
+blog_title: "Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Pre-training a large language model with
-  Megatron-DeepSpeed on multiple AMD GPUs"
-    "keywords": "Megatron, language model, fine-tuning, DeepSpeed,
-  Generative AI, Megatron-DeepSpeed, GPT-3, 3D parallelism, AMD GPU, MI300, MI250,
-    flash-attention, AAC, Tuning"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs"
+        "keywords": "Megatron, language model, fine-tuning, DeepSpeed, Generative AI, Megatron-DeepSpeed, GPT-3, 3D parallelism, AMD GPU, MI300, MI250, flash-attention, AAC, Tuning"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Pre-training a large language model with Megatron-DeepSpeed on multiple AMD GPUs

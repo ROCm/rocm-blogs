@@ -5,11 +5,22 @@ author: David Doscher
 tags: HPC, Installation
 category: Software tools & optimizations
 language: English
+blog_title: "AMD ROCm™ installation"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 myst:
-  html_meta:
-    "description lang=en": "ROCm installation"
-    "keywords": "HPC, ROCm, MI250, MI300, libraries, installation"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "ROCm installation"
+        "keywords": "HPC, ROCm, MI250, MI300, libraries, installation"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI, Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # AMD ROCm™ installation

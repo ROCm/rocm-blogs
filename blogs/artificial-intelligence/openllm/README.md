@@ -6,13 +6,22 @@ date: 1 May 2024
 author: Fabricio Flores
 tags: AI/ML, LLM, Serving
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "OpenLLM is an open-source platform for deploying large language models, enabling cloud or on-premises use. In this blog we focus on using OpenLLM to start an LLM server leveraging the capabilities of AMD GPUs"
-    "author": "Fabricio Flores"
-    "keywords": "LLM, OpenLLM, vLLM, ROCm, AMD, GPU, MI300, MI250"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "OpenLLM is an open-source platform for deploying large language models, enabling cloud or on-premises use. In this blog we focus on using OpenLLM to start an LLM server leveraging the capabilities of AMD GPUs"
+        "author": "Fabricio Flores"
+        "keywords": "LLM, OpenLLM, vLLM, ROCm, AMD, GPU, MI300, MI250"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
 ---
 
 # Step-by-Step Guide to Use OpenLLM on AMD GPUs

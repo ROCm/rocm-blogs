@@ -5,12 +5,21 @@ tags: Partner Applications
 category: Ecosystems and Partners
 blog_title: 'Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators'
 thumbnail: 'stone-ridge.jpg'
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Stone Ridge Technology (SRT) pioneered the use of GPUs for high performance reservoir simulation (HPC) nearly a decade ago with ECHELON, its flagship software product. ECHELON, the first of its kind, engineered from the outset to harness the full potential of massively parallel GPUs, stands apart in the industry for its power, efficiency, and accuracy. Now, ECHELON has added support for AMDInstinct accelerators into its simulation engine, offering new flexibility and optionality to its clients."
-    "keywords": "Stone Ridge, SRT, ECHELON, HIP, Instinct GPU, HPC, MI210, MI250, MI300X, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Stone Ridge Technology (SRT) pioneered the use of GPUs for high performance reservoir simulation (HPC) nearly a decade ago with ECHELON, its flagship software product. ECHELON, the first of its kind, engineered from the outset to harness the full potential of massively parallel GPUs, stands apart in the industry for its power, efficiency, and accuracy. Now, ECHELON has added support for AMDInstinct accelerators into its simulation engine, offering new flexibility and optionality to its clients."
+        "keywords": "Stone Ridge, SRT, ECHELON, HIP, Instinct GPU, HPC, MI210, MI250, MI300X, ROCm"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models, Ecosystem and Partners"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "Design, Simulation & Modeling"
+        "amd_blog_topic_categories": "Software & Ecosystem, HPC & Scientific Computing, Industry Applications & Use Cases"
+        "property=og:locale": "en_US"
 ---
 
 # Stone Ridge Expands Reservoir Simulation Options with AMD Instinct™ Accelerators

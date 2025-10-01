@@ -6,13 +6,23 @@ date: 24 October 2024
 author: Fabricio Flores
 tags: PyTorch, AI/ML, LLM
 category: Applications & models
+key_value_propositions: ""
+target_audience: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "Torchtune is a PyTorch library that enables efficient fine-tuning of LLMs. In this blog we use Torchtune to fine-tune the Llama-3.1-8B model for summarization tasks using LoRA and showcasing scalable training across multiple GPUs."
-    "author": "Fabricio Flores"
-    "keywords": "Torchtune, LoRA, PyTorch, Llama3, Llama-3.1, Llama-3.1-8B, LLM, Fine-tuning, distributed training, ROCm, AMD, GPU, MI300, MI250, MI210"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "Torchtune is a PyTorch library that enables efficient fine-tuning of LLMs. In this blog we use Torchtune to fine-tune the Llama-3.1-8B model for summarization tasks using LoRA and showcasing scalable training across multiple GPUs."
+        "author": "Fabricio Flores"
+        "keywords": "Torchtune, LoRA, PyTorch, Llama3, Llama-3.1, Llama-3.1-8B, LLM, Fine-tuning, distributed training, ROCm, AMD, GPU, MI300, MI250, MI210"
+        "property=og:locale": "en_US"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+
 ---
 
 # Torchtune on AMD GPUs How-To Guide: Fine-tuning and Scaling LLMs with Multi-GPU Power

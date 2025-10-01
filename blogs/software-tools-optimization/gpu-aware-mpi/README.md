@@ -4,12 +4,23 @@ date: 8 Jun 2023
 author: Mahdieh Ghazimirsaeed, Noel Chalmers, Damon McDougall
 tags: Compiler, HPC, Installation, Memory, Performance
 category: Software tools & optimizations
+blog_title: "GPU-aware MPI with ROCm"
+key_value_propositions: ""
+target_audience: ""
+thumbnail: ""
 language: English
 myst:
-  html_meta:
-    "description lang=en": "GPU-aware MPI with ROCm"
-    "keywords": "HPC, MI250, MPI, cray, mpich, openmpi, ROCm"
-    "property=og:locale": "en_US"
+    html_meta:
+        "description lang=en": "GPU-aware MPI with ROCm"
+        "keywords": "HPC, MI250, MPI, cray, mpich, openmpi, ROCm"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Applications and Models"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference, Generative AI"
+        "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
+        "property=og:locale": "en_US"
 ---
 
 # GPU-aware MPI with ROCm
