@@ -5,7 +5,7 @@ author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel
 tags: Compiler, Linear Algebra, Memory, HPC, Optimization
 category: Software tools & optimizations
 language: English
-bio: "Daniel Velicka is a contributor to ROCm matrix cores, focusing on double-precision GEMM, and its differences from single-precision GEMM."
+bio: Daniel Velicka is a contributor to ROCm matrix cores, focusing on double-precision GEMM, and its differences from single-precision GEMM.
 blog_title: "AMD matrix cores"
 key_value_propositions: ""
 target_audience: ""
