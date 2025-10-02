@@ -123,7 +123,7 @@ This tutorial assumes ROCm 6.3+ and Docker are available on your system. We run 
 
 ## Step-by-Step Setup
 
-For starters let's clone [rocm blogs](https://github.com/ROCm/rocm-blogs/artificial-intelligence/serving-videogen-v1/) GitHub repo and navigate to the directory where you can find supplementary code for this blog.
+For starters let's clone [rocm blogs](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/serving-videogen-v1) GitHub repo and navigate to the directory where you can find supplementary code for this blog.
 
 ```bash
 git clone git@github.com:ROCm/rocm-blogs.git
