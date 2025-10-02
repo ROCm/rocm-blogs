@@ -130,7 +130,6 @@ docker run -d --rm\
   --ipc=host \
   --cap-add=SYS_PTRACE \
   --security-opt seccomp=unconfined \
-  --privileged \
   --name comfyui-rocm-container \
   -p 8188:8188 \
   comfyui-rocm \
