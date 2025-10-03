@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Enabling FlashInfer on ROCm for Accelerated LLM Serving"
 date: 1 Oct 2025
-author: 'Clint Greene, Rishi Madduri, Yao Liu'
+author: 'Rishi Madduri, Dipto Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani'
 thumbnail: 'flashinfer-thumbnail.jpg'
 tags: AI/ML, GenAI, Optimization, Serving
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Demonstrate that FlashInfer now runs on ROCm for acceler
 language: English
 myst:
     html_meta:
-        "author": "Clint Greene, Rishi Madduri, Yao, Liu"
+        "author": "Rishi Madduri, Dipto Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani"
         "description lang=en": "FlashInfer is an open-source library for accelerating LLM serving that is now supported by ROCm."
         "keywords": "Flashinfer, transformer, inference, prefill, decode, flash attention, LLM, serving"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, Generative AI, Data Science"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_authors": "Clint Greene, Rishi Madduri, Yao, Liu"
+        "amd_blog_authors": "Rishi Madduri, Dipto Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani"
 ---
 
 <!---
@@ -130,8 +130,12 @@ The early release of FlashInfer for ROCm marks an important milestone in making 
 
 Stay tuned for updates, and try FlashInfer on ROCm today to start experiencing accelerated LLM serving on AMD GPUs!
 
+## Acknowledgements
+
+The authors wish to acknowledge the AMD teams that supported this work, whose contributions were instrumental in enabling FlashInfer: Aditya Bhattacharji, Pankaj Gupta, Radha Srimanthula, Anisha Sankar, Amit Kumar, Ram Seenivasan, Eliot Li, Ian Dass, Kiran Thumma, Aakash Sudhanwa, Ehud Sharlin, Saad Rahim.
+
 ## Additional Resources
- 
+
 Ye, Z., Chen, L., Lai, R., Lin, W., Zhang, Y., Wang, S., Chen, T., Kasikci, B., Grover, V., Krishnamurthy, A., & Ceze, L. (2025). FlashInfer: Efficient and customizable attention engine for LLM inference serving. *arXiv preprint*. [arXiv:2501.01005](https://arxiv.org/abs/2501.01005)
 
 ## Disclaimers
