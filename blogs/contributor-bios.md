@@ -57,6 +57,12 @@ Principal Member of Technical Staff at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Deepan Sekar](./authors/deepan-sekar.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Douglas Jia](./authors/douglas-jia.md)
 :padding: 1
 
