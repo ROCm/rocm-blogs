@@ -84,7 +84,7 @@ In summary, 3DGS combines the speed of explicit rendering, the flexibility of vo
 
 ### System Requirements
 
-GSplat for AMD ROCm™ 1.0.0 depends directly on PyTorch for AMD ROCm™
+GSplat 1.0.0 for AMD ROCm™ depends directly on PyTorch for AMD ROCm™
 
 - ROCm: version 6.4.3 (recommended)
 - Operating system: Ubuntu 22.04 and above
@@ -266,7 +266,7 @@ In our next blog we will explore more advanced workflows, optimizations, and int
 
 - Mildenhall, Ben, Pratul P. Srinivasan, Matthew Tancik, Jonathan T. Barron, Ravi Ramamoorthi, and Ren Ng. "Nerf: Representing scenes as neural radiance fields for view synthesis." Communications of the ACM 65, no. 1 (2021).
 
-- Kerbl, Bernhard, Georgios Kopanas, Thomas Leimkühler, and George Drettakis. "3D Gaussian splatting for real-time radiance field rendering." ACM Trans. Graph. 42, no. 4 (2023): 139-1. 
+- Kerbl, Bernhard, Georgios Kopanas, Thomas Leimkühler, and George Drettakis. "3D Gaussian splatting for real-time radiance field rendering." ACM Trans. Graph. 42, no. 4 (2023): 139-1.
 
 - Ye, Vickie, Ruilong Li, Justin Kerr, Matias Turkulainen, Brent Yi, Zhuoyang Pan, Otto Seiskari et al. "gsplat: An open-source library for Gaussian splatting." Journal of Machine Learning Research 26, no. 34 (2025): 1-17.
 
@@ -278,6 +278,5 @@ PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CON
 IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO
 YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE
 FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
-
 
 [def]: images/Distributed-Training.png
