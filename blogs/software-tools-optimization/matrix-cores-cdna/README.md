@@ -587,8 +587,8 @@ The compiler intrinsic function `__builtin_amdgcn_mfma_scale_f32_32x32x64_f8f6f4
 
 In this article, we introduced Matrix Core instructions available on the AMD CDNA™3 and CDNA™4 architectures. We covered floating-point formats in detail, including modern low-precision element data types such as FP8, FP6, FP4, and the scale data type E8M0. We further explained how the floating-point types are represented as binary sequences and demonstrated, with concrete examples, how to convert their binary representations into real values. Next, we listed Matrix Core instructions supported by the modern CDNA™ architectures and discussed how to calculate the theoretical peak performance of Matrix Cores for specific MFMA instructions. To make the discussion more practical, we reviewed the compiler intrinsic functions that allow users to program Matrix Cores inside HIP kernels. Finally, we examined a subset of MFMA instructions in detail, providing code examples and illustrations to explain data layout and demonstrate how to implement simple mixed-precision MFMA operations in HIP. For additional information on Matrix Cores and low-precision data types, please refer to the following resources:
 
-1. [Matrix Core Programming on CDNA2 - ROCm Blogs](https://rocm.blogs.amd.com/software-tools-optimization/matrix-cores/README.htm)
-2. [Using the Matrix Cores of AMD RDNA 4 architecture GPUs - GPUOpen Blogs](https://rocm.blogs.amd.com/software-tools-optimization/matrix-cores/README.htm)
+1. [Matrix Core Programming on CDNA2 - ROCm Blogs](https://rocm.blogs.amd.com/software-tools-optimization/matrix-cores/README.html)
+2. [Using the Matrix Cores of AMD RDNA 4 architecture GPUs - GPUOpen Blogs](https://gpuopen.com/learn/using_matrix_core_amd_rdna4)
 3. [AMD Matrix Instruction Calculator](https://github.com/ROCm/amd_matrix_instruction_calculator)
 4. [Low-Precision Floating Point Types - ROCm documentation](https://rocm.docs.amd.com/projects/HIP/en/latest/reference/low_fp_types.html)
 
