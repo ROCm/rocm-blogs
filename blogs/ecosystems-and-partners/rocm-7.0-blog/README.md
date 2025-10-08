@@ -308,7 +308,7 @@ And this is only the start. We are planning to refresh the UX of our profiler to
 ## Additional Resources
 
 - [ROCm Announcement Blog](https://www.amd.com/en/developer/resources/technical-articles/2025/amd-rocm-7-built-for-developers-ready-for-enterprises.html)
-- [AMD GPU Driver Release Notes](https://instinct.docs.amd.com/projects/amdgpu-docs/en/30.10.0/documentation/change-logs/30.10.0.html)
+- [AMD GPU Driver Release Notes](https://instinct.docs.amd.com/projects/amdgpu-docs/en/latest/documentation/change-logs/30.10.1.html#amd-gpu-driver-amdgpu-30-10-release-notes)
 - [AMD GPU 30.10.0 Documentation](https://instinct.docs.amd.com/projects/amdgpu-docs/en/latest/)
 - [ROCm SDK Release Notes](https://rocm.docs.amd.com/en/docs-7.0.0/about/release-notes.html)
 - [ROCm 7.0 Documentation](https://rocm.docs.amd.com)
