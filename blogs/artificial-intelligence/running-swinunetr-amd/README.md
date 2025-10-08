@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Running SwinUNETR on AMD MI300X GPUs"
 date: 07 Oct 2025
 author: 'Joaquin Rives Gambin, Vasumathi Neralla, David Bjorelind'
-thumbnail: 'images/thumbnail.png'
+thumbnail: 'swinunetrblogthumbnail.png'
 tags: AI/ML, HPC, Computer Vision, Optimization, PyTorch
 category: Applications & models
 target_audience: AI Scientists
@@ -307,12 +307,14 @@ While the overall results were highly successful, several areas could benefit fr
 
 ### Related Content
 
-This blog is part of our ongoing series on Life Science AI models, building on our previous work with [AstraZeneca's improved life sciences model training](https://www.amd.com/en/blogs/2025/astrazeneca-improved-life-sciences-model-training-time.html). 
+This blog is part of our ongoing series on Life Science AI models, building on our previous work with [AstraZeneca's improved life sciences model training](https://www.amd.com/en/blogs/2025/astrazeneca-improved-life-sciences-model-training-time.html).
 
 **Upcoming in this series:**
+
 - Model serving and inference optimization for SwinUNETR
 
 **Related AMD resources:**
+
 - [ROCm Software Platform](https://rocm.docs.amd.com/) for GPU computing
 - [AMD Instinct™ MI300X specifications](https://www.amd.com/en/products/server-accelerators/instinct-mi300x) and performance guides
 - [ROCm Life Science toolkit](https://rocm.docs.amd.com/projects/rocm-ls/en/develop/index.html) for GPU accelerated computational workloads workloads
