@@ -9,7 +9,7 @@
 # Mukhil Azhagan Mallaiyan Sathiaseelan
 
 ```{image} ./data/473164243-d1f5d165-78a4-4988-abb8-3d557bdfbe41.png
- :alt: Aditya Kumar Singh
+ :alt: Mukhil Azhagan Mallaiyan Sathiaseelan
  :class: bg-primary
  :height: 250px
  :align: left

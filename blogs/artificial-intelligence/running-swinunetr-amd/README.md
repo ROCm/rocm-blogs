@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Running SwinUNETR on AMD MI300X GPUs"
 date: 07 Oct 2025
-author: 'Joaquin Rives Gambin, Vasumathi Neralla, David Bjorelind'
+author: 'Joaquin Rives Gambin, Vasumathi Neralla, David Björelind, Rui Sampaio'
 thumbnail: 'swinunetrblogthumbnail.png'
 tags: AI/ML, HPC, Computer Vision, Optimization, PyTorch
 category: Applications & models
