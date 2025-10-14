@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "Running SwinUNETR on AMD MI300X GPUs"
+blog_title: "Medical Imaging on MI300X: Optimized SwinUNETR for Tumor Detection"
 date: 07 Oct 2025
 author: 'Joaquin Rives Gambin, Vasumathi Neralla, David Björelind, Rui Sampaio'
 thumbnail: 'swinunetrblogthumbnail.png'
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Training, Computer Vision"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Joaquin Rives Gambin, Vasumathi Neralla, David Bjorelind"
+        "amd_blog_authors": "Joaquin Rives Gambin, Vasumathi Neralla, David Björelind, Rui Sampaio"
 ---
 
 <!---
@@ -47,7 +47,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# Running SwinUNETR on AMD MI300X GPUs
+# Medical Imaging on MI300X: Optimized SwinUNETR for Tumor Detection
 
 This blog is part of a series of walkthroughs of Life Science AI models, stemming from [this article](https://www.amd.com/en/blogs/2025/astrazeneca-improved-life-sciences-model-training-time.html).
 
