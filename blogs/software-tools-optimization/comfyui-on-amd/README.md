@@ -123,13 +123,9 @@ Once the image is built, launch a container based on the image with:
 
 ```bash
 docker run -d --rm\
-  --network=host \
   --device=/dev/kfd \
   --device=/dev/dri \
   --group-add=video \
-  --ipc=host \
-  --cap-add=SYS_PTRACE \
-  --security-opt seccomp=unconfined \
   --name comfyui-rocm-container \
   -p 8188:8188 \
   comfyui-rocm \
