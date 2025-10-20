@@ -72,7 +72,7 @@ and industry-wide ROCm releases needed exact combinations of all these projects 
 The ROCm software ecosystem has expanded dramatically over the past few years. Our single monolithic release targeting multiple industries and use cases often leaves our users installing more software than they need.
 We understand this trend is not sustainable, and have already introduced [ROCm-DataScience](https://rocm.blogs.amd.com/software-tools-optimization/introducing-rocm-ds-revolutionizing-data-processing-with-amd-instinct-gpus/README.html) and [ROCm-LifeScience](https://rocm.blogs.amd.com/software-tools-optimization/rocm-ls-intro/README.html) as separate entities.
 However, the entire ROCm toolkit is still too big, and the ROCm Core SDK slims it down to the parts necessary to run common AI workloads.
-This means moving groups of related packages to market specific expansion packs such as HPC, or moving standalone projects into the miscellaneous category. These changes will land in early 2026 with ROCm 8.
+This means moving groups of related packages to market specific expansion packs such as HPC, or moving standalone projects into the miscellaneous category. These changes will land in mid 2026 with ROCm 8.
 
 Before TheRock, the centralized build system was a collection of bash scripts invoking CMake or make as necessary to build the core ROCm toolkit. Passing CMake build flags across a single build often required manual intervention.
 TheRock brings a pure CMake based build system, streamlining the propagation of build flags and configurations across different stages and components of the build.
