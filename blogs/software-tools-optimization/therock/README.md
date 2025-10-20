@@ -78,7 +78,7 @@ Before TheRock, the centralized build system was a collection of bash scripts in
 TheRock brings a pure CMake based build system, streamlining the propagation of build flags and configurations across different stages and components of the build.
 Python and github are used for dependency management.
 
-[ROCm 7.9 (TODO: update link)](https://advanced-micro-devices-rocm-internal--586.com.readthedocs.build/en/586/about/release-notes.html) is a technology preview release built by TheRock. We intend to continue supporting the current build process for ROCm until the switch over to TheRock in mid-2026.
+[ROCm 7.9](https://rocm.docs.amd.com/en/docs-7.9.0/about/release-notes.html) is a technology preview release built by TheRock. We intend to continue supporting the current build process for ROCm until the switch over to TheRock in mid-2026.
 For more on ROCm 7 including new features, changes, and general improvements, see the [ROCm 7.0 release blog](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-7.0-blog/README.html).
 
 The diagram below shows an overview of the entire software stack that powers an AMD GPU.
@@ -339,7 +339,7 @@ The ROCm Core SDK is a carefully structured collection of foundational libraries
 ROCm has made tremendous progress over the past decade, but to deliver ROCm solutions faster in an increasingly complex ecosystems, we rebuilt the build system to allow us to accelerate our journey.
 The Core SDK and TheRock are key parts of AMD's strategy for delivering AI software solutions that get the most out of the next generation of GPU hardware.
 
-ROCm 7.9 is a technology preview release, formally introducing the ROCm Core SDK and TheRock available to developers. The keyhighlights of TheRock are as follows:
+ROCm 7.9 is a technology preview release, formally introducing the ROCm Core SDK and TheRock available to developers. The key highlights of TheRock are as follows:
 
 * Consolidation of source code into core super repositories: systems, libraries
 * ManyLinux_2_28 support in our Python wheels and ROCm binaries
