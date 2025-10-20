@@ -339,7 +339,7 @@ The ROCm Core SDK is a carefully structured collection of foundational libraries
 ROCm has made tremendous progress over the past decade, but to deliver ROCm solutions faster in an increasingly complex ecosystems, we rebuilt the build system to allow us to accelerate our journey.
 The Core SDK and TheRock are key parts of AMD's strategy for delivering AI software solutions that get the most out of the next generation of GPU hardware.
 
-ROCm 7.9 is a technology preview release, formally introducing the ROCm Core SDK and TheRock available to developers. The keyhighlights of TheRock are as follows:
+ROCm 7.9 is a technology preview release, formally introducing the ROCm Core SDK and TheRock available to developers. The key highlights of TheRock are as follows:
 
 * Consolidation of source code into core super repositories: systems, libraries
 * ManyLinux_2_28 support in our Python wheels and ROCm binaries
