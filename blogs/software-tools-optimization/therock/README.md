@@ -112,9 +112,6 @@ These include:
   * Math and ML libraries including [hipBLAS](https://github.com/ROCm/hipblas), [rocRAND](https://github.com/ROCm/rocRAND), [ComposableKernel](https://github.com/ROCm/composable_kernel/), [MIOpen](https://github.com/ROCm/miopen), and more.
   * The full list is in the rocm-libraries super-repo at [rocm-libraries/projects](https://github.com/ROCm/rocm-libraries/tree/develop/projects).
   * Fully-migrated projects are mapped into TheRock's ROCm build at locations including the `rocm-libraries` submodule of [TheRock](https://github.com/ROCm/TheRock/tree/main) itself. Some are included at [TheRock/math-libs](https://github.com/ROCm/TheRock/tree/main/math-libs) and [TheRock/ml-libs](https://github.com/ROCm/TheRock/tree/main/ml-libs).
- 
-* llvm
-* gdb
 
 Our [blog post on ROCm 7.0](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-7.0-blog/README.html#math-compute-libraries) gives a full list of math and communication libraries, with descriptions and links.
 
@@ -339,12 +336,12 @@ supporting ongoing compatibility across AMD products and throughout the wider ec
 ## Summary
 
 The ROCm Core SDK is a carefully structured collection of foundational libraries, and TheRock is a centralized build system that systematically gathers, builds, and tests these components.
-ROCm has made tremendous progress over the past decade, but to deliver ROCm solutions faster in an increasingly complex ecosystems, we rebuilt the e̶n̶g̶i̶n̶e̶  build system to allow us to accelerate our journey.
+ROCm has made tremendous progress over the past decade, but to deliver ROCm solutions faster in an increasingly complex ecosystems, we rebuilt the build system to allow us to accelerate our journey.
 The Core SDK and TheRock are key parts of AMD's strategy for delivering AI software solutions that get the most out of the next generation of GPU hardware.
 
 ROCm 7.9 is a technology preview release, formally introducing the ROCm Core SDK and TheRock available to developers. The keyhighlights of TheRock are as follows:
 
-* Consolidation of source code into four core super repositories: systems, libraries, llvm and gdb
+* Consolidation of source code into core super repositories: systems, libraries
 * ManyLinux_2_28 support in our Python wheels and ROCm binaries
 * Nightly artitacts open for all to try the latest builds
 * An intuitive build from source process using standard CMake
