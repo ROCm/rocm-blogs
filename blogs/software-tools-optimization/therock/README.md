@@ -23,7 +23,6 @@ myst:
         "amd_blog_applications": "AI Inference, AI Training, Generative AI"
         "amd_blog_topic_categories": "Software & Ecosystem"
         "amd_blog_authors": "Dominic Widdows, Janet Tseng, Chris Sosa, Saad Rahim"
-  enable_extensions: ["strikethrough"]
 ---
 
 <!---
