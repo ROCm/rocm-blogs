@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Enabling FlashInfer on ROCm for Accelerated LLM Serving"
 date: 1 Oct 2025
-author: 'Rishi Madduri, Dipto Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani'
+author: 'Rishi Madduri, Diptorup Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani'
 thumbnail: 'flashinfer-thumbnail.jpg'
 tags: AI/ML, GenAI, Optimization, Serving
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Demonstrate that FlashInfer now runs on ROCm for acceler
 language: English
 myst:
     html_meta:
-        "author": "Rishi Madduri, Dipto Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani"
+        "author": "Rishi Madduri, Diptorup Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani"
         "description lang=en": "FlashInfer is an open-source library for accelerating LLM serving that is now supported by ROCm."
         "keywords": "Flashinfer, transformer, inference, prefill, decode, flash attention, LLM, serving"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, Generative AI, Data Science"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_authors": "Rishi Madduri, Dipto Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani"
+        "amd_blog_authors": "Rishi Madduri, Diptorup Deb, Debasis Mandal, Clint Greene, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani"
 ---
 
 <!---
