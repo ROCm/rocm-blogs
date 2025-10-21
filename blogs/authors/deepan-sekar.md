@@ -9,7 +9,7 @@
 
 # Deepan Sekar
 
-```{image} ./data/Deepan-Sekar.png
+```{image} ./data/Deepan-Sekar.jpg
 :alt: Deepan
 :class: bg-primary
 :height: 250px
