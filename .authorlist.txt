@@ -96,6 +96,8 @@ Douglas
 Jia
 Eduardo
 Alvarez
+Eli
+Uriegas
 Eliot
 Li
 Emad
@@ -168,6 +170,8 @@ Johanna
 Yang
 Justin
 Chang
+Justin
+Chu
 Kailash
 Gogineni
 Karthik

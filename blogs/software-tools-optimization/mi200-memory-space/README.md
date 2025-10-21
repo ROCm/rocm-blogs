@@ -8,7 +8,7 @@ language: English
 blog_title: "AMD Instinct™ MI200 GPU memory space overview"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: ""
+thumbnail: "2025-10-20-rocm-hpc-blogs.png"
 myst:
     html_meta:
         "description lang=en": "AMD Instinct MI200 GPU memory space overview"

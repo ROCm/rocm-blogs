@@ -8,7 +8,7 @@ language: English
 blog_title: "Introduction to profiling tools for AMD hardware"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: ""
+thumbnail: "2025-10-20-rocm-hpc-blogs.png"
 myst:
     html_meta:
         "description lang=en": "Profiling tools"
