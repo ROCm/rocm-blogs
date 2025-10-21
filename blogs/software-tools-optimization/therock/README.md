@@ -49,8 +49,7 @@ SOFTWARE.
 
 # ROCm 7.9 Technology Preview: ROCm Core SDK and TheRock Build System
 
-AMD is delighted to announce the availability of the [ROCm Core SDK 7.9.0](https://rocm.docs.amd.com/en/docs-7.9.0/about/release-notes.html), with a new build system, called [TheRock](https://github.com/ROCm/TheRock).
-The Core SDK is a slimmed down version of the traditional ROCm release, focusing on foundational components for running high performance AI workloads on AMD GPUs.
+[ROCm Core SDK 7.9.0](https://rocm.docs.amd.com/en/docs-7.9.0/about/release-notes.html) is a technology preview release built by [TheRock](https://github.com/ROCm/TheRock). The Core SDK is a slimmed down version of the traditional ROCm release, focusing on foundational components for running high performance AI workloads on AMD GPUs.
 [TheRock](https://github.com/ROCm/TheRock) introduces a streamlined uniform system for building and testing these core components.
 TheRock manages dependencies between packages, so changes affecting several ROCm components can be coordinated automatically.
 Python releases built using TheRock can be easily installed in virtual environments, so developers can try new ROCm versions and features quickly without making system changes.
@@ -78,7 +77,7 @@ Before TheRock, the centralized build system was a collection of bash scripts in
 TheRock brings a pure CMake based build system, streamlining the propagation of build flags and configurations across different stages and components of the build.
 Python and github are used for dependency management.
 
-[ROCm 7.9](https://rocm.docs.amd.com/en/docs-7.9.0/about/release-notes.html) is a technology preview release built by TheRock. We intend to continue supporting the current build process for ROCm until the switch over to TheRock in mid-2026.
+We intend to continue supporting the current build process for ROCm until the switch over to TheRock in mid-2026.
 For more on ROCm 7 including new features, changes, and general improvements, see the [ROCm 7.0 release blog](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-7.0-blog/README.html).
 
 The diagram below shows an overview of the entire software stack that powers an AMD GPU.
