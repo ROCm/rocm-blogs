@@ -1,0 +1,20 @@
+---
+config:
+      theme: redux
+---
+flowchart TD
+    A[Start: Run app on multiple devices] --> B(Establish baseline)
+    B --> C(Identify potential network bottleneck with rocprof-sys)
+    C --> D{Is communication a bottleneck?}
+    D -- No --> E(Identify GPU kernel bottlenecks with rocprofv3)
+    D -- Yes --> R(Trace communication calls with rocprof-sys and optimize)
+    E --> F(Analyze roofline with rocprof-compute)
+    F --> G{Is the kernel under scrutiny hitting the roofline?}
+    G -- No --> H(Inspect code and performance metrics, and optimize)
+    G -- Yes --> K
+    H --> J(Assess new overall performance)
+    J --> K{Goals met or improvement sufficient?}
+    R --> J
+    K -- Yes --> Q
+    K -- No --> B
+    Q[Exit]

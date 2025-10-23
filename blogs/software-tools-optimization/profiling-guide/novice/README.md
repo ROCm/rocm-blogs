@@ -258,8 +258,7 @@ will be `workloads/<name-of-workload>/<device-arch>`, where `device-arch` is eit
 what AMD Instinct device you are profiling on. In this example, `workloads/jacobi` will be our primary workload directory.
 Since we are profiling on an MI200 (MI210, MI250, MI250X) device, the relevant output should be under `workloads/jacobi/MI200`.
 
-> [!Note]
-> Before using `rocprof-compute`, you may need to install relevant python dependencies. This can be done via: `pip3 install -r <PATH-TO-ROCPROFILER-COMPUTE-INSTALL>/requirements.txt`. For most ROCm installations on shared systems, the path to rocprofiler-compute will be under `/opt/rocm-X.Y.Z/libexec`.
+> Note: Before using `rocprof-compute`, you may need to install relevant python dependencies. This can be done via: `pip3 install -r <PATH-TO-ROCPROFILER-COMPUTE-INSTALL>/requirements.txt`. For most ROCm installations on shared systems, the path to rocprofiler-compute will be under `/opt/rocm-X.Y.Z/libexec`.
 
 A snapshot of the roofline for the `JacobiIterationKernel` saved in `workloads/jacobi/MI200/empirRoof_gpu-0_fp32_fp64.pdf` is shown below.
 
@@ -497,8 +496,8 @@ steps outlined in this blog, we were able to obtain detailed information about
 the kernels, including their HBM BW, register usage, and occupancy. We
 used this information to identify areas of potential optimization and
 demonstrated how targeted optimization improved performance. An example of trace visualization
-was also provided. Another blog will go into more advanced aspects of kernel
-profiling, expanding on the topics discussed here.
+was also provided. [Part 3](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/advanced/README.html) 
+will go into more advanced aspects of kernel profiling, expanding on the topics discussed here.
 
 ## Additional resources
 
@@ -507,6 +506,7 @@ above for your quick reference.
 
 - Performance Profiling on AMD GPUs:
   - [Part 1](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/intro/README.html)
+  - [Part 3](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/advanced/README.html)
 - Perfetto UI:
   - [Online documentation for using Perfetto UI](https://perfetto.dev/docs/visualization/perfetto-ui)
 - `rocprofv3`:
