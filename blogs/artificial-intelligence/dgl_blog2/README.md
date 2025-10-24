@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "DGL in the Real World: Running GNNs on Real Use Cases"
 date: 20 Aug 2025
-author: 'Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James Smith, Yao Liu, Phani Vaddadi, Vish Vadlamani'
+author: 'Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James E. T. Smith, Yao Liu, Phani Vaddadi, Vish Vadlamani'
 thumbnail: 'thumbnail_dgl2.png'
 tags: AI/ML
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: DGL for AMD; Run your Graph Neural Networks at scale —
 language: English
 myst:
     html_meta:
-        "author": "Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James Smith, Yao Liu, Phani Vaddadi, Vish Vadlamani"
+        "author": "Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James E. T. Smith, Yao Liu, Phani Vaddadi, Vish Vadlamani"
         "description lang=en": "We walk through four advanced GNN workloads from heterogeneous e-commerce graphs to neuroscience applications that we successfully ran using our DGL implementation."
         "keywords": "Deep Graph Learning, AMD Instinct GPUs, Graph Theory"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Training"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James Smith, Yao Liu, Phani Vaddadi, Vish Vadlamani"
+        "amd_blog_authors": "Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James E. T. Smith, Yao Liu, Phani Vaddadi, Vish Vadlamani"
 ---
 
 <!---
@@ -366,7 +366,7 @@ breakthroughs in real-world scientific applications.
 
 ## Acknowledgements
 
-The authors would also like to acknowledge the broader AMD team whose contributions were instrumental in enabling DGL: *Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James Smith, Vicky Tsang, Tiffany Mintz, Pei Zhang, Debasis Mandal, Yao Liu, Phani Vaddadi, Vish Vadlamani, Ritesh Hiremath, Bhavesh Lad, Radha Srimanthula, Mohan Kumar Mithur, Phaneendr-kumar Lanka, Jayshree Soni, Amit Kumar, Leo Paoletti, Anisha Sankar, Ram Seenivasan, Aditya Bhattacharji, Marco Grond, Anshul Gupta, Ehud Sharlin, Saad Rahim, Aakash Sudhanwa*
+The authors would also like to acknowledge the broader AMD team whose contributions were instrumental in enabling DGL: *Mukhil Azhagan Mallaiyan Sathiaseelan, Anuya Welling, James E. T. Smith, Vicky Tsang, Tiffany Mintz, Pei Zhang, Debasis Mandal, Yao Liu, Phani Vaddadi, Vish Vadlamani, Ritesh Hiremath, Bhavesh Lad, Radha Srimanthula, Mohan Kumar Mithur, Phaneendr-kumar Lanka, Jayshree Soni, Amit Kumar, Leo Paoletti, Anisha Sankar, Ram Seenivasan, Aditya Bhattacharji, Marco Grond, Anshul Gupta, Ehud Sharlin, Saad Rahim, Aakash Sudhanwa*
 
 ## Additional Resources
 
