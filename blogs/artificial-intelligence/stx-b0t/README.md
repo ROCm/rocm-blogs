@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "STX-B0T: AI Robot Assistant Powered by RyzenAI and ROCm"
 date: 23 Oct 2025
 author: 'Justin Chu, Yosi Hatekar, Vivian Cheng, Hyunji Kim, Alex Bogdan'
-thumbnail: 'images/stxb0t_cartoonized.png'
+thumbnail: 'stxb0t_cartoonized.png'
 tags: AI/ML, Computer Vision
 category: Applications & models
 target_audience: Robotics developers and researchers
