@@ -255,6 +255,42 @@ Machine Learning Researcher at AMD
 Senior Software Development Manager at AMD
 :::
 
+:::{grid-item-card} [Mukhil Azhagan Mallaiyan Sathiaseelan](./authors/mukhil-azhagan-mallaiyan-sathiaseelan.md) *
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Pei Zhang](./authors/pei-zhang.md) *
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Debasis Mandal](./authors/debasis-mandal.md) *
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Anuya Welling](./authors/anuya-welling.md) *
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [James E. T. Smith](./authors/james-e.-t.-smith.md) *
+:padding: 1
+
+Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Rishi Madduri](./authors/rishi-madduri.md) *
+:padding: 1
+
+Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Arseny Moskvichev](./authors/arseny-moskvichev.md) *
 :padding: 1
 
