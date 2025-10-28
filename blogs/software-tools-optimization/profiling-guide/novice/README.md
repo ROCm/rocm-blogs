@@ -343,7 +343,7 @@ VGPRs and 16 SGPRs.
 
 For more details on why register pressure is important and how it affects performance, please refer to the following [blog post](https://rocm.blogs.amd.com/software-tools-optimization/register-pressure/README.html).
 
-The `NormKernel1` kernel shows low occupancy (around 7.3%) even though the register pressure is low (12 VGPRs and 13 SGPRs).
+The `NormKernel1` kernel shows low occupancy (around 7.3%) even though the register pressure is low (12 VGPRs and 32 SGPRs).
 This strongly suggests our concerns about inefficient memory bandwidth utilization within this kernel are valid.
 
 > [!Note]
@@ -496,7 +496,7 @@ steps outlined in this blog, we were able to obtain detailed information about
 the kernels, including their HBM BW, register usage, and occupancy. We
 used this information to identify areas of potential optimization and
 demonstrated how targeted optimization improved performance. An example of trace visualization
-was also provided. [Part 3](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/advanced/README.html) 
+was also provided. [Part 3](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/advanced/README.html)
 will go into more advanced aspects of kernel profiling, expanding on the topics discussed here.
 
 ## Additional resources
