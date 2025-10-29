@@ -134,6 +134,7 @@ DPM
 DRI
 DW
 DWORD
+EDA
 ELMo
 embeddings
 enablement
