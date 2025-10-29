@@ -237,6 +237,7 @@ initializer
 Inlines
 inlining
 installable
+integrations
 IntelliSense
 interprocedural
 Intersphinx
