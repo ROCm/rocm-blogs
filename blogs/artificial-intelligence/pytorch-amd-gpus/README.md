@@ -12,7 +12,7 @@ language: English
 myst:
     html_meta:
         "author": "Hongxia Yang, Peng Sun, Nick Romero, Jeff Daily, Jithun Nair, Pruthvi Madugundu, Jagadish Krishnamoorthy, Srinivasan Subramanian, Eli Uriegas"
-        "description lang=en": "At AMD, the PyTorch ecosystem team is committed to delivering an exceptional out-of-the-box experience for developers. Over the past year, the team has made significant progress in expanding PyTorch ecosystem support, improving CI test coverage across a wider range of GPU architectures, enhancing training and inference capabilities, streamlining the developer experience, introducing new functionality and performance optimizations, and strengthening quality monitoring. This blog showcases our ongoing efforts to build a robust PyTorch ecosystem on AMD ROCm™ Software, including the production-readiness of PyTorch across N-1, N, and N+1 releases aligned with ROCm versions. We also introduce the AI SoftWare Heads-Up Dashboard (AISWHUD), a powerful new tool that provides deep insights into the health and performance of the PyTorch ecosystem on ROCm, empowering developers with greater visibility and control."
+        "description lang=en": "Production ROCm support for N-1 to N+1 PyTorch releases is in progress. The AI Software Head-Up Dashboard shows status of PyTorch on ROCm."
         "keywords": "Pytorch, ecosystem, AI, Unit test coverage, performance, quality, monitoring, AI tool"
         "vertical": "Developers, AI"
         "amd_category": "Developer Resources"
