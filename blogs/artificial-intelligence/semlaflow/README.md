@@ -1,13 +1,13 @@
 ---
 blogpost: true
-blog_title: "Optimizing drug discovery tools on AMD MI300s Part 2: 3D Molecular Generation with SemlaFlow"
+blog_title: "Optimizing drug discovery tools on AMD MI300X Part 2: 3D Molecular Generation with SemlaFlow"
 date: 3 Oct 2025
 author: 'Vasumathi Neralla, Rui Sampaio'
 thumbnail: 'thumbnail-semlaflow.jpeg'
 tags: PyTorch, Optimization
 category: Applications & models
 target_audience: LifeScience developers
-key_value_propositions: Steps to follow to run SemlaFlow on AMD MI300x, and also detailed optimization steps
+key_value_propositions: Steps to follow to run SemlaFlow on AMD MI300X, and also detailed optimization steps
 language: English
 myst:
     html_meta:
@@ -47,7 +47,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# Optimizing Drug Discovery Tools on AMD MI300s Part 2: 3D Molecular Generation with SemlaFlow
+# Optimizing Drug Discovery Tools on AMD MI300X Part 2: 3D Molecular Generation with SemlaFlow
 
 This blog is part of a series of walkthroughs of Life Science AI models, stemming from [this article](https://www.amd.com/en/blogs/2025/astrazeneca-improved-life-sciences-model-training-time.html), which was a collaborative effort between AstraZeneca and AMD. The series delves into what was required in order to run drug discovery related AI workloads on AMD MI300X. The first post in this series, available [here](https://rocm.blogs.amd.com/artificial-intelligence/running-reinvent4-amd/README.html), focuses on REINVENT4, a molecular design tool used to generate and optimize candidate molecules. This blog, in particular, looks at SemlaFlow, an efficient 3D molecular generation model with latent attention and equivariant flow matching.
 
