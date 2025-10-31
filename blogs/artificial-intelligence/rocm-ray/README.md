@@ -101,6 +101,14 @@ You can install Ray with ROCm support on a single node.
 The ROCm Ray team provides prebuilt Docker images, which are the simplest way to use Ray on ROCm.
 See the [ROCm installation guide](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/ray-install.html) to install Ray.
 
+### ROCm Ray
+
+* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/ray-install.html)
+
+* [Docker image](https://hub.docker.com/r/rocm/ray/tags)
+
+* [GitHub](https://github.com/ROCm/ray)
+
 ## Examples
 
 Basic use cases:

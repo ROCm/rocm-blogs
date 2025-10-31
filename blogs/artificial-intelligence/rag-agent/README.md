@@ -57,6 +57,14 @@ This guide explains how to build Retrieval-Augmented Generation systems optimize
 
 All the files required to follow this blog are available in the [ROCm Blogs GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/rag-agent). For more information on RAG workflows on AMD GPUs visit the official GitHub repository [rocm-rag](https://github.com/ROCm/rocm-rag).
 
+## ROCm RAG Agent
+
+* [Installation](https://rocm.docs.amd.com/projects/rocm-rag/en/latest/install/configure-framework.html)
+
+* [Docker image](https://hub.docker.com/r/rocm/rocm-rag/tags)
+
+* [GitHub](https://github.com/ROCm/rocm-rag)
+
 ## Requirements
 
 * AMD GPU: See the [ROCm documentation page](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html) for supported hardware and operating systems.

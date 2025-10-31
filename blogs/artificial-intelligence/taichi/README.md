@@ -71,6 +71,14 @@ instructions for installing Taichi and several examples for running a Taichi pro
 [^2]: https://docs.taichi-lang.org/docs/master/internal#data-structure-organization
 [^3]: https://docs.taichi-lang.org/docs/overview
 
+## ROCm Taichi
+
+* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/taichi-install.html)
+
+* [Docker image](https://hub.docker.com/r/rocm/taichi/tags)
+
+* [GitHub](https://github.com/ROCm/taichi)
+
 ## Getting Started with Taichi
 
 When writing compute-intensive tasks, users can make use of the two decorators `@ti.func` and `@ti.kernel`.
