@@ -7,6 +7,7 @@ addr
 AddressSanitizer
 agentic
 ai
+AIE
 AIG
 AIME
 AlexNet
@@ -394,6 +395,7 @@ perl
 PIL
 PILImage
 PipelineParallel
+PMTS
 png
 PowerShell
 pragma

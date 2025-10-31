@@ -8,7 +8,7 @@
 
 # Zhaofeng Zhang
 
-```{image} ./data/Wei-Luo.jpg
+```{image} ./data/Zhaofeng-Zhang.jpg
 :alt: Zhaofeng
 :class: bg-primary
 :height: 250px

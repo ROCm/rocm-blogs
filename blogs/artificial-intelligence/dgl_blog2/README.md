@@ -82,7 +82,7 @@ They're real-world examples showing what already works
 --- so developers can hit the ground running
 with GNNs on AMD GPUs.
 
-The Docker images, installation instructions, and compatibility matrix
+The Docker images, installation instructions, compatibility matrix, and GitHub repo
 are all available here:
 
 - [Docker images](https://hub.docker.com/r/rocm/dgl/tags)
@@ -92,6 +92,8 @@ are all available here:
 
 - [Supported
   Configurations](https://rocmdocs.amd.com/en/latest/compatibility/ml-compatibility/dgl-compatibility.html)
+
+- [GitHub](https://github.com/ROCm/dgl)
 
 ## Use Case 1: GNN-FiLM-Graph Neural Networks with Feature-wise Linear Modulation
 
