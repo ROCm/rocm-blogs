@@ -8,7 +8,7 @@
 
 # Bowen Bao
 
-```{image} ./data/Bowen-Bao.jpg
+```{image} ./data/Bowen-Bao.png
 :alt: Bowen
 :class: bg-primary
 :height: 250px

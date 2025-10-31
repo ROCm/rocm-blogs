@@ -8,7 +8,7 @@
 
 # Felix Marty
 
-```{image} ./data/Felix-Marty.jpg
+```{image} ./data/Felix-Marty.jpeg
 :alt: Felix
 :class: bg-primary
 :height: 250px
