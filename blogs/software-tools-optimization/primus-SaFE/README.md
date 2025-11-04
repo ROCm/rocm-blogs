@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Stability at Scale: AMD’s Full‑Stack Platform for Large‑Model Training"
 date: 4 Nov 2025
-author: "Chaojun Hou, Lei Wei"
+author: "Chaojun Hou, Lei Wei, Liz Li, Yao Fu, Andy Luo, Zhenyu Gu"
 thumbnail: './images/primus-safe-thumbnail.png'
 tags: AI/ML
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Automates cluster provisioning, intelligent scheduling, 
 language: English
 myst:
     html_meta:
-        "author": "Chaojun Hou, Lei Wei"
+        "author": "Chaojun Hou, Lei Wei, Liz Li, Yao Fu, Andy Luo, Zhenyu Gu."
         "description lang=en": "Primus streamlines LLM training on AMD GPUs with unified configs, multi-backend support, preflight validation, and structured logging."
         "keywords": "PRIMUS, Training, LLM, AMD GPUs"
         "vertical": "AI, Developers"
