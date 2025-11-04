@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Stability at Scale: AMD’s Full‑Stack Platform for Large‑Model Training"
 date: 4 Nov 2025
 author: "Chaojun Hou, Lei Wei, Liz Li, Yao Fu, Andy Luo, Zhenyu Gu"
-thumbnail: './images/primus-safe-thumbnail.png'
+thumbnail: 'primus-safe-thumbnail.png'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: AI ENTHUSIAST AND DEVELOPERS
