@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Day 0 Developer Guide: hipBLASLt Offline GEMM Tuning Script"
-date: 20 Oct 2025
+date: 5 Nov 2025
 author: 'Han Lin, Spandan Tiwari, Xinjun Niu, Chao Li, Wei Luo, Junyan Yang, Carson Liao, Chunhung Wang, Ashish Sirasao'
 thumbnail: 'hipblaslt_offline_tuning.png'
 tags: Performance, hipBLASLt, LLM, GEMM Tuning
