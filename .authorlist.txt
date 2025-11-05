@@ -50,12 +50,16 @@ Brian
 Cornille
 Bruce
 Xue
+Carson
+Liao
 Chaitanya
 Manem
 Chandan-Sharma
 
 Chang-liu
 
+Chao
+Li
 Chao
 Xu
 Chaojun
@@ -110,6 +114,8 @@ Eliot
 Li
 Emad
 Barsoum
+Ethan
+Yang
 Evan
 Masters
 Fabricio
@@ -136,6 +142,10 @@ Grant
 Pinkert
 Guihong
 Li
+Han
+Lin
+Hang
+Yang
 Haocong
 Wang
 Haoyang
@@ -152,6 +162,8 @@ Hyunji
 Kim
 Ish
 Kool
+Jacky
+Zhao
 James
 Smith
 Jarkko
@@ -181,6 +193,8 @@ Shajrawi
 Johanna
 Potyka
 Johanna
+Yang
+Junyan
 Yang
 Justin
 Chang
@@ -358,6 +372,8 @@ Suyash
 Tandon
 Takashi
 Isobe
+Thiago
+Crepaldi
 Thomas
 Gibson
 Tiffany
@@ -412,12 +428,16 @@ Yao
 Fu
 Yao
 Liu
+Yilin
+Zhao
 Yixing
 Xu
 Yosi
 Hatekar
 Yu
 Wang
+Yu
+Zhou
 Yuchen
 Lin
 Yusheng
