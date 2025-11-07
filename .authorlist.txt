@@ -38,6 +38,8 @@ Balazs
 Toth
 Ben
 Sander
+Bill
+He
 Bin
 Ding
 Bob
@@ -92,6 +94,8 @@ Deeksha
 Goplani
 Deepan
 Sekar
+Di
+Tian
 Diptorup
 Deb
 Dominic
@@ -106,6 +110,8 @@ Doug
 Lehr
 Douglas
 Jia
+Duyi
+Wang
 Eduardo
 Alvarez
 Eli
