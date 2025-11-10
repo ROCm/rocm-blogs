@@ -630,3 +630,7 @@ ZBook
 ZenDNN
 ZeRO
 zypper
+Broadcom
+CEAI
+GPGPU
+VMware
