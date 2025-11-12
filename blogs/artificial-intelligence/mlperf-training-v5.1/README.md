@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Technical Dive into AMD MLPerf Training v5.1 Submission"
-date: 21 Oct 2025
+date: 12 Nov 2025
 author: 'Meena Arunachalam, Miro Hodak, Ravi Dwivedula, Sarthak Arora, Sathish Sanjeevi, Su Ann Chong, Karan Verma, Eliot Li'
 thumbnail: 'mlperf-training-v5.1-thumbnail.png'
 tags: AI/ML, GenAI, Performance, Optimization, Fine-Tuning
@@ -59,9 +59,9 @@ This blog provides a brief description of the AMD Instinct MI350 series GPUs, fo
 
 ## AMD Instinct MI350 Series GPUs
 
-<img src="images/MI355X-gpus.png" alt="MI355X architectural diagram" width="100%">
+<img src="images/MI355X-gpus_v2.png" alt="MI355X architectural diagram" width="100%">
 
-Building upon the success of the [MLPerf Inference v5.1 submission](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-inference-v5.1/README.html), this AMD submission features the [MI355X GPU](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf) again. The MI355X GPU is designed to deliver outstanding performance for the latest generation artificial intelligence models. Utilizing AMD [CDNA 4 architecture](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-4-architecture-whitepaper.pdf), this GPU delivers computational power and efficiency, making it an excellent option for organizations aiming to advance AI model training and inference. The MI355X GPU is seamlessly integrated with the AMD ROCm software ecosystem, providing developers with a robust, open platform for creating and scaling AI applications.
+Building upon the success of the [MLPerf Inference v5.1 submission](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-inference-v5.1/README.html), this AMD submission features the [MI355X GPU](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/product-briefs/amd-instinct-mi355x-gpu-brochure.pdf) again. The MI355X GPU is designed to deliver outstanding performance for the latest generation artificial intelligence models. Utilizing AMD [CDNA 4 architecture](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-4-architecture-whitepaper.pdf), this GPU delivers computational power and efficiency, making it an excellent option for organizations aiming to advance AI model training and inference. The MI355X GPU is seamlessly integrated with the AMD ROCm<sup>TM</sup> software ecosystem, providing developers with a robust, open platform for creating and scaling AI applications.
 
 MI350 Series GPUs have native support for FP4 (4-bit floating-point) precision, offering up to 20 petaflops of FP4 performance, an essential feature for deploying large-scale AI models today. This high-performing FP4 computation, combined with an industry-leading 288 GB of high-bandwidth HBM3e memory with a bandwidth of 8TB/s, greatly minimizes memory and computational overhead without sacrificing accuracy. These characteristics render the MI355X GPU perfect for cutting-edge generative AI models, facilitating low-latency inference for large-scale model deployment with numerous simultaneous users, while also enabling efficient training on vast datasets.
 
@@ -81,9 +81,9 @@ The [Llama 2 70B LoRA benchmark](https://github.com/mlcommons/training/tree/mast
 
 The [Llama 3.1 8B pretraining benchmark](https://mlcommons.org/2025/10/training-llama-3-1-8b/), introduced in MLPerf Training v5.1, democratizes modern LLM pretraining evaluation, making it accessible to a much wider group of organizations, including many academic institutions and small AI startups. It is specifically designed for easy setup and execution on small to moderately-sized computational resources, requiring only a single node, but also being scalable to a large number of nodes. In fact, it shares many similarities, with Llama3.1-405b MLPerf Training benchmark: It reuses the same dataset, shares convergence evaluation metric (perplexity).
 
-This benchmark is the first MLPerf training benchmark led by AMD. The design goal has been to create a benchmark similar to existing Llama3.1-405b benchmark, but making it accessible on a single node while preserving as many features as possible. This model also replaces BERT pre-training benchmark, which has been part of the MLPerf Training suite for a long time, but has become obsolete compared to modern LLMs. 
+This benchmark is the first MLPerf training benchmark led by AMD. The design goal has been to create a benchmark similar to existing Llama3.1-405b benchmark, but making it accessible on a single node while preserving as many features as possible. This model also replaces BERT pre-training benchmark, which has been part of the MLPerf Training suite for a long time, but has become obsolete compared to modern LLMs.
 
-An important feature of this benchmark is that it does not require a checkpoint as a start, but instead it randomizes weights at the start. This avoids the need for checkpoint conversion, which can become a hurdle when submitters want to use a different training framework compared to the reference implementation. This also means that this benchmark represents an early part of model training with initial fast convergence followed by a slowdown in later stages. 
+An important feature of this benchmark is that it does not require a checkpoint as a start, but instead it randomizes weights at the start. This avoids the need for checkpoint conversion, which can become a hurdle when submitters want to use a different training framework compared to the reference implementation. This also means that this benchmark represents an early part of model training with initial fast convergence followed by a slowdown in later stages.
 
 The benchmark provides three tunable hyperparameters: batch size, learning rate, and number of warmup samples, although they must align with behaviors defined by [Reference Convergence Points (RCPs)](https://github.com/mlcommons/training_policies/blob/master/training_rules.adoc#13-reference-convergence-points-rcps). The benchmark utilizes a subset of the C4 (Colossal Cleaned Common Crawl) dataset split for training and validation. Each evaluation run tests the first 1,024 sequences (about 8.4 million tokens) from the validation set. The training data is shuffled to introduce variability, while the validation data is kept unshuffled to ensure consistent evaluation across different runs.
 
@@ -123,8 +123,8 @@ PyTorch 2.8 introduced functional support for `gfx950` architecture on ROCm 7, e
 
 Building upon the optimizations developed at AMD, several non-GEMM kernels - namely SwiGLU, and Fused Cross Entropy, have seen significant performance improvements since the MLPerf training v5.0 round.
 
-- SwiGLU: Llama 2 models use the SwiGLU activation function in their feed-forward layers instead of the standard ReLU activation commonly found in most deep learning models. 
-- Triton Fused Cross-Entropy: A fused cross-entropy implementation in Triton was developed with conditional gradient scaling, per-row gradient output support via stride indexing, and valid token count handling for masked sequences. 
+- SwiGLU: Llama 2 models use the SwiGLU activation function in their feed-forward layers instead of the standard ReLU activation commonly found in most deep learning models.
+- Triton Fused Cross-Entropy: A fused cross-entropy implementation in Triton was developed with conditional gradient scaling, per-row gradient output support via stride indexing, and valid token count handling for masked sequences.
 - To reduce peak memory utilization on the Llama2 70B model and fit larger batch sizes, we employ the following 2 strategies–storing forward activations in 8 bit and improving the ROCm transformer engine’s weight caching mechanism. With the above 2 changes, we were able to avoid using any activation recomputation.
 
 ### System tuning
@@ -143,13 +143,13 @@ Prior to launching model training, a runtime system-tuning shell script is used 
 
 In MLPerf Inference v5.1 AMD submitted results on 4 AMD Instinct GPUs spanning multiple generations: MI355X, MI350X, MI325X, MI300X. Compared to the previous MLPerf Training round (v5.0), where we submitted results for the Llama 2 70B LoRA finetuning benchmark, in this round we have added a brand new Llama 3.1 8B pretraining benchmark as another model optimized on Instinct GPUs. Both benchmarks utilize FP8 numerical precision, which currently provides the best balance between performance and accuracy in LLM training.
 
-While the new benchmark focused on the latest generation of GPUs, Llama 2 70B LoRA finetuning was submitted on four AMD Instinct GPUs with results shown in the figure below. All results use the same training code and the only difference being the configuration file that is customized for each GPU. Therefore, the benchmark reflects compute capabilities across four generations of Instinct GPUs. As can be seen from the figure below, comparing results on MI355X and MI300X GPUs shows an impressive 2.8x improvement in training time. Similarly, MI355X GPU comparison with MI325X yields 2.1x improvement, demonstrating superior computational capabilities of the latest generation on AMD GPUs.
+While the new benchmark focused on the latest generation of GPUs, Llama 2 70B LoRA finetuning was submitted on four AMD Instinct GPUs with results shown in the figure below. All results use the same training code and the only difference being the configuration file that is customized for each GPU. Therefore, the benchmark reflects compute capabilities across three generations of Instinct GPUs. As can be seen from the figure below, comparing results on MI355X and MI300X GPUs shows an impressive 2.8x improvement in training time. Similarly, MI355X GPU comparison with MI325X yields 2.1x improvement, demonstrating superior computational capabilities of the latest generation on AMD GPUs.
 
 <img src="images/Training5.1-AMD_Results.png" alt="MLPerf Training 5.1 AMD Results" width="100%">
 
 This MLPerf Training round also has submissions from nine partners, a record for AMD. Specifically, Asus, Cisco, Dell, Giga Computing, Krai, MangoBoost, MiTAC, QCT, and Supermicro all submitted results on AMD Instinct GPUs demonstrating increased acceptance of AMD Instinct GPUs as premier platform for AI training by the industry.
 
-To compare performance relative to competition, we compare the submissions on the B200-SXM and B300-SXM systems that use FP8 numerical precision. The comparison is shown in the figure below for both benchmarks and shows a highly competitive performance. For Llama 2 70B LoRA finetuning, the difference between AMD Instinct MI355X and the Nvidia platforms is only 3% for B200 and 6% for B300. Similarly, for Llama 3.1 8B pretraining benchmark, the difference between AMD Instinct MI355X and B200 is only 6%, and 5% for MI355X vs B300 comparison. The close performance relative to the competition demonstrates that AMD Instinct GPUs provide a real alternative to Nvidia GPUs for your training workloads.
+To compare performance relative to competition, we compare the submissions on the B200-SXM and B300-SXM systems that use FP8 numerical precision. The comparison is shown in the figure below for both benchmarks and shows a highly competitive performance. For Llama 2 70B LoRA finetuning, the difference between AMD Instinct MI355X and the Nvidia platforms is only 3% for B200 and 6% for B300. Similarly, for Llama 3.1 8B pretraining benchmark, the difference between AMD Instinct MI355X and B200 platform is only 6%, and 5% for MI355X vs B300 platform comparison. The close performance relative to the competition demonstrates that AMD Instinct GPUs provide a real alternative to Nvidia GPUs for your training workloads.
 
 <img src="images/Training5.1-AMDvsCompetition.png" alt="MLPerf Training 5.1 AMD Results" width="100%">
 
@@ -170,3 +170,7 @@ Taken together, the MLPerf Training v5.1 submissions highlight AMD strengths in 
 ## Disclaimers
 
 The information contained herein is for informational purposes only and is subject to change without notice. While every precaution has been taken in the preparation of this document, it may contain technical inaccuracies, omissions and typographical errors, and AMD is under no obligation to update or otherwise correct this information. Advanced Micro Devices, Inc. makes no representations or warranties with respect to the accuracy or completeness of the contents of this document, and assumes no liability of any kind, including the implied warranties of noninfringement, merchantability or fitness for particular purposes, with respect to the operation or use of AMD hardware, software or other products described herein. No license, including implied or arising by estoppel, to any intellectual property rights is granted by this document. Terms and limitations applicable to the purchase or use of AMD products are as set forth in a signed agreement between the parties or in AMD's Standard Terms and Conditions of Sale. GD-18u.
+
+## Endnotes
+
+ MI350-021 - Calculations by AMD Performance Labs in May 2025, based on the published memory capacity specifications of AMD Instinct™ MI350X / MI355X OAM 8xGPU platform vs. an NVIDIA Blackwell B200 8xGPU platform. Server manufacturers may vary configurations, yielding different results. MI350-021
