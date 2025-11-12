@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Reproduce AMD MLPerf Training v5.1 Submission Result"
-date: 21 Oct 2025
+date: 12 Nov 2025
 author: 'Meena Arunachalam, Miro Hodak, Ravi Dwivedula, Sarthak Arora, Sathish Sanjeevi, Su Ann Chong, Karan Verma, Eliot Li'
 thumbnail: 'mlperf-training5.1-repro-thumbnail.png'
 tags: AI/ML, Fine-Tuning, GenAI, Optimization, Performance
