@@ -1,0 +1,22 @@
+services:
+  hipvs_container:
+    image: hipvs
+    build: .
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
+    ipc: host
+    group_add:
+      - video
+    shm_size: 8G
+    volumes:
+      - ../:/usr/src/app
+    ports:
+      - "8888:8888"
+    environment:
+      ROCM_HOME: /opt/rocm
+    command: jupyter-lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.token=''

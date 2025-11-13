@@ -634,3 +634,7 @@ Broadcom
 CEAI
 GPGPU
 VMware
+Basemark
+Eficode
+ZenRobotics
+transformative
