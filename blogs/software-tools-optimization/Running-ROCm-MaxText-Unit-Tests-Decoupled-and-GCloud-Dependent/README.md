@@ -15,6 +15,17 @@ myst:
     "description lang=en": "This guide details how to run MaxText unit tests on AMD ROCm GPUs, supporting both decoupled (offline) and cloud-dependent workflows. It explains the rationale and setup for each mode: decoupled mode enables fast, reproducible local testing without cloud dependencies, ideal for environments that do not have Google Cloud setup, while cloud-dependent mode enables full integration and diagnostic coverage. The document walks through prerequisites, environment setup, building the Transformer Engine wheel, and running tests in both modes, including Docker-based options. It clarifies which tests are included or excluded in each scenario, provides troubleshooting advice, and emphasizes the importance of decoupling for reproducibility and development speed. However, it also cautions that offline success doesn’t guarantee cloud integration, recommending periodic full test runs. This comprehensive approach empowers ML practitioners to validate their ROCm-based MaxText setups efficiently, ensuring robust model development and deployment pipelines."
     "keywords": "MaxText, LLM, AI/ML, Unit Testing, JAX, Transformer Engine"
     "property=og:locale": "en_US"
+    "amd_category": "Developer Resources"
+    "amd_asset_type": "Blogs"
+    "amd_blog_type": "Technical Articles & Blogs"
+    "amd_technical_blog_type": "Applications and models"
+    "amd_developer_type": "ML/AI Developer"
+    "amd_deployment": "Servers"
+    "amd_product_type": "Development Tools"
+    "amd_developer_tool": "ROCm Software, Open-Source Tools"
+    "amd_applications": "Large Language Model (LLM)"
+    "amd_industries": "Data Center"
+    "amd_blog_releasedate": Thu Nov 13, 12:00:00 PST 2025
 ---
 <!---
 Copyright (c) 2025 Advanced Micro Devices, Inc. (AMD)
