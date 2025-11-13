@@ -75,7 +75,7 @@ Key features of hipVS and hipRAFT include:
 - **Open Source and Collaborative**: Embrace open development under the Apache-2.0 and MIT license, welcoming contributions from the broader community to drive innovation and development.
 - **Foundational GPU Building Blocks for AI & Data Science**: Powers libraries like hipGraph, enabling fast, scalable analytics and ML across various domains.
 
-For more information please refer to the [hipVS documentation](https://rocm.docs.amd.com/projects/hipVS/en/latest/) and [hipRAFT documentation](https://rocm.docs.amd.com/projects/hipRAFT/en/latest).
+For more information please refer to the [hipVS documentation](https://rocm.docs.amd.com/projects/hipVS/en/latest/) and [hipRAFT documentation](https://rocm.docs.amd.com/projects/hipRaft/en/latest).
 
 ## Applications of hipVS
 
