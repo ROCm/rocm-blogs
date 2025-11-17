@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Plug-and-Play CuPy on ROCm: Data Analytic Acceleration Made Simple"
 date: 14 Nov 2025
-author: 'Grant Pickert, Eliot Li'
+author: 'Grant Pinkert, Eliot Li'
 thumbnail: 'cuPy-ROCm7-thumbnail.png'
 tags: Scientific Computing, AI/ML, Time Series, Optimization
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Inform the AI community that AMD has released a new CuPy
 language: English
 myst:
     html_meta:
-        "author": "Grant Pickert, Eliot Li"
+        "author": "Grant Pinkert, Eliot Li"
         "description lang=en": "Learn about how to enhance your analytics project with the latest AMD CuPy release."
         "keywords": "CuPy, NumPy, ROCm 7, Per-Thread Default Stream, CUDA Array Interface"
         "vertical": "Data Science, AI"
@@ -168,6 +168,7 @@ Device 7 Name             : AMD Instinct MI355X
 Device 7 Arch             : gfx950:sramecc+:xnack-
 Device 7 PCI Bus ID       : 0000:95:00.0
 ```
+
 </details>
 
 You can also verify that CuPy can access the GPU device(s) on your system. Test GPU operations by creating a simple array. This code initializes a CuPy array and checks its device location. The `.device` attribute confirms GPU usage if it returns a device ID.
@@ -244,7 +245,7 @@ You can immediately take advantage of these improvements by installing the lates
 ## Acknowledgements
 
 The authors would like to acknowledge the AMD teams that supported this work on CuPy: Philipp Samfass, Dominic Etienne Charrier, Michael Obersteiner, Mohammad NorouziArab, Lior Galanti, Matthew Cordery, Jason Riedy, Marco Grond, Bhavesh Lad, Pankaj Gupta, Bhanu Kiran Atturu, Ritesh Hiremath, Radha Srimanthula, Randy Hartgrove, Amit Kumar, Ram Seenivasan, Saad Rahim, Ramesh Mantha.
- 
+
 Special thanks to Kenichi Maehashi and his team for their help in adding ROCm support to CuPy.
 
 ## Disclaimers
