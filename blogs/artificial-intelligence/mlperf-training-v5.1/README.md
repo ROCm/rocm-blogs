@@ -4,7 +4,7 @@ blog_title: "Technical Dive into AMD MLPerf Training v5.1 Submission"
 date: 12 Nov 2025
 author: 'Meena Arunachalam, Miro Hodak, Ravi Dwivedula, Sarthak Arora, Sathish Sanjeevi, Su Ann Chong, Karan Verma, Eliot Li'
 thumbnail: 'mlperf-training-v5.1-thumbnail.png'
-tags: AI/ML, GenAI, Performance, Optimization, Fine-Tuning
+tags: AI/ML, GenAI, Performance, Optimization, Fine-Tuning, MLPerf, MLPerf Training
 category: Applications & models
 target_audience: AI developers, AI practitioners
 key_value_propositions: Share the technical details of how AMD accomplish the results in the MLPerf Training v5.1 submission
@@ -13,7 +13,7 @@ myst:
     html_meta:
         "author": "Meena Arunachalam, Miro Hodak, Ravi Dwivedula, Sarthak Arora, Sathish Sanjeevi, Su Ann Chong, Karan Verma, Eliot Li"
         "description lang=en": "Learn about the technical details of how AMD achieved the results in the MLPerf Training v5.1 submission."
-        "keywords": "MLPerf, Training, Optimization, Llama 2, Llama 3.1, LoRA"
+        "keywords": "MLPerf, MLPerf Training, Training, Optimization, Llama 2, Llama 3.1, LoRA"
         "vertical": "AI"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Training, Generative AI"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Meena Arunachalam, Miro Hodak, Eliot Li"
+        "amd_blog_authors": "Meena Arunachalam, Miro Hodak, Ravi Dwivedula, Sarthak Arora, Sathish Sanjeevi, Su Ann Chong, Karan Verma, Eliot Li"
 ---
 
 <!---
