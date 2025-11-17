@@ -392,6 +392,8 @@ Suyash
 Tandon
 Takashi
 Isobe
+Teemu
+Karkkainen
 Thiago
 Crepaldi
 Thomas
@@ -480,3 +482,5 @@ Zongheng
 Yang
 cai
 wai
+Aalto
+Kärkkäinen
