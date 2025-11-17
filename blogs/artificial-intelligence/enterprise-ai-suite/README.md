@@ -49,19 +49,19 @@ SOFTWARE.
 
 # AMD Enterprise AI Suite: Open Infrastructure for Production AI
 
-In this blog, you'll learn how to operationalize enterprise AI on AMD 
-Instinct™ GPUs using an open, Kubernetes-native software stack. AMD 
-Enterprise AI Suite provides a unified platform that integrates GPU 
-infrastructure, workload orchestration, model inference, and lifecycle 
-governance without dependence on proprietary systems. We begin by 
-outlining the end-to-end architecture and then walk through how each 
-component fits into production workflows: AMD Inference Microservice 
-(AIM) for optimized and scalable model serving, AMD Solution Blueprints 
-for assembling these capabilities into validated, end-to-end AI 
-workflows, AMD Resource Manager for infrastructure administration and 
-multi-team governance, and AMD AI Workbench for reproducible 
-development and fine-tuning environments. Together, these building 
-blocks show how to build, scale, and manage AI workloads across the 
+In this blog, you'll learn how to operationalize enterprise AI on AMD
+Instinct™ GPUs using an open, Kubernetes-native software stack. AMD
+Enterprise AI Suite provides a unified platform that integrates GPU
+infrastructure, workload orchestration, model inference, and lifecycle
+governance without dependence on proprietary systems. We begin by
+outlining the end-to-end architecture and then walk through how each
+component fits into production workflows: AMD Inference Microservice
+(AIM) for optimized and scalable model serving, AMD Solution Blueprints
+for assembling these capabilities into validated, end-to-end AI
+workflows, AMD Resource Manager for infrastructure administration and
+multi-team governance, and AMD AI Workbench for reproducible
+development and fine-tuning environments. Together, these building
+blocks show how to build, scale, and manage AI workloads across the
 enterprise using an open, modular, production-ready stack.
 
 The AMD Enterprise AI Suite is designed for enterprise teams operating
@@ -78,22 +78,22 @@ Kubernetes-native design that integrates directly with enterprise DevOps
 and MLOps pipelines; hardware-aware optimizations tuned for AMD CDNA™
 architectures to maximize throughput and efficiency; unified
 observability through consistent telemetry, metrics, and logging; and
-enterprise security features such as RBAC, secrets management, and 
+enterprise security features such as RBAC, secrets management, and
 governance controls.
 
-As shown in Figure 1, AMD Enterprise AI Suite integrates several 
-foundational components that work together in production: AMD Inference 
-Microservice (AIM) for high-performance, scalable model serving, AMD 
-Solution Blueprints that provide validated generative and agentic AI 
-workflows based on open, reproducible reference architectures, AMD 
-Resource Manager for fine-grained resource governance, quotas, and 
-workload policy enforcement across teams, and AMD AI Workbench as a 
-unified environment for model development, fine-tuning, and managing 
-AIM-based deployments. Combined, these components create a cohesive, 
-production-ready AI stack engineered for performance, visibility, and 
+As shown in Figure 1, AMD Enterprise AI Suite integrates several
+foundational components that work together in production: AMD Inference
+Microservice (AIM) for high-performance, scalable model serving, AMD
+Solution Blueprints that provide validated generative and agentic AI
+workflows based on open, reproducible reference architectures, AMD
+Resource Manager for fine-grained resource governance, quotas, and
+workload policy enforcement across teams, and AMD AI Workbench as a
+unified environment for model development, fine-tuning, and managing
+AIM-based deployments. Combined, these components create a cohesive,
+production-ready AI stack engineered for performance, visibility, and
 control across the enterprise.
 
-![Enterprise AI Stack](images/EAI_stack_view.png)
+![Enterprise AI Stack](images/eai-suite-stack-new.png)
 
 Figure 1: AMD Enterprise AI Suite
 
@@ -121,10 +121,10 @@ AIMs simplify and accelerate inference on AMD Instinct™ by turning a
 complex, manual setup into a one-command deployment of validated models.
 They package validated profiles for AMD accelerators, delivering
 predictable performance, scalability, and seamless integration with
-open-source engines like vLLM. Figure 2 illustrates the AMD Inference 
-Microservice (AIM) architecture, showing how optimized model runtimes, 
-scalable serving layers, and Kubernetes-native orchestration integrate 
-to deliver high-throughput, production-grade inference on AMD Instinct™ 
+open-source engines like vLLM. Figure 2 illustrates the AMD Inference
+Microservice (AIM) architecture, showing how optimized model runtimes,
+scalable serving layers, and Kubernetes-native orchestration integrate
+to deliver high-throughput, production-grade inference on AMD Instinct™
 GPUs.
 
 ![AIM Architecture](images/AIMs_marketecture.png)
@@ -134,26 +134,26 @@ Figure 2: AMD Inference Microservice (AIM) Architecture
 AIMs implement a microservices-based control plane that manages the full
 inference lifecycle:
 
-1.  **Runtime Initialization** Loads and validates containerized
+1. **Runtime Initialization** Loads and validates containerized
     configurations
 
-2.  **Hardware Detection** Auto-discovers available AMD Instinct™ GPUs
+2. **Hardware Detection** Auto-discovers available AMD Instinct™ GPUs
     and health checks on each accelerator.
 
-3.  **Profile Selection** Matches model profiles to AMD Instinct™ GPUs
+3. **Profile Selection** Matches model profiles to AMD Instinct™ GPUs
     (e.g., MI300X, MI325X) using validated performance templates.
 
-4.  **Execution Command Generation** Creates tuned runtime commands for
+4. **Execution Command Generation** Creates tuned runtime commands for
     tensor parallelism, precision (FP16, BF16, FP8), and communication
     optimizations.
 
-5.  **Open-Source Inference Engine** Support for popular open-source
+5. **Open-Source Inference Engine** Support for popular open-source
     inference engines such as vLLM.
 
-6.  **Model Caching & Memory Management** Caches weights locally and
+6. **Model Caching & Memory Management** Caches weights locally and
     dynamically manages GPU memory across sessions.
 
-7.  **Observability & Autoscaling** Exposes Prometheus-compatible
+7. **Observability & Autoscaling** Exposes Prometheus-compatible
     metrics and scales pods through KServe autoscaling hooks.
 
 AIMs expose OpenAI-compatible REST APIs, enabling immediate integration
@@ -189,15 +189,15 @@ An AMD Solution Blueprint typically includes:
 
 ### Initial Blueprints
 
-**Agentic Translation**
+#### Agentic Translation
 
 - Agentic machine translation pipeline with document ingestion and
   chunking for long-context document-level translation.
 
 - Incorporates arbitrary instructions for the translation, enabling
-  enterprise rules and tone compliance. 
+  enterprise rules and tone compliance.
 
-**LLM Chat Sandbox**
+#### LLM Chat Sandbox
 
 - Modular playground for evaluating model behavior and prompt
   engineering.
@@ -205,14 +205,14 @@ An AMD Solution Blueprint typically includes:
 - Includes plug-in interfaces for custom retrieval modules and
   telemetry.
 
-**Local LLM Assistant for IDE**
+#### Local LLM Assistant for IDE
 
 - Embeds AIMs powered LLMs in developer IDEs.
 
 - Supports context-aware suggestions, documentation generation, and
   inline code refactoring.
 
-**Financial Stock Intelligence**
+#### Financial Stock Intelligence
 
 - A financial analysis tool that combines real-time stock data and
   technical indicators using an LLM to provide comprehensive stock
@@ -221,7 +221,7 @@ An AMD Solution Blueprint typically includes:
 - Includes information from recent news, sustainability scores, and
   analyst recommendations.
 
-**AutoGen Studio Agentic Platform**
+#### AutoGen Studio Agentic Platform
 
 - Create and configure AI agents with specific roles, personalities, and
   capabilities through a web interface.
@@ -251,8 +251,8 @@ performance tuned for AMD hardware.
 
 In large-scale AI operations, managing compute clusters, allocating
 quotas, controlling user access, and monitoring resource utilization all
-become complex and mission critical. Figure 3 shows the AMD Resource 
-Manager interface, which provides a unified control plane that simplifies 
+become complex and mission critical. Figure 3 shows the AMD Resource
+Manager interface, which provides a unified control plane that simplifies
 these tasks and centralized AI infrastructure governance.
 
 ![AMD Resource Manager](images/resource-manager-for-web.jpg)
@@ -261,7 +261,7 @@ Figure 3: AMD Resource Manager User Interface
 
 ### Key Capabilities
 
-**1. Cluster & Infrastructure Visibility**
+#### 1. Cluster & Infrastructure Visibility
 
 AMD Resource Manager delivers a unified cluster overview dashboard that
 provides real-time insights into cluster health, utilization, and
@@ -269,7 +269,7 @@ capacity. Infrastructure administrators can seamlessly add, monitor, and
 manage on-prem and cloud compute clusters from a single intuitive
 console.
 
-**2. Workloads & Quotas Management**
+#### 2. Workloads & Quotas Management
 
 Gain clear visibility into active workloads, and resource consumption
 bottlenecks. AMD Resource Manager simplifies project governance with
@@ -277,13 +277,13 @@ built-in tools to create projects, define quotas, and enforce scheduling
 policies, ensuring fair and efficient use of compute resources across
 teams.
 
-**3. User & Role Management**
+#### 3. User & Role Management
 
 Empower teams with secure, role-based access. AMD Resource Manager
 enables administrators to create users, assign roles, integrate SSO, and
 manage invitations from a centralized interface.
 
-**4. Secrets & Access Control**
+#### 4. Secrets & Access Control
 
 Protect sensitive data with centralized management of credentials, API
 keys, and secrets. AMD Resource Manager enforces fine-grained access
@@ -310,32 +310,32 @@ Manager helps organizations:
 
 ## AMD AI Workbench: AIMs Management UI, AI Developer Tooling and Workspaces
 
-AMD AI Workbench is a unified interface to manage, develop, fine-tune, and 
-deploy AI workloads at scale. As shown in Figure 4, the Workbench interface 
-offers AI practitioners and data scientists a cohesive environment that 
+AMD AI Workbench is a unified interface to manage, develop, fine-tune, and
+deploy AI workloads at scale. As shown in Figure 4, the Workbench interface
+offers AI practitioners and data scientists a cohesive environment that
 streamlines the full AI lifecycle from experimentation to deployment.
 
 ![AMD AI Workbench](images/workbench-for-web.jpg)
 
 Figure 4: AMD AI Workbench Interface
 
-### Key Capabilities
+### Key Capabilities in AMD AI Workbench
 
-**1. AIMs Catalog**
+#### 1. AIMs Catalog
 
 The AIMs catalogue is onboarded to the AI Workbench and the user can
 browse, deploy and interact with AIMs. API key management allows sharing
 the deployed AIMs inference API with external users and applications and
 monitor the utilization.
 
-**2. AI Workspaces**
+#### 2. AI Workspaces
 
 Launch pre-configured development workspaces optimized for AMD compute
 to accelerate experimentation. Select the desired amount of GPU resources,
 targeted base image and deploy e.g. VScode or JupyterLab to get started
 with development on AMD GPUs.
 
-**3. Training & Fine-Tuning**
+#### 3. Training & Fine-Tuning
 
 Customize base models with your own data to address specific enterprise
 use cases. Choose between a low code UI with pre-set hyperparameters
@@ -343,12 +343,12 @@ use cases. Choose between a low code UI with pre-set hyperparameters
 selection for the expert users of reference AI workloads for Kubernetes
 CLI.
 
-**4. Chat & Compare**
+#### 4. Chat & Compare
 
 Interactively test AIMs and custom models through a chat interface and
 compare outputs side-by-side to quickly get a gist of performance.
 
-**5. GPU-as-a-Service**
+#### 5. GPU-as-a-Service
 
 Enable teams to self-provision GPU resources while administrators retain
 control through quotas and governance.
@@ -372,30 +372,30 @@ challenges by:
 
 ## Summary
 
-This blog outlined how the AMD Enterprise AI Suite delivers a unified, 
-open, and performance-optimized foundation for running AI workloads on 
-AMD Instinct™ GPUs. You saw how AMD Inference Microservice (AIM) 
-delivers optimized model serving, how AMD Solution Blueprints provide 
-validated workflow patterns, how AMD Resource Manager enforces 
-multi-team governance, and how AMD AI Workbench enables reproducible 
-development, together forming a unified, production-ready AI stack. 
-These components enable enterprise teams to accelerate the path from 
-prototype to production, whether deploying multi-node LLM inference, 
-building agentic pipelines, or operating large GPU fleets with 
+This blog outlined how the AMD Enterprise AI Suite delivers a unified,
+open, and performance-optimized foundation for running AI workloads on
+AMD Instinct™ GPUs. You saw how AMD Inference Microservice (AIM)
+delivers optimized model serving, how AMD Solution Blueprints provide
+validated workflow patterns, how AMD Resource Manager enforces
+multi-team governance, and how AMD AI Workbench enables reproducible
+development, together forming a unified, production-ready AI stack.
+These components enable enterprise teams to accelerate the path from
+prototype to production, whether deploying multi-node LLM inference,
+building agentic pipelines, or operating large GPU fleets with
 predictable performance and control.
 
-Looking ahead, the team will continue expanding reference architectures, 
-adding new AIM model profiles, extending governance capabilities in 
-Resource Manager, and delivering deeper integrations across the suite. 
-For a deeper look at the inference layer introduced here, see the 
-companion [AMD Inference Microservice (AIM) blog](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-aims/README.html). 
-Future posts will build on both blogs with additional guidance, best 
-practices, and validated designs to help enterprises scale AI 
+Looking ahead, the team will continue expanding reference architectures,
+adding new AIM model profiles, extending governance capabilities in
+Resource Manager, and delivering deeper integrations across the suite.
+For a deeper look at the inference layer introduced here, see the
+companion [AMD Inference Microservice (AIM) blog](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-aims/README.html).
+Future posts will build on both blogs with additional guidance, best
+practices, and validated designs to help enterprises scale AI
 confidently on AMD hardware.
 
 ## Get Started
 
-- Visit the 
+- Visit the
   [AMD Enterprise AI Suite Documentation site](https://enterprise-ai.docs.amd.com/en/latest/)
 
 - **AMD Inference Microservices (AIMs)**: AIMs are open-source and
