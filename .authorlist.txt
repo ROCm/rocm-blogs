@@ -10,6 +10,8 @@ Alex
 He
 Alex
 Voicu
+Alexander
+Aurell
 Alireza
 Sariaslani
 Amanzhol
@@ -132,6 +134,8 @@ Farshad
 Ghodsian
 Felix
 Marty
+Fuwei
+Yang
 Garrett
 Byrd
 George
@@ -322,6 +326,8 @@ Phillip
 Dang
 Pier
 Dovesi
+Piero
+Ranalli
 Pin
 Tan
 Poovaiah
@@ -350,6 +356,8 @@ Rishi
 Madduri
 Romil
 Bhardwaj
+Rongzhang
+Zheng
 Saad
 Rahim
 Saptarshi
@@ -402,6 +410,8 @@ Tiffany
 Mintz
 Tong
 Shen
+Tun
+Tan
 Vara
 Bayanagari
 Vicky
@@ -452,6 +462,8 @@ Yao
 Fu
 Yao
 Liu
+Ye
+Cheong
 Yilin
 Zhao
 Yixing

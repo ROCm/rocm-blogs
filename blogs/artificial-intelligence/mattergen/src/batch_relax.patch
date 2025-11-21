@@ -1,0 +1,13 @@
+diff --git a/src/mattersim/applications/batch_relax.py b/src/mattersim/applications/batch_relax.py
+index e5b44d3..941ac5f 100644
+--- a/src/mattersim/applications/batch_relax.py
++++ b/src/mattersim/applications/batch_relax.py
+@@ -123,7 +123,7 @@ class BatchRelaxer(object):
+ 
+                 opt.step()
+                 opt.nsteps += 1
+-                if opt.converged() or opt.nsteps >= self.max_n_steps:
++                if opt.converged(forces_batch[counter].ravel()) or opt.nsteps >= self.max_n_steps:
+                     self.is_active_instance[idx] = False
+                     self.total_converged += 1
+                     if self.total_converged % 100 == 0:
