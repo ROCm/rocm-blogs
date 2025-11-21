@@ -1,0 +1,24 @@
+diff --git a/mattergen/conf/lightning_module/default.yaml b/mattergen/conf/lightning_module/default.yaml
+index a5f91c7..61cc890 100644
+--- a/mattergen/conf/lightning_module/default.yaml
++++ b/mattergen/conf/lightning_module/default.yaml
+@@ -9,7 +9,6 @@ scheduler_partials:
+       factor: 0.6
+       patience: 100
+       min_lr: 1e-6
+-      verbose: true
+       _partial_: true
+     interval: epoch
+     frequency: 1
+diff --git a/mattergen/conf/trainer/default.yaml b/mattergen/conf/trainer/default.yaml
+index 92fcf64..1d3bbcb 100644
+--- a/mattergen/conf/trainer/default.yaml
++++ b/mattergen/conf/trainer/default.yaml
+@@ -30,7 +30,6 @@ callbacks:
+     mode: min
+     save_top_k: 1
+     save_last: True
+-    verbose: false
+     every_n_epochs: 1
+     filename: "{epoch}-{loss_val:.2f}"
+   - _target_: pytorch_lightning.callbacks.TQDMProgressBar
