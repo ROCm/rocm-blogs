@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Reinforcement Learning from Human Feedback on AMD GPUs with verl and ROCm Integration"
 date: 24 Apr 2025
-author: 'Yusheng Su, Vicky Tsang, Satya Jandhyala, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu'
+author: 'Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu'
 thumbnail: 'verl.jpg'
 tags: Fine-Tuning, Reinforcement Learning, AI/ML
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: verl, an efficient RLHF framework designed for scalable 
 language: English
 myst:
     html_meta:
-        "author": "Yusheng Su, Vicky Tsang, Satya Jandhyala, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu"
+        "author": "Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu"
         "description lang=en": "Deploy verl on AMD GPUs for fast, scalable RLHF training with ROCm optimization, Docker scripts, and impressive throughput-convergence results"
         "keywords": "verl, Training, AMD GPUs."
         "property=og:locale": "en_US"
@@ -54,7 +54,7 @@ Follow this guide to get started with verl on AMD Instinct GPUs and accelerate y
 ## Key Takeaways
 
 1. verl framework and its advantages
-2. AMD ROCm software support and docker image for the [v0.6.0](https://github.com/volcengine/verl/tree/0eb50ec4a33cda97e05ed8caab9c7f17a30c05a9) version verl
+2. AMD ROCm software support and docker image for the [v0.3.0.post0](https://github.com/volcengine/verl/releases/tag/v0.3.0.post0) version verl
 3. Single-node and multi-node training scripts for verl
 4. Throughput and convergence accuracy
   
@@ -68,7 +68,7 @@ Building on this foundation, an open-source community ([Volcengine](https://gith
 
 ## Enabling verl on AMD Instinct™ with ROCm and Docker
 
-To better support AMD Instinct GPUs and ROCm 7, we a provide a pre-built [docker images](https://hub.docker.com/r/rocm/verl/tags) to simplify the setup of the verl training environment.
+To ensure verl functions effectively on AMD Instinct GPUs, we contributed some key ROCm enhancements. First, we updated the verl codebase to ensure compatibility with the ROCm kernel, enabling stable and efficient execution on AMD GPUs (see PR: [\[Hardware\] Support AMD (ROCMm Kernel) #360](https://github.com/volcengine/verl/pull/360)). Additionally, we addressed issues in the third-party library **Ray** on AMD Instinct, allowing it to handle dynamic resource allocation reliably---an essential step toward achieving high overall training efficiency (see PR: [Replace AMD device env var with HIP_VISIBLE_DEVICES #51104](https://github.com/ray-project/ray/pull/51104)).Additionally, to better support AMD Instinct GPUs, we provide [Dockerfiles](https://github.com/volcengine/verl/blob/main/docker/Dockerfile.rocm) to simplify the setup of the verl training environment. The aforementioned supports have been integrated into the official verl upstream repository and are included in the [v0.3.0.post0](https://github.com/volcengine/verl/releases/tag/v0.3.0.post0) version.
 
 ## Running verl on AMD GPUs: Single-Node and Multi-Node Setups
 
@@ -76,7 +76,54 @@ Let's get started with running verl on AMD Instinct:
 
 ### Single-node Training
 
-The first step is to launch the verl docker image:
+The first step is to launch the verl docker image. You can build by your own with:
+
+```shell
+FROM rocm/vllm:rocm6.2_mi300_ubuntu20.04_py3.9_vllm_0.6.4
+
+# Set working directory
+WORKDIR $PWD/app
+
+# Set environment variables
+ENV PYTORCH_ROCM_ARCH="gfx90a;gfx942"
+
+# Install vllm
+RUN pip uninstall -y vllm && \
+    rm -rf vllm && \
+    git clone -b v0.6.3 https://github.com/vllm-project/vllm.git && \
+    cd vllm && \
+    MAX_JOBS=$(nproc) python3 setup.py install && \
+    cd .. && \
+    rm -rf vllm
+
+# Copy the entire project directory
+COPY . .
+
+# Install dependencies
+RUN pip install "tensordict<0.6" --no-deps && \
+    pip install accelerate \
+    codetiming \
+    datasets \
+    dill \
+    hydra-core \
+    liger-kernel \
+    numpy \
+    pandas \
+    peft \
+    "pyarrow>=15.0.0" \
+    pylatexenc \
+    "ray[data,train,tune,serve]" \
+    torchdata \
+    transformers \
+    wandb \
+    orjson \
+    pybind11 && \
+    pip install -e . --no-deps
+```
+
+After building the Docker image (verl-rocm) using the provided Dockerfile with the command `docker build -t verl-rocm .`, you can proceed to the next steps.
+
+#### Docker Launch
 
 ```shell
 docker run --rm -it \
@@ -91,7 +138,7 @@ docker run --rm -it \
 	-v $HOME:$HOME \
 	--shm-size 128G \
 	-w $PWD \
-	rocm/verl:verl-0.6.0.amd0_rocm7.0_vllm0.11.0.dev
+	verl-rocm 
 ```
 
 #### Data Prepare
@@ -102,7 +149,7 @@ python3 examples/data_preprocess/gsm8k.py --local_dir ../data/gsm8k
   
 #### Model Loading
 
-```shell
+```shell  
 python3 -c "import transformers;transformers.pipeline('text-generation', model='Qwen/Qwen2-7B-Instruct')"
 python3 -c "import transformers;transformers.pipeline('text-generation', model='deepseek-ai/deepseek-llm-7b-chat')"
 ```
@@ -114,18 +161,19 @@ MODEL_PATH="Qwen/Qwen2-7B-Instruct"
 train_files="../data/gsm8k/train.parquet"
 test_files="../data/gsm8k/test.parquet"
 ```
-
+  
 You can choose any model supported by verl and assign it to the `$MODEL_PATH` variable. In our case, we use`Qwen/Qwen2-7B-Instruct` and `deepseek-ai/deepseek-llm-7b-chat`. As for the dataset, you are free to use any dataset of your choice---just ensure it is converted into the required format. In this example, we use `gsm8k`, as verl already provides preprocessing code to format it appropriately.
 
 #### Environment Variable Setup
 
 ```shell
 export HIP_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+export ROCR_VISIBLE_DEVICES=$HIP_VISIBLE_DEVICES
 GPUS_PER_NODE=8
 ```
 
-You must assign `HIP_VISIBLE_DEVICES`.
-This is the most crucial part---and the only difference compared to running on CUDA version torch.
+You must assign `HIP_VISIBLE_DEVICES` and `ROCR_VISIBLE_DEVICES`.
+This is the most crucial part---and the only difference compared to running on CUDA version torch.  
 
 Then, you can run the RLHF algorithms provided by verl, including PPO, GRPO, ReMax, REINFORCE++, RLOO, PRIME, and others. In this example, we use PPO and GRPO to illustrate the workflow.
 
@@ -238,7 +286,7 @@ For more detailed guidance, comprehensive single-node and multi-node training tu
 
 ## Performance Benchmarks: Throughput and Convergence on MI300X vs. H100
 
-In this section, we run verl (v0.6.0) and present the throughput and convergence accuracy results on H100 and MI300, respectively, using the same hyperparameter settings.
+In this section, we run our modified verl (v0.3.0.post0) and present the throughput and convergence accuracy results on H100 and MI300, respectively, using the same hyperparameter settings.  
 
 PPO:
 |Platform   |Model   |TP_VALUE |INFERENCE_BATCH_SIZE |GPU_MEMORY_UTILIZATION |Throughput (Token/GPU/Sec)|Convergence(Acc.)
@@ -258,7 +306,7 @@ GRPO:
 |H100| deepseek-llm-7b-chat| 2| 110| 0.4| 1624.42| 71.2|
 |MI300^\[1\]^| deepseek-llm-7b-chat| 2| 110| 0.4| 1899.04| 70.9|
 
-Note: For throughput (measured in Tokens/GPU/Second), we run 350 training steps for each setting and compute the average throughput over the remaining steps.
+Note: For throughput (measured in Tokens/GPU/Second), we run 350 training steps for each setting. To ensure stability, we exclude any step where step % 10 == 0, then compute the average throughput over the remaining steps.
 Note: For convergence (measured by accuracy), we run 350 training steps and report the highest accuracy achieved during this period, as the training typically converges within these steps.
 
 ## Summary
@@ -267,7 +315,7 @@ As RLHF becomes a cornerstone in fine-tuning LLMs, verl offers a scalable, open-
 
 ## Contributors
 
-Core contributors: Yusheng Su, Vicky Tsang, Satya Jandhyala, Yao Liu, Zicheng Liu
+Core contributors: Yusheng Su, Vicky Tsang, Yao Liu, Zicheng Liu
 
 Contributors: Xiaodong Yu, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Phani Vaddadi, Vish Vadlamani, Emad Barsoum
 
