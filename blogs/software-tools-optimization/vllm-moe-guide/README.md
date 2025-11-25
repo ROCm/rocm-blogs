@@ -699,7 +699,7 @@ vLLM allows combining multiple strategies to efficiently distribute models acros
    1. `--pipeline-parallel-size 2 --enable-expert-parallel` → EP **does NOT activate** (TP=1, DP=1 per stage)
    2. `--pipeline-parallel-size 2 --tensor-parallel-size 4 --enable-expert-parallel` → EP activates (TP=4 per stage)
 
-2. **PP \+ EP requires AITER (Advanced Inter-node Tensor-parallelism Engine Runtime)**
+2. **PP \+ EP requires AITER**
    1. AITER provides stability for complex communication patterns with PP
    2. Enable with: `VLLM_ROCM_USE_AITER=1`
    3. Without AITER: May experience instability or failures with large MoE models
