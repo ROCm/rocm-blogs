@@ -1,12 +1,12 @@
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Levent Güner">
+  <meta name="description" content="Levent Guner">
   <meta name="keywords" content="blog, contributor, blog author">
 </head>
 
-(levent-gner)=
+(levent-guner)=
 
-# Levent Güner
+# Levent Guner
 
 ```{image} ./data/Levent-Guner.jpeg
 :alt: LeventGuner
