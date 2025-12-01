@@ -789,7 +789,7 @@ docker run -it --privileged --network=host --device=/dev/kfd --device=/dev/dri -
 
 ```bash
 
-pip install ray[serve]=2.44.1 hugginface_hub
+pip install ray[serve]==2.44.1 huggingface_hub
 
 ```
 
