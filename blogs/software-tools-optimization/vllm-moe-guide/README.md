@@ -407,13 +407,13 @@ When you use `--data-parallel-size 8` **without** `--enable-expert-parallel`:
   - Requires AllGather before routed experts (gather shared expert outputs)
   - Requires ReduceScatter after routed experts (reduce and distribute results)
 - **MoE shared expert: SHARDED**
-- KV cache: **Full KV cache on each GPU** (NOT partitioned \- each GPU processes its own separate batch)
+- KV cache is **partitioned** across GPUs; each GPU holds the cache only for the requests it is assigned.
 - Communication: Uses AllGather (before routed experts) \+ ReduceScatter (after routed experts), **NOT AllToAll**
 - **No DP Attention behavior**
 
 **Figure 6** illustrates this architecture, showing how routed experts are sharded across all 8 GPUs with AllGather and ReduceScatter communication patterns.
 
-```{figure} ./images/dp_without_ep_moe_v2.svg
+```{figure} ./images/dp_without_ep_moe_v3.svg
 :alt: Data flow for DP=8 without Expert Parallelism
 :width: 800px
 :align: center
