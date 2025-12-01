@@ -4,8 +4,8 @@
    style="font-size:12px;font-family:Arial"
    version="1.1"
    id="svg_dp_without_ep"
-   sodipodi:docname="dp_without_ep_moe_v2.svg"
-   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   sodipodi:docname="dp_without_ep_moe_v3.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    inkscape:export-filename="dp_without_ep_moe.png"
    inkscape:export-xdpi="150"
    inkscape:export-ydpi="150"
@@ -26,11 +26,11 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.094087"
      inkscape:cx="632.03383"
-     inkscape:cy="648.0289"
+     inkscape:cy="429.12492"
      inkscape:window-width="1920"
-     inkscape:window-height="1010"
-     inkscape:window-x="-6"
-     inkscape:window-y="-6"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg_dp_without_ep" />
   <!-- Title Box -->
@@ -512,14 +512,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn0_3">KV: A</text>
-  <text
-     x="135"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn0_4">FULL!</text>
   <rect
      x="210"
      y="276"
@@ -553,14 +545,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn1_3">KV: B</text>
-  <text
-     x="260"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn1_4">FULL!</text>
   <rect
      x="335"
      y="276"
@@ -594,14 +578,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn2_3">KV: C</text>
-  <text
-     x="385"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn2_4">FULL!</text>
   <rect
      x="460"
      y="276"
@@ -635,14 +611,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn3_3">KV: D</text>
-  <text
-     x="510"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn3_4">FULL!</text>
   <rect
      x="585"
      y="276"
@@ -676,14 +644,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn4_3">KV: E</text>
-  <text
-     x="635"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn4_4">FULL!</text>
   <rect
      x="710"
      y="276"
@@ -717,14 +677,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn5_3">KV: F</text>
-  <text
-     x="760"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn5_4">FULL!</text>
   <rect
      x="835"
      y="276"
@@ -758,14 +710,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn6_3">KV: G</text>
-  <text
-     x="885"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn6_4">FULL!</text>
   <rect
      x="960"
      y="276"
@@ -799,14 +743,6 @@
      font-size="11px"
      font-weight="bold"
      id="attn7_3">KV: H</text>
-  <text
-     x="1010"
-     y="341"
-     text-anchor="middle"
-     fill="#ffffff"
-     font-size="10px"
-     font-weight="bold"
-     id="attn7_4">FULL!</text>
   <!-- Communication note -->
   <!-- Shared Experts Layer (individual boxes) -->
   <!-- Shared experts label -->
