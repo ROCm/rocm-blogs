@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Týr-the-Pruner: Search-based Global Structural Pruning for LLMs"
-date: 03 Nov 2025
+date: 03 Dec 2025
 author: 'Guanchen Li, Yixing Xu, Zeping Li, Ji Liu, Xuanwu Yin, Dong Li, Emad Barsoum'
 thumbnail: 'images/AI-generated.png'
 tags: AI/ML
