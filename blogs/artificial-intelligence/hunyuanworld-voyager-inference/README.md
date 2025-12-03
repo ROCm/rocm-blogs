@@ -69,8 +69,7 @@ In the following sections, you’ll find step-by-step instructions for running t
 
 ### 1. Launch the Docker Container
 
-We use the ROCm 7.0 container (rocm/7.0:rocm7.0_pytorch_training_instinct_20250915) with PyTorch, required Python packages, and FlashAttention 2 pre‑installed; supported platforms are listed here: [list of supported OSs and AMD hardware](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html)
-It is recommended to use ≥80 GB VRAM for single‑GPU inference. We run on an AMD Instinct MI300X (192 GB) and scale multi‑GPU tests on 2, 4, and 8 MI300X cards.
+We use the [ROCm-based xDiT Docker image](https://hub.docker.com/r/amdsiloai/pytorch-xdit) (amdsiloai/pytorch-xdit:v25.11), an optimized diffusion model Docker with out-of-box support for state-of-the-art video generation models; supported platforms are listed here: [list of supported OSs and AMD hardware](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html). It is recommended to use ≥80 GB VRAM for single‑GPU inference. We run on an AMD Instinct MI300X (192 GB) and scale multi‑GPU tests on 2, 4, and 8 MI300X cards.
 
 The selection of shm-size can be based on number of GPUs, model size, or system RAM. One simple way to calculate it is `--shm-size` = (Number of GPUs × 8GB) to (Number of GPUs × 16GB). We used 32g for 4-GPU inference on Voyager model.
 
@@ -84,7 +83,7 @@ docker run -it --rm --runtime=amd \
   --shm-size=32g \
   --name hunyuan-voyager \
   -v $(pwd):/workspace -w /workspace \
-  rocm/7.0:rocm7.0_pytorch_training_instinct_20250915
+  amdsiloai/pytorch-xdit:v25.11
 ```
 
 Note for HPC/Job Scheduler Users:
@@ -102,7 +101,7 @@ docker run -it --rm \
   --shm-size=32g \
   --name hunyuan-voyager \
   -v $(pwd):/workspace -w /workspace \
-  rocm/7.0:rocm7.0_pytorch_training_instinct_20250915
+  amdsiloai/pytorch-xdit:v25.11
 ```
 
 For Vultr and some cloud providers, manual render device mapping may be required.
@@ -121,9 +120,16 @@ git checkout feat/rocm-platform
 During setup you may see pip resolver warnings. These optional extras are not used in our inference path and can be safely ignored.
 
 ```bash
-python -m pip install -r requirements.txt
-# transformers 4.55.0 is pre-installed in the docker image, but the model requires 4.39.3
-python -m pip install transformers==4.39.3
+# Dependencies
+pip install pyexr==0.5.0 loguru==0.7.2 tensorboard==2.19.0 transformers==4.45
+pip install flash-attn --no-build-isolation
+export FLASH_ATTN_IMPL=ck
+# Needed if the underlaying host ROCm <= 6.4.1
+export HSA_NO_SCRATCH_RECLAIM=1
+# Optional: MIOpen tuning variables (may improve performance on some configurations)
+export MIOPEN_DEBUG_CONV_DIRECT=0
+export MIOPEN_FIND_MODE=3
+export MIOPEN_FIND_ENFORCE=3
 ```
 
 The HunyuanWorld-Voyager framework includes utilities for processing custom input images and camera trajectories. To create your own input conditions, you also need to install the following dependencies:
@@ -132,22 +138,6 @@ The HunyuanWorld-Voyager framework includes utilities for processing custom inpu
 pip install --no-deps git+https://github.com/microsoft/MoGe.git
 pip install scipy==1.11.4
 pip install git+https://github.com/EasternJournalist/utils3d.git@a480806f58337da70d3c0df970b1df91ca152e61
-```
-
-#### Additional Requirements for Multi-GPU Inference with torchrun
-
-For multi-GPU inference, install xDiT (`xfuser`) which provides distributed inference capabilities. Since `xfuser` expects CUDA version information that's unavailable in ROCm environments, a compatibility fix is required to prevent runtime errors. This issue has been fixed in recent commits but not yet released. Once these changes are released, the manual compatibility fixes below may no longer be necessary.
-
-```bash
-# Install xDiT for parallel inference
-python -m pip install xfuser==0.4.2
-
-# Fix CUDA version parsing for ROCm compatibility
-sed -i 's/"CUDA_VERSION": lambda: version.parse(torch.version.cuda),/"CUDA_VERSION": lambda: version.parse(torch.version.cuda or "0.0.0"),/' /opt/venv/lib/python3.10/site-packages/xfuser/envs.py
-
-# Update ring_flashinfer_attn.py, it has been fixed in recent commits but not released
-pip uninstall yunchang -y
-pip install git+https://github.com/feifeibear/long-context-attention.git@7a52abd669efb35e550680a239e1745b620b2bae
 ```
 
 ### 3. Model Download and Environment Variable Setup
@@ -292,11 +282,14 @@ The video shows all six camera trajectories (49 frames each) at real-time speed,
 
 ## Performance Results
 
-The table below shows baseline end-to-end generation times (1040×768 resolution, 49 frames, 50 diffusion steps) on MI300X GPUs (192 GB VRAM per GPU, 12 host CPU cores each). Results were measured after an initial warm-up run to exclude model loading and compilation overhead. Clear scaling benefits are demonstrated from 1 to 8 GPUs. These benchmarks use default settings without advanced overlap, precision, or cache optimizations, indicating additional performance potential beyond the scope of this blog.
+The table below shows baseline inference latency and end-to-end generation times (1040×768 resolution, 49 frames, 50 diffusion steps) on MI300X GPUs (192 GB VRAM per GPU, 12 host CPU cores each). Results were measured after an initial warm-up run to exclude model loading and compilation overhead. Clear scaling benefits are demonstrated from 1 to 8 GPUs. These benchmarks use default settings without advanced overlap, precision, or cache optimizations, indicating additional performance potential beyond the scope of this blog.
 
-| Number of GPUs | 1 | 2 | 4 | 8 |
-|------|---|---|---|---|
-| Generation Time (s) | 680 | 479 | 304 | 236 |
+| GPUs | Inference Latency (s) | End-to-End Generation Time (s) |
+|------|----------------------|-------------------------------|
+| 1 | 635 | 680 |
+| 2 | 359 | 473 |
+| 4 | 188 | 310 |
+| 8 | 111 | 239 |
 
 ## Summary
 
@@ -314,7 +307,7 @@ As video generation technology advances, AMD continues to optimize emerging fram
 
 ## Acknowledgement
 
-We acknowledge the authors of the [HunyuanWorld-Voyager: Technical Report](https://3d-models.hunyuan.tencent.com/voyager/voyager_en/assets/HYWorld_Voyager.pdf), whose contributions enabled the implementation demonstrated in this blog.
+We acknowledge the authors of the [HunyuanWorld-Voyager: Technical Report](https://3d-models.hunyuan.tencent.com/voyager/voyager_en/assets/HYWorld_Voyager.pdf), whose contributions enabled the implementation demonstrated in this blog. We also thank Jesus Carabano Bravo for his support in testing the new xDiT Docker image.
 
 ## Disclaimers
 
