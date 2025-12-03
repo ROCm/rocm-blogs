@@ -5,7 +5,10 @@ on:
 
 jobs:
   extract-author-info:
-    permissions: write-all
+    permissions:
+       contents: write
+       pull-requests: write
+       issues: write
     runs-on: ubuntu-latest
     if: contains(github.event.issue.labels.*.name, 'Author Creation')
     steps:
@@ -24,7 +27,7 @@ jobs:
         uses: actions/github-script@v7.0.1
         continue-on-error: false
         with:
-          github-token: ${{ secrets.ROCM_BLOG_PAT }}
+          github-token: ${{ github.token }}
           script: |
             const issue = await github.rest.issues.get({
               owner: context.repo.owner,
@@ -118,6 +121,8 @@ jobs:
       - name: Download Author Image
         id: download
         if: steps.extract.outputs.image_url != ''
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           mkdir -p blogs/authors/data
           
@@ -148,7 +153,8 @@ jobs:
           DOWNLOAD_PATH="blogs/authors/data/$FINAL_FILENAME"
 
           echo "Downloading image with authentication..."
-          curl -L -H "Authorization: token ${{ secrets.ROCM_BLOG_PAT }}" \
+          curl -L \
+               -H "Authorization: token $GITHUB_TOKEN" \
                -H "Accept: image/*" \
                -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
                "$IMAGE_URL" -o "$DOWNLOAD_PATH"
@@ -163,7 +169,8 @@ jobs:
               echo "Downloaded file is not a valid image. Trying alternative method..."
               
               # Alternative download method
-              curl -L -H "Authorization: token ${{ secrets.ROCM_BLOG_PAT }}" \
+              curl -L \
+                   -H "Authorization: token $GITHUB_TOKEN" \
                    -H "Accept: application/vnd.github.v3.raw" \
                    "$IMAGE_URL" -o "$DOWNLOAD_PATH"
                    
@@ -269,7 +276,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v7.0.6
         with:
-          token: ${{ secrets.ROCM_BLOG_PAT }}
+          token: ${{ github.token }}
           commit-message: "Add new author: ${{ steps.extract.outputs.author_name }}"
           title: "Add new author: ${{ steps.extract.outputs.author_name }}"
           body: |
@@ -297,7 +304,7 @@ jobs:
         if: steps.cpr.outputs.pull-request-number
         uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.ROCM_BLOG_PAT }}
+          token: ${{ github.token }}
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## Author Bio Created ✅
@@ -321,7 +328,7 @@ jobs:
         if: failure()
         uses: peter-evans/create-or-update-comment@v4
         with:
-          token: ${{ secrets.ROCM_BLOG_PAT }}
+          token: ${{ github.token }}
           issue-number: ${{ github.event.issue.number }}
           body: |
             ## ❌ Error Creating Author Bio
