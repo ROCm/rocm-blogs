@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Elevating 3D Scene Rendering with GSplat"
 date: 03 Oct 2025
-author: 'Deeksha Goplani, Ish Kool, Karthik Kashyap Thatipamula, Marco Grond, Mark Granroth-Wilding, Pier Luigi Dovesi, Shaghayegh Roohi, Vish Vadlamani, Vikas C Sajjan, Phani Vaddadi'
+author: 'Deeksha Goplani, Ish Kool, Karthik Kashyap Thatipamula, Marco Grond, Mark Granroth Wilding, Pier Luigi Dovesi, Shaghayegh Roohi, Vish Vadlamani, Vikas C Sajjan, Phani Vaddadi'
 thumbnail: '2025-09-30-gsplat.png'
 tags: Computer Vision, PyTorch
 category: Software tools & optimizations
