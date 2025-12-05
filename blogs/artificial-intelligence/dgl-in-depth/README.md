@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "DGL in Depth: SE(3)-Transformer on ROCm 7"
-date: October 24, 2025
+date: 5 Dec 2025
 author: 'Anuya Welling, James E. T. Smith, Geoffrey C. Martin-Noble, Tres Popp, Eliot Li, Mukhil Azhagan Mallaiyan Sathiaseelan, Yao Liu, Phani Vaddadi, Vish Vadlamani'
 thumbnail: 'se3transformer-thumbnail.png'
 tags: AI/ML
