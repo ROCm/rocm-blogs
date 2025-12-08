@@ -68,10 +68,10 @@ Get Started with the ROCm-DGL Repo - [_GitHub Repository_](https://github.com/RO
 Find All 4 Containerized Builds on Our DockerHub [_Dockerhub_](https://hub.docker.com/r/rocm/dgl/tags)
 
 Install DGL — Follow the Official Guide - [_DGL installation
-documentation_](https://rocmdocs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/dgl-install.html)
+documentation_](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/dgl-install.html#)
 
 ROCm-DGL Compatibility Guide — Platforms, Versions, and More [_DGL
-compatibility_](https://rocmdocs.amd.com/en/latest/compatibility/ml-compatibility/dgl-compatibility.html)
+compatibility_]( https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/dgl-install.html)
 
 ## Why Does Deep Graph Learning Need a Specialized Stack?
 
@@ -439,6 +439,10 @@ Ram Seenivasan, Aditya Bhattacharji, Marco Grond, Anshul Gupta, Saad Rahim_
 
 4. [Reprogramming Discovery: How AMD Instinct™ GPUs Are Powering the
     Next Wave of AI-Driven Biology - Part 3 -](https://www.amd.com/en/blogs/2025/reprogramming-discovery--mi300x-gpus-power-ai-driven-biology-par.html)
+
+```{update} Oct 3, 2025
+Corrected the links to ROCm installation and compatibility matrix
+```
 
 ## Disclaimers
 

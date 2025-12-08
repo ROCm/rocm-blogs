@@ -8,7 +8,7 @@ category: Applications & models
 language: English
 key_value_propositions: ""
 target_audience: ""
-thumbnail: ""
+thumbnail: "2025-10-20-rocm-hpc-blogs.png"
 myst:
     html_meta:
             "description lang=en": "Finite difference method - Laplacian Part 4"

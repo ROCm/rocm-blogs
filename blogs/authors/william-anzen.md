@@ -1,0 +1,18 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="William Anzen">
+  <meta name="keywords" content="blog, contributor, blog author">
+</head>
+
+(william-anzen)=
+
+# William Anzen
+
+```{image} ./data/William-Anzen.png
+:alt: William
+:class: bg-primary
+:height: 250px
+:align: left
+```
+
+William is an AI Engineer from AMD Silo AI working in the Enterprise AI team. He has a background in data science, data engineering and developing E2E AI solutions for Nordic industry. As part of the Enterprise AI team, William focuses on Kubernetes and building scalable AI solutions with robust monitoring and streamlined deployment lifecycle.

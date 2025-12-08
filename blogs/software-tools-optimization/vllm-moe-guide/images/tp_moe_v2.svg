@@ -1,0 +1,1186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1102 688"
+   style="font-size:12px;font-family:Arial"
+   version="1.1"
+   id="svg129"
+   sodipodi:docname="tp_moe_v2.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   inkscape:export-filename="tp_moe.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150"
+   width="1102"
+   height="688"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview53"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.8298567"
+     inkscape:cx="599.50109"
+     inkscape:cy="536.23716"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg129" />
+  <!-- Title Box -->
+  <rect
+     x="0.81884003"
+     y="0.81884003"
+     width="1100.3623"
+     height="46.919315"
+     fill="#2c3e50"
+     stroke="#34495e"
+     stroke-width="1.63768"
+     rx="5.001647"
+     id="rect1"
+     inkscape:export-filename="TP_NoEP.png"
+     inkscape:export-xdpi="200"
+     inkscape:export-ydpi="200" />
+  <text
+     x="581"
+     y="31.000002"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="18px"
+     font-weight="bold"
+     id="text1">TP=8 Without Expert Parallelism</text>
+  <text
+     x="74.148438"
+     y="353.39804"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="10px"
+     font-weight="bold"
+     id="shared_label1"
+     style="font-size:12px;font-family:Arial"><tspan
+       sodipodi:role="line"
+       id="tspan1"
+       x="74.148438"
+       y="353.39804">Shared</tspan><tspan
+       sodipodi:role="line"
+       id="tspan2"
+       x="74.148438"
+       y="368.39804">Experts</tspan></text>
+  <rect
+     x="81.406418"
+     y="380"
+     width="975"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="74.148438"
+     y="401.88208"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="10px"
+     font-weight="bold"
+     id="routed_label1"
+     style="font-size:12px;font-family:Arial"><tspan
+       sodipodi:role="line"
+       id="tspan3"
+       x="74.148438"
+       y="401.88208">Routed</tspan><tspan
+       sodipodi:role="line"
+       id="tspan4"
+       x="74.148438"
+       y="416.88208">Experts</tspan></text>
+  <text
+     x="128.61064"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51a-0-0"
+     style="font-size:12px;font-family:Arial">Shard 1/8</text>
+  <text
+     x="253.61066"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51b-9"
+     style="font-size:12px;font-family:Arial">Shard 2/8</text>
+  <text
+     x="378.61066"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51c-4"
+     style="font-size:12px;font-family:Arial">Shard 3/8</text>
+  <text
+     x="503.6106"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51d-8"
+     style="font-size:12px;font-family:Arial">Shard 4/8</text>
+  <text
+     x="628.6106"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51e-8"
+     style="font-size:12px;font-family:Arial">Shard 5/8</text>
+  <text
+     x="753.6106"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51f-2"
+     style="font-size:12px;font-family:Arial">Shard 6/8</text>
+  <text
+     x="878.6106"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51g-4"
+     style="font-size:12px;font-family:Arial">Shard 7/8</text>
+  <text
+     x="1003.6106"
+     y="411.07043"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51h-5-9"
+     style="font-size:12px;font-family:Arial">Shard 8/8</text>
+  <!-- Input Request Box -->
+  <rect
+     x="406"
+     y="79"
+     width="350"
+     height="60"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="5"
+     id="rect2" />
+  <text
+     x="581"
+     y="104"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="16px"
+     id="text3">Request X</text>
+  <text
+     x="581"
+     y="124"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     id="text4">(single request)</text>
+  <!-- Input Tensor Split Label -->
+  <text
+     x="395"
+     y="151"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text5">Input Tensor</text>
+  <text
+     x="395"
+     y="166"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text6">(split across 8 GPUs)</text>
+  <!-- GPU Labels -->
+  <text
+     x="131"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text7">GPU0</text>
+  <text
+     x="256"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text8">GPU1</text>
+  <text
+     x="381"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text9">GPU2</text>
+  <text
+     x="506"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text10">GPU3</text>
+  <text
+     x="631"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text11">GPU4</text>
+  <text
+     x="756"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text12">GPU5</text>
+  <text
+     x="881"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text13">GPU6</text>
+  <text
+     x="1006"
+     y="199"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text14">GPU7</text>
+  <!-- Diagonal arrows from input to GPUs -->
+  <path
+     d="M 131,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path14"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 256,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path15"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 381,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path16"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="m 506,214 75,-75"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path17"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 631,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path18"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 756,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path19"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 881,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path20"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 1006,214 581,139"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path21"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <!-- Attention Layer (ONE unified box) -->
+  <rect
+     x="91"
+     y="219"
+     width="955"
+     height="80"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect21" />
+  <text
+     x="131"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text21">Attn</text>
+  <text
+     x="131"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text22">Layer</text>
+  <text
+     x="131"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text23">(1/8)</text>
+  <text
+     x="131"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text24">KV: FULL!</text>
+  <text
+     x="256"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text25">Attn</text>
+  <text
+     x="256"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text26">Layer</text>
+  <text
+     x="256"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text27">(2/8)</text>
+  <text
+     x="256"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text28">KV: FULL!</text>
+  <text
+     x="381"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text29">Attn</text>
+  <text
+     x="381"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text30">Layer</text>
+  <text
+     x="381"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text31">(3/8)</text>
+  <text
+     x="381"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text32">KV: FULL!</text>
+  <text
+     x="506"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text33">Attn</text>
+  <text
+     x="506"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text34">Layer</text>
+  <text
+     x="506"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text35">(4/8)</text>
+  <text
+     x="506"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text36">KV: FULL!</text>
+  <text
+     x="631"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text37">Attn</text>
+  <text
+     x="631"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text38">Layer</text>
+  <text
+     x="631"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text39">(5/8)</text>
+  <text
+     x="631"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text40">KV: FULL!</text>
+  <text
+     x="756"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text41">Attn</text>
+  <text
+     x="756"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text42">Layer</text>
+  <text
+     x="756"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text43">(6/8)</text>
+  <text
+     x="756"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text44">KV: FULL!</text>
+  <text
+     x="881"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text45">Attn</text>
+  <text
+     x="881"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text46">Layer</text>
+  <text
+     x="881"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text47">(7/8)</text>
+  <text
+     x="881"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text48">KV: FULL!</text>
+  <text
+     x="1006"
+     y="239"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text49">Attn</text>
+  <text
+     x="1006"
+     y="254"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="text50">Layer</text>
+  <text
+     x="1006"
+     y="269"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="text51">(8/8)</text>
+  <text
+     x="1006"
+     y="289"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text52">KV: FULL!</text>
+  <!-- AllReduce 1 -->
+  <line
+     x1="131"
+     y1="314"
+     x2="1006"
+     y2="314"
+     stroke="#9b59b6"
+     stroke-width="3"
+     stroke-dasharray="5, 5"
+     marker-start="url(#arrowhead-left)"
+     marker-end="url(#arrowhead-purple)"
+     id="line52" />
+  <text
+     x="581"
+     y="329"
+     text-anchor="middle"
+     fill="#8e44ad"
+     font-size="12px"
+     font-weight="normal"
+     id="text127">AllReduce (sync)</text>
+  <!-- MoE Shared Experts Layer (TP-sharded MLP) -->
+  <!-- MoE Shared Experts Label -->
+  <!-- AllReduce after shared experts -->
+  <!-- MoE Routed Experts Layer -->
+  <!-- MoE Routed Experts Label -->
+  <!-- AllReduce after routed experts -->
+  <line
+     x1="131"
+     y1="452"
+     x2="1006"
+     y2="452"
+     stroke="#9b59b6"
+     stroke-width="3"
+     stroke-dasharray="5, 5"
+     marker-start="url(#arrowhead-left)"
+     marker-end="url(#arrowhead-purple)"
+     id="line_routed_allreduce" />
+  <text
+     x="581"
+     y="467"
+     text-anchor="middle"
+     fill="#8e44ad"
+     font-size="12px"
+     font-weight="normal"
+     id="text_routed_allreduce">AllReduce (sync)</text>
+  <!-- Expert routing note -->
+  <!-- Dense Layer (ONE unified box) -->
+  <rect
+     x="91"
+     y="479"
+     width="955"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect76" />
+  <text
+     x="131"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text77">Dense</text>
+  <text
+     x="131"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text78">Layer</text>
+  <text
+     x="131"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text79">(1/8)</text>
+  <text
+     x="256"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text15">Dense</text>
+  <text
+     x="256"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text16">Layer</text>
+  <text
+     x="256"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text82">(2/8)</text>
+  <text
+     x="381"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text83">Dense</text>
+  <text
+     x="381"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text84">Layer</text>
+  <text
+     x="381"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text17">(3/8)</text>
+  <text
+     x="506"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text18">Dense</text>
+  <text
+     x="506"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text87">Layer</text>
+  <text
+     x="506"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text88">(4/8)</text>
+  <text
+     x="631"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text89">Dense</text>
+  <text
+     x="631"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text19">Layer</text>
+  <text
+     x="631"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text20">(5/8)</text>
+  <text
+     x="756"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text53">Dense</text>
+  <text
+     x="756"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text93">Layer</text>
+  <text
+     x="756"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text94">(6/8)</text>
+  <text
+     x="881"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text95">Dense</text>
+  <text
+     x="881"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text96">Layer</text>
+  <text
+     x="881"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text97">(7/8)</text>
+  <text
+     x="1006"
+     y="499"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text98">Dense</text>
+  <text
+     x="1006"
+     y="516"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     font-weight="bold"
+     id="text99">Layer</text>
+  <text
+     x="1006"
+     y="534"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     id="text100">(8/8)</text>
+  <!-- AllReduce 2 -->
+  <line
+     x1="131"
+     y1="564"
+     x2="1006"
+     y2="564"
+     stroke="#9b59b6"
+     stroke-width="3"
+     stroke-dasharray="5, 5"
+     marker-start="url(#arrowhead-left)"
+     marker-end="url(#arrowhead-purple)"
+     id="line100" />
+  <text
+     x="581"
+     y="579"
+     text-anchor="middle"
+     fill="#8e44ad"
+     font-size="12px"
+     font-weight="normal"
+     id="text129">AllReduce (sync)</text>
+  <!-- Output Label -->
+  <text
+     x="768"
+     y="606"
+     text-anchor="start"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text101">Request X's Output</text>
+  <text
+     x="768"
+     y="621"
+     text-anchor="start"
+     fill="#2c3e50"
+     font-size="14px"
+     font-weight="bold"
+     id="text102">(parts combined)</text>
+  <!-- Diagonal arrows from GPUs to output -->
+  <path
+     d="M 581,619 131,549"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path102"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 581,619 256,549"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path103"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 581,619 381,549"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path104"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 581,619 506,549"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path105"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="m 581,619 50,-70"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path106"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 581,619 756,549"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path107"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="M 581,619 881,549"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path108"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <path
+     d="m 581,619 425,-70"
+     stroke="#000000"
+     stroke-width="1.5"
+     fill="none"
+     marker-start="url(#arrowhead-black)"
+     id="path109"
+     style="marker-start:url(#ConcaveTriangle)" />
+  <!-- Output Response Box -->
+  <rect
+     x="406"
+     y="627"
+     width="350"
+     height="60"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="5"
+     id="rect109" />
+  <text
+     x="581"
+     y="652"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="16px"
+     id="text109">Response X</text>
+  <text
+     x="581"
+     y="672"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="14px"
+     id="text110">(single response)</text>
+  <!-- Arrow markers -->
+  <defs
+     id="defs121">
+    <marker
+       style="overflow:visible"
+       id="ConcaveTriangle"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="Concave triangle arrow"
+       markerWidth="1"
+       markerHeight="1"
+       viewBox="0 0 1 1"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.7)"
+         d="M -2,-4 9,0 -2,4 c 2,-2.33 2,-5.66 0,-8 z"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:none"
+         id="path_concave" />
+    </marker>
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#34495e"
+         id="polygon118" />
+    </marker>
+    <marker
+       id="arrowhead-left"
+       markerWidth="10"
+       markerHeight="10"
+       refX="1"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,3 10,6 10,0 "
+         fill="#9b59b6"
+         id="polygon119" />
+    </marker>
+    <marker
+       id="arrowhead-purple"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#9b59b6"
+         id="polygon120" />
+    </marker>
+    <marker
+       id="arrowhead-black"
+       markerWidth="10"
+       markerHeight="10"
+       refX="1"
+       refY="3"
+       orient="auto-start-reverse">
+      <polygon
+         points="0,3 10,6 10,0 "
+         fill="#000000"
+         id="polygon121" />
+    </marker>
+  </defs>
+  <!-- Vertical dashed lines showing GPU boundaries (at end for proper z-order) -->
+  <path
+     d="M 194,209 V 582.975"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path121" />
+  <path
+     d="M 319,209 V 582.975"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path122" />
+  <path
+     d="M 444,209 V 582.975"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path123" />
+  <path
+     d="M 569,212.01257 V 585.98743"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path124" />
+  <path
+     d="M 694,209 V 582.975"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path125" />
+  <path
+     d="M 819,209 V 582.975"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path126" />
+  <path
+     d="M 944,209 V 582.975"
+     stroke="#000000"
+     stroke-width="2.97612"
+     stroke-dasharray="18, 18"
+     stroke-opacity="1"
+     id="path127"
+     inkscape:export-filename="TP_NoEP.png"
+     inkscape:export-xdpi="200"
+     inkscape:export-ydpi="200" />
+  <rect
+     x="81.505875"
+     y="334.33939"
+     width="974.93042"
+     height="50.114254"
+     fill="#e67e22"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_shared7"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="128.62157"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51a-0-9"
+     style="font-size:12px;font-family:Arial">Shard 1/8</text>
+  <text
+     x="253.62152"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51b-9-4"
+     style="font-size:12px;font-family:Arial">Shard 2/8</text>
+  <text
+     x="378.62152"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51c-4-8"
+     style="font-size:12px;font-family:Arial">Shard 3/8</text>
+  <text
+     x="503.62146"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51d-8-8"
+     style="font-size:12px;font-family:Arial">Shard 4/8</text>
+  <text
+     x="628.62152"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51e-8-2"
+     style="font-size:12px;font-family:Arial">Shard 5/8</text>
+  <text
+     x="753.6214"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51f-2-4"
+     style="font-size:12px;font-family:Arial">Shard 6/8</text>
+  <text
+     x="878.6214"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51g-4-5"
+     style="font-size:12px;font-family:Arial">Shard 7/8</text>
+  <text
+     x="1003.6216"
+     y="362.62314"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51h-5-5"
+     style="font-size:12px;font-family:Arial"
+     inkscape:export-filename="DP_without_EP.png"
+     inkscape:export-xdpi="150"
+     inkscape:export-ydpi="150">Shard 8/8</text>
+</svg>

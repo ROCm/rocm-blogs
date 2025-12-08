@@ -57,6 +57,14 @@ The underlying Tensor Library of llama.cpp is called [GGML](https://github.com/g
 
 In this blog, you’ll learn how to set up llama.cpp on a MI300X system from AMD, use it to run inference of [DeepSeek v3](https://huggingface.co/deepseek-ai/DeepSeek-V3), and benchmark its performance across a range of configurations. Performance comparison against the H100 system will be presented to illustrate the leadership position of AMD Instinct GPUs in running modern AI workloads.
 
+## ROCm llama.cpp
+
+* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/llama-cpp-install.html)
+
+* [Docker image](https://hub.docker.com/r/rocm/llama.cpp/tags)
+
+* [GitHub](https://github.com/ROCm/llama.cpp)
+
 ## Prerequisites
 
 To follow the steps in this blog to discover the power of llama.cpp on MI300X, you need:

@@ -1,0 +1,1984 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1070.9189 768"
+   style="font-size:12px;font-family:Arial"
+   version="1.1"
+   id="svg_dp_with_ep"
+   sodipodi:docname="dp_with_ep_moe_v2.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   width="1070.9189"
+   height="768"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.73999997"
+     inkscape:cx="493.91894"
+     inkscape:cy="410.81083"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg_dp_with_ep" />
+  <!-- Title Box -->
+  <rect
+     x="25.299332"
+     y="0.97500002"
+     width="1044.6447"
+     height="50.049999"
+     fill="#2c3e50"
+     stroke="#34495e"
+     stroke-width="1.95"
+     rx="4.7483845"
+     id="rect_title"
+     inkscape:export-filename="DP_EP.png"
+     inkscape:export-xdpi="200"
+     inkscape:export-ydpi="200" />
+  <text
+     x="565.65979"
+     y="30.594593"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="20px"
+     font-weight="bold"
+     id="text_title">DP=8 + Expert Parallelism</text>
+  <!-- Load Balancer Box -->
+  <rect
+     x="380.32434"
+     y="81"
+     width="350"
+     height="40"
+     fill="#9b59b6"
+     stroke="#8e44ad"
+     stroke-width="2"
+     rx="5"
+     id="rect_lb" />
+  <text
+     x="555.32434"
+     y="106"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="16px"
+     id="text_lb">Request Load Balancer (Router)</text>
+  <!-- Fan out lines from load balancer to 8 requests -->
+  <line
+     x1="380.32434"
+     y1="121"
+     x2="105.32433"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line1" />
+  <line
+     x1="430.32434"
+     y1="121"
+     x2="230.32433"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line2" />
+  <line
+     x1="480.32434"
+     y1="121"
+     x2="355.32434"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line3" />
+  <line
+     x1="530.32434"
+     y1="121"
+     x2="480.32434"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line4" />
+  <line
+     x1="580.32434"
+     y1="121"
+     x2="605.32434"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line5" />
+  <line
+     x1="630.32434"
+     y1="121"
+     x2="730.32434"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line6" />
+  <line
+     x1="680.32434"
+     y1="121"
+     x2="855.32434"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line7" />
+  <line
+     x1="730.32434"
+     y1="121"
+     x2="980.32434"
+     y2="171"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line8" />
+  <!-- Request Boxes (8 different requests) -->
+  <rect
+     x="55.324326"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_a" />
+  <text
+     x="105.32433"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_a1">Req A</text>
+  <text
+     x="105.32433"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_a2">(diff)</text>
+  <rect
+     x="180.32433"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_b" />
+  <text
+     x="230.32433"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_b1">Req B</text>
+  <text
+     x="230.32433"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_b2">(diff)</text>
+  <rect
+     x="305.32434"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_c" />
+  <text
+     x="355.32434"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_c1">Req C</text>
+  <text
+     x="355.32434"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_c2">(diff)</text>
+  <rect
+     x="430.32434"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_d" />
+  <text
+     x="480.32434"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_d1">Req D</text>
+  <text
+     x="480.32434"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_d2">(diff)</text>
+  <rect
+     x="555.32434"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_e" />
+  <text
+     x="605.32434"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_e1">Req E</text>
+  <text
+     x="605.32434"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_e2">(diff)</text>
+  <rect
+     x="680.32434"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_f" />
+  <text
+     x="730.32434"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_f1">Req F</text>
+  <text
+     x="730.32434"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_f2">(diff)</text>
+  <rect
+     x="805.32434"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_g" />
+  <text
+     x="855.32434"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_g1">Req G</text>
+  <text
+     x="855.32434"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_g2">(diff)</text>
+  <rect
+     x="930.32434"
+     y="171"
+     width="100"
+     height="40"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_req_h" />
+  <text
+     x="980.32434"
+     y="191"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_req_h1">Req H</text>
+  <text
+     x="980.32434"
+     y="206"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text_req_h2">(diff)</text>
+  <!-- Arrows from requests to GPUs -->
+  <line
+     x1="105.32433"
+     y1="211"
+     x2="105.32433"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow1" />
+  <line
+     x1="230.32433"
+     y1="211"
+     x2="230.32433"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow2" />
+  <line
+     x1="355.32434"
+     y1="211"
+     x2="355.32434"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow3" />
+  <line
+     x1="480.32434"
+     y1="211"
+     x2="480.32434"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow4" />
+  <line
+     x1="605.32434"
+     y1="211"
+     x2="605.32434"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow5" />
+  <line
+     x1="730.32434"
+     y1="211"
+     x2="730.32434"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow6" />
+  <line
+     x1="855.32434"
+     y1="211"
+     x2="855.32434"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow7" />
+  <line
+     x1="980.32434"
+     y1="211"
+     x2="980.32434"
+     y2="241"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow8" />
+  <!-- GPU Labels -->
+  <text
+     x="105.32433"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu0">GPU 0</text>
+  <text
+     x="230.32433"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu1">GPU 1</text>
+  <text
+     x="355.32434"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu2">GPU 2</text>
+  <text
+     x="480.32434"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu3">GPU 3</text>
+  <text
+     x="605.32434"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu4">GPU 4</text>
+  <text
+     x="730.32434"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu5">GPU 5</text>
+  <text
+     x="855.32434"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu6">GPU 6</text>
+  <text
+     x="980.32434"
+     y="261"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="gpu7">GPU 7</text>
+  <!-- Attention Layer (individual boxes) - KV cache PARTITIONED -->
+  <rect
+     x="55.324326"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn0" />
+  <text
+     x="105.32433"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn0_1">Attn Layer</text>
+  <text
+     x="105.32433"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn0_2">(Full)</text>
+  <text
+     x="105.32433"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn0_3">KV: A</text>
+  <rect
+     x="180.32433"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn1" />
+  <text
+     x="230.32433"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn1_1">Attn Layer</text>
+  <text
+     x="230.32433"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn1_2">(Full)</text>
+  <text
+     x="230.32433"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn1_3">KV: B</text>
+  <rect
+     x="305.32434"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn2" />
+  <text
+     x="355.32434"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn2_1">Attn Layer</text>
+  <text
+     x="355.32434"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn2_2">(Full)</text>
+  <text
+     x="355.32434"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn2_3">KV: C</text>
+  <rect
+     x="430.32434"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn3" />
+  <text
+     x="480.32434"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn3_1">Attn Layer</text>
+  <text
+     x="480.32434"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn3_2">(Full)</text>
+  <text
+     x="480.32434"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn3_3">KV: D</text>
+  <rect
+     x="555.32434"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn4" />
+  <text
+     x="605.32434"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn4_1">Attn Layer</text>
+  <text
+     x="605.32434"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn4_2">(Full)</text>
+  <text
+     x="605.32434"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn4_3">KV: E</text>
+  <rect
+     x="680.32434"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn5" />
+  <text
+     x="730.32434"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn5_1">Attn Layer</text>
+  <text
+     x="730.32434"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn5_2">(Full)</text>
+  <text
+     x="730.32434"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn5_3">KV: F</text>
+  <rect
+     x="805.32434"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn6" />
+  <text
+     x="855.32434"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn6_1">Attn Layer</text>
+  <text
+     x="855.32434"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn6_2">(Full)</text>
+  <text
+     x="855.32434"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn6_3">KV: G</text>
+  <rect
+     x="930.32434"
+     y="276"
+     width="100"
+     height="70"
+     fill="#e74c3c"
+     stroke="#c0392b"
+     stroke-width="2"
+     rx="3"
+     id="rect_attn7" />
+  <text
+     x="980.32434"
+     y="296"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="attn7_1">Attn Layer</text>
+  <text
+     x="980.32434"
+     y="311"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="attn7_2">(Full)</text>
+  <text
+     x="980.32434"
+     y="326"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="attn7_3">KV: H</text>
+  <!-- Communication note -->
+  <text
+     x="555.32434"
+     y="366"
+     text-anchor="middle"
+     fill="#7f8c8d"
+     font-size="12px"
+     font-style="italic"
+     id="comm1">(No communication - compute shared expert first)</text>
+  <!-- Shared Experts Layer (individual boxes) -->
+  <!-- Shared experts label -->
+  <!-- Communication note - Each GPU processes own tokens -->
+  <text
+     x="555.32434"
+     y="379"
+     text-anchor="middle"
+     fill="#7f8c8d"
+     font-size="12px"
+     font-style="italic"
+     id="comm2">(Each GPU processes ITS OWN request tokens independently)</text>
+  <!-- AllToAll dispatch -->
+  <line
+     x1="105.32433"
+     y1="390"
+     x2="980.32434"
+     y2="390"
+     stroke="#e67e22"
+     stroke-width="3"
+     stroke-dasharray="5, 5"
+     marker-start="url(#arrowhead-orange-left)"
+     marker-end="url(#arrowhead-orange)"
+     id="alltoall_dispatch" />
+  <text
+     x="555.32434"
+     y="405"
+     text-anchor="middle"
+     fill="#d68910"
+     font-size="12px"
+     font-weight="normal"
+     id="alltoall_dispatch_text">AllToAll (dispatch)</text>
+  <!-- Routed Experts Layer (individual boxes - sharded) -->
+  <!-- Routed experts label -->
+  <!-- Communication note - processes redistributed tokens -->
+  <text
+     x="555.32434"
+     y="522"
+     text-anchor="middle"
+     fill="#7f8c8d"
+     font-size="12px"
+     font-style="italic"
+     id="comm3">(Processes redistributed tokens based on expert routing)</text>
+  <!-- AllToAll combine -->
+  <line
+     x1="105.32433"
+     y1="537"
+     x2="980.32434"
+     y2="537"
+     stroke="#e67e22"
+     stroke-width="3"
+     stroke-dasharray="5, 5"
+     marker-start="url(#arrowhead-orange-left)"
+     marker-end="url(#arrowhead-orange)"
+     id="alltoall_combine" />
+  <text
+     x="555.32434"
+     y="552"
+     text-anchor="middle"
+     fill="#d68910"
+     font-size="12px"
+     font-weight="normal"
+     id="alltoall_combine_text">AllToAll (combine)</text>
+  <!-- Dense Layer (individual boxes) -->
+  <rect
+     x="55.324326"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense0" />
+  <text
+     x="105.32433"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense0_1">Dense</text>
+  <text
+     x="105.32433"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense0_2">Layer</text>
+  <text
+     x="105.32433"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense0_3">(Full)</text>
+  <rect
+     x="180.32433"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense1" />
+  <text
+     x="230.32433"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense1_1">Dense</text>
+  <text
+     x="230.32433"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense1_2">Layer</text>
+  <text
+     x="230.32433"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense1_3">(Full)</text>
+  <rect
+     x="305.32434"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense2" />
+  <text
+     x="355.32434"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense2_1">Dense</text>
+  <text
+     x="355.32434"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense2_2">Layer</text>
+  <text
+     x="355.32434"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense2_3">(Full)</text>
+  <rect
+     x="430.32434"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense3" />
+  <text
+     x="480.32434"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense3_1">Dense</text>
+  <text
+     x="480.32434"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense3_2">Layer</text>
+  <text
+     x="480.32434"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense3_3">(Full)</text>
+  <rect
+     x="555.32434"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense4" />
+  <text
+     x="605.32434"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense4_1">Dense</text>
+  <text
+     x="605.32434"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense4_2">Layer</text>
+  <text
+     x="605.32434"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense4_3">(Full)</text>
+  <rect
+     x="680.32434"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense5" />
+  <text
+     x="730.32434"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense5_1">Dense</text>
+  <text
+     x="730.32434"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense5_2">Layer</text>
+  <text
+     x="730.32434"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense5_3">(Full)</text>
+  <rect
+     x="805.32434"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense6" />
+  <text
+     x="855.32434"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense6_1">Dense</text>
+  <text
+     x="855.32434"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense6_2">Layer</text>
+  <text
+     x="855.32434"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense6_3">(Full)</text>
+  <rect
+     x="930.32434"
+     y="567"
+     width="100"
+     height="70"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_dense7" />
+  <text
+     x="980.32434"
+     y="587"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense7_1">Dense</text>
+  <text
+     x="980.32434"
+     y="602"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="13px"
+     font-weight="bold"
+     id="dense7_2">Layer</text>
+  <text
+     x="980.32434"
+     y="622"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     id="dense7_3">(Full)</text>
+  <!-- Arrows from dense to outputs -->
+  <line
+     x1="105.32433"
+     y1="637"
+     x2="105.32433"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out1" />
+  <line
+     x1="230.32433"
+     y1="637"
+     x2="230.32433"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out2" />
+  <line
+     x1="355.32434"
+     y1="637"
+     x2="355.32434"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out3" />
+  <line
+     x1="480.32434"
+     y1="637"
+     x2="480.32434"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out4" />
+  <line
+     x1="605.32434"
+     y1="637"
+     x2="605.32434"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out5" />
+  <line
+     x1="730.32434"
+     y1="637"
+     x2="730.32434"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out6" />
+  <line
+     x1="855.32434"
+     y1="637"
+     x2="855.32434"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out7" />
+  <line
+     x1="980.32434"
+     y1="637"
+     x2="980.32434"
+     y2="667"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_out8" />
+  <!-- Output Boxes -->
+  <rect
+     x="55.324326"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_a" />
+  <text
+     x="105.32433"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_a">Out A</text>
+  <rect
+     x="180.32433"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_b" />
+  <text
+     x="230.32433"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_b">Out B</text>
+  <rect
+     x="305.32434"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_c" />
+  <text
+     x="355.32434"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_c">Out C</text>
+  <rect
+     x="430.32434"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_d" />
+  <text
+     x="480.32434"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_d">Out D</text>
+  <rect
+     x="555.32434"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_e" />
+  <text
+     x="605.32434"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_e">Out E</text>
+  <rect
+     x="680.32434"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_f" />
+  <text
+     x="730.32434"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_f">Out F</text>
+  <rect
+     x="805.32434"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_g" />
+  <text
+     x="855.32434"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_g">Out G</text>
+  <rect
+     x="930.32434"
+     y="667"
+     width="100"
+     height="35"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="3"
+     id="rect_out_h" />
+  <text
+     x="980.32434"
+     y="689"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_out_h">Out H</text>
+  <!-- Arrows to response boxes -->
+  <line
+     x1="105.32433"
+     y1="702"
+     x2="105.32433"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp1" />
+  <line
+     x1="230.32433"
+     y1="702"
+     x2="230.32433"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp2" />
+  <line
+     x1="355.32434"
+     y1="702"
+     x2="355.32434"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp3" />
+  <line
+     x1="480.32434"
+     y1="702"
+     x2="480.32434"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp4" />
+  <line
+     x1="605.32434"
+     y1="702"
+     x2="605.32434"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp5" />
+  <line
+     x1="730.32434"
+     y1="702"
+     x2="730.32434"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp6" />
+  <line
+     x1="855.32434"
+     y1="702"
+     x2="855.32434"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp7" />
+  <line
+     x1="980.32434"
+     y1="702"
+     x2="980.32434"
+     y2="732"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow)"
+     id="arrow_resp8" />
+  <!-- Response Boxes -->
+  <rect
+     x="55.324326"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_a" />
+  <text
+     x="105.32433"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_a">Resp A</text>
+  <rect
+     x="180.32433"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_b" />
+  <text
+     x="230.32433"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_b">Resp B</text>
+  <rect
+     x="305.32434"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_c" />
+  <text
+     x="355.32434"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_c">Resp C</text>
+  <rect
+     x="430.32434"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_d" />
+  <text
+     x="480.32434"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_d">Resp D</text>
+  <rect
+     x="555.32434"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_e" />
+  <text
+     x="605.32434"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_e">Resp E</text>
+  <rect
+     x="680.32434"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_f" />
+  <text
+     x="730.32434"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_f">Resp F</text>
+  <rect
+     x="805.32434"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_g" />
+  <text
+     x="855.32434"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_g">Resp G</text>
+  <rect
+     x="930.32434"
+     y="732"
+     width="100"
+     height="35"
+     fill="#3498db"
+     stroke="#2980b9"
+     stroke-width="2"
+     rx="3"
+     id="rect_resp_h" />
+  <text
+     x="980.32434"
+     y="754"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="13px"
+     id="text_resp_h">Resp H</text>
+  <!-- Vertical dashed lines for GPU boundaries -->
+  <line
+     x1="167.32433"
+     y1="266"
+     x2="167.32433"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary1" />
+  <line
+     x1="292.32434"
+     y1="266"
+     x2="292.32434"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary2" />
+  <line
+     x1="417.32434"
+     y1="266"
+     x2="417.32434"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary3" />
+  <line
+     x1="542.32434"
+     y1="266"
+     x2="542.32434"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary4" />
+  <line
+     x1="667.32434"
+     y1="266"
+     x2="667.32434"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary5" />
+  <line
+     x1="792.32434"
+     y1="266"
+     x2="792.32434"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary6" />
+  <line
+     x1="917.32434"
+     y1="266"
+     x2="917.32434"
+     y2="681"
+     stroke="#34495e"
+     stroke-width="2"
+     stroke-dasharray="10, 10"
+     stroke-opacity="0.3"
+     id="boundary7"
+     inkscape:export-filename="DP_EP.png"
+     inkscape:export-xdpi="200"
+     inkscape:export-ydpi="200" />
+  <!-- Arrow markers definition -->
+  <defs
+     id="defs_markers">
+    <marker
+       id="arrow"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#34495e"
+         id="polygon_arrow" />
+    </marker>
+    <marker
+       id="arrowhead-orange-left"
+       markerWidth="10"
+       markerHeight="10"
+       refX="1"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,3 10,6 10,0 "
+         fill="#e67e22"
+         id="polygon_orange_left" />
+    </marker>
+    <marker
+       id="arrowhead-orange"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#e67e22"
+         id="polygon_orange" />
+    </marker>
+  </defs>
+  <rect
+     x="55.705856"
+     y="409.78381"
+     width="974.93042"
+     height="50.114254"
+     fill="#e67e22"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_shared7"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="102.82155"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51a-0-9"
+     style="font-size:12px;font-family:Arial">Shard 1/8</text>
+  <text
+     x="227.82149"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51b-9-4"
+     style="font-size:12px;font-family:Arial">Shard 2/8</text>
+  <text
+     x="352.82147"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51c-4-8"
+     style="font-size:12px;font-family:Arial">Shard 3/8</text>
+  <text
+     x="477.82141"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51d-8-8"
+     style="font-size:12px;font-family:Arial">Shard 4/8</text>
+  <text
+     x="602.82147"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51e-8-2"
+     style="font-size:12px;font-family:Arial">Shard 5/8</text>
+  <text
+     x="727.82141"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51f-2-4"
+     style="font-size:12px;font-family:Arial">Shard 6/8</text>
+  <text
+     x="852.82141"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51g-4-5"
+     style="font-size:12px;font-family:Arial">Shard 7/8</text>
+  <text
+     x="977.82166"
+     y="438.06757"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text51h-5-5"
+     style="font-size:12px;font-family:Arial"
+     inkscape:export-filename="DP_without_EP.png"
+     inkscape:export-xdpi="150"
+     inkscape:export-ydpi="150">Shard 8/8</text>
+  <rect
+     x="55.204239"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed0"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="105.20424"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text55"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="105.20424"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text56"
+     style="font-size:12px;font-family:Arial">0-31</text>
+  <rect
+     x="180.20424"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed1"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="230.20421"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text60"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="230.20421"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text61"
+     style="font-size:12px;font-family:Arial">32-63</text>
+  <rect
+     x="305.20422"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed2"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="355.20422"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text65"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="355.20422"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text66"
+     style="font-size:12px;font-family:Arial">64-95</text>
+  <rect
+     x="430.20422"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed3"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="480.20428"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text70"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="480.20428"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text71"
+     style="font-size:12px;font-family:Arial">96-127</text>
+  <rect
+     x="555.20428"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed4"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="605.20428"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text75"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="605.20428"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text76"
+     style="font-size:12px;font-family:Arial">128-159</text>
+  <rect
+     x="680.20428"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed5"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="730.20428"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text80"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="730.20428"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text81"
+     style="font-size:12px;font-family:Arial">160-191</text>
+  <rect
+     x="805.20428"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed6"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="855.20428"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text85"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="855.20428"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text86"
+     style="font-size:12px;font-family:Arial">192-223</text>
+  <rect
+     x="930.20422"
+     y="455.28247"
+     width="100"
+     height="55"
+     fill="#f39c12"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="3"
+     id="rect_routed7"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="980.20435"
+     y="475.28247"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text90"
+     style="font-size:12px;font-family:Arial">Exp</text>
+  <text
+     x="980.20435"
+     y="490.28241"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text91"
+     style="font-size:12px;font-family:Arial">224-255</text>
+  <text
+     x="43.278023"
+     y="477.50751"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="10px"
+     font-weight="bold"
+     id="routed_label1-4"
+     style="font-size:12px;font-family:Arial"
+     inkscape:export-filename="TP_EP.png"
+     inkscape:export-xdpi="200"
+     inkscape:export-ydpi="200"><tspan
+       sodipodi:role="line"
+       id="tspan3"
+       x="43.278023"
+       y="477.50751">Routed</tspan><tspan
+       sodipodi:role="line"
+       id="tspan4"
+       x="43.278023"
+       y="492.50751">Experts</tspan></text>
+  <text
+     x="43.148438"
+     y="430.36176"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="10px"
+     font-weight="bold"
+     id="shared_label1-9"
+     style="font-size:12px;font-family:Arial"><tspan
+       sodipodi:role="line"
+       id="tspan1"
+       x="43.148438"
+       y="430.36176">Shared</tspan><tspan
+       sodipodi:role="line"
+       id="tspan2"
+       x="43.148438"
+       y="445.36176">Experts</tspan></text>
+</svg>

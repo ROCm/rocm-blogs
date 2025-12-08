@@ -320,6 +320,7 @@ Finally, we provided clear installation instructions, recommended testing method
 In the upcoming posts in the series, we will demonstrate how to apply these tools to real-world profiling scenarios, progressively advancing from basic analysis to advanced multi-GPU profiling.
 
 Read [Part 2](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/novice/README.html).
+Read [Part 3](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/advanced/README.html).
 
 ## Disclaimers
 

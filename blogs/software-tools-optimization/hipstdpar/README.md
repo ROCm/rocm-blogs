@@ -7,7 +7,7 @@ category: Software tools & optimizations
 blog_title: "C++17 parallel algorithms and HIPSTDPAR #"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: ""
+thumbnail: "2025-10-20-rocm-hpc-blogs.png"
 language: English
 myst:
     html_meta:

@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: 'Efficient MoE training on AMD ROCm: How-to use Megablocks on AMD GPUs'
+blog_title: 'Efficient MoE training on AMD ROCm: How-to use MegaBlocks on AMD GPUs'
 thumbnail: 'megablocks.jpeg'
 date: 23 March 2025
 author: Fabricio Flores, Rishi Madduri, Yao Liu, Phani Vaddadi, Vish Vadlamani
@@ -8,12 +8,12 @@ tags: PyTorch, AI/ML, LLM
 category: Applications & models
 language: English
 target_audience: AI developers, AI practitioners
-key_value_propositions: Demonstrate how to perform Mixture of Experts training on AMD hardware using Megablocks.
+key_value_propositions: Demonstrate how to perform Mixture of Experts training on AMD hardware using MegaBlocks.
 myst:
     html_meta:
         "author": "Fabricio Flores, Rishi Madduri, Yao Liu, Phani Vaddadi, Vish Vadlamani"
-        "description lang=en": "Learn how to use Megablocks to pre-train GPT2 Mixture of Experts (MoE) model, helping you scale your deep learning models effectiveness on AMD GPUs using ROCm"
-        "keywords": "Megablocks, Megatron-LM, PyTorch, MoE, LLM, Fine-tuning, distributed training, ROCm, AMD, GPU, MI300"
+        "description lang=en": "Learn how to use MegaBlocks to pre-train GPT2 Mixture of Experts (MoE) model, helping you scale your deep learning models effectiveness on AMD GPUs using ROCm"
+        "keywords": "MegaBlocks, Megatron-LM, PyTorch, MoE, LLM, Fine-tuning, distributed training, ROCm, AMD, GPU, MI300"
         "property=og:locale": "en_US"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blogs"
@@ -28,20 +28,36 @@ myst:
         "amd_blog_releasedate": "Fri Mar 21 08:52:00 PST 2025"    
 ---
 
-# Efficient MoE training on AMD ROCm: How-to use Megablocks on AMD GPUs
+# Efficient MoE training on AMD ROCm: How-to use MegaBlocks on AMD GPUs
 
 Training massive deep-learning models requires a balance of efficiency and scalability. In the context of the [Transformers architecture](https://arxiv.org/abs/1706.03762), [Mixture of Experts (MoE)](https://huggingface.co/blog/moe) models are massive machine learning architectures characterized for dividing tasks among multiple specialized sub-networks or "experts". A gating network determines the expert to which a given input should be routed, enabling the model to handle complex tasks more efficiently by using the specialized capabilities of each expert. This dynamic routing mechanism allows MoE models to scale efficiently, activating only a subset of the network for each input, therefore reducing computational load while maintaining high model capacity.
 
 Implementing MoE models introduces challenges such as training instability, load imbalance among experts, and increased complexity of routing mechanism management and expert selection. These challenges lead to inefficient memory usage due to the uneven data distribution among the expert sub-networks.
 
-[Megablocks](https://github.com/ROCm/megablocks) is a lightweight library for MoE training that uses block-sparse computations to reduce overhead and improve training scalability. Block-sparse computations deal with matrices that are broken down into smaller, denser blocks. Many of these blocks have all their elements set to zero. The main operations happen on the remaining non-zero blocks allowing for efficient storage and computation. Megablocks solves the challenges of regular MoE training by reworking computations so that each expert can handle varying amounts of data without discarding or padding. This results in improved training efficiency and performance.
+[MegaBlocks](https://github.com/ROCm/megablocks) is a lightweight library for MoE training that uses block-sparse computations to reduce overhead and improve training scalability. Block-sparse computations deal with matrices that are broken down into smaller, denser blocks. Many of these blocks have all their elements set to zero. The main operations happen on the remaining non-zero blocks allowing for efficient storage and computation. MegaBlocks solves the challenges of regular MoE training by reworking computations so that each expert can handle varying amounts of data without discarding or padding. This results in improved training efficiency and performance.
 
- Megablocks is highly integrated with [Megatron-LM](https://github.com/ROCm/Stanford-Megatron-LM), a scalable framework for training transformer models that implements model and data parallelism strategies. This integration enables Megablocks to distribute training workload across multiple GPUs efficiently, ensuring that block-sparse computations are executed with high performance and minimal overhead. To learn more about Megatron-LM on ROCm, see [Training a model with ROCm Megatron-LM](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/training/train-a-model.html#start-training-on-mi300x-accelerators).
+MegaBlocks is highly integrated with [Stanford-Megatron-LM](https://github.com/ROCm/Stanford-Megatron-LM), a scalable framework for training transformer models that implements model and data parallelism strategies. This integration enables MegaBlocks to distribute training workload across multiple GPUs efficiently, ensuring that block-sparse computations are executed with high performance and minimal overhead. To learn more about Megatron-LM on ROCm, see [Training a model with ROCm Megatron-LM](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/training/train-a-model.html#start-training-on-mi300x-accelerators).
 
-In this blog, you will learn how to use Megablocks for Mixture-of-Experts (MoE) training on AMD hardware, gaining insights into its application and effectiveness in training massive transformer-based models. You will also explore the `bigscience/misc-test-data` repository on Hugging Face, which offers datasets like `oscar-1GB.jsonl`, commonly used for pre-training language models and running tests or experiments.
+In this blog, you will learn how to use MegaBlocks for Mixture-of-Experts (MoE) training on AMD hardware, gaining insights into its application and effectiveness in training massive transformer-based models. You will also explore the `bigscience/misc-test-data` repository on Hugging Face, which offers datasets like `oscar-1GB.jsonl`, commonly used for pre-training language models and running tests or experiments.
 
 For the files related to this blog post, see this
 [GitHub folder](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/megablocks).
+
+## ROCm MegaBlocks
+
+* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/megablocks-install.html)
+
+* [Docker image](https://hub.docker.com/r/rocm/megablocks/tags)
+
+* [GitHub](https://github.com/ROCm/megablocks)
+
+## ROCm Stanford-Megatron-LM
+
+* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/stanford-megatron-lm-install.html)
+
+* [Docker image](https://hub.docker.com/r/rocm/stanford-megatron-lm/tags)
+
+* [GitHub](https://github.com/ROCm/Stanford-Megatron-LM)
 
 ## Requirements
 
@@ -51,9 +67,9 @@ For the files related to this blog post, see this
 
 * Docker: See [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/) for installation instructions.
 
-* PyTorch 2.4 and [ROCm fork of Megablocks](https://github.com/ROCm/megablocks): You can use this [Dockerfile](./docker/Dockerfile/) to prepare a custom Docker image with Megablocks pre-installed.
+* PyTorch 2.4 and [ROCm fork of Megablocks](https://github.com/ROCm/megablocks): You can use this [Dockerfile](./docker/Dockerfile/) to prepare a custom Docker image with MegaBlocks pre-installed.
 
-## Getting started with Megablocks
+## Getting started with MegaBlocks
 
 * Clone the repo and `cd` into the blog directory:
 
@@ -70,7 +86,7 @@ For the files related to this blog post, see this
     cd ..
     ```
 
-* Start the megablocks container
+* Start the MegaBlocks container
 
   ```shell
   docker run -it --rm \
@@ -170,9 +186,9 @@ Done! Now finalizing.
 
 This results in two output files `my-gpt2_text_document.bin` and `my-gpt2_text_document.idx`, which are located at `/megablocks/third_party/Stanford-Megatron-LM/tools`. These files will be used during the training process.
 
-## Testing Megablocks for GPT2-125m distributed training
+## Testing MegaBlocks for GPT2-125m distributed training
 
-The ROCm megablocks [GitHub repository](https://github.com/ROCm/megablocks/tree/main/exp) contains several examples that you can test. The following example is based on the [`gpt2_125m_8gpu.sh`](https://github.com/ROCm/megablocks/blob/main/exp/gpt2/gpt2_125m_8gpu.sh) script for pretraining the GPT2-125 million parameter model.
+The ROCm MegaBlocks [GitHub repository](https://github.com/ROCm/megablocks/tree/main/exp) contains several examples that you can test. The following example is based on the [`gpt2_125m_8gpu.sh`](https://github.com/ROCm/megablocks/blob/main/exp/gpt2/gpt2_125m_8gpu.sh) script for pretraining the GPT2-125 million parameter model.
 
 You can use this [megablocks_gpt2_125m_8gpu.sh](./src/megablocks_gpt2_125m_8gpu.sh) script that contains all the necessary instructions and parameters needed to start the training process. Some of the parameters listed in `megablocks_gpt2_125m_8gpu.sh` bash script are:
 
@@ -275,7 +291,7 @@ validation loss at the end of training for test data | lm loss value: 4.529140E+
 
 The consistent downward trend in the validation loss scores demonstrates that the model was improved by the training process.
 
-## Testing Megablocks for GPT2-125m distributed training using MoE
+## Testing MegaBlocks for GPT2-125m distributed training using MoE
 
 This example demonstrates the training process for a 125-million-parameter GPT-2 Transformer model, utilizing the Mixture of Experts (MoE) architecture and building upon a previous GPT-2 training example. The `MOE_ARGUMENTS` variable defines the MoE architecture that modifies the Transformers section of the GPT-2 model accordingly. Additional parameters included in the `megablocks_moe_gpt2_125m_8gpu.sh` bash script are:
 
@@ -377,11 +393,11 @@ saving checkpoint at iteration    2000 to ./
 
 From the output, you can see that the pre-training of the GPT2 Mixture of Experts (MoE) model was conducted successfully on a node with eight AMD Instinct™ MI300X GPUs. The training process ran for 2000 steps, during which the loss (`lm loss value`) decreased consistently (from 6.71 at iteration 200, to 4.74 at iteration 1000, to 4.34 at iteration 2000), indicating effective learning.
 
-Megablocks makes MoE training easier by letting you set up MoE layers with just a few simple parameters in the `MOE_ARGUMENTS` inside the bash script. This speeds up prototyping and experimentation.
+MegaBlocks makes MoE training easier by letting you set up MoE layers with just a few simple parameters in the `MOE_ARGUMENTS` inside the bash script. This speeds up prototyping and experimentation.
 
 ## Summary
 
-This blog shows you how to use Megablocks for Mixture of Experts (MoE) training on AMD hardware, with a clear example using the GPT-2 model. It gives a quick overview of MoE and explains how it helps scale deep learning models across multiple GPUs. If you want to boost efficiency or try out MoE training on AMD hardware, this guide will help you get started. Future work will present performance benchmarking of MoE models on AMD GPUs, focusing on metrics like throughput, latency, and power efficiency.
+This blog shows you how to use MegaBlocks for Mixture of Experts (MoE) training on AMD hardware, with a clear example using the GPT-2 model. It gives a quick overview of MoE and explains how it helps scale deep learning models across multiple GPUs. If you want to boost efficiency or try out MoE training on AMD hardware, this guide will help you get started. Future work will present performance benchmarking of MoE models on AMD GPUs, focusing on metrics like throughput, latency, and power efficiency.
 
 ## Disclaimers
 

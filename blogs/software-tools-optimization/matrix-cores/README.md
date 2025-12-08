@@ -9,7 +9,7 @@ bio: Daniel Velicka is a contributor to ROCm matrix cores, focusing on double-pr
 blog_title: "AMD matrix cores"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: ""
+thumbnail: "2025-10-20-rocm-hpc-blogs.png"
 myst:
     html_meta:
         "description lang=en": "Matrix cores"

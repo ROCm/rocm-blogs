@@ -7,7 +7,7 @@ category: Applications & models
 blog_title: "Sparse matrix vector multiplication - part 1"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: ""
+thumbnail: "2025-10-20-rocm-hpc-blogs.png"
 language: English
 myst:
     html_meta:
