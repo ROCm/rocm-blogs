@@ -115,13 +115,13 @@ To simplify running Taichi programs on AMD GPUs, we recommend using the pre-buil
 To do this, pull the docker image:
 
 ```bash
-docker pull rocm/taichi:taichi-1.8.0b2_rocm7.0_ubuntu22.04_py3.10.12
+docker pull rocm/taichi:taichi-1.8.0b2_rocm7.0.0_ubuntu24.04_py3.12.3
 ```
 
 and launch the docker container:
 
 ```bash
-docker run -it --privileged --network=host --device=/dev/kfd --device=/dev/dri --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ipc=host --name taichi_lang rocm/taichi:taichi-1.8.0b2_rocm7.0.0_ubuntu24.04_py3.12 bash
+docker run -it --privileged --network=host --device=/dev/kfd --device=/dev/dri --group-add video --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ipc=host --name taichi_lang rocm/taichi:taichi-1.8.0b2_rocm7.0.0_ubuntu24.04_py3.12.3 bash
 ```
 
 ### Build Your Own Docker Image
