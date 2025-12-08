@@ -1,6 +1,6 @@
 ---
 blogpost: true
-date: 1 Oct 2025
+date: 14 Nov 2022
 author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel Chalmers, Ossian O'Reilly, Daniel Velicka
 tags: Compiler, Linear Algebra, Memory, HPC, Optimization
 category: Software tools & optimizations
@@ -403,6 +403,10 @@ elements and hardware registers, we direct you to the
 tool. This powerful tool can be used to describe WMMA instructions as well as
 MFMA ISA-level instructions for a given architecture.
 We welcome [issues](https://github.com/ROCm/amd_matrix_instruction_calculator/issues) and feedback from the community.
+
+```{update} Dec 8, 2025
+Blog content was updated.
+```
 
 ## Additional resources
 
