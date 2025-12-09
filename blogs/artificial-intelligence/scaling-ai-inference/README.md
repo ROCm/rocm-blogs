@@ -70,9 +70,9 @@ Each model was tested across:
 
 - **Concurrency levels:** 4, 8, 16, 32, 64, and 128 simultaneous requests.
 - **Sequence configurations:** Input and output Sequence Length (ISL/OSL)
-   - **1024/1024** – Balanced input/output
-   - **1024/8192** – Long-form generation
-   - **8192/1024** – Large-context summarization
+ - **1024/1024** – Balanced input/output
+ - **1024/8192** – Long-form generation
+ - **8192/1024** – Large-context summarization
 
 The benchmark configuration above reflects real-world workloads, from interactive chat to document summarization at scale.
 
@@ -82,9 +82,9 @@ Our analysis includes throughput-latency curves for each model, illustrating how
 
 ### DeepSeek-R1
 
-DeepSeek-R1 is a widely adopted open reasoning model built on **Mixture-of-Experts (MoE)** and **Multi-Head Latent Attention (MLA)** architectures that demand specialized optimization for peak inference performance. On **AMD Instinct™ MI355X GPU, AITER kernels** including fused MoE, fused MLA, and additional kernel fusions unlock substantial throughput gains. These optimizations are fully integrated into **vLLM** with **zero developer overhead.** 
+DeepSeek-R1 is a widely adopted open reasoning model built on **Mixture-of-Experts (MoE)** and **Multi-Head Latent Attention (MLA)** architectures that demand specialized optimization for peak inference performance. On **AMD Instinct™ MI355X GPU, AITER kernels** including fused MoE, fused MLA, and additional kernel fusions unlock substantial throughput gains. These optimizations are fully integrated into **vLLM** with **zero developer overhead.**
 
-**Benchmark Insight:** AMD Instinct MI355X GPU consistently outperforms NVIDIA B200 GPU across all concurrency levels. AMD measurements demonstrate up to **1.4x higher throughput** on AMD Instinct MI355X GPU over NVIDIA B200 GPU, when serving DeepSeek-R1 at scale. 
+**Benchmark Insight:** AMD Instinct MI355X GPU consistently outperforms NVIDIA B200 GPU across all concurrency levels. AMD measurements demonstrate up to **1.4x higher throughput** on AMD Instinct MI355X GPU over NVIDIA B200 GPU, when serving DeepSeek-R1 at scale.
 
 ```{figure} ./images/DeepSeek-R1.png
 :align: center
@@ -131,7 +131,7 @@ Llama-3.3-70B is a dense model from the Llama family, built for reasoning, knowl
 - At **mid concurrency** (32-64 requests) B200 leads due to more efficient kernel implementations and fusions.
 - At **high concurrency** (128 requests), performance begins to saturate on B200 on long sequence lengths, while MI355X GPU gains the lead due to higher HBM capacity.
 
-Overall, MI355X GPU delivers **0.94x of B200’s performance** across configurations. 
+Overall, MI355X GPU delivers **0.94x of B200’s performance** across configurations.
 
 ```{figure} ./images/Llama-3.3-70B.png
 :align: center
@@ -154,20 +154,20 @@ For teams deploying LLM inference at scale, these gains translate into:
 MI355X GPU provides the **headroom and reliability** needed for demanding production environments, where consistent performance at scale is non-negotiable, and upcoming kernel fusion enhancements will push performance even further.
 
 Learn more about our previous work on vLLM from the following ROCm Blogs:
+
 - [The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism](https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html)
 - [vLLM V1 Meets AMD Instinct GPUs: A New Era for LLM Inference Performance](https://rocm.blogs.amd.com/software-tools-optimization/vllmv1-rocm-llm/README.html)
 - [Accelerated LLM Inference on AMD Instinct™ GPUs with vLLM 0.9.x and ROCm](https://rocm.blogs.amd.com/software-tools-optimization/vllm-0.9.x-rocm/README.html)
 - [QuickReduce: Up to 3x Faster All-reduce for vLLM and SGLang](https://rocm.blogs.amd.com/artificial-intelligence/quick-reduce/README.html)
 
-## Reproducibility / Tech details:
+## Reproducibility / Tech details
 
-- B200 [GPT-OSS-120B](https://docs.vllm.ai/projects/recipes/en/latest/OpenAI/GPT-OSS.html) and [Llama-3.3-70b](https://docs.vllm.ai/projects/recipes/en/latest/Llama/Llama3.3-70B.html) configurations are used from NVIDIA public recipes while for DeepSeek and Qwen 3 are from our baseline configurations listed below. 
+- B200 [GPT-OSS-120B](https://docs.vllm.ai/projects/recipes/en/latest/OpenAI/GPT-OSS.html) and [Llama-3.3-70b](https://docs.vllm.ai/projects/recipes/en/latest/Llama/Llama3.3-70B.html) configurations are used from NVIDIA public recipes while for DeepSeek and Qwen 3 are from our baseline configurations listed below.
 - Upstream Docker (Coming soon)
 
 ### *DeepSeek-R1*
 
 #### MI355X
-
 
 Docker: rocm/7.x-preview:rocm7.2_preview_ubuntu_22.04_vlm_0.10.1_instinct_20251029
 
@@ -221,8 +221,8 @@ vllm serve ${MODEL} \
     --tensor-parallel-size 8 \
     --max-num-seqs 1024 \
     --no-enable-prefix-caching \
-    --max-num-batched-tokens \
-    --max-model-len \
+    --max-num-batched-tokens 131072 \
+    --max-model-len 16384 \
     --block-size 1 \
     --gpu-memory-utilization 0.95 \
     --disable-custom-all-reduce \
