@@ -1,10 +1,11 @@
 ---
 blogpost: true
 date: 14 Nov 2022
-author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel Chalmers, Ossian O'Reilly
+author: Gina Sitaraman, Damon McDougall, Rene Van Oostrum, Nicholas Malaya, Noel Chalmers, Ossian O'Reilly, Daniel Velicka
 tags: Compiler, Linear Algebra, Memory, HPC, Optimization
 category: Software tools & optimizations
 language: English
+bio: Daniel Velicka is a contributor to ROCm matrix cores, focusing on double-precision GEMM, and its differences from single-precision GEMM.
 blog_title: "AMD matrix cores"
 key_value_propositions: ""
 target_audience: ""
@@ -197,17 +198,17 @@ The following two figures show 1) the shape and size of the $A$ and $B$ inputs; 
 2) how the elements of $A$ and $B$ map to lanes in the register owned by the
 wavefront.
 
-![the shape and size of the A and B inputs](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+![the shape and size of the A and B inputs](images/v_mfma_f32_16x16x4f32_matrix_layout.svg)
 
-![how the elements of A and B map to lanes in the register owned by the wavefront](images/v_mfma_f64_16x16x4f64_lane_layout.svg)
+![how the elements of A and B map to lanes in the register owned by the wavefront](images/v_mfma_f32_16x16x4f32_lane_layout.svg)
 
 The following two figures show 1) the shape and size of the output matrix $D$; and
 2) how the elements of $D$ map to lanes in the registers owned by the
 wavefront:
 
-![shape and size of the output matrix D](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
+![shape and size of the output matrix D](images/v_mfma_f32_16x16x4f32_output_matrix_layout.svg)
 
-![how the elements of $D$ map to lanes in the registers owned by the wavefront](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
+![how the elements of $D$ map to lanes in the registers owned by the wavefront](images/v_mfma_f32_16x16x4f32_output_lane_layout.svg)
 
 An example kernel performing this MFMA operation is given below.
 
@@ -247,7 +248,59 @@ sgemm_16x16x4 <<< grid, block >>> (d_A, d_B, d_D);
 
 As previously noted, the input $C$ matrix is assumed to contain zeroes.
 
-## Example 2 - V_MFMA_F32_16x16x1F32
+## Example 2 - V_MFMA_F64_16x16x4F64
+
+This example performs a matrix multiplication with the same dimensions as in Example 1: a 16×4 matrix multiplied by a 4×16 matrix, producing a 16×16 output matrix. However, in this case, **double-precision floating-point (FP64)** elements are used, and the computation is carried out via the intrinsic `__builtin_amdgcn_mfma_f64_16x16x4f64`. 
+
+The input matrices $A$ and $B$ maintain the same data layout as in the FP32 case. However, due to differences in the architecture of double-precision MFMA units, the output matrix $D$ is **packed differently**, the FP64 layout spreads the four elements across every 4th row in the same column group. This means the elements owned by a single lane are separated by four row strides, which is clearly visible in the output matrix and lane layout visualizations below.
+
+![!](images/v_mfma_f64_16x16x4f64_output_matrix_layout.svg)
+
+![!](images/v_mfma_f64_16x16x4f64_output_lane_layout.svg)
+
+A similar visualization can be obtained for the lane layout for the $D$ matrix using the [AMD Matrix Instruction Calculator](https://github.com/ROCm/amd_matrix_instruction_calculator), with command:
+
+```
+python3 matrix_calculator.py -a gfx90a --instruction v_mfma_f64_16x16x4f64  -M --D-matrix
+```
+
+An example kernel performing this MFMA operation is given below.
+
+```cuda
+#define M 16
+#define N 16
+#define K 4
+
+using double4 = __attribute__( (__vector_size__(K * sizeof(double)) )) double;
+
+__global__ void dgemm_16x16x4(const double* A, const double* B, double* D)
+{
+  double4 dmn = {0};
+
+  int mk = threadIdx.y + K * threadIdx.x;
+  int kn = threadIdx.x + N * threadIdx.y;
+
+  double amk = A[mk];
+  double bkn = B[kn];
+  dmn = __builtin_amdgcn_mfma_f64_16x16x4f64(amk, bkn, dmn, 0, 0, 0);
+
+  for(int i = 0; i < 4; ++i){
+    const int idx = threadIdx.x + 4 * N * i + N * threadIdx.y;
+    D[idx] = dmn[i];
+  }
+}
+```
+
+This kernel is launched as follows.
+
+```cuda
+dim3 grid (1, 1, 1);
+dim3 block(16, 4, 1);
+ 
+dgemm_16x16x4 <<< grid, block >>> (d_A, d_B, d_D);
+```
+
+## Example 3 - V_MFMA_F32_16x16x1F32
 
 Consider the case of multiplying matrices of dimensions $M=N=16$ and $K=1$
 using the compiler intrinsic `__builtin_amdgcn_mfma_f32_16x16x1f32`. In this
@@ -255,16 +308,16 @@ case, the input values could be held just by 16 lanes of the wavefront.
 In fact, this instruction could simultaneously multiply 4 such matrices
 thereby having each lane hold values from one of those 4 matrices.
 
-We can re-use the figure from the previous example to illustrate the data
+We can re-use the figure from the previous example of `V_MFMA_F32_16x16x4F32` to illustrate the data
 layout for this operation too. The input $A$ is not a $16 \times 4$ matrix in
 this case but four $16 \times 1$ matrices. But the way they are laid out, and
 the elements that are owned by each lane in the wavefront is the same. The
 "columns" of $A$ are distinct $16 \times 1$ matrices. The input $B$ is
 similar.
 
-![!](images/v_mfma_f64_16x16x4f64_matrix_layout.svg)
+![!](images/v_mfma_f32_16x16x4f32_matrix_layout.svg)
 
-![!](images/v_mfma_f64_16x16x4f64_lane_layout.svg)
+![!](images/v_mfma_f32_16x16x4f32_lane_layout.svg)
 
 The output of a given matrix multiplication has exactly the same data layout
 as in the previous example. The difference is that now there are four
@@ -309,7 +362,7 @@ dim3 block(16, 4, 1);
 sgemm_16x16x1 <<< grid, block >>> (d_A, d_B, d_D);
 ```
 
-## Example 3 - V_MFMA_F64_4x4x4F64
+## Example 4 - V_MFMA_F64_4x4x4F64
 
 Consider the `V_MFMA_F64_4x4x4F64` instruction, which computes the MFMA of
 four independent blocks of matrices of size $4\times4$. The operation performed
@@ -350,6 +403,10 @@ elements and hardware registers, we direct you to the
 tool. This powerful tool can be used to describe WMMA instructions as well as
 MFMA ISA-level instructions for a given architecture.
 We welcome [issues](https://github.com/ROCm/amd_matrix_instruction_calculator/issues) and feedback from the community.
+
+```{update} Dec 8, 2025
+Blog content was updated.
+```
 
 ## Additional resources
 

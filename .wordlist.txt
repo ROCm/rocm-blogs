@@ -20,6 +20,7 @@ allocators
 AllReduce
 AllToAll
 ALU
+amd
 AMD
 amd
 AMDGPU
@@ -76,6 +77,7 @@ Cheong
 chiplet
 CIFAR
 CLI
+cmake
 CMake
 cmake
 CMakeLists
@@ -101,6 +103,7 @@ CoRR
 CP
 CPC
 CPF
+cpp
 CPP
 cpp
 CPU
@@ -187,6 +190,7 @@ gcc
 GCD
 GCDs
 GCN
+gdb
 GDB
 gdb
 GDDR
@@ -355,6 +359,7 @@ MX
 MXFP
 mxfp
 MyEnvironment
+myst
 MyST
 myst
 namespace
@@ -649,9 +654,11 @@ WikiText
 workgroup
 Workgroups
 workgroups
+Workgroups
 writeback
 Writebacks
 writebacks
+Writebacks
 wrreq
 WX
 xargs
