@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Týr-the-Pruner: Search-based Global Structural Pruning for LLMs"
 date: 03 Dec 2025
 author: 'Guanchen Li, Yixing Xu, Zeping Li, Ji Liu, Xuanwu Yin, Dong Li, Emad Barsoum'
-thumbnail: 'images/AI-generated.png'
+thumbnail: 'AI-generated.png'
 tags: AI/ML
 category: Applications & models
 target_audience: Engineers and researchers working on large model optimization on ROCm/PyTorch; readers concerned with structured sparsity, model compression, and end-to-end performance effectiveness.
@@ -55,7 +55,7 @@ This blog introduces Týr-the-Pruner, a search-based, end-to-end framework for g
 
 Local structural pruning is attractive because it is compute and memory efficient: layers are compressed independently, often enabling single device offload even for hundred-billion–scale LLMs. However, local pruning enforces uniform per layer sparsity and ignores cross layer dependencies. “Global” pruning methods attempt to fix this by following a two-stage pipeline:
 (i) compute a global ranking of substructure saliencies to allocate layerwise sparsity
-(ii) prune accordingly—which breaks end-to-end optimization and mishandles inter-structure interactions. 
+(ii) prune accordingly—which breaks end-to-end optimization and mishandles inter-structure interactions.
 
 **Týr-the-Pruner inverts this process**: Instead of ranking before pruning, it first builds a multi-sparsity supernet and then searches for the optimal layer-wise sparsity distribution under a global sparsity target - yielding a truly end-to-end global approach.
 
@@ -108,7 +108,7 @@ In this blog, you explored Týr-the-Pruner, an end-to-end framework for global s
 
 Týr-the-Pruner achieves up to 50% parameter reduction while preserving 97% accuracy on Llama-3.1-70B, demonstrating strong pruning quality, effective search efficiency, and meaningful acceleration on modern hardware.
 
-Looking ahead, we will continue expanding the Týr-the-Pruner ecosystem. Upcoming efforts include more in-depth evaluations, additional tuning recipes, and practical guides for deploying pruned LLMs on ROCm-enabled platforms. You can dive deeper into the methodology and extensive benchmarks in our [paper](https://arxiv.org/abs/2503.09657), and access our implementation on [GitHub](https://github.com/AMD-AGI/Tyr-the-Pruner). 
+Looking ahead, we will continue expanding the Týr-the-Pruner ecosystem. Upcoming efforts include more in-depth evaluations, additional tuning recipes, and practical guides for deploying pruned LLMs on ROCm-enabled platforms. You can dive deeper into the methodology and extensive benchmarks in our [paper](https://arxiv.org/abs/2503.09657), and access our implementation on [GitHub](https://github.com/AMD-AGI/Tyr-the-Pruner).
 
 We also invite you to explore the [AMD Developer Cloud](https://www.amd.com/en/forms/registration/developer-cloud-application.html), featuring AMD Instinct™ accelerators purpose-built for AI workflows. For questions or collaboration opportunities, reach out to the AMD team at [amd_ai_mkt@amd.com](mailto:amd_ai_mkt@amd.com). Stay tuned for future posts, expanded tooling, and hands-on tutorials as we continue advancing LLM pruning research and deployment.
 
