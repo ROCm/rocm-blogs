@@ -53,7 +53,7 @@ SOFTWARE.
 
 ## ROCm Taichi
 
-* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/taichi-install.html)
+* [Installation](https://rocm.docs.amd.com/projects/taichi/en/docs-25.11/)
 
 * [Docker image](https://hub.docker.com/r/rocm/taichi/tags)
 
@@ -187,9 +187,9 @@ If the docker container terminal does not launch automatically run the following
 docker attach taichi_lang
 ```
 
-## Prepared Taichi Lang Examples
+## Taichi Lang Examples
 
-AMD has a collection of select examples to demonstrate the use of Taichi Lang on AMD Instinct GPUs. One such example is the "count primes" program. In this example we have the function `is_prime` which will be used in the kernel `count_primes`. In the code below, we write this example as a Taichi program by decorating `is_prime` with the Taichi decorator `@ti.func` and decorating `count_primes` with the Taichi decorator `@ti.kernel`. To run this example, copy the code below to a file named count_primes.py:
+We have curated a variety of examples to demonstrate the use of Taichi Lang on AMD Instinct GPUs. One such example is the "count primes" program. In this example we have the function `is_prime` which will be used in the kernel `count_primes`. In the code below, we write this example as a Taichi program by decorating `is_prime` with the Taichi decorator `@ti.func` and decorating `count_primes` with the Taichi decorator `@ti.kernel`. To run this example, copy the code below to a file named count_primes.py:
 
 ```python
 import taichi as ti
@@ -281,7 +281,7 @@ The output should be similar to the output below:
 2706
 ```
 
-The last example we will demonstrate is the fractal example. This example demonstrates how to iteratively save images and video using Taichi's Video Manager Tool:
+To demonstrate more of Taichi's simulation capabilites with graphics, we present a fractal example. This example demonstrates how to iteratively save images and video using Taichi's Video Manager Tool:
 To run this, save the code below into a file named fractal.py:
 
 ```python
@@ -342,6 +342,34 @@ Once execution of fractal.py has completed, a directory named `taichi_fractal_re
 The two video files, `video.mp4` and `video.gif`, are identical animations. When you open either video file, the animation should display this fractal:
 
 <img src="images/video.gif" height="320px">
+
+To further demonstrate Taichi's graphics simulation capabilities, we introduce a ray trace implementation based on the tutorial [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html). The instructions below show how to download and run the [Taichi implementation of Ray Tracing in One Weekend](https://github.com/bsavery/ray-tracing-one-weekend-taichi):
+
+First, clone the git repo containing the Taichi source code:
+
+```bash
+git clone https://github.com/bsavery/ray-tracing-one-weekend-taichi.git
+```
+
+Next, cd to the source repo and run the ray trace script:
+
+```bash
+cd ray-tracing-one-weekend-taichi
+python3 main.py
+```
+
+The output should be similar to this:
+
+```bash
+[Taichi] version 1.8.0, llvm 20.1.8, commit 104dc18b, linux, python 3.12.3
+[Taichi] Starting on arch=amdgpu
+starting big wavefront
+76.01607370376587
+```
+
+Your code will have also generated a png file named `out.png`. The picture in this file should look like the picture below:
+
+<img src="images/raytrace_ex_out.png" height="320px">
 
 ## Summary
 
