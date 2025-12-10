@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "Modernizing Taichi Lang to LLVM 20 for MI325X GPU Acceleration"
+blog_title: "Modernizing Taichi Lang to LLVM 20 for MI355X GPU Acceleration"
 date: 04 Dec 2025
 author: 'Tiffany Mintz, Yao Liu, Phani Vaddadi, Vish Vadlamani'
 thumbnail: 'taichi_blog_thumbnail.png'
@@ -47,9 +47,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# Modernizing Taichi Lang to LLVM 20 for MI325X GPU Acceleration
+# Modernizing Taichi Lang to LLVM 20 for MI355X GPU Acceleration
 
-[Our first Taichi Lang blog](https://rocm.blogs.amd.com/artificial-intelligence/taichi/README.html) intrduced you to Taichi Lang on AMD's MI210 and MI250X GPUs. This previous version of Taichi was limited by it's dependence on outdated versions of LLVM. We have modernized Taichi to LLVM 20 to take advantage of the latest advances in LLVM's code generation capabilities. This modernization also allows us to make Taichi available for execution on newer AMD Instinct GPUs, MI300X and MI325X. As with our previous blog, we provide you with a guide for understanding Taichi, and walk you through installing Taichi, as well as, writing and executing a Taichi program.
+[Our first Taichi Lang blog](https://rocm.blogs.amd.com/artificial-intelligence/taichi/README.html) intrduced you to Taichi Lang on AMD's MI210 and MI250X GPUs. This previous version of Taichi was limited by it's dependence on outdated versions of LLVM. We have modernized Taichi to LLVM 20 to take advantage of the latest advances in LLVM's code generation capabilities. This modernization also allows us to make Taichi available for execution on newer AMD Instinct GPUs, MI300X, MI325X and MI355X. As with our previous blog, we provide you with a guide for understanding Taichi, and walk you through installing Taichi, as well as, writing and executing a Taichi program.
 
 ## ROCm Taichi
 
@@ -373,7 +373,7 @@ Your code will have also generated a png file named `out.png`. The picture in th
 
 ## Summary
 
-Taichi Lang has been modernized to LLVM 20 for use on AMD's MI300X, and MI325X GPUs, an anticipated update from [previous versions of Taichi](https://rocm.blogs.amd.com/artificial-intelligence/taichi/README.html). The provided step-by-step guide should enable users to install Taichi Lang in a ROCm 7.0 docker environment, and run Taichi Lang programs with features enabled for AMD MI210, MI250X, MI300X, and MI325x GPUs.
+Taichi Lang has been modernized to LLVM 20 for use on AMD's MI300X, MI325X and MI355X GPUs, an anticipated update from [previous versions of Taichi](https://rocm.blogs.amd.com/artificial-intelligence/taichi/README.html). The provided step-by-step guide should enable users to install Taichi Lang in a ROCm 7.0 docker environment, and run Taichi Lang programs with features enabled for AMD MI210, MI250X, MI300X, MI325x and MI355X GPUs.
 
 AMD continues to enhance Taichi support through ongoing development on its latest ROCm software and AMD Instinct GPU products. Keep an eye out for updates and new blogs as we share our progress.
 
