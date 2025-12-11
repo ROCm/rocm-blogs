@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Scaling AI Inference Performance with vLLM on AMD Instinct MI355X GPUs"
 date: 08 Dec 2025
 author: 'Jouni Hartikainen, Aarne Talman, Reima Karhila, Teemu Virolainen, Mikko Tukiainen, Bishwo Adhikari,  Xavier Aguilar Fruto, Chun Fang, Stig-Arne Gronroos, Markus Hartikainen, Mustafa Khalid Masood, Olga Miroshnichenko,  Tres Popp, Tuukka Sarvi, Olha Shkaravska,  Jin Tao, Matti Varjokallio, Nico Holmberg, Jaakko Vainio, Faisal Azhar'
-thumbnail: 'images/vllm_blog_thumbnail.png'
+thumbnail: 'vllm_blog_thumbnail.png'
 tags: AI/ML, HPC, Performance
 category: Applications & models
 target_audience: Developers and AI enthusiasts
