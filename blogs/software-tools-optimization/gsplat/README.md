@@ -84,7 +84,7 @@ In summary, 3DGS combines the speed of explicit rendering, the flexibility of vo
 
 ### System Requirements
 
-GSplat 1.0.0 for AMD ROCm™ depends directly on PyTorch for AMD ROCm™
+GSplat 1.5.3 for AMD ROCm™ depends directly on PyTorch for AMD ROCm™
 
 - ROCm: version 6.4.3 (recommended)
 - Operating system: Ubuntu 22.04 and above
@@ -105,13 +105,13 @@ docker run --cap-add=SYS_PTRACE --ipc=host --privileged=true \
 Install GSplat from the AMD hosted PYPI repository:
 
   ```bash
-  pip install gsplat --extra-index-url=https://pypi.amd.com/simple
+pip install amd_gsplat  --extra-index-url=https://pypi.amd.com/rocm-6.4.3/simple/
   ```
 
 Once the installation is successful, you can verify the installation using the pip show command:
 
   ```bash
-  pip show gsplat
+  pip show amd_gsplat
   ```
 
 ## Training GSplat on AMD MI300X
