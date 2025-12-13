@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Democratizing AI Compute with AMD Using SkyPilot"
 date: 13 Nov 2025
 author: 'Pratik Mishra, Paul Hartke, Romil Bhardwaj, Zongheng Yang, Zhanghao Wu'
-thumbnail: './images/amd-multicloud-skypilot.jpg'
+thumbnail: 'amd-multicloud-skypilot.jpg'
 tags: AI/ML, PyTorch, Kubernetes
 category: Ecosystems and Partners
 target_audience: AI Developers and enthusiasts, Infrastructure Teams,
