@@ -69,7 +69,7 @@ In the following sections, you’ll find step-by-step instructions for running t
 
 ### 1. Launch the Docker Container
 
-We use the [ROCm-based xDiT Docker image](https://hub.docker.com/r/amdsiloai/pytorch-xdit) (amdsiloai/pytorch-xdit:v25.11), an optimized diffusion model Docker with out-of-box support for state-of-the-art video generation models; supported platforms are listed here: [list of supported OSs and AMD hardware](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html). It is recommended to use ≥80 GB VRAM for single‑GPU inference. We run on an AMD Instinct MI300X (192 GB) and scale multi‑GPU tests on 2, 4, and 8 MI300X cards.
+We use the [ROCm-based xDiT Docker image](https://hub.docker.com/r/amdsiloai/pytorch-xdit) (amdsiloai/pytorch-xdit:v25.12), an optimized diffusion model Docker with out-of-box support for state-of-the-art video generation models; supported platforms are listed here: [list of supported OSs and AMD hardware](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html). It is recommended to use ≥80 GB VRAM for single‑GPU inference. We run on an AMD Instinct MI300X (192 GB) and scale multi‑GPU tests on 2, 4, and 8 MI300X cards.
 
 The selection of shm-size can be based on number of GPUs, model size, or system RAM. One simple way to calculate it is `--shm-size` = (Number of GPUs × 8GB) to (Number of GPUs × 16GB). We used 32g for 4-GPU inference on Voyager model.
 
@@ -83,7 +83,7 @@ docker run -it --rm --runtime=amd \
   --shm-size=32g \
   --name hunyuan-voyager \
   -v $(pwd):/workspace -w /workspace \
-  amdsiloai/pytorch-xdit:v25.11
+  amdsiloai/pytorch-xdit:v25.12
 ```
 
 Note for HPC/Job Scheduler Users:
@@ -101,14 +101,14 @@ docker run -it --rm \
   --shm-size=32g \
   --name hunyuan-voyager \
   -v $(pwd):/workspace -w /workspace \
-  amdsiloai/pytorch-xdit:v25.11
+  amdsiloai/pytorch-xdit:v25.12
 ```
 
 For Vultr and some cloud providers, manual render device mapping may be required.
 
 ### 2. Install Dependencies and Setup HunyuanWorld-Voyager Repository
 
-Begin by cloning our [updated hunyuanWorld-voyager repository](https://github.com/silogen/HunyuanWorld-Voyager), which includes AMD GPU set-ups and pre-processing configuration improvements. Additional AMD-specific setup instructions are available in `platform/AMD_GPU/README.md`:
+Begin by cloning our [updated hunyuanWorld-voyager repository](https://github.com/silogen/HunyuanWorld-Voyager), which includes AMD GPU optimizations with [AITER](https://github.com/ROCm/aiter) (AI Tensor Engine for ROCm) backend support and pre-processing configuration improvements. Additional AMD-specific setup instructions are available in `platform/AMD_GPU/README.md`:
 
 ```bash
 git clone https://github.com/silogen/HunyuanWorld-Voyager
@@ -122,14 +122,6 @@ During setup you may see pip resolver warnings. These optional extras are not us
 ```bash
 # Dependencies
 pip install pyexr==0.5.0 loguru==0.7.2 tensorboard==2.19.0 transformers==4.45
-pip install flash-attn --no-build-isolation
-export FLASH_ATTN_IMPL=ck
-# Needed if the underlaying host ROCm <= 6.4.1
-export HSA_NO_SCRATCH_RECLAIM=1
-# Optional: MIOpen tuning variables (may improve performance on some configurations)
-export MIOPEN_DEBUG_CONV_DIRECT=0
-export MIOPEN_FIND_MODE=3
-export MIOPEN_FIND_ENFORCE=3
 ```
 
 The HunyuanWorld-Voyager framework includes utilities for processing custom input images and camera trajectories. To create your own input conditions, you also need to install the following dependencies:
@@ -143,7 +135,7 @@ pip install git+https://github.com/EasternJournalist/utils3d.git@a480806f58337da
 ### 3. Model Download and Environment Variable Setup
 
 ```bash
-huggingface-cli download tencent/HunyuanWorld-Voyager --local-dir ./ckpts
+hf download tencent/HunyuanWorld-Voyager --local-dir ./ckpts
 # Default model path is hardcoded to /root, modify the model path
 export MODEL_BASE="./ckpts"
 ```
@@ -156,10 +148,10 @@ Download the example images used in the following use cases:
 mkdir -p examples/image
 
 # Download village scene image
-curl -L -o examples/image/village.jpg https://raw.githubusercontent.com/ROCm/rocm-blogs/release/blogs/artificial-intelligence/hunyuanworld-voyager-inference/images/village.jpg
+wget -O examples/image/village.jpg https://raw.githubusercontent.com/ROCm/rocm-blogs/release/blogs/artificial-intelligence/hunyuanworld-voyager-inference/images/village.jpg
 
 # Download elk scene image
-curl -L -o examples/image/elk.jpg https://raw.githubusercontent.com/ROCm/rocm-blogs/release/blogs/artificial-intelligence/hunyuanworld-voyager-inference/images/elk.jpg
+wget -O examples/image/elk.jpg https://raw.githubusercontent.com/ROCm/rocm-blogs/release/blogs/artificial-intelligence/hunyuanworld-voyager-inference/images/elk.jpg
 ```
 
 ## Use Cases
@@ -286,10 +278,12 @@ The table below shows baseline inference latency and end-to-end generation times
 
 | GPUs | Inference Latency (s) | End-to-End Generation Time (s) |
 |------|----------------------|-------------------------------|
-| 1 | 635 | 680 |
-| 2 | 359 | 473 |
-| 4 | 188 | 310 |
-| 8 | 111 | 239 |
+| 1 | 471 | 517 |
+| 2 | 270 | 376 |
+| 4 | 140 | 250 |
+| 8 | 86 | 205 |
+
+These performance improvements benefit from AITER backend optimizations for attention operations on AMD GPUs, as enabled in our updated repository.
 
 ## Summary
 
@@ -307,7 +301,7 @@ As video generation technology advances, AMD continues to optimize emerging fram
 
 ## Acknowledgement
 
-We acknowledge the authors of the [HunyuanWorld-Voyager: Technical Report](https://3d-models.hunyuan.tencent.com/voyager/voyager_en/assets/HYWorld_Voyager.pdf), whose contributions enabled the implementation demonstrated in this blog. We also thank Jesus Carabano Bravo for his support in testing the new xDiT Docker image.
+We acknowledge the authors of the [HunyuanWorld-Voyager: Technical Report](https://3d-models.hunyuan.tencent.com/voyager/voyager_en/assets/HYWorld_Voyager.pdf), whose contributions enabled the implementation demonstrated in this blog. We also thank Jesus Carabano Bravo for his support in enabling AITER backend optimizations and testing the new xDiT Docker image.
 
 ## Disclaimers
 
