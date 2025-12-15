@@ -10,6 +10,6 @@ dashscope
 imageio-ffmpeg
 gradio>=5.0.0
 numpy>=1.23.5,<2
-peft>=0.17.0
+peft==0.17.1
 xfuser>=0.4.1
 git+https://github.com/huggingface/diffusers
