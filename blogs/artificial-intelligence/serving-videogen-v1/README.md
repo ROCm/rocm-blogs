@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "A Simple Design for Serving Video Generation Models with Distributed Inference"
 date: 24 Sep 2025
 author: 'Sopiko Kurdadze, Albin Toft'
-thumbnail: 'serving-videogen-v1-thumbnail.png '
+thumbnail: 'serving-videogen-v1-thumbnail.png'
 tags: AI/ML, Diffusion Model, GenAI, Serving
 category: Applications & models
 target_audience: AI researchers and engineers working on video generation and diffusion models
