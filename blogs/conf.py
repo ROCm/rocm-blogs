@@ -84,7 +84,7 @@ templates_path = ["."]
 
 blog_feed_length = 10
 
-html_static_path = ["_static", "images", "videos"]
+html_static_path = ["_static", "images", "videos", "authors/data"]
 
 html_css_files = ["css/custom.css", "css/asciinema-player.css"]
 
