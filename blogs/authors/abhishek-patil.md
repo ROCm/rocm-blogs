@@ -1,3 +1,7 @@
+---
+thumbnail: Abhishek-Patil.JPG
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Abhishek Patil">
@@ -7,13 +11,6 @@
 (abhipatil)=
 
 # Abhishek Patil
-
-```{image} ./data/Abhishek-Patil.JPG
-:alt: Abhishek
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Abhishek Patil is a seasoned expert with over a decade of comprehensive experience in GPU, CPU, and System-on-Chip (SoC) architecture. His deep expertise spans the domains of High Performance Computing (HPC) and Artificial Intelligence (AI) workloads, where he has contributed significantly to advancing computing performance and efficiency. Throughout his career, Abhishek has led and collaborated on diverse projects encompassing GPU computing, deep learning frameworks, and large-scale data analytics pipelines.
 
