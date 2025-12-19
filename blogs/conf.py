@@ -79,7 +79,6 @@ external_toc_path = "./sphinx/_toc.yml"
 
 hoverxref_api_host = "/_"
 
-
 templates_path = ["."]
 
 blog_feed_length = 10
@@ -90,6 +89,7 @@ html_css_files = ["css/custom.css", "css/asciinema-player.css"]
 
 html_js_files = [
     "js/asciinema-player.min.js",
+    "js/giscus_theme.js",
 ]
 
 nitpicky = True
