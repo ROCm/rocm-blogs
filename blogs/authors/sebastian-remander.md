@@ -10,4 +10,6 @@
 
 Sebastian is a Senior Software Developer at AMD Silo AI, working in Life Science Drug Discovery Workloads team. He brings extensive experience in consulting, AI platforms, and developing AI software for clients across diverse industries. In his current role, Sebastian collaborates with industry partners to optimize and streamline the deployment of their workloads on AMD hardware.
 
+Sebastian studied at Aalto University, earning a Master of Science in Life Science Technologies and a Bachelor's degree in Biomedical Engineering.
+
 In his free time, Sebastian enjoys playing and watching sports, as well as analyzing sports data — especially ice hockey.
