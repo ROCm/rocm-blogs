@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "GEAK-Triton v2 Family of AI Agents: Kernel Optimization for AMD Instinct GPUs"
 date: December 23 2025
-author: "Jianghui Wang, Saptarshi Majumdar, Umang Pandey, Chao Xu, Bin Ding, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
+author: "Jianghui Wang, Saptarshi Majumder, Umang Pandey, Chao Xu, Bin Ding, Manoj Rao, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
 thumbnail: "GEAK-Tritonv2-Thumbnail.png"
 tags: GenAI, AI/ML, Performance, Profiling
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: Automated GPU kernel optimization using AI agents, achie
 language: English
 myst:
     html_meta:
-        "author": "Jianghui Wang, Saptarshi Majumdar, Umang Pandey, Chao Xu, Bin Ding, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
+        "author": "Jianghui Wang, Saptarshi Majumder, Umang Pandey, Chao Xu, Bin Ding, Manoj Rao, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
         "description lang=en": "Introducing GEAK Family - AI-driven agents that automate GPU kernel optimization for AMD Instinct GPUs with hardware-aware feedback"
         "keywords": "GPU optimization, AI agents, AMD Instinct, Triton, kernel optimization, hardware-aware, ROCm, performance tuning, profiling, Evolutionary Agents, AI4code"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "Generative AI"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Jianghui Wang, Saptarshi Majumdar, Umang Pandey, Chao Xu, Bin Ding, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
+        "amd_blog_authors": "Jianghui Wang, Saptarshi Majumder, Umang Pandey, Chao Xu, Bin Ding, Manoj Rao, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
 ---
 
 <!---
@@ -53,19 +53,19 @@ Optimizing GPU kernels is a formidable task, traditionally requiring deep domain
 
 In this blog, we will discuss GEAK-OptimAgentv2 and GEAK-OpenEvolve AI agents for generating [Triton](https://triton-lang.org/main/index.html) [[7]](#ref7) kernels optimized for AMD Instinct™ GPUs. These two new specialized systems that leverage hardware-aware feedback and large-scale evolutionary search to generate and refine high-performance Triton kernels, helping to improve the efficiency of training and inference of AI models. For HIP kernel optimization, check out our companion blog [GEAK-HIP: Expanding GEAK to HIP Code Optimization](https://rocm.blogs.amd.com/software-tools-optimization/geak-hip-optimizations/README.html), which extends the GEAK family to native HIP code generation.
 
-## Key Takeaways:
+## Key Takeaways
 
-* We are announcing GEAK-OptimAgentv2 for Instruction-to-Triton, an advanced AI agent for generating kernels from instructions. It now features multi-offspring evolution, an LLM-based evaluator, and a critical hardware-aware feedback loop to guide self-improvement.
+* We are announcing [GEAK-OptimAgentv2](https://github.com/AMD-AGI/GEAK-agent/tree/main) for Instruction-to-Triton, an advanced AI agent for generating kernels from instructions. It now features multi-offspring evolution, an LLM-based evaluator, and a critical hardware-aware feedback loop to guide self-improvement.
 
-* We are also announcing GEAK-OpenEvolve for Triton-to-Triton, a new framework for optimizing existing kernels that uses a Quality-Diversity search to maintain and evolve thousands of diverse, high-quality kernel variants in parallel.
+* We are also announcing [GEAK-OpenEvolve](https://github.com/AMD-AGI/GEAK-agent/tree/geak-openevolve) for Triton-to-Triton, a new framework for optimizing existing kernels that uses a Quality-Diversity search to maintain and evolve thousands of diverse, high-quality kernel variants in parallel.
 
-* The GEAK-OptimAgentv2 achieves up to a +9.76% accuracy jump over its predecessor and an average speed up of 3.32x over reference kernels.
+* GEAK-OptimAgentv2 achieves up to a +9.76% accuracy jump over its predecessor and an average speed up of 3.32x over reference kernels.
 
 * GEAK-OpenEvolve achieves an average speedup of 3.42x over reference kernels from the TritonBench-modified benchmark and a 7.02x speedup over ROCm-bench kernels.
 
-## GEAK-Agents Family:
+## GEAK-Agents Family
 
-#### A Quick Look Back
+### A Quick Look Back
 
 GEAK-Agent [[1]](#ref1) (hereafter referred to as GEAK-OptimAgentv1) introduced several features that established a foundation for a scalable and iterative system capable of generating high-performance Triton kernels:
 
@@ -77,7 +77,7 @@ GEAK-Agent [[1]](#ref1) (hereafter referred to as GEAK-OptimAgentv1) introduced 
 * **Debugging Trap**: Automatically discards strategies that fail repeatedly after a set number of attempts, preventing the agent from getting stuck in a loop.
 * **Parallel Scaling**: Runs multiple independent instances to generate diverse strategies and discover better kernel candidates.
 
-### GEAK-OptimAgentv2 
+### GEAK-OptimAgentv2
 
 ```{figure} images/geakv2updated.png
 :align: center
@@ -116,14 +116,14 @@ Figure 2. Overview of GEAK-OpenEvolve
 
   1. fusion intelligence, 2. autotuning coverage, 3. memory access efficiency, 4. algorithmic complexity, 5. warp wavefront utilization, 6. software pipelining, 7. numerical stability, 8. correctness and portability, 9. optimization scope
 
-* **Generation Engine (Selection & Creation)**: 
+* **Generation Engine (Selection & Creation)**:
 
   * It uses a Hybrid Parent Selection strategy to balance exploiting good solutions and exploring new ones.
 
 * **Prompt Engineering (Context & Feedback)**:
 
   * Prompts are enriched with targeted optimization cues—memory coalescing, occupancy, register pressure, shared/LDS usage—and kernel-agnostic guidance such as autotuning and algorithmic refinements, while embedding hardware-specific details (CU topology, LDS limits, MI300X/MI325X characteristics) to anchor improvements to real GPU architecture. The prompts also provide strict guidelines on which warp sizes, block sizes, and launch configurations to explore, following commonly validated optimization strategies from [AMD ROCm’s workload tuning guide](https://rocm.docs.amd.com/en/docs-7.0.2/how-to/rocm-for-ai/inference-optimization/workload.html).
-    
+
 * **Evaluation (High-Throughput Pipeline)**:
 
   * It uses Cascade Filtering to evaluate kernels efficiently. Candidates are first tested on small inputs, then medium, and finally full-scale inputs. This multi-stage process quickly filters out poor candidates and runs multiple offspring concurrently on separate GPUs to dramatically increase iteration throughput. It then feeds the kernel to an LLM Evaluator which assigns scores of 0 to 1 to kernels on the same 9 "MAP” dimensions as mentioned above.
@@ -132,11 +132,11 @@ Figure 2. Overview of GEAK-OpenEvolve
 
 All results presented below are validated by our updated GEAK-eval suite [[4]](#ref4). We have improved its test coverage to ensure strict correctness by adding support for randomized, large-scale input tensors (up to 32K) and halting immediately on any mismatch. This guarantees that all speedups are reported only after their correctness is established. All the results for the tables below were tested with Claude 4 Sonnet, on MI300.
 
-#### Benchmarks
+### Benchmarks
 
 We evaluate our agents on two benchmarks, updated TritonBench-modified (184 Triton kernels) and ROCm-bench (31 Triton kernels) from [GEAK-eval](https://github.com/AMD-AGI/GEAK-eval) [[4]](#ref4).
 
-### Task 1: Instruction-to-Triton (Generation) 
+### Task 1: Instruction-to-Triton (Generation)
 
 This task measures the ability of our GEAK-agents to generate correct and performant code from a natural language instruction. We report call_accuracy (the code runs without error) and exec_accuracy (the code passes all unit tests), as well as the speedup of the generated kernel over the reference.
 
@@ -161,7 +161,6 @@ As we can see from Tables 1 and 2, GEAK-OptimAgentv2 shows significant improveme
 ### Ablation: Impact of Hardware-Aware Feedback on GEAK-OptimAgentv2
 
 To show the specific impact of GEAK-OptimAgentv2's new hardware-aware feedback loop, the table below breaks down the performance gains across multiple setups- 1. Base OptimAgentv2, 2. OptimAgentv2 with [rocprofv3-compute](https://github.com/ROCm/rocm-systems/tree/develop/projects/rocprofiler-compute) profiler and 3. OptimAgentv2 with rocprofv3-compute and the LLM analyzer
- 
 
 | **Kernel Name**    | **Speedup (OptimAgentv2)** | **Speedup OptimAgentv2 + rocprofv3-compute** | **Speedup OptimAgentv2 + rocprofv3-compute & LLM Analyzer** |
 |--------------------------|----------------------------|----------------------------------------------|-------------------------------------------------------|
@@ -186,12 +185,11 @@ As Table 3 indicates, the hardware-aware feedback loop with the profiler and the
 
 This task measures the ability of GEAK-OpenEvolve to take an existing Triton kernel and optimize it for maximum performance. We report the success rate (percentage of kernels that achieved a speedup of >1) and average speedup (over the successfully optimized kernels) in the table below.
 
-
 | **GEAK-OpenEvolve**   |      |      |
 |-------------------------|------------------|----------------|
 | **Benchmark**     | **Success Rate** | **Avg. Speedup** |
 | TritonBench-modified   | 56.01    | 3.42     |
-| ROCm benchmark    | 56.67    | 7.02     | 
+| ROCm benchmark    | 56.67    | 7.02     |
 
 Table 4. Performance of GEAK-OpenEvolve across multiple benchmarks
 
@@ -295,7 +293,7 @@ norm_acc += tl.sum(a.to(tl.float32) * a.to(tl.float32), axis=1)
 </tr>
 </table>
 </div>
- 
+
 * **Cache Eviction Policies**
 
   * The optimized implementation adds explicit `eviction_policy="evict_first"` to all memory loads (input tensors, RMS weights, and weight matrices), whereas the baseline uses no explicit cache management.
@@ -319,9 +317,9 @@ The profiler-guided agent discovered and implemented the following targeted opti
 
 * **Architectural Transformation (Grid Flattening):**
 
-    * The agent completely replaced the 2D grid with a 1D flattened grid of (`n_rows` * `n_heads`).
-    * This transformation established a 1:1 mapping for each thread block to a unique (`row`, `head`) pair, eliminating serialization and dramatically improving cache locality.
-    * The comparison below shows the progression from the reference 2D grid, through the agent's initial optimization, to the final profiler-guided flattened grid:
+* The agent completely replaced the 2D grid with a 1D flattened grid of (`n_rows` * `n_heads`).
+* This transformation established a 1:1 mapping for each thread block to a unique (`row`, `head`) pair, eliminating serialization and dramatically improving cache locality.
+* The comparison below shows the progression from the reference 2D grid, through the agent's initial optimization, to the final profiler-guided flattened grid:
 
 <div style="overflow-x: auto;">
 <table style="min-width:900px; table-layout:fixed;">
@@ -435,17 +433,17 @@ def calculate_settings(n: int):
 </table>
 </div>
 
-  * The **reference** dynamically calculates block size but is conservative with warp allocation.
-  * **Without profiler**, the agent caps block size at 2048 and uses gradual warp scaling.
-  * **With profiler**, the agent uses fixed, larger block sizes (128-1024) with more warps, exploiting AMD's architecture.
+* The **reference** dynamically calculates block size but is conservative with warp allocation.
+* **Without profiler**, the agent caps block size at 2048 and uses gradual warp scaling.
+* **With profiler**, the agent uses fixed, larger block sizes (128-1024) with more warps, exploiting AMD's architecture.
 
 * **Memory Access Pattern**:  
 
-  * The grid transformation fixed the core memory bottleneck. By moving from a (1 block : N heads) to a (1 block : 1 head) mapping, the agent eliminated the inner loop over heads, which was the source of serialization and poor memory access patterns on the Q tensor.
+* The grid transformation fixed the core memory bottleneck. By moving from a (1 block : N heads) to a (1 block : 1 head) mapping, the agent eliminated the inner loop over heads, which was the source of serialization and poor memory access patterns on the Q tensor.
 
  **Comparing RoPE Implementation Strategies:**
  
- To demonstrate the optimization progression, we examine how each approach implements the rotary position embedding (RoPE) transformation:
+To demonstrate the optimization progression, we examine how each approach implements the rotary position embedding (RoPE) transformation:
 <div style="overflow-x: auto;">
 <table style="min-width:1500px; table-layout:fixed;">
 <tr>
@@ -618,10 +616,10 @@ We applied an agent to optimize this kernel on an **AMD MI325X GPU**, resulting 
   )
   ```
 
-* **Adaptive Algorithm: Single-Pass vs Two-Pass**:  
+* **Adaptive Algorithm: Single-Pass vs Two-Pass**:
  
-  * The agent's most impressive innovation was discovering an adaptive branching strategy. 
-  * For small sequences that fit in one block, it loads data once and computes variance + normalization in a single fused pass, saving 50% memory bandwidth. For larger sequences, it uses a blocked two-pass algorithm to stay within hardware limits. 
+  * The agent's most impressive innovation was discovering an adaptive branching strategy.
+  * For small sequences that fit in one block, it loads data once and computes variance + normalization in a single fused pass, saving 50% memory bandwidth. For larger sequences, it uses a blocked two-pass algorithm to stay within hardware limits.
   * As shown below, the reference uses a two-loop approach that reads data twice, while the optimized version fuses these operations into a single pass when possible:
 
 <div style="overflow-x: auto;">
@@ -723,8 +721,8 @@ We applied an agent to optimize this kernel on an **AMD MI325X GPU**, resulting 
 </table>
 </div>
 
-  * Uses `rsqrt` - a dedicated GPU instruction that is both faster and more numerically stable
-  * Wraps with `tl.maximum()` to prevent potential issues with denormal numbers.
+* Uses `rsqrt` - a dedicated GPU instruction that is both faster and more numerically stable
+* Wraps with `tl.maximum()` to prevent potential issues with denormal numbers.
 
 The results show that the agent's optimized version, combining dynamic autotuning with an adaptive pass, drastically outperforms the baseline. This data-driven approach resulted in a 6.58 times speedup.
 
