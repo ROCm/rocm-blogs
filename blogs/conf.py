@@ -89,6 +89,8 @@ html_css_files = ["css/custom.css", "css/asciinema-player.css"]
 
 html_js_files = [
     "js/asciinema-player.min.js",
+    "https://cdn.plot.ly/plotly-2.32.0.min.js",
+    "js/vision-timeline-plotly-minimal.js",
     "js/giscus_theme.js",
 ]
 

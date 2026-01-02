@@ -1,0 +1,1621 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 1113.4062 708.55438"
+   style="font-size:12px;font-family:Arial"
+   version="1.1"
+   id="svg_mm_encoder_dp_v3"
+   sodipodi:docname="mm_encoder_dp_mode_v5.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:export-filename="mm_encoder_dp_mode_v4.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   width="1113.4062"
+   height="708.55438"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview217"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.91414765"
+     inkscape:cx="569.38286"
+     inkscape:cy="422.79822"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg_mm_encoder_dp_v3"
+     showgrid="false" />
+  <defs
+     id="defs5">
+    <rect
+       x="91.27475"
+       y="502.78467"
+       width="1013.3045"
+       height="52.59901"
+       id="rect1" />
+    <marker
+       id="arrowhead-left"
+       markerWidth="10"
+       markerHeight="10"
+       refX="1"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,3 10,6 10,0 "
+         fill="#9b59b6"
+         id="polygon1" />
+    </marker>
+    <marker
+       id="arrowhead-purple"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#9b59b6"
+         id="polygon2" />
+    </marker>
+    <marker
+       id="arrowhead-green-left"
+       markerWidth="10"
+       markerHeight="10"
+       refX="1"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,3 10,6 10,0 "
+         fill="#27ae60"
+         id="polygon3" />
+    </marker>
+    <marker
+       id="arrowhead-green"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#27ae60"
+         id="polygon4" />
+    </marker>
+    <marker
+       id="arrow-black"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="#34495e"
+         id="polygon5" />
+    </marker>
+    <marker
+       id="arrow-black-1"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,6 0,0 10,3 "
+         fill="#34495e"
+         id="polygon5-7" />
+    </marker>
+    <marker
+       id="arrow-black-15"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,6 0,0 10,3 "
+         fill="#34495e"
+         id="polygon5-2" />
+    </marker>
+    <marker
+       id="arrow-black-6"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,6 0,0 10,3 "
+         fill="#34495e"
+         id="polygon5-1" />
+    </marker>
+    <marker
+       id="arrow-black-2"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,6 0,0 10,3 "
+         fill="#34495e"
+         id="polygon5-3" />
+    </marker>
+    <marker
+       id="arrow-black-21"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,6 0,0 10,3 "
+         fill="#34495e"
+         id="polygon5-6" />
+    </marker>
+    <marker
+       id="arrow-black-0"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0,6 0,0 10,3 "
+         fill="#34495e"
+         id="polygon3-9" />
+    </marker>
+  </defs>
+  <!-- Title Box -->
+  <rect
+     x="12.40625"
+     y="1"
+     width="1100"
+     height="50"
+     fill="#2c3e50"
+     stroke="#34495e"
+     stroke-width="2"
+     rx="5"
+     id="rect5" />
+  <text
+     x="562.40625"
+     y="33"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="20px"
+     font-weight="bold"
+     id="text5">Batch-Level DP Mode (--mm-encoder-tp-mode data)</text>
+  <!-- Batch grouping box (encompasses title and all images) -->
+  <!-- Input Batch Title -->
+  <!-- Individual image boxes -->
+  <!-- Total patches -->
+  <rect
+     x="92.40625"
+     y="63"
+     width="975"
+     height="98"
+     fill="none"
+     stroke="#2980b9"
+     stroke-width="2"
+     stroke-dasharray="8, 4"
+     rx="5"
+     id="rect6" />
+  <text
+     x="579.40625"
+     y="86"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-weight="bold"
+     font-size="16px"
+     id="text6">Input Batch</text>
+  <g
+     id="g1"
+     transform="translate(-27.59375,-19)">
+    <rect
+       x="145"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect7" />
+    <text
+       x="171"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text7">I1</text>
+    <rect
+       x="203"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect8" />
+    <text
+       x="229"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text9">I2</text>
+    <rect
+       x="261"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect10" />
+    <text
+       x="287"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text11">I3</text>
+    <rect
+       x="319"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect12" />
+    <text
+       x="345"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text13">I4</text>
+    <rect
+       x="377"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect14" />
+    <text
+       x="403"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text15">I5</text>
+    <rect
+       x="435"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect16" />
+    <text
+       x="461"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text17">I6</text>
+    <rect
+       x="493"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect18" />
+    <text
+       x="519"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text19">I7</text>
+    <rect
+       x="551"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect20" />
+    <text
+       x="577"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text21">I8</text>
+    <rect
+       x="609"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect22" />
+    <text
+       x="635"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text23">I9</text>
+    <rect
+       x="667"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect24" />
+    <text
+       x="693"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text25">I10</text>
+    <rect
+       x="725"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect26" />
+    <text
+       x="751"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text27">I11</text>
+    <rect
+       x="783"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect28" />
+    <text
+       x="809"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text29">I12</text>
+    <rect
+       x="841"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect30" />
+    <text
+       x="867"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text31">I13</text>
+    <rect
+       x="899"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect32" />
+    <text
+       x="925"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text33">I14</text>
+    <rect
+       x="957"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect34" />
+    <text
+       x="983"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text35">I15</text>
+    <rect
+       x="1015"
+       y="115"
+       width="52"
+       height="50"
+       fill="#3498db"
+       stroke="#2980b9"
+       stroke-width="1.5"
+       rx="3"
+       id="rect36" />
+    <text
+       x="1041"
+       y="145"
+       text-anchor="middle"
+       fill="#ffffff"
+       font-size="11px"
+       font-weight="bold"
+       id="text37">I16</text>
+  </g>
+  <!-- Arrow down to load balancer -->
+  <!-- Load Balance Assignment Box -->
+  <rect
+     x="362.40625"
+     y="186"
+     width="400"
+     height="50"
+     fill="#e67e22"
+     stroke="#d68910"
+     stroke-width="2"
+     rx="5"
+     id="rect39" />
+  <text
+     x="561.50018"
+     y="216.09392"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="14px"
+     id="text40">Batch split across GPUs</text>
+  <!-- Fan out lines from load balancer to GPUs -->
+  <line
+     x1="412.40625"
+     y1="236"
+     x2="142.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line41" />
+  <line
+     x1="442.40625"
+     y1="236"
+     x2="267.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line42" />
+  <line
+     x1="482.40625"
+     y1="236"
+     x2="392.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line43" />
+  <line
+     x1="522.40625"
+     y1="236"
+     x2="517.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line44" />
+  <line
+     x1="602.40625"
+     y1="236"
+     x2="642.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line45" />
+  <line
+     x1="642.40625"
+     y1="236"
+     x2="767.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line46" />
+  <line
+     x1="682.40625"
+     y1="236"
+     x2="892.40625"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line47" />
+  <line
+     x1="712.40625"
+     y1="236"
+     x2="1017.4062"
+     y2="276"
+     stroke="#7f8c8d"
+     stroke-width="2"
+     id="line48" />
+  <!-- GPU Labels with load-balanced assignments -->
+  <text
+     x="142.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text48">GPU 0</text>
+  <text
+     x="267.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text52">GPU 1</text>
+  <text
+     x="392.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text56">GPU 2</text>
+  <text
+     x="517.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text60">GPU 3</text>
+  <text
+     x="642.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text64">GPU 4</text>
+  <text
+     x="767.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text68">GPU 5</text>
+  <text
+     x="892.40625"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text72">GPU 6</text>
+  <text
+     x="1017.4062"
+     y="294"
+     text-anchor="middle"
+     fill="#2c3e50"
+     font-size="13px"
+     font-weight="bold"
+     id="text76">GPU 7</text>
+  <!-- Arrows from GPU labels to MM Encoder -->
+  <line
+     x1="142.40625"
+     y1="295"
+     x2="142.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line79" />
+  <line
+     x1="267.40625"
+     y1="295"
+     x2="267.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line80" />
+  <line
+     x1="392.40625"
+     y1="295"
+     x2="392.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line81" />
+  <line
+     x1="517.40625"
+     y1="295"
+     x2="517.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line82" />
+  <line
+     x1="642.40625"
+     y1="295"
+     x2="642.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line83" />
+  <line
+     x1="767.40625"
+     y1="295"
+     x2="767.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line84" />
+  <line
+     x1="892.40625"
+     y1="295"
+     x2="892.40625"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line85" />
+  <line
+     x1="1017.4062"
+     y1="295"
+     x2="1017.4062"
+     y2="315"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line86" />
+  <!-- MM Encoder Layer Label -->
+  <text
+     x="79.40625"
+     y="380"
+     text-anchor="end"
+     fill="#2c3e50"
+     font-size="12px"
+     font-weight="bold"
+     id="text88"><tspan
+       x="79.40625"
+       y="370"
+       id="tspan86">MM Encoder</tspan><tspan
+       x="79.40625"
+       y="385"
+       id="tspan87">Layer</tspan><tspan
+       x="79.40625"
+       y="400"
+       id="tspan88">(Data Parallel)</tspan></text>
+  <!-- MM Encoder subtitle -->
+  <text
+     x="579.40625"
+     y="333"
+     text-anchor="middle"
+     fill="#7f8c8d"
+     font-size="11px"
+     font-style="italic"
+     id="text89">(No communication during forward pass)</text>
+  <!-- MM Encoder - Individual boxes for each GPU (Data Parallel - FULL weights) -->
+  <rect
+     x="90.859222"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect89" />
+  <text
+     x="142.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text90">FULL</text>
+  <text
+     x="142.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91">Weights</text>
+  <text
+     x="142.8252"
+     y="407.58984"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan5"
+       x="142.8252"
+       y="407.58984">[I1,I2]</tspan></text>
+  <text
+     x="269.17453"
+     y="405.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-11"
+     style="font-size:10.6667px;font-family:Arial">[E1,E2]</text>
+  <text
+     x="265.73517"
+     y="407.67349"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-1"
+     style="font-size:10.6667px;font-family:Arial">[E1,E2]</text>
+  <text
+     x="191.17453"
+     y="431.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-5"
+     style="font-size:10.6667px;font-family:Arial">[E1,E2]</text>
+  <text
+     x="268.17453"
+     y="410.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-2"
+     style="font-size:10.6667px;font-family:Arial">[E1,E2]</text>
+  <text
+     x="268.17453"
+     y="406.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-8"
+     style="font-size:10.6667px;font-family:Arial">[E1,E2]</text>
+  <text
+     x="142.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text92">(replica)</text>
+  <rect
+     x="217.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect93" />
+  <text
+     x="268.17453"
+     y="407.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan4"
+       x="268.17453"
+       y="407.66669">[I3,I4]</tspan></text>
+  <text
+     x="392.17453"
+     y="408.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-3"
+     style="font-size:10.6667px;font-family:Arial">[E1,E2]</text>
+  <text
+     x="517.52386"
+     y="408.74353"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-2"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan2-2"
+       x="517.52386"
+       y="408.74353">[E3,E4]</tspan></text>
+  <text
+     x="267.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text94">FULL</text>
+  <text
+     x="267.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text95">Weights</text>
+  <text
+     x="267.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text96">(replica)</text>
+  <rect
+     x="342.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect97" />
+  <text
+     x="392.17453"
+     y="407.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-6"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan3"
+       x="392.17453"
+       y="407.66669">[I5,I6]</tspan></text>
+  <text
+     x="392.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text98">FULL</text>
+  <text
+     x="392.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text99">Weights</text>
+  <text
+     x="392.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text100">(replica)</text>
+  <rect
+     x="467.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect101" />
+  <text
+     x="518.02344"
+     y="408.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-6-8"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan6"
+       x="518.02344"
+       y="408.66669">[I7,I8]</tspan></text>
+  <text
+     x="517.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text102">FULL</text>
+  <text
+     x="517.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text103">Weights</text>
+  <text
+     x="517.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text104">(replica)</text>
+  <rect
+     x="592.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect105" />
+  <text
+     x="642.0235"
+     y="408.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-6-8-7"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan7"
+       x="642.0235"
+       y="408.66669">[I9,I10]</tspan></text>
+  <text
+     x="642.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text106">FULL</text>
+  <text
+     x="642.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text107">Weights</text>
+  <text
+     x="642.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text108">(replica)</text>
+  <rect
+     x="717.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect109" />
+  <text
+     x="766.0235"
+     y="408.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-6-8-4"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan8"
+       x="766.0235"
+       y="408.66669">[I11,I12]</tspan></text>
+  <text
+     x="767.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text110">FULL</text>
+  <text
+     x="767.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text111">Weights</text>
+  <text
+     x="767.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text112">(replica)</text>
+  <rect
+     x="842.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect113" />
+  <text
+     x="892.0235"
+     y="408.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-6-8-2"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan9"
+       x="892.0235"
+       y="408.66669">[I13,I14]</tspan></text>
+  <text
+     x="892.40625"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text114">FULL</text>
+  <text
+     x="892.40625"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text115">Weights</text>
+  <text
+     x="892.40625"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text116">(replica)</text>
+  <rect
+     x="967.40625"
+     y="340"
+     width="100"
+     height="80"
+     fill="#16a085"
+     stroke="#1abc9c"
+     stroke-width="2"
+     rx="3"
+     id="rect117" />
+  <text
+     x="1018.0234"
+     y="408.66669"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text91-9-14-6-8-41"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;font-family:Arial;-inkscape-font-specification:'Arial, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#ffffff"><tspan
+       sodipodi:role="line"
+       id="tspan10"
+       x="1018.0234"
+       y="408.66669">[I15,I16]</tspan></text>
+  <text
+     x="1017.4062"
+     y="360"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     font-weight="bold"
+     id="text118">FULL</text>
+  <text
+     x="1017.4062"
+     y="375"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="11px"
+     id="text119">Weights</text>
+  <text
+     x="1017.4062"
+     y="390"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="9px"
+     id="text120">(replica)</text>
+  <!-- Arrows from MM Encoder to embeddings -->
+  <line
+     x1="142.40625"
+     y1="420"
+     x2="142.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line121" />
+  <line
+     x1="267.40625"
+     y1="420"
+     x2="267.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line122" />
+  <line
+     x1="392.40625"
+     y1="420"
+     x2="392.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line123" />
+  <line
+     x1="517.40625"
+     y1="420"
+     x2="517.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line124" />
+  <line
+     x1="642.40625"
+     y1="420"
+     x2="642.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line125" />
+  <line
+     x1="767.40625"
+     y1="420"
+     x2="767.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line126" />
+  <line
+     x1="892.40625"
+     y1="420"
+     x2="892.40625"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line127" />
+  <line
+     x1="1017.4062"
+     y1="420"
+     x2="1017.4062"
+     y2="445"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line128" />
+  <!-- Embedding outputs per GPU -->
+  <!-- Arrows from embedding outputs to per-GPU Pad boxes -->
+  <!-- Per-GPU Pad boxes -->
+  <!-- AllGather (after Pad) -->
+  <line
+     x1="142.40625"
+     y1="453"
+     x2="1017.4062"
+     y2="453"
+     stroke="#27ae60"
+     stroke-width="3"
+     stroke-dasharray="5, 5"
+     marker-start="url(#arrowhead-green-left)"
+     marker-end="url(#arrowhead-green)"
+     id="line152" />
+  <text
+     x="579.40625"
+     y="468"
+     text-anchor="middle"
+     fill="#229954"
+     font-size="12px"
+     font-weight="normal"
+     id="text152">AllGather (collect embeddings)</text>
+  <!-- Arrows from AllGather to per-GPU Unpad boxes -->
+  <!-- Per-GPU Unpad & Reorder boxes -->
+  <!-- Per-GPU embedding labels (no boxes) -->
+  <text
+     x="142.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb0">[E1..E16]</text>
+  <text
+     x="142.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt0">+ Text</text>
+  <text
+     x="267.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb1">[E1..E16]</text>
+  <text
+     x="267.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt1">+ Text</text>
+  <text
+     x="392.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb2">[E1..E16]</text>
+  <text
+     x="392.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt2">+ Text</text>
+  <text
+     x="517.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb3">[E1..E16]</text>
+  <text
+     x="517.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt3">+ Text</text>
+  <text
+     x="642.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb4">[E1..E16]</text>
+  <text
+     x="642.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt4">+ Text</text>
+  <text
+     x="767.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb5">[E1..E16]</text>
+  <text
+     x="767.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt5">+ Text</text>
+  <text
+     x="892.40625"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb6">[E1..E16]</text>
+  <text
+     x="892.40625"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt6">+ Text</text>
+  <text
+     x="1017.4062"
+     y="481"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     font-weight="bold"
+     id="text_emb7">[E1..E16]</text>
+  <text
+     x="1017.4062"
+     y="495"
+     text-anchor="middle"
+     fill="#3498db"
+     font-size="10px"
+     id="text_txt7">+ Text</text>
+  <!-- Arrows from per-GPU embeddings to LLM -->
+  <line
+     x1="142.40625"
+     y1="503"
+     x2="142.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm0" />
+  <line
+     x1="267.40625"
+     y1="503"
+     x2="267.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm1" />
+  <line
+     x1="392.40625"
+     y1="503"
+     x2="392.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm2" />
+  <line
+     x1="517.40625"
+     y1="503"
+     x2="517.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm3" />
+  <line
+     x1="642.40625"
+     y1="503"
+     x2="642.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm4" />
+  <line
+     x1="767.40625"
+     y1="503"
+     x2="767.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm5" />
+  <line
+     x1="892.40625"
+     y1="503"
+     x2="892.40625"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm6" />
+  <line
+     x1="1017.4062"
+     y1="503"
+     x2="1017.4062"
+     y2="523"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black)"
+     id="line_emb_llm7" />
+  <rect
+     x="93.476929"
+     y="531.07068"
+     width="974.85864"
+     height="80.2547"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2.14134"
+     rx="2.9995651"
+     id="rect133"
+     style="font-size:12px;font-family:Arial" />
+  <!-- LLM Attention Layer Label -->
+  <!-- LLM Attention Layer (ONE unified box) -->
+  <!-- Attention partition labels -->
+  <!-- AllReduce 2 (after Attention) -->
+  <!-- LLM MLP Layer Label -->
+  <!-- LLM MLP Layer (ONE unified box) -->
+  <!-- MLP partition labels -->
+  <!-- AllReduce 3 (after MLP) -->
+  <!-- Arrow down to output -->
+  <!-- LLM Output Box -->
+  <!-- Vertical dashed lines for GPU boundaries -->
+  <line
+     x1="205.40625"
+     y1="366"
+     x2="205.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line211" />
+  <line
+     x1="330.40625"
+     y1="366"
+     x2="330.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line212" />
+  <line
+     x1="455.40625"
+     y1="366"
+     x2="455.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line213" />
+  <line
+     x1="580.40625"
+     y1="366"
+     x2="580.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line214" />
+  <line
+     x1="705.40625"
+     y1="366"
+     x2="705.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line215" />
+  <line
+     x1="830.40625"
+     y1="366"
+     x2="830.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line216" />
+  <line
+     x1="955.40625"
+     y1="366"
+     x2="955.40625"
+     y2="622.67072"
+     stroke="#34495e"
+     stroke-width="1.33624"
+     stroke-dasharray="18, 18"
+     stroke-opacity="0.4"
+     id="line217" />
+  <line
+     x1="562.40625"
+     y1="164"
+     x2="562.40625"
+     y2="184"
+     stroke="#34495e"
+     stroke-width="1.5"
+     marker-end="url(#arrow-black-1)"
+     id="line82-1"
+     style="font-size:12px;font-family:Arial;marker-end:url(#arrow-black-1)" />
+  <text
+     x="584.40625"
+     y="580.55438"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-size="12px"
+     font-weight="bold"
+     id="text144"
+     style="font-size:29.3333px;font-family:Arial">LLM</text>
+  <line
+     x1="579.40625"
+     y1="627.55438"
+     x2="579.40625"
+     y2="652.55438"
+     stroke="#34495e"
+     stroke-width="2"
+     marker-end="url(#arrow-black-0)"
+     id="line150"
+     style="font-size:12px;font-family:Arial;marker-end:url(#arrow-black-0)" />
+  <rect
+     x="379.40625"
+     y="657.55438"
+     width="400"
+     height="50"
+     fill="#27ae60"
+     stroke="#229954"
+     stroke-width="2"
+     rx="5"
+     id="rect150"
+     style="font-size:12px;font-family:Arial" />
+  <text
+     x="579.40625"
+     y="685.55438"
+     text-anchor="middle"
+     fill="#ffffff"
+     font-weight="bold"
+     font-size="16px"
+     id="text151"
+     style="font-size:12px;font-family:Arial">LLM Output</text>
+  <text
+     xml:space="preserve"
+     id="text1"
+     style="font-weight:bold;font-size:29.3333px;font-family:Sans;-inkscape-font-specification:'Sans, Bold';text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect1);display:inline;fill:#000000;fill-opacity:0"
+     transform="translate(-37.59375,-19)" />
+  <rect
+     style="fill:#000000;fill-opacity:0"
+     id="rect2"
+     width="65.087952"
+     height="18.049601"
+     x="200.33281"
+     y="404.89215"
+     rx="3" />
+</svg>

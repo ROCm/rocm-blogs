@@ -130,10 +130,12 @@ DataLoader
 DataParallel
 datatypes
 dbgapi
+dcd
 deallocation
 deepep
 DeepSeek
 DeepSpeed
+Deepstack
 denoise
 denoised
 denoises
@@ -161,6 +163,7 @@ DWORD
 EDA
 Eficode
 ELMo
+fb
 embeddings
 enablement
 ENDPGM
@@ -264,6 +267,8 @@ inband
 incrementing
 inferencing
 InfiniBand
+Instruct
+InternVL
 inflight
 init
 initializer
@@ -352,6 +357,8 @@ MQA
 MSVC
 mtypes
 Multicore
+Multimodal
+multimodal
 Multithreaded
 MVAPICH
 MVFFR
@@ -412,6 +419,7 @@ pageable
 PaLM
 parallelization
 parameterization
+params
 passthrough
 PCI
 PCIe
@@ -443,6 +451,7 @@ protobuf
 PRs
 pseudorandom
 PTQ
+px
 py
 PyPi
 PyTorch
@@ -464,6 +473,7 @@ reducescatter
 RelWithDebInfo
 representable
 representativeness
+reproducibility
 Req
 req
 resampling
@@ -502,6 +512,7 @@ rocSPARSE
 rocThrust
 ROCTracer
 rocWMMA
+ROI
 RST
 runtime
 runtimes
@@ -522,6 +533,7 @@ SerDes
 serializers
 SGPR
 SGPRs
+SGLang
 SHA
 shader
 SHARDED
@@ -631,8 +643,11 @@ vectorizer
 vectorizes
 VGPR
 VGPRs
+ViT
 Vitis
+VL
 VLA
+VLM
 vllm
 vLLM
 vLLM's
