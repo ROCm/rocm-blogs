@@ -329,6 +329,7 @@ matchers
 Matplotlib
 Mecanum
 mecanum
+MediaTek
 Megatron
 Mellanox's
 MEM
@@ -796,3 +797,10 @@ generalizable
 reproducablity
 factuality
 datacenter
+Naïve
+ds
+kKPack
+kKPerBlock
+kMPerBlock
+naïve
+reindexed
