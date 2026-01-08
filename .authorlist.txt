@@ -54,6 +54,8 @@ Brian
 Cornille
 Bruce
 Xue
+Carlus
+Huang
 Carson
 Liao
 Chaitanya
@@ -178,6 +180,8 @@ Henry
 Ho
 Hongxia
 Yang
+Hongyi
+Yao
 Hyunji
 Kim
 Ish
@@ -382,6 +386,8 @@ Rongzhang
 Zheng
 Ruibin
 Zhang
+Ruturaj
+Vaidya
 Saad
 Rahim
 Saptarshi
