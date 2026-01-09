@@ -185,6 +185,7 @@ FlashInfer
 FLOPs
 FMA
 Fortran
+fp
 FP
 frac
 Fuyu
@@ -258,7 +259,9 @@ hyperparameter
 Hyperparameters
 hyperparameters
 ib_core
+ibm
 ICV
+IFEVAL
 iGPU
 ImageNet
 IMDB
@@ -301,6 +304,7 @@ kdb
 Keras
 KFD
 Khronos
+Kimi
 KV
 KVM
 lang
@@ -456,9 +460,11 @@ px
 py
 PyPi
 PyTorch
+QAT
 QKV
 QPS
 quantized
+quantizing
 Quantizing
 quasirandom
 qwen
@@ -532,6 +538,7 @@ SDMA
 SDRAM
 SerDes
 serializers
+SGLang
 SGPR
 SGPRs
 SGLang
