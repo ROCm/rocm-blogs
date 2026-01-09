@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Bridging the Last Mile: Deploying Hummingbird-XT for Efficient Video Generation on AMD Consumer-Grade Platforms "
 date: 8 Jan 2026
-author: 'Takashi Isobe,He Cui,Mengmeng Ge,Dong Zhou,Dong Li,KuanTing Lin,Wickey Wang,Emad Barsoum'
+author: 'Takashi Isobe,He Cui,Mengmeng Ge,Dong Zhou,Dong Li,KuanTing Lin,Chandra Yang,Wickey Wang,Emad Barsoum'
 thumbnail: 'hummingbird_xt.png'
 tags: GenAI, PyTorch, Diffusion Model
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: HummingbirdXT, an efficient video diffusion models for h
 language: English
 myst:
     html_meta:
-        "author": "Takashi Isobe,He Cui,Mengmeng Ge,Dong Zhou,Dong Li,KuanTing Lin,Wickey Wang,Emad Barsoum"
+        "author": "Takashi Isobe,He Cui,Mengmeng Ge,Dong Zhou,Dong Li,KuanTing Lin,Chandra Yang,Wickey Wang,Emad Barsoum"
         "description lang=en": "Learn how to use Hummingbird-XT and Hummingbird-XTX modelS to generate videos. Explore the video diffusion model acceleration solution, including dit distillation method and light VAE model."
         "keywords": "HummingbirdXT, Diffusion Models, Instinct GPU Accelerators"
         "vertical": "AI, Developers"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, AI Training, Generative AI"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Takashi Isobe,He Cui,Mengmeng Ge,Dong Zhou,Dong Li,KuanTing Lin,Wickey Wang,Emad Barsoum"
+        "amd_blog_authors": "Takashi Isobe,He Cui,Mengmeng Ge,Dong Zhou,Dong Li,KuanTing Lin,Chandra Yang,Wickey Wang,Emad Barsoum"
 ---
 
 <!---
@@ -52,7 +52,15 @@ SOFTWARE.
 
 With the rapid advancement of diffusion models [1], artificial intelligence (AI) has entered a new era of visual understanding and generation. Video generative models, one of the most exciting and rapidly emerging areas in AI, demonstrate remarkable capabilities in producing cinematic videos and reshaping entire production pipelines. However, the substantial computational and memory demands of large-scale diffusion transformer backbones require high-performance computation and highly optimized operators, which restrict their deployment to server-grade GPUs. In contrast, client-grade GPUs dominate the end-user market, making efficient on-device video generation highly desirable. Nevertheless, their limited power budget and memory bandwidth impose stringent constraints on computation and energy consumption, hindering the deployment of current DiT models [2,3]. 
 
-In this blog, AMD presents a highly efficient video generative model based on the Wan-2.2-5B TI2V architecture [3], termed **Hummingbird-XT**, designed to bridge the last mile of deploying large-scale DiT models on client-grade GPUs, including both Navi48 dGPUs and Strix Halo iGPUs. Hummingbird-XT achieves up to 33× speedup on Strix Halo and enables efficient video generation on Navi48, where the original model runs out of memory, through two key innovations:  (1) carefully designed data curation for step distillation, which enables 3-step generation while preserving background consistency and motion smoothness, especially reducing human-body ghosting in high-dynamic-action scenarios; and (2) a lightweight VAE, which accelerates latent decoding while preserving crucial image quality and semantic understanding capability. Hummingbird-XT is fully trained on 16 AMD Instinct™ MI325X GPUs, marking an important milestone in showcasing operator-friendly support for large-scale video generative models and stable training performance for both DiT and VAE architectures. In addition, this blog introduces a member of the Hummingbird family, termed **Hummingbird-XTX**, an efficient DiT model designed for long-video generation. Hummingbird-XT and its family further enrich the AMD ecosystem by enabling more devices to benefit from AMD-trained native models. The training code and datasets will be open-sourced to the community, attracting more developers to build and experiment with models on AMD GPUs.  
+In this blog, AMD presents a highly efficient video generative model based on the Wan-2.2-5B TI2V architecture [3], termed **Hummingbird-XT**, designed to bridge the last mile of deploying large-scale DiT models on client-grade GPUs, including both Navi48 dGPUs and Strix Halo iGPUs. Hummingbird-XT achieves up to 33× speedup on Strix Halo and enables efficient video generation on Navi48, where the original model runs out of memory, through two key innovations:  (1) carefully designed data curation for step distillation, which enables 3-step generation while preserving background consistency and motion smoothness, especially reducing human-body ghosting in high-dynamic-action scenarios; and (2) a lightweight VAE, which accelerates latent decoding while preserving crucial image quality and semantic understanding capability. Hummingbird-XT is fully trained on 16 AMD Instinct™ MI325X GPUs, marking an important milestone in showcasing operator-friendly support for large-scale video generative models and stable training performance for both DiT and VAE architectures. In addition, this blog introduces **Hummingbird-XTX**, an efficient DiT-based member of the Hummingbird family designed for long video generation, built on Wan-2.1-1.3B T2V. Hummingbird-XT and its family further enrich the AMD ecosystem by enabling more devices to benefit from AMD-trained native models. The training code and datasets have been open-sourced to the community, empowering developers to build and experiment with models on AMD GPUs.  
+
+Key Takeaways:
+- Presenting an end-to-end acceleration pipeline for DiT-based video models, combining step distillation and a lightweight VAE decoder to significantly reduce inference latency and memory footprint while preserving visual quality.
+- Introducing Hummingbird-XT, an efficient DiT-based video generation framework built upon Wan-2.2-5B, designed to bridge the last mile of deploying large-scale diffusion transformer models on AMD client-grade GPUs, including Navi48 dGPUs and Strix Halo iGPUs.
+- Achieving up to 33× speedup on Strix Halo iGPUs, and enabling efficient video generation on Navi48, where the original Wan-2.2-5B model exceeds memory limits.
+- Introducing Hummingbird-XTX, an efficient DiT-based extension of Hummingbird-XT for long-video generation, built upon Wan-2.1-1.3B, addressing challenges in temporal scalability and computational growth.
+- Demonstrating stable training convergence for both DiT and VAE architectures on AMD Instinct™ MI325 and AMD Instinct™ MI300 GPUs, highlighting strong operator support and robust training performance on AMD platforms.
+- Open-sourcing the training pipeline and datasets, further enriching the AMD ecosystem and empowering developers to build, experiment with, and deploy video generative models on AMD GPUs.
 
 ## Towards 3-Step Generation in Diffusion Transformers
 
@@ -112,7 +120,9 @@ In addition to the distillation loss, we also include the reconstruction loss, L
 
 Here, we present Hummingbird-XTX, a member of the Hummingbird-XT family built upon Wan-2.1-1.3B, towards efficient long-video generation. Generating long videos poses challenges in computational growth and temporal scalability. Most state-of-the-art video generation models depend on bidirectional attention [12], requiring full-sequence processing for each generated frame. This results in quadratic computational complexity with respect to frame count and makes long-video generation infeasible for real-time or streaming scenarios.   
 
-To alleviate this problem, autoregressive (AR) models [13] appear to be an ideal choice. They generate frame by frame and support KV caching for accelerated inference. However, directly applying AR architectures introduces severe exposure bias: during training the model relies on ground-truth frames, whereas during inference it must condition on its own imperfect predictions. This train–test mismatch causes videos to drift or collapse within a few seconds as errors accumulate over time. To mitigate this error accumulation, we found that simply fine-tuning existing models was insufficient; a fundamental redesign of the initialization and training paradigm was required. 
+To enable scalable long-video generation, we follow the frame-by-frame generation paradigm of autoregressive (AR) models [13] and leverage KV caching for accelerated inference. However, naively applying this generation paradigm is ineffective, as it introduces severe exposure bias: the model is trained using ground-truth frames but must condition on its own predictions during inference. This discrepancy between training and inference leads to compounding errors over time, causing rapid degradation or collapse of generated videos.
+
+To mitigate this issue, we adopt a fundamentally redesigned initialization and training paradigm, going beyond simple fine-tuning of existing models.
 
 ### ODE Initialization: Standing on the Shoulders of Giants 
 
@@ -147,7 +157,7 @@ Figure 4: Two decoding strategies for long video.
 ```
 
 
-We first train two types of VAE decoders on short video clips: (1) **Causal VAE decoder** composed of causal convolutions, which uses only past frames as context, and (2) **Non-causal VAE decoder** composed of non-causal convolutions, which leverages both past and future frames as inputs. To extend these decoders to long-video decoding, we adopt different strategies for each architecture.  For the causal VAE decoder, we employ a **causal cache** mechanism, where the video latent sequence is split into multiple non-overlapped latent clips along the temporal dimension and decoded sequentially. Intermediate features from decoding of the previous clip are cached and reused as contextual input for decoding of the current clip. For the non-causal VAE decoder, we apply a **tiling** strategy, in which video latent sequence is divided into overlapping clips along the temporal dimension. The overlapping regions provide additional temporal context for each latent clip. To ensure temporal continuity, the decoded video clips corresponding to overlapping regions are linearly blended. Experimental comparisons indicate that integrating the non-causal VAE decoder with tiling improves reconstruction quality and substantially accelerates inference for both Hummingbird-XT and Hummingbird-XT-Long. 
+We first train two types of VAE decoders on short video clips: (1) Causal VAE decoder composed of causal convolutions, which uses only past frames as context, and (2) Non-causal VAE decoder composed of non-causal convolutions, which leverages both past and future frames as inputs. To extend these decoders to long-video decoding, we adopt different strategies for each architecture.  For the causal VAE decoder, we employ a causal cache mechanism, where the video latent sequence is split into multiple non-overlapped latent clips along the temporal dimension and decoded sequentially. Intermediate features from decoding of the previous clip are cached and reused as contextual input for decoding of the current clip. For the non-causal VAE decoder, we apply a tiling strategy, in which video latent sequence is divided into overlapping clips along the temporal dimension. The overlapping regions provide additional temporal context for each latent clip. To ensure temporal continuity, the decoded video clips corresponding to overlapping regions are linearly blended. Experimental comparisons indicate that integrating the non-causal VAE decoder with tiling improves reconstruction quality and substantially accelerates inference for both Hummingbird-XT and Hummingbird-XTX. 
 
 ## Experimental Results
 In Table 1, we compare Wan-2.2-5B and our method on the text-to-video task evaluated on VBench, under settings with and without caption recaption. We report the Quality Score, Semantic Score, and the overall Total Score.
@@ -160,7 +170,7 @@ In Table 1, we compare Wan-2.2-5B and our method on the text-to-video task evalu
 
 <p align="center">Table 1. Quantitative results for the text-to-video task on VBench.</p>
 
-In Table 2, we compare Wan-2.2-5B and our method on the image-to-video task evaluated on VBench, under settings with and without caption recaption. We report Video–Image Subject Consistency, Video–Image Background Consistency, and the Quality Score.
+In Table 2, we compare Wan-2.2-5B and our method on the image-to-video task evaluated on VBench, under settings with and without caption recaption. We report Video–Image Subject Consistency, Video–Image Background Consistency, and the Quality Score. For caption recaption, we use **Qwen2.5-3B**, followed by evaluation with VBench.
 | Model                     | Video-Image Subject Consistency ↑ | Video-Image Background Consistency ↑ | Quality Score ↑ |
 |---------------------------|-----------------------------------|--------------------------------------|-----------------|
 | Wan-2.2-5B-I2V w/o recap   | 97.89                             | 99.04                                | 81.43           |
@@ -189,7 +199,7 @@ In Table 4, we compare the original uncompressed VAE from Wan-2.2 (Wan-2.2 VAE),
 
 <p align="center">Table 4. Performance and efficiency comparison of different VAE decoders on AMD Instinct™ MI300X GPU.</p>
 
-We compare our method with long-video generation models such as Self-Forcing [15], CausVid [17], LongLive [18], and RollingForcing [19] in terms of generation speed and three other commonly used benchmarks. The detailed quantitative results are reported in Table 5.
+We compare our method with long-video generation models such as Self-Forcing [15], CausVid [17], LongLive [18], and RollingForcing [19] in terms of generation speed and three other commonly used benchmarks, under a video generation setting of 321 frames at a resolution of 832 × 480. The detailed quantitative results are reported in Table 5.
 | Model          | FPS ↑ | Flicker Metric ↓ | DOVER ↑ | VBench Quality ↑ | VBench Semantic ↑ | VBench Total ↑ |
 |----------------|-------------------|------------------|---------|----------------|-----------------|--------------|
 | Self-Forcing    | 19.28             | 0.1010           | 84.37   | 81.99          | 80.09           | 81.61        |
@@ -252,7 +262,6 @@ Please refer to the following resources to get started with training on AMD ROCm
 15. Huang X, Li Z, He G, et al. Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion[J]. arXiv preprint arXiv:2506.08009, 2025.
 
 16. Xiao G, Tian Y, Chen B, et al. Efficient streaming language models with attention sinks[J]. arXiv preprint arXiv:2309.17453, 2023.
-
 
 17. Yin T, Zhang Q, Zhang R, et al. From slow bidirectional to fast autoregressive video diffusion models[C]//Proceedings of the Computer Vision and Pattern Recognition Conference. 2025: 22963-22974.
 
