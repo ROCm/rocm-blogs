@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Breaking the Accuracy-Speed Barrier: How MXFP4/6 Quantization Revolutionizes Image and Video Generation"
 date: Jan 7 2026
 author: 'Hongyi Yao, Zhe Li, Han Wang, Xuanwu Yin, Dong Li, Steve Reinhardt, Ephrem Wu, Emad Barsoum'
-thumbnail: 'Accuracy_Thumbnail.jpg'
+thumbnail: 'MXFP4-6_Thumbnail.png'
 tags: GenAI
 category: Applications & models
 target_audience: customers/engineers focusing on low-bit computation
