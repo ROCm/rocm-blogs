@@ -304,7 +304,7 @@ vllm serve ${MODEL} \
 Docker: amdsiloai/vllm:rocm7.2_preview_ubuntu_22.04_vllm_0.10.1_instinct_20251120
 
 ```bash
-MODEL=amd/Llama-3.1-70B-Instruct-FP8-KV
+MODEL=amd/Llama-3.3-70B-Instruct-FP8-KV
 
 export VLLM_ROCM_USE_AITER_MHA=1
 export VLLM_ROCM_USE_AITER=1 
