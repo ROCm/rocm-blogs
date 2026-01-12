@@ -60,7 +60,7 @@ Read the [full paper](https://arxiv.org/abs/2508.15212) and try the [implementat
 
 Long-context inference in LLMs is increasingly constrained by the **KV cache bottleneck**: memory usage grows linearly with sequence length, while attention computation scales quadratically. This limits the maximum batch size and sequence length that can be processed on a single GPU.
 
-![Figure1](images/fig1.png)
+![Figure1](images/fig2.png)
 
 <p align="center"><i>Figure 1: Illustrative comparisons among (a) full KV cache, (b) eviction-based KV compression, (c) structured channel pruning-based KV reduction, and (d) our proposed SparK, which employs unstructured channel pruning with subsequent recovery during attention score computation.</i></p>
 
@@ -68,7 +68,7 @@ As shown in figure 1, existing approaches typically address this by compressing 
 
 ## **Inside SparK: How It Works**
 
-![Figure2](images/fig2.png)
+![Figure2](images/fig1.png)
 
 <p align="center"><i>Figure 2: An illustration of SparK. SparK computes channel-wise saliency scores and applies unstructured pruning during prefill. During decoding, SparK leverages F and sampling from the cached distribution to reconstruct the pruned channels and then performs standard full attention.</i></p>
 
