@@ -89,7 +89,7 @@ We presented a new method for aligning visual features with the parameter space 
 
 ## Endnotes
 
-You are invited to download and test this model on AMD hardware. For more information on the training, inference, and insights of this model, visit the [AMD GitHub repository](https://github.com/AMD-AIG-AIMA/AMD-EfficientVLM), where you can access the code, as well as the [Hugging Face Model Card](https://huggingface.co/amd/EVLM-3B) to download the model file. Additionally, AMD has established a dedicated cloud infrastructure featuring AMD Instinct™ GPU instances for AI developers. Visit [AMD Developer Cloud](https://www.amd.com/en/forms/registration/developer-cloud-application.html) for specific access requests and usage guidelines. If you have any questions, feel free to reach out to the AMD team at [amd_ai_mkt@amd.com](mailto:amd_ai_mkt@amd.com).
+You are invited to download and test this model on AMD hardware. For more information on the training, inference, and insights of this model, visit the [AMD GitHub repository](https://github.com/AMD-AIG-AIMA/AMD-EfficientVLM), where you can access the code. Additionally, AMD has established a dedicated cloud infrastructure featuring AMD Instinct™ GPU instances for AI developers. Visit [AMD Developer Cloud](https://www.amd.com/en/forms/registration/developer-cloud-application.html) for specific access requests and usage guidelines. If you have any questions, feel free to reach out to the AMD team at [amd_ai_mkt@amd.com](mailto:amd_ai_mkt@amd.com).
 
 <!---
 Copyright (c) 2025 Advanced Micro Devices, Inc. (AMD)
