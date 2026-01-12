@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Avoiding LDS Bank Conflicts on AMD GPUs with CK-Tile"
 date: 25 Jul 2025
-author: "Haocong Wang, Clement Lin, Menghsuan Yang, Yu-Chen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
+author: "Haocong Wang, Clement Lin, Menghsuan Yang, Yuchen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
 thumbnail: '12.png'
 tags: Optimization
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: CK-Tile’s XOR-based swizzle enables conflict-free LDS 
 language: English
 myst:
     html_meta:
-        "author": "Haocong Wang, Clement Lin, Menghsuan Yang, Yu-Chen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
+        "author": "Haocong Wang, Clement Lin, Menghsuan Yang, Yuchen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
         "description lang=en": "This blog shows how CK-Tile’s XOR-based swizzle optimizes shared memory access in GEMM kernels on AMD GPUs by eliminating LDS bank conflicts"
         "keywords": "LDS Bank Conflict , CK -tile, AMD Instinct GPUs"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "Generative AI"
         "amd_blog_topic_categories": "Adaptive & Embedded Computing"
-        "amd_blog_authors": "Haocong Wang, Clement Lin, Menghsuan Yang, Yu-Chen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
+        "amd_blog_authors": "Haocong Wang, Clement Lin, Menghsuan Yang, Yuchen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
 ---
 
 # Avoiding LDS Bank Conflicts on AMD GPUs Using CK-Tile Framework
