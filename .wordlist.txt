@@ -912,3 +912,6 @@ kKPerBlock
 kMPerBlock
 naïve
 reindexed
+CPX
+CTA
+SPX
