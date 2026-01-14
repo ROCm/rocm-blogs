@@ -51,6 +51,10 @@ SOFTWARE.
 
 In this blog, you’ll learn how Kubernetes’ new Dynamic Resource Allocation (DRA) framework and the [AMD GPU DRA Driver](https://github.com/ROCm/k8s-gpu-dra-driver) turn GPUs into first-class, attribute-aware resources. We’ll walk through how to publish AMD Instinct GPUs via ResourceSlices, request specific models and partition profiles with declarative ResourceClaims, and observe allocations through Kubernetes-native lifecycle objects, so you can simplify cluster operations compared to traditional Device Plugin–based setups.
 
+```{note}
+The AMD GPU DRA Driver described in this blog is currently available in **beta**. Features, APIs, and behaviors may change in future releases.
+```
+
 ## From Device Plugin to DRA: Why Kubernetes Needed a New Model
 
 Kubernetes managed GPUs for years through the Device Plugin framework - a node-local system that handled simple "count-based" scheduling but couldn't express device details or relationships. Every GPU looked identical, and there was no clean way to request *two MI300X GPUs on the same PCIe root* or *two partitions from one parent device*, for example. As clusters grew more diverse, operators depended on node labels and vendor-specific logic just to approximate the placement they wanted.
@@ -351,6 +355,10 @@ In this blog, you saw how the AMD GPU DRA Driver turns GPUs into first-class, at
 For cluster operators and platform teams, you also saw how this model replaces sprawling node labels and custom affinity rules with a standardized DRA lifecycle. Resource discovery, attribute publication, validation, and CDI injection are all handled by the driver, and every GPU allocation is visible and auditable through Kubernetes APIs. The end result is a Kubernetes-native workflow for GPU scheduling that is simpler to operate, easier to debug, and better aligned with modern AI workloads.
 
 Looking ahead, the AMD GPU DRA Driver also lays the foundation for a new generation of resource-aware scheduling in ROCm-based clusters. Building on today’s Kubernetes-driven partitioning, which is managed statically through the AMD GPU Operator and AMD Device Config Manager, ongoing work focuses on enabling *dynamic, workload-driven partitioning* for fractional GPU allocations, along with *cross-driver orchestration* with NICs and *cluster-level resource managers* that can coordinate device pools across multiple nodes in rack-scale deployments.
+
+```{update} Jan 14, 2026
+Clarified that the AMD GPU DRA Driver described in this blog is currently available in beta and may change in future releases.
+```
 
 ## Disclaimers
 
