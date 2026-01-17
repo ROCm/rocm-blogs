@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "3D Scene Reconstruction from the Inside: Explore the Mathematics Behind gsplat"
 date: 16 Dec 2025
 author: 'Ish Kool, Mark Granroth Wilding, Shaghayegh Roohi, Deeksha Goplani, Karthik Kashyap Thatipamula, Vikas C Sajjan, Pier Luigi Dovesi, Mittul Singh, Niko Vuokko'
-thumbnail: 'images/gsplat_blg2_math.jpeg'
+thumbnail: 'gsplat_blg2_math.jpeg'
 tags: Computer Vision, Linear Algebra, Scientific Computing, AI/ML, PyTorch
 category: Software tools & optimizations
 target_audience: Developers
