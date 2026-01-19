@@ -557,7 +557,7 @@ The HIP-enabled GROMACS build's optimized GPU-aware MPI implementation and GTL l
 In general, MD studies require repeating simulations using a number of replicates with different starting conditions (velocity seed, initial coordinates) to ensure that any observations are significant and reproducible. Other studies directly rely on combining several simulations to obtain the final results, and thus need a number of replicates at the same time.
 GROMACS enables running several simulations together using the `-multidir` flag, for either independent or coupled simulations, depending on the kind of study being performed.
 
-For smaller molecular systems like ADH (Alcohol Dehydrogenase) that don't fully saturate GPU resources, it can be possible to run several of those simulations on the same device to achieve higher overall simulation throughput. By running multiple replicas in parallel, you can achieve better overall throughput when individual simulations cannot fully utilize all available resources.
+For smaller molecular systems like ADH (Alcohol Dehydrogenase) that don't fully saturate GPU resources, it can be possible to run several of those simulations on the same device to achieve higher overall simulation throughput. By running multiple replicas in parallel, you can achieve better overall throughput when individual simulations cannot fully utilize all available resources. Furthermore, GPU partitioning significantly improves multidir performance by exposing each partition as an independent device; see [Applying Compute Partitioning for Workloads on MI300X GPUs](https://rocm.blogs.amd.com/artificial-intelligence/gpu-partitioning-workloads/README.html) for details.
 
 #### Setting Up the Multidir Folder Structure
 
@@ -808,6 +808,7 @@ Newer AMD Instinct GPUs like MI300X and MI355X offer increased memory bandwidth 
 We leveraged MI250X GCD partitioning (2 GCDs per physical GPU) throughout this guide. Newer generation devices like MI300X and MI355X extend this capability, allowing you to partition a single device into up to 8 XCDs (Compute Dies). For production environments running multiple simulations or compute-heavy workloads, you can use GPU partitioning to efficiently share compute resources:
 
 * [GPU Partitioning Made Easy: Pack More AI Workloads Using AMD GPU Operator](https://rocm.blogs.amd.com/software-tools-optimization/gpu-operator-partitioning/README.html) - Learn how to partition AMD GPUs for multi-tenant HPC environments, enabling concurrent GROMACS simulations or mixed HPC/AI workloads on shared infrastructure.
+* [Applying Compute Partitioning for Workloads on MI300X GPUs](https://rocm.blogs.amd.com/artificial-intelligence/gpu-partitioning-workloads/README.html) - Explore how GPU compute partitioning can boost GROMACS and other parallel workloads on MI300X. The ADH benchmarks in that blog achieve up to 2x higher throughput on a single MI300X compared to [our MI250X results](#adh-results-comparison) on LUMI.
 
 ## Additional Readings
 
