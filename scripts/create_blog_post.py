@@ -152,7 +152,7 @@ echo "c 226:128 rwm" > /sys/fs/cgroup/devices/devices.allow #Allow access to dev
 ```
 
 ```{note}
-This is how to add a note. See the [myst markdown admomition guide](https://mystmd.org/guide/admonitions) for more details.
+This is how to add a note. See the [myst markdown admonition guide](https://mystmd.org/guide/admonitions) for more details.
 ```
 
 ## Summary
