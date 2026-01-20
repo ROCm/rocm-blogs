@@ -110,6 +110,7 @@ docker run -it -v /data/mlperf_llama2:/data \
 Start the script for downloading and preprocessing data from within the container:
 
 ```bash
+pip uninstall -y bitsandbytes
 export HF_TOKEN=<your huggingface token>
 bash ./scripts/prepare_data_and_model.sh
 ```
@@ -119,13 +120,13 @@ bash ./scripts/prepare_data_and_model.sh
 The data and model files are stored under `/data` within the container.
 After preprocessing, you should see the following files in the `/data/model` directory:
 
-```
+```bash
 <hash>_tokenizer.model  llama2-70b.nemo  model_config.yaml  model_weights
 ```
 
 And the following files in the `/data/data` directory:
 
-```
+```bash
 train.npy  validation.npy
 ```
 
@@ -164,7 +165,7 @@ For example, to set the configuration for the MI355X platform on a single node, 
 source config_MI355X_1x8x1.sh
 ```
 
-**Launch a single finetuning run**
+##### Launch a single finetuning run
 
 To perform a single run for Llama 2 70B LoRA finetuning, set `NEXP` to `1`, and then run the `run_with_docker.sh` script:
 
@@ -173,7 +174,7 @@ export NEXP=1
 bash run_with_docker.sh
 ```
 
-**Launch 10 finetuning runs**
+##### Launch 10 finetuning runs
 
 To prepare for a 10 run result, simply set the environment variable `NEXP` to `10` before running the `run_with_docker.sh` script:
 
@@ -219,7 +220,7 @@ bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/he
 bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/heads/main/mlc-r2-downloader.sh) -d model https://training.mlcommons-storage.org/metadata/llama-3-1-8b-tokenizer.uri
 ```
 
-After the download is completed, you should see files with the following naming conventions under the data directory, ending with both `.idx` and `.bin` extensions: 
+After the download is completed, you should see files with the following naming conventions under the data directory, ending with both `.idx` and `.bin` extensions:
 
 - Training partitions: `c4-train.en_6_text_document`
 - Validation partitions: `c4-validation-91205-samples.en_text_document`
@@ -228,7 +229,7 @@ The size of the data directory is ~80 GB, and ~30 GB for the model directory.
 
 ### Run pre-training benchmark
 
-#### Set up environment
+#### Environment setup
 
 Set environment variables for the directory for the data, model and the container. Ensure that `$LOGDIR` has write access for the results to be written by running `sudo chmod -R 777 $LOGDIR`, In this example the folder `/data/mlperf_llama31_8b/results` is used as the results directory, so please make sure to create this directory.
 
@@ -243,7 +244,7 @@ export CONT=rocm/amd-mlperf:llama31_8b_training_5.1
 sudo chmod -R 777 $LOGDIR
 ```
 
-#### Set configuration
+#### Set configurations
 
 Similar to the Llama 2 70B LoRA finetuning case, there is a configuration file for each Instinct platform submission for the Llama 3.1 8B benchmark:
 
@@ -258,7 +259,7 @@ For example, to configure the environment for a MI355X platform, use:
 source config_MI355X_1x8x1_8b.sh
 ```
 
-**Launch a single training run**
+##### Launch a single training run
 
 If you want to perform a single run of the pretraining benchmark, use:
 
@@ -267,7 +268,7 @@ export NEXP=1
 bash run_with_docker.sh
 ```
 
-**Launch 10 training runs**
+##### Launch 10 training runs
 
 If you would like to prepare for 10 run submission, use:
 
@@ -333,7 +334,7 @@ Make sure there is no error in the output. If RCP checker prints a normalization
 
 ## Expected Results
 
-### Llama 2 70B LoRA finetuning
+### Llama 2 70B LoRA finetuning results
 
 For MI355X, the score should be about 10 mins. The AMD MLPerf Training v5.1 submission score is `10.18` mins.
 
@@ -343,7 +344,7 @@ For MI325X, the score should be about 21 mins. The AMD MLPerf Training v5.1 subm
 
 For MI300X, the score should be about 28 mins. The AMD MLPerf Training v5.1 submission score is `27.95` mins.
 
-### Llama 3.1 8B pretraining
+### Llama 3.1 8B pretraining results
 
 For MI355X, the score should be about 100 mins. The AMD MLPerf Training v5.1 submission score is `99.71` mins.
 
