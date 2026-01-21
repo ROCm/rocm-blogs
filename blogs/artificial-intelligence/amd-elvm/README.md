@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Athena-PRM: Enhancing Multimodal Reasoning with Data-Efficient Process Reward Models"
 date: 12 Jan 2026
 author: 'Zhenhua Liu, Xuanwu Yin, Dong Li, Emad Barsoum'
-thumbnail: 'images/Athena-PRM-thumbnail.png'
+thumbnail: 'Athena-PRM-thumbnail.png'
 tags: AI/ML, Multimodal
 category: Applications & models
 target_audience: The people who are interesting for the reasoning tasks for LLM/VLM.
