@@ -86,6 +86,8 @@ Corbin
 Robeck
 Damon
 McDougall
+Daniel
+Huang
 Danny
 Guan
 David
@@ -234,6 +236,8 @@ Karthik
 Thatipamula
 Ke
 Wang
+Kenneth
+Roche
 Kenny
 Roche
 Kevin
@@ -310,6 +314,8 @@ Mohammad
 Norouzi
 Mohammed
 Mustafa
+Mohit
+Deopujari
 Moskvichev
 Arseny
 Mou
