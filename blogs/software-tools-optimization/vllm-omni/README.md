@@ -244,7 +244,7 @@ Looking ahead, our work doesn't stop here. In the coming months, we will focus o
 
 ## Acknowledgements
 
-Making ROCm a first-class platform in the vLLM ecosystem was a major collaborative effort across many teams. The authors are deeply grateful to the AMD collaborators — Satya Ramji Ainapurapu, Omkar Kakarparthi, Divin Honnappa, Keerthana Bidar — and the broader ROCm organization, as well as Kevin Luu, Roger Wang, Hongsheng Liu, Simon Mo, and the vLLM and vLLM‑Omni maintainers. This milestone shows how fast an open source project moves when we build together.
+Making ROCm a first-class platform in the vLLM ecosystem was a major collaborative effort across many teams. The authors are deeply grateful to the AMD collaborators — Satya Ramji Ainapurapu, Randall Smith, Alexei Ivanov, Qiang Li, Charlie Fu, Divakar Verma, Andreas Karatzas, Yida Wu, Ryan Rock, Matt Wong, Micah Williamson, Omkar Kakarparthi, Divin Honnappa, Keerthana Bidar — and the broader ROCm organization, as well as Kevin Luu, Roger Wang, Hongsheng Liu, Simon Mo, and the vLLM and vLLM‑Omni maintainers. This milestone shows how fast an open source project moves when we build together.
 
 ## References
 
