@@ -128,7 +128,7 @@ The above example starts a GROMACS run with 64 replicas using all 64 partitions 
 
 The goal of the benchmarks is to achieve as high a simulation speed (ns/day) as possible. To do this, parameter search was performed on `nstlist`, `multidir` (number of replicas per run, must be a multiple of the number of GPUs used) and `ntomp` (numbers of CPU threads per replica). The numbers presented below are hence the highest performing parameter configuration.
 
-The results demonstrate significant performance improvements when using GPU partitioning (CPX mode) compared to SPX (single partition) for GROMACS multidir workloads on the MI300X architecture. Partitioning delivers consistent speedups ranging from 1.75x to 2.47x across different GPU counts (see [Table 1](#table1)). These gains stem from the multidir workflow's natural parallelism: running multiple independent replicas on 8 partitions keeps all compute resources fully utilized, whereas the traditional SPX mode struggles to efficiently distribute work across such highly parallel tasks. The speedup is fairly consistent across different GPU configurations (see [Figure 1](#fig1)). However, the slightly lower speedups at 8 GPUs (1.78x) suggest that at this scale system resources are being saturated, specifically CPU resources due to the large amount of replicas being run in parallel. Even though the system used has 2x AMD EPYC 9654 96-Core Processors, running 128 replicas leaves only 1 **whole** physical CPU core per replica. Since all MI300X nodes are not equipped with equal CPU hardware, one takeaway is that it is important to balance GPU partitions and replica counts for the specific system configuration.
+The results demonstrate significant performance improvements when using GPU partitioning (CPX mode) compared to SPX (single partition) for GROMACS multidir workloads on the MI300X architecture. Partitioning delivers consistent speedups ranging from 1.78x to 2.47x across different GPU counts (see [Table 1](#table1)). These gains stem from the multidir workflow's natural parallelism: running multiple independent replicas on 8 partitions keeps all compute resources fully utilized, whereas the traditional SPX mode struggles to efficiently distribute work across such highly parallel tasks. The speedup is fairly consistent across different GPU configurations (see [Figure 1](#fig1)). However, the slightly lower speedups at 8 GPUs (1.78x) suggest that at this scale system resources are being saturated, specifically CPU resources due to the large amount of replicas being run in parallel. Even though the system used has 2x AMD EPYC 9654 96-Core Processors, running 128 replicas leaves only 1 **whole** physical CPU core per replica. Since all MI300X nodes are not equipped with equal CPU hardware, one takeaway is that it is important to balance GPU partitions and replica counts for the specific system configuration.
 
 For workflows involving ensemble simulations, free-energy calculations, or parameter sweeps, these results indicate that GPU partitioning can nearly double to triple effective throughput, dramatically reducing time-to-results for production MD campaigns.
 
@@ -137,8 +137,8 @@ For workflows involving ensemble simulations, free-energy calculations, or param
 | Compute mode      | Dataset     | Metric      | 1x MI300X | 2x MI300X | 4x MI300X | 8x MI300X |
 |-------------------|-------------|-------------|-----------|-----------|-----------|-----------|
 | SPX               | adh_dodec   | ns/day      | 647       | 1140      | 2435      | 4507      |
-| CPX (Partitioned) | adh_dodec   | ns/day      | 1570      | 1997      | 6022      | 8026      |
-| **Performance Difference** ||| **2.43x** | **1.75x** | **2.47x** | **1.78x** |
+| CPX (Partitioned) | adh_dodec   | ns/day      | 1570      | 2822      | 6022      | 8026      |
+| **Performance Difference** ||| **2.43x** | **2.48x** | **2.47x** | **1.78x** |
 
 <a id="fig1"></a>
 <img src="images/gromacs_mi300x_performance.png" alt="GROMACS MI300X performance" width="100%">
@@ -219,7 +219,7 @@ The baseline job takes approximately 34 minutes on the full GPU, so sequential e
 
 GPU compute partitioning on AMD MI300X accelerators delivers substantial performance improvements for workloads composed of multiple independent tasks.
 
-For GROMACS multidir workloads, partitioning (CPX mode) achieved **1.75x to 2.47x speedups** across different GPU configurations compared to traditional single-partition mode (SPX) on the ADH Dodec dataset. At scale, 8 partitioned MI300X GPUs delivered 8026 ns/day compared to 4507 ns/day without partitioning (see [Figure 1](#fig1)) - a **1.78x improvement**.
+For GROMACS multidir workloads, partitioning (CPX mode) achieved **1.78x to 2.48x speedups** across different GPU configurations compared to traditional single-partition mode (SPX) on the ADH Dodec dataset. At scale, 8 partitioned MI300X GPUs delivered 8026 ns/day compared to 4507 ns/day without partitioning (see [Figure 1](#fig1)) - a **1.78x improvement**.
 
 For REINVENT4 hyperparameter optimization and transfer learning workflows, partitioning enabled concurrent execution of multiple training jobs on a single GPU. With 8 concurrent jobs, partitioning achieved a **1.42x speedup** (191 minutes vs 272 minutes), reducing total workflow time by **30%**. This demonstrates that for high-throughput AI workflows involving model sweeps, ensemble training, or multi-seed validation, the benefits of concurrent execution outweigh the per-job overhead introduced by partitioning.
 
@@ -230,6 +230,7 @@ For readers interested in deeper technical details about partitioning modes and 
 - [Deep dive into the MI300 compute and memory partition modes](https://rocm.blogs.amd.com/software-tools-optimization/compute-memory-modes/README.html)
 - [GPU Partitioning Made Easy](https://rocm.blogs.amd.com/software-tools-optimization/gpu-operator-partitioning/README.html)
 - [Optimizing REINVENT4 workflows on AMD GPUs](https://rocm.blogs.amd.com/artificial-intelligence/running-reinvent4-amd/README.html)
+- [Installing AMD HIP-Enabled GROMACS on HPC Systems: A LUMI Supercomputer Case Study](https://rocm.blogs.amd.com/artificial-intelligence/gromacs-lumi-guide/README.html)
 
 ## Disclaimers
 
