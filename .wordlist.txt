@@ -46,8 +46,10 @@ avx
 awk
 backend
 backends
+balancer
 Bao
 Basemark
+benchmarker
 benchmarking
 bilinear
 BitCode
@@ -111,6 +113,7 @@ CPP
 cpp
 CPU
 CPUs
+CPX
 CSC
 CSE
 CSn
@@ -164,6 +167,7 @@ Dockerfile
 Doxygen
 dp
 DPM
+DPX
 dra
 DRA
 DRI
@@ -264,6 +268,8 @@ HSA
 hsa
 hsakmt
 html
+HuggingFace
+HuggingFace's
 Hur
 HWE
 hyperparameter
@@ -297,6 +303,8 @@ Intra
 intra
 invariants
 invocating
+IOD
+IOD's
 Ioffe
 IOMMU
 IOP
@@ -397,6 +405,7 @@ Navi
 NBIO
 NBIOs
 nbsp
+Nginx
 NIC
 NICs
 NLI
@@ -591,6 +600,7 @@ SMTS
 Softmax
 Spack
 SPI
+SPX
 SQs
 SRAM
 SRAMECC
@@ -711,6 +721,8 @@ Writebacks
 wrreq
 WX
 xargs
+XCD
+XCDs
 Xeon
 XGBoost
 XGBoost's
