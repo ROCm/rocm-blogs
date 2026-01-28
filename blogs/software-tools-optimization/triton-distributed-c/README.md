@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Unleash Full GPU Potential: Overlap Communication and Computation with Triton-Distributed"
 date: 06 May 2025
 author: 'Lei Zhang, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta'
-thumbnail: 'BD.png'
+thumbnail: 'triton-distributed-communication.png'
 tags: Compiler
 category: Software tools & optimizations
 target_audience: AI Developers and Enthusiasts

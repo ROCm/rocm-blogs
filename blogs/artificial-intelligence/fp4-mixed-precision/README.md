@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Optimizing FP4 Mixed-Precision Inference on AMD Instinct MI250 and MI300 GPUs: A Developers Perspective"
 date: 06 Oct 2025
 author: 'Haohui Mai, Charles Yang, George Wang'
-thumbnail: 'fp4.png'
+thumbnail: 'fp4-mixed-precision.png'
 tags: AI/ML
 category: Applications & models
 target_audience: AI DEVELOPERS AND ENTHUSIASTS

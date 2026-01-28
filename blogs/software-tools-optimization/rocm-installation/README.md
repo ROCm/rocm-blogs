@@ -7,7 +7,7 @@ category: Software tools & optimizations
 language: English
 blog_title: "AMD ROCm™ installation"
 key_value_propositions: ""
-thumbnail: "2025-10-20-rocm-hpc-blogs.png"
+thumbnail: "rocm-installation-thumbnail.png"
 target_audience: ""
 myst:
     html_meta:

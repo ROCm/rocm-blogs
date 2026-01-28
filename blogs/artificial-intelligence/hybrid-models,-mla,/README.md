@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "AMD-HybridLM: Towards Extremely Efficient Hybrid Language Models"
 date: 17 Sep 2025
 author: 'Mehdi Rezagholizadeh, Mingyu Yang, Guihong Li, Vikram Appia, Emad Barsoum'
-thumbnail: 'meh.png'
+thumbnail: 'hybrid-models-mla.png'
 tags: AI/ML
 category: Applications & models
 target_audience: Ai enthusiast and developers

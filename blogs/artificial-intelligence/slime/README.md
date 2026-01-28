@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Day-0 Support for the SGLang-Native RL Framework - slime on AMD Instinct™ GPUs"
 date: 25 Sep 2025
 author: 'Yusheng Su, Yuzhen Zhou, Jin Pan, Gowtham Ramesh, Xiaodong Yu, Jialian Wu, Ze Wang, Ximeng Sun, Jiang Liu, Hao Chen, Zicheng Liu, Emad Barsoum'
-thumbnail: '1.png'
+thumbnail: 'slime-thumbnail.png'
 tags: Reinforcement Learning, AI/ML, Fine-Tuning, GenAI
 category: Applications & models
 target_audience: AI DEVELOPERS AND ENTHUSIAST

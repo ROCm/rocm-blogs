@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "QuickReduce: Up to 3x Faster All-Reduce for  vLLM and SGLang"
 date: 26 Aug 2025
 author: 'Haoyang Li, Wei Luo, Xinjun Niu, Spandan Tiwari, Ke Wang, Jiangyong Ren, Ashish Sirasao, Doug Lehr'
-thumbnail: 'quick.jpg'
+thumbnail: 'quick-reduce-allreduce.jpg'
 tags: Performance, AI/ML, LLM
 category: Applications & models
 target_audience: AI DEVELOPERS AND ENTHUSIAST

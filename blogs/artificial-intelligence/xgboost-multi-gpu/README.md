@@ -2,7 +2,7 @@
 blogpost: true
 date: 26 Jan 2024
 blog_title: 'Accelerating XGBoost with Dask using multiple AMD GPUs'
-thumbnail: 'cat.jpeg'
+thumbnail: 'xgboost-multi-gpu.jpeg'
 author: Clint Greene
 tags: LLM, AI/ML
 category: Applications & models

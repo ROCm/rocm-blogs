@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "AMD Integrates llm-d on AMD Instinct MI300X Cluster For Distributed LLM Serving"
 date: 20 May 2025
 author: 'Kenny Roche, Joe Shajrawi, Andy Luo, Anshul Gupta'
-thumbnail: 'LLLMD.jpg'
+thumbnail: 'llm-d-distributed-inference.jpg'
 tags: AI/ML
 category: Applications & models
 target_audience: AI Developers and AI Enthusiasts

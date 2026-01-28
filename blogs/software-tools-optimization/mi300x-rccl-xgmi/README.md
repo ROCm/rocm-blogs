@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Understanding RCCL Bandwidth and xGMI Performance on AMD Instinct MI300X"
 date: 2 March 2025
 author: Jayacharan Kolla, Pedram Alizadeh, Gilbert Lee
-thumbnail: 'rccl.png'
+thumbnail: 'mi300x-rccl-xgmi.png'
 tags: System-Tuning, Performance, Optimization
 category: Software tools & optimizations
 target_audience: AI / HPC Developers

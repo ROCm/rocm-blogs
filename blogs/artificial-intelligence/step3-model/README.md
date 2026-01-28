@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Step-3 Deployment Simplified: A Developer’s Guide on AMD Instinct™ GPUs"
 date: 4 Sep 2025
 author: 'George Wang, Ning Zhang'
-thumbnail: 'tb21.jpg'
+thumbnail: 'step3-model-training.jpg'
 tags: AI/ML, Serving
 category: Applications & models
 target_audience: AI DEVELOPERS AND ENTHUSIAST

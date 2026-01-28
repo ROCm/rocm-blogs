@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "From Theory to Kernel: Implement FlashAttention-v2 with CK-Tile"
 date: 21 May 2025
 author: 'Haocong Wang, Kevin Chang, David Li, George Wang'
-thumbnail: 'CK.png'
+thumbnail: 'ck-tile-flash-attention.png'
 tags: AI/ML, Developers
 category: Software tools & optimizations
 target_audience: ai enthusiasts and ai developers

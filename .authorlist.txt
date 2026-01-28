@@ -208,6 +208,8 @@ Jianghui
 Wang
 Jiangyong
 Ren
+Jin
+Zhou
 Jingai
 Yu
 Joaquin
@@ -244,6 +246,8 @@ Kevin
 Joseph
 Kristoffer
 Peyron
+Kuo
+Tsai
 Kyle
 Zhao
 Lalith
@@ -478,6 +482,8 @@ Vikas
 Sajjan
 Vikram
 Appia
+Vin
+Huang
 Vinay
 Joshi
 Vish

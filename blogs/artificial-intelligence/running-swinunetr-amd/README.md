@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Medical Imaging on MI300X: Optimized SwinUNETR for Tumor Detection"
 date: 07 Oct 2025
 author: 'Joaquin Rives Gambin, Vasumathi Neralla, David Björelind, Rui Sampaio'
-thumbnail: 'swinunetrblogthumbnail.png'
+thumbnail: 'swinunetr-amd.png'
 tags: AI/ML, HPC, Computer Vision, Optimization, PyTorch
 category: Applications & models
 target_audience: AI Scientists

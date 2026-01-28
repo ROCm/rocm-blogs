@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Step-Video-T2V Inference with xDiT on AMD Instinct  MI300X GPUs"
 date: 15 May 2025
 author: 'Wei Cai, George Wang'
-thumbnail: 'thumb.jpg'
+thumbnail: 'step-video-t2v-thumbnail.jpg'
 tags: AI/ML
 category: Applications & models
 target_audience: AI Developers and Enthusiast

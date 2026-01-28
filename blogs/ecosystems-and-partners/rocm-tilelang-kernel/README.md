@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Quickly Developing Powerful Flash Attention Using TileLang on AMD Instinct MI300X GPU"
 date: 20 Jan 2026
 author: 'Daniel Huang, George Wang'
-thumbnail: 'cover.png'
+thumbnail: 'rocm-tilelang-kernel.png'
 tags: AI/ML, Hardware
 category: Ecosystems and Partners
 target_audience: The GPU kernel developers want to author high-peformance LLM kernels for AMD GPUs

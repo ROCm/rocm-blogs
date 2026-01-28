@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "AMD ROCm: Powering the World's Fastest Supercomputers"
 date: Jun 10 2025
 author: 'Mohammed Faraaz Mustafa, Saad Rahim'
-thumbnail: 'supercomputing.png'
+thumbnail: 'rocm-revisited-power.png'
 tags: AI/ML, Scientific Computing, HPC, Performance
 category: Ecosystems and Partners
 target_audience: AI/ML Developers, System Administrators

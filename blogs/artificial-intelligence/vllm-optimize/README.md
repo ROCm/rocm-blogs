@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Enhancing vLLM Inference on AMD GPUs'
-thumbnail: '2024-10-31-inferencing-and-serving-with-vLLM-on-AMD-GPUs.jpeg'
+thumbnail: 'vllm-optimize-thumbnail.jpeg'
 date: Sep 19 2024
 author: 'Clint Greene'
 tags: AI/ML, LLM, Serving

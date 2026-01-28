@@ -3,7 +3,7 @@ blogpost: true
 blog_title: 'Analyzing the Impact of Tensor Parallelism Configurations on LLM Inference Performance'
 date: 14 March 2025
 author: Eduardo Alvarez
-thumbnail: 'image.jpg'
+thumbnail: 'tensor-parallelism-thumbnail.jpg'
 tags: LLM, AI/ML, Fine-Tuning
 category: Applications & models
 language: English

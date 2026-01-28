@@ -7,7 +7,7 @@ category: Applications & models
 blog_title: "Jacobi Solver with HIP and OpenMP offloading"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: "2025-10-20-rocm-hpc-blogs.png"
+thumbnail: "jacobi-solver-thumbnail.png"
 language: English
 myst:
     html_meta:

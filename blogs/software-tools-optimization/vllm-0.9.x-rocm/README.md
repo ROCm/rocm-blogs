@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Accelerated LLM Inference on AMD Instinct™ GPUs with vLLM 0.9.x and ROCm"
 date: 28 Jun 2025
 author: 'Hongxia Yang, Peng Sun, Tun Jian Tan, Pin Siang Tan, Anshul Gupta'
-thumbnail: 'tt.png'
+thumbnail: 'vllm-rocm-performance.png'
 tags: LLM, GenAI, Performance
 category: Software tools & optimizations
 target_audience: AI developers and Advocates

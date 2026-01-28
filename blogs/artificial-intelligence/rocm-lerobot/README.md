@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Fine-tuning Robotics Vision Language Action Models with AMD ROCm and LeRobot"
 date: 14 July 2025
 author: Abby O'Neill, Sarunas Kalade, Ken O'Brien, Graham Schelle
-thumbnail: 'images/thumbnail.png'
+thumbnail: 'rocm-lerobot-thumbnail.png'
 tags: AI/ML, Robotics
 category: Applications & models
 target_audience: Robotics developers and researchers

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "ROCm Fork of MaxText: Structure and Strategy"
 date: 06 Jan 2026
 author: 'Gulsum Gudukbay Akbulut'
-thumbnail: 'MaxtextStructureandStrategyThumb.jpeg'
+thumbnail: 'rocm-maxtext-structure.jpeg'
 tags: AI/ML, GenAI, JAX
 category: Applications & models
 target_audience: AI/ML engineers, AI/ML enthusiasts, LLM enthusiasts and developers

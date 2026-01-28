@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Matrix Core Programming on AMD CDNA™3 and CDNA™4 architecture"
 date: 30 Sep 2025
 author: 'Amanzhol Salykov, Andy Luo, Carlus Huang, Peng Sun'
-thumbnail: 'MatrixCoresCDNAThumbnail.png'
+thumbnail: 'matrix-cores-cdna.png'
 tags: AI/ML, C++, Linear Algebra, HPC, Performance, Optimization, Hardware
 category: Software tools & optimizations
 target_audience: AI/ML/HPC engineers, researchers, developers

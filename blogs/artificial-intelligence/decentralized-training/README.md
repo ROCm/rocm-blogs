@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "A Step-by-Step Walkthrough of Decentralized LLM Training on AMD GPUs"
 date: 18 Dec 2025
 author: 'Mohammad Abdul Basit, Adeem Jassani'
-thumbnail: 'thumbnail.jpg'
+thumbnail: 'decentralized-training-thumbnail.jpg'
 tags: AI/ML, GenAI, LLM
 category: Applications & models
 target_audience: developers, end users

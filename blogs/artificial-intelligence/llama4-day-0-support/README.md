@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Power Up Llama 4 with AMD Instinct: A Developer’s Day 0 Quickstart"
 date: 06 Apr 2025
 author: 'Liz Li, Seungrok Jung, Andy Luo'
-thumbnail: 'llama.jpg'
+thumbnail: 'llama4-day0-support.jpg'
 tags: AI/ML
 category: Applications & models
 target_audience: ai enthusiasts and developers

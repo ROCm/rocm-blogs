@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Enhancing AI Training with AMD ROCm Software"
 date: 31 January 2025
 author: Emad Barsoum
-thumbnail: 'Training2.jpg'
+thumbnail: 'training-rocm-pytorch.jpg'
 tags: AI/ML, GenAI, PyTorch
 category: Applications & models
 target_audience: "AI developers, AI practionners"

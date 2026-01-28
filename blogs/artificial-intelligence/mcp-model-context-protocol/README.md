@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Enabling Real-Time Context for LLMs: Model Context Protocol (MCP) on AMD GPUs"
 date: 20 Jun 2025
 author: 'Fabricio Flores'
-thumbnail: 'mcp.jpeg'
+thumbnail: 'mcp-model-context-protocol.jpeg'
 tags: AI/ML
 category: Applications & models
 target_audience: ML engineers, DevOps

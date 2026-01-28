@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "GEAK HIP: Expanding GEAK for HIP Code Optimization"
 date: 23 Dec 2025
 author: 'Ethan Yang, Chao Xu, Jianghui Wang, Bin Ding, Saptarshi Majumder, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum'
-thumbnail: 'geakhip.png'
+thumbnail: 'geak-hip-optimizations.png'
 tags: AI/ML, Optimization, Performance
 category: Software tools & optimizations
 target_audience: Internal & external developers who aim for performance gain for GPU operations.

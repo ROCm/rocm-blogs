@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "AMD Hummingbird Image to Video: A Lightweight Feedback-Driven Model for Efficient Image-to-Video Generation"
 date: 3 Aug 2025
 author: 'Takashi Isobe, Dong zhou, He Cui,Mengmeng Ge,Dong Li,Emad Barsoum'
-thumbnail: 'hummingbird.jpg'
+thumbnail: 'image-to-video-generation.jpg'
 tags: AI/ML
 category: Applications & models
 target_audience: AI DEVELOPERS AND ENTHUSIAST

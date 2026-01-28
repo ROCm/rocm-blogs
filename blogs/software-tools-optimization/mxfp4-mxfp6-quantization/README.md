@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "High-Accuracy MXFP4, MXFP6, and Mixed-Precision Models on AMD GPUs"
 date: 29 Oct 2025
 author: 'Lin Zhao, Felix Marty, Spandan Tiwari, Wei Luo, Bowen Bao, Xinjun Niu, Zhaofeng Zhang, Haoyang Li, Ke Wang, Ashish Sirasao'
-thumbnail: 'mxfp4.jpg'
+thumbnail: 'mxfp4-mxfp6-quantization.jpg'
 tags: AI/ML, LLM, Optimization
 category: Software tools & optimizations
 target_audience: developers, end users

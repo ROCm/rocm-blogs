@@ -2,7 +2,7 @@
 blogpost: true
 date: 29 Aug 2024
 blog_title: "Seismic stencil codes - part 2"
-thumbnail: "2024-10-10-seismic.jpeg"
+thumbnail: "2024-10-10-seismic-part2.jpeg"
 author: Justin Chang, Ossian O'Reilly
 tags: HPC, Memory, Performance, Profiling, Optimization, Scientific Computing
 category: Applications & models

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Prefill Decode Disaggregation on AMD Instinct MI300X SGLang"
 date: 28 Aug 2025
 author: 'Bill He,Andy Luo'
-thumbnail: 'pd.jpg'
+thumbnail: 'disaggregation-prefill-decode.jpg'
 tags: AI/ML, Optimization, Performance
 category: Software tools & optimizations
 target_audience: AI developers and Enthusiast

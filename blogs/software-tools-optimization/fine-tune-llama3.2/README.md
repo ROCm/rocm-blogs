@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Chain-of-Thought Guided Visual Reasoning Using Llama 3.2 on a Single AMD Instinct MI300X GPU"
 date: 21 Jul 2025
 author: 'Matthias Reso'
-thumbnail: 't.png'
+thumbnail: 'finetune-llama32.png'
 tags: Fine-Tuning
 category: Software tools & optimizations
 target_audience: AI Enthusiast and Developers
