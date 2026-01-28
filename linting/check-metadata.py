@@ -30,7 +30,8 @@ def parse_myst_metadata(myst_list):
 def check_metadata(files: list[str]) -> list[str]:
 
     total_missing = []
-    
+    thumbnail_names = {}  # Track thumbnail names across all files
+
     for file in files:
         print(f"Checking metadata for {file}")
 
@@ -74,7 +75,8 @@ def check_metadata(files: list[str]) -> list[str]:
         except Exception as e:
             print(f"Error reading {file}: {e}")
             blog_skip = 1
-    
+            continue
+
         # check only blogs (NOT REDUNDANT)
         if "blogpost" not in md.Meta or md.Meta["blogpost"][0].lower() != "true":
             print(f"Skipping metadata check for {file} because 'blogpost' is not true")
@@ -105,10 +107,66 @@ def check_metadata(files: list[str]) -> list[str]:
                     missing.append(field)
         
             missing_text = ", ".join(missing)
-        
+
             if len(missing) > 0:
                 result = f"{file} is missing metadata field(s): {missing_text}. Please check guide-to-blogs-metadata.md"
                 total_missing.append(result)
+
+            # Check thumbnail metadata
+            if "thumbnail" in md.Meta:
+                thumbnail_value = md.Meta["thumbnail"][0].strip().strip('"').strip("'")
+                # Skip if thumbnail is empty or too short
+                if thumbnail_value and len(thumbnail_value) > 1:
+                    # Extract just the filename from the path
+                    thumbnail_filename = os.path.basename(thumbnail_value)
+                    thumbnail_filename_lower = thumbnail_filename.lower()
+                    thumbnail_name_without_ext = os.path.splitext(thumbnail_filename_lower)[0]
+
+                    # Check if thumbnail contains directory structure (like 'images/' or 'image/')
+                    if "/" in thumbnail_value or "\\" in thumbnail_value:
+                        result = (
+                            f"{file} has a thumbnail with directory path: '{thumbnail_value}'. "
+                            f"Thumbnails should be filename only, not include paths like 'images/'. "
+                            f"Place the image in the blog's images/ folder or central blogs/images/ folder."
+                        )
+                        total_missing.append(result)
+
+                    # Check for obviously generic patterns
+                    generic_patterns = [
+                        r'^thumbnail$',           # Just "thumbnail"
+                        r'^\d+$',                 # Just a number like "1"
+                        r'^image\d*$',            # "image" or "image1"
+                        r'^thumb\d*$',            # "thumb" or "thumb1"
+                        r'^img\d*$',              # "img" or "img1"
+                        r'^pic\d*$',              # "pic" or "pic1"
+                        r'^[a-z]$',               # Single letter
+                        r'^[a-z][a-z0-9]*$',      # Single letter followed by numbers
+                        r'^[a-z][a-z0-9]*\d*$',   # Single letter followed by numbers and then optional numbers
+                        r'^[a-z][a-z0-9]*\d*\d*$',   # Single letter followed by numbers and then optional numbers
+                        r'^[a-z][a-z0-9]*\d*\d*\d*$',   # Single letter followed by numbers and then optional numbers
+                        r'^[a-z]{,10}$', # Less than 10 characters
+                    ]
+                    is_generic_pattern = any(re.match(p, thumbnail_name_without_ext) for p in generic_patterns)
+
+                    if is_generic_pattern:
+                        result = (
+                            f"{file} has a non-descriptive thumbnail name: '{thumbnail_value}'. "
+                            f"Please use a name that relates to your blog content. "
+                            f"For example, if your blog is 'Introducing AMD EVLM: Efficient Vision-Language Models', "
+                            f"your thumbnail should be something like 'amd-evlm-blog.jpg'."
+                        )
+                        total_missing.append(result)
+
+                    # Check for duplicate thumbnail names across blogs
+                    if thumbnail_filename_lower in thumbnail_names:
+                        result = (
+                            f"{file} uses the same thumbnail name as {thumbnail_names[thumbnail_filename_lower]}: '{thumbnail_filename}'. "
+                            f"Each blog should have a unique thumbnail name. "
+                            f"Please rename to something that relates to your blog content."
+                        )
+                        total_missing.append(result)
+                    else:
+                        thumbnail_names[thumbnail_filename_lower] = file
 
     return total_missing
 
@@ -155,13 +213,16 @@ def test():
     print(f"Found {len(readme_files)} 'README.md' file(s).")
 
     error_flag = 0
-    for file in readme_files:
-        if check_metadata(file) == 1:
-            error_flag = 1
+    errors = check_metadata(readme_files)
+
+    if errors:
+        error_flag = 1
+        for error in errors:
+            print(error)
 
     if error_flag:
         exit(1)
 
 
 if __name__ == "__main__":
-    main()
+    test()

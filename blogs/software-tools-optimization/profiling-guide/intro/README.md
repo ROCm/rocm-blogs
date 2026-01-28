@@ -3,7 +3,7 @@ blogpost: true
 date: 26 June 2025
 blog_title: "Performance Profiling on AMD GPUs – Part 1: Foundations"
 author: 'Gina Sitaraman, Thomas Gibson, Luka Stanisic, Giacomo Capodaglio, Alessandro Fanfarillo, Asitav Mishra'
-thumbnail: '2025-06-25-profiling-guide.png'
+thumbnail: 'profiling-guide-intro-thumbnail.png'
 tags: HPC, Performance, Optimization, Profiling
 category: "Software tools & optimizations"
 key_value_propositions: ""

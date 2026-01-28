@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Týr-the-Pruner: Search-based Global Structural Pruning for LLMs"
 date: 03 Dec 2025
 author: 'Guanchen Li, Yixing Xu, Zeping Li, Ji Liu, Xuanwu Yin, Dong Li, Emad Barsoum'
-thumbnail: 'AI-generated.png'
+thumbnail: 'tyr-pruner-thumbnail.png'
 tags: AI/ML
 category: Applications & models
 target_audience: Engineers and researchers working on large model optimization on ROCm/PyTorch; readers concerned with structured sparsity, model compression, and end-to-end performance effectiveness.

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Shrink LLMs, Boost Inference: INT4 Quantization on AMD GPUs with GPTQModel"
 date: 9 April 2025
 author: 'Fabricio Flores'
-thumbnail: 'quantization.png'
+thumbnail: 'gptq-quantization.png'
 tags: GenAI, AI/ML, Performance, Optimization
 category: Applications & models
 target_audience: AI developers, AI practitioners

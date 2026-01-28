@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Primus: A Lightweight, Unified Training Framework for Large Models on AMD GPUs"
 date: 22 Aug 2025
 author: 'Wen Xie ,Yao Fu, Xiaoming Peng, Xiaobo Chen, Liz Li, Vidushi Goyal, Anshul Gupta'
-thumbnail: 'primus.jpg'
+thumbnail: 'primus-inference.jpg'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: AI ENTHUSIAST AND DEVELOPERS

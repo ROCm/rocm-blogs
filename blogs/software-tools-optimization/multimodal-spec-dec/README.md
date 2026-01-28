@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Beyond Text: Accelerating Multimodal AI Inference with Speculative Decoding on AMD Instinct™ MI300X GPUs"
 date: 28 Apr 2025
 author: 'Mohammad Mahdi Kamani, Parsa Fashi, Vikram Appia, Emad Barsoum'
-thumbnail: 'thumb.jpg'
+thumbnail: 'multimodal-spec-dec-thumbnail.jpg'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: AI Developers and Enthusiast

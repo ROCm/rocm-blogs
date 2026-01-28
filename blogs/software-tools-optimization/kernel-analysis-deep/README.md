@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Optimizing DeepseekV3 Inference on SGLang Using ROCm Profiling Tools"
 date: 1 May 2025
 author: 'Liz Li, Shekhar Pandey, Seungrok Jung, Andy Luo'
-thumbnail: 'Whale.jpg'
+thumbnail: 'kernel-analysis-deepseek.jpg'
 tags: Optimization
 category: Software tools & optimizations
 target_audience: AI Developers and Enthusiasts

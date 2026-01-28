@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Modernizing Taichi Lang to LLVM 20 for MI355X GPU Acceleration"
 date: 04 Dec 2025
 author: 'Tiffany Mintz, Yao Liu, Phani Vaddadi, Vish Vadlamani'
-thumbnail: 'taichi_blog_thumbnail.png'
+thumbnail: 'taichi-mi300x-thumbnail.png'
 tags: AI/ML, Scientific Computing
 category: Applications & models
 target_audience: The target audience is AI developers interested in AMD GPU kernel offload

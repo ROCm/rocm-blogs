@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Power Up Qwen 3 with AMD Instinct: A Developer’s Day 0 Quickstart"
 date: 28 Apr 2025
 author: 'Andy Luo, Bill He, Seungrok Jung, Mahdi Ghodsi'
-thumbnail: 'qwen.jpg'
+thumbnail: 'qwen3-day0-amd.jpg'
 tags: AI/ML
 category: Applications & models
 target_audience: AI

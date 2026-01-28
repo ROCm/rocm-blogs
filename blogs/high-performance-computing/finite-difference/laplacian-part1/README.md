@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Finite difference method - Laplacian part 1"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: "2025-10-20-rocm-hpc-blogs.png"
+thumbnail: "laplacian-part1-thumbnail.png"
 date: 14 Nov 2022
 author: Justin Chang, Rajat Arora, Thomas Gibson, Sean Miller, Ossian O'Reilly
 tags: HPC, Memory, Performance, Profiling, Scientific Computing

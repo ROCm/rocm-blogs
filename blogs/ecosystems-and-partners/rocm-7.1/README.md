@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Continuing the Momentum: Refining ROCm for the Next Wave of AI and HPC"
 date: 5 Nov 2025
 author: 'Anshul Gupta, Liam Berry, Saad Rahim'
-thumbnail: 'blog7.jpg'
+thumbnail: 'rocm-7-1-release.jpg'
 tags: AI/ML
 category: Ecosystems and Partners
 target_audience: AI DEVELOPERS AND ENTHUSIAST

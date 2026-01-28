@@ -8,7 +8,7 @@ language: English
 blog_title: 'Finite difference method - Laplacian part 3'
 key_value_propositions: ""
 target_audience: ""
-thumbnail: "2025-10-20-rocm-hpc-blogs.png"
+thumbnail: "laplacian-part3-thumbnail.png"
 myst:
     html_meta:
         "description lang=en": "Finite difference method - Laplacian Part 3"

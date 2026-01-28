@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "GEAK: Introducing Triton Kernel AI Agent & Evaluation Benchmark"
 date: 01 Aug 2025
 author: 'Jianghui Wang, Vinay Joshi, Saptarshi Majumder, Chao Xu, Bin Ding, Ziqiong Liu, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum'
-thumbnail: '1.png'
+thumbnail: 'triton-kernel-ai-thumbnail.png'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: AI developers and Enthusiast

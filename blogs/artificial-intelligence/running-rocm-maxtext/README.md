@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Running ROCm/MaxText Unit Tests (Decoupled and GCloud-Dependent)"
 date: 06 Jan 2026
 author: 'Gulsum Gudukbay Akbulut'
-thumbnail: 'RunningRocmMaxTextUnitTestsThumb.jpeg'
+thumbnail: 'rocm-maxtext-unittests.jpeg'
 tags: AI/ML, GenAI, JAX
 category: Applications & models
 target_audience: AI/ML engineers, AI/ML enthusiasts, LLM enthusiasts and developers

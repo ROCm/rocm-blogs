@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Instella-T2I: Open-Source Text-to-Image with 1D Tokenizer and 32× Token Reduction on AMD GPUs"
 date: 15 Jul 2025
 author: 'Ze Wang, Hao Chen, Benran Hu, Jiang Liu, Ximeng Sun, Jialian Wu, Xiaodong Yu, Yusheng Su, Zicheng Liu, Emad Barsoum'
-thumbnail: 'Figure1.jpg'
+thumbnail: 'instella-text-to-image.jpg'
 tags: AI/ML
 category: Applications & models
 target_audience: AI enthusiast and developers

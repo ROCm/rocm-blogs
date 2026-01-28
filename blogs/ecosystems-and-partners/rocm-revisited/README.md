@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "The ROCm Revisited Series"
 date: 6 Jun 2025
 author: 'Mohammed Faraaz Mustafa, Liam Berry, Saad Rahim'
-thumbnail: 'navigationblog.png'
+thumbnail: 'rocm-revisited-navigation.png'
 tags: Performance, HPC, AI/ML, Optimization
 category: Ecosystems and Partners
 target_audience: AI/HPC Developers, System Administrators

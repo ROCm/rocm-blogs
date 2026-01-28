@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Speculative Decoding - Deep Dive"
 date: 24 Mar 2025
 author: 'Chang Liu'
-thumbnail: 'cover.png'
+thumbnail: 'speculative-decoding-deep-dive.png'
 tags: GenAI, AI/ML, LLM
 category: Software tools & optimizations
 target_audience: AI developers, AI enthusiasts

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: 'Vision Mamba on AMD GPU with ROCm'
 date: 24 January 2025
 author: Sean Song
-thumbnail: 'chip.jpeg'
+thumbnail: 'vision-mamba-amd.jpeg'
 tags: AI/ML, GenAI, Computer Vision, PyTorch
 category: Applications & models
 language: English

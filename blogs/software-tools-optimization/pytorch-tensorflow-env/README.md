@@ -8,7 +8,7 @@ language: English
 blog_title: "Creating a PyTorch/TensorFlow code environment on AMD GPUs"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: "2025-10-20-rocm-hpc-blogs.png"
+thumbnail: "pytorch-tensorflow-env-thumbnail.png"
 myst:
     html_meta:
         "description lang=en": "Creating a PyTorch TensorFlow environment on AMD GPUs"

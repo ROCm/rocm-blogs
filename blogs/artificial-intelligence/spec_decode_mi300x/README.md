@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Accelerating LLM Inference: Up to 3x Speedup on MI300X with Speculative Decoding"
 date: 27 March 2025
-thumbnail: "thumbnail2.png"
+thumbnail: 'speculative-decoding-mi300x.png'
 author: Sonali Singh, Karthik Sangaiah, Shenrun Zhang, Ryan Swann, Ganesh Dasika
 tags: AI/ML, LLM, GenAI
 category: Applications & models

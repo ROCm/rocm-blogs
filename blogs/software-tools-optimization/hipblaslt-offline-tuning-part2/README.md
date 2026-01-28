@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "GEMM Tuning within hipBLASLt- Part 2"
 date: 09 Oct 2025
 author: 'Chia Hung, YangWen Huang, Carson Liao'
-thumbnail: 'image/thumbnail.png'
+thumbnail: 'hipblaslt-tuning-part2-thumbnail.png'
 tags: AI/ML, Developers
 category: Software tools & optimizations
 target_audience: ai enthusiasts and ai developers

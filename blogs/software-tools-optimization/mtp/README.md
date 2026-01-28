@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Efficient LLM Serving with MTP: DeepSeek V3 and SGLang on AMD Instinct GPUs"
 date: 11 Sep 2025
 author: 'Chang Liu, Andy Luo, Anshul Gupta'
-thumbnail: 'SGLang.png'
+thumbnail: 'mtp-sglang-tokengen.png'
 tags: AI/ML, Performance, Serving
 category: Software tools & optimizations
 target_audience: AI developers and Enthusiast

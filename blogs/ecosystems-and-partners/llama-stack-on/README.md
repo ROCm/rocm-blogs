@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "A step-by-step guide on how to deploy Llama Stack on AMD Instinct™ GPU"
 date: 22 Apr 2025
 author: 'Alex He'
-thumbnail: '3.jpg'
+thumbnail: 'llama-stack-amd.jpg'
 tags: AI/ML
 category: Ecosystems and Partners
 target_audience: AI enthusiast and developers

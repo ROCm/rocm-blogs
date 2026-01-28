@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "ROCm Gets Modular: Meet the Instinct Datacenter GPU Driver"
 date: 11 Apr 2025
 author: 'Saad Rahim, Danny Guan'
-thumbnail: 'divergence.png'
+thumbnail: 'instinct-gpu-driver.png'
 tags: Installation
 category: Ecosystems and Partners
 target_audience: All Instinct GPU customers are the target audience.

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Reinforcement Learning from Human Feedback on AMD GPUs with verl and ROCm Integration"
 date: 24 Apr 2025
 author: 'Yusheng Su, Vicky Tsang, Yao Liu, Phani Vaddadi, Vish Vadlamani, Zicheng Liu'
-thumbnail: 'verl.jpg'
+thumbnail: 'verl-large-scale-rl.jpg'
 tags: Fine-Tuning, Reinforcement Learning, AI/ML
 category: Applications & models
 target_audience: AI DEVELOPERS AND ENTHUSIAST

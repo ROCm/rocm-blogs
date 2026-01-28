@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Avoiding LDS Bank Conflicts on AMD GPUs with CK-Tile"
 date: 25 Jul 2025
 author: "Haocong Wang, Clement Lin, Menghsuan Yang, Yuchen Lin, Bobo Fang, Chunhung Wang, David Li, George Wang, Anshul Gupta"
-thumbnail: '12.png'
+thumbnail: 'lds-bank-conflict.png'
 tags: Optimization
 category: Software tools & optimizations
 target_audience: ai developers and enthusiast

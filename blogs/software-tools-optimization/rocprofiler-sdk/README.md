@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Introducing ROCprofiler SDK - The Latest Toolkit for Performance Profiling."
 date: 25 Mar 2025
 author: "Jayacharan Kolla, Ammar Elwazir, Gina Sitaraman"
-thumbnail: "profiler.png"
+thumbnail: 'rocprofiler-sdk-thumbnail.png'
 tags: Profiling, Performance, AI/ML, System-Tuning, HPC
 category: Software tools & optimizations
 target_audience: "AI/ML and HPC Developers"

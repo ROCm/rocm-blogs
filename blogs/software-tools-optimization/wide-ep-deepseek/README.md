@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Practical, Fault‑Robust Distributed Inference for DeepSeek on AMD MI300X"
 date: 12 Nov 2025
 author: 'Peng Sun, Andy Luo, Gilbert Lei, Lingpeng Jin, Carlus Huang, Duyi Wang, Mingzhi Liu, Di Tian, Bill He, Jun Chen, Yutong Wu, Jiahao Zhou, Niko Ma'
-thumbnail: 'thumbnail.png'
+thumbnail: 'wide-ep-deepseek-thumbnail.png'
 tags: AI/ML, Performance, Optimization, Serving
 category: Software tools & optimizations
 target_audience: AI infra engineer, ML Engineers, Performance engineers, AI developers

@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Benchmarking Reasoning Models: From Tokens to Answers"
 date: 24 July 2025
 author: 'Dominic Widdows'
-thumbnail: 'benchmark_reasoning.png'
+thumbnail: 'benchmark_reasoning.jpg'
 tags: AI/ML, Performance, Serving, GenAI, Reasoning, Benchmarking, Thinking Mode
 category: Applications & models
 target_audience: AI practitioners

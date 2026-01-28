@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Vibe Coding Pac-Man Inspired Game Generation with DeepSeek-R1 and AMD Instinct MI300X"
 date: 17 Jul 2025
 author: 'Charles Yang, Mahdi Ghodsi, George Wang'
-thumbnail: 'pac.jpg'
+thumbnail: 'vibe-coding-agentic.jpg'
 tags: AI/ML, GenAI, LLM
 category: Applications & models
 target_audience: AI Developers

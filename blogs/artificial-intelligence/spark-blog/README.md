@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "SparK: Query-Aware Unstructured Sparsity with Recoverable KV Cache Channel Pruning"
 date: 02 Jan 2026
 author: 'Huanxuan Liao, Yixing Xu, Shizhu He, Guanchen Li, Xuanwu Yin, Dong Li, Emad Barsoum, Jun Zhao, Kang Liu'
-thumbnail: 'AI-generated.png'
+thumbnail: 'spark-blog-thumbnail.png'
 tags: AI/ML
 category: Applications & models
 target_audience: Engineers and researchers working on large model optimization on ROCm/PyTorch; readers concerned with KV cache pruning and end-to-end performance effectiveness.

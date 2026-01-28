@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Hands-On with CK-Tile: Develop and Run Optimized GEMM on AMD GPUs"
 date: 15 Apr 2025
 author: 'David Li, George Wang'
-thumbnail: '2.jpg'
+thumbnail: 'ck-tile-gemm-kernels.jpg'
 tags: Fine-Tuning
 category: Software tools & optimizations
 target_audience: AI Developers and enthusiast

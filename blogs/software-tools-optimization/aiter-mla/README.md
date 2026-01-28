@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "AITER Enabled MLA layer Inference on AMD Instinct MI300X GPUs"
 date: 25 Aug 2025
 author: 'Daniel Huang, George Wang'
-thumbnail: 'aiter.jpg'
+thumbnail: 'aiter-mla-attention.jpg'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: ai enthusiast and developers

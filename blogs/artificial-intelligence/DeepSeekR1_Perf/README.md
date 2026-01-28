@@ -3,7 +3,7 @@ blogpost: true
 blog_title: 'Unlock DeepSeek-R1 Inference Performance on AMD Instinct™ MI300X GPUs'
 date: 21 Feb 2025
 author: Andy Luo
-thumbnail: 'whale.jpg'
+thumbnail: 'deepseek-r1-performance.jpg'
 tags: LLM, AI/ML, Fine-Tuning
 category: Applications & models
 language: English

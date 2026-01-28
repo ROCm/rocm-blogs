@@ -7,7 +7,7 @@ category: Software tools & optimizations
 blog_title: "Affinity part 2 - System topology and controlling affinity"
 key_value_propositions: ""
 target_audience: ""
-thumbnail: "2025-10-20-rocm-hpc-blogs.png"
+thumbnail: "affinity-part2-thumbnail.png"
 language: English
 myst:
     html_meta:

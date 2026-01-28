@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'CTranslate2: Efficient Inference with Transformer Models on AMD GPUs'
-thumbnail: 'nlp.jpg'
+thumbnail: 'ctranslate2-inference.jpg'
 date: 24 October 2024
 author: Michael Zhang
 tags: AI/ML, GenAI, LLM, PyTorch 

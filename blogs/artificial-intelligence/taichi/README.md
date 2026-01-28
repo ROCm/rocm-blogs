@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Accelerating Parallel Programming in Python with Taichi Lang on AMD GPUs"
 date: 31 Jul 2025
 author: 'Tiffany Mintz, Yao Liu, Phani Vaddadi, Vish Vadlamani'
-thumbnail: 'taichi_blog_thumbnail.png'
+thumbnail: 'taichi-thumbnail.png'
 tags: AI/ML, Scientific Computing
 category: Applications & models
 target_audience: The target audience is AI developers interested in AMD GPU kernel offload

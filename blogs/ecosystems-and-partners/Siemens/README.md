@@ -3,7 +3,7 @@ blogpost: true
 date: 16 May 2024
 tags: Partner Applications, Data Science
 blog_title: 'Siemens taps AMD Instinct™ GPUs to expand high-performance hardware options for Simcenter STAR-CCM+'
-thumbnail: 'siemens.jpg'
+thumbnail: 'siemens-partnership.jpg'
 category: Ecosystems and Partners
 language: English
 target_audience: "Scientific computing application users"

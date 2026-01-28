@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "MoE Training Best Practices on AMD GPUs"
 date: 16 Dec 2025
 author: 'Wen Xie, Xiaoming Peng, Xiaobo Chen, Lihuan Zhang, Liying Li, Ruibin Zhang, Cheng Yao, Kyle Zhao, Zhen Huang, Yuankai Chen, Yanyuan Qin, Mou Li, Chaojun Hou, Yao Fu, Liz Li, Andy Luo, Zhenyu Gu'
-thumbnail: 'images/primus-moe-package-blog-thumbnail.jpg'
+thumbnail: 'primus-moe-package-blog-thumbnail.jpg'
 tags: AI/ML, Performance, Optimization
 category: Software tools & optimizations
 target_audience: AI Training Developers

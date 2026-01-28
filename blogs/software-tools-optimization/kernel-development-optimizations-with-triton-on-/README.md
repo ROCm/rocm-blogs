@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Unlock Peak Performance on AMD GPUs with Triton Kernel Optimizations"
 date: 10 Apr 2025
 author: 'Ning Zhang, George Wang'
-thumbnail: '1.jpg'
+thumbnail: 'triton-kernel-development.jpg'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: AI Enthusiast and Developers

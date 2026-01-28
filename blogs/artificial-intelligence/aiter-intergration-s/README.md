@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Accelerate DeepSeek-R1 Inference: Integrate AITER into SGLang"
 date: 16 May 2025
 author: 'Bruce Xue, George Wang'
-thumbnail: 'Thumbn.jpg'
+thumbnail: 'aiter-integration-sglang.jpg'
 tags: Optimization
 category: Applications & models
 target_audience: AI enthusiast and developers

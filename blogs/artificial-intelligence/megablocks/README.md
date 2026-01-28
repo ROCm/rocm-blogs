@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: 'Efficient MoE training on AMD ROCm: How-to use MegaBlocks on AMD GPUs'
-thumbnail: 'megablocks.jpeg'
+thumbnail: 'megablocks-moe.jpeg'
 date: 23 March 2025
 author: Fabricio Flores, Rishi Madduri, Yao Liu, Phani Vaddadi, Vish Vadlamani
 tags: PyTorch, AI/ML, LLM

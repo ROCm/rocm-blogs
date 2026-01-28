@@ -8,7 +8,7 @@ category: Applications & models
 key_value_propositions: ""
 target_audience: ""
 language: English
-thumbnail: 'image.jpg'
+thumbnail: 'llama-qlora-thumbnail.jpg'
 myst:
     html_meta:
         "description lang=en": "This blog demonstrate how to use QLora to efficiently fine-tune Llama model on a single AMD GPU with ROCm."

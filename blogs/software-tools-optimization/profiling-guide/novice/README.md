@@ -3,7 +3,7 @@ blogpost: true
 date: 13 August 2025
 blog_title: "AMD GPU profiling guide - Basic Usage"
 author: 'Gina Sitaraman, Thomas Gibson, Luka Stanisic, Giacomo Capodaglio, Alessandro Fanfarillo, Asitav Mishra'
-thumbnail: '2025-06-25-profiling-guide.png'
+thumbnail: 'profiling-guide-novice-thumbnail.png'
 tags: HPC, Performance, Optimization, Profiling
 category: "Software tools & optimizations"
 key_value_propositions: ""

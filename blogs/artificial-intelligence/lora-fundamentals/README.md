@@ -8,7 +8,7 @@ category: Applications & models
 key_value_propositions: ""
 target_audience: ""
 language: English
-thumbnail: 'image.jpg'
+thumbnail: 'lora-fundamentals-thumbnail.jpg'
 myst:
     html_meta:
         "description lang=en": "This blog demonstrate how to use Lora to efficiently fine-tune Llama model on AMD GPUs with ROCm."

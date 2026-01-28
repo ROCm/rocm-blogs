@@ -25,12 +25,31 @@ jobs:
           files: |
             **/*.md
 
-      - name: Run markdownlint
+      - name: Check number of changed files
+        id: check-count
         if: steps.changed-md.outputs.any_changed == 'true'
+        run: |
+          COUNT=$(echo "${{ steps.changed-md.outputs.all_changed_files }}" | wc -w)
+          echo "count=$COUNT" >> $GITHUB_OUTPUT
+          if [ "$COUNT" -gt 50 ]; then
+            echo "too_many=true" >> $GITHUB_OUTPUT
+          else
+            echo "too_many=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run markdownlint on changed files
+        if: steps.changed-md.outputs.any_changed == 'true' && steps.check-count.outputs.too_many == 'false'
         uses: DavidAnson/markdownlint-cli2-action@v10.0.1
         with:
           config: .markdownlint.yaml
           globs: ${{ steps.changed-md.outputs.all_changed_files }}
+
+      - name: Run markdownlint on all blog files (many changes)
+        if: steps.changed-md.outputs.any_changed == 'true' && steps.check-count.outputs.too_many == 'true'
+        uses: DavidAnson/markdownlint-cli2-action@v10.0.1
+        with:
+          config: .markdownlint.yaml
+          globs: "blogs/**/*.md"
 
   spelling:
     name: Spelling Check
