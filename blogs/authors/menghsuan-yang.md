@@ -1,5 +1,5 @@
 ---
-thumbnail: Menghsuan-yang.jpg
+thumbnail: Menghsuan-Yang.jpg
 ---
 
 <head>
