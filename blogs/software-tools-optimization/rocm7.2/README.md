@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "ROCm 7.2: Smarter, Faster, and More Scalable for Modern AI Workloads"
-date: 30 Jan 2026
+date: 22 Jan 2026
 author: 'Anshul Gupta'
 thumbnail: 'rocm72-thumbnail.jpg'
 tags: AI/ML, GenAI, HPC

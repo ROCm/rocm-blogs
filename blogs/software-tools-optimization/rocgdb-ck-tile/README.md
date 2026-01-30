@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Debugging NaN Results in CK Tile GEMM: A rocgdb Detective Story"
-date: 08 Dec 2025
+date: 30 January 2026
 author: 'Menghsuan Yang, Clement Lin, Bobo Fang, Yuchen Lin, Chunhung Wang'
 thumbnail: 'rocgdb-ck-tile-thumbnail.png'
 tags: AI
