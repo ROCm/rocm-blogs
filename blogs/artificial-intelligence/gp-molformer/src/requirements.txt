@@ -1,0 +1,9 @@
+accelerate == 0.26.1
+datasets == 2.20.0
+networkx == 3.1
+numpy == 1.24.3
+pandas == 2.2.3
+peft == 0.10.0
+scikit-learn == 1.5.1
+transformers == 4.32.1
+rdkit == 2022.3.3
