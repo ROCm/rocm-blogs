@@ -1,0 +1,24 @@
+diff --git a/scripts/pairtune_training.py b/scripts/pairtune_training.py
+index f6bbf88..0579002 100644
+--- a/scripts/pairtune_training.py
++++ b/scripts/pairtune_training.py
+@@ -105,9 +105,17 @@ class CustomTrainer(Trainer):
+ 
+     def prediction_step(self, model, inputs, prediction_loss_only, ignore_keys=None):
+         inputs = self._prepare_inputs(inputs)
+-        max_new_tokens = model.base_model.molformer.config.max_position_embeddings - 2  # 200
++
++        if hasattr(model, "module"):
++            real = model.module
++        else:
++            real = model
++
++        cfg = real.base_model.molformer.config
++        max_new_tokens = cfg.max_position_embeddings - 2  # 200
++
+         try:
+-            logits = model.generate(
++            logits = real.generate(
+                 **inputs,
+                 do_sample=True,
+                 top_k=None,
