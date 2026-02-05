@@ -161,17 +161,17 @@ docker run -d -it --ipc=host --network=host --privileged \
 Please navigate to the directory where you can save the downloaded model weights. In our case, it’s the directory “/models“. Use the commands below:
 
 ```bash
-# Download DeepSeek V3 weight
+# Download DeepSeek R1 weight
 huggingface-cli download --resume-download \
     --local-dir-use-symlinks False \
-    deepseek-ai/DeepSeek-V3 \
-    --local-dir DeepSeek-V3
+    deepseek-ai/DeepSeek-R1 \
+    --local-dir DeepSeek-R1
 
 # Download NextN (MTP) weight
 huggingface-cli download --resume-download \
     --local-dir-use-symlinks False \
-    lmsys/DeepSeek-V3-NextN \
-    --local-dir DeepSeek-V3-NextN
+    lmsys/DeepSeek-R1-NextN \
+    --local-dir DeepSeek-R1-NextN
 ```
 
 ### Launch the Server
