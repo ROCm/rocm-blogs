@@ -42,6 +42,8 @@ Ben
 Sander
 Bill
 He
+Bill
+Ku
 Bin
 Ding
 Bob
@@ -50,6 +52,8 @@ Bobo
 Fang
 Bowen
 Bao
+Brian
+Chang
 Brian
 Cornille
 Bruce
@@ -132,6 +136,8 @@ Ethan
 Yang
 Evan
 Masters
+Eveline
+Chen
 Fabricio
 Flores
 Fan
@@ -234,6 +240,8 @@ Justin
 Chu
 Kailash
 Gogineni
+Kaiping
+Lu
 Karthik
 Thatipamula
 Ke
@@ -330,6 +338,8 @@ Muhammad
 Osama
 Mukhil
 Sathiaseelan
+Nhat
+Vo
 Nicholas
 Curtis
 Nicholas
@@ -408,6 +418,8 @@ Saptarshi
 Majumder
 Saroosh
 Shabbir
+Sarthak
+Tandon
 Sarunas
 Kalade
 Sean
