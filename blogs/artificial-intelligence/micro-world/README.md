@@ -498,7 +498,7 @@ In future work, we plan to extend Micro-World toward generating longer action-co
 
 **Huggingface Dataset Cards:**
 
-- [amd/Micro-World-MC-Dataset](https://huggingface.co/datasets/amd/Micro-World-MC-Dataset) (Coming soon)
+- [amd/Micro-World-MC-Dataset](https://huggingface.co/datasets/amd/Micro-World-MC-Dataset)
 
 **Code:**
 
