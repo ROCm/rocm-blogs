@@ -129,6 +129,8 @@ cuRAND
 CUs
 cuSOLVER
 cuSPARSE
+cvml
+CVML
 CVMLSDK
 CVMLSDK's
 Dask
@@ -158,6 +160,7 @@ devicelibs
 DGEMM
 dimensionality
 disambiguates
+discoverable
 distinctAttribute
 DKMS
 DL
@@ -354,6 +357,7 @@ LLVM
 LM
 logits
 LoRA
+loopback
 lossy
 LSAN
 LTS
@@ -536,6 +540,8 @@ RHEL
 Rickle
 RNE
 roadmap
+roboticist
+roboticists
 ROC
 roc
 rocAL
@@ -564,6 +570,7 @@ rocThrust
 ROCTracer
 rocWMMA
 ROI
+ROS
 RST
 runtime
 runtimes
@@ -621,6 +628,7 @@ strided
 Strix
 STX
 stxb
+subcommand
 subdirectory
 subexpression
 subfolder
@@ -733,6 +741,7 @@ Writebacks
 wrreq
 WX
 xargs
+XDNA
 XCD
 XCDs
 Xeon
