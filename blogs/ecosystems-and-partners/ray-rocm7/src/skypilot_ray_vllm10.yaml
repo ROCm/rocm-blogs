@@ -1,0 +1,116 @@
+service:
+  # Specifying the path to the endpoint to check the readiness of the service.
+  readiness_probe:
+    path: /v1/models
+    initial_delay_seconds: 1200
+    timeout_seconds: 1200
+  ports: 8000
+  replica_policy:
+    min_replicas: 1
+    max_replicas: 2
+    target_qps_per_replica: 0.05
+    upscale_delay_seconds: 2
+
+resources:
+  cloud: kubernetes
+  image_id: rocm/vllm:rocm7.0.0_vllm_0.11.2_20251210
+  accelerators: MI300:1 # One GPU per node
+  cpus: 8+
+  memory: 128+
+  ports: 
+    - 6379
+    - 6380
+    - 8265
+    - 8266
+    - 8000
+
+envs:
+  HUGGINGFACE_HUB_CACHE: /workspace
+  VLLM_V1_USE_PREFILL_DECODE_ATTENTION: 1
+  MODEL_NAME: Qwen/Qwen2.5-0.5B-Instruct
+  RAY_SERVE_HTTP_HOST: "0.0.0.0"
+  RAY_SERVE_HTTP_PORT: "8000"
+secrets:
+  HF_TOKEN: null # pass with '--secret HF_TOKEN'
+
+setup: |
+  echo "AMD ROCm Ray + vLLM INFERENCE on SkyPilot"
+  mkdir -p /workspace
+  cd /workspace
+
+  # Install prerequisites
+  pip install --upgrade pip
+  pip install ray[serve]==2.52.1
+  pip install locust --ignore-installed blinker
+
+  # Install compatible vLLM v0.10.2 from source.
+  # For more details see Step 6 in https://docs.vllm.ai/en/latest/getting_started/installation/gpu/#unsupported-os-build
+  ######################################################################################################################
+  pip uninstall -y vllm
+  git clone https://www.github.com/vllm-project/vllm.git -b v0.10.2
+
+  # Build & install AMD SMI
+  pip install /opt/rocm/share/amd_smi
+
+  # Install dependencies
+  pip install --upgrade numba \
+      scipy \
+      huggingface-hub[cli,hf_transfer] \
+      setuptools_scm
+  cd vllm
+  pip install -r requirements/rocm.txt
+
+  # To build for a single architecture (e.g., MI300) for faster installation (recommended):
+  export PYTORCH_ROCM_ARCH="gfx942"
+
+  # To build vLLM for multiple arch MI210/MI250/MI300, use this instead
+  # export PYTORCH_ROCM_ARCH="gfx90a;gfx942"
+
+  python3 setup.py develop
+  ######################################################################################################################
+
+  # Write the vllm application to a file on the cluster
+  cd /workspace
+  cat > vllm_serve.py <<-'EOF'
+  from ray import serve
+  from ray.serve.llm import LLMConfig, build_openai_app
+
+  llm_config = LLMConfig(
+      model_loading_config={
+          "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+          "model_source": "Qwen/Qwen2.5-0.5B-Instruct",
+      }, 
+      deployment_config={
+          "autoscaling_config": None, # SkyPilot handles this, not Ray internal autoscaler
+          "max_ongoing_requests": 1,
+          "num_replicas": 1, # 1 replica per SkyPilot node
+      },
+
+      engine_kwargs={
+          "tensor_parallel_size": 1,
+      },
+      runtime_env={"env_vars": {"VLLM_USE_V1": "1"}},
+  )
+
+  app = build_openai_app({"llm_configs": [llm_config]})
+  EOF
+
+  # Setup Ray serve deploy config
+  cat > serve_config.yaml <<-'EOF'
+  http_options:
+    host: "0.0.0.0"
+    port: 8000
+
+  applications:
+    - name: vllm_app
+      route_prefix: /
+      import_path: vllm_serve:app
+  EOF
+
+run: |
+  cd /workspace
+  # Setup Ray Head node
+  ray start --head --port=6379 --dashboard-host=0.0.0.0 --dashboard-port=8265
+  sleep 30
+  # Run the ray deployment
+  serve deploy /workspace/serve_config.yaml
