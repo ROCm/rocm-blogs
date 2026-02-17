@@ -124,7 +124,7 @@ Detailed analysis of the effect of rotations per-layer and on OCP MX groups of 3
 
 ## Combining rotations with SmoothQuant input channel scaling
 
-[SmoothQuant](https://arxiv.org/abs/2211.10438) channel rescaling is a common technique to improve layer quantization by redistributing weights and activations through a diagonal transform $D$, such that $y = x @ D @ D^{-1} @ W^T = (x @ D) @ (W D^{-1})^T$.
+[SmoothQuant](https://arxiv.org/abs/2211.10438) channel rescaling is a common technique to improve layer quantization by redistributing weights and activations through a diagonal transform $D$, such that $y = x \times D \times D^{-1} \times W^T = (x \times D) \times (W D^{-1})^T$.
 
 **SmoothQuant scaling can be combined with online rotation** as a single transform $O = DR$. Thus, in a linear layer, we get:
 
