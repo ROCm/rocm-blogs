@@ -14,6 +14,7 @@ myst:
         "description lang=en": "GPU Unleashed: Training Reinforcement Learning Agents with Stable Baselines3 on an AMD GPU in Gymnasium Environment"
         "keywords": "Reinforcement Learning, Stable Baselines3, Deep Reinforcement Learning, Gymnasium, DQN, Deep Q-Network, CarRacing, AMD, GPU, MI300, MI250, ROCm"
         "property=og:locale": "en_US"
+        "vertical": "AI, Robotics"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"

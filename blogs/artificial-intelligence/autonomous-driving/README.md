@@ -14,7 +14,7 @@ myst:
         "author": "Fuwei Yang, Mingjie Lu, Bin Ding, Fan Wang, Treemann Zheng, Zhaodong Bing, Dong Li, Emad Barsoum"
         "description lang=en": "Learn how to deploy AMD GPUs for high-performance autonomous driving related model training with ROCm optimization."
         "keywords": "Autonomous Driving, Training"
-        "vertical": "AI"
+        "vertical": "AI, Robotics"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"
