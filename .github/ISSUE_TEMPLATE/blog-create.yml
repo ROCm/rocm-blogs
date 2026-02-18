@@ -110,6 +110,7 @@ body:
         - Developers
         - Systems
         - Data Science
+        - Robotics
     validations:
       required: true
   - type: input

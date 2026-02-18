@@ -14,7 +14,7 @@ myst:
         "author": "Levent Guner, Teemu Karkkainen, Shaghayegh Roohi, Niko Vuokko"
         "description lang=en": "Fine-tune OpenCLIP with Bridge Data V2 on ROCm to enable robotics related fine-tuning"
         "keywords": "fine-tune, robotics, vlm, openclip, rocm"
-        "vertical": "AI"
+        "vertical": "AI, Robotics"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"

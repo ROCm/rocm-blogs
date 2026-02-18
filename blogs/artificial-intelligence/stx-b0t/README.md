@@ -14,7 +14,7 @@ myst:
         "author": "Justin Chu, Yosi Hatekar, Vivian Cheng, Hyunji Kim, Alex Bogdan"
         "description lang=en": "STX-B0T explores the potential of RyzenAI PCs to power robotics applications on NPU+GPU. This blog demonstrates how our hardware and software interoperate to unlock real-time perception."
         "keywords": "robot, ryzenai, rocm"
-        "vertical": "AI, Developers"
+        "vertical": "AI, Developers, Robotics"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"
