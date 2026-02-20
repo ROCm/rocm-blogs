@@ -1,15 +1,15 @@
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="Nichols A. Romero">
+  <meta name="description" content="Nick Romero">
   <meta name="keywords" content="blog, contributor, blog author">
 </head>
 
-(nichols-a.-romero)=
+(nick-romero)=
 
-# Nichols A. Romero
+# Nick Romero
 
-```{image} ./data/Nichols-A-Romero.jpg
-:alt: Nichols
+```{image} ./data/Nick-Romero.jpg
+:alt: Nick
 :class: bg-primary
 :height: 250px
 :align: left
