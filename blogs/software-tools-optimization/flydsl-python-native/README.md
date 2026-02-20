@@ -127,9 +127,11 @@ The underlying thread level IR is nearly complete, and early demos of transpose,
 
 MLIR-based tracing, lowering, and code generation through ROCDL are also working end-to-end with continuous CI integration.
 
+FlyDSL-based high-performance operators have entered early production adoption for **large-scale** inference workloads. These deployments operate at production hyperscale across MI GPU clusters, demonstrating scalability and production readiness.
+
 ## Ecosystem Impact
 
-FlyDSL opens a smoother path for AMD enablement across many open-source projects already based on CuTe DSL or Cutlass like abstractions. These include:
+**Firstly**, FlyDSL opens a smoother path for AMD enablement across many open-source projects already based on CuTe DSL or Cutlass like abstractions. These include:
 
 - FlashInfer kernels (GEMM, fused reduce)
 - FlashAttention
@@ -139,7 +141,9 @@ FlyDSL opens a smoother path for AMD enablement across many open-source projects
 
 It also accelerates Cutlass-derived ODM workloads such as DeepGEMM, FlashMLA, and XFormers.
 
-Whether you're maintaining a high-performance LLM operator library or exploring new fused kernels, FlyDSL provides a clear on-ramp into the ROCm ecosystem.
+**Secondly**, the FlyDSL project is also collaborating with our industry partners to actively design and incorporate more high performance layout variants in the future. These efforts are complementary to Triton Linear layouts and aim to extend their flexibility and performance coverage. This helps pave the way for continuous evolution and drives open source collaboration at both the kernel development and DSL solution levels.
+
+**In summary**, whether you're maintaining a high-performance LLM operator library or exploring new fused kernels, FlyDSL provides a clear on-ramp into the **ROCm ecosystem**.
 
 ## Getting Started with FlyDSL
 
@@ -159,57 +163,35 @@ Now you are ready to try a simple example below:
 """Simple example demonstrating fused add + relu operation in FlyDSL."""
 
 from flydsl.compiler.context import RAIIMLIRContextModule
-
 from flydsl.dialects.ext import flir, arith
-
 from _mlir.ir import InsertionPoint
-
 import _mlir.extras.types as T
-
 import os
 
 # Set up MLIR context
-
 ctx = RAIIMLIRContextModule(allow_unregistered_dialects=True)
 
 # Define the fused add + relu function
-
 with InsertionPoint(ctx.module.body):
-
     @flir.jit(T.f32(), T.f32())
-
     def fused_add_relu(x, y):
-
         # Add the two inputs
-
         sum_val = x + y
-
         # ReLU: max(x, 0) using arith.maximum
-
         zero = arith.f32(0.0)
-
         result = arith.maximum(sum_val, zero)
-
         return result
 
 # Print the generated MLIR
-
 print("Generated MLIR:")
-
 print(ctx.module)
-
 print("\n" + "="*50 + "\n")
 
 # Verify the module
-
 try:
-
     ctx.module.operation.verify()
-
     print("✓ Module verification passed!")
-
 except Exception as e:
-
     print(f"✗ Module verification failed: {e}")
 
 os._exit(0)
@@ -219,25 +201,15 @@ You will see the output below:
 
 ```mlir
 Generated MLIR:
-
 module {
-
   func.func @fused_add_relu(%arg0: f32, %arg1: f32) -> f32 {
-
     %cst = arith.constant 0.000000e+00 : f32
-
     %0 = arith.addf %arg0, %arg1 : f32
-
     %1 = arith.maximumf %0, %cst : f32
-
     return %1 : f32
-
   }
-
 }
-
 ==================================================
-
 ✓ Module verification passed!
 ```
 
