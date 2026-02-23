@@ -237,14 +237,14 @@ In this blog, you learned how FlyDSL brings together Python’s ease of use, the
 
 Our roadmap and future work include but are not limited to:
 
-## Language and Compiler
+### Language and Compiler
 
 - MFMA, Atom, and additional intrinsic support
 - Expanded AST-transform coverage for Python syntax
 - Separation of platform-agnostic vs. platform-specific components
 - Exploring a layout agnostic design to support multiple layout strategies
 
-## Kernel Projects
+### Kernel Projects
 
 - Finalize GEMM and MOE kernels
 - Upcoming support for attention, AR+GEMM, and more complex fusions
