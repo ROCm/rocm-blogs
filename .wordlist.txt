@@ -1284,3 +1284,5 @@ xRR
 xW
 AutoSmothQuant
 GPTQ
+TunableOp
+TF
