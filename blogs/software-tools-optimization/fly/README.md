@@ -1,0 +1,97 @@
+---
+blogpost: true
+blog_title: "FLy: A New Paradigm for Speculative Decoding — Accepting Semantically Correct Drafts Beyond Exact Match"
+date: 27 Febrary 2026
+author: 'Jinze Li, Yixing Xu, Guanchen Li, Xuanwu Yin, Dong Li, Emad Barsoum'
+thumbnail: 'fly-blog-2026-02-27.png'
+tags: AI/ML
+category: Software tools & optimizations
+target_audience: ai developers and enthusiasts
+key_value_propositions: Delivers state-of-the-art LLM performance by maximizing early-token accuracy while ensuring efficient, scalable, and production-ready deployment on AMD GPUs.
+language: English
+myst:
+    html_meta:
+        "author": "Jinze Li, Yixing Xu, Guanchen Li, Xuanwu Yin, Dong Li, Emad Barsoum"
+        "description lang=en": "FLy boosts LLM inference with training-free loosely speculative decoding for speed, accuracy, and ROCm-optimized deployment."
+        "keywords": "LLM performance,  Training free"
+        "vertical": "AI"
+        "amd_category": "Developer Resources"
+        "amd_asset_type": "Blog"
+        "amd_technical_blog_type": "Tools, Features, and Optimizations"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "ROCm Software"
+        "amd_blog_applications": "AI Inference"
+        "amd_blog_topic_categories": "Enterprise & Data Center Trends"
+        "amd_blog_authors": "Jinze Li, Yixing Xu, Guanchen Li, Xuanwu Yin, Dong Li, Emad Barsoum"
+---
+
+<!---
+Copyright (c) 2026 Advanced Micro Devices, Inc. (AMD)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+--->
+
+# FLy: A New Paradigm for Speculative Decoding — Accepting Semantically Correct Drafts Beyond Exact Match
+
+Speculative decoding has emerged as a highly effective approach to accelerate large language model (LLM) inference, yet existing methods are severely bottlenecked by a rigid exact-match verification rule, which discards many semantically valid continuations. Furthermore, existing training-based loose decoding methods often suffer from significant performance degradation on out-of-distribution (OOD) tasks. 
+
+In our recent paper, [Training-Free Loosely Speculative Decoding: Accepting Semantically Correct Drafts Beyond Exact Match](https://arxiv.org/abs/2511.22972), we introduce FLy, a novel method that loosens this rigid criterion without requiring any additional training. By leveraging the target model's inherent self-corrective behavior, FLy judges whether a draft-target mismatch remains semantically valid. In this blog, we will discuss the motivation behind FLy, its two-tier verification mechanism, and how it delivers state-of-the-art, training-free performance on AMD GPUs using the ROCm software stack.
+
+## What Is Speculative Decoding (SPD)? 
+
+Large language models (LLMs) typically generate text in an auto-regressive fashion, producing tokens one by one, which entails substantial inference latency. Speculative Decoding (SPD) tackles this bottleneck losslessly by using a lightweight draft model to sequentially propose multiple candidate tokens. A much larger target model then verifies these draft tokens in parallel, accepting those that match its own predictions. When the acceptance rate is high, the amortized time per token drops, yielding substantial speedups. 
+
+## Motivation – The Exact-Match Bottleneck & OOD Degradation 
+
+Standard SPD is fundamentally constrained by its exact-match rule: the target model accepts a draft token only if it is identical to its own generation. This rigid requirement forces the rejection of many plausible continuations—even those that are semantically aligned and valid—thereby wasting compute and limiting potential speedup. 
+
+To address this, recent works have proposed loose variants of SPD that train an auxiliary classifier to decide if a draft token is contextually valid. However, this requires carefully curated training data and incurs high annotation costs. More critically, these supervised classifiers often fail to generalize across different domains or tasks, making them brittle in out-of-distribution (OOD) settings. 
+
+## Core Insight – LLM Self-Corrective Behavior 
+
+To overcome these limitations without relying on fragile trained verifiers, FLy operates entirely training-free. Our central insight is that LLMs tend to exhibit self-corrective behavior when conditioned on genuinely erroneous tokens, but do not diverge when faced with differently worded yet semantically valid alternatives. Building on this property, FLy leverages the target model's own behavior to distinguish harmful mismatches from semantically equivalent continuations. 
+
+## ROCm — Powering FLy's Efficient Acceleration 
+
+Because FLy introduces no additional forward passes and computes per-token entropy directly from already-available logits, its computational overhead is negligible. All our experiments were conducted on AMD Instinct MI355X GPUs. By leveraging the ROCm software stack—which is designed to maximize memory bandwidth utilization and fine-grained parallelism—FLy is able to execute parallel token verification at scale with minimal latency overhead. This makes FLy a highly efficient, plug-and-play solution that seamlessly composes with arbitrary draft-target pairs on ROCm-enabled systems, ensuring production-grade performance without the need for hyperparameter re-tuning.
+
+## FLy — A Two-Tier Mechanism for Semantic Verification 
+
+To accurately identify semantically valid mismatches, FLy introduces a sophisticated two-tier mechanism: 
+
+Entropy-level Gate: This acts as a lightweight, per-token ambiguity detector. It identifies whether the current token allows multiple plausible alternatives (high entropy) or is nearly deterministic, such as in mathematical calculations (low entropy). If the target model is confident, the mismatch is immediately rejected. If it is ambiguous, FLy defers the decision.
+
+Token-level Deferred Window: When deferral is activated, FLy looks ahead over a window spanning the next several tokens (e.g., 6 tokens). Within this window, the mismatch is provisionally accepted. If another mismatch emerges, it signals that the target model is attempting to course-correct a genuine error, and the initial token is retroactively rejected. If no further divergence occurs, the token is deemed a semantically valid continuation and is retained.
+
+## Multi-Level Acceleration (MLA)
+
+By accepting semantically correct mismatches, the average number of accepted tokens rises markedly. Consequently, the draft model must propose a larger set of tokens per round, making the drafting stage a new latency bottleneck. To mitigate this, we implemented a multi-level acceleration (MLA) scheme that speeds up not just the target model, but the drafter itself. By integrating a parameter-free method like prompt lookup decoding (PLD), MLA reduces draft-side overhead and achieves even greater end-to-end efficiency without adding domain bias.
+ 
+## Summary 
+
+In this blog, we introduced FLy, a training-free algorithm that replaces standard SPD's rigid exact-match criterion with a loosely verified scheme to accept semantically correct tokens. By utilizing an entropy-level gate and a token-level deferred window, FLy leverages the target model's self-corrective behavior to distinguish genuine errors from valid alternatives. Paired with multi-level acceleration, FLy delivers state-of-the-art speedups on AMD ROCm-enabled GPUs while maintaining over 99% accuracy.
+
+## Disclaimers
+
+Third-party content is licensed to you directly by the third party that owns the
+content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS
+PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT
+IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO
+YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE
+FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
