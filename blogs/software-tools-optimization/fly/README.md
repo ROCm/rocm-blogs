@@ -7,7 +7,7 @@ thumbnail: 'fly-blog-2026-02-27.png'
 tags: AI/ML
 category: Software tools & optimizations
 target_audience: ai developers and enthusiasts
-key_value_propositions: Delivers state-of-the-art LLM performance by maximizing early-token accuracy while ensuring efficient, scalable, and production-ready deployment on AMD GPUs.
+key_value_propositions: Delivers state-of-the-art LLM performance by using training-free speculative decoding method while ensuring efficient, scalable, and production-ready deployment on AMD GPUs.
 language: English
 myst:
     html_meta:
