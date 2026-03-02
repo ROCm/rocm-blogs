@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "Exploring Use Cases for Scalable AI: Implementing Ray with ROCm 7 Support for Efficient ML Workflows"
 date: 27 Feb 2026
 author: 'Vicky Tsang, Satya Jandhyala, Yao Liu, Phani Vaddadi, Vish Vadlamani'
-thumbnail: 'thumbnail_rocm_ray.png'
+thumbnail: 'thumbnail_rocm7_ray.png'
 tags: AI/ML, GenAI, Fine-Tuning, Reinforcement Learning, Serving
 category: Applications & models
 target_audience: AI developers, AIOps
@@ -21,7 +21,7 @@ myst:
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, AI Training, Deploying AI at Scale, Generative AI"
-        "amd_blog_topic_categories": "AI and Intelligent Systems"
+        "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_authors": "Vicky Tsang, Satya Jandhyala, Yao Liu, Phani Vaddadi, Vish Vadlamani"
 ---
 
