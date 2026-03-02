@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "LuminaSFT: Generating Synthetic Fine-Tuning Data for Small Language Models"
-date: 24 Feb 2026
+date: 21 Nov 2025
 author: 'Sudhanshu Ranjan, Jiang Liu, Gowtham Ramesh, Prakamya Mishra, Jialian Wu, Xiaodong Yu,  Zicheng Liu, Yusheng Su, Ximeng Sun, Ze Wang, Emad Barsoum'
 thumbnail: 'lumina-sft-blog.png'
 tags: AI/ML, GenAI, Fine-Tuning
@@ -49,19 +49,38 @@ SOFTWARE.
 
 # LuminaSFT: Generating Synthetic Fine-Tuning Data for Small Language Models
 
-Small language models (SLMs) are an important lightweight alternative to large language models (LLMs). They help in reducing inference cost and can also match the performance of LLMs when targeted for a specific task. However, SLMs require more supervision and supervised fine-tuning (SFT) is an important method to improve their performance. In this blog, we present [LuminaSFT](https://huggingface.co/collections/amd/luminasft), an SFT dataset targeted towards SLMs.
+Small language models (SLMs) are emerging as a lightweight and cost-efficient alternative to large language models (LLMs). They significantly reduce inference costs and latency, and when carefully optimized for specific tasks, can approach—or even match—the performance of larger models. However, due to their limited parameter capacity, SLMs typically require stronger supervision to reach their full potential. Supervised fine-tuning (SFT) therefore plays a crucial role in enhancing their performance. 
 
-Recent work has focused primarily on building general-purpose SFT datasets or datasets geared towards math and coding tasks for SLMs. With LuminaSFT, we aim to answer the following two questions:
-a. How can we improve existing SFT data using a stronger teacher model?
-b. How can we generate new task-specific data to improve downstream task performance?
+In this blog, we introduce [LuminaSFT](https://huggingface.co/collections/amd/luminasft), a synthetic SFT dataset specifically designed to improve both general-purpose and task-specific SLMs. LuminaSFT consists of multiple curated splits that target diverse capabilities: 
+- **[UltraChat200K-DeepSeek](https://huggingface.co/datasets/amd/UltraChat200K-regenerated)** – A regenerated base SFT dataset for broad instruction-following. 
+- **[InstructGPT-NaturalQA](https://huggingface.co/datasets/amd/InstructGpt-NaturalQa)** and **[InstructGPT-TriviaQA](https://huggingface.co/datasets/amd/InstructGpt-TriviaQa)** – Factual question answering datasets to strengthen knowledge recall and answer accuracy. 
+- **[CoT-Drop](https://huggingface.co/datasets/amd/Cot-Drop)** – A reading comprehension dataset with detailed reasoning traces to enhance multi-step reasoning. 
+- **[InstructGPT-Educational](https://huggingface.co/datasets/amd/InstructGpt-educational)** – A pedagogical QA dataset with step-by-step explanations to improve educational assistance. 
 
-For improving the existing SFT data, we experiment with data regeneration. More specifically, we keep the initial prompts of the commonly used SFT datasets the same and see how much performance improvement can be obtained by regenerating the data using a large teacher model. This allows us to measure the impact of teacher choice on data regeneration and to identify which tasks benefit more from regeneration. For understanding the impact of task-specific dataset generation, we consider a diverse range of tasks (general purpose question answering, reading comprehension, and educational question answering). For each task, we generate data using a seed dataset and prompts specific to that task. This allows us to measure the impact of creating a dataset specific to the task. We share our methodology for generating data and release our dataset publicly where possible. All experiments in this study were conducted on AMD Instinct™ MI300X and MI250 GPUs using the AMD ROCm™ software stack.
+Our experiments demonstrate that LuminaSFT supports both general-purpose fine-tuning and targeted task adaptation, offering measurable gains across multiple downstream benchmarks. 
+
+We also detail our data generation methodology and publicly release LuminaSFT where licensing permits. All experiments were conducted on AMD Instinct™ MI300X and MI250 GPUs using the AMD ROCm™ software stack. 
 
 ## Key takeaways
 
-- Using a stronger teacher model such as DeepSeek-V3 to regenerate data may be helpful in some cases, but performance improvement relies on the downstream task as well as the initial prompts. We observe an improvement of up to ~4% on average across multiple tasks.
-- Generating task-specific data can be very helpful in cases like reading comprehension and can boost performance by up to ~41%.
-- When no seed data is present for a given task, it is still possible to generate useful data from scratch using detailed prompts and multi-step generation.
+- **We release [LuminaSFT](https://huggingface.co/collections/amd/luminasft)** — a supervised fine-tuning dataset comprising both general-purpose and multiple task-specific splits designed to improve small language model (SLM) performance. 
+- **Stronger teacher models can improve existing SFT data, but gains are task-dependent.** Regenerating responses with a stronger teacher model (e.g., DeepSeek-V3) yields measurable improvements—up to ~4% on average across multiple tasks. However, the magnitude of improvement depends heavily on the downstream task and the quality of the original prompts. 
+- **Task-specific data generation can deliver substantial performance gains.** In domains such as reading comprehension, targeted dataset construction boosts performance by as much as ~41%, highlighting the value of specialization for SLMs. 
+- **High-quality data can be generated even without seed datasets.** When no existing seed data is available, detailed task-specific prompts combined with multi-step generation strategies can still produce effective supervision signals. 
+
+## Dataset 
+
+LuminaSFT contains data spanning general-purpose instruction following, factual QA, reading comprehension, and educational QA. For general-purpose instruction following, [UltraChat200K-DeepSeek](https://huggingface.co/datasets/amd/UltraChat200K-regenerated) preserves the original UltraChat200K prompts and regenerates responses using DeepSeek-V3 as the teacher, yielding improvement in 5 out of 7 standard benchmarks. For general-purpose QA, [InstructGPT-NaturalQA](https://huggingface.co/datasets/amd/InstructGpt-NaturalQa) and [InstructGPT-TriviaQA](https://huggingface.co/datasets/amd/InstructGpt-TriviaQa) are each ~1M-sample datasets produced via self-instruct from the NaturalQA and TriviaQA train splits respectively, with DeepSeek-V3 as the teacher; when combined with a general-purpose SFT dataset, they improve accuracy by 2-4%. For reading comprehension, [CoT-Drop](https://huggingface.co/datasets/amd/Cot-Drop) augments the DROP train split with chain-of-thought reasoning chains generated by Qwen3-30B-A3B, boosting performance by up to +41.6%. For educational QA, [InstructGPT-Educational](https://huggingface.co/datasets/amd/InstructGpt-educational) is a fully synthetic dataset created through a multi-step pipeline (exams or tracks → topics → questions) using Qwen3-30B-A3B with no seed training data, achieving ~2.4% average improvement on MMLU, AGIEval, and MMLU-Pro. 
+
+## Method 
+
+Recent research has largely focused on building broad, general-purpose SFT datasets or datasets tailored to domains such as math and coding. With LuminaSFT, we explore two complementary research questions: 
+1. **How can stronger teacher models improve existing SFT datasets?**
+2. **How can task-specific data generation enhance downstream performance?**
+
+To address the first question, we investigate data regeneration. We retain the original prompts from widely used SFT datasets and regenerate responses using a stronger teacher model. This controlled setup allows us to isolate the impact of teacher quality, quantify performance improvements, and identify which task categories benefit most from regeneration. 
+
+To address the second question, we generate new task-specific datasets spanning general question answering, reading comprehension, and educational QA. For each task, we begin with a seed dataset and apply task-specific prompting strategies to synthesize high-quality supervision signals. This enables us to evaluate the effectiveness of targeted dataset construction for specialized SLM training. 
 
 ## Data regeneration
 
