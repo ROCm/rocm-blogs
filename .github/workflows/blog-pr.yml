@@ -208,7 +208,7 @@ jobs:
             > **BLOCKING: Your blog WILL NOT be published until ALL items below are checked.**
             > A CI check enforces this requirement. The PR cannot be merged with an incomplete legal review.
             
-            - [ ] **Legal self review completed** - AMD Employees: [Complete traffic lights review](https://amdcloud.sharepoint.com/sites/amd-legal/Shared%20Documents/Forms/AllItems.aspx?id=%2Fsites%2Famd%2Dlegal%2FShared%20Documents%2FLegal%20Requirements%20for%20AMD%20Technical%20Materials%20%5B2025%5D%2Epdf&parent=%2Fsites%2Famd%2Dlegal%2FShared%20Documents)
+            - [ ] **Legal self review completed** - AMD Employees: [Complete traffic lights review](https://amdcloud.sharepoint.com/:b:/r/sites/amd-legal/Shared%20Documents/Legal%20Requirements%20for%20AMD%20Technical%20Materials%20%5B2025%5D.pdf?csf=1&web=1&e=ecEOkU)
             - [ ] **Performance claims cleared** - If the blog contains ANY performance benchmarks, comparisons, or claims, you MUST obtain legal clearance before publication.
               - Any claim that references performance or improvements should either be:
                     - Backed up with measurements and a % improvement, with the required legal claim/footnote.
