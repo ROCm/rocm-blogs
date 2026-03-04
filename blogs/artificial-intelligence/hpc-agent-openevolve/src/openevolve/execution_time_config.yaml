@@ -1,0 +1,25 @@
+llm:
+  models:
+    - name: 'GLM-4.7'
+  api_key: '<API_KEY>'
+  api_base: '<API_BASE>'
+
+  timeout: 500
+  max_tokens: 4096
+  temperature: 0.7
+
+prompt:
+  system_message: |
+    You are a Python code optimizer focused on execution time.
+    Return ONLY valid Python code - no explanations, no markdown, no diff markers, no merge conflict syntax.
+    The code must be executable Python that can run directly.
+    Focus on optimizing for faster execution time.
+
+database:
+  in_memory: true
+  log_prompts: true
+  population_size: 4
+  archive_size: 2
+
+log_level: "DEBUG"
+

@@ -1,0 +1,5 @@
+fastmcp
+openevolve
+pyyaml
+cffi
+
