@@ -1,0 +1,24 @@
+defaults:
+- field_index_map_override: blog_example_full_well_field_index
+well_base_path: /artifacts/the_well/datasets/
+wandb_data_name: post_neutron_star_merger
+module_parameters:
+  _target_: walrus.data.MixedWellDataModule
+  batch_size: 1
+  n_steps_input: 3
+  n_steps_output: 1
+  min_dt_stride: 1
+  max_dt_stride: 1
+  max_samples: 2000
+  start_rollout_valid_output_at_t: 17
+  well_dataset_info:
+    post_neutron_star_merger:
+      include_filters: []
+      exclude_filters: []
+      normalization_path: stats.yaml
+      field_transforms:
+        density: torch.log10
+        temperature: torch.log10
+        pressure: torch.log10
+        entropy: torch.log10
+        internal_energy: torch.log10

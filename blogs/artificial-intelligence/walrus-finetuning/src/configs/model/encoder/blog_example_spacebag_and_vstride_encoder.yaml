@@ -1,0 +1,23 @@
+_partial_: true
+_target_: walrus.models.encoders.vstride_encoder.SpaceBagAdaptiveDVstrideEncoder
+learned_pad: true
+base_kernel_size1d:
+  - [4, 4]
+base_kernel_size2d:
+  - [8, 4]
+  - [8, 4]
+base_kernel_size3d:
+  - [8, 4]
+  - [8, 4]
+  - [8, 4] # Assume this is for all dimensions unless a tuple is passed
+groups: 12
+kernel_scales_seq:
+  - [2, 2]
+  - [4, 2]
+  - [4, 4]
+  - [8, 4]
+variable_downsample: true
+variable_deterministic_ds: true
+activation:
+  _partial_: true
+  _target_: torch.nn.SiLU

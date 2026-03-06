@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "JAX-AITER: Bringing AMD’s Optimized AI Kernels to JAX on ROCm"
 date: 24 Feb 2026
-author: 'Ruturaj Kiran Vaidya'
+author: 'Ruturaj Kiran Vaidya, Jehandad Khan'
 thumbnail: 'jax-aiter-thumbnail.png'
 tags: AI/ML, JAX, Optimization, Compiler, Performance
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: This blog introduces JAX-AITER, a bridge that lets JAX u
 language: English
 myst:
     html_meta:
-        "author": "Ruturaj Kiran Vaidya"
+        "author": "Ruturaj Kiran Vaidya, Jehandad Khan"
         "description lang=en": "Use JAX-AITER to run AMD’s AITER-optimized AI kernels from JAX on AMD ROCm, starting with faster multi-head attention and expanding to more ops."
         "keywords": "JAX, JAX-AITER, AITER, ROCm, AMD Instinct, MI300, MI350, multi-head attention, flash attention, GEMM, LLM, transformer, GPU kernels, performance optimization, AI, machine learning"
         "property=og:locale": "en_US"
@@ -23,7 +23,7 @@ myst:
         "amd_blog_development_tools": "Open-Source Tools, ROCm Software"
         "amd_blog_applications": "AI Inference, AI Training, Deploying AI at Scale"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Ruturaj Kiran Vaidya"
+        "amd_blog_authors": "Ruturaj Kiran Vaidya; Jehandad Khan"
 ---
 
 <!---

@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Elevate Your LLM Inference: Autoscaling with Ray, ROCm 7.0.0, and SkyPilot"
 date: 13 Feb 2026
-author: 'Vicky Tseng, Mohit Deopujari, Pratik Mishra, Satya Jandhyala, Eliot Li, Yao Liu, Phani Vaddadi, Vish Vadlamani'
+author: 'Vicky Tsang, Mohit Deopujari, Pratik Mishra, Satya Jandhyala, Eliot Li, Yao Liu, Phani Vaddadi, Vish Vadlamani'
 thumbnail: 'ray-rocm7.jpg'
 tags: AI/ML, GenAI, Serving
 category: Ecosystems and Partners
@@ -11,7 +11,7 @@ key_value_propositions: Learn how to use multi-node and multi-cluster autoscalin
 language: English
 myst:
     html_meta:
-        "author": "Vicky Tseng, Mohit Deopujari, Pratik Mishra, Satya Jandhyala, Eliot Li, Yao Liu, Phani Vaddadi, Vish Vadlamani"
+        "author": "Vicky Tsang, Mohit Deopujari, Pratik Mishra, Satya Jandhyala, Eliot Li, Yao Liu, Phani Vaddadi, Vish Vadlamani"
         "description lang=en": "Learn how to use multi-node and multi-cluster autoscaling in the Ray framework on ROCm 7.0.0 with SkyPilot"
         "keywords": "AMD GPUs, ROCm 7.0.0, Model Serving, Ray, ML Platform, Workload Orchestration, Generative AI, Tuning, Fine-Tuning, GenAI, Distributed serving"
         "vertical": "AI"

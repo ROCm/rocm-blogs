@@ -1,0 +1,21 @@
+defaults:
+  - _self_
+  - trainer: blog_example_finetune_globalnorm
+  - optimizer: blog_example_adam
+  - lr_scheduler: blog_example_inv_sqrt_w_sqrt_ramps_longer
+  - model: blog_example_isotropic_model
+  - data: blog_example_post_neutron_star_merger
+  - experiment: blog_example_finetune_example
+  - server: blog_example_local
+  - distribution: local
+  - logger: blog_example_wandb
+  - checkpoint: blog_example_finetune
+  - finetuning_mods: blog_example_all
+data_workers: 10
+name: blog_example_ft_experiment
+finetune: True
+automatic_setup: True
+experiment_dir: /artifacts/finetuning_logs/experiment_dir
+hydra:
+  run:
+    dir: /artifacts/finetuning_logs/outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}

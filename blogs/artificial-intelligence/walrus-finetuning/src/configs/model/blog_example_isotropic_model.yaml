@@ -1,0 +1,22 @@
+defaults:
+  - encoder: blog_example_spacebag_and_vstride_encoder
+  - decoder: blog_example_vstride_decoder
+  - processor: blog_example_space_time_split
+  - norm_layer: blog_example_rmsgroupnorm
+_target_: walrus.models.IsotropicModel
+hidden_dim: 1408
+projection_dim: 48
+intermediate_dim: 352
+processor_blocks: 40
+drop_path: 0.0
+groups: 16
+max_d: 3
+static_axes: True
+weight_tied_axes: False
+causal_in_time: True
+include_d: [2, 3]
+override_dimensionality: 0 # Original 3 but pretrainedd configs say 0. Force it to treat all data as 3D
+jitter_patches: True
+gradient_checkpointing_freq: 2
+use_periodic_fixed_jitter: True
+input_field_drop: 0

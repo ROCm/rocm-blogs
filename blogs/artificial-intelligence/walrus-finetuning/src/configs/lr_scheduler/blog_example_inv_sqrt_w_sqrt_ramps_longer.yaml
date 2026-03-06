@@ -1,0 +1,5 @@
+_target_: walrus.optim.schedulers.InverseSqrtLinearWarmupSqrtCooldown
+warmup_epochs: 10
+cooldown_epochs: 10
+warmup_lr_factor: 0.1
+cooldown_lr_factor: .001 # Doesn't actually matter here.
