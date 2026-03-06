@@ -1,0 +1,4 @@
+_partial_: true
+_target_: walrus.models.spatial_blocks.full_attention.FullAttention
+num_heads: 16
+mlp_dim:

@@ -1,0 +1,3 @@
+_partial_: true
+_target_: walrus.models.spatial_blocks.axial_attention.AxialAttentionBlock
+num_heads: 12

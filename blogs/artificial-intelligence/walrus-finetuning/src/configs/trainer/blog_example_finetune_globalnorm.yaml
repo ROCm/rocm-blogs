@@ -1,0 +1,41 @@
+_target_: walrus.trainer.Trainer
+max_epoch: 50
+val_frequency: 1
+rollout_val_frequency: 1
+short_validation_length: 20
+max_rollout_steps: 30
+num_time_intervals: 5
+enable_amp: False
+loss_fn:
+  _target_: the_well.benchmark.metrics.MAE
+formatter:
+  _target_: hydra.utils.get_class
+  path: walrus.data.well_to_multi_transformer.ChannelsFirstWithTimeFormatter
+revin:
+  _target_: walrus.trainer.normalization_strat.GlobalRevNormalization
+  _partial_: True
+prediction_type: delta
+grad_acc_steps: 1
+image_validation: True
+video_validation: True
+gradient_log_level: 0 # 0 is none, 1 is full norm only, higher not implemented
+clip_gradient: 10
+log_interval: 50 # How often to log training metrics to screen (causes GPU sync)
+loss_multiplier: 100. # Multiply the loss by this factor so gradient scaling is easier
+lr_scheduler_per_step: False
+validation_suite:
+  # - _target_: the_well.benchmark.metrics.RMSE
+  - _target_: the_well.benchmark.metrics.NRMSE
+  # - _target_: the_well.benchmark.metrics.LInfinity
+  - _target_: the_well.benchmark.metrics.VRMSE
+  # - _target_: the_well.benchmark.metrics.binned_spectral_mse
+  - _target_: the_well.benchmark.metrics.PearsonR
+# validation_trajectory_metrics:
+  # - _target_: the_well.benchmark.metrics.HistogramW1
+  # - _target_: the_well.benchmark.metrics.WindowedDTW
+batch_aggregation_fns: # Note these are strings pointing to function to be resolved by hydra
+  - torch.mean
+  - torch.median
+  - torch.std
+skip_spectral_metrics: True
+epsilon: 1e-8

@@ -1,0 +1,3 @@
+wandb: true
+wandb_project_name: "blog_example_walrus_finetuning"
+wandb_dir: /artifacts/

@@ -1,0 +1,4 @@
+_partial_: true
+_target_: walrus.models.temporal_blocks.axial_time_attention.AxialTimeAttention
+num_heads: 16
+bias_type: 'rel'

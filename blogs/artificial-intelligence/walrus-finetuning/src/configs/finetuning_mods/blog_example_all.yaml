@@ -1,0 +1,3 @@
+learnable_rope: True
+rope_per_axis: True
+ape_shape: [17, 16, 16]
