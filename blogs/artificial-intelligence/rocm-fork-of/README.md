@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "ROCm Fork of MaxText: Structure and Strategy"
 date: 06 Jan 2026
-author: 'Gulsum Gudukbay Akbulut'
+author: 'Gulsum Gudukbay Akbulut, Jehandad Khan'
 thumbnail: 'rocm-maxtext-structure.jpeg'
 tags: AI/ML, GenAI, JAX
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: The ROCm fork of MaxText keeps a clean, automated sync w
 language: English
 myst:
     html_meta:
-        "author": "Gulsum Gudukbay Akbulut"
+        "author": "Gulsum Gudukbay Akbulut, Jehandad Khan"
         "description lang=en": "Learn how the ROCm fork of MaxText mirrors upstream while enabling offline testing, minimal datasets, and platform-agnostic, decoupled workflows."
         "keywords": "MaxText, LLM, AI/ML, Decoupling, GCP, Unit Testing, JAX, Transformer Engine"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Training, AI Inference, Generative AI"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Gulsum Gudukbay Akbulut"
+        "amd_blog_authors": "Gulsum Gudukbay Akbulut, Jehandad Khan"
 ---
 
 <!---
