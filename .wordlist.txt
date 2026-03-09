@@ -842,6 +842,7 @@ quantizing
 Quantizing
 quasirandom
 qwen
+radeon
 Radeon
 Raghuraman
 RAII
@@ -1545,6 +1546,18 @@ sccache
 slidingwindow
 wav
 xgrammar
+comfyui
+ComfyUI
+ComfyUI's
+ControlNets
+GRE
+LoRAs
+SDXL
+SSD
+WSL
+Yayuan
+cuDNN
+cudnn
 BFloat
 DINOv
 GELU
