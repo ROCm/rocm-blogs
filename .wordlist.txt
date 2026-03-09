@@ -1745,3 +1745,17 @@ swappable
 sysfs
 traceback
 xplane
+JIT
+Orbax
+Orbax's
+TSDBs
+XLA's
+chatbot
+checkpointing
+codebases
+gRPC
+handoff
+hostnames
+runbook
+runbooks
+triages
