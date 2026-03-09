@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Running ROCm/MaxText Unit Tests (Decoupled and GCloud-Dependent)"
 date: 06 Jan 2026
-author: 'Gulsum Gudukbay Akbulut'
+author: 'Gulsum Gudukbay Akbulut, Jehandad Khan'
 thumbnail: 'rocm-maxtext-unittests.jpeg'
 tags: AI/ML, GenAI, JAX
 category: Applications & models
@@ -11,7 +11,7 @@ key_value_propositions: This blog offers a clear and practical approach for runn
 language: English
 myst:
     html_meta:
-        "author": "Gulsum Gudukbay Akbulut"
+        "author": "Gulsum Gudukbay Akbulut, Jehandad Khan"
         "description lang=en": "Learn how to run MaxText unit tests on AMD ROCm GPUs in offline and cloud modes for fast validation, clear reports, and reproducible workflows."
         "keywords": "MaxText, LLM, AI/ML, Decoupling GCP, Unit Testing, JAX, Transformer Engine"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, AI Training, Generative AI"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Gulsum Gudukbay Akbulut"
+        "amd_blog_authors": "Gulsum Gudukbay Akbulut, Jehandad Khan"
 ---
 
 <!---
