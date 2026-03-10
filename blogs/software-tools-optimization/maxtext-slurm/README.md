@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "MaxText-Slurm: Production-Grade LLM Training with Built-In Observability"
 date: 2 Mar 2026
-author: 'Yi Huang, Andy Ye, Qiang Han, Xi Zhao, Yao Fu, Zhenyu Gu'
+author: 'Yi Huang, Andy Ye, Qiang Han, Xi Zhao, Yanyuan Qin, Frank Wang, Claire Lee, Gene Su, Yaoming Mu, Liz Li, Angela Wang, Yao Fu, Huasha Zhao, Zhenyu Gu'
 thumbnail: 'maxtext-slurm-thumbnail.png'
 tags: AI/ML, JAX, LLM, Performance, Profiling, HPC
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: MaxText-Slurm is a unified launch system and observabili
 language: English
 myst:
     html_meta:
-        "author": "Yi Huang, Andy Ye, Qiang Han, Xi Zhao, Yao Fu, Zhenyu Gu"
+        "author": "Yi Huang, Andy Ye, Qiang Han, Xi Zhao, Yanyuan Qin, Frank Wang, Claire Lee, Gene Su, Yaoming Mu, Liz Li, Angela Wang, Yao Fu, Huasha Zhao, Zhenyu Gu"
         "description lang=en": "MaxText-Slurm: A unified launch system for production-grade LLM training with observability on AMD GPU clusters."
         "keywords": "MaxText, Slurm, JAX, LLM, AMD Instinct GPUs, ROCm, Observability, Prometheus, Ray, Distributed Training"
         "vertical": "AI, Developers, Systems, HPC"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "AI Training"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Yi Huang, Andy Ye, Qiang Han, Xi Zhao, Yao Fu, Zhenyu Gu"
+        "amd_blog_authors": "Yi Huang, Andy Ye, Qiang Han, Xi Zhao, Yanyuan Qin, Frank Wang, Claire Lee, Gene Su, Yaoming Mu, Liz Li, Angela Wang, Yao Fu, Huasha Zhao, Zhenyu Gu"
 ---
 
 <!---
@@ -318,7 +318,7 @@ MaxText-Slurm's layered architecture was designed from the start to make the orc
 - **Kubernetes orchestration** — the current system targets Slurm, but the container, training, and observability components are scheduler-agnostic by design. Adding a Kubernetes backend means writing a new orchestration tier (replacing `_job.sbatch` and `submit.sh` with Kubernetes Job or [JobSet](https://github.com/kubernetes-sigs/jobset) manifests) while the rest of the stack — container setup, training launch, observability, and metrics plugins — runs unmodified. This will bring MaxText-Slurm's single-command launch and full observability stack to cloud-native GPU clusters.
 - **Expanded model coverage** — adding pre-validated configs for additional model families beyond the current set (LLaMA, Mixtral, Grok, etc.), including emerging architectures and larger parameter counts.
 - **Enhanced fault tolerance** — automatic detection and recovery from common failure modes such as single-node GPU errors or NCCL timeouts, enabling long-running jobs to self-heal without operator intervention.
-- **Richer AI skills** — existing skills are continuously refined as they are exercised on real production incidents, and new skills will expand the framework's coverage to include automated performance regression detection, capacity planning recommendations, and guided migration workflows for teams moving from other training frameworks to MaxText. A follow-up blog post will demonstrate end-to-end agentic diagnosis on real production incidents using the unified TSDB.
+- **Richer AI skills** — existing skills are continuously refined as they are exercised on real production incidents, and new skills will expand the framework's coverage to include automated performance regression detection, capacity planning recommendations, and guided migration workflows for teams moving from other training frameworks to MaxText. The follow-up blog post [Agentic Diagnosis for LLM Training at Scale](https://rocm.blogs.amd.com/software-tools-optimization/maxtext-slurm-agentic-diagnosis/README.html) demonstrates end-to-end agentic diagnosis on real production incidents using the unified TSDB.
 
 MaxText-Slurm is actively maintained by AMD, with a commitment to ongoing support including:
 
@@ -349,7 +349,9 @@ Whether you are running short benchmarks or week-long production training runs, 
 ## Additional Resources
 
 - [MaxText-Slurm GitHub Repository](https://github.com/AMD-AGI/maxtext-slurm)
-- [MaxText GitHub Repository](https://github.com/AI-Hypercomputer/maxtext)
+- [Agentic Diagnosis for LLM Training at Scale](https://rocm.blogs.amd.com/software-tools-optimization/maxtext-slurm-agentic-diagnosis/README.html) — follow-up post on agentic diagnostic skills and case studies
+- [ROCm MaxText Fork](https://github.com/ROCm/maxtext)
+- [Upstream MaxText GitHub Repository](https://github.com/AI-Hypercomputer/maxtext)
 - [Ray Documentation](https://docs.ray.io/)
 - [Prometheus Documentation](https://prometheus.io/docs/)
 
