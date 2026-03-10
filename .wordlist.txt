@@ -1759,3 +1759,5 @@ hostnames
 runbook
 runbooks
 triages
+Huasha
+Yaoming
