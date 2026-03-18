@@ -88,6 +88,8 @@ Cheng
 Yao
 Chunhung
 Wang
+Claire
+Lee
 Clement
 Lin
 Clint
@@ -483,6 +485,8 @@ Kurdadze
 Soumitra
 Chatterjee
 Spandan
+More
+Spandan
 Tiwari
 Srinivasan
 Subramanian
@@ -520,6 +524,8 @@ Umang
 Pandey
 Vara
 Bayanagari
+Vicky
+Chen
 Vicky
 Tsang
 Victor

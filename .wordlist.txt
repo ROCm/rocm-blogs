@@ -121,9 +121,8 @@ Blit
 blit
 blogpost
 BMC
+bnxt
 Boesel
-Bohan
-Bohan
 Bohan
 boson
 bosons
@@ -346,6 +345,7 @@ Filesystem
 filesystem
 fineweb
 Flang
+FlashAttention
 FlashInfer
 FLOPs
 FlowAR
@@ -466,6 +466,7 @@ HWE
 hyperparameter
 Hyperparameters
 hyperparameters
+IB
 ib_core
 ibm
 ICML
@@ -576,7 +577,7 @@ LDS
 Lehtinen
 lfloor
 Liang
-Liang
+libibverbs
 libjpeg
 libs
 lifecycle
@@ -630,6 +631,7 @@ Mecanum
 mecanum
 MediaTek
 Megatron
+Mellanox
 Mellanox's
 MEM
 Meng
@@ -649,6 +651,7 @@ MiniMax
 MIOpen
 MIOpenGEMM
 MirroredStrategy
+Misconfigured
 Misha
 MIVisionX
 Mixtral
@@ -676,7 +679,7 @@ Multicore
 Multilayer
 Multimodal
 multimodal
-Multimodal
+multinode
 Multithreaded
 multivendor
 Muthiah
@@ -854,6 +857,7 @@ RBAC
 rc
 RCCL
 RDC
+rdma
 RDMA
 RDNA
 rdzv
@@ -897,6 +901,7 @@ rocALUTION
 rocBLAS
 ROCclr
 ROCdbgapi
+RoCE
 rocFFT
 ROCgdb
 ROCk
@@ -1102,12 +1107,12 @@ uncached
 Unhandled
 uninstallation
 unoptimized
-unoptimized
 unsqueeze
 unstacking
 unswitching
 untrusted
 untuned
+userspace
 upsample
 USM
 UTCL
@@ -1129,6 +1134,7 @@ vectorize
 vectorized
 vectorizer
 vectorizes
+VFS
 VGPR
 VGPRs
 Vijay
@@ -1176,6 +1182,7 @@ Writebacks
 wrreq
 WX
 xargs
+xDiT
 XDNA
 XCD
 XCDs
@@ -1227,6 +1234,7 @@ RBAC
 SSO
 UI
 VScode
+webp
 WebSurfer
 Workspaces
 autoscaling
@@ -1477,6 +1485,7 @@ denoising
 depthwise
 et
 hunyuan
+HunyuanVideo
 iGPUs
 mathcal
 pointwise
@@ -1761,3 +1770,8 @@ runbooks
 triages
 Huasha
 Yaoming
+Kemppi
+Leppänen
+Malinen
+Rony
+Tero
