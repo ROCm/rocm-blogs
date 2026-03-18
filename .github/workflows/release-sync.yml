@@ -1,0 +1,85 @@
+name: Sync Internal/External
+on:
+  push:
+    branches:
+      - develop
+env:
+  EXTERNAL_REPO: "ROCm/rocm-blogs"
+  EXTERNAL_BRANCH: "dummy_release"
+  INTERNAL_BRANCH: "develop"
+jobs:
+  sync-to-external:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout internal repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.INTERNAL_BRANCH }}
+          fetch-depth: 0
+          token: ${{ secrets.EXTERNAL_REPO_TOKEN }}
+      - name: Configure Git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Add external remote
+        run: |
+          git remote add external "https://x-access-token:${{ secrets.EXTERNAL_REPO_TOKEN }}@github.com/${{ env.EXTERNAL_REPO }}.git"
+          git fetch external "${{ env.EXTERNAL_BRANCH }}" || echo "Branch does not exist on external yet"
+      - name: Filter out internal-only files
+        run: |
+          EXCLUDE_PATTERNS=(
+            "internal/"
+            ".internal-config"
+            "docs/internal/"
+          )
+          CHANGED=false
+          for pattern in "${EXCLUDE_PATTERNS[@]}"; do
+            if git ls-files --error-unmatch "$pattern" &>/dev/null 2>&1; then
+              git rm -rf --ignore-unmatch "$pattern"
+              CHANGED=true
+            fi
+          done
+          if [ "$CHANGED" = true ]; then
+            git commit -m "chore: strip internal-only files for external release" || true
+          fi
+      - name: Merge or push to external/release
+        id: sync
+        run: |
+          if git rev-parse --verify "external/${{ env.EXTERNAL_BRANCH }}" >/dev/null 2>&1; then
+            git checkout -b temp-external "external/${{ env.EXTERNAL_BRANCH }}"
+            git merge "${{ env.INTERNAL_BRANCH }}" \
+              --no-edit \
+              --allow-unrelated-histories \
+              -m "chore: sync from internal/develop ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+            git push external "HEAD:${{ env.EXTERNAL_BRANCH }}"
+          else
+            git push external "${{ env.INTERNAL_BRANCH }}:refs/heads/${{ env.EXTERNAL_BRANCH }}"
+          fi
+      - name: Summary
+        run: |
+          echo "### Sync Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Source:** \`${{ env.INTERNAL_BRANCH }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Target:** \`${{ env.EXTERNAL_REPO }}@${{ env.EXTERNAL_BRANCH }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+  notify-failure:
+    runs-on: ubuntu-latest
+    needs: sync-to-external
+    if: failure()
+    steps:
+      - name: Report sync failure
+        run: |
+          echo "### Sync Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The sync from \`${{ env.INTERNAL_BRANCH }}\` to \`${{ env.EXTERNAL_REPO }}@${{ env.EXTERNAL_BRANCH }}\` failed." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This usually means there are **merge conflicts** that need manual resolution." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Next steps:**" >> $GITHUB_STEP_SUMMARY
+          echo "1. Pull both branches locally" >> $GITHUB_STEP_SUMMARY
+          echo "2. Resolve conflicts manually" >> $GITHUB_STEP_SUMMARY
+          echo "3. Push the resolved external/release branch" >> $GITHUB_STEP_SUMMARY
