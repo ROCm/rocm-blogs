@@ -19,14 +19,14 @@ jobs:
         with:
           ref: ${{ env.INTERNAL_BRANCH }}
           fetch-depth: 0
-          token: ${{ secrets.EXTERNAL_REPO_TOKEN }}
+          token: ${{ secrets.ROCM_BLOG_PAT }}
       - name: Configure Git identity
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Add external remote
         run: |
-          git remote add external "https://x-access-token:${{ secrets.EXTERNAL_REPO_TOKEN }}@github.com/${{ env.EXTERNAL_REPO }}.git"
+          git remote add external "https://x-access-token:${{ secrets.ROCM_BLOG_PAT }}@github.com/${{ env.EXTERNAL_REPO }}.git"
           git fetch external "${{ env.EXTERNAL_BRANCH }}" || echo "Branch does not exist on external yet"
       - name: Filter out internal-only files
         run: |
