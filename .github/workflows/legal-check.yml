@@ -12,7 +12,7 @@ jobs:
     
     steps:
       - name: Check Legal Review Checkboxes
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const prBody = context.payload.pull_request.body || '';
