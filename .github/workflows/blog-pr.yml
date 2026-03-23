@@ -186,7 +186,7 @@ jobs:
       - name: Create Pull Request with Blog
         id: cpr
         if: steps.extract.outputs.validation_passed == 'true' && steps.extract.outputs.create_pr == 'true'
-        uses: peter-evans/create-pull-request@v7.0.6
+        uses: peter-evans/create-pull-request@v8.1.0
         with:
           token: "${{ github.token }}"
           commit-message: "${{ github.event.issue.title }}"
