@@ -158,6 +158,8 @@ Farshad
 Ghodsian
 Felix
 Marty
+Frank
+Wang
 Fuwei
 Yang
 Gabriel
@@ -440,6 +442,8 @@ Romil
 Bhardwaj
 Rongzhang
 Zheng
+Rony
+Leppänen
 Ruibin
 Zhang
 Ruturaj

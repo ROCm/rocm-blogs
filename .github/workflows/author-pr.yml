@@ -24,7 +24,7 @@ jobs:
           
       - name: Extract author information
         id: extract
-        uses: actions/github-script@v7.0.1
+        uses: actions/github-script@v8
         continue-on-error: false
         with:
           github-token: ${{ github.token }}

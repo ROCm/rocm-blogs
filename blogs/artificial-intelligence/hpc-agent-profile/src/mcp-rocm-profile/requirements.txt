@@ -1,2 +1,2 @@
-fastmcp==2.13.0.2
+fastmcp==2.14.2
 pandas

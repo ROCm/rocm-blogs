@@ -55,21 +55,21 @@ In this blog post, we show how to run multi-node inference for diffusion models 
 
 Diffusion models are widely used in generative AI, especially for image and video generation. Text-to-video models like HunyuanVideo can produce high-quality results, but they come with heavy computational requirements. These models are based on the Diffusion Transformer (DiT) architecture, and video generation in particular can suffer from high inference latency.
 
-One effective way to reduce latency is to scale inference across multiple nodes, which allows both computation and memory usage to be distributed across GPUs. We demonstrate how to run multi-node inference for diffusion models using [xDiT](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/inference/xdit-diffusion-inference.html), leveraging parallelization techniques and high-speed interconnects to enable efficient multi-node inference on AMD Instinct accelerators.
+One effective way to reduce latency is to scale inference across multiple nodes, which allows both computation and memory usage to be distributed across GPUs. We demonstrate how to achieve this efficiently using [xDiT](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/inference/xdit-diffusion-inference.html), leveraging parallelization techniques and high-speed interconnects on AMD Instinct accelerators.
 
 ## Multi-node challenges
 
 Running inference across multiple nodes requires careful coordination, especially when parallelization is involved. Sequence parallelization techniques such as DeepSpeed-Ulysses and Ring Attention allow us to split large attention workloads efficiently. Unified Sequence Parallelism (USP) combines these two approaches so they can be used together, and the xDiT library supports USP out of the box, making it relatively easy to adopt.
 
-In distributed diffusion inference, the workload is split by breaking attention-dominated and other expensive operations into smaller pieces that can run in parallel. Each node processes part of the computation, and the partial results are combined. This approach reduces latency and allows inference to scale with the available hardware.
+In distributed diffusion inference, the workload is split by breaking attention and other computationally expensive operations into smaller pieces that can run in parallel. Each node processes part of the computation, and the partial results are combined. This approach reduces latency and allows inference to scale with the available hardware.
 
-In our setup, only the diffusion Transformer is parallelized across nodes. The VAE is executed locally on a single GPU as its runtime contribution is relatively small compared to the diffusion process.
+In our setup, only the Diffusion Transformer is parallelized across nodes. The VAE runs on a single GPU, as its runtime contribution is relatively small compared to the diffusion process.
 
 ## Communication and Performance Optimization
 
-Efficient communication is critical for multi-node inference. For GPU-to-GPU communication within a node, we rely on RCCL (the ROCm collective communication library). For communication between nodes, we use RoCE (RDMA over Converged Ethernet). While RoCE can fall back to TCP/IP, this fallback is significantly slower and quickly becomes a bottleneck. For high-performance inference, RCCL combined with RDMA is the preferred setup. These results assume a low-latency, high-bandwidth network between the nodes.
+Efficient communication is critical for multi-node inference. For GPU-to-GPU communication within a node, we rely on RCCL (the ROCm collective communication library). For communication between nodes, we use RoCE (RDMA over Converged Ethernet). While RoCE can fall back to TCP/IP, this fallback is significantly slower and quickly becomes a bottleneck. For high-performance inference, RCCL combined with RoCE is the preferred setup. These results assume a low-latency, high-bandwidth RDMA network between nodes.
 
-On top of this, we use the AITER implementation to further optimize inference performance. AITER provides high-performance kernels, including FlashAttention v3, which improves attention efficiency and reduces end-to-end inference latency.
+We also use AITER, AMD's library of high-performance kernels designed for AI workloads. Its FlashAttention v3 implementation improves attention efficiency and reduces end-to-end inference latency.
 
 ## Unified Sequence Parallelism in Practice
 
@@ -77,13 +77,13 @@ Unified Sequence Parallelism (USP) depends on explicit communication patterns to
 
 In practice, USP requires choosing how to combine Ulysses and Ring Attention based on both the model architecture and the available hardware. A key constraint is the number of attention heads since the Ulysses degree must evenly divide the attention head count. This determines which configurations are possible using Ulysses alone.
 
-For example, HunyuanVideo has 24 attention heads, while Wan 2.1 14B has 40 heads. As a result, HunyuanVideo naturally supports a Ulysses degree of 24, while Wan 2.1 supports a degree of 40. On nodes with 8 GPUs, this allows HunyuanVideo to scale cleanly to 3 nodes (24 GPUs), and the 40 head Wan model scales to 5 nodes (40 GPUs) using Ulysses alone.
+For example, HunyuanVideo has 24 attention heads, while Wan 2.1 14B has 40 heads. As a result, HunyuanVideo naturally supports a Ulysses degree of 24, while Wan 2.1 supports a degree of 40. On nodes with 8 GPUs, this allows HunyuanVideo to scale cleanly to 3 nodes (24 GPUs), and the 40-head Wan 2.1 model scales to 5 nodes (40 GPUs) using Ulysses alone.
 
 Scaling to other node counts requires supplementing Ulysses with Ring Attention. In this case, Ulysses is best used as the inner dimension where its lower communication volume and bandwidth efficiency can be fully exploited while Ring Attention makes scaling possible beyond the attention-head constraint. When using Ulysses and Ring Attention together, the total GPU count must equal the Ulysses degree multiplied by the Ring degree.
 
 ## Performance Observations and Practical Considerations
 
-In our experiments, using Ulysses across three nodes reduces inference latency to nearly half of the single-node baseline.[^A] In contrast, the speedup from Ring Attention is noticeably smaller, as it introduces more cross-node communication and additional data movement that quickly becomes limiting factors. As a result, Ring Attention is better suited for enabling larger scale-out configurations than for maximizing raw latency improvements.
+In our experiments, using Ulysses across three nodes reduces inference latency to nearly half of the single-node baseline.[^A] In contrast, the speedup from Ring Attention is noticeably smaller, as it introduces more cross-node communication and data movement, which quickly become limiting factors. As a result, Ring Attention is better suited for enabling larger scale-out configurations than for minimizing latency.
 
 Figure 1 illustrates the normalized performance of the best-performing configuration at each GPU count, showing that Ulysses scales more effectively for low-latency inference, while Ring Attention enables node configurations that are not possible with Ulysses alone.
 
@@ -92,7 +92,7 @@ Figure 1 illustrates the normalized performance of the best-performing configura
 
 Beyond latency improvements, multi-node inference also enables memory scaling, allowing larger batch sizes or longer video sequences without CPU offloading.
 
-Multi-node inference is sensitive to configuration details, and the resulting issues are not always obvious. RoCE may silently fall back to TCP/IP if drivers or network settings are incorrect, leading to large performance drops. Misconfigured attention head counts or Ulysses degrees can cause failures, and adding more nodes does not automatically improve performance if communication overhead is large.
+Multi-node inference is sensitive to configuration details, and problems are not always easy to diagnose. RoCE may silently fall back to TCP/IP if drivers or network settings are incorrect, leading to large performance drops. Misconfigured attention head counts or Ulysses degrees can cause failures, and adding more nodes does not automatically improve performance if communication overhead is large.
 
 ## How to choose a parallelization strategy
 
@@ -100,13 +100,13 @@ Choosing the right parallelization strategy depends on both the model and the av
 
 - Multiple nodes with matching attention head alignment: Use Ulysses across nodes when the number of attention heads divides evenly by the total GPU count.
 - Arbitrary node count: Combine Ulysses with Ring Attention using USP.
-- Network limited environments: Prefer fewer nodes and avoid heavy Ring Attention usage.
+- Network-limited environments: Prefer fewer nodes and avoid heavy Ring Attention usage.
 
 ## Running the example
 
 PyTorch's torchrun makes it straightforward to launch multi-node inference, but some manual setup is still required. In this example, containers and torchrun are started independently on each node.
 
-### Host setup (all nodes)
+### Host setup on all nodes
 
 Each node must have the AMD MI300X GPU drivers and RoCE networking drivers installed on the host OS. Follow the steps in [Multi-node network configuration for AMD Instinct accelerators](https://instinct.docs.amd.com/projects/gpu-cluster-networking/en/latest/how-to/multi-node-config.html) to set up the required host drivers.
 
@@ -120,7 +120,7 @@ You should see multiple devices listed (for example, bnxt_re\* or rdma\*). This 
 
 ### Step 1: Start containers on each node
 
-SSH into each node (both the master and all worker nodes) to start a local container using the rocm/`rocm/pytorch-xdit:v25:10` image.
+SSH into each node (both the master and all worker nodes) to start a local container using the `rocm/pytorch-xdit:v25.10` image.
 
 First, set a shared Hugging Face cache location on each node (preferably on a shared filesystem such as VFS):
 
@@ -184,7 +184,7 @@ However, if you see a warning like the one below, it indicates a mismatch betwee
 libibverbs: Warning: Driver bnxt_re does not support the kernel ABI of 6 (supports 1 to 1) for device /sys/class/infiniband/bnxt_re0
 ```
 
-If the command lists devices and there are no warnings, and you know the host OS is using the same drivers provided by the OS, you can move to step 3 to run inference.
+If the command lists devices with no warnings, and the host is using the default RDMA drivers provided by the OS distribution, you can proceed to step 3.
 
 If you are not sure which provider and driver versions are installed, use commands `lspci | grep -i -E 'mellanox|broadcom'` and `lsmod | grep -E 'mlx5|bnxt'` to identify the RDMA vendor, then run `modinfo bnxt_re` (Broadcom) or `modinfo mlx5_ib` (Mellanox) to check the kernel driver version in use.
 
@@ -215,7 +215,7 @@ As an alternative to installing RDMA userspace drivers inside the container, it 
 
 Now that the containers are running on all nodes, launch torchrun inside each container.
 
-On every node, set `NODE_RANK` to a unique value starting from 0, and set `MASTER_ADDR` to the IP address of the node chosen as the master.
+Assuming N nodes, assign each node a unique `NODE_RANK` from 0 to N-1, and set `MASTER_ADDR` to the IP address of the node chosen as the master.
 
 ```bash
 cd /app/Hunyuanvideo
@@ -241,7 +241,7 @@ torchrun \
   --bench_output results
 ```
 
-This script launches the multi-node inference job across all specified nodes. The choice of Ulysses and Ring degrees directly affects performance and scalability, as discussed earlier in this post. The Ulysses degree must be chosen to match the number of participating nodes.
+This script launches the multi-node inference job across all specified nodes. The choice of Ulysses and Ring degrees directly affects performance and scalability, as discussed earlier in this post. The Ulysses degree must match the total GPU count across all nodes.
 
 To verify that the communication uses RDMA devices rather than TCP, enable RCCL logging before launching torchrun:
 
@@ -251,7 +251,7 @@ export NCCL_DEBUG_SUBSYS=INIT,NET
 export NCCL_DEBUG_FILE=/tmp/rccl.log
 ```
 
-In the output, look for messages indicating the NET/IB transport which confirms that RCCL is using RDMA. If the logs instead show NET/Socket, RCCL has fallen back to TCP and RDMA is not being used.
+In the output, look for messages indicating the NET/IB transport, which confirms that RCCL is using RDMA. Note that NET/IB refers to the RDMA transport layer and appears for both InfiniBand and RoCE setups. If the logs instead show NET/Socket, RCCL has fallen back to TCP and RDMA is not being used.
 
 ## Summary
 
