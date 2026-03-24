@@ -73,7 +73,10 @@ Because FLy introduces no additional forward passes and computes per-token entro
 
 ## FLy — A Two-Tier Mechanism for Semantic Verification 
 
-To accurately identify semantically valid mismatches, FLy introduces a sophisticated two-tier mechanism: 
+![Figure1](images/fig1.png)
+<p align="center"><i>Figure 1. Overview of our proposed FLy. (1) When the draft and target tokens differ, we do not immediately reject the case as in prior SPD methods. Instead, our two-tier scheme assesses whether the mismatch is semantically valid and rejects only truly invalid cases. (2) An entropy gate rejects deterministic target predictions where h < θ, deferring ambiguous mismatches. (3) A token-level deferral window (W = 6) then monitors for continued divergence. (4) The final generation demonstrates that FLy admits more semantically valid continuations, whereas standard SPD would reject at the first mismatch.</i></p>
+
+As shown in Figure 1, to accurately identify semantically valid mismatches, FLy introduces a sophisticated two-tier mechanism: 
 
 Entropy-level Gate: This acts as a lightweight, per-token ambiguity detector. It identifies whether the current token allows multiple plausible alternatives (high entropy) or is nearly deterministic, such as in mathematical calculations (low entropy). If the target model is confident, the mismatch is immediately rejected. If it is ambiguous, FLy defers the decision.
 
@@ -82,7 +85,22 @@ Token-level Deferred Window: When deferral is activated, FLy looks ahead over a 
 ## Multi-Level Acceleration (MLA)
 
 By accepting semantically correct mismatches, the average number of accepted tokens rises markedly. Consequently, the draft model must propose a larger set of tokens per round, making the drafting stage a new latency bottleneck. To mitigate this, we implemented a multi-level acceleration (MLA) scheme that speeds up not just the target model, but the drafter itself. By integrating a parameter-free method like prompt lookup decoding (PLD), MLA reduces draft-side overhead and achieves even greater end-to-end efficiency without adding domain bias.
- 
+
+## Results: Speedup Ratio and accuracy preservation on AMD hardware
+![Table1](images/fig2.png)
+<p align="center"><i>Table 1. Speedup ratios and mean accepted tokens (τ ) on out-of-domain (OOD) datasets. L31 and L33 represents Llama-3.1-Instruct and Llama-3.3-Instruct, respectively. Mean represents the average performance across these datasets. We use bold text to denote the best result. ✓ indicates
+training-based methods, whereas ✗ means training-free methods.</i></p>
+
+As shown in Table 1, FLy demonstrates exceptional performance. For Llama3.1-70B-Instruct, FLy achieves an average speedup of 2.74× (2.62×) with temperature= 0 (= 1), outperforming existing training-free baselines. On the Llama-3.3 variant, FLy surpasses the trainingbased SOTA method EAGLE-3 by 1.62× (1.77×). This advantage scales with model size. FLy achieves a 4.80× (5.21×) average speedup on the 405B variant, as its higher per-token latency
+allows greater time savings when draft tokens are accepted, reducing costly target model calls.
+
+![Figure2](images/fig3.png)
+<p align="center"><i>Figure 2. Accuracy preservation results. The performance of the target model is normalized to 100, and the recovery ratio is used to quantify the extent of performance preservation.</i></p>
+
+Since our method is a loosely SPD method, the output of the accelerated target model would not be exactly the same as the original. Thus, we report accuracy preservation relative to the original target model after applying FLy, as shown in Figure 2. Concretely, we normalize the original target
+model’s score to 100% and use a recovery ratio to quantify how much performance is retained. The original non-normalized scores are provided in Appendix B. Across different datasets and model scales, our method consistently maintains accuracy with over 99% recovery score, and performs on par with the training-based loosely SPD method JudgeDecoding (Bachmann et al., 2025). It is worth noting that JudgeDecoding also recognizes sensitivity to train–test domain misalignment. When coding examples are removed from their training data, performance on HumanEval drops substantially from 99.4% to 92.3%, underscoring degradation under distribution shift.
+
+
 ## Summary 
 
 In this blog, we introduced FLy, a training-free algorithm that replaces standard SPD's rigid exact-match criterion with a loosely verified scheme to accept semantically correct tokens. By utilizing an entropy-level gate and a token-level deferred window, FLy leverages the target model's self-corrective behavior to distinguish genuine errors from valid alternatives. Paired with multi-level acceleration, FLy delivers state-of-the-art speedups on AMD ROCm-enabled GPUs while maintaining over 99% accuracy.
