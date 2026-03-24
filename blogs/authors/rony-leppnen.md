@@ -4,7 +4,7 @@
   <meta name="keywords" content="blog, contributor, blog author">
 </head>
 
-(rony-leppnen)=
+(rony-leppanen)=
 
 # Rony Leppanen
 
