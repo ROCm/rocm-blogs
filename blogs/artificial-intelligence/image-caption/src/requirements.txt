@@ -1,7 +1,7 @@
-transformers==4.34.0 
-gradio==3.37.0
+transformers==4.53.0 
+gradio==6.7.0
 matplotlib
-requests==2.28.2
+requests==2.32.4
 sentencepiece
 wget
 einops
