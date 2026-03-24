@@ -1,9 +1,9 @@
 ---
 blogpost: true
-blog_title: "FLy blog post"
+blog_title: "FLy: A New Paradigm for Speculative Decoding — Accepting Semantically Correct Drafts Beyond Exact Match"
 date: 24 Mar 2026
 author: 'Jinze Li, Yixing Xu, Guanchen Li, Xuanwu Yin, Dong Li, Emad Barsoum'
-thumbnail: ''
+thumbnail: 'fly-blog-2026-02-27.png'
 tags: AI/ML
 category: Applications & models
 target_audience: For people who are interested in spd
@@ -47,59 +47,45 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# FLy blog post
+# FLy: A New Paradigm for Speculative Decoding — Accepting Semantically Correct Drafts Beyond Exact Match
 
-ROCm Blogs follow a consistent magazine article approach where there is no explicit introduction per se,
-but rather each blog starts with a brief, wide-scoped introductory text, without a section title,
-before moving into the blog’s first section.
-The introductory text should include a concise description of your blog: briefly describe for the
-reader how they will benefit from the blog, detailing its main deliverables. Please use an active-voice,
-call-to-action approach.
+Speculative decoding has emerged as a highly effective approach to accelerate large language model (LLM) inference, yet existing methods are severely bottlenecked by a rigid exact-match verification rule, which discards many semantically valid continuations. Furthermore, existing training-based loose decoding methods often suffer from significant performance degradation on out-of-distribution (OOD) tasks. 
 
-## Body
+In our recent paper, [Training-Free Loosely Speculative Decoding: Accepting Semantically Correct Drafts Beyond Exact Match](https://arxiv.org/abs/2511.22972), we introduce FLy, a novel method that loosens this rigid criterion without requiring any additional training. By leveraging the target model's inherent self-corrective behavior, FLy judges whether a draft-target mismatch remains semantically valid. In this blog, we will discuss the motivation behind FLy, its two-tier verification mechanism, and how it delivers state-of-the-art, training-free performance on AMD GPUs using the ROCm software stack.
 
-This is where you unleash your creativity. Please follow these general guidelines:
+## What Is Speculative Decoding (SPD)? 
 
-• use actionable, hands-on, conversational approach, guiding your reader through the blog and its content, maintaining engagement. Use active voice, call-to-action (CTA) text (e.g. “Interested in learning more?”, “Run this function by using”, “Try implementing this yourself”)
+Large language models (LLMs) typically generate text in an auto-regressive fashion, producing tokens one by one, which entails substantial inference latency. Speculative Decoding (SPD) tackles this bottleneck losslessly by using a lightweight draft model to sequentially propose multiple candidate tokens. A much larger target model then verifies these draft tokens in parallel, accepting those that match its own predictions. When the acceptance rate is high, the amortized time per token drops, yielding substantial speedups. 
 
-• keep your writing structured, engaging, and actionable. Divide the blog’s content into logical sections.
+## Motivation – The Exact-Match Bottleneck & OOD Degradation 
 
-• Make sure you provide the required background and prerequisites for your blog. Outline any foundational knowledge and tools the reader will likely require.
+Standard SPD is fundamentally constrained by its exact-match rule: the target model accepts a draft token only if it is identical to its own generation. This rigid requirement forces the rejection of many plausible continuations—even those that are semantically aligned and valid—thereby wasting compute and limiting potential speedup. 
 
-• When describing a process use step-by-step guide, employ numbered steps or subheadings to guide the reader through the process.
+To address this, recent works have proposed loose variants of SPD that train an auxiliary classifier to decide if a draft token is contextually valid. However, this requires carefully curated training data and incurs high annotation costs. More critically, these supervised classifiers often fail to generalize across different domains or tasks, making them brittle in out-of-distribution (OOD) settings. 
 
-• Integrate examples and use cases: provide real-world applications and scenarios. Reflect on common pitfalls and possible troubleshooting approaches, addressing potential mistakes and solutions.
+## Core Insight – LLM Self-Corrective Behavior 
 
-Leeway into figures, equations, etc.
+To overcome these limitations without relying on fragile trained verifiers, FLy operates entirely training-free. Our central insight is that LLMs tend to exhibit self-corrective behavior when conditioned on genuinely erroneous tokens, but do not diverge when faced with differently worded yet semantically valid alternatives. Building on this property, FLy leverages the target model's own behavior to distinguish harmful mismatches from semantically equivalent continuations. 
 
-## Sample markdown
+## ROCm — Powering FLy's Efficient Acceleration 
 
-This section covers some markdown techniques commonly used in a blogs.
+Because FLy introduces no additional forward passes and computes per-token entropy directly from already-available logits, its computational overhead is negligible. All our experiments were conducted on AMD Instinct MI355X GPUs. By leveraging the ROCm software stack—which is designed to maximize memory bandwidth utilization and fine-grained parallelism—FLy is able to execute parallel token verification at scale with minimal latency overhead. This makes FLy a highly efficient, plug-and-play solution that seamlessly composes with arbitrary draft-target pairs on ROCm-enabled systems, ensuring production-grade performance without the need for hyperparameter re-tuning.
 
-This is a table.
+## FLy — A Two-Tier Mechanism for Semantic Verification 
 
-|      | SPX (MI300X) | CPX (MI300X) |
-| ---- | :----------: | :----------: |
-| NPS1 |      ✔       |      ✔       |
-| NPS4 |              |      ✔       |
+To accurately identify semantically valid mismatches, FLy introduces a sophisticated two-tier mechanism: 
 
-Below is a code snippet from the console. You can also use bash, C++, python and other languages.
+Entropy-level Gate: This acts as a lightweight, per-token ambiguity detector. It identifies whether the current token allows multiple plausible alternatives (high entropy) or is nearly deterministic, such as in mathematical calculations (low entropy). If the target model is confident, the mismatch is immediately rejected. If it is ambiguous, FLy defers the decision.
 
-```console
-echo "c 226:128 rwm" > /sys/fs/cgroup/devices/devices.deny #Deny access to device 226:128 in docker (renderD128)
+Token-level Deferred Window: When deferral is activated, FLy looks ahead over a window spanning the next several tokens (e.g., 6 tokens). Within this window, the mismatch is provisionally accepted. If another mismatch emerges, it signals that the target model is attempting to course-correct a genuine error, and the initial token is retroactively rejected. If no further divergence occurs, the token is deemed a semantically valid continuation and is retained.
 
-echo "c 226:128 rwm" > /sys/fs/cgroup/devices/devices.allow #Allow access to device 226:128 in docker (renderD128)
-```
+## Multi-Level Acceleration (MLA)
 
-```{note}
-This is how to add a note. See the [myst markdown admonition guide](https://mystmd.org/guide/admonitions) for more details.
-```
+By accepting semantically correct mismatches, the average number of accepted tokens rises markedly. Consequently, the draft model must propose a larger set of tokens per round, making the drafting stage a new latency bottleneck. To mitigate this, we implemented a multi-level acceleration (MLA) scheme that speeds up not just the target model, but the drafter itself. By integrating a parameter-free method like prompt lookup decoding (PLD), MLA reduces draft-side overhead and achieves even greater end-to-end efficiency without adding domain bias.
+ 
+## Summary 
 
-## Summary
-
-ROCm Blogs follow a consistent magazine-article approach where each blog ends with a “Summary” section.
-Please provide a brief summary of your blog, reiterating the main takeaways and deliverables, as well
-as what the reader learned from it.
+In this blog, we introduced FLy, a training-free algorithm that replaces standard SPD's rigid exact-match criterion with a loosely verified scheme to accept semantically correct tokens. By utilizing an entropy-level gate and a token-level deferred window, FLy leverages the target model's self-corrective behavior to distinguish genuine errors from valid alternatives. Paired with multi-level acceleration, FLy delivers state-of-the-art speedups on AMD ROCm-enabled GPUs while maintaining over 99% accuracy.
 
 ## Disclaimers
 
