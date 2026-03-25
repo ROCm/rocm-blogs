@@ -157,6 +157,7 @@ Ching
 chiplet
 Chonglin
 CIFAR
+CK
 CIOs
 CLI
 cmake
@@ -175,7 +176,9 @@ colspan
 comgr
 Commitizen
 CommonMark
+Composable
 composable
+composability
 comprehensize
 concretization
 Concretized
@@ -241,6 +244,7 @@ deepep
 DeepSeek
 DeepSpeed
 Deepstack
+demystifies
 denoise
 denoised
 denoises
@@ -425,6 +429,7 @@ Helvetica
 heterogenous
 Hiew
 Higgs
+HIP
 hipBLAS
 hipBLASLt
 HIPCC
@@ -639,6 +644,7 @@ MERCHANTABILITY
 Meta's
 MediaTek
 MFMA
+MI308X
 microarchitecture
 Microservice
 Microservices
@@ -774,6 +780,7 @@ parameterization
 params
 Params
 partitionProfile
+PassThrough
 passthrough
 PCI
 PCIe
@@ -914,6 +921,7 @@ ROCm's
 ROCmSoftwarePlatform
 ROCmValidationSuite
 rocPRIM
+rocprofv3
 ROCProfiler
 ROCr
 rocRAND
@@ -1046,8 +1054,11 @@ td
 Teahv
 templated
 TensorBoard
+TensorDescriptor
+TensorDescriptors
 TensorFlow
 TensorParallel
+Tensors
 TFLOPS
 th
 th
@@ -1106,6 +1117,8 @@ Uncached
 uncached
 Unhandled
 uninstallation
+Unmerge
+unmerge
 unoptimized
 unsqueeze
 unstacking
