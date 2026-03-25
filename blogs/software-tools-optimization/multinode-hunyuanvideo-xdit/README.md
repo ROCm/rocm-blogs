@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Multi-Node Distributed Inference for Diffusion Models with xDiT"
 date: 18 Mar 2026
-author: 'Jarkko Lehtiranta, Tero Kemppi, Rony Leppänen, Johanna Malinen'
+author: 'Jarkko Lehtiranta, Tero Kemppi, Rony Leppanen, Johanna Malinen'
 thumbnail: 'multinode_thumbnail.webp'
 tags: Performance, Diffusion Model, GenAI
 category: Software tools & optimizations
