@@ -4,7 +4,7 @@ blog_title: "Edge-to-Cloud Robotics with AMD ROCm: From Data Collection to Real-
 date: 23 Mar 2026
 author: Alex He, Theresa Shan, Eda Zhou
 thumbnail: 'edge2cloud-thumbnail.png'
-tags: AI/ML, Fine-Tuning
+tags: AI/ML, Fine-Tuning, Robotics
 category: Applications & models
 target_audience: Robotics developers, researchers and entrance-level users
 key_value_propositions: AMD hardware and ROCm deliver a scalable, performant foundation for robotics AI and machine learning across data center and desktop environments, enabling a fast transition from fundamentals to real-world, multistep applications.

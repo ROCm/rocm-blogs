@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Multi-Node Distributed Inference for Diffusion Models with xDiT"
 date: 18 Mar 2026
-author: 'Jarkko Lehtiranta, Tero Kemppi, Rony Leppänen, Johanna Malinen'
+author: 'Jarkko Lehtiranta, Tero Kemppi, Rony Leppanen, Johanna Malinen'
 thumbnail: 'multinode_thumbnail.webp'
 tags: Performance, Diffusion Model, GenAI
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Practical guidance for scaling inference to multi-node
 language: English
 myst:
     html_meta:
-        "author": "Jarkko Lehtiranta, Tero Kemppi, Rony Leppänen, Johanna Malinen"
+        "author": "Jarkko Lehtiranta, Tero Kemppi, Rony Leppanen, Johanna Malinen"
         "description lang=en": "Follow a tutorial on multi-node video generation with diffusion models, covering scaling considerations and a practical Docker-based example."
         "keywords": "multi-node inference, diffusion models, AMD Instinct MI300X, PyTorch, torchrun, RDMA, RoCE, RCCL, Ulysses, Ring Attention, Docker"
         "vertical": "AI"

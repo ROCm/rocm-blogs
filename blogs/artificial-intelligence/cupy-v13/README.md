@@ -58,6 +58,13 @@ In an earlier [blog on CuPy and hipDF](https://rocm.blogs.amd.com/artificial-int
 
 To help you leverage the latest CuPy and ROCm features in your data analytics projects, AMD will continue to release PyPI wheels regularly while pushing changes to the upstream CuPy repository. This blog describes key enhancements in the PyPI wheel based on the [CuPy v13](https://docs.cupy.dev/en/stable/upgrade.html#cupy-v13) release and ROCm 7.0.0. It also outlines the plan to upstream those enhancements to the next CuPy version (v14).
 
+```{note}
+**New wheels released (March 2026):** Updated CuPy wheels are now available for ROCm 7.0.2 and ROCm 7.2.0, including miscellaneous bug fixes since the last release. You can find the new wheels here:
+
+- [ROCm 7.0.2 wheels](https://pypi.amd.com/rocm-7.0.2/simple/)
+- [ROCm 7.2.0 wheels](https://pypi.amd.com/rocm-7.2.0/simple/)
+```
+
 ## The CuPy v13 fork from AMD
 
 The latest published [PyPI wheel](https://pypi.amd.com/simple/amd-cupy/) from AMD is based on a fork of CuPy v13 that introduces expanded functionality and hardware support, including:
