@@ -134,11 +134,11 @@ The key required modules are:
 * buildtools: Exposes `cmake`, the build system generator used by GROMACS.
 
 ```bash
-module load LUMI partition/G buildtools/24.03
+module load LUMI/25.03 partition/G buildtools/25.03
 module load PrgEnv-cray
-module load rocm/6.2.2
+module load rocm/6.3.4
 module load craype-accel-amd-gfx90a
-module load cray-fftw/3.3.10.7
+module load cray-fftw/3.3.10.11
 ```
 
 ```{tip}
@@ -154,7 +154,7 @@ This branch contains AMD-specific optimizations and will continue to be maintain
 ```
 
 ```{tip}
-AMD also maintains branches specific to individual patch releases if you require a particular GROMACS version for compatibility or reproducibility purposes.
+AMD also maintains branches specific to individual patch releases if you require a particular GROMACS version for compatibility or reproducibility purposes. For example, use the [2025 HIP-enabled GROMACS branch](https://github.com/ROCm/Gromacs/tree/4947-hip-feature-enablement-2025.4) if you want to reproduce the benchmark numbers presented in this blogpost.
 ```
 
 ```bash
@@ -173,8 +173,8 @@ Make sure to adjust the paths, i.e., the version numbers in `MPI_CFLAGS` and `MP
 ```
 
 ```bash
-export MPI_CFLAGS="-I/opt/cray/pe/mpich/8.1.29/ofi/cray/17.0/include/"
-export MPI_LDFLAGS="-L/opt/cray/pe/mpich/8.1.29/ofi/cray/17.0/lib -lmpi -L/opt/cray/pe/mpich/8.1.29/gtl/lib -lmpi_gtl_hsa"
+export MPI_CFLAGS="-I/opt/cray/pe/mpich/8.1.33/ofi/cray/20.0/include/"
+export MPI_LDFLAGS="-L/opt/cray/pe/mpich/8.1.33/ofi/cray/20.0/lib -lmpi -L/opt/cray/pe/mpich/8.1.33/gtl/lib -lmpi_gtl_hsa"
 
 cmake .. \
     -DCMAKE_C_COMPILER=${ROCM_PATH}/bin/amdclang \
@@ -216,7 +216,7 @@ You should see output indicating the GROMACS version and that it was built with 
 
 ```text
 MPI library:         MPI
-MPI library version: MPI VERSION    : CRAY MPICH version 8.1.29.7 (ANL base 3.4a2) MPI BUILD INFO : Tue Feb 20 19:45 2024 (git hash d8ab47f)
+MPI library version: MPI VERSION    : CRAY MPICH version 8.1.33 (ANL base 3.4a2)
 OpenMP support:      enabled (GMX_OPENMP_MAX_THREADS = 128)
 GPU support:         HIP
 ```
@@ -250,11 +250,11 @@ if [ -d "${INSTALL_PREFIX}" ]; then
     exit 1
 fi
 
-module load LUMI partition/G buildtools/24.03
+module load LUMI/25.03 partition/G buildtools/25.03
 module load PrgEnv-cray
-module load rocm/6.2.2
+module load rocm/6.3.4
 module load craype-accel-amd-gfx90a
-module load cray-fftw/3.3.10.7
+module load cray-fftw/3.3.10.11
 
 echo "ROCM path:      ${ROCM_PATH}"
 echo "MPICH path:     ${MPICH_DIR}"
@@ -266,8 +266,8 @@ git clone -b ${GROMACS_BRANCH} https://gitlab.com/gromacs/gromacs.git gromacs_${
 cd gromacs_${INSTALL_VERSION}
 mkdir build && cd build
 
-export MPI_CFLAGS="-I/opt/cray/pe/mpich/8.1.29/ofi/cray/17.0/include/"
-export MPI_LDFLAGS="-L/opt/cray/pe/mpich/8.1.29/ofi/cray/17.0/lib -lmpi -L/opt/cray/pe/mpich/8.1.29/gtl/lib -lmpi_gtl_hsa"
+export MPI_CFLAGS="-I/opt/cray/pe/mpich/8.1.33/ofi/cray/20.0/include/"
+export MPI_LDFLAGS="-L/opt/cray/pe/mpich/8.1.33/ofi/cray/20.0/lib -lmpi -L/opt/cray/pe/mpich/8.1.33/gtl/lib -lmpi_gtl_hsa"
 
 cmake .. \
     -DCMAKE_C_COMPILER=${ROCM_PATH}/bin/amdclang \
@@ -404,9 +404,9 @@ The hexadecimal CPU masks in the benchmark scripts below are LUMI-specific. On o
 #SBATCH --ntasks-per-node=8
 
 # Set up the RUNTIME environment
-module load LUMI partition/G
+module load LUMI/25.03 partition/G
 module load PrgEnv-cray
-module load rocm/6.2.2
+module load rocm/6.3.4
 module load craype-accel-amd-gfx90a
 
 # The path to the GROMACS bare metal libraries
@@ -593,9 +593,9 @@ The runtime parameters in the script (such as GPU-aware MPI settings and GPU off
 #SBATCH --ntasks-per-node=48
 
 # Set up the RUNTIME environment
-module load LUMI partition/G
+module load LUMI/25.03 partition/G
 module load PrgEnv-cray
-module load rocm/6.2.2
+module load rocm/6.3.4
 module load craype-accel-amd-gfx90a
 
 # The path to the GROMACS bare metal libraries: adjust for custom location
