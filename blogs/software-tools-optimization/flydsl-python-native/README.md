@@ -59,7 +59,7 @@ In this blog, we explain what FlyDSL is, why we built it, how it complements exi
 
 FlyDSL (Flexible Layout Python DSL) is a Python DSL and an MLIR stack for authoring high-performance GPU kernels with explicit layouts and tiling.
 
-FlyDSL is powered by FLIR (Flexible Layout Intermediate Representation), an end-to-end, MLIR-native compiler stack for GPU kernels. Its core is the flir dialect, a first-class layout IR with explicit algebra and coordinate mapping, plus a composable lowering pipeline to GPU/ROCDL.
+FlyDSL is powered by the Fly dialect: an end-to-end, MLIR-native compiler stack for GPU kernels. Its core is the `fly` dialect, a first-class layout IR with explicit algebra and coordinate mapping, plus a composable lowering pipeline to GPU/ROCDL.
 
 FlyDSL was created to meet several long-standing needs expressed by the open-source and ROCm communities:
 
@@ -82,7 +82,7 @@ FlyDSL addresses these issues by providing the following (see also Figure 1):
 - A native Python DSL for expressing kernels
 - AST transforms to convert Pythonic control flow into MLIR
 - JIT friendly compilation, dramatically reducing iteration time
-- Clear MLIR → ROCDL → HSACO lowering pipeline designed for AI workloads
+- Clear MLIR → Fly → ROCDL → HSACO lowering pipeline designed for AI workloads
 
 This results in faster kernel development and more predictable experimentation.
 
@@ -160,66 +160,83 @@ pip install flydsl
 Now you are ready to try a simple example below:
 
 ```python
-"""Simple example demonstrating fused add + relu operation in FlyDSL."""
+import torch
+import flydsl.compiler as flyc
+import flydsl.expr as fx
 
-from flydsl.compiler.context import RAIIMLIRContextModule
-from flydsl.dialects.ext import flir, arith
-from _mlir.ir import InsertionPoint
-import _mlir.extras.types as T
-import os
+@flyc.kernel
+def vectorAddKernel(
+    A: fx.Tensor,
+    B: fx.Tensor,
+    C: fx.Tensor,
+    block_dim: fx.Constexpr[int],
+):
+    bid = fx.block_idx.x
+    tid = fx.thread_idx.x
 
-# Set up MLIR context
-ctx = RAIIMLIRContextModule(allow_unregistered_dialects=True)
+    A = fx.rocdl.make_buffer_tensor(A)
 
-# Define the fused add + relu function
-with InsertionPoint(ctx.module.body):
-    @flir.jit(T.f32(), T.f32())
-    def fused_add_relu(x, y):
-        # Add the two inputs
-        sum_val = x + y
-        # ReLU: max(x, 0) using arith.maximum
-        zero = arith.f32(0.0)
-        result = arith.maximum(sum_val, zero)
-        return result
+    tA = fx.logical_divide(A, fx.make_layout(block_dim, 1))
+    tB = fx.logical_divide(B, fx.make_layout(block_dim, 1))
+    tC = fx.logical_divide(C, fx.make_layout(block_dim, 1))
 
-# Print the generated MLIR
-print("Generated MLIR:")
-print(ctx.module)
-print("\n" + "="*50 + "\n")
+    tA = fx.slice(tA, (None, bid))
+    tB = fx.slice(tB, (None, bid))
+    tC = fx.slice(tC, (None, bid))
+    tA = fx.logical_divide(tA, fx.make_layout(1, 1))
+    tB = fx.logical_divide(tB, fx.make_layout(1, 1))
+    tC = fx.logical_divide(tC, fx.make_layout(1, 1))
 
-# Verify the module
-try:
-    ctx.module.operation.verify()
-    print("✓ Module verification passed!")
-except Exception as e:
-    print(f"✗ Module verification failed: {e}")
+    RABMemRefTy = fx.MemRefType.get(fx.T.f32(), fx.LayoutType.get(1, 1), fx.AddressSpace.Register)
 
-os._exit(0)
+    copyAtom = fx.make_copy_atom(fx.UniversalCopy32b(), fx.Float32)
+    copyAtomBuffer = fx.make_copy_atom(fx.rocdl.BufferCopy32b(), fx.Float32)
+
+    rA = fx.memref_alloca(RABMemRefTy, fx.make_layout(1, 1))
+    rB = fx.memref_alloca(RABMemRefTy, fx.make_layout(1, 1))
+    rC = fx.memref_alloca(RABMemRefTy, fx.make_layout(1, 1))
+
+    fx.copy_atom_call(copyAtomBuffer, fx.slice(tA, (None, tid)), rA)
+    fx.copy_atom_call(copyAtom, fx.slice(tB, (None, tid)), rB)
+
+    vC = fx.arith.addf(fx.memref_load_vec(rA), fx.memref_load_vec(rB))
+    fx.memref_store_vec(vC, rC)
+
+    fx.copy_atom_call(copyAtom, rC, fx.slice(tC, (None, tid)))
+
+
+@flyc.jit
+def vectorAdd(
+    A: fx.Tensor,
+    B: fx.Tensor,
+    C,  # omitted for auto induction
+    n: fx.Int32,  # dynamic int32
+    const_n: fx.Constexpr[int],  # static int32, it has an effect on function cache-key
+    stream: fx.Stream = fx.Stream(None),
+):
+    block_dim = 64
+    grid_x = (n + block_dim - 1) // block_dim
+
+    vectorAddKernel(A, B, C, block_dim).launch(grid=(grid_x, 1, 1), block=[block_dim, 1, 1], stream=stream)
+
+# Usage
+n = 128
+A = torch.randint(0, 10, (n,), dtype=torch.float32).cuda()
+B = torch.randint(0, 10, (n,), dtype=torch.float32).cuda()
+C = torch.zeros(n, dtype=torch.float32).cuda()
+tA = flyc.from_dlpack(A).mark_layout_dynamic(leading_dim=0, divisibility=4)
+vectorAdd(tA, B, C, n, n + 1, stream=torch.cuda.Stream())
+torch.cuda.synchronize()
+print('Result correct:', torch.allclose(C, A + B))
 ```
 
-You will see the output below:
-
-```mlir
-Generated MLIR:
-module {
-  func.func @fused_add_relu(%arg0: f32, %arg1: f32) -> f32 {
-    %cst = arith.constant 0.000000e+00 : f32
-    %0 = arith.addf %arg0, %arg1 : f32
-    %1 = arith.maximumf %0, %cst : f32
-    return %1 : f32
-  }
-}
-==================================================
-✓ Module verification passed!
-```
-
-In this example, you learned how to use FlyDSL to define a GPU-optimized function (fused add + ReLU) with MLIR operations and verify the generated IR.
+In this example, you can see how FlyDSL expresses a vectorized GPU kernel using CuTe-style layout algebra: tensors are partitioned hierarchically by block and thread, data is moved through typed register buffers via copy atoms, and arithmetic is performed on register-resident vectors, all within a clean Python DSL that compiles through the Fly dialect to HSACO.
 
 ### Building from Source
 
-The pip package (flydsl) supports Python 3.10 or 3.12, glibc >= 2.35. Alternatively, you can build from source.
+The pip package (flydsl) supports Python 3.10+. Alternatively, you can build from source.
 
-Figure 2 below outlines the full building from source workflow, including building MLIR, building FLIR, installing the Python package, and running tests.
+Figure 2 below outlines the full building from source workflow, including building MLIR, building FlyDSL, installing the Python package, and running tests.
 
 ```{figure} ./images/flydsl-figure2-getting-started-flow.svg
 :align: center
@@ -258,12 +275,13 @@ We’re excited for what comes next, and even more excited to see what you build
 
 ## Acknowledgements
 
-FLIR's design is inspired by ideas from several projects:
+FlyDSL's design is inspired by ideas from several projects:
 
 - Categorical Foundations for CuTe Layouts [1] – mathematical framework for layout algebra (companion code)
 - NVIDIA CUTLASS – CuTe layout algebra concepts (BSD-3-Clause parts only; no EULA-licensed code was referenced)
 - Triton – Python DSL for GPU kernel authoring
 - ROCm Composable Kernel – tile-based kernel design patterns for AMD GPUs
+- ROCm Aiter – test infrastructure and performance comparison baselines
 
 ## References
 
@@ -301,3 +319,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
+
+```{update} Mar 30, 2026
+Updated the blog to match FlyDSL's current API and terminology
+```
