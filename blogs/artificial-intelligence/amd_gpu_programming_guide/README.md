@@ -1,9 +1,9 @@
 ---
 blogpost: true
-blog_title: "AMD GPU Programming From Beginner to Expert 1 - TensorDescriptor in Composable Kernel (CK)"
+blog_title: "Programming Tensor Descriptors in Composable Kernel (CK)"
 date: 25 Mar 2026
-author: 'Hang Yang'
-thumbnail: 'thumbnail.png'
+author: 'Hang Yang, Spandan Tiwari, Xinjun Niu, Wei Luo, Felix Marty, Ashish Sirasao'
+thumbnail: 'TensorDescriptor_in_CK.png'
 tags: HPC
 category: Applications & models
 target_audience: Beginners of AMD GPU programming
@@ -11,7 +11,7 @@ key_value_propositions: Lower the learning curve of AMD GPU programming and enco
 language: English
 myst:
     html_meta:
-        "author": "Hang Yang"
+        "author": "Hang Yang, Spandan Tiwari, Xinjun Niu, Wei Luo, Felix Marty, Ashish Sirasao"
         "description lang=en": "Learn how to use TensorDescriptor in Composable Kernel (CK) to manage multi-dimensional data layouts and write efficient GPU kernels on AMD GPUs."
         "keywords": "GPU programming, Composable Kernel (CK), HIP"
         "vertical": "HPC, AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Hang Yang"
+        "amd_blog_authors": "Hang Yang, Spandan Tiwari, Xinjun Niu, Wei Luo, Felix Marty, Ashish Sirasao"
 ---
 
 <!---
@@ -47,7 +47,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# AMD GPU Programming From Beginner to Expert (Part 1) - TensorDescriptor in Composable Kernel (CK)
+# Programming Tensor Descriptors in Composable Kernel (CK)
 
 Writing efficient GPU kernels requires more than knowing the API—it demands a deep understanding of the underlying concepts, from GPU architecture to low-level programming patterns. This blog series demystifies GPU kernel programming on AMD GPUs by breaking down common kernels into their fundamental building blocks. Rather than treating GPU programming as a black box, each blog focuses on a specific concept, starting from first principles and building up to complete implementations with simple, insightful example code. In this blog, you will learn one of the most fundamental concepts in Composable Kernel (CK): the **TensorDescriptor**—a powerful abstraction for managing multi-dimensional data layouts and transformations. By the end of this series, you will be able to not only understand existing GPU kernels but also design and optimize your own.
 
@@ -57,11 +57,13 @@ Writing efficient GPU kernels requires more than knowing the API—it demands a 
 
 Logically speaking, a Tensor can be understood as a mapping from logical coordinates to physical memory addresses. For example, if we define a K-dimensional Tensor $T(d_1, d_2, d_3, ..., d_k)$, we can read and write elements within this Tensor as follows:
 
+<!-- spellcheck-disable -->
 $$T[a_1, a_2, \ldots, a_K] = T[b_1, b_2, \ldots, b_K]$$
 
-Assuming the Tensor's data pointer is P, and the stride for each dimension is $[s_1, s_2, ... s_k]$, then in terms of physical storage, the above data access translates to:
+Assuming the data pointer of Tensor is P, and the stride for each dimension is $[s_1, s_2, ... s_k]$, then in terms of physical storage, the above data access translates to:
 
 $$P\left[\sum_{i=1}^{K} a_i s_i\right] = P\left[\sum_{i=1}^{K} b_i s_i\right]$$
+<!-- spellcheck-enable -->
 
 This demonstrates the fundamental mapping: logical multi-dimensional coordinates are converted to a single linear memory offset by taking the dot product of the coordinate vector with the stride vector. CK (Composable Kernel) needs to implement this mapping relationship efficiently.
 
@@ -80,11 +82,11 @@ template <typename Transforms,
 struct TensorDescriptor
 ```
 
-There are a few confusing concepts in the struct definition, we'll explain them next. Let's start with Transforms.
+There are a few confusing concepts in the `struct` definition, we'll explain them next. Let's start with Transforms.
 
 ### The Concept of Transform
 
-To understand TensorDescriptor, we need to introduce a core concept: **Transform**. In CK, a Transform is defined as a struct type. TensorDescriptor uses a tree structure composed of multi-level coordinates and multiple Transforms to represent a Tensor, as shown in Figure 1.
+To understand TensorDescriptor, we need to introduce a core concept: **Transform**. In CK, a Transform is defined as a `struct` type. TensorDescriptor uses a tree structure composed of multi-level coordinates and multiple Transforms to represent a Tensor, as shown in Figure 1.
 
 Each Transform defines a method called `CalculateLowerIndex`, which maps upper-level coordinates to lower-level coordinates. At the bottom level of the TensorDescriptor hierarchy, we have a one-dimensional coordinate that directly corresponds to physical memory storage. Through a series of Transforms, we can construct any desired target coordinate system from this base.
 
@@ -106,6 +108,7 @@ Let's consider an example: we start with an (M, K) Tensor, then split the first 
 **Note:** If we define a 2D tensor in CK, an instance of Transform named `Embed` will be implicitly inserted, as shown in Figure 1.
 
 In the diagram:
+
 - Circle nodes represent dimensions/coordinates.
 - Square boxes represent Transforms.
 
@@ -140,6 +143,7 @@ If we assign a global index to each dimension (all the circles in the figure) sh
 <p align="center"><em>Figure 3: Global dimension numbering</em></p>
 
 We define the following terminology:
+
 - **Upper dimension id**: The dimension id(s) above each Transform.
 - **Lower dimension id**: The dimension id(s) below each Transform.
 - **Visible dimension id**: The dimension id(s) at the top level of the tree structure (what the user directly interacts with).
@@ -162,6 +166,7 @@ VisibleDimensionIds = [3, 4, 5]
 For one specific Transform `Transforms[i]`, its upper dimension ids are `UpperDimensionIdss[i]` and its lower dimension ids are `LowerDimensionIdss[i]`.
 
 These tuples encode:
+
 - Which transforms are applied.
 - How dimensions are connected between levels.
 - Which dimensions are exposed to the user.
@@ -169,6 +174,7 @@ These tuples encode:
 ### Code Example
 
 Here's a complete example demonstrating how to create and use TensorDescriptors:
+
 ```cpp linenums="1"
  1  #include "ck/tensor_operation/gpu/device/impl/device_gemm_xdl_cshuffle.hpp"
  2  #include "ck/library/utility/literals.hpp"
@@ -243,7 +249,7 @@ Here's a complete example demonstrating how to create and use TensorDescriptors:
 
 After compiling and running, the output is:
 
-```
+```txt
 Unmerge lower_idx = 67
 tensor_desc.shape = 256, 128
 transformed_tensor_desc.shape = 4, 64, 128
@@ -253,14 +259,15 @@ hidden_idx = 8578, 67, 2, 1, 3, 2,
 
 #### Understanding the Output
 
-- **Unmerge lower_idx = 67**: When we unmerge coordinates (1, 3) with dimensions (4, 64), we get 1 * 64 + 3 = 67
-- **tensor_desc.shape = 256, 128**: The original 2D tensor shape
-- **transformed_tensor_desc.shape = 4, 64, 128**: The transformed 3D tensor shape generated by splitting the first dimension (256) into two dimensions (4, 64)
-- **physical offset = 8578**: The linear memory offset for coordinate (1, 3, 2), calculated as (1 * 64 + 3) * 128 + 2 = 67 * 128 + 2 = 8578
-- **hidden_idx**: Contains values at all levels of the tree structure from Figure 3
+- **`Unmerge lower_idx = 67`**: When we unmerge coordinates (1, 3) with dimensions (4, 64), we get 1 * 64 + 3 = 67
+- **`tensor_desc.shape = 256, 128`**: The original 2D tensor shape
+- **`transformed_tensor_desc.shape = 4, 64, 128`**: The transformed 3D tensor shape generated by splitting the first dimension (256) into two dimensions (4, 64)
+- **`physical offset = 8578`**: The linear memory offset for coordinate (1, 3, 2), calculated as `(1 * 64 + 3) * 128 + 2 = 67 * 128 + 2 = 8578`
+- **`hidden_idx`**: Contains values at all levels of the tree structure from Figure 3
 
 ### Chaining Transforms
-We can continue to transform the tensor_desc. For example, let's merge the second and third dimensions into a single dimension:
+
+We can continue to transform the `tensor_desc`. For example, let's merge the second and third dimensions into a single dimension:
 
 ```cpp linenums="1"
  1  // #include ...
@@ -290,7 +297,7 @@ We can continue to transform the tensor_desc. For example, let's merge the secon
 
 The output is:
 
-```
+```txt
 new_transformed_tensor_desc.shape = 4, 8192
 ```
 
@@ -312,10 +319,12 @@ This design enables CK to handle various tensor layouts (row-major, column-major
 
 ## Example of Matrix Transpose
 
-### Overview
+### Matrix Transpose Overview
+
 Matrix transpose is a fundamental operation in linear algebra where we swap rows and columns of a matrix. Given an input matrix A of shape (M, K), the transpose operation produces an output matrix $A^T$ of shape (K, M), where $A^T[i,j] = A[j,i]$.
 
 In this example, we demonstrate an efficient GPU implementation using CK. The key idea is to leverage parallelism at multiple levels:
+
 - Each GPU thread processes a 4×4 sub-matrix
 - Threads are organized into blocks of 8×8 (64 threads per block)
 - Each block therefore processes a 32×32 tile of the input matrix
@@ -350,6 +359,7 @@ This matrix transpose example demonstrates several key CK concepts:
 5. **Register-level computation**: Maximizing throughput by keeping data in registers
 
 ### Host Code Walkthrough
+
 The host code sets up the data, launches the kernel, and verifies the results. We used some APIs in CK, such as `HostTensorDescriptor` and `DeviceMem`. They are self-explanatory in the code snippet below:
 
 ```cpp linenums="1"
@@ -603,7 +613,7 @@ Notice the `vector_type<float, 16>`. It will allocate a buffer containing 16 flo
 
 ### Performance Test
 
-For comparison, we implement matrix transpose in PyTorch and test the performance of both implementations with rocprofv3:
+For comparison, we implement matrix transpose in PyTorch and test the performance of both implementations with `rocprofv3`:
 
 ```python linenums="1"
 1  import torch
@@ -625,6 +635,10 @@ In this blog, you learned the fundamentals of AMD GPU kernel programming using C
 The 4x4 per-thread transpose approach demonstrated here strikes a good balance between parallelism, memory efficiency, and register usage, making it an excellent template for similar GPU kernels.
 
 In the next blog in this series, we will break down GEMM (General Matrix Multiply) into basic parts and understand them one by one, building on the TensorDescriptor foundation covered here. Stay tuned to continue your journey from beginner to expert in AMD GPU programming.
+
+## Acknowledgement
+
+We would like to express our thanks to AMD Quark Team for their insightful feedback and technical assistance.
 
 ## Disclaimers
 

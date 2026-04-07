@@ -272,6 +272,8 @@ Kailash
 Gogineni
 Kaiping
 Lu
+Karan
+Verma
 Karthik
 Thatipamula
 Ke
@@ -438,6 +440,8 @@ Rahul
 Biswas
 Rajat
 Arora
+Rajesh
+Poornachandran
 Rajneesh
 Bhardwaj
 Rasmus
@@ -536,6 +540,8 @@ Tong
 Shen
 Tun
 Tan
+Uma
+Kannikanti
 Umang
 Pandey
 Vara
