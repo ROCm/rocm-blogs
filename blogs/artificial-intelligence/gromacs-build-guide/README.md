@@ -80,9 +80,9 @@ Before starting the installation, ensure your system has:
 
 - A supported Linux distribution with ROCm compatibility
 - ROCm installed and configured
-    - ROCm &ge; 6.0.0 for MI300X and &ge; 7.0.0 for MI355X
+  - ROCm &ge; 6.0.0 for MI300X and &ge; 7.0.0 for MI355X
 - Standard build tools (GCC, make, etc.)
-    - This guide uses GCC/G++ 11
+  - This guide uses GCC/G++ 11
 - Git for source code retrieval
 
 ## Bare metal installation
@@ -192,7 +192,7 @@ export PATH="${BASE_INSTALL}/openmpi/bin:${PATH}"
 
 ### Build Tools (CMake)
 
-GROMACS requires CMake 3.18 or later for HIP support. Installing a known-compatible version ensures the build configuration works correctly:
+GROMACS requires CMake 3.28 or later for HIP support. Installing a known-compatible version ensures the build configuration works correctly:
 
 ```bash
 echo "Installing CMake ${CMAKE_VERSION}..."
@@ -242,11 +242,8 @@ cmake \
     -DCMAKE_INSTALL_PREFIX="${BASE_INSTALL}" \
     -DCMAKE_BUILD_TYPE=Release \
     -DGMX_GPU=HIP \
-    -DGMX_GPU_UPDATE=ON \
     -DGMX_MPI=ON \
     -DGMX_OPENMP=ON \
-    -DGMX_GPU_FFT=ON \
-    -DGMX_MULTI_GPU_FFT=ON \
     -DGMX_HIP_TARGET_ARCH="${GPU_TARGET}" \
     -DGMX_BUILD_OWN_FFTW=ON \
     -DCMAKE_C_COMPILER="${GCC_VERSION}" \
@@ -263,11 +260,8 @@ rm -rf "${GROMACS_BUILD_DIR}"
 Key CMake options explained:
 
 - `GMX_GPU=HIP` &mdash; Enables HIP GPU acceleration for AMD GPUs
-- `GMX_GPU_UPDATE=ON` &mdash; Enables GPU-resident update and constraints
 - `GMX_MPI=ON` &mdash; Builds with MPI support for multi-GPU scaling
 - `GMX_OPENMP=ON` &mdash; Enables OpenMP for multi-threaded parallelism within each MPI rank
-- `GMX_GPU_FFT=ON` &mdash; Uses GPU-accelerated FFT operations
-- `GMX_MULTI_GPU_FFT=ON` &mdash; Enables multi-GPU FFT decomposition
 - `GMX_HIP_TARGET_ARCH` &mdash; Specifies the target GPU architecture
 - `GMX_BUILD_OWN_FFTW=ON` &mdash; Builds FFTW for optimal CPU FFT performance
 
@@ -299,9 +293,11 @@ You can deploy GROMACS using either Apptainer (formerly Singularity) or Docker, 
 - **Docker** &mdash; Suitable for cloud deployments and development environments
 
 For container builds, the scripts install GROMACS in
+
 ```bash
 /opt/gromacs
 ```
+
 instead of installing in your home directory.
 
 The sections below provide complete install scripts for Docker and Apptainer. These scripts are not discussed in detail because the containerized installation procedure is largely the same as the bare metal approach, with some initial differences. Both container options use the base image `rocm/dev-ubuntu-24.04:latest`.
@@ -312,6 +308,7 @@ The sections below provide complete install scripts for Docker and Apptainer. Th
 <summary>Apptainer build & install instructions</summary>
 
 GROMACS Apptainer .def-file:
+
 ```bash
 Bootstrap: docker
 From: rocm/dev-ubuntu-24.04:latest
@@ -446,11 +443,8 @@ From: rocm/dev-ubuntu-24.04:latest
         -DCMAKE_INSTALL_PREFIX="${BASE_INSTALL}" \
         -DCMAKE_BUILD_TYPE=Release \
         -DGMX_GPU=HIP \
-        -DGMX_GPU_UPDATE=ON \
         -DGMX_MPI=ON \
         -DGMX_OPENMP=ON \
-        -DGMX_GPU_FFT=ON \
-        -DGMX_MULTI_GPU_FFT=ON \
         -DGMX_HIP_TARGET_ARCH="${GPU_TARGET}" \
         -DGMX_BUILD_OWN_FFTW=ON \
         -DCMAKE_C_COMPILER="${GCC_VERSION}" \
@@ -469,10 +463,13 @@ From: rocm/dev-ubuntu-24.04:latest
 %runscript
     exec /bin/bash
 ```
+
 Build Apptainer image:
+
 ```bash
 apptainer build --fakeroot gromacs_openmpi.sif gromacs_openmpi.def
 ```
+
 You need the `--fakeroot` flag because the `%post` section runs `apt-get install`, which needs root-level permissions to install packages. This flag allows unprivileged users to build containers without actual root access.
 
 </details>
@@ -483,6 +480,7 @@ You need the `--fakeroot` flag because the `%post` section runs `apt-get install
 <summary>Docker build & install instructions</summary>
 
 GROMACS Dockerfile:
+
 ```Dockerfile
 # -------- STAGE 1: Build UCX + OpenMPI ----------
 FROM rocm/dev-ubuntu-24.04:latest AS mpi-builder
@@ -595,11 +593,8 @@ RUN GROMACS_BUILD_DIR="/var/tmp/gromacs" && \
         -DCMAKE_INSTALL_PREFIX="${BASE_INSTALL}" \
         -DCMAKE_BUILD_TYPE=Release \
         -DGMX_GPU=HIP \
-        -DGMX_GPU_UPDATE=ON \
         -DGMX_MPI=ON \
         -DGMX_OPENMP=ON \
-        -DGMX_GPU_FFT=ON \
-        -DGMX_MULTI_GPU_FFT=ON \
         -DGMX_HIP_TARGET_ARCH="${GPU_TARGET}" \
         -DGMX_BUILD_OWN_FFTW=ON \
         -DCMAKE_C_COMPILER="${GCC_VERSION}" \
@@ -657,12 +652,12 @@ CMD ["/bin/bash"]
 ```
 
 Build Docker image:
+
 ```bash
 docker build -f Dockerfile -t gromacs-openmpi .
 ```
 
 </details>
-
 
 ## Summary
 
