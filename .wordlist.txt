@@ -137,6 +137,7 @@ Cantarell
 cartoonized
 Causvid
 CCD
+CCIE
 cd
 CDI
 CDNA
@@ -256,6 +257,7 @@ Dependabot
 depthwise
 Deqing
 Deqing
+Devang
 deserializers
 detections
 dev
@@ -527,6 +529,7 @@ Jianyu
 Jie
 Jiyan
 Jiyuan
+JNCIE
 Jongsoo
 jpeg
 jpg
@@ -1614,6 +1617,7 @@ ThinLTO
 XLA
 backporting
 hyperscale
+hyperscalers
 rocMLIR
 rocSHMEM
 topologies
