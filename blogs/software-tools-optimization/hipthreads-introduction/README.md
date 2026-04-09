@@ -159,31 +159,29 @@ hipThreads has the following prerequisites:
 - Linux OS (Ubuntu 22.04+ is recommended)
 - CMake 3.21+
 - Build tools (e.g., `make` or `ninja`)
-- **ROCm 7.0.2** (HIP runtime and hipcc) — **hipThreads currently does not work with other ROCm versions.**
-  See the [hipThreads Prerequisites](https://github.com/ROCm/hipThreads/blob/release/0.1.0/README.md#Prerequisites) for detailed step-by-step ROCm 7.0.2 installation instructions.
-- [libhipcxx v2.7](https://github.com/ROCm/libhipcxx/tree/release/2.7.x)
-  - Checkout the `release/2.7.x` branch
-  - Build with `-DCMAKE_INSTALL_PREFIX=/opt/rocm`
-  - Use `-DLIBCUDACXX_ENABLE_LIBCUDACXX_TESTS=OFF` to skip tests
+- **ROCm 7.12+** (recommended) or **ROCm 7.0.2** — hipThreads depends on HIP and libhipcxx. The code samples also use rocThrust. All dependencies are included in [TheRock](https://rocm.docs.amd.com/en/7.12.0-preview/) builds (ROCm 7.12+).
 
-> **Note**:
-> The sample code in this blog post uses [rocThrust 4.2.0](https://rocm.docs.amd.com/projects/rocThrust/en/latest/index.html).
-> Install rocThrust separately by following the
-> [rocThrust installation guide](https://rocm.docs.amd.com/projects/rocThrust/en/latest/install/rocThrust-prerequisites.html).
+  For **ROCm 7.12+**: See the [hipThreads 0.1.1 prerequisites](https://github.com/ROCm/hipThreads/blob/release/0.1.1/README.md#prerequisites) for installation and environment setup instructions.
+
+  For **ROCm 7.0.2**: See the [hipThreads 0.1.0 prerequisites](https://github.com/ROCm/hipThreads/blob/release/0.1.0/README.md#prerequisites) for manual installation of ROCm 7.0.2, libhipcxx, and rocThrust.
+
+> **Note:** ROCm 7.12 is part of a technology preview release stream (starting from 7.9.0) and is separate from the 7.0–7.2 production releases. The last supported ROCm 7 production release is 7.0.2.
 
 ## Build and Installation
 
-- By default hipThreads installs under `/opt/rocm` (matching other ROCm components). You can override this by adding `-DCMAKE_INSTALL_PREFIX=<path>` to the CMake configure command.
-- Installing to `/opt/rocm` usually requires `sudo`.
+Before building, make sure your ROCm environment is configured properly (e.g., `ROCM_PATH`, `PATH`, `LD_LIBRARY_PATH`). See the [hipThreads Prerequisites](https://github.com/ROCm/hipThreads/blob/release/0.1.1/README.md#Prerequisites) for details.
+
+By default, hipThreads installs under `$ROCM_PATH` (matching other ROCm components). You can override this by adding `-DCMAKE_INSTALL_PREFIX=<path>` to the CMake configure command.
 
 ``` bash
-  git clone https://github.com/ROCm/hipThreads.git
-  cd hipThreads
-  mkdir build && cd build
-  cmake ..
-  make -j
-  sudo make install
+git clone https://github.com/ROCm/hipThreads.git
+cd hipThreads
+cmake -B build
+cmake --build ./build
+sudo cmake --install ./build
 ```
+
+> **Note**: Installing to `$ROCM_PATH` usually requires `sudo`.
 
 ## How to use hipThreads in a CMake project
 
@@ -526,3 +524,7 @@ WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT IS DONE AT
 YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR
 ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY
 DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
+
+```{update} Apr 9, 2026
+Updated hipThreads library to support the newest ROCm 7.12+ in addition to ROCm 7.0.2.
+```

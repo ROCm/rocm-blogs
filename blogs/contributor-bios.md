@@ -21,6 +21,12 @@ Senior Technical Product Manager at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Anshu Raina](./authors/anshu-raina.md)
+:padding: 1
+
+AI Performance Engineer on the Training at Scale team at AMD
+:::
+
 :::{grid-item-card} [Anton Smirnov](./authors/anton-smirnov.md)
 :padding: 1
 
@@ -61,6 +67,12 @@ Senior Member of Technical Staff at AMD
 :padding: 1
 
 Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Devang Patel](./authors/devang-patel.md)
+:padding: 1
+
+GPU Cluster Network Architect at AMD
 :::
 
 :::{grid-item-card} [Douglas Jia](./authors/douglas-jia.md)
