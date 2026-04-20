@@ -257,6 +257,7 @@ Dependabot
 depthwise
 Deqing
 Deqing
+Dewei
 Devang
 deserializers
 detections
@@ -981,6 +982,7 @@ Sharded
 sharded
 sharding
 Shi
+Shijie
 Shilong
 Shilong
 Shizhe
@@ -1224,6 +1226,7 @@ YAML
 yaml
 YML
 YModel
+YYYYMMDD
 ZBook
 ZenDNN
 ZenRobotics
@@ -1827,6 +1830,17 @@ Malinen
 Rony
 Tero
 kimi
+dri
+dsl
+flydsl
+kfd
+linux
+llvm
+mlir
+pytorch
+ubuntu
+url
+uv
 Allshire
 EGL
 Erez
