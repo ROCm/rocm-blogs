@@ -105,6 +105,12 @@ Senior Product Manager at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Hattie Wu](./authors/hattie-wu.md)
+:padding: 1
+
+Senior Member of Technical Staff at AMD
+:::
+
 :::{grid-item-card} [Hari Sadasivan](./authors/hari-sadasivan.md)
 :padding: 1
 
