@@ -9,6 +9,13 @@
 ::::{grid} 2
 :margin: 1
 
+:::{grid-item-card} [Peyman Razaghi](./authors/peyman-razaghi.md)
+:padding: 1
+
+Principal Member of Technical Staff
+:::
+
+
 :::{grid-item-card} [Abhishek Patil](./authors/abhishek-patil.md)
 :padding: 1
 
