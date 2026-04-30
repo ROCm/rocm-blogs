@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: 'TraceLens: Democratizing AI Performance Analysis'
 date: 27 Apr 2026
-author: Adeem Jassani, Gabriel Weisz, Spandan More, Deval Shah, Anshu Raina, Steven K Reinhardt
+author: Adeem Jassani, Gabriel Weisz, Spandan More, Deval Shah, Anshu Raina, Steven K. Reinhardt
 thumbnail: 'tracelens_thumbnail.png'
 tags: AI/ML, Optimization, Performance
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: TraceLens turns large profiler traces into structured pe
 language: English
 myst:
     html_meta:
-        "author": "Adeem Jassani, Gabriel Weisz, Spandan More, Deval Shah, Anshu Raina, Steven K Reinhardt"
+        "author": "Adeem Jassani, Gabriel Weisz, Spandan More, Deval Shah, Anshu Raina, Steven K. Reinhardt"
         "description lang=en": "Explore how TraceLens automates profiler trace analysis to pinpoint bottlenecks and optimize AI workloads."
         "keywords": "TraceLens, PyTorch profiler, AI performance analysis, GPU profiling, ROCm, CUDA, roofline analysis, trace analysis, multi-GPU communication, GEMM optimization, performance engineering, open source"
         "property=og:locale": "en_US"
