@@ -21,40 +21,49 @@ jobs:
             sudo apt update
             sudo apt install gh -y
           fi
-          
+
           # Authenticate GitHub CLI
           echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
-          
+
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Extract Inputs from Issue Body and Create Blog Post
         id: extract
         shell: bash
+        # Pass issue body/title via env so they are NEVER interpolated into the
+        # script source. Prevents script injection AND the quote/apostrophe
+        # parsing problems that come from `${{ ... }}` substitution into bash.
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
         run: |
           pip install numpy
-          
-          # Save the issue body into a variable
-          ISSUE_BODY="${{ github.event.issue.body }}"
+
           echo "Issue body:"
           echo "$ISSUE_BODY"
-          
+
+          # Trim leading/trailing whitespace WITHOUT xargs (xargs treats ' and "
+          # as quote delimiters and dies on values like "Claude Code's ...").
+          trim() {
+            printf '%s' "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+          }
+
           extract_field() {
             local header="$1"
             # Find the section and extract all content until the next ###
-            echo "$ISSUE_BODY" | awk -v header="### $header" '
+            printf '%s' "$ISSUE_BODY" | awk -v header="### $header" '
               BEGIN { found=0; content=""; }
               $0 ~ header { found=1; next; }
               found && $0 ~ /^###/ { found=0; }
-              found && !/^[0-9]+$/ { gsub(/^[0-9]+/, ""); content=content"\n"$0; }
+              found && !/^[0-9]+$/ { content=content"\n"$0; }
               END { gsub(/^\n+/, "", content); gsub(/\n+$/, "", content); print content; }
             ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
           }
-          
-          # Using the raw issue title
-          BLOG_TITLE="${{ github.event.issue.title }}"
 
-          BLOG_TITLE=$(echo "$BLOG_TITLE" | sed 's/^\[New Post\][[:space:]]*//')
+          # Use the issue title from env, then strip the "[New Post]" prefix.
+          BLOG_TITLE=$(printf '%s' "$ISSUE_TITLE" | sed 's/^\[New Post\][[:space:]]*//')
+
           BLOG_FILE_PATH=$(extract_field "File Path Name")
           BLOG_AUTHORS=$(extract_field "Author")
           BLOG_TAGS=$(extract_field "Tags")
@@ -70,7 +79,17 @@ jobs:
           BLOG_AMD_CATEGORY_TOPIC=$(extract_field "AMD Blog Topic Categories")
           BLOG_JIRA=$(extract_field "Jira Ticket")
           BLOG_MARKET_VERTICAL=$(extract_field "Market Vertical")
-          
+
+          # Defensive defaults so downstream calls never see literal "unset".
+          : "${BLOG_FILE_PATH:=}"
+          : "${BLOG_JIRA:=}"
+          : "${BLOG_AMD_TECHNICAL_BLOG_TYPE:=}"
+          : "${BLOG_AMD_APPLICATIONS:=}"
+          : "${BLOG_HARDWARE_DEPLOYMENT_TARGETS:=}"
+          : "${BLOG_SOFTWARE_DEPLOYMENT_TARGETS:=}"
+          : "${BLOG_AMD_CATEGORY_TOPIC:=}"
+          : "${BLOG_MARKET_VERTICAL:=}"
+
           echo "Blog Title: $BLOG_TITLE"
           echo "Blog File Path: $BLOG_FILE_PATH"
           echo "Blog Author(s): $BLOG_AUTHORS"
@@ -90,16 +109,16 @@ jobs:
           # Check for empty required fields
           VALIDATION_ERRORS=""
           VALIDATION_PASSED="true"
-          REQUIRED_FIELDS=("BLOG_TITLE:Title" "BLOG_AUTHORS:Author" "BLOG_TAGS:Tags" "BLOG_CATEGORY:Category" 
-                          "BLOG_AUDIENCE:Audience" "BLOG_KVP:Key Value Proposition" "BLOG_KEYWORDS:Keywords" 
+          REQUIRED_FIELDS=("BLOG_TITLE:Title" "BLOG_AUTHORS:Author" "BLOG_TAGS:Tags" "BLOG_CATEGORY:Category"
+                          "BLOG_AUDIENCE:Audience" "BLOG_KVP:Key Value Proposition" "BLOG_KEYWORDS:Keywords"
                           "BLOG_DESCRIPTION:Description")
-          
+
           for field_info in "${REQUIRED_FIELDS[@]}"; do
             IFS=':' read -r field_var field_name <<< "$field_info"
             field_value="${!field_var}"
-            # Trim whitespace from the field value
-            field_value=$(echo "$field_value" | xargs)
-            
+            # Quote-safe whitespace trim (replaces the old `xargs` call).
+            field_value=$(trim "$field_value")
+
             if [ -z "$field_value" ]; then
               VALIDATION_ERRORS+="- Missing required field: $field_name\n"
               VALIDATION_PASSED="false"
@@ -109,9 +128,9 @@ jobs:
           done
 
           echo "validation_passed=$VALIDATION_PASSED" >> $GITHUB_OUTPUT
-          
+
           if [ "$VALIDATION_PASSED" = "false" ]; then
-          
+
             echo "validation_errors<<EOF" >> $GITHUB_OUTPUT
             echo -e "$VALIDATION_ERRORS" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
@@ -133,10 +152,16 @@ jobs:
           if [ "$VALIDATION_PASSED" = "true" ]; then
             python3 scripts/create_blog_post.py "$BLOG_TITLE" "$BLOG_FILE_PATH" "$BLOG_AUTHORS" "$BLOG_TAGS" "$BLOG_CATEGORY" "$BLOG_AUDIENCE" "$BLOG_KVP" "$BLOG_KEYWORDS" "$BLOG_AMD_TECHNICAL_BLOG_TYPE" "$BLOG_AMD_APPLICATIONS" "$BLOG_DESCRIPTION" "$BLOG_HARDWARE_DEPLOYMENT_TARGETS" "$BLOG_SOFTWARE_DEPLOYMENT_TARGETS" "$BLOG_AMD_CATEGORY_TOPIC" "$BLOG_MARKET_VERTICAL"
           fi
-          
-          echo "blog_title=$BLOG_TITLE" >> $GITHUB_OUTPUT
-          echo "current_date=$CURRENT_DATE" >> $GITHUB_OUTPUT
-          echo "jira_ticket=$BLOG_JIRA" >> $GITHUB_OUTPUT
+
+          # Use a heredoc-style multiline output for blog_title so apostrophes,
+          # quotes, em-dashes, etc. survive `$GITHUB_OUTPUT` parsing intact.
+          {
+            echo "blog_title<<EOF"
+            echo "$BLOG_TITLE"
+            echo "EOF"
+            echo "current_date=$CURRENT_DATE"
+            echo "jira_ticket=$BLOG_JIRA"
+          } >> $GITHUB_OUTPUT
 
       - name: Create error comment on original issue
         if: steps.extract.outputs.validation_passed == 'false'
@@ -147,17 +172,17 @@ jobs:
             ## ❌ Blog Post Creation Failed
 
             Hello @${{ github.event.issue.user.login }},
-            
+
             The automated system encountered validation errors while trying to create your blog post.
-            
+
             ### 🚫 Missing Required Information:
-            
+
             ```diff
             ${{ steps.extract.outputs.validation_errors }}
             ```
-            
+
             ### 📊 Validation Status:
-            
+
             | Field | Status | Notes |
             |-------|--------|-------|
             | Title | ${{ !contains(steps.extract.outputs.validation_errors, 'Title') && '✅ Present' || '❌ MISSING' }} | Must have a blog title |
@@ -168,18 +193,18 @@ jobs:
             | Key Value Proposition | ${{ !contains(steps.extract.outputs.validation_errors, 'Key Value Proposition') && '✅ Present' || '❌ MISSING' }} | Required for SEO |
             | Keywords | ${{ !contains(steps.extract.outputs.validation_errors, 'Keywords') && '✅ Present' || '❌ MISSING' }} | Required for search indexing |
             | Description | ${{ !contains(steps.extract.outputs.validation_errors, 'Description') && '✅ Present' || '❌ MISSING' }} | Blog description is required |
-            
+
             ### 📋 Next Steps:
-            
+
             1. Edit your issue to add the missing information marked with ❌ above
             2. Each of these fields should be under their respective section headers (e.g., `### Author`)
             3. Once all required fields are provided, the system will automatically process your request again
-            
+
             ### 📝 Example Common Errors:
-            
+
             1. **Missing Titles**: Please ensure you have typed out your title correctly in the correct location
             2. **Incorrect Placement of Values**: Please double check your response to ensure each value has the correct information and inputs are in the correct areas.
-            
+
             Thank you for your understanding!
           reactions: '-1'
 
@@ -195,19 +220,19 @@ jobs:
           labels: Blog Creation
           body: |
             ## 📝 Blog Post Pull Request
-            
-            Hello @${{ github.event.issue.user.login }}, 
-            
+
+            Hello @${{ github.event.issue.user.login }},
+
             This is the pull request for your blog post and closes #${{ github.event.issue.number }}. The automated system has created the initial blog structure for you.
 
             ---
 
             ## LEGAL REVIEW - REQUIRED BEFORE PUBLICATION
-            
+
             > [!CAUTION]
             > **BLOCKING: Your blog WILL NOT be published until ALL items below are checked.**
             > A CI check enforces this requirement. The PR cannot be merged with an incomplete legal review.
-            
+
             - [ ] **Legal self review completed** - AMD Employees: [Complete traffic lights review](https://amdcloud.sharepoint.com/:b:/r/sites/amd-legal/Shared%20Documents/Legal%20Requirements%20for%20AMD%20Technical%20Materials%20%5B2025%5D.pdf?csf=1&web=1&e=ecEOkU)
             - [ ] **Performance claims cleared** - If the blog contains ANY performance benchmarks, comparisons, or claims, you MUST obtain legal clearance before publication.
               - Any claim that references performance or improvements should either be:
@@ -216,16 +241,16 @@ jobs:
             - [ ] **License check** - Verified all licenses for code, images, and third-party content are correct and properly attributed.
 
             ---
-            
+
             ### 📋 Next Steps
-            
+
             Please continue working on the blog via the pull request. You can:
-            
+
             - [ ] **Review the metadata** carefully for any mistakes or adjustments needed
             - [ ] **Edit the content** in the Markdown files to complete your blog post
             - [ ] **Request reviews** from team members when ready
             - [ ] **Address any feedback** before final publication
-            
+
             ### ✅ Content Checklist
 
             - [ ] Content follows [ROCm Tech Blogs Style Guide](https://confluence.amd.com/display/DCGPUPM/ROCm+Tech+Blogs%3A+Mission%2C+Stakeholders%2C+Processes%2C+Style+and+Metadata)
@@ -239,23 +264,23 @@ jobs:
             ### ✅ Signoffs and Approvals
 
             Please complete the steps below to the best of your ability. This section **must be completed** before publishing.
-            
+
             - [ ] **Technical reviewer approval**
             - [ ] **Editorial team approval**
             - [ ] **Thumbnail:** Thumbnail image for blog post included in PR
             - [ ] **Post description:** Provide a 2-3 line summary that grabs the reader's attention:
-            
+
             ### ✅ Blog Author/Team Signoffs
-            
+
             - [ ] **Post-review changes:** Confirm that changes from technical review and editorial feedback have been made
             - [ ] All sections above are completed
             - [ ] Content is in final draft state
             - [ ] Images/assets are optimized and properly placed
             - [ ] Linter checks are passing
-            
+
             ---
-            
-            Generated By: [GitHub Issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }})  
+
+            Generated By: [GitHub Issue #${{ github.event.issue.number }}](https://github.com/${{ github.repository }}/issues/${{ github.event.issue.number }})
             Creation Date: ${{ steps.extract.outputs.current_date }}
             Corresponding Jira Ticket: ${{ steps.extract.outputs.jira_ticket }}
           branch: ${{ github.actor }}-${{ github.event.issue.number }}
@@ -270,34 +295,34 @@ jobs:
             ## ✅ Blog Post Created Successfully - ${{ steps.extract.outputs.current_date }}
 
             Hello @${{ github.event.issue.user.login }},
-            
+
             A pull request has been created with your blog post titled: **${{ steps.extract.outputs.blog_title }}**
-            
+
             ### 📋 Next Steps
-            
+
             Please continue working on the blog via the pull request. You can:
-            
+
             1. **Review the metadata** carefully for any mistakes or adjustments needed
             2. **Edit the content** in the Markdown files to complete your blog post
             3. **Request reviews** from team members when ready
             4. **Address any feedback** before final publication
 
             ### 🔍 Helpful Resources:
-            
+
             - [GitHub Markdown Guide](https://guides.github.com/features/mastering-markdown/)
             - [Getting Started with Markdown](https://www.markdownguide.org/getting-started/)
             - [Markdown Cheatsheet](https://www.markdownguide.org/cheat-sheet/)
             - [Markdown Syntax Guide](https://www.markdownguide.org/basic-syntax/)
             - [MyST Markdown Guide](https://mystmd.org/guide/quickstart-myst-markdown)
-            
+
             ### 🔄 Workflow Information:
-            
+
             - Review the Markdown file for any mistakes / review the auto-generated content
             - You can continue to edit files directly in this PR, changes will automatically update in the PR preview
             - When ready for review, get in contact with the proper reviewers and add the appropriate labels
             - When the reviewers are done and the blog is ready to go, we will push your blog to live
-            
+
             👉 [View Pull Request #${{ steps.cpr.outputs.pull-request-number }}](${{ steps.cpr.outputs.pull-request-url }})
-            
+
             Thank you for your submission!
           reactions: '+1'
