@@ -50,17 +50,20 @@ SOFTWARE.
 # From Naive to Near-Peak: Building High-Performance GEMM Kernels with Gluon
 
 High-performance GPU kernels are built through measurement, not guesswork. The
-[`gfx950-gluon-tutorials`](https://github.com/ROCm/gfx950-gluon-tutorials) repository
-is a hands-on ROCm tutorial that shows how to write, profile, and optimize Gluon
-GEMM kernels on AMD Instinct GPUs. Starting from a correctness-first FP16 GEMM,
-the tutorial walks through memory movement, LDS layout design, software
-pipelining, register pressure, MFMA efficiency, and XCD-aware L2 locality. The
-same design ideas then extend to BF8 and MXFP4 kernels for low-precision AI
-workloads.
+[`gfx950-gluon-tutorials`](https://github.com/ROCm/gfx950-gluon-tutorials)
+repository takes a naive **522 TFLOPS** FP16 GEMM and turns it into a
+**1619 TFLOPS** production-grade kernel — a **3× speedup** in ten incremental
+versions, every one motivated by a thread trace or a hardware counter. The same
+design then extends to BF8 (**3456 TFLOPS**) and MXFP4 (**5728 TFLOPS**) for
+low-precision AI workloads.
 
-This blog is the map. The repository is the full tutorial. Here we explain what
-the tutorial covers, why Gluon is useful for this style of kernel development,
-and how profiling turns each optimization step into an engineering decision.
+This post is for **kernel developers, compiler engineers, and performance
+specialists** who want to see how a near-peak kernel is constructed step by
+step on AMD MI350/MI355 GPUs (gfx950, CDNA4). Triton's strength is
+hardware-portable productivity; Gluon is the tool when you need to extract
+every last percent on a target architecture. The blog walks through what the
+tutorial covers, why Gluon is useful for this style of kernel development, and
+how profiling turns each optimization step into an engineering decision.
 
 ## Why another GEMM tutorial?
 
@@ -77,8 +80,8 @@ from optimal, then builds performance one measured bottleneck at a time. Each
 version isolates one idea so that readers can connect code structure to
 hardware behavior.
 
-The tutorial focuses on AMD MI350 and MI355 GPUs, using gfx950 as the target
-architecture. The main kernels are:
+The tutorial targets AMD MI350/MI355 (gfx950, CDNA4). Three kernels span the
+data types most relevant to modern AI workloads:
 
 | Kernel | Data type | Shape used in the summary | Documented result |
 | --- | --- | --- | --- |
@@ -86,17 +89,25 @@ architecture. The main kernels are:
 | `a8w8` | BF8 | `4096x4096x16384` | `3456 TFLOPS`, `99%` MFMA efficiency |
 | `a4w4` | MXFP4 | `4096x4096x32768` | `5728 TFLOPS`, `92%` MFMA efficiency |
 
-These numbers are measurements from the tutorial configuration and should be
-read with the repository's documented ROCm, Triton, and profiling setup. The
-main value of the tutorial is not only the final number, but the path from
-baseline to that number.
+MFMA efficiency is the share of MFMA peak throughput the kernel actually sustains;
+98% means the FP16 result lands within 2% of the theoretical MFMA peak on
+MI355 (≈1650 TFLOPS for FP16, ≈3500 TFLOPS for BF8, ≈6200 TFLOPS for MXFP4 in
+this configuration). The numbers above are measurements from the documented
+tutorial setup and should be reproduced against the repository's pinned ROCm
+and Triton versions; the value of the tutorial is not only the final number,
+but the path from baseline to that number.
 
 ```{figure} ./images/gluon-gemm-performance-progression.png
 :align: center
-:alt: FP16 GEMM performance progression from the naive baseline to the optimized tutorial kernel
+:alt: FP16 GEMM performance from the v0 naive baseline (522 TFLOPS) to v9 with the LLIR scheduler and amdgcnas peephole pass (1619 TFLOPS); MFMA efficiency overlaid in red
 
-FP16 GEMM performance progression across the tutorial versions.
+FP16 GEMM performance across the v0–v9 tutorial versions on MI355. Bars are
+TFLOPS; the red line tracks MFMA efficiency. v0 (naive) runs at 522 TFLOPS and
+25% MFMA efficiency; v9 (with the LLIR scheduler and `amdgcnas` peephole pass)
+reaches 1619 TFLOPS and 98% — roughly 3.1× faster than the baseline.
 ```
+
+> This post is the map. The repository is the full tutorial.
 
 ## What Gluon makes explicit
 
@@ -110,8 +121,11 @@ control over layouts, pipeline stages, and live ranges.
 Gluon raises the authoring level to tiles and block-level operations. The
 kernel author describes how data moves between global memory, LDS, registers,
 and MFMA instructions. Layouts are explicit. Pipeline stages are explicit.
-Register budgeting becomes part of the kernel design instead of something that
-is discovered only after the backend compiler has lowered the code.
+Register budgeting becomes part of the kernel design instead of something
+discovered only after the backend compiler has lowered the code. The compiler's
+job narrows to faithful lowering and throughput-aware interleaving; the hard
+parts of traditional GPU compilation (NP-hard scheduling, graph-coloring
+register allocation) become design problems the kernel author owns.
 
 That explicit control is the central teaching point of the repository. The
 tutorial repeatedly asks:
@@ -128,29 +142,39 @@ and profiler data all stay connected.
 ## The FP16 path: one bottleneck at a time
 
 The `a16w16` tutorial is the recommended starting point. It is organized as a
-versioned optimization journey from `v0_naive` to `v9_beyond_hotloop`.
+versioned optimization journey from `v0_naive` to `v9_beyond_hotloop` in four
+acts.
 
-The early versions focus on getting data movement right. `v0_naive` establishes
-a correct baseline with explicit layouts. `v1_buffer_load` switches masked
-loads to AMD buffer operations so out-of-bounds handling can be done by
-hardware instead of control-flow branches. `v2_async_copy` moves data directly
-from global memory to LDS, avoiding register staging and eliminating unnecessary
-`ds_write` instructions. `v3_lds` then studies LDS layout choices and bank
-conflicts.
+**Act I — Getting the basics right (v0–v3).** `v0_naive` establishes a correct
+FP16 GEMM with explicit layouts. `v1_buffer_load` switches masked loads to AMD
+buffer operations so out-of-bounds handling moves into hardware and 140 control-
+flow branches collapse to 4. `v2_async_copy` routes data directly from global
+memory into LDS, eliminating register staging and every `ds_write` in the inner
+loop. `v3_lds` then **eliminates LDS bank conflicts** by comparing raw,
+swizzled, and padded shared layouts at the instruction level and picking the
+one that hits the steady-state `ds_read` issue rate.
 
-The middle versions focus on overlap. `v4_global_prefetch` introduces a
-two-stage pipeline so the kernel can prefetch data for the next K iteration
-while computing on the current one. `v5_local_prefetch` adds a third stage so
-MFMA compute, LDS reads, and global memory movement can overlap. At that point,
-instruction ordering becomes a first-class performance problem, so the tutorial
-uses the LLIR scheduler described in the repository to interleave MFMA and
-memory operations according to the hardware throughput model.
+**Act II — Hiding latency (v4–v5).** `v4_global_prefetch` adds a two-stage
+software pipeline so the next K iteration's data is in flight while the current
+iteration computes. `v5_local_prefetch` adds a third stage so MFMA, LDS reads,
+and global-memory loads can all overlap. At that point instruction ordering
+becomes a first-class performance problem, so the tutorial introduces the
+**LLIR scheduler**, a Triton-level pass that interleaves MFMA with memory
+operations according to the hardware throughput model.
 
-The later versions focus on register pressure and locality. `v6_loop_unroll`
-removes copy overhead at iteration boundaries. `v7_sliceN` and `v8_sliceMN`
-reduce register pressure by slicing the tile structure. `v9_beyond_hotloop`
-looks outside the hot loop and improves L2 locality through XCD-aware workgroup
-remapping.
+**Act III — Taming the hardware (v6–v8).** `v6_loop_unroll` removes the
+register-copy overhead at iteration boundaries by alternating two register sets.
+`v7_sliceN` cuts the B-tile register footprint in half by computing the output
+tile in two N-halves; combined with the `amdgcnas` post-assembly peephole pass,
+this is where v7 first reaches 98% MFMA efficiency. `v8_sliceMN` slices A along
+M as well, dropping register pressure further and resolving a buffer-load
+throughput stall that v7 hits at large K.
+
+**Act IV — Beyond the hot loop (v9).** With the inner loop already at near-peak
+MFMA utilization, `v9_beyond_hotloop` looks outside the loop and improves L2
+cache locality through **XCD-aware workgroup remapping** (MI350-class parts have
+8 XCDs, each with its own L2; remapping reduces inter-XCD traffic, which
+reduces power, which raises sustained clock frequency).
 
 ```{figure} ./images/gluon-gemm-slicemn-design.png
 :align: center
@@ -170,17 +194,27 @@ the only signal, it tracks the evidence needed to explain a result:
 * generated LLVM IR, AMDGCN, and assembly
 * rocprof kernel timing
 * hardware counters for cache and memory behavior
-* ATT screenshots for instruction-level bottleneck analysis
+* ATT (Advanced Thread Trace) screenshots for instruction-level bottleneck analysis
 
 This matters because the same end-to-end runtime can hide very different
 problems. A kernel can be limited by LDS bank conflicts, global memory latency,
 register copies, spilled values, missing interleaving, or L2 locality. The fix
 depends on identifying the real bottleneck.
 
-The repository includes helper scripts for this workflow. For example,
+```{figure} ./images/gluon-gemm-att-near-peak.png
+:align: center
+:alt: Thread trace of the optimized v7 kernel showing densely packed MFMA instructions with negligible gaps
+
+Thread trace of the v7 kernel after the LLIR scheduler and `amdgcnas` passes.
+MFMA instructions are tightly packed across the iteration boundary, with
+buffer loads and LDS reads interleaved between them — the visual signature of
+a kernel running at 98% MFMA efficiency.
+```
+
+The repository includes helper scripts for this workflow.
 `scripts/run_perf_table.py` runs selected kernel versions under different
 scheduler configurations and reports TFLOPS, VGPRs, spills, and MFMA
-efficiency. `scripts/process_json.py` analyzes ATT output and computes loop
+efficiency. `scripts/process_json.py` parses ATT output and computes loop
 timing breakdowns. The goal is to make the optimization process reproducible,
 not only the final kernel.
 
@@ -189,17 +223,27 @@ not only the final kernel.
 After the FP16 path, the repository shows how the same design transfers to
 lower precision formats.
 
-The BF8 kernel keeps the same high-level structure but changes the tile shape,
-MFMA instruction, K width, and LDS padding. This part of the tutorial is a
-checklist proof: if you understand the FP16 design, the BF8 design follows from
-the changed instruction shape and data type.
+**BF8.** The BF8 kernel keeps the same high-level structure but changes the
+tile shape, MFMA instruction, K width, and LDS padding. This part of the
+tutorial is a checklist proof: if you understand the FP16 design, the BF8
+design follows from the changed instruction shape and data type. End result:
+**3456 TFLOPS at 99% MFMA efficiency** on MI355.
 
-The MXFP4 kernel adds a genuinely new problem: scales. MXFP4 stores two 4-bit
-values per byte and uses per-group 8-bit scale factors. The data path now needs
-a scale pipeline in addition to the tile pipeline. Scales are loaded from global
-memory into registers, written to LDS, and read back in the layout required by
-the scaled MFMA instruction. The tutorial refers to this as a GR -> LW -> LR
-round trip.
+**MXFP4.** This is the most impressive number in the tutorial — **5728 TFLOPS
+at 92% MFMA efficiency** — and it is also the most interesting design. MXFP4
+stores two 4-bit values per byte and uses a per-group 8-bit scale factor for
+every 32 elements, so the kernel needs an entire **scale pipeline** in addition
+to the tile pipeline. The scale pipeline is a three-step round trip:
+
+> **GR → LW → LR**: Global Read of scales into registers, LDS Write to convert
+> their layout, then LDS Read to feed the scaled MFMA instruction.
+
+The scale layout that the global memory delivers is not the layout that the
+MFMA scaled instruction consumes, and there is no instruction that reads scales
+from registers into the right MFMA layout directly. So the scales make a round
+trip through LDS to perform a hardware-assisted layout conversion (using
+`ds_read_tr`, the transpose variant of `ds_read`). The tutorial schedules this
+extra dataflow alongside the tile pipeline so neither one stalls the MFMA.
 
 ```{figure} ./images/gluon-gemm-mxfp4-pipeline.png
 :align: center
@@ -208,30 +252,37 @@ round trip.
 The MXFP4 tutorial adds a scale pipeline on top of the inherited tile pipeline.
 ```
 
-This is a useful example because it shows how the same method extends beyond a
-single clean FP16 GEMM. The author still reasons about layout, pipeline stage,
-register lifetime, instruction throughput, and profiler evidence, but the
-kernel now has an additional dataflow to schedule.
+The MXFP4 chapter is a useful example because it shows how the same method
+extends beyond a single clean FP16 GEMM. The author still reasons about layout,
+pipeline stage, register lifetime, instruction throughput, and profiler
+evidence — the kernel just has an additional dataflow to schedule.
 
 ## Try the tutorial
 
-To start, clone the tutorial repository and follow the setup instructions in
-the README. The peak numbers use the ROCm Triton branch and pinned tag
-documented in the repository.
+To start, clone the tutorial repository. The peak numbers are reproduced
+against the
+[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/tree/gfx9-gluon-tutorials-pin)
+annotated tag in `ROCm/triton`, which pins a specific `matmul_4waves` commit.
+Build Triton from that tag before benchmarking.
 
 ```bash
 git clone https://github.com/ROCm/gfx950-gluon-tutorials.git
 cd gfx950-gluon-tutorials
 ```
 
-The FP16 tutorial is the best first stop:
+Run the naive baseline and the optimized v9 back-to-back to see the journey
+the tutorial walks through:
 
 ```bash
 cd kernels/gemm/a16w16
+# Naive baseline (~520 TFLOPS, 25% MFMA efficiency on MI355)
+python bench.py --version 0 --K 8192 --dtype fp16 --use-rocprof
+# Final optimized kernel (~1620 TFLOPS, 98% MFMA efficiency on MI355)
 python bench.py --version 9 --K 8192 --dtype fp16 --use-rocprof
 ```
 
-For a broader performance table, run from the repository root:
+For a broader performance table that compares scheduler configurations across
+several versions, run from the repository root:
 
 ```bash
 python scripts/run_perf_table.py \
@@ -267,6 +318,14 @@ Gluon makes those decisions explicit, which makes the optimization process
 teachable and reproducible.
 
 ## Disclaimers
+
+The TFLOPS and MFMA-efficiency numbers in this blog were measured on a single
+MI355 with ROCm 6.5.0 and Triton built from the
+[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/tree/gfx9-gluon-tutorials-pin)
+tag. Performance varies based on hardware configuration, software versions,
+system topology, thermal state, and workload characteristics, and may shift as
+ROCm and Triton evolve. Treat the numbers as reproducible reference points for
+the documented setup, not as universal performance claims.
 
 Third-party content is licensed to you directly by the third party that owns the
 content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS
