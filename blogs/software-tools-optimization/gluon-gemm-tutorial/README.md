@@ -89,12 +89,16 @@ data types most relevant to modern AI workloads:
 | `a8w8` | BF8 | `4096x4096x16384` | `3456 TFLOPS`, `99%` MFMA efficiency |
 | `a4w4` | MXFP4 | `4096x4096x32768` | `5728 TFLOPS`, `92%` MFMA efficiency |
 
-MFMA efficiency is the share of MFMA peak throughput the kernel actually
-sustains, so 98% means the FP16 result lands within 2% of MI355's theoretical
-MFMA peak. The numbers above are measurements from the documented tutorial
-setup and should be reproduced against the repository's pinned ROCm and Triton
-versions; the value of the tutorial is not only the final number, but the path
-from baseline to that number.
+MFMA efficiency here is a within-loop, cycle-level metric measured from the
+thread trace: the fraction of inner-loop cycles in which the MFMA unit is busy.
+98% means MFMA instructions are tightly packed across the loop with negligible
+gaps. It is not the same as a kernel-end-to-end TFLOPS / peak ratio, which is
+also affected by epilogue stores, prologue setup, and multi-CU dispatch effects.
+The metric is cycle-based and independent of clock frequency, which makes it
+more stable across runs than raw TFLOPS. The numbers above are measurements
+from the documented tutorial setup and should be reproduced against the
+repository's pinned ROCm and Triton versions; the value of the tutorial is not
+only the final number, but the path from baseline to that number.
 
 ```{figure} ./images/gluon-gemm-performance-progression.png
 :align: center
