@@ -50,7 +50,7 @@ SOFTWARE.
 # From Naive to Near-Peak: Building High-Performance GEMM Kernels with Gluon
 
 High-performance GPU kernels are built through measurement, not guesswork. The
-[`gfx9-gluon-tutorials`](https://github.com/ROCm/gfx9-gluon-tutorials) repository
+[`gfx950-gluon-tutorials`](https://github.com/ROCm/gfx950-gluon-tutorials) repository
 is a hands-on ROCm tutorial that shows how to write, profile, and optimize Gluon
 GEMM kernels on AMD Instinct GPUs. Starting from a correctness-first FP16 GEMM,
 the tutorial walks through memory movement, LDS layout design, software
@@ -220,8 +220,8 @@ the README. The peak numbers use the ROCm Triton branch and pinned tag
 documented in the repository.
 
 ```bash
-git clone https://github.com/ROCm/gfx9-gluon-tutorials.git
-cd gfx9-gluon-tutorials
+git clone https://github.com/ROCm/gfx950-gluon-tutorials.git
+cd gfx950-gluon-tutorials
 ```
 
 The FP16 tutorial is the best first stop:
@@ -254,7 +254,7 @@ The recommended reading order is:
 
 ## Summary
 
-The `gfx9-gluon-tutorials` repository is a practical guide to AMD GPU kernel
+The `gfx950-gluon-tutorials` repository is a practical guide to AMD GPU kernel
 optimization with Gluon. It teaches the full path from a simple FP16 GEMM to
 high-performance FP16, BF8, and MXFP4 kernels by connecting each optimization
 to profiler evidence and hardware behavior.

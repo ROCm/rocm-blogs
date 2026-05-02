@@ -130,6 +130,12 @@ Senior Member of Technical Staff at AMD
 Senior Member of Technical Staff at AMD
 :::
 
+:::{grid-item-card} [Lixun Zhang](./authors/lixun-zhang.md)
+:padding: 1
+
+Senior Software Development Manager at AMD
+:::
+
 :::{grid-item-card} [Mahdieh Ghazimirsaeed](./authors/mahdieh-ghazimirsaeed.md)
 :padding: 1
 
