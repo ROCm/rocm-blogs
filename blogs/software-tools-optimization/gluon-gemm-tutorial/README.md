@@ -52,7 +52,7 @@ SOFTWARE.
 High-performance GPU kernels are built through measurement, not guesswork. The
 [`gfx950-gluon-tutorials`](https://github.com/ROCm/gfx950-gluon-tutorials)
 repository takes a naive **522 TFLOPS** FP16 GEMM and turns it into a
-**1619 TFLOPS** production-grade kernel — a **3× speedup** in ten incremental
+**1619 TFLOPS** near-peak kernel — a **3× speedup** in ten incremental
 versions, every one motivated by a thread trace or a hardware counter. The same
 design then extends to BF8 (**3456 TFLOPS**) and MXFP4 (**5728 TFLOPS**) for
 low-precision AI workloads.
@@ -163,26 +163,28 @@ becomes a first-class performance problem, so the tutorial introduces the
 operations according to the hardware throughput model.
 
 **Act III — Taming the hardware (v6–v8).** `v6_loop_unroll` removes the
-register-copy overhead at iteration boundaries by alternating two register sets.
-`v7_sliceN` cuts the B-tile register footprint in half by computing the output
-tile in two N-halves; combined with the `amdgcnas` post-assembly peephole pass,
-this is where v7 first reaches 98% MFMA efficiency. `v8_sliceMN` slices A along
-M as well, dropping register pressure further and resolving a buffer-load
-throughput stall that v7 hits at large K.
+register-copy overhead at iteration boundaries by double-buffering the operand
+registers, so consecutive K iterations swap which register set the MFMA
+consumes. `v7_sliceN` cuts the B-tile register footprint in half by computing
+the output tile in two N-halves; combined with `amdgcnas` (a post-assembly
+peephole pass over the generated AMDGCN assembly), this is where v7 first
+reaches 98% MFMA efficiency. `v8_sliceMN` slices A along M as well, dropping
+register pressure further and resolving a buffer-load throughput stall that v7
+hits at large K.
+
+```{figure} ./images/gluon-gemm-slicemn-design.png
+:align: center
+:alt: v7/v8 M-and-N slicing design used by the optimized FP16 Gluon GEMM kernel
+
+v7/v8 slicing along M and N reduces register pressure and structures the
+pipeline around smaller operand regions.
+```
 
 **Act IV — Beyond the hot loop (v9).** With the inner loop already at near-peak
 MFMA utilization, `v9_beyond_hotloop` looks outside the loop and improves L2
 cache locality through **XCD-aware workgroup remapping** (MI350-class parts have
 8 XCDs, each with its own L2; remapping reduces inter-XCD traffic, which
 reduces power, which raises sustained clock frequency).
-
-```{figure} ./images/gluon-gemm-slicemn-design.png
-:align: center
-:alt: M and N slicing design used by the optimized FP16 Gluon GEMM kernel
-
-M and N slicing reduce register pressure and structure the pipeline around
-smaller operand regions.
-```
 
 ## Profiling drives the tutorial
 
@@ -261,7 +263,7 @@ evidence — the kernel just has an additional dataflow to schedule.
 
 To start, clone the tutorial repository. The peak numbers are reproduced
 against the
-[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/tree/gfx9-gluon-tutorials-pin)
+[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/releases/tag/gfx9-gluon-tutorials-pin)
 annotated tag in `ROCm/triton`, which pins a specific `matmul_4waves` commit.
 Build Triton from that tag before benchmarking.
 
@@ -321,7 +323,7 @@ teachable and reproducible.
 
 The TFLOPS and MFMA-efficiency numbers in this blog were measured on a single
 MI355 with ROCm 6.5.0 and Triton built from the
-[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/tree/gfx9-gluon-tutorials-pin)
+[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/releases/tag/gfx9-gluon-tutorials-pin)
 tag. Performance varies based on hardware configuration, software versions,
 system topology, thermal state, and workload characteristics, and may shift as
 ROCm and Triton evolve. Treat the numbers as reproducible reference points for
