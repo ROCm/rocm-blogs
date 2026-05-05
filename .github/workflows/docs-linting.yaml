@@ -20,7 +20,7 @@ jobs:
 
       - name: Get changed markdown files
         id: changed-md
-        uses: tj-actions/changed-files@v46.0.1
+        uses: tj-actions/changed-files@v47.0.6
         with:
           files: |
             **/*.md
@@ -60,7 +60,7 @@ jobs:
 
       - name: Get changed markdown files
         id: changed-md
-        uses: tj-actions/changed-files@v46.0.1
+        uses: tj-actions/changed-files@v47.0.6
         with:
           files: |
             **/*.md
