@@ -39,14 +39,14 @@ jobs:
 
       - name: Run markdownlint on changed files
         if: steps.changed-md.outputs.any_changed == 'true' && steps.check-count.outputs.too_many == 'false'
-        uses: DavidAnson/markdownlint-cli2-action@v10.0.1
+        uses: DavidAnson/markdownlint-cli2-action@v23.1.0
         with:
           config: .markdownlint.yaml
           globs: ${{ steps.changed-md.outputs.all_changed_files }}
 
       - name: Run markdownlint on all blog files (many changes)
         if: steps.changed-md.outputs.any_changed == 'true' && steps.check-count.outputs.too_many == 'true'
-        uses: DavidAnson/markdownlint-cli2-action@v10.0.1
+        uses: DavidAnson/markdownlint-cli2-action@v23.1.0
         with:
           config: .markdownlint.yaml
           globs: "blogs/**/*.md"
