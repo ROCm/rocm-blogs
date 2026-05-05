@@ -26,8 +26,8 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
       - name: Add external remote
         run: |
-          git remote add external "https://x-access-token:${{ secrets.ROCM_BLOG_PAT }}@github.com/${{ env.EXTERNAL_REPO }}.git"
-          git fetch external "${{ env.EXTERNAL_BRANCH }}" || echo "Branch does not exist on external yet"
+          git remote add external "https://x-access-token:${{ secrets.SYNC_TO_PUBLIC }}@github.com/${{ env.EXTERNAL_REPO }}.git"
+          git fetch external "${{ env.EXTERNAL_BRANCH }}" || echo "Branch does not exist on external yet."
       - name: Filter out internal-only files
         run: |
           EXCLUDE_PATTERNS=(
@@ -53,7 +53,7 @@ jobs:
             git merge "${{ env.INTERNAL_BRANCH }}" \
               --no-edit \
               --allow-unrelated-histories \
-              -m "chore: sync from internal/develop ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+              -m "chore: sync from internal/develop ($(date -u +%Y-%m-%dT%H:%M:%SZ))."
             git push external "HEAD:${{ env.EXTERNAL_BRANCH }}"
           else
             git push external "${{ env.INTERNAL_BRANCH }}:refs/heads/${{ env.EXTERNAL_BRANCH }}"
