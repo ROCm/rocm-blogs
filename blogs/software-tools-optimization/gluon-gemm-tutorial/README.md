@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "From Naive to Near-Peak: Building High-Performance GEMM Kernels with Gluon"
 date: 28 Apr 2026
 author: 'Lixun Zhang'
-thumbnail: 'gluon-gemm-performance-progression.png'
+thumbnail: 'gluon-gemm-cover.png'
 tags: AI/ML, Linear Algebra, Performance, Profiling, Optimization, Hardware, Compiler
 category: Software tools & optimizations
 target_audience: GPU kernel developers, ML compiler engineers, and performance engineers
