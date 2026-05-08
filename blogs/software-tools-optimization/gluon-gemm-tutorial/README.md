@@ -51,8 +51,8 @@ SOFTWARE.
 
 On a single MI355, our most-optimized FP16 GEMM kernel runs at **98.75% MFMA
 efficiency** — the matrix engine sits idle for a handful of cycles per loop.
-Getting there took ten versions, several wrong turns, and a profiler open the
-whole time. This post is a tour of that path: from a 520 TFLOPS naive baseline
+Getting there took ten versions, a regression along the way, and a profiler
+open the whole time. This post is a tour of that path: from a 520 TFLOPS naive baseline
 to a 1489 TFLOPS near-peak kernel (~3× speedup), then the same design carried
 forward to BF8 (3257 TFLOPS, 99.72%) and MXFP4 (5255 TFLOPS, 92.41%) for
 low-precision AI workloads.
@@ -67,21 +67,15 @@ tool when you need to extract every last percent on a target architecture.
 
 ## Why another GEMM tutorial?
 
-ROCm already provides optimized linear algebra libraries and tuning workflows
-for production workloads. Those tools should be the first stop for most users.
-Kernel developers, compiler engineers, and performance specialists often need a
-different kind of resource: they need to understand how a high-performance
-kernel is constructed, what the hardware bottleneck is at each step, and why a
-specific code change improves the result.
+This isn't a replacement for production libraries like hipBLASLt; it's the
+path *through* the bottlenecks those libraries hide. The tutorial does not
+start with the final kernel — it starts with a simple FP16 GEMM that is
+correct but far from optimal, then builds performance one measured bottleneck
+at a time. Each version isolates one idea so readers can connect code
+structure to hardware behavior.
 
-The Gluon GEMM tutorial is designed for that second audience. It does not start
-with the final kernel. It starts with a simple FP16 GEMM that is correct but far
-from optimal, then builds performance one measured bottleneck at a time. Each
-version isolates one idea so that readers can connect code structure to
-hardware behavior.
-
-The tutorial targets AMD MI350/MI355 (gfx950, CDNA4). Three kernels span the
-data types most relevant to modern AI workloads:
+Three kernels on AMD MI350/MI355 (gfx950, CDNA4) span the data types most
+relevant to modern AI workloads:
 
 | Kernel | Data type | Shape used in the summary | Documented result |
 | --- | --- | --- | --- |
@@ -96,7 +90,7 @@ number, but the path from baseline to that number.
 
 ```{figure} ./images/gluon-gemm-performance-progression.png
 :align: center
-:alt: FP16 GEMM performance from the v0 naive baseline (520 TFLOPS) to v9 with the LLIR scheduler and amdgcnas peephole pass (1489 TFLOPS); MFMA efficiency overlaid in red
+:alt: Bar chart of FP16 GEMM TFLOPS across tutorial versions v0 to v9 with each version's measured configurations. A visible drop at v6 with the LLIR scheduler shows the spill regression discussed in Act III. v9 with the LLIR scheduler and amdgcnas peephole pass reaches 1489 TFLOPS (~3x the 520 TFLOPS v0 baseline). MFMA efficiency is overlaid as a red line.
 
 FP16 GEMM performance across the v0–v9 tutorial versions on MI355 (each
 version shown for the configurations measured for it). Bars are TFLOPS; the
@@ -110,21 +104,15 @@ and 98.75% — roughly 2.9× faster than the baseline.
 
 ## What Gluon makes explicit
 
-Gluon is a block-level programming model in Triton. In a conventional
-thread-level GPU kernel, the compiler receives code that describes what each
-thread should compute and then has to recover scheduling, register allocation,
-and memory movement opportunities from that lower-level representation. That
-works well for many kernels, but high-performance GEMM often needs very precise
-control over layouts, pipeline stages, and live ranges.
-
-Gluon raises the authoring level to tiles and block-level operations. The
-kernel author describes how data moves between global memory, LDS, registers,
-and MFMA instructions. Layouts are explicit. Pipeline stages are explicit.
-Register budgeting becomes part of the kernel design instead of something
-discovered only after the backend compiler has lowered the code. The compiler's
-job narrows to faithful lowering and throughput-aware interleaving; the hard
-parts of traditional GPU compilation (NP-hard scheduling, graph-coloring
-register allocation) become design problems the kernel author owns.
+Gluon is a block-level programming model in Triton. Where conventional
+thread-level kernels leave the compiler to recover scheduling, register
+allocation, and memory-movement opportunities from low-level IR, Gluon raises
+the authoring level to tiles. Layouts are explicit. Pipeline stages are
+explicit. Register budgeting becomes part of the kernel design, not something
+discovered after the backend lowers the code. The compiler's job narrows to
+faithful lowering and throughput-aware interleaving; the hard problems of
+traditional GPU compilation (NP-hard scheduling, graph-coloring register
+allocation) become design problems the kernel author owns.
 
 That explicit control is the central teaching point of the repository. The
 tutorial repeatedly asks:
@@ -135,8 +123,8 @@ tutorial repeatedly asks:
 * How many registers are live at the MFMA boundary?
 * What does the trace show after the change?
 
-The result is a workflow where hardware reasoning, source code, generated code,
-and profiler data all stay connected.
+Hardware reasoning, source code, generated code, and profiler data stay
+connected throughout.
 
 ## The FP16 path: one bottleneck at a time
 
@@ -197,10 +185,24 @@ pipeline around smaller operand regions.
 ```
 
 **Act IV — Beyond the hot loop (v9).** With the inner loop already at near-peak
-MFMA utilization, `v9_beyond_hotloop` looks outside the loop and improves L2
-cache locality through **XCD-aware workgroup remapping** (MI350-class parts have
-8 XCDs, each with its own L2; remapping reduces inter-XCD traffic, which
-reduces power, which raises sustained clock frequency).
+MFMA utilization, `v9_beyond_hotloop` shifts focus to the structural quirk
+that distinguishes MI350-class hardware: **MI350 is a chiplet GPU with 8 XCDs,
+each carrying its own L2 cache.** Workgroups dispatched to different XCDs read
+from different L2s, so tile pairs that should reuse data instead trigger
+redundant DRAM traffic — bandwidth and power lost to a hardware structure that
+doesn't exist on monolithic dies.
+
+The fix is XCD-aware workgroup remapping plus a `GROUP_SIZE_M`-based swizzle:
+assign adjacent tiles to the same XCD so they share L2 lines, then choose the
+swizzle that minimizes a closed-form objective `f(GM) = GM + ⌈P/GM⌉` where `P`
+is workgroups per XCD. For `P=32`, the optimum is `GM ∈ {4, 6, 8}`. Hardware
+counters confirm: L2 misses drop from ~5.3M to ~4.1M, power drops with them,
+and sustained clock — and therefore TFLOPS — lifts the last few percent on top
+of v8.
+
+This is the kind of insight unique to MI350's chiplet architecture; it doesn't
+transfer from a monolithic-die GPU. The mechanism is unusual; the recipe is
+open.
 
 ## Profiling drives the tutorial
 
@@ -223,9 +225,8 @@ The tutorial uses **MFMA efficiency** as its primary signal because it is
 clock-independent and reproducible across runs in a way raw TFLOPS isn't. It's
 a cycle-level metric measured from the thread trace — the fraction of
 inner-loop cycles in which the MFMA unit is busy. 98% means the matrix engine
-is essentially never idle inside the hot loop. (End-to-end TFLOPS is a
-different question — it also picks up epilogue stores, prologue setup, and
-multi-CU dispatch — and the tutorial reports both.)
+is essentially never idle inside the hot loop. (End-to-end TFLOPS — which also
+captures epilogue, prologue, and multi-CU dispatch — is reported alongside it.)
 
 ```{figure} ./images/gluon-gemm-att-near-peak.png
 :align: center
@@ -304,18 +305,18 @@ real AI workloads:
   attention, KV-cache projections. If your inference stack has a kernel sitting
   at 70–80% MFMA efficiency on MI350, the tutorial's diagnostic process is the
   fastest way to identify what's missing.
-* **Where the tutorial does not yet go.** The repository covers compute-bound
-  GEMM in FP16, BF8, and MXFP4 today. **Memory-bound GEMM, FlashAttention
-  (prefill and decode), and an MXFP4 MoE kernel are on the public
-  [roadmap](https://github.com/ROCm/gfx950-gluon-tutorials/blob/main/ROADMAP.md).**
-  Treat the current tutorial as the foundation those kernels will build on,
-  not as a complete inference recipe.
-* **Why this matters for evaluating MI350 for AI.** Gluon, the LLIR scheduler,
-  and `amdgcnas` are open ROCm Triton work that ship with the tutorial; the
-  performance recipe is reproducible end-to-end against the pinned commit.
-  This is the rare case where the kernel that produced the reported number is
-  also the kernel you can read, run, and modify — no black box, no vendor
-  secrets.
+* **What's coming next.** The same team is extending the tutorial to
+  **memory-bound GEMM, FlashAttention prefill and decode, and an MXFP4 MoE
+  kernel** — the kernels that dominate LLM inference and MoE inference today.
+  The
+  [roadmap](https://github.com/ROCm/gfx950-gluon-tutorials/blob/main/ROADMAP.md)
+  is public; the pace and direction are visible in the repo.
+* **Why this matters for evaluating MI350 for AI.** The kernel source, the
+  LLIR scheduler pass, the `amdgcnas` post-assembly peephole, the
+  `run_perf_table.py` reproducer, and the pinned Triton commit all ship under
+  MIT in the same repository. The kernel that produced 98.75% MFMA efficiency
+  is the same kernel you can read, run, modify, and benchmark on your own
+  hardware — no black box, no vendor secrets.
 
 ### Where to look in `docs/`
 
@@ -342,11 +343,12 @@ bottleneck in your own kernel.
 
 What you'll see: a ~3× speedup in two commands, plus a perf-table sweep that
 confirms the same numbers across the configurations the tutorial documents.
-The peak numbers reproduce against the
+**Setup is ~30 minutes** (Triton built from source against a pinned tag); after
+that, two commands reproduce the journey. The peak numbers reproduce against
+the
 [`gfx950-tutorial-v0.1`](https://github.com/triton-lang/triton/releases/tag/gfx950-tutorial-v0.1)
 annotated tag in `triton-lang/triton`, which pins a specific commit on the
-`gfx950-tutorial` branch. Clone the tutorial repo and build Triton from that
-tag before benchmarking.
+`gfx950-tutorial` branch.
 
 ```bash
 git clone https://github.com/ROCm/gfx950-gluon-tutorials.git
@@ -364,6 +366,11 @@ python bench.py --version 0 --K 8192 --dtype fp16
 TRITON_ENABLE_LLIR_SCHED=1 TRITON_ENABLE_AMDGCN_AS=1 \
     python bench.py --version 9 --K 8192 --dtype fp16
 ```
+
+> `bench.py` reports `do_bench` (cache-warm) numbers, which run a few percent
+> below the cold-cache numbers in the rest of this post. The cold-cache,
+> rocprofv3-measured numbers in the table and chart come from the perf-table
+> sweep below.
 
 For a broader performance table that compares scheduler configurations across
 several versions, run from the repository root:
@@ -384,21 +391,16 @@ The recommended reading order is:
 2. Read each version README from `v0_naive` through `v9_beyond_hotloop`.
 3. Compare the code changes with the profiler evidence.
 4. Move to `a8w8` for BF8 and `a4w4` for MXFP4.
-5. Use the `docs/` directory when you want a deeper model for MFMA efficiency,
-   LDS throughput, or memory bandwidth.
+
+Dip into `docs/` (see "Where to look in `docs/`" above) whenever a particular
+bottleneck — bank conflicts, MFMA efficiency, HBM bandwidth — comes up.
 
 ## Summary
 
-Near-peak GEMM performance is not one trick. It is a sequence of design
-decisions — use the right data movement instruction, choose the right LDS
-layout, overlap memory and compute, control register pressure, measure MFMA
-efficiency, and look beyond the hot loop when locality matters. Gluon makes
-those decisions explicit, which makes the optimization process teachable and
-reproducible.
-
-The tutorial reproduces. The methodology transfers. The next time someone
-tells you AMD GPUs need vendor secrets to hit peak, you'll know exactly where
-to look.
+Near-peak GEMM performance isn't one trick. Gluon makes the sequence of
+design decisions explicit, the tutorial reproduces them, and the methodology
+transfers. The next time someone tells you AMD GPUs need vendor secrets to hit
+peak, you'll know exactly where to look.
 
 ## Disclaimers
 
