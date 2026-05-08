@@ -51,10 +51,10 @@ SOFTWARE.
 
 High-performance GPU kernels are built through measurement, not guesswork. The
 [`gfx950-gluon-tutorials`](https://github.com/ROCm/gfx950-gluon-tutorials)
-repository takes a naive **522 TFLOPS** FP16 GEMM and turns it into a
-**1619 TFLOPS** near-peak kernel — a **3× speedup** in ten incremental
+repository takes a naive **520 TFLOPS** FP16 GEMM and turns it into a
+**1489 TFLOPS** near-peak kernel — a **~3× speedup** in ten incremental
 versions, every one motivated by a thread trace or a hardware counter. The same
-design then extends to BF8 (**3456 TFLOPS**) and MXFP4 (**5728 TFLOPS**) for
+design then extends to BF8 (**3257 TFLOPS**) and MXFP4 (**5255 TFLOPS**) for
 low-precision AI workloads.
 
 This post is for **kernel developers, compiler engineers, and performance
@@ -85,9 +85,9 @@ data types most relevant to modern AI workloads:
 
 | Kernel | Data type | Shape used in the summary | Documented result |
 | --- | --- | --- | --- |
-| `a16w16` | FP16 | `4096x4096x8192` | `1619 TFLOPS`, `98%` MFMA efficiency |
-| `a8w8` | BF8 | `4096x4096x16384` | `3456 TFLOPS`, `99%` MFMA efficiency |
-| `a4w4` | MXFP4 | `4096x4096x32768` | `5728 TFLOPS`, `92%` MFMA efficiency |
+| `a16w16` | FP16 | `4096x4096x8192` | `1489 TFLOPS`, `98.75%` MFMA efficiency |
+| `a8w8` | BF8 | `4096x4096x16384` | `3257 TFLOPS`, `99.72%` MFMA efficiency |
+| `a4w4` | MXFP4 | `4096x4096x32768` | `5255 TFLOPS`, `92.41%` MFMA efficiency |
 
 MFMA efficiency here is a within-loop, cycle-level metric measured from the
 thread trace: the fraction of inner-loop cycles in which the MFMA unit is busy.
@@ -102,12 +102,12 @@ only the final number, but the path from baseline to that number.
 
 ```{figure} ./images/gluon-gemm-performance-progression.png
 :align: center
-:alt: FP16 GEMM performance from the v0 naive baseline (522 TFLOPS) to v9 with the LLIR scheduler and amdgcnas peephole pass (1619 TFLOPS); MFMA efficiency overlaid in red
+:alt: FP16 GEMM performance from the v0 naive baseline (520 TFLOPS) to v9 with the LLIR scheduler and amdgcnas peephole pass (1489 TFLOPS); MFMA efficiency overlaid in red
 
 FP16 GEMM performance across the v0–v9 tutorial versions on MI355. Bars are
-TFLOPS; the red line tracks MFMA efficiency. v0 (naive) runs at 522 TFLOPS and
+TFLOPS; the red line tracks MFMA efficiency. v0 (naive) runs at 520 TFLOPS and
 25% MFMA efficiency; v9 (with the LLIR scheduler and `amdgcnas` peephole pass)
-reaches 1619 TFLOPS and 98% — roughly 3.1× faster than the baseline.
+reaches 1489 TFLOPS and 98.75% — roughly 2.9× faster than the baseline.
 ```
 
 > This post is the map. The repository is the full tutorial.
@@ -165,15 +165,16 @@ becomes a first-class performance problem, so the tutorial introduces the
 **LLIR scheduler**, a Triton-level pass that interleaves MFMA with memory
 operations according to the hardware throughput model.
 
-**Act III — Taming the hardware (v6–v8).** `v6_loop_unroll` removes the
-register-copy overhead at iteration boundaries by double-buffering the operand
-registers, so consecutive K iterations swap which register set the MFMA
-consumes. `v7_sliceN` cuts the B-tile register footprint in half by computing
-the output tile in two N-halves; combined with `amdgcnas` (a post-assembly
-peephole pass over the generated AMDGCN assembly), this is where v7 first
-reaches 98% MFMA efficiency. `v8_sliceMN` slices A along M as well, dropping
-register pressure further and resolving a buffer-load throughput stall that v7
-hits at large K.
+**Act III — Taming the hardware (v6–v8).** `v6_loop_unroll` double-buffers the
+operand registers so consecutive K iterations swap which register set the MFMA
+consumes — the per-iteration copy disappears, but both register sets now have
+to be concurrently live, pushing the working set against the 512-VGPR limit.
+`v7_sliceN` resolves that by cutting the B-tile register footprint in half:
+the output tile is computed in two N-halves rather than one. Combined with
+`amdgcnas` (a post-assembly peephole pass over the generated AMDGCN assembly),
+this is where v7 first reaches 98% MFMA efficiency. `v8_sliceMN` slices A along
+M as well, dropping register pressure further and resolving a buffer-load
+throughput stall that v7 hits at large K.
 
 ```{figure} ./images/gluon-gemm-slicemn-design.png
 :align: center
@@ -232,10 +233,10 @@ lower precision formats.
 tile shape, MFMA instruction, K width, and LDS padding. This part of the
 tutorial is a checklist proof: if you understand the FP16 design, the BF8
 design follows from the changed instruction shape and data type. End result:
-**3456 TFLOPS at 99% MFMA efficiency** on MI355.
+**3257 TFLOPS at 99.72% MFMA efficiency** on MI355.
 
-**MXFP4.** This is the most impressive number in the tutorial — **5728 TFLOPS
-at 92% MFMA efficiency** — and it is also the most interesting design. MXFP4
+**MXFP4.** This is the most impressive number in the tutorial — **5255 TFLOPS
+at 92.41% MFMA efficiency** — and it is also the most interesting design. MXFP4
 stores two 4-bit values per byte and uses a per-group 8-bit scale factor for
 every 32 elements, so the kernel needs an entire **scale pipeline** in addition
 to the tile pipeline. The scale pipeline is a three-step round trip:
@@ -266,9 +267,9 @@ evidence — the kernel just has an additional dataflow to schedule.
 
 To start, clone the tutorial repository. The peak numbers are reproduced
 against the
-[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/releases/tag/gfx9-gluon-tutorials-pin)
-annotated tag in `ROCm/triton`, which pins a specific `matmul_4waves` commit.
-Build Triton from that tag before benchmarking.
+[`gfx950-tutorial-v0.1`](https://github.com/triton-lang/triton/releases/tag/gfx950-tutorial-v0.1)
+annotated tag in `triton-lang/triton`, which pins a specific commit on the
+`gfx950-tutorial` branch. Build Triton from that tag before benchmarking.
 
 ```bash
 git clone https://github.com/ROCm/gfx950-gluon-tutorials.git
@@ -281,9 +282,10 @@ the tutorial walks through:
 ```bash
 cd kernels/gemm/a16w16
 # Naive baseline (~520 TFLOPS, 25% MFMA efficiency on MI355)
-python bench.py --version 0 --K 8192 --dtype fp16 --use-rocprof
-# Final optimized kernel (~1620 TFLOPS, 98% MFMA efficiency on MI355)
-python bench.py --version 9 --K 8192 --dtype fp16 --use-rocprof
+python bench.py --version 0 --K 8192 --dtype fp16
+# Final optimized kernel (~1490 TFLOPS, 98.75% MFMA efficiency on MI355)
+TRITON_ENABLE_LLIR_SCHED=1 TRITON_ENABLE_AMDGCN_AS=1 \
+    python bench.py --version 9 --K 8192 --dtype fp16
 ```
 
 For a broader performance table that compares scheduler configurations across
@@ -296,7 +298,7 @@ python scripts/run_perf_table.py \
   --configs base llir llir+amdgcnas \
   --K 8192 \
   --dtype fp16 \
-  --use-rocprof
+  --rocprof
 ```
 
 The recommended reading order is:
@@ -325,8 +327,8 @@ teachable and reproducible.
 ## Disclaimers
 
 The TFLOPS and MFMA-efficiency numbers in this blog were measured on a single
-MI355 with ROCm 6.5.0 and Triton built from the
-[`gfx9-gluon-tutorials-pin`](https://github.com/ROCm/triton/releases/tag/gfx9-gluon-tutorials-pin)
+MI355 with ROCm 7.0 and Triton built from the
+[`gfx950-tutorial-v0.1`](https://github.com/triton-lang/triton/releases/tag/gfx950-tutorial-v0.1)
 tag. Performance varies based on hardware configuration, software versions,
 system topology, thermal state, and workload characteristics, and may shift as
 ROCm and Triton evolve. Treat the numbers as reproducible reference points for
