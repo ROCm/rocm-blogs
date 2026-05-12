@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "From Naive to Near-Peak: Building High-Performance GEMM Kernels with Gluon"
 date: 28 Apr 2026
-author: 'Lixun Zhang'
+author: 'Lixun Zhang, Jason Furmanek, Peng Sun, Emad Barsoum'
 thumbnail: 'gluon-gemm-cover.png'
 tags: AI/ML, Linear Algebra, Performance, Profiling, Optimization, Hardware, Compiler
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Learn how a hands-on Gluon tutorial teaches profiling-dr
 language: English
 myst:
     html_meta:
-        "author": "Lixun Zhang"
+        "author": "Lixun Zhang, Jason Furmanek, Peng Sun, Emad Barsoum"
         "description lang=en": "Learn how a Gluon GEMM tutorial teaches profiling-driven AMD GPU optimization from FP16 baseline to BF8 and MXFP4 kernels."
         "keywords": "Gluon, GEMM, ROCm, Triton, AMD GPUs, MFMA, LDS, profiling, optimization"
         "vertical": "HPC"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "AI Inference, AI Training"
         "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
-        "amd_blog_authors": "Lixun Zhang"
+        "amd_blog_authors": "Lixun Zhang, Jason Furmanek, Peng Sun, Emad Barsoum"
 ---
 
 <!---
