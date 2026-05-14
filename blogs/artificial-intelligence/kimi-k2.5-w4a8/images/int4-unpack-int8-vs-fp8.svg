@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1000" viewBox="0 0 1100 1000">
+  <defs>
+    <style>
+      text { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+      .mono { font-family: 'Courier New', Consolas, 'Liberation Mono', monospace; }
+    </style>
+    <marker id="ag" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#9ca3af"/>
+    </marker>
+    <marker id="ao" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#d97706"/>
+    </marker>
+    <marker id="av" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <path d="M0,0 L10,3.5 L0,7 Z" fill="#059669"/>
+    </marker>
+    <filter id="sh">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.07"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1100" height="1000" rx="10" fill="#f8f9fb"/>
+
+  <!-- ==================== TITLE ==================== -->
+  <text x="550" y="38" text-anchor="middle" font-size="21" font-weight="700" fill="#111827">INT4 Weight Unpacking: Why INT8 Activations Beat FP8</text>
+  <text x="550" y="60" text-anchor="middle" font-size="14" fill="#6b7280">Comparing ALU cost of converting packed INT4 weights for MFMA consumption</text>
+
+  <!-- ==================== INPUT ==================== -->
+  <text x="550" y="88" text-anchor="middle" font-size="12" font-weight="600" fill="#9ca3af" letter-spacing="2">INPUT</text>
+
+  <rect x="300" y="98" width="500" height="82" rx="10" fill="#eef2ff" stroke="#818cf8" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="550" y="122" text-anchor="middle" font-size="15" font-weight="600" fill="#1e1b4b">Packed i32 Register  (8 x INT4 values)</text>
+
+  <!-- Byte blocks -->
+  <rect x="332" y="133" width="96" height="30" rx="5" fill="#6366f1"/>
+  <text x="380" y="153" text-anchor="middle" class="mono" font-size="13" fill="#fff">byte 3</text>
+  <rect x="434" y="133" width="96" height="30" rx="5" fill="#818cf8"/>
+  <text x="482" y="153" text-anchor="middle" class="mono" font-size="13" fill="#fff">byte 2</text>
+  <rect x="536" y="133" width="96" height="30" rx="5" fill="#6366f1"/>
+  <text x="584" y="153" text-anchor="middle" class="mono" font-size="13" fill="#fff">byte 1</text>
+  <rect x="638" y="133" width="96" height="30" rx="5" fill="#818cf8"/>
+  <text x="686" y="153" text-anchor="middle" class="mono" font-size="13" fill="#fff">byte 0</text>
+
+  <text x="550" y="175" text-anchor="middle" class="mono" font-size="12" fill="#6366f1">each byte = 2 x signed INT4  (high nibble | low nibble)</text>
+
+  <!-- Arrow -->
+  <line x1="550" y1="182" x2="550" y2="206" stroke="#9ca3af" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- ==================== SHARED STEP ==================== -->
+  <text x="550" y="222" text-anchor="middle" font-size="12" font-weight="600" fill="#9ca3af" letter-spacing="2">SHARED STEP</text>
+
+  <rect x="150" y="232" width="800" height="152" rx="10" fill="#fff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+  <text x="550" y="260" text-anchor="middle" font-size="16" font-weight="600" fill="#111827">INT4 &#x2192; INT8 Sign Extension    (7 ALU ops &#x2014; both paths need this)</text>
+
+  <!-- Code lines -->
+  <text x="200" y="290" class="mono" font-size="13" fill="#374151">even = packed32 &amp; 0x0F0F0F0F</text>
+  <text x="560" y="290" class="mono" font-size="12" fill="#9ca3af">// mask low nibbles</text>
+
+  <text x="200" y="312" class="mono" font-size="13" fill="#374151">e_sign = (even &amp; 0x08080808) * 0x1E</text>
+  <text x="560" y="312" class="mono" font-size="12" fill="#9ca3af">// sign extension</text>
+
+  <text x="200" y="334" class="mono" font-size="13" fill="#374151">even = even | e_sign</text>
+  <text x="560" y="334" class="mono" font-size="13" fill="#059669" font-weight="600">&#x2192; 4 x signed INT8</text>
+
+  <text x="200" y="360" class="mono" font-size="13" fill="#374151">odd  = (packed32 &gt;&gt; 4) &amp; 0x0F0F0F0F  // then same sign-ext</text>
+  <text x="700" y="360" class="mono" font-size="13" fill="#059669" font-weight="600">&#x2192; 4 x signed INT8</text>
+
+  <!-- Arrow -->
+  <line x1="550" y1="386" x2="550" y2="406" stroke="#9ca3af" stroke-width="2" marker-end="url(#ag)"/>
+
+  <!-- Result pill -->
+  <rect x="370" y="410" width="360" height="36" rx="18" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1.2"/>
+  <text x="550" y="434" text-anchor="middle" font-size="15" font-weight="600" fill="#1f2937">Result: 8 x signed INT8 values</text>
+
+  <!-- ==================== BRANCH ==================== -->
+  <line x1="550" y1="448" x2="550" y2="472" stroke="#9ca3af" stroke-width="2"/>
+
+  <!-- Left branch -->
+  <line x1="550" y1="472" x2="275" y2="472" stroke="#d97706" stroke-width="2.5"/>
+  <line x1="275" y1="472" x2="275" y2="498" stroke="#d97706" stroke-width="2.5" marker-end="url(#ao)"/>
+
+  <!-- Right branch -->
+  <line x1="550" y1="472" x2="825" y2="472" stroke="#059669" stroke-width="2.5"/>
+  <line x1="825" y1="472" x2="825" y2="498" stroke="#059669" stroke-width="2.5" marker-end="url(#av)"/>
+
+  <!-- ==================== LEFT: FP8 PATH ==================== -->
+
+  <!-- Default badge -->
+  <rect x="170" y="482" width="80" height="22" rx="11" fill="#d97706"/>
+  <text x="210" y="497" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">DEFAULT</text>
+
+  <!-- Header -->
+  <rect x="30" y="504" width="490" height="48" rx="10" fill="#d97706"/>
+  <text x="275" y="528" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">W4A_FP8 Path</text>
+  <text x="275" y="546" text-anchor="middle" font-size="12" font-weight="500" fill="#fef3c7">+20 extra ALU ops per 8 elements</text>
+
+  <!-- Content box -->
+  <rect x="30" y="558" width="490" height="260" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="1.5" filter="url(#sh)"/>
+
+  <text x="275" y="586" text-anchor="middle" font-size="15" font-weight="600" fill="#92400e">Must convert each INT8 &#x2192; F32 &#x2192; FP8</text>
+
+  <text x="52" y="614" class="mono" font-size="13" font-weight="600" fill="#78350f">even i32 &#x2192; fp8 i32  (15 ALU ops):</text>
+
+  <text x="60" y="640" class="mono" font-size="12" fill="#92400e">byte0: shl 24 &#x2192; shr_arith 24 &#x2192; sitofp &#x2192; f0</text>
+  <text x="60" y="660" class="mono" font-size="12" fill="#92400e">byte1: shl 16 &#x2192; shr_arith 24 &#x2192; sitofp &#x2192; f1</text>
+  <text x="60" y="680" class="mono" font-size="12" fill="#92400e">byte2: shl  8 &#x2192; shr_arith 24 &#x2192; sitofp &#x2192; f2</text>
+  <text x="60" y="700" class="mono" font-size="12" fill="#92400e">byte3:         shr_arith 24 &#x2192; sitofp &#x2192; f3</text>
+
+  <text x="60" y="728" class="mono" font-size="13" fill="#78350f">cvt_pk_fp8_f32(f0,f1) &#x2192; low  2 fp8</text>
+  <text x="60" y="748" class="mono" font-size="13" fill="#78350f">cvt_pk_fp8_f32(f2,f3) &#x2192; high 2 fp8</text>
+
+  <line x1="50" y1="764" x2="500" y2="764" stroke="#d97706" stroke-width="0.8" stroke-dasharray="5,3"/>
+  <text x="52" y="784" class="mono" font-size="13" fill="#78350f">odd i32 &#x2192; fp8 i32  (same 14 ops)</text>
+
+  <!-- Extra ops badge -->
+  <rect x="105" y="798" width="340" height="32" rx="8" fill="#fcd34d" opacity="0.35"/>
+  <rect x="105" y="798" width="340" height="32" rx="8" fill="none" stroke="#f59e0b" stroke-width="1"/>
+  <text x="275" y="820" text-anchor="middle" font-size="14" font-weight="700" fill="#92400e">Extra cost: 20 ALU + 4 cvt_pk_fp8 ops</text>
+
+  <!-- Arrow -->
+  <line x1="275" y1="838" x2="275" y2="858" stroke="#d97706" stroke-width="2" marker-end="url(#ao)"/>
+
+  <!-- Bitcast -->
+  <rect x="85" y="864" width="380" height="32" rx="8" fill="#fff" stroke="#d97706" stroke-width="1.2"/>
+  <text x="275" y="886" text-anchor="middle" class="mono" font-size="13" fill="#92400e">bitcast(even_fp8, odd_fp8) &#x2192; b64</text>
+
+  <!-- Arrow -->
+  <line x1="275" y1="898" x2="275" y2="916" stroke="#d97706" stroke-width="2" marker-end="url(#ao)"/>
+
+  <!-- MFMA -->
+  <rect x="55" y="922" width="440" height="32" rx="8" fill="#fff" stroke="#d97706" stroke-width="2" filter="url(#sh)"/>
+  <text x="275" y="944" text-anchor="middle" class="mono" font-size="14" font-weight="600" fill="#b45309">mfma_f32_16x16x32_fp8_fp8</text>
+
+  <!-- Total -->
+  <rect x="115" y="964" width="320" height="30" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="275" y="984" text-anchor="middle" font-size="14" font-weight="700" fill="#b45309">&#x2716;  Total: 7 + 20 = 27 ALU ops</text>
+
+  <!-- ==================== RIGHT: INT8 PATH ==================== -->
+
+  <!-- AITER_W4A8_USE_INT8=1 badge -->
+  <rect x="680" y="476" width="260" height="26" rx="13" fill="#059669"/>
+  <text x="810" y="494" text-anchor="middle" class="mono" font-size="12" font-weight="700" fill="#fff">AITER_W4A8_USE_INT8=1</text>
+
+  <!-- Header -->
+  <rect x="580" y="504" width="490" height="48" rx="10" fill="#059669"/>
+  <text x="825" y="528" text-anchor="middle" font-size="17" font-weight="700" fill="#fff">W4A_INT8 Path</text>
+  <text x="825" y="546" text-anchor="middle" font-size="12" font-weight="500" fill="#d1fae5">0 extra ops &#x2014; INT4 naturally sign-extends to INT8</text>
+
+  <!-- Content box -->
+  <rect x="580" y="558" width="490" height="130" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5" filter="url(#sh)"/>
+
+  <text x="825" y="588" text-anchor="middle" font-size="17" font-weight="700" fill="#064e3b">No conversion needed!</text>
+
+  <text x="610" y="618" font-size="14" fill="#065f46">INT4 values sign-extend directly to INT8 via</text>
+  <text x="610" y="640" font-size="14" fill="#065f46">the shared 7 ALU ops above. The result is</text>
+  <text x="610" y="662" font-size="14" fill="#065f46">already in the correct format for INT8 MFMA.</text>
+
+  <!-- Dashed line -->
+  <line x1="825" y1="690" x2="825" y2="858" stroke="#059669" stroke-width="2" stroke-dasharray="8,5"/>
+
+  <!-- 0 extra ops callout -->
+  <rect x="855" y="750" width="170" height="36" rx="18" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+  <text x="940" y="774" text-anchor="middle" font-size="15" font-weight="700" fill="#059669">0 extra ops</text>
+
+  <!-- Arrow tip -->
+  <line x1="825" y1="856" x2="825" y2="862" stroke="#059669" stroke-width="2" marker-end="url(#av)"/>
+
+  <!-- Bitcast -->
+  <rect x="635" y="864" width="380" height="32" rx="8" fill="#fff" stroke="#059669" stroke-width="1.2"/>
+  <text x="825" y="886" text-anchor="middle" class="mono" font-size="13" fill="#065f46">bitcast(even, odd) &#x2192; b64</text>
+
+  <!-- Arrow -->
+  <line x1="825" y1="898" x2="825" y2="916" stroke="#059669" stroke-width="2" marker-end="url(#av)"/>
+
+  <!-- MFMA -->
+  <rect x="605" y="922" width="440" height="32" rx="8" fill="#fff" stroke="#059669" stroke-width="2" filter="url(#sh)"/>
+  <text x="825" y="944" text-anchor="middle" class="mono" font-size="14" font-weight="600" fill="#047857">mfma_i32_16x16x32_i8</text>
+
+  <!-- Total -->
+  <rect x="665" y="964" width="320" height="30" rx="8" fill="#d1fae5" stroke="#059669" stroke-width="1.5"/>
+  <text x="825" y="984" text-anchor="middle" font-size="14" font-weight="700" fill="#047857">&#x2714;  Total: 7 + 0 = 7 ALU ops</text>
+
+</svg>
