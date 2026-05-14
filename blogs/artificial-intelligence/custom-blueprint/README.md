@@ -11,9 +11,9 @@ key_value_propositions: Learn how to deploy and customize AMD Solution Blueprint
 language: English
 myst:
     html_meta:
-        "author": "Rasmus Larsson, Daniel Gustafsson, Eliecer Diaz Diaz"
+        "author": "Rasmus Larsson, Daniel Gustafsson, Eliecer Diaz"
         "description lang=en": "Learn how to deploy and customize AMD Solution Blueprints — from default deployment to swapping and reusing AMD Inference Microservices across multiple blueprints."
-        "keywords": "Solution Blueprints, Enterprise AI, AMD Inference Microservices, Kubernetes, Enterprise AI Suite"
+        "keywords": "Solution Blueprints, Enterprise AI, AMD Inference Microservices, Kubernetes, enterprise AI reference stack"
         "vertical": "AI"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
@@ -51,7 +51,7 @@ SOFTWARE.
 
 AMD Solution Blueprints are ready-to-deploy, customizable reference applications built with AMD Inference Microservices (AIMs). They offer a microservice solution for a range of use cases, from standard chat interfaces to agentic frameworks, serving as both starting points for development and example implementations.
 
-Packaged as Helm charts, the Solution Blueprints are off-the-shelf and ready to be deployed on an AMD Enterprise AI Suite cluster. The Helm templating system allows you to customize each application. Every Solution Blueprint includes architecture diagrams and documentation, making it clear how the components of the Solution Blueprint fit together. For more information, see the previous [blog post on AMD Solution Blueprints](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-blueprints/README.html) or the [documentation](https://enterprise-ai.docs.amd.com/en/latest/solution-blueprints/overview.html).
+Packaged as Helm charts, the Solution Blueprints are off-the-shelf and ready to be deployed to a Kubernetes cluster running AMD compute. The Helm templating system allows you to customize each application. Every Solution Blueprint includes architecture diagrams and documentation, making it clear how the components of the Solution Blueprint fit together. For more information, see the previous [blog post on AMD Solution Blueprints](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-blueprints/README.html) or the [documentation](https://enterprise-ai.docs.amd.com/en/latest/solution-blueprints/overview.html).
 
 This blog post demonstrates how to deploy and customize Solution Blueprints, including how to reuse an AIM LLM across multiple blueprints. We will be using two Solution Blueprints as examples, **Agentic Translation** (multi-agent collaborative translation) and **AutoGen Studio** (web-based interface for creating, configuring, and managing multi-agent AI conversations).
 
@@ -68,10 +68,10 @@ Solution Blueprints can be customized in different ways; determining the right a
 
 ## Prerequisites
 
-This blog post was validated on a cluster running the AMD Enterprise AI Suite powered by AMD Instinct™ MI300X GPUs with 1+ TB of storage. Before proceeding, ensure that the following prerequisites are met:
+This blog post was validated on a cluster powered by AMD Instinct™ MI300X GPUs with 1+ TB of storage and with [AMD Resource Manager](https://enterprise-ai.docs.amd.com/en/latest/resource-manager/overview.html) installed. Before proceeding, ensure that the following prerequisites are met:
 
-- **Kubernetes cluster**: Access to a cluster (e.g., via `kubectl`). You should be able to create resources in at least one namespace (AMD Enterprise AI Suite project, see below)
-- **AMD Enterprise AI Suite**: Access to at least one [project](https://enterprise-ai.docs.amd.com/en/latest/resource-manager/projects/manage-projects.html). In this blog post, we use a project called “demo”
+- **Kubernetes cluster**: Access to a cluster (e.g., via `kubectl`). You should be able to create resources in at least one namespace (we're using AMD Resource Manager, for managing projects or namespaces, see below)
+  - **Namespace**: Access to at least one namespace. For this blog we've used AMD Resource Manager to get access to a [project](https://enterprise-ai.docs.amd.com/en/latest/resource-manager/projects/manage-projects.html). We use a project called “demo”
 - **kubectl** and **k9s**: Installed and configured to communicate with your cluster
 - **Helm**: Installed on your machine
 - **Basic technical proficiency**: Familiarity with command-line tools, `kubectl`, and cluster monitoring tools such as `k9s`
@@ -127,7 +127,7 @@ Start by identifying the Solution Blueprint chart name from the [Solution Bluepr
 Next, define the deployment parameters:
 
 - Deployment name: `autostudio`
-- Kubernetes namespace: `demo` (this corresponds to your AMD Enterprise AI Suite project)
+- Kubernetes namespace: `demo` (this corresponds to your AMD Resource Manager project)
 
 Feel free to use a different existing namespace and a different deployment name.
 
@@ -455,15 +455,13 @@ kubectl delete -f at-custom-deployment.yaml -n $namespace
 
 ## Summary
 
-In this tutorial, you learned how to deploy a Solution Blueprint with default configuration, how to swap the underlying LLM using `--set` flags, configure it using a custom yaml file and how to reuse a single AIM service across multiple Solution Blueprints to conserve GPU resources. These techniques apply across the full Solution Blueprint catalog, not just the two covered here. Head over to the [Solution Blueprint Catalog](https://enterprise-ai.docs.amd.com/en/latest/solution-blueprints/catalog/blueprints.html) to explore the full list and start deploying your own. Stay tuned to the [AMD Enterprise AI Suite release notes](https://enterprise-ai.docs.amd.com/en/latest/release-notes.html) for updates on AIMs, Solution Blueprints, and other components.
+In this tutorial, you learned how to deploy a Solution Blueprint with default configuration, how to swap the underlying LLM using `--set` flags, configure it using a custom yaml file and how to reuse a single AIM service across multiple Solution Blueprints to conserve GPU resources. These techniques apply across the full Solution Blueprint catalog, not just the two covered here. Head over to the [Solution Blueprint Catalog](https://enterprise-ai.docs.amd.com/en/latest/solution-blueprints/catalog/blueprints.html) to explore the full list and start deploying your own. Stay tuned to the [AMD enterprise AI reference stack release notes](https://enterprise-ai.docs.amd.com/en/latest/release-notes.html) for updates on AIMs, Solution Blueprints, and other components.
 
 ### Additional Resources
 
-Ready to build on what you have learned? Use the resources below to start your journey with the AMD Enterprise AI Suite:
+Ready to build on what you have learned? Use the additional resources below to get started:
 
-- [AMD Enterprise AI Suite product page](https://www.amd.com/en/products/software/enterprise-ai-suite.html)
-- [AMD Enterprise AI Suite developer page](https://www.amd.com/en/developer/resources/enterprise-ai-suite.html)
-- [AMD Enterprise AI Suite Documentation](https://enterprise-ai.docs.amd.com/en/latest/index.html)
+- [AMD enterprise AI reference stack documentation](https://enterprise-ai.docs.amd.com/en/latest/index.html)
 - [Blog post - AMD Inference Microservice (AIM): Production Ready Inference on AMD Instinct™ GPUs](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-aims/README.html)
 - [Blog post - Getting Started with AMD AI Workbench: Deploying and Managing AI Workloads](https://rocm.blogs.amd.com/software-tools-optimization/enterprise-ai-workbench/README.html)
 - [Blog post - Solution Blueprints: Accelerating AI Deployment with AMD Enterprise AI](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-blueprints/README.html)
@@ -476,3 +474,7 @@ PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CON
 IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO
 YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE
 FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
+
+```{update} May 12th, 2026
+Updated the blog to clarify usage of AMD enterprise AI reference stack components.
+```
