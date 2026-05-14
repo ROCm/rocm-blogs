@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Primus Projection: Estimate Memory and Performance Before You Train"
-date: 14 May 2026
+date: 24 Apr 2026
 author: 'Anshu Raina, Yuankai Chen, Cheng Yao, Yao Fu, Devang Patel, Vidushi Goyal, Peyman Razaghi, Wen Xie, Zhenyu Gu'
 thumbnail: 'Primus-projection-thumbnail.png'
 tags: AI/ML, LLM, Optimization
