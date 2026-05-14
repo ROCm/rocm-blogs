@@ -71,7 +71,7 @@ Integrating ATOM as a vLLM plugin creates a win-win for all stakeholders, offeri
 
 - **Zero learning curve:** Full compatibility with existing vLLM commands, APIs, and end-to-end workflows. ATOM runs transparently in the background, requiring no new tools or complex configurations—while delivering enhanced kernel performance while preserving a consistent user experience.
 
-- **Instant access to AMD innovation:** Leverage cutting-edge AMD hardware features (e.g., FP4 on the MI355X GPU, rack-scale inference on the MI400 GPU) and top-tier kernel optimizations (e.g., AITER fused attention, custom AllReduce) out of the box, without waiting for upstream integration into the main vLLM codebase. This drastically shortens the time-to-value for the new AMD GPUs.
+- **Instant access to AMD innovation:** Leverage cutting-edge AMD hardware features (e.g., FP4 on the MI355X GPU) and top-tier kernel optimizations (e.g., AITER fused attention, custom AllReduce) out of the box, without waiting for upstream integration into the main vLLM codebase. This drastically shortens the time-to-value for the new AMD GPUs.
 
 - **Agile innovation sandbox:** A fast validation layer for new technical ideas, hardware enablement, and kernel library testing (e.g., AITER). The plugin aligns flexibly with the AMD product roadmap, including new GPU releases, FP8/FP4 precision support, and next-gen attention mechanisms—unconstrained by vLLM’s upstream release cycles.
 

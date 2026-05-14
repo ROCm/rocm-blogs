@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Further Accelerating Kimi-K2.5 on AMD Instinct™ MI325X: W4A8 & W8A8 Quantization with AMD Quark"
-date: 9 Apr 2026
+date: 14 May 2026
 author: 'Clement Lin, Menghsuan Yang, Chunhung Wang, Bowen Bao, Bobo Fang, Eveline Chen'
 thumbnail: 'kimi-k2.5-w4a8.png'
 tags: AI/ML
