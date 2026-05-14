@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Primus Projection: Estimate Memory and Performance Before You Train"
-date: 24 Apr 2026
+date: 14 May 2026
 author: 'Anshu Raina, Yuankai Chen, Cheng Yao, Yao Fu, Devang Patel, Vidushi Goyal, Peyman Razaghi, Wen Xie, Zhenyu Gu'
 thumbnail: 'Primus-projection-thumbnail.png'
 tags: AI/ML, LLM, Optimization
@@ -17,8 +17,8 @@ myst:
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"
-        "amd_blog_hardware_platforms": "AMD Instinct™ GPUs"
-        "amd_blog_development_tools": "Open-Source Tools, AMD ROCm™ Software"
+        "amd_blog_hardware_platforms": "Instinct GPUs"
+        "amd_blog_development_tools": "Open-Source Tools, ROCm Software"
         "amd_blog_applications": "AI Training"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_authors": "Anshu Raina, Yuankai Chen, Cheng Yao, Yao Fu, Devang Patel, Vidushi Goyal, Peyman Razaghi, Wen Xie, Zhenyu Gu"
