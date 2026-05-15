@@ -112,6 +112,7 @@ Bidar
 bilinear
 Bingyue
 Bingyue
+biome
 BitCode
 bitsandbytes
 BLAS
@@ -129,6 +130,8 @@ bosons
 bottlenecked
 Brayden
 Broadcom
+BubbleFence
+bubblefence
 buildable
 bursty
 bzip
@@ -226,6 +229,7 @@ CVMLSDK
 CVMLSDK's
 CY
 DALL
+dashcam
 Dask
 datacenter
 datacenters
@@ -241,6 +245,8 @@ De
 deallocated
 deallocation
 declaratively
+Deduplication
+deduplication
 deepep
 DeepSeek
 DeepSpeed
@@ -252,6 +258,8 @@ denoises
 denoising
 Denoising
 denoising
+Dequantization
+dequantization
 denormalize
 Dependabot
 depthwise
@@ -287,6 +295,7 @@ DL
 DLRM
 DLRMv
 DMA
+DMark
 Dmytro
 DNN
 DNNL
@@ -333,6 +342,7 @@ et
 et
 etcetera
 ethernet
+EuroHPC
 EXAONE
 exascale
 executables
@@ -366,6 +376,8 @@ FSDP
 Franka
 Fuyu
 GALB
+Gameplay
+gameplay
 GAN
 Gangidi
 Gao
@@ -384,6 +396,7 @@ GEMMs
 GenAI
 generalizable
 GenEval
+Geofencing
 GetPreferredAllocation
 GFortran
 gfx
@@ -428,6 +441,7 @@ Haswell
 HBM
 HCA
 HD
+heatmap
 Helvetica
 heterogenous
 Hiew
@@ -474,6 +488,7 @@ HWE
 hyperparameter
 Hyperparameters
 hyperparameters
+hypersphere
 IB
 ib_core
 ibm
@@ -555,6 +570,7 @@ Keyu
 KFD
 khorashadi
 Khronos
+Kiehn
 Kimi
 Kiran
 Kishore
@@ -656,6 +672,9 @@ Microservices
 microservices
 MIGraphX
 MIGraphX's
+Minecraft
+Minecraft's
+MINERVA
 Mingyang
 Mingyang
 MiniMax
@@ -804,6 +823,7 @@ performant
 perl
 Personalization
 Petr
+photoshoot
 PIL
 PILImage
 PipelineParallel
@@ -851,7 +871,10 @@ Qihang
 Qinyu
 Qinyu
 QKV
+QMC
 QPS
+QuickReduce
+quickreduce
 quantized
 quantizing
 Quantizing
@@ -941,6 +964,7 @@ rollout
 Rombach
 Rourkela
 ROS
+Routefencing
 RST
 runtime
 RunTime
@@ -1011,6 +1035,7 @@ SMI
 smoothens
 SMT
 SMTS
+SNE
 Softmax
 SOTA
 Spack
@@ -1037,7 +1062,9 @@ subdirectory
 subexpression
 subfolder
 subfolders
+sublicense
 Subregion
+subsequences
 Sucheng
 summarization
 Sundaraman
@@ -1083,6 +1110,7 @@ tokenized
 tokenizer
 tokenizes
 toml
+tp
 toolchain
 toolchains
 toolset
@@ -1156,6 +1184,8 @@ vectorizes
 VFS
 VGPR
 VGPRs
+videogame
+videogames
 Vijay
 ViT
 Vitis
@@ -1171,6 +1201,7 @@ VMEM
 VMWare
 VMware
 Volodymyr
+VPT
 VRAM
 VScode
 VSIX
@@ -1232,6 +1263,7 @@ YYYYMMDD
 ZBook
 ZenDNN
 ZenRobotics
+Zenseact
 ZeRO
 AIMs
 AutoGen
@@ -1271,6 +1303,7 @@ prem
 summarization
 templated
 workspaces
+ZOD
 zypper
 DDP
 DRM
