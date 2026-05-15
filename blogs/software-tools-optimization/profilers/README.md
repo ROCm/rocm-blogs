@@ -1,7 +1,7 @@
 ---
 blogpost: true
 date: 10 Apr 2026
-author: Gina Sitaraman, Thomas Gibson, Noah Wolfe
+author: Gina Sitaraman, Thomas Gibson, Noah Wolfe, Suyash Tandon
 tags: HPC, Memory, Profiling
 category: Software tools & optimizations
 language: English
@@ -131,7 +131,7 @@ should be treated as "go-to" profiling tools for performance tuning and benchmar
  ### Figure 1
 ================ -->
 
-<img src="images/when-to-use-diagram.png" width="80%" class="img-center">
+<img src="images/when-to-use-diagram.png" width="80%" class="img-center" alt="Flow diagram mapping profiling goals to AMD tools including rocprof-sys, rocprofv3, rocprof-compute, uProf, and Radeon GPU Profiler.">
 
 <p style="text-align:center">
 Figure 1: Use cases for a variety of AMD profiling tools.
@@ -197,7 +197,7 @@ viewing what else is happening on the system during a performance bottleneck.
  ### Figure 2
 ================ -->
 
-<img src="images/rocprof-sys-timeline.png" width="900" class="img-center">
+<img src="images/rocprof-sys-timeline.png" width="900" class="img-center" alt="rocprof-sys timeline trace showing CPU, GPU, and system activity over time in a profiling UI.">
 
 <p style="text-align:center">
 Figure 2: rocprof-sys timeline trace example.
@@ -227,7 +227,7 @@ necessary hardware counters using the [iteration multiplexing mechanism](https:/
  ### Figure 3
 ================ -->
 
-<img src="images/mca-diagram-example.png" width="100%" class="img-center">
+<img src="images/mca-diagram-example.png" width="100%" class="img-center" alt="rocprof-compute memory chart analysis view with hardware memory metrics for a GPU kernel.">
 
 <p style="text-align:center">
 Figure 3: rocprof-compute memory chart analysis panel.
