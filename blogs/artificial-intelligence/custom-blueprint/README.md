@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Deploy and Customize AMD Solution Blueprints"
 date: 02 Apr 2026
-author: 'Rasmus Larsson, Daniel Gustafsson, Eliecer Diaz Diaz'
+author: 'Rasmus Larsson, Daniel Gustafsson, Eliecer Diaz'
 thumbnail: 'blueprint-custom-thumbnail.png'
 tags: Kubernetes, AI/ML, LLM
 category: Applications & models
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, Generative AI"
         "amd_blog_topic_categories": "Industry Applications & Use Cases"
-        "amd_blog_authors": "Rasmus Larsson, Daniel Gustafsson, Eliecer Diaz Diaz"
+        "amd_blog_authors": "Rasmus Larsson, Daniel Gustafsson, Eliecer Diaz"
 ---
 
 <!---
@@ -53,7 +53,7 @@ AMD Solution Blueprints are ready-to-deploy, customizable reference applications
 
 Packaged as Helm charts, the Solution Blueprints are off-the-shelf and ready to be deployed to a Kubernetes cluster running AMD compute. The Helm templating system allows you to customize each application. Every Solution Blueprint includes architecture diagrams and documentation, making it clear how the components of the Solution Blueprint fit together. For more information, see the previous [blog post on AMD Solution Blueprints](https://rocm.blogs.amd.com/artificial-intelligence/enterprise-ai-blueprints/README.html) or the [documentation](https://enterprise-ai.docs.amd.com/en/latest/solution-blueprints/overview.html).
 
-This blog post demonstrates how to deploy and customize Solution Blueprints, including how to reuse an AIM LLM across multiple blueprints. We will be using two Solution Blueprints as examples, **Agentic Translation** (multi-agent collaborative translation) and **AutoGen Studio** (web-based interface for creating, configuring, and managing multi-agent AI conversations).
+This blog post demonstrates how to deploy and customize Solution Blueprints, including how to reuse an AIM LLM across multiple Solution Blueprints. We will be using two Solution Blueprints as examples, **Agentic Translation** (multi-agent collaborative translation) and **AutoGen Studio** (web-based interface for creating, configuring, and managing multi-agent AI conversations).
 
 We will cover how to:
 
@@ -82,7 +82,7 @@ If using a gated model, providing a Hugging Face token will be necessary. Create
 
 ## Deploying Solution Blueprints
 
-In this section, we deploy two Solution Blueprints that will share a single AIM LLM. We start by deploying the **AutoGen Studio** blueprint directly from the terminal using `kubectl apply`. Each Solution Blueprint ships with a default AIM LLM (Llama 3.3 70B Instruct). Rather than deploying a separate model for each blueprint, we then deploy the **Agentic Translation** blueprint and connect it to the same AIM, sharing a single LLM across both blueprints. The resulting architecture is shown in Figure 1, below:
+In this section, we deploy two Solution Blueprints that will share a single AIM LLM. We start by deploying the **AutoGen Studio** Solution Blueprint directly from the terminal using `kubectl apply`. Each Solution Blueprint ships with a default AIM LLM (Llama 3.3 70B Instruct). Rather than deploying a separate model for each Solution Blueprint, we then deploy the **Agentic Translation** Solution Blueprint and connect it to the same AIM, sharing a single LLM across both Solution Blueprints. The resulting architecture is shown in Figure 1, below:
 
 ```{image} ./images/figure1_demostructure.png
 :label: demo-structure
@@ -382,7 +382,7 @@ The following table summarizes the changes for the AIM deployment:
 
 ### Create the Override File
 
-To apply the changes from the table above, create a file named `blueprint-override.yaml` with the following content:
+To apply the changes from the table above, create a file named `solution-blueprint-override.yaml` with the following content:
 
 ```yaml
 llm:
@@ -405,7 +405,7 @@ name="customized-translator"
 namespace="demo"
 chart="aimsb-agentic-translation"
 helm template $name oci://registry-1.docker.io/amdenterpriseai/$chart \
--f blueprint-override.yaml > at-custom-deployment.yaml
+-f solution-blueprint-override.yaml > at-custom-deployment.yaml
 ```
 
 Then, apply the manifest to deploy the Solution Blueprint:
