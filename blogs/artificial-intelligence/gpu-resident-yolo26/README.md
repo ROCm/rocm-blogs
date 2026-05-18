@@ -1,26 +1,26 @@
 ---
 blogpost: true
 blog_title: "Building a GPU-Resident YOLO26 Object Detection Pipeline on the AMD Radeon AI PRO R9700 GPU"
-date: "11 May 2026"
-author: "Ivan Tikhonov, Aleksandr Suslov"
+date: 22 Apr 2026
+author: 'Ivan Tikhonov, Aleksandr Suslov'
 thumbnail: 'gpu-resident-pipeline-thumbnail.jpg'
-tags: "AI/ML, Computer Vision, PyTorch"
-category: "Applications & models"
-target_audience: "PyTorch and ML/CV engineers running on AMD Radeon Graphics and Instinct hardware"
-key_value_propositions: "Build a hardware-accelerated, end-to-end object detection pipeline on AMD GPUs where video frames stay in VRAM from decode to detection, chaining rocDecode, DLPack, and MIGraphX."
+tags: Computer Vision, AI/ML, PyTorch
+category: Applications & models
+target_audience: PyTorch and ML/CV engineers running on AMD Radeon Graphics and Instinct hardware
+key_value_propositions: Build a hardware-accelerated, end-to-end object detection pipeline on AMD GPUs where video frames stay in VRAM from decode to detection, chaining rocDecode, DLPack, and MIGraphX.
 language: English
 myst:
     html_meta:
         "author": "Ivan Tikhonov, Aleksandr Suslov"
         "description lang=en": "Build a GPU-resident object detection pipeline on AMD GPUs with rocDecode, DLPack, and MIGraphX. Frames stay in VRAM end to end."
         "keywords": "ROCm 7.2, rocDecode, MIGraphX, DLPack, PyTorch, GPU-resident, VCN, YOLO26, Computer Vision, Radeon Graphics, Instinct GPUs"
-        "vertical": "AI, Developers"
+        "vertical": "AI"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"
         "amd_blog_hardware_platforms": "Radeon Graphics, Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
-        "amd_blog_applications": "Computer Vision, AI Inference"
+        "amd_blog_applications": "AI Inference, Computer Vision"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_authors": "Ivan Tikhonov, Aleksandr Suslov"
 ---
@@ -51,7 +51,7 @@ SOFTWARE.
 
 Modern AMD GPUs include a dedicated hardware block for video processing called the Video Core Next (VCN) engine. By chaining VCN directly into machine learning frameworks, you can build an object detection pipeline where a video frame stays in VRAM from decode to the final bounding boxes. The host sees only the surviving detections.
 
-In this guide, we build that pipeline on the AMD ROCm™ 7.2 platform, using [Ultralytics YOLO26](https://docs.ultralytics.com/models/yolo26/) as the detector. The complete source code for this tutorial lives in the [companion GitHub repository](https://github.com/ROCm/rocm-examples/tree/amd-staging/AI/MIGraphX/gpu_resident_yolo26_pipeline).
+In this guide, we build that pipeline on the AMD ROCm™ 7.2 platform, using [Ultralytics YOLO26](https://docs.ultralytics.com/models/yolo26/) as the detector. The complete source code for this tutorial lives in the [companion GitHub repository](https://github.com/amd/rocm-examples).
 
 We integrate three core components:
 
@@ -114,7 +114,7 @@ python3 -c 'import pyRocVideoDecode.decoder, migraphx; print("Libraries loaded s
 
 ### Compile the model
 
-MIGraphX compiles the ONNX graph into a GPU-tuned `.mxr` binary. We use Ultralytics' [`yolo26s.pt`](https://docs.ultralytics.com/models/yolo26/), the small variant of the YOLO26 object detector (9.5 M params, 48.6 mAP on COCO). Its end-to-end head emits a `[1, 300, 6]` tensor (`[x1, y1, x2, y2, conf, class_id]` per row) and skips NMS entirely.
+MIGraphX compiles the ONNX graph into a GPU-tuned `.mxr` binary. We use Ultralytics' [`yolo26s.pt`](https://docs.ultralytics.com/models/yolo26/), the small variant of the YOLO26 object detector. Its end-to-end head emits a `[1, 300, 6]` tensor (`[x1, y1, x2, y2, conf, class_id]` per row) and skips NMS entirely.
 
 The build runs in two separate Python invocations: first export `yolo26s.pt` to ONNX, then compile that ONNX into a MIGraphX `.mxr` binary. Splitting them avoids an Ultralytics side effect that hides the GPU from MIGraphX when both steps share a process.
 
@@ -141,7 +141,7 @@ migraphx.save(model, "model.mxr")
 
 ## Step 1: GPU-native decoding with rocDecode
 
-The input is an MP4 or MKV file with H.264 or H.265 video. This guide uses `peloton_sample_ai_gen.mp4`, a 15-second 1920×1080 H.264 cycling clip shipped alongside the source code in the [companion GitHub repository](https://github.com/ROCm/rocm-examples/tree/amd-staging/AI/MIGraphX/gpu_resident_yolo26_pipeline). The clip is upscaled with FFmpeg's lanczos filter from a 1280×704 AI-generated source produced with [Qwen-Image-2512](https://huggingface.co/Qwen/Qwen-Image-2512) and [Wan 2.2 I2V-A14B](https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B) on an AMD Instinct™ MI350X GPU with ROCm 7.2.
+The input is an MP4 or MKV file with H.264 or H.265 video. This guide uses `peloton_sample_ai_gen.mp4`, a 15-second 1920×1080 H.264 cycling clip shipped alongside the source code in the [companion GitHub repository](https://github.com/amd/rocm-examples). The clip is upscaled with FFmpeg's lanczos filter from a 1280×704 AI-generated source produced with [Qwen-Image-2512](https://huggingface.co/Qwen/Qwen-Image-2512) and [Wan 2.2 I2V-A14B](https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B) on an AMD Instinct™ MI350X GPU with ROCm 7.2.
 
 Two rocPyDecode components turn the file into GPU-resident frames:
 
@@ -214,7 +214,7 @@ for _ in range(n_frames):
 
 ## Step 2: GPU-native preprocessing with PyTorch
 
-With `rgb` resident on the GPU, we run YOLO preprocessing natively in PyTorch using [torch.nn.functional](https://pytorch.org/docs/stable/nn.functional.html). Reshape, normalisation, resize, and letterbox pad each allocate a new device tensor on the active PyTorch stream, the same stream MIGraphX uses in Step 3. None of these steps touch host memory.
+With `rgb` resident on the GPU, we run YOLO preprocessing natively in PyTorch using [torch.nn.functional](https://pytorch.org/docs/stable/nn.functional.html). Reshape, normalization, resize, and letterbox pad each allocate a new device tensor on the active PyTorch stream, the same stream MIGraphX uses in Step 3. None of these steps touch host memory.
 
 ```python
 import torch.nn.functional as F
@@ -240,7 +240,7 @@ def preprocess_spatial(tensor: torch.Tensor, target: int = 640) -> torch.Tensor:
     new_h, new_w = int(h * scale), int(w * scale)
     tensor = F.interpolate(tensor, size=(new_h, new_w), mode="bilinear", align_corners=False)
     padding = (pad_x, target - new_w - pad_x, pad_y, target - new_h - pad_y)
-    tensor = F.pad(tensor, padding, value=114.0 / 255.0)  # YOLO letterbox grey
+    tensor = F.pad(tensor, padding, value=114.0 / 255.0)  # YOLO letterbox gray
     return tensor.contiguous()
 ```
 
@@ -315,7 +315,7 @@ def transform_coordinates(survivors: torch.Tensor, scale: float, pad_x: int, pad
     return survivors
 ```
 
-A single `survivors.cpu().numpy()` lifts the result to the host. If the next consumer is another GPU stage (tracker, serialiser, downstream model), even that copy disappears.
+A single `survivors.cpu().numpy()` transfers the result to the host. If the next consumer is another GPU stage (tracker, serializer, downstream model), that final copy is unnecessary too.
 
 The 4 steps now compose into a minimal per-frame loop:
 
@@ -353,7 +353,7 @@ while True:
         break
 ```
 
-The full runnable sample is in the [companion GitHub repository](https://github.com/ROCm/rocm-examples/tree/amd-staging/AI/MIGraphX/gpu_resident_yolo26_pipeline); its `main.py` adds command-line parsing and an OpenCV CPU decoding baseline on top of the snippets in this section.
+The full runnable sample is in the [companion GitHub repository](https://github.com/amd/rocm-examples); its `main.py` adds command-line parsing and an OpenCV CPU decoding baseline on top of the snippets in this section.
 
 ### Adapting to YOLO models that need NMS
 
@@ -404,11 +404,11 @@ GPU: 0
 
 To see how this maps to the hardware over a longer run, we can plot the engine activity side-by-side.
 
-When using the `rocDecode` path, the VCN multimedia engine and the GFX compute engine run concurrently. VCN handles the compressed bitstream at a low, steady utilization (mean 10%<sup>[1](#endnote)</sup>), visible as a continuous low fill in the chart; it is a fixed-function hardware block that decodes H.264/H.265 far faster than real-time for a single stream, so it spends most of its time waiting for the next frame. The GFX compute engine maintains a steady ~21%<sup>[1](#endnote)</sup> load executing the PyTorch preprocessing, MIGraphX inference, and the `GetFrameRgb` color conversion kernel.
+When using the `rocDecode` path, the VCN multimedia engine and the GFX compute engine run concurrently. VCN handles the compressed bitstream at a low, steady utilization, visible as a continuous low fill in the chart; a single H.264/H.265 stream uses only a small fraction of the fixed-function block, which idles between frames. The GFX compute engine carries the rest of the per-frame work: the `GetFrameRgb` color conversion kernel, PyTorch preprocessing, and MIGraphX inference.
 
-Falling back to the OpenCV baseline disables the hardware decode path entirely. The VCN engine flatlines at 0% because the host CPU now decompresses the video. The GFX compute engine still runs the neural network pipeline, but its average load falls slightly (to ~19%<sup>[1](#endnote)</sup>) because OpenCV delivers pre-converted RGB frames, sparing the GPU from the color conversion step.
+Falling back to the OpenCV baseline disables the hardware decode path entirely. The VCN engine remains idle because the host CPU now decompresses the video. The GFX compute engine still runs the neural network pipeline, but its load is also reduced because OpenCV delivers pre-converted RGB frames, sparing the GPU from the color conversion step.
 
-![Side-by-side engine activity during inference: rocDecode panel shows GFX and VCN with dashed means (21% / 10%); OpenCV panel shows flat VCN with on-plot CPU-decoder note and lower GFX mean (19%).](images/vcn_activity.png)
+![Side-by-side engine activity during inference: rocDecode panel shows both GFX and VCN engines active concurrently; OpenCV panel shows VCN flatlined because the host CPU performs decompression.](images/vcn_activity.png)
 
 For a timeline-level view, [`rocprofv3`](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/) shows per-engine VCN activity side by side with HIP kernel launches.
 
@@ -427,11 +427,8 @@ The reference implementation has two intentional constraints:
 * [rocJPEG Documentation](https://rocm.docs.amd.com/projects/rocJPEG/en/latest/), the still-image counterpart to rocDecode for single-image pipelines, which plugs into the same DLPack → MIGraphX path. See also [rocJPEG decoding performance on AMD Instinct GPUs](https://rocm.blogs.amd.com/artificial-intelligence/rocjpeg-decoding-performance-blog/README.html).
 * [DLPack Specification](https://dmlc.github.io/dlpack/latest/)
 
-## Endnote
-
-<a id="endnote"></a>
-
-**[1]** Measured on AMD Radeon™ AI PRO R9700, ROCm 7.2.2, `rocm/pytorch:rocm7.2.2_ubuntu22.04_py3.10_pytorch_release_2.10.0`, `yolo26s` FP16, 1920×1080 H.264 input at 16 fps, `batch=1`, 15.2 s source clip (AI-generated, upscaled from 1280×704 to 1920×1080 with FFmpeg `scale=1920:1080:flags=lanczos`). Method: `amdsmi.amdsmi_get_gpu_activity` sampled every 100 ms; means computed over the active-pipeline window after auto-trim of the model-load spike and idle tail. Results are configuration-specific and may vary.
 ## Disclaimers
 
 Third-party content is licensed to you directly by the third party that owns the content and is not licensed to you by AMD. ALL LINKED THIRD-PARTY CONTENT IS PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CONTENT IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
+
+Use of certain video codecs (including but not limited to H.264 / AVC, H.265 / HEVC, VP9, and AV1) may require licenses from third parties (such as MPEG LA, Via LA, the Alliance for Open Media, or other patent licensing pools or rights holders). It is the user’s responsibility to obtain any such licenses required for the user’s use of any such codecs. AMD provides no patent rights or licenses for the use of any such codecs through AMD products or technologies.
