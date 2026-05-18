@@ -1,26 +1,26 @@
 ---
 blogpost: true
 blog_title: "Building a GPU-Resident YOLO26 Object Detection Pipeline on the AMD Radeon AI PRO R9700 GPU"
-date: 22 Apr 2026
-author: 'Ivan Tikhonov, Aleksandr Suslov'
+date: "11 May 2026"
+author: "Ivan Tikhonov, Aleksandr Suslov"
 thumbnail: 'gpu-resident-pipeline-thumbnail.jpg'
-tags: Computer Vision, AI/ML, PyTorch
-category: Applications & models
-target_audience: PyTorch and ML/CV engineers running on AMD Radeon Graphics and Instinct hardware
-key_value_propositions: Build a hardware-accelerated, end-to-end object detection pipeline on AMD GPUs where video frames stay in VRAM from decode to detection, chaining rocDecode, DLPack, and MIGraphX.
+tags: "AI/ML, Computer Vision, PyTorch"
+category: "Applications & models"
+target_audience: "PyTorch and ML/CV engineers running on AMD Radeon Graphics and Instinct hardware"
+key_value_propositions: "Build a hardware-accelerated, end-to-end object detection pipeline on AMD GPUs where video frames stay in VRAM from decode to detection, chaining rocDecode, DLPack, and MIGraphX."
 language: English
 myst:
     html_meta:
         "author": "Ivan Tikhonov, Aleksandr Suslov"
         "description lang=en": "Build a GPU-resident object detection pipeline on AMD GPUs with rocDecode, DLPack, and MIGraphX. Frames stay in VRAM end to end."
         "keywords": "ROCm 7.2, rocDecode, MIGraphX, DLPack, PyTorch, GPU-resident, VCN, YOLO26, Computer Vision, Radeon Graphics, Instinct GPUs"
-        "vertical": "AI"
+        "vertical": "AI, Developers"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Applications and Models"
         "amd_blog_hardware_platforms": "Radeon Graphics, Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
-        "amd_blog_applications": "AI Inference, Computer Vision"
+        "amd_blog_applications": "Computer Vision, AI Inference"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
         "amd_blog_authors": "Ivan Tikhonov, Aleksandr Suslov"
 ---
@@ -51,7 +51,7 @@ SOFTWARE.
 
 Modern AMD GPUs include a dedicated hardware block for video processing called the Video Core Next (VCN) engine. By chaining VCN directly into machine learning frameworks, you can build an object detection pipeline where a video frame stays in VRAM from decode to the final bounding boxes. The host sees only the surviving detections.
 
-In this guide, we build that pipeline on the AMD ROCm™ 7.2 platform, using [Ultralytics YOLO26](https://docs.ultralytics.com/models/yolo26/) as the detector. The complete source code for this tutorial lives in the [companion GitHub repository](https://github.com/amd/rocm-examples).
+In this guide, we build that pipeline on the AMD ROCm™ 7.2 platform, using [Ultralytics YOLO26](https://docs.ultralytics.com/models/yolo26/) as the detector. The complete source code for this tutorial lives in the [companion GitHub repository](https://github.com/ROCm/rocm-examples/tree/amd-staging/AI/MIGraphX/gpu_resident_yolo26_pipeline).
 
 We integrate three core components:
 
@@ -141,7 +141,7 @@ migraphx.save(model, "model.mxr")
 
 ## Step 1: GPU-native decoding with rocDecode
 
-The input is an MP4 or MKV file with H.264 or H.265 video. This guide uses `peloton_sample_ai_gen.mp4`, a 15-second 1920×1080 H.264 cycling clip shipped alongside the source code in the [companion GitHub repository](https://github.com/amd/rocm-examples). The clip is upscaled with FFmpeg's lanczos filter from a 1280×704 AI-generated source produced with [Qwen-Image-2512](https://huggingface.co/Qwen/Qwen-Image-2512) and [Wan 2.2 I2V-A14B](https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B) on an AMD Instinct™ MI350X GPU with ROCm 7.2.
+The input is an MP4 or MKV file with H.264 or H.265 video. This guide uses `peloton_sample_ai_gen.mp4`, a 15-second 1920×1080 H.264 cycling clip shipped alongside the source code in the [companion GitHub repository](https://github.com/ROCm/rocm-examples/tree/amd-staging/AI/MIGraphX/gpu_resident_yolo26_pipeline). The clip is upscaled with FFmpeg's lanczos filter from a 1280×704 AI-generated source produced with [Qwen-Image-2512](https://huggingface.co/Qwen/Qwen-Image-2512) and [Wan 2.2 I2V-A14B](https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B) on an AMD Instinct™ MI350X GPU with ROCm 7.2.
 
 Two rocPyDecode components turn the file into GPU-resident frames:
 
@@ -353,7 +353,7 @@ while True:
         break
 ```
 
-The full runnable sample is in the [companion GitHub repository](https://github.com/amd/rocm-examples); its `main.py` adds command-line parsing and an OpenCV CPU decoding baseline on top of the snippets in this section.
+The full runnable sample is in the [companion GitHub repository](https://github.com/ROCm/rocm-examples/tree/amd-staging/AI/MIGraphX/gpu_resident_yolo26_pipeline); its `main.py` adds command-line parsing and an OpenCV CPU decoding baseline on top of the snippets in this section.
 
 ### Adapting to YOLO models that need NMS
 
