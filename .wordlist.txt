@@ -258,6 +258,8 @@ denoises
 denoising
 Denoising
 denoising
+Dequantization
+dequantization
 denormalize
 Dependabot
 depthwise
@@ -871,6 +873,8 @@ Qinyu
 QKV
 QMC
 QPS
+QuickReduce
+quickreduce
 quantized
 quantizing
 Quantizing
@@ -1106,6 +1110,7 @@ tokenized
 tokenizer
 tokenizes
 toml
+tp
 toolchain
 toolchains
 toolset
