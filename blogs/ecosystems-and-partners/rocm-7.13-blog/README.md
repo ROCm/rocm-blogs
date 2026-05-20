@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "ROCm 7.13: Expanding Hardware, Tools, and Reach"
-date: "19 May 2026"
+date: "20 May 2026"
 author: "Liam Berry, Layla Frischman, Anshul Gupta, Mohammed Faraaz Mustafa, Saad Rahim"
 thumbnail: 'ROCm-7.13-Thumbnail_cropped.png'
 tags: "Hardware, HPC, Installation, Optimization, Performance, AI/ML, Profiling, Fine-Tuning"

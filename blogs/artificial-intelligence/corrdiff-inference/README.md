@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Diffusion-based Atmospheric Downscaling on AMD Instinct GPUs"
-date: 18 Mar 2026
+date: 20 May 2026
 author: 'Pauli Pihajoki'
 thumbnail: 'corrdiff-inference-thumbnail.jpg'
 tags: AI/ML, Diffusion Model, Scientific Computing

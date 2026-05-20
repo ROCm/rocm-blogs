@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "QuickReduce FP4 Quantization and Benchmarking on MI355"
-date: 11 Mar 2026
+date: 20 May 2026
 author: 'Haoyang Li, Wei Luo, Xinjun Niu, Spandan Tiwari, Ke Wang, Ashish Sirasao'
 thumbnail: 'quickreduce-fp4-mi355-thumbnail.jpg'
 tags: Systems, Performance, AI/ML, LLM
