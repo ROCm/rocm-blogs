@@ -1,22 +1,21 @@
 # yaml for checking tags
-# check ONLY the file being updated ends in .md
-
+# Hard-fails on tag/category errors in files that are part of the current PR
+# (or push). Pre-existing errors in untouched .md files are reported as
+# warnings only, so unrelated PRs are not blocked by legacy issues.
 name: Linting
-
 on:
   push:
-    branches: 
+    branches:
     - develop
     - release
     - 'docs/*'
     - 'roc**'
   pull_request:
-    branches: 
+    branches:
     - develop
     - release
     - 'docs/*'
     - 'roc**'
-
 # the tags should be like: tags: A, B, C, strip into A B C
 jobs:
   check-tags:
@@ -28,7 +27,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          # Need full history so we can diff against the PR base commit
+          # (or HEAD~1 on push events).
+          fetch-depth: 0
       - name: setup python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
@@ -38,6 +39,36 @@ jobs:
           python3 -m pip install --upgrade pip
           python3 -m pip install markdown
           python3 -m pip install PyYAML
+      - name: Determine changed Markdown files
+        id: changed-files
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+            HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            echo "PR base: $BASE_SHA"
+            echo "PR head: $HEAD_SHA"
+            # ACMR = Added, Copied, Modified, Renamed (deleted files excluded).
+            git diff --name-only --diff-filter=ACMR "$BASE_SHA" "$HEAD_SHA" -- '*.md' \
+              > changed_files.txt
+          else
+            # Push event: compare against the previous commit on this branch.
+            if git rev-parse HEAD~1 >/dev/null 2>&1; then
+              git diff --name-only --diff-filter=ACMR HEAD~1 HEAD -- '*.md' \
+                > changed_files.txt
+            else
+              # First commit on the branch — treat everything as in-scope.
+              git ls-files '*.md' > changed_files.txt
+            fi
+          fi
+          echo "---- Files in scope for hard-fail ----"
+          cat changed_files.txt || true
+          echo "--------------------------------------"
       - name: Check for tags
+        env:
+          # The Python script reads this and treats only listed files as
+          # blocking. Errors in any other .md file become soft warnings.
+          CHANGED_FILES_PATH: changed_files.txt
         run: |
           python3 linting/check-tags.py
