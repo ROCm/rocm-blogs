@@ -364,4 +364,10 @@ Member of Technical Staff
 Principal Member of Technical Staff
 :::
 
+:::{grid-item-card} [Lixun Zhang](./authors/lixun-zhang.md)
+:padding: 1
+
+Senior Software Development Manager at AMD
+:::
+
 ::::
