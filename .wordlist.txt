@@ -1978,6 +1978,14 @@ randomizer
 uv
 xarm
 xml
+CHW
+IPC
+ResNet
+migraphx
+onnx
+onnxruntime
+triton
+tritonserver
 APUs
 CrayOS
 DX
