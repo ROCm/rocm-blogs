@@ -2035,6 +2035,14 @@ YangWen
 nd
 prefetches
 suboptimal
+tensilelite
+LPDDR
+Ollama
+ollama
+Ryzen
+ryzen
+UMA
+uma
 subtrees
 tensilelite
 ASM
@@ -2097,7 +2105,9 @@ openai
 upstreamed
 zai
 tracelens
-
+de
+downscales
+upscales
 AITER-backed
 amd/DeepSeek-R1-0528-MXFP4
 amd/Kimi-K2-Thinking-MXFP4
