@@ -159,6 +159,7 @@ Chieh
 Chieh
 Ching
 chiplet
+chiplets
 Chonglin
 CIFAR
 CK
@@ -292,6 +293,7 @@ DiT
 Divin
 DKMS
 DL
+DLC
 DLRM
 DLRMv
 DMA
@@ -456,6 +458,7 @@ hipFFT
 hipfft
 hipfort
 HIPIFY
+HipKittens
 hipLIB
 hipRAND
 hipSOLVER
@@ -617,6 +620,7 @@ linter
 Liwei
 Liwei
 LlamaGen
+LLC
 LLM
 llm
 LLMs
