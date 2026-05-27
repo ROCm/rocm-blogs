@@ -198,6 +198,8 @@ Giacomo
 Capodaglio
 Gina
 Sitaraman
+Giovanni
+Baraldi
 Gowtham
 Ramesh
 Grant
@@ -292,6 +294,8 @@ Justin
 Chang
 Justin
 Chu
+Kai
+Hakala
 Kailash
 Gogineni
 Kaiping
