@@ -1,0 +1,9 @@
+molecule:
+  geometry: "Li 0 0 0; H 0 0 1.6"
+basis: 6-31g
+ansatz: uccsd
+optimizer: slsqp
+maxiter: 1000
+simulator:
+  device: CPU
+  precision: double
