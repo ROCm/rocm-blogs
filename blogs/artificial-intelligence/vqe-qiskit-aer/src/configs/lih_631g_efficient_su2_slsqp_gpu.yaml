@@ -1,0 +1,13 @@
+molecule:
+  geometry: "Li 0 0 0; H 0 0 1.6"
+basis: 6-31g
+ansatz: efficient_su2
+efficient_su2:
+  reps: 2
+  entanglement: linear
+optimizer: slsqp
+maxiter: 1000
+simulator:
+  device: GPU
+  num_devices: 2
+  precision: double
