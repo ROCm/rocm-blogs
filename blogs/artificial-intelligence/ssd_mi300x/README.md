@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Enabling Speculative Speculative Decoding on MI300X"
-date: 23 Apr 2026
+date: 29 May 2026
 author: 'Yixing Xu, Subhajit Dutta Chowdhury, Xuanwu Yin, Dong Li, Vikram Appia, Zhenyu Gu, Emad Barsoum'
 thumbnail: 'ssd_thumbnail.png'
 tags: AI/ML
