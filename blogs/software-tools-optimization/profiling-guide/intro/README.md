@@ -321,6 +321,7 @@ In the upcoming posts in the series, we will demonstrate how to apply these tool
 
 Read [Part 2](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/novice/README.html).
 Read [Part 3](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/advanced/README.html).
+Read [Part 4](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/fortran_openmp/README.html).
 
 ## Disclaimers
 

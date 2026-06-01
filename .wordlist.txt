@@ -369,6 +369,8 @@ FlashInfer
 FLOPs
 FlowAR
 FMA
+FoM
+FOM
 Fortran
 fp
 FP
@@ -787,6 +789,8 @@ OpenDiLiCo
 OpenFabrics
 OpenGL
 OpenMP
+openmp
+OpenMPI
 OpenSSL
 OpenThinker
 OpenVid
@@ -807,6 +811,8 @@ parallelization
 parameterization
 params
 Params
+parenthetical
+parentheticals
 partitionProfile
 PassThrough
 passthrough
@@ -848,6 +854,7 @@ preprint
 preprint
 preprocess
 preprocessed
+preprocessor
 preprocessing
 preq
 prerequisites
@@ -961,6 +968,7 @@ rocSOLVER
 rocSPARSE
 rocThrust
 ROCTracer
+ROCTx
 rocWMMA
 ROI
 RollingForcing
@@ -2016,6 +2024,7 @@ toolkits
 uProf
 DepthU
 GFLOPS
+GFLOPs
 GPRs
 Gflops
 GlobalReadCoalesceGroupA

@@ -1197,6 +1197,7 @@ above for your quick reference.
 - Performance Profiling on AMD GPUs:
   - [Part 1](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/intro/README.html)
   - [Part 2](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/novice/README.html)
+  - [Part 4](https://rocm.blogs.amd.com/software-tools-optimization/profiling-guide/fortran_openmp/README.html).
 - Perfetto UI:
   - [Online documentation for using Perfetto UI](https://perfetto.dev/docs/visualization/perfetto-ui)
 - `rocprof-sys`:
