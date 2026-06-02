@@ -58,7 +58,7 @@ Molecular dynamics (MD) simulations are essential for understanding biomolecular
 Before diving into the benchmarks, here is what you should know:
 
 - **GROMACS basics**: Familiarity with running GROMACS simulations helps, but is not required. We provide context where needed.
-- **Multidir runs**: GROMACS multidir launches multiple independent simulation replicas in parallel. This approach suits ensemble MD, free-energy screening, and parameter sweeps.
+- **Multidir runs**: GROMACS [multidir](https://manual.gromacs.org/current/user-guide/mdrun-features.html#running-multi-simulations) launches multiple independent simulation replicas in parallel. This approach suits ensemble MD, free-energy screening, and parameter sweeps.
 
 For details on GPU compute partitioning and how to run GROMACS multidir workloads, see [Applying GPU Compute Partitioning for GPU Workloads](https://rocm.blogs.amd.com/artificial-intelligence/gpu-partitioning-workloads/README.html).
 
@@ -66,7 +66,7 @@ For details on GPU compute partitioning and how to run GROMACS multidir workload
 
 ### Test System
 
-We ran all benchmarks on a dual-socket server with the following configuration (see [Table 1](#tab1)):
+We ran all benchmarks on a dual-socket server with the following configuration (see [Table 1](#tab1)). A dual-socket setup provides the CPU core count needed to keep up with many concurrent GPU replicas, since GROMACS offloads most work to GPUs but still relies on CPUs for tasks like [pair list regeneration](https://manual.gromacs.org/current/reference-manual/algorithms/molecular-dynamics.html#pair-lists-generation):
 
 <a id="tab1"></a>
 | Component | Specification |
@@ -78,7 +78,7 @@ We ran all benchmarks on a dual-socket server with the following configuration (
 
 ### Benchmark Workload
 
-The ADH dodec (alcohol dehydrogenase dodecahedron) system serves as our test case. ADH is a crucial enzyme for metabolizing alcohol and other biological substances, making it a relevant model for drug interaction studies. This medium-sized biomolecular benchmark represents realistic production workloads and is widely used for GPU performance evaluation in the MD community.
+The ADH dodec (alcohol dehydrogenase dodecahedron) system serves as our test case. ADH is a crucial enzyme for metabolizing alcohol and other substrates in the body. Since many drugs are processed through the same metabolic pathways, simulating ADH helps researchers [predict drug metabolism and potential toxicity](https://doi.org/10.1208/s12248-020-00536-y). This medium-sized biomolecular benchmark represents realistic production workloads and is widely used for GPU performance evaluation in the MD community.
 
 ### Partitioning Modes
 
@@ -102,12 +102,12 @@ Let's examine the benchmark data. All performance figures are in ns/day (nanosec
 | CPX (Partitioned) | 1,570 ns/day | 2,822 ns/day | 6,022 ns/day | 8,026 ns/day |
 | **Speedup** | **2.43x** | **2.48x** | **2.47x** | **1.78x** |
 
-**Table 2:** MI300X GROMACS performance with ADH dodec benchmark
+**Table 2:** MI300X GROMACS performance with ADH dodec benchmark. SPX (non-partitioned) uses one logical GPU per physical card; CPX (partitioned) exposes each XCD as an independent GPU. Higher ns/day is better.
 
 <a id="fig1"></a>
 <img src="images/gromacs_mi300x_performance.png" alt="GROMACS MI300X performance comparison" width="100%">
 
-*Figure 1: MI300X multidir throughput in SPX (blue) vs. CPX (orange) mode. Higher ns/day is better.*
+*Figure 1: MI300X multidir throughput comparing SPX (non-partitioned) and CPX (partitioned) modes across 1-8 GPUs. CPX mode exposes each XCD as an independent GPU, boosting aggregate throughput for independent replicas. Higher ns/day is better.*
 
 As shown in [Figure 1](#fig1), partitioning delivers substantial gains—up to 2.47x at 4 GPUs. Even at 8 GPUs, where CPU resources start to limit scaling, you still see a 1.78x improvement.
 
@@ -122,12 +122,12 @@ Now let's look at MI355X. [Table 3](#tab3) shows how the next-generation archite
 | CPX (Partitioned) | 2,065 ns/day | 4,230 ns/day | 8,350 ns/day | 10,300 ns/day |
 | **Speedup** | **2.33x** | **3.20x** | **2.89x** | **1.73x** |
 
-**Table 3:** MI355X GROMACS performance with ADH dodec benchmark
+**Table 3:** MI355X GROMACS performance with ADH dodec benchmark. SPX (non-partitioned) uses one logical GPU per physical card; CPX (partitioned) exposes each XCD as an independent GPU. Higher ns/day is better.
 
 <a id="fig2"></a>
 <img src="images/gromacs_mi355x_performance.png" alt="GROMACS MI355X performance comparison" width="100%">
 
-*Figure 2: MI355X multidir throughput in SPX (blue) vs. CPX (orange) mode. Higher ns/day is better.*
+*Figure 2: MI355X multidir throughput comparing SPX (non-partitioned) and CPX (partitioned) modes across 1-8 GPUs. CPX mode exposes each XCD as an independent GPU, boosting aggregate throughput for independent replicas. Higher ns/day is better.*
 
 As seen in [Figure 2](#fig2), MI355X reaches 10,300 ns/day with 8 GPUs in CPX mode. The 2-GPU configuration shows a remarkable 3.20x speedup from partitioning, indicating excellent scaling efficiency at that scale.
 
@@ -143,7 +143,7 @@ How much faster is MI355X? [Table 4](#tab4) and [Table 5](#tab5) quantify the ge
 | 4 GPUs | 8,350 ns/day | 6,022 ns/day | **+38.7%** |
 | 8 GPUs | 10,300 ns/day | 8,026 ns/day | **+28.3%** |
 
-**Table 4:** MI355X advantage over MI300X with GPU partitioning enabled
+**Table 4:** MI355X advantage over MI300X **with** GPU partitioning enabled (CPX)
 
 For non-partitioned workloads, [Table 5](#tab5) shows MI355X still outperforms:
 <a id="tab5"></a>
@@ -154,7 +154,7 @@ For non-partitioned workloads, [Table 5](#tab5) shows MI355X still outperforms:
 | 4 GPUs | 2,890 ns/day | 2,435 ns/day | **+18.7%** |
 | 8 GPUs | 5,952 ns/day | 4,507 ns/day | **+32.1%** |
 
-**Table 5:** MI355X performance advantage over MI300X without GPU partitioning
+**Table 5:** MI355X performance advantage over MI300X **without** GPU partitioning (SPX)
 
 ## Discussion
 
@@ -166,7 +166,7 @@ The benchmarks reveal several important insights:
 
 **GPU partitioning benefits both architectures.** Both MI300X and MI355X show 1.7x to 3.2x speedups when using CPX mode for multidir workloads (see [Figure 1](#fig1) and [Figure 2](#fig2)). This technique is essential for maximizing throughput in ensemble MD scenarios.
 
-**Scaling efficiency varies with GPU count.** At 8 GPUs with 128 replicas, speedups from partitioning are slightly lower (1.73-1.78x). At this scale, system resources may become a limiting factor as replica count increases.
+**Scaling efficiency varies with GPU count.** At 8 GPUs with 128 replicas, speedups from partitioning are slightly lower (1.73-1.78x), yet this configuration still delivers the best absolute performance for the ADH system. At this scale, a large number of concurrent replicas compete for shared system resources such as CPU cores and memory bandwidth, which can constrain the per-replica throughput and reduce the relative benefit of partitioning.
 
 ```{note}
 The ADH benchmarks are configured to offload all compute-intensive work to the GPU, keeping the CPU off the critical path. However, pair list regeneration &mdash; an infrequent but potentially expensive step &mdash; remains CPU-bound. Systems with more physical CPU cores can reduce the overhead of this step, particularly at high replica counts where many pair list updates may coincide.
@@ -179,6 +179,7 @@ Whether you are a researcher running production simulations or a developer optim
 - **Leverage GPU partitioning on both MI300X and MI355X.** Enabling CPX mode delivers 1.7-3.2x throughput gains for multidir workloads on either GPU generation. This is a straightforward configuration change that benefits any ensemble-style simulation campaign.
 - **MI355X offers the highest throughput.** For new deployments or hardware refreshes, MI355X provides 28%+ performance improvement over MI300X, enabling faster iteration on research questions and shorter queue times for batch jobs.
 - **Balance compute resources.** Tune the number of concurrent replicas for optimal performance, especially at very high replica counts.
+- **Consider your system size.** These benchmarks use ADH dodec, a medium-sized system well-suited for GPU acceleration. Larger molecular systems with different computational profiles may show different scaling characteristics.
 
 ## Summary
 
@@ -197,6 +198,13 @@ For life-science researchers running ensemble MD simulations, free-energy calcul
 - [Applying GPU Compute Partitioning for GPU Workloads](https://rocm.blogs.amd.com/artificial-intelligence/gpu-partitioning-workloads/README.html)
 - [Deep Dive into MI300 Compute and Memory Partition Modes](https://rocm.blogs.amd.com/software-tools-optimization/compute-memory-modes/README.html)
 - [GPU Partitioning Made Easy](https://rocm.blogs.amd.com/software-tools-optimization/gpu-operator-partitioning/README.html)
+- [Installing AMD HIP-enabled GROMACS on HPC Systems](https://rocm.blogs.amd.com/artificial-intelligence/gromacs-lumi-guide/README.html)
+
+```{update} Jun. 2, 2026
+- Updated figures with colorblind-friendly patterns
+- Clarified SPX/CPX in captions and table descriptions
+- Additional reading references
+```
 
 ## Disclaimers
 
