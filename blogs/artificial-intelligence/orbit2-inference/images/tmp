@@ -1,0 +1,17 @@
+
+While the above discussion shows the downscaling capability of ORBIT-2, we can also couple ORBIT-2 downscaling to a weather forecasting tool to obtain higher-resolution global weather forecasts. The key for such a forecast is to have outputs of forecasts that match the input of the downscaling code. Such an idea has been explored in [8], where Park et al. demonstrate a super-resolution framework that chains a machine-learning weather prediction model with a downscaling step to produce 1-km regional air temperature forecasts regionally. Here we demonstrate an analogous idea at global scale for precipitation, coupling GenCast with ORBIT-2. As we have discussed before in a blog post, synoptic-scale weather forecasting models take current and past states of the atmosphere (at a fixed resolution) and map them to a future atmospheric state (at the same resolution) based on a model trained on many years of data. We can then downscale the global forecasts using ORBIT-2 to obtain higher-resolution output. This paves the way for higher-resolution global forecasts. We demonstrate this idea here as a proof of principle.
+
+First, We refer the reader to the installation recipes for `GenCast` in the previous blog. While `GenCast` generates ensembles of forecasts, here we are just looking at a single ensemble member. Now, on a separate (from our orbit2 container) docker container built from `jax.dockerfile` from the previous blogpost, we run a script which is analogous to the `code/jax_script.sh` from that blog. This script two gencast models `gencast-0.25` and `gencast-1.0` with starting date 2020-01-01 at midnight with a lead time of 48 hours.
+```bash 
+bash gencast_script.sh
+```` 
+This produces two output files 
+`predictions/gencast-0.25.grib
+predictions/gencast-0.25.grib`
+
+Next, we come back to our `orbit2` container with these output files from the gencast script and convert them into the input format for ORBIT-2. GenCast produces nearly all the variables required by ORBIT-2. The two missing fields are `landcover` and `volumetric_soil_water_layer_1`, both of which we supply from ERA5. `landcover` (ERA5 variable `soil_type`) is a static land-surface classification that does not vary in time, so any ERA5 snapshot suffices. `volumetric_soil_water_layer_1` changes slowly and we take this from ERA5 at the forecast input time. Finally, GenCast uses a precipitation variable accumulated over 12 hours, so for a forecast at midnight on the next day (2020-01-02) we need to add the precipitation from the last two time steps (2020-01-01 1200) and (2020-01-02 000). All of this is done along with a format change to render the forecast in the same format as the other input files in the script `grib_to_npz.py`.
+
+
+
+
+
