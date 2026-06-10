@@ -1,3 +1,12 @@
+---
+thumbnail: Hari-Sadasivan.jpg
+myst:
+  html_meta:
+    "description lang=en": "Hari Sadasivan"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Hari Sadasivan">
@@ -7,13 +16,6 @@
 (harisada)=
 
 # Hari Sadasivan
-
-```{image} ./data/Hari-Sadasivan.jpg
-:alt: Hari
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Hari Sadasivan is Member of Technical Staff at AMD where he explores performance optimizations for GPU
 GEMMs as part of AMD's open-sourced Composable Kernel library team. Hari also leads/co-leads several

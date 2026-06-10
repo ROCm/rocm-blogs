@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Mamba on AMD GPUs with ROCm"
 date: 28 Jun 2024
-author: 'Sean Song, Jassani Adeem, Moskvichev Arseny'
+author: 'Sean Song, Jassani Adeem, Arseny Moskvichev'
 thumbnail: '2024-07-29-roberta.jpg'
 tags: LLM, GenAI, Performance
 category: Applications & models

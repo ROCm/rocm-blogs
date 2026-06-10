@@ -15,7 +15,6 @@
 Principal Member of Technical Staff
 :::
 
-
 :::{grid-item-card} [Abhishek Patil](./authors/abhishek-patil.md)
 :padding: 1
 

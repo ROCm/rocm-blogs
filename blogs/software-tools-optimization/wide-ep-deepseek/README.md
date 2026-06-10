@@ -223,7 +223,7 @@ As upcoming features like dual batches overlapping and continued ROCm enhancemen
 
 System Model: Supermicro AS-8125GS-TNMR2
     CPU: 2x AMD EPYC™ 9654 96-Core Processor
-    NUMA: 2 NUMA nodes per socket. NUMA auto-balancing disabled/ Memory: 2304 	GiB (24 DIMMs x 96 GiB Micron Technology MTC40F204WS1RC48BB1 DDR5 4800 MT/s)
+    NUMA: 2 NUMA nodes per socket. NUMA auto-balancing disabled/ Memory: 2304 GiB (24 DIMMs x 96 GiB Micron Technology MTC40F204WS1RC48BB1 DDR5 4800 MT/s)
     Disk: 16,092 GiB (4x SAMSUNG MZQL23T8HCLS-00A07 3576 GiB, 2x SAMSUNG MZ1L2960HCJR-00A07 894 GiB)
     GPU: 8x AMD Instinct™ MI300X 192GB HBM3 750W
     Host OS: Ubuntu 22.04.4

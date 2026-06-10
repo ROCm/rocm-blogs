@@ -1,3 +1,12 @@
+---
+thumbnail: george-wang.jpg
+myst:
+  html_meta:
+    "description lang=en": "George Wang"
+    "keywords": "AMD GPU, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="George Wang">
@@ -7,13 +16,6 @@
 (georgewang)=
 
 # George Wang
-
-```{image} ./data/george-wang.jpg
- :alt: George Wang
- :class: bg-primary
- :height: 250px
- :align: left
- ```
 
 George Wang is Director of AI Software Product Engineering in the AI Group at AMD, where he leads a talented team for AI software solutions, product management, and end-to-end performance optimizations across Data Center, Client, and Edge/Endpoint applications, driving cutting-edge AI capabilities for AMD’s customers, developers, and the broader community.
 

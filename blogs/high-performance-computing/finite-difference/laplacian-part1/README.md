@@ -49,7 +49,7 @@ As an example of a physical phenomena that can be described by the Laplacian, th
 
 | Initial condition | Simulation |
 |-------------------|------------|
-|<img src="./diagrams/heat_eq_initial_condition.png" width="400px" height="300px">|<img src="./diagrams/heat_eq.gif" width="400px" height="300px">|
+|<img src="./diagrams/heat_eq_initial_condition.png" alt="heat eq initial condition" width="400px" height="300px">|<img src="./diagrams/heat_eq.gif" alt="heat eq" width="400px" height="300px">|
 
 In Cartesian coordinates, the Laplacian takes the form of the divergence of a gradient of a scalar field $u(x,y,z)$:
 
@@ -122,7 +122,7 @@ The parentheses around `i`, `j`, and `k` ensure proper expansion of expressions 
 
 The figure below shows the Laplacian stencil applied at a grid point `pos`
 
-<img src="./diagrams/5x5-stencil.png" width="600px">
+<img src="./diagrams/5x5-stencil.png" alt="5x5 stencil" width="600px">
 
 <p style="text-align:center">
 Figure 1: Finite difference stencil in 3D space.
@@ -132,7 +132,7 @@ Grid points adjacent to each other in the `j` and `k`
 directions are actually far apart in memory due to the strided data layout.
 For example, consider when `nx = ny = nz = 5`:
 
-<img src="./diagrams/memory-strides-5x5x5-grid.png" width="600px">
+<img src="./diagrams/memory-strides-5x5x5-grid.png" alt="memory strides 5x5x5 grid" width="600px">
 
 <p style="text-align:center">
 Figure 2: Strided memory space for the central difference stencil. Here we see which entries in the <code class="codesnippet">h_u[]</code> array (red) are needed to update the output array <code class="codesnippet">h_f[]</code>. Note that these entries are not contiguous.

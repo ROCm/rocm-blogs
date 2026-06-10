@@ -160,7 +160,7 @@ The following table compares different PP scheduling algorithms under the assump
 
 **Note:** V-half and V-min employ greedy algorithms and therefore lack closed-form bubble-rate formulas. Use the simulator to estimate their bubble rates.
 
-**Notation:**
+Notation:
 
 - `p`: number of pipeline stages
 - `m`: number of mini-batches
@@ -213,6 +213,7 @@ We also provide a bar chart for the performance comparison of the Qwen3-235B mod
 ## Best Practice Guide
 
 Based on the results above, we draw the following conclusions.
+
 - Llama-based models show higher throughput and memory gains than MoE models, because the overall network has a larger GEMM footprint and higher activation memory usage.
 - For large MoE cases in practice, 1f1b-interleaved reaches a higher throughput roofline than zero-bubble schedules, but it is harder to reduce memory usage. In memory-limited scenarios, v-half is a reasonable option.
 
@@ -249,7 +250,6 @@ We would like to express our sincere gratitude to the [SeaAI Lab](https://sail.s
 - [Llama-2-7B](https://huggingface.co/meta-llama/Llama-2-7b): Meta's Llama 2 7B model used for experimental validation.
 
 - [Qwen3-235B](https://huggingface.co/Qwen/Qwen3-235B-A22B): Qwen 235B MoE model used for large-scale experiments.
-
 
 ## Disclaimers
 

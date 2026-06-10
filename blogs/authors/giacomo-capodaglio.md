@@ -1,3 +1,12 @@
+---
+thumbnail: Giacomo-Capodaglio.jpg
+myst:
+  html_meta:
+    "description lang=en": "Giacomo Capodaglio"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Giacomo Capodaglio">
@@ -7,13 +16,6 @@
 (giaccapo)=
 
 # Giacomo Capodaglio
-
-```{image} ./data/Giacomo-Capodaglio.jpg
-:alt: Giacomo
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Giacomo Capodaglio is a MTS Software Applications Eng. working on developing and delivering trainings
 on AMD GPU software. He has a PhD in Applied Mathematics from Texas Tech University and a Master’s

@@ -49,7 +49,6 @@ SOFTWARE.
 
 # 3D Scene Reconstruction from the Inside: Explore the Mathematics Behind gsplat
 
-
 [3D Gaussian Splatting (3DGS)](https://dl.acm.org/doi/10.1145/3592433) reconstructs 3D scenes from multiple 2D images and renders novel views in real time. In this blog, which serves as a follow up to a previous post, [Elevating 3D Scene Rendering with GSplat](https://rocm.blogs.amd.com/software-tools-optimization/gsplat/README.html), you will learn the core mathematics and the practical library components behind 3DGS using [gsplat](https://github.com/ROCm/gsplat).
 
 We will start with explaining how 3D points in a scene become 3D Gaussians, how they project to 2D splats to produce images, and how rendering, loss functions, and adaptive density control fit together. This blog showcases the key equations, parameterizations, and how gsplat implements projection and rasterization on the GPU.
@@ -57,7 +56,6 @@ We will start with explaining how 3D points in a scene become 3D Gaussians, how 
 By the end, you will be able to understand and reason about 3DGS implementations and trace the training pipeline all the way from COLMAP initialization to rendering of novel views. Explore the gsplat [repo](https://github.com/ROCm/gsplat) and [docs](https://rocm.docs.amd.com/projects/gsplat/en/latest/) as you read, and look into linked resources for deeper dives.
 
 Interested in using this in practice? Review the referenced setup guides and try rendering a simple scene with gsplat after you finish the explanation section.
-
 
 ## 3DGS Basics
 
@@ -67,25 +65,22 @@ and lidar sensors, and the data from these can be combined to build a 3D model o
 
 A number of techniques, like **meshes** and **[NeRFs](https://dl.acm.org/doi/10.1145/3503250)**, have been developed to address the task of reconstructing a 3D scene from 2D images, such that the resulting representation can be
 used to render views of the objects in the scene that were not directly observed in the training images.
-**3DGS** represents a scene as a collection of 3D Gaussians, each with position, shape, color, and opacity. 
+**3DGS** represents a scene as a collection of 3D Gaussians, each with position, shape, color, and opacity.
 These Gaussians can be projected, blended, and optimized to match the appearance of real photos. As well as rendering novel
 scene views, 3DGS has the advantage (compared to NeRFs) that it explicitly models the structure of the scene, making it
 possible to retrieve 3D geometry from the positions and shapes of the Gaussians.
 
-### What is a Splat though? 
+### What is a Splat though?
 
 Think of splat as a liquid blob splashed on a wall. A splat is a 2D projection of a 3D Gaussian, visualized as an elliptical, semi-transparent patch on the screen. It looks like a soft, fuzzy blob with a specific location, shape, color and transparency as depicted in *Figure 1*. By combining a large number of 2D splats, it is possible to produce an accurate reconstruction of an image (say for example, a photo, look at *Figure 2*). By positioning and coloring large numbers of 3D Gaussians in a 3D space, we can create a 3D scene reconstruction that produces something very similar to the original scene captured by the photos used to create the rendering. 2D images can be recreated by splatting the 3D Gaussians onto 2D planes, which are positioned similarly to where the cameras were when the photos were taken.
 
-
-<img src="images/anisotropic_gaussian.png" width="200" height="200" />
+<img src="images/anisotropic_gaussian.png" alt="Anisotropic gaussian" width="200" height="200" />
 
 *Figure 1. Visualization of a splat.*
 
-
-<img src="images/GS_num.png" width="1200" height="400" />
+<img src="images/GS_num.png" alt="GS num" width="1200" height="400" />
 
 *Figure 2. Rendering the garden scene from the [Mip-NeRF 360 dataset](https://jonbarron.info/mipnerf360/) with different number of splats. The left image contains about 1K Gaussians, obtained after 500 training iterations of 3D Gaussian Splatting. The right image includes 6M Gaussians, corresponding to 30K training steps. As shown, a larger number of Gaussians enables much finer detail in the reconstruction.*
-
 
 ### Why use Gaussian splats?
 
@@ -97,14 +92,13 @@ triangular meshes, voxels or continuous 3D volumetric functions (e.g. NeRF)?
 * Voxels are memory-heavy and, like triangles, are discrete and discontinuous.
 * Point clouds (such as those produced by COLMAP) lack size/volume and visual richness.
 
-Gaussians have a soft volumetric nature and, when projected onto the image plane, appear as 2D ellipses (splats). Because Gaussians are continuous and smooth, they are differentiable in 3D space, a property that makes them well-suited for optimization techniques such as gradient descent, which play a central role in this method. 
+Gaussians have a soft volumetric nature and, when projected onto the image plane, appear as 2D ellipses (splats). Because Gaussians are continuous and smooth, they are differentiable in 3D space, a property that makes them well-suited for optimization techniques such as gradient descent, which play a central role in this method.
 
-Additionally, 3DGS incorporates view-dependent color through **spherical harmonics**, allowing a single representation of an object to vary in appearance when viewed from different angles. This is an efficient and elegant way to capture reflection and lighting effects. 
+Additionally, 3DGS incorporates view-dependent color through **spherical harmonics**, allowing a single representation of an object to vary in appearance when viewed from different angles. This is an efficient and elegant way to capture reflection and lighting effects.
 
 In summary, this approach unifies geometry, appearance, and transparency into a single continuous and trainable representation.
 
 We now turn to the mathematical representation and parameterization of a 3D Gaussian.
-
 
 ## Mathematical Representation
 
@@ -142,7 +136,6 @@ Each Gaussian is parametrized by:
 
     2. $Y_l^m$ are real-valued SH basis functions.
 
-
     3. $a^m_{l,i}$ are the learned SH coefficients for each Gaussian. If we truncate at degree $L$, there are $(L+1)^2$ coefficients per Gaussian per color channel.
 
    This way, 3DGS is able to model view-dependent appearance, like reflections and lighting effects.
@@ -167,23 +160,19 @@ colors = torch.empty((1, 3), dtype=torch.float32, device="cuda").uniform_(0.0, 1
 opacities = torch.empty(1, dtype=torch.float32, device="cuda").uniform_(0.5, 1.0)
 W, H = 256, 256
 view = torch.eye(4, dtype=torch.float32, device="cuda").unsqueeze(0)
-K = torch.tensor([[100, 0, W/2], [0, 100, H/2], [0, 0, 1]], 
+K = torch.tensor([[100, 0, W/2], [0, 100, H/2], [0, 0, 1]],
                  dtype=torch.float32, device="cuda").unsqueeze(0)
 
-rgb, alpha, _ = rasterization(means, quats, scales, opacities, 
+rgb, alpha, _ = rasterization(means, quats, scales, opacities,
                               colors, view, K, W, H)
 ```
 
-<img src="images/anisotropic_gaussian.png" width="200" height="200" />
+<img src="images/anisotropic_gaussian.png" alt="Anisotropic gaussian" width="200" height="200" />
 
 *Figure 3. Rasterization of a randomized 3D Gaussian using gsplat library.*
 
 Now that the ground is set and we understand the representations of 3D Gaussians, let’s dive into the magic behind this technique and take a look
-at how the process of scene reconstruction works from a technical perspective. 
-
-
-
-
+at how the process of scene reconstruction works from a technical perspective.
 
 ## The 3DGS Process
 
@@ -193,7 +182,7 @@ The process of 3D scene reconstruction can be broken down into three major stage
 2. **Optimizing** the initial point cloud into 3D Gaussians by comparing rendered views with input images as ground truths.
 3. **Rendering** novel views of the scene from previously unseen angles.
 
-<img src="images/pipeline.jpg" width="591" height="419" />
+<img src="images/pipeline.jpg" alt="Pipeline" width="591" height="419" />
 
 *Figure 4. Outline of the entire process.*
 
@@ -202,6 +191,7 @@ The process of 3D scene reconstruction can be broken down into three major stage
 The first task is to collect the images of the object or scene that we want to build a 3D model of. We do this using a camera and take photos from multiple overlapping viewpoints.
 
 Now this data has to be processed using a Structure-from-Motion (SfM) tool. This provides two essential inputs to the 3DGS training:
+
 1. An estimate of the **poses** (positions and directions) of the camera when each photo was taken. Using a normal camera, we need to infer this automatically before 3DGS can work. If you capture images using a specialised camera rig or other setup that provides information about the poses of the cameras, this is not necessary.
 2. A **point cloud**, giving an initial rough estimate of the 3D positions and colors of some of the surfaces that are visible in the scene. This is used to *initialize* the positions and colors of Gaussians. The parameters of the Gaussians will then be optimized by 3DGS and further Gaussians will be added through the *densification* process.
 
@@ -213,12 +203,13 @@ We describe the process carried out by COLMAP here, but alternative tools, like 
 #### COLMAP: Feature extraction
 
 When you feed COLMAP a set of images, the first step in the pipeline is feature extraction. The goal here is:
+
 1. Detect **distinctive keypoints** (corners, blobs, edges that are stable across viewpoints, scale, illumination).
 2. Compute **descriptors** (numerical vectors that describe the local image patch around each keypoint).
 
 These will be matched in the next step.
 
-COLMAP uses [**SIFT (Scale-Invariant Feature Transform)**](https://en.wikipedia.org/wiki/Scale-invariant_feature_transform) by default, which is a popular technique used in Computer Vision to extract local features in an image. 
+COLMAP uses [**SIFT (Scale-Invariant Feature Transform)**](https://en.wikipedia.org/wiki/Scale-invariant_feature_transform) by default, which is a popular technique used in Computer Vision to extract local features in an image.
 The output of this stage is keypoints and SIFT vectors.
 
 #### COLMAP: Feature matching
@@ -229,8 +220,8 @@ This is the *feature matching stage*, and it is the backbone of Structure-from-M
 A **correspondence** is simply a pairing of points in two (or more) images that are believed to be the projection of the same 3D world point.
 
 These correspondences feed into camera pose estimation and triangulation to build 3D structure.
-    
-The matching finds nearest-neighbor descriptors across images and filters them with Lowe’s ratio — the ratio of the distance of the closest keypoint match to the distance of the second closest match. 
+
+The matching finds nearest-neighbor descriptors across images and filters them with Lowe’s ratio — the ratio of the distance of the closest keypoint match to the distance of the second closest match.
 The lower the value of the ratio, the greater the difference, thus the higher the confidence.
 
 #### COLMAP: Geometric verification
@@ -243,13 +234,13 @@ The goal is to keep only matches that are geometrically consistent, ensuring tha
 
 #### COLMAP: Scene reconstruction
 
-COLMAP's reconstruction algorithm works as follows, using the results from the feature extraction, matching, and verification steps.
+COLMAP’s reconstruction algorithm works as follows, using the results from the feature extraction, matching, and verification steps.
 
-1.  **Initialization**: COLMAP starts by bootstrapping the reconstruction with two images that have a good number of verified matches.
-    1.  Select initial image pair, the one with the largest number of inlier correspondences, ensuring a strong baseline and stable geometry.
-    2.  Estimate relative pose. Recover rotation *R* and translation *t* between the two cameras
-    3.  Initial triangulation. For each correspondence between the images, compute a 3D point via triangulation.
-2.  **Image Registration (Incremental Reconstruction)**: From  these two cameras and initial 3D points, COLMAP grows the model by adding new images incrementally.
+1. **Initialization**: COLMAP starts by bootstrapping the reconstruction with two images that have a good number of verified matches.
+    1. Select initial image pair, the one with the largest number of inlier correspondences, ensuring a strong baseline and stable geometry.
+    2. Estimate relative pose. Recover rotation *R* and translation *t* between the two cameras
+    3. Initial triangulation. For each correspondence between the images, compute a 3D point via triangulation.
+2. **Image Registration (Incremental Reconstruction)**: From  these two cameras and initial 3D points, COLMAP grows the model by adding new images incrementally.
     1. Find 2D–3D correspondences. For an unregistered image, match its keypoints against the existing 3D points’ descriptors.
     2. Camera pose estimation. Use *Perspective-n-Point (PnP)* to estimate camera pose.
     3. Add the image to the reconstruction to be used in further incremental steps.
@@ -261,18 +252,20 @@ This serves to make the reconstruction globally consistent.
 
 It uses an objective function that minimises the projection error of each point when it is projected from the cameras from which it was observed under the optimised (or known) camera parameters and pose.
 
-<img src="images/colmap_garden.gif" width="800" height="473">
+<img src="images/colmap_garden.gif" alt="Colmap garden" width="800" height="473">
 
-*Figure 5. Colmap output of sparse point cloud*
+Figure 5. Colmap output of sparse point cloud
+
 ### Stage 2: Training the 3DGS model
 
-<img src="images/Training_flow_gsplat.svg" width="860" height="182" />
+<img src="images/Training_flow_gsplat.svg" alt="Training flow gsplat" width="860" height="182" />
 
-*Figure 6. Training flow for 3DGS*
+Figure 6. Training flow for 3DGS
 
 Once we have the sparse point cloud from SfM (*Figure 5*), we proceed to the main training routine of 3DGS (*Figure 6*).
 
 At a high level, this works as follows:
+
 1. Initialize a set of 3D Gaussians, using the point cloud from COLMAP as an initial best guess as to their positions and colors.
 2. Randomly sample one of the real images of the scene.
    * Using the camera pose that was inferred by COLMAP for this image, render a new image of our current scene reconstruction from the same angle. With a perfect reconstruction, this would exactly match the real image.
@@ -284,7 +277,7 @@ We describe each of these steps in more detail below.
 
 #### Initialization
 
-COLMAP provides camera intrinsics and extrinsics (poses), along with sparse point clouds. 
+COLMAP provides camera intrinsics and extrinsics (poses), along with sparse point clouds.
 During the initialization of 3D Gaussian Splatting, each point in the cloud is represented as a Gaussian with a small, isotropic covariance and is given the color assigned to it by COLMAP.
 
 $$\mu_i = \text{3D point location}, \quad \Sigma_i = \sigma^2 I$$
@@ -297,7 +290,7 @@ In order to compute a loss function for the current scene reconstruction (the *r
 a known camera position and angle.
 The reconstruction loss (and therefore also the rendering process) must be differentiable, so we can incrementally optimize the scene reconstruction using stochastic gradient descent (SGD).
 
-To render an image for a given set of Gaussian parameters, 
+To render an image for a given set of Gaussian parameters,
 we need to **project each 3D Gaussian into the 2D screen space** corresponding to the viewing plane of the camera, accounting for the camera’s position and perspective $\Sigma' = J (W \Sigma W^T) J^T$.
 In image space, each 3D Gaussian is projected as a 2D elliptical Gaussian kernel.
 
@@ -305,20 +298,18 @@ The same rendering process is then used after training in order to render novel 
 
 ##### From 3D Space to Camera Space
 
-We can transform the center point of the 3D Gaussian, $\mu_i$, into the camera's coordinate system by:  
+We can transform the center point of the 3D Gaussian, $\mu_i$, into the camera's coordinate system by:
 
-
-$$  
-R_c \mu_i + t_c,  
 $$
-
+R_c \mu_i + t_c,
+$$
 
 where $R_c$ and $t_c$ are rotation matrix and translation vector of camera $c$, respectively. $R_c$ and $t_c$ are set from COLMAP’s output and fixed during this step.
 
 To transform the covariance of the 3D Gaussian into the camera’s coordinate system, we apply the viewing transformation matrix, which translates and rotates the 3D Gaussian from its position in the world into the camera space:
 
-$$  
-W \Sigma W^T,  
+$$
+W \Sigma W^T,
 $$
 
 where $\Sigma$ is the original 3D covariance matrix that defines the Gaussian’s shape and orientation in world coordinates, and $W = R_c$ is the viewing transformation matrix encoding the camera’s position and rotation.
@@ -330,19 +321,17 @@ The linear transformation of $\mu$ and $\Sigma$ produces a new 3D Gaussian as se
 Next, we apply the perspective projection, which makes objects farther away appear smaller and objects at an angle appear distorted.
 
 First, we transform the center point from camera space to the image space:
-    
 
-$$  
-\mu_i' = \pi (K(R_c \mu_i + t_c)),  
+$$
+\mu_i' = \pi (K(R_c \mu_i + t_c)),
 $$
 
 where $K$, the camera's intrinsic matrix, is a $3 \times 3$ matrix containing the camera's **focal length** ($f_x, f_y$) and **principal point** ($c_x, c_y$). The perspective transformation $\pi$ means we divide the $x$ and $y$ components by the $z$ component (depth).
 
 Next, we transform the covariance matrix from camera space to the image space:
-    
 
-$$  
-\Sigma' = J(W \Sigma W^T)J^T,  
+$$
+\Sigma' = J(W \Sigma W^T)J^T,
 $$
 
 where the Jacobian matrix $J$ is the derivative of the projection function with respect to the 3D point, evaluated at the Gaussian’s center. This projection function incorporates the camera's intrinsic matrix $K$ and the perspective divide. Perspective is not a purely linear transformation, since the apparent size of objects depends on depth. By using the Jacobian, we approximate this nonlinear mapping locally as a linear transformation at the Gaussian’s center. The result is a 2D ellipse with 2D covariance $\Sigma'$ on the image plane that represents the projected shape of the Gaussian.
@@ -351,47 +340,43 @@ where the Jacobian matrix $J$ is the derivative of the projection function with 
 
 Since a covariance matrix must always be **positive semi-definite** (a 3D ellipsoid cannot have negative or zero extent along any axis), directly optimizing its entries with gradient descent can break this property. To avoid this, the covariance is parameterized using a scaling matrix $S$ and a rotation matrix $R$:
 
-$$  
-\Sigma = R S S^T R^T  
+$$
+\Sigma = R S S^T R^T
 $$
 
 Here, $S$ is typically chosen as a diagonal matrix built from a scale vector $\mathbf{s}$ (radii). Multiplying $S$ with its transpose yields squared scales along each axis, which are always non-negative. The rotation $R$ is obtained from a unit quaternion $q$, which is normalized from unconstrained parameters before being converted into a $3 \times 3$ rotation matrix. This parameterization ensures that the covariance remains positive semi-definite under gradient-based updates. To guarantee strictly positive variances (i.e., a non-degenerate covariance), the scale vector is typically parameterized in log-space as $\mathbf{s} = \exp(\mathbf{s'})$, where $\mathbf{s'}$ are unconstrained parameters.
 
 ##### Rasterization
 
-Now we combine projected Gaussians into pixels via the process of rasterization, which is nothing but a result of stacking up semi-transparent Gaussians, known as alpha blending. This complex process is implemented under various [forward](https://github.com/ROCm/gsplat/blob/release/1.0.0/gsplat/cuda/csrc/RasterizeToPixels3DGSFwd.cu) and [backward](https://github.com/ROCm/gsplat/blob/release/1.0.0/gsplat/cuda/csrc/RasterizeToPixels3DGSBwd.cu) GPU kernels. 
+Now we combine projected Gaussians into pixels via the process of rasterization, which is nothing but a result of stacking up semi-transparent Gaussians, known as alpha blending. This complex process is implemented under various [forward](https://github.com/ROCm/gsplat/blob/release/1.0.0/gsplat/cuda/csrc/RasterizeToPixels3DGSFwd.cu) and [backward](https://github.com/ROCm/gsplat/blob/release/1.0.0/gsplat/cuda/csrc/RasterizeToPixels3DGSBwd.cu) GPU kernels.
 
-1.  For pixel $x \in \mathbb{R}^2$, the contribution from 2D Gaussian $i$ is:
-    
+1. For pixel $x \in \mathbb{R}^2$, the contribution from 2D Gaussian $i$ is:
 
-$$ \alpha'_i(x) = \tilde{\alpha_i} d_i(x) = \mathrm{sigmoid}(\alpha_i) \exp\left(-\tfrac{1}{2}(x - \mu'_i)^T \Sigma'^{-1} (x - \mu'_i)\right) ,$$
+$$ \alpha’_i(x) = \tilde{\alpha_i} d_i(x) = \mathrm{sigmoid}(\alpha_i) \exp\left(-\tfrac{1}{2}(x - \mu’_i)^T \Sigma’^{-1} (x - \mu’_i)\right) ,$$
 
 where $\mu’_i$ and $\Sigma’_i$ are the mean and covariance matrix of the 2D Gaussian $i$, and $\alpha_i$ is the learned opacity of Gaussian $i$. A sigmoid function is used to ensure the opacity is in $[0, 1]$.
 
-2.  Finally, all of the Gaussians that overlap a pixel are depth sorted from front to back, where depth is the distance each Gaussian is situated from the camera. Then, they are alpha blended as follows:
-    
+2. Finally, all of the Gaussians that overlap a pixel are depth sorted from front to back, where depth is the distance each Gaussian is situated from the camera. Then, they are alpha blended as follows:
 
 $$ C(x) = \sum_{i=1}^N T_i \alpha'_i c_i(x), $$
 
 where:
 
 $T_i = \prod_{j < i} (1 - \alpha'_j)$ is the transmittance from earlier Gaussians (the probability of light that survives previous Gaussians $j$ and reaches current Gaussian $i$), and $c_i(x)$ is the color of Gaussian $i$.
-    
 
 ##### GPU rasterization
 
 For rasterization, we need to sort the Gaussians from farthest to nearest (back to front), based on their depth values. We can use GPU-optimized sorting algorithms for this. [The backward GPU kernel](https://github.com/ROCm/gsplat/blob/bffd2aefbb57e57439b38b065d240675b15c4131/gsplat/cuda/csrc/RasterizeToPixels3DGSBwd.cu) takes care of the efficient sorting operation in the gsplat codebase.
 
-1.  The screen is divided into smaller regions called tiles, e.g. $16 \times 16$ tiles. GPUs can process these tiles in parallel.
-    
-2.  Each Gaussian will be assigned with the tiles it overlaps. An instance of that Gaussian is created for each overlapping tile. As a Gaussian may overlap multiple tiles, multiple instances of it may be generated, potentially adding a small overhead which will be negated by the parallel computing of GPUs.
-    
-3.  For each of these instances, a 64-bit key is assigned, combining the **Tile ID** and **Gaussian’s** **depth value**.
-    
-4.  A GPU-optimized sorting algorithm is used to sort these keys in parallel. Since the **Tile ID** is the higher bits of the keys, the sorting algorithm will group all instances belonging to the same tile together, then sort the instances based on the depth values.
-    
-5.  During the final rendering, a separate GPU thread can work on a pre-sorted list of Gaussians per tile.
-    
+1. The screen is divided into smaller regions called tiles, e.g. $16 \times 16$ tiles. GPUs can process these tiles in parallel.
+
+2. Each Gaussian will be assigned with the tiles it overlaps. An instance of that Gaussian is created for each overlapping tile. As a Gaussian may overlap multiple tiles, multiple instances of it may be generated, potentially adding a small overhead which will be negated by the parallel computing of GPUs.
+
+3. For each of these instances, a 64-bit key is assigned, combining the **Tile ID** and **Gaussian’s** **depth value**.
+
+4. A GPU-optimized sorting algorithm is used to sort these keys in parallel. Since the **Tile ID** is the higher bits of the keys, the sorting algorithm will group all instances belonging to the same tile together, then sort the instances based on the depth values.
+
+5. During the final rendering, a separate GPU thread can work on a pre-sorted list of Gaussians per tile.
 
 #### Training
 
@@ -404,8 +389,8 @@ The **structural similarity index** measures loss, $L_{SSIM}=1-SSIM$, instead of
 
 Some optional regularization terms include:
 
-1.  Opacity regularization loss to prevent trivial full transparency, i.e., all opacities going to zero.
-2.  Covariance shrinkage loss to avoid exploding Gaussians by penalizing excessively large covariances.
+1. Opacity regularization loss to prevent trivial full transparency, i.e., all opacities going to zero.
+2. Covariance shrinkage loss to avoid exploding Gaussians by penalizing excessively large covariances.
 
 Since the rendering process is differentiable with respect to $\mu_i, \Sigma_i, \alpha_i, and \mathbf{c}_i$, the Gaussian parameters can be optimized via backpropagation. In *Figure 7* below, you can see both the forward and backward pass of 3DGS.
 
@@ -416,16 +401,17 @@ Since the rendering process is differentiable with respect to $\mu_i, \Sigma_i, 
 #### Adaptive density control (ADC)
 
 After each training iteration, 3DGS updates the set of Gaussians by:
-1.  **Splitting:** If a Gaussian covers too large an image area (low detail), split into multiple smaller Gaussians.
-2.  **Cloning:** If gradient magnitude is large in a region, duplicate Gaussians for more capacity.
-3.  **Pruning/Culling:** Remove Gaussians with very low opacity as they will have negligible contribution to the final rendering.
-    
+
+1. **Splitting:** If a Gaussian covers too large an image area (low detail), split into multiple smaller Gaussians.
+2. **Cloning:** If gradient magnitude is large in a region, duplicate Gaussians for more capacity.
+3. **Pruning/Culling:** Remove Gaussians with very low opacity as they will have negligible contribution to the final rendering.
 
 This prevents under/overfitting and balances efficiency vs quality.
 There are various densification strategies that gsplat supports and implements:
+
 * [gsplat's default ADC strategy](https://github.com/nerfstudio-project/gsplat/blob/0b4dddf0/gsplat/strategy/default.py#L79-L94): implements the densification approach from the original 3D Gaussian Splatting paper, with optional support for absolute gradients from the AbsGS paper.
-* [ABSGRAD](https://github.com/ROCm/gsplat/blob/bffd2aefbb57e57439b38b065d240675b15c4131/gsplat/strategy/default.py#L91): uses absolute gradients to avoid opposing gradients neutralizing each other.  
-* [MCMC](https://github.com/ROCm/gsplat/blob/release/1.0.0/gsplat/strategy/mcmc.py): the densification adopts a probabilistic approach. By recasting the set of Gaussians as a sample drawn from an underlying probability distribution, this method treats inference as a Markov Chain Monte Carlo sampling method that draws successive samples from this distribution. This entails a small update to the SGD update during training to add a controlled amount of noise to the center of Gaussians (making the update an instance of **Stochastic Gradient Langevin Dynamics (SGLD)**). ADC is slightly modified such that it preserves the probability of the MCMC sample. In practice, this causes the new Gaussians to appear away from crowded and low-error regions and the optimization better identifies where new primitives are needed to reduce the residual error.  
+* [ABSGRAD](https://github.com/ROCm/gsplat/blob/bffd2aefbb57e57439b38b065d240675b15c4131/gsplat/strategy/default.py#L91): uses absolute gradients to avoid opposing gradients neutralizing each other.
+* [MCMC](https://github.com/ROCm/gsplat/blob/release/1.0.0/gsplat/strategy/mcmc.py): the densification adopts a probabilistic approach. By recasting the set of Gaussians as a sample drawn from an underlying probability distribution, this method treats inference as a Markov Chain Monte Carlo sampling method that draws successive samples from this distribution. This entails a small update to the SGD update during training to add a controlled amount of noise to the center of Gaussians (making the update an instance of **Stochastic Gradient Langevin Dynamics (SGLD)**). ADC is slightly modified such that it preserves the probability of the MCMC sample. In practice, this causes the new Gaussians to appear away from crowded and low-error regions and the optimization better identifies where new primitives are needed to reduce the residual error.
 
 | Strategy | Criterion for Adding Gaussians           | Strengths                           | Weaknesses                   |
 |----------|------------------------------------------|-------------------------------------|-----------------------------|
@@ -442,14 +428,13 @@ as results vary based on the type of scene, input data, etc.
 
 The following metrics are used for final output evaluation:
 
--    **Peak Signal-to-Noise Ratio (PSNR):** This metric measures the pixel-wise difference between the rendered image and the ground truth image and is calculated as $10 \cdot \log_{10} \frac{L^2}{\text{MSE}}$, where $L$ is the maximum possible pixel value, and $MSE$ is the mean squared error between the two images. It is sensitive to small pixel differences, and is good for fidelity assessment, but not perceptual quality.
--   **SSIM**: This metric, also used in the loss function, assesses the perceptual similarity between the two images. It is sensitive to luminance, contrast, and structure and has a range between 0 and 1, with 1 meaning identical images. This metric is calculated as:
+* **Peak Signal-to-Noise Ratio (PSNR):** This metric measures the pixel-wise difference between the rendered image and the ground truth image and is calculated as $10 \cdot \log_{10} \frac{L^2}{\text{MSE}}$, where $L$ is the maximum possible pixel value, and $MSE$ is the mean squared error between the two images. It is sensitive to small pixel differences, and is good for fidelity assessment, but not perceptual quality.
+* **SSIM**: This metric, also used in the loss function, assesses the perceptual similarity between the two images. It is sensitive to luminance, contrast, and structure and has a range between 0 and 1, with 1 meaning identical images. This metric is calculated as:
     $\text{SSIM}(x, y) = \frac{(2\mu_x\mu_y+C_1)(2\sigma_{xy}+C_2)}{(\mu_x^2\mu_y^2+C_1)(\sigma_x^2\sigma_y^2+C_2)}$,
     where $x$ and $y$ are the images being compared, $\mu_x, \mu_y$ are the means of $x$ and $y$, $\sigma_x, \sigma_y$ are the variances of $x$ and $y$, $\sigma_{xy}$ is the covariance of $x$ and $y$, and $C_1, C_2$ are small constants for division stabilization.
--   **Learned Perceptual Image Patch Similarity (LPIPS)**: This is a **learned perceptual metric**. It uses pretrained neural network features like VGG or AlexNet for its comparison. LPIPS is considered the most aligned with human perception and is sensitive to blurriness and unnatural textures, which PSNR and SSIM might miss. It has a range between 0 and 1, with lower values corresponding to better quality. The metric is calculated as:
+* **Learned Perceptual Image Patch Similarity (LPIPS)**: This is a **learned perceptual metric**. It uses pretrained neural network features like VGG or AlexNet for its comparison. LPIPS is considered the most aligned with human perception and is sensitive to blurriness and unnatural textures, which PSNR and SSIM might miss. It has a range between 0 and 1, with lower values corresponding to better quality. The metric is calculated as:
     $\text{LPIPS}(x, y) = \sum_l \left\| w_l \odot (\hat{y}_l - y_l) \right\|_2^2$,
     where $x$ and $y$ are the images being compared, $\hat{y}_l, y_l$ are the normalized feature maps at layer $l$, and $w_l$ is the learned weights for layer $l$
-
 
 ### Stage 3: Novel view rendering
 
@@ -475,13 +460,12 @@ real time. The video in *Figure 8* demonstrates this.
 
 ## Summary
 
-We have taken an in-depth look at the math behind Gaussian splatting and some of the tricks that help to get great results out of it. If you're curious and want to experiment with this cutting-edge technology, or want to train your own scenes on the [MI300X](https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html), check out our [public repo](https://github.com/ROCm/gsplat), a fork of gsplat that enables lightning-fast performance on ROCm-based AMD GPUs. You can also take a look at [our previous blog](https://rocm.blogs.amd.com/software-tools-optimization/gsplat/README.html), where we break down setup steps, benchmarks and optimizations.  
+We have taken an in-depth look at the math behind Gaussian splatting and some of the tricks that help to get great results out of it. If you're curious and want to experiment with this cutting-edge technology, or want to train your own scenes on the [MI300X](https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html), check out our [public repo](https://github.com/ROCm/gsplat), a fork of gsplat that enables lightning-fast performance on ROCm-based AMD GPUs. You can also take a look at [our previous blog](https://rocm.blogs.amd.com/software-tools-optimization/gsplat/README.html), where we break down setup steps, benchmarks and optimizations.
 
 At AMD, we are actively working on high-performance 3DGS using ROCm. At AMD Silo AI, we are using gsplat and related technologies for cutting-edge
 applications in autonomous driving, so expect fresh 3DGS-related insights soon!
 
 Happy splatting! 😁
-
 
 ## Disclaimers
 

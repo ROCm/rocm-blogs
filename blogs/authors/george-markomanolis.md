@@ -1,3 +1,12 @@
+---
+thumbnail: George-Markomanolis.jpg
+myst:
+  html_meta:
+    "description lang=en": "George Markomanolis"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="George Markomanolis">
@@ -7,13 +16,6 @@
 (geormark)=
 
 # George Markomanolis
-
-```{image} ./data/George-Markomanolis.jpg
-:alt: George
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 George Markomanolis is Principal Member of Technical Staff Software
 Development Engineer at AMD. He helps with the AMD training, among

@@ -186,7 +186,7 @@ Provided that you are using efficient constructs, the performance of
 Julia GPU code is on par with C++ and sometimes even exceeding it,
 depending on the workload.
 
-<img src="data/amdgpu-performance.png" width="80%">
+<img src="data/amdgpu-performance.png" alt="AMDGPU performance" width="80%">
 
 Performance comparison of a memcopy and 2D diffusion kernel
 implemented in Julia with AMDGPU.jl and executed on a MI250x GPU.

@@ -56,6 +56,7 @@ With the rapid advancement of diffusion models [1], artificial intelligence (AI)
 In this blog, AMD presents a highly efficient video generative model based on the Wan-2.2-5B TI2V architecture [3], termed **Hummingbird-XT**, designed to bridge the last mile of deploying large-scale DiT models on client-grade GPUs, including both Navi48 dGPUs and Strix Halo iGPUs. Hummingbird-XT achieves up to 33× speedup on Strix Halo and enables efficient video generation on Navi48, where the original model runs out of memory, through two key innovations:  (1) carefully designed data curation for step distillation, which enables 3-step generation while preserving background consistency and motion smoothness, especially reducing human-body ghosting in high-dynamic-action scenarios; and (2) a lightweight VAE, which accelerates latent decoding while preserving crucial image quality and semantic understanding capability. Hummingbird-XT is fully trained on 16 AMD Instinct™ MI325X GPUs, marking an important milestone in showcasing operator-friendly support for large-scale video generative models and stable training performance for both DiT and VAE architectures. In addition, this blog introduces **Hummingbird-XTX**, an efficient DiT-based member of the Hummingbird family designed for long video generation, built on Wan-2.1-1.3B T2V. Hummingbird-XT and its family further enrich the AMD ecosystem by enabling more devices to benefit from AMD-trained native models. The training code and datasets have been open-sourced to the community, empowering developers to build and experiment with models on AMD GPUs.  
 
 Key Takeaways:
+
 - Presenting an end-to-end acceleration pipeline for DiT-based video models, combining step distillation and a lightweight VAE decoder to significantly reduce inference latency and memory footprint while preserving visual quality.
 - Introducing Hummingbird-XT, an efficient DiT-based video generation framework built upon Wan-2.2-5B, designed to bridge the last mile of deploying large-scale diffusion transformer models on AMD client-grade GPUs, including Navi48 dGPUs and Strix Halo iGPUs.
 - Achieving up to 33× speedup on Strix Halo iGPUs, and enabling efficient video generation on Navi48, where the original Wan-2.2-5B model exceeds memory limits.
@@ -70,14 +71,16 @@ Key Takeaways:
 Diffusion-based video generative models typically consist of three key components: (1) a condition encoder, (2) a diffusion backbone, and (3) a VAE decoder. Among these, the diffusion backbone contains billions of parameters and executes numerous time-consuming operations repeatedly across many denoising steps (e.g., 50), leading to substantial latency and energy consumption. In addition, the classifier-free guidance (CFG) mechanism further increases computation cost. This motivates reducing the number of denoising steps from 50 to just 3 and adopt a fully CFG-free design.
 
 To achieve this, we adopt step distillation using a self-forcing variant of Distribution Matching Distillation (DMD) [4,5,14]. The core idea is to train the student DiT to follow the teacher’s reverse-diffusion behavior without relying on ground-truth text–video pairs. Taking Wan-2.2-5B as an example, the distillation process proceeds in three steps.
+
 - First, the student model produces a latent video trajectory using a backward-simulation sampler that traverses a set of large diffusion timesteps (e.g., 1000, 750, 500, 250), and the final denoised latent from this trajectory is taken as the "clean" latent target.
 - Second, a random diffusion timestep is sampled, and Gaussian noise is added to construct a noisy latent.
 - Third, two score networks are applied to this noisy latent: a frozen real score network from the teacher and a trainable fake score network from the student, both incorporating conditional and unconditional branches through classifier-free guidance. The real score provides the teacher’s target denoising direction, and the fake score represents the student’s estimate; their difference yields a KL-style correction that forces the student to follow the teacher’s update.
- 
+
 To support both image-to-video and text-to-video generation, the VAE-encoded latent of the input image is injected into the first-frame region of the noisy latent sequence with a spatial-temporal mask.  
 
-### Data Curation for Step Distillation 
-Although self-forcing DMD avoids the need for high-quality videos, the caption design of input images still has a critical impact on student performance. As you can see in Figure 1, below, the three rows of the figure illustrate common data-curation issues in text formulation that can noticeably degrade generation quality: (1) **Row 1**: short captions that focus only on the action while lacking sufficient background or appearance details; (2) **Row 2**: long captions that describe objects, background, and actions in an overly verbose manner; (3) **Row 3**: long captions that overemphasize actions and camera motion. 
+### Data Curation for Step Distillation
+
+Although self-forcing DMD avoids the need for high-quality videos, the caption design of input images still has a critical impact on student performance. As you can see in Figure 1, below, the three rows of the figure illustrate common data-curation issues in text formulation that can noticeably degrade generation quality: (1) **Row 1**: short captions that focus only on the action while lacking sufficient background or appearance details; (2) **Row 2**: long captions that describe objects, background, and actions in an overly verbose manner; (3) **Row 3**: long captions that overemphasize actions and camera motion.
 
 ```{figure} ./images/figure1.png
 :align: center
@@ -92,7 +95,6 @@ We further employ Qwen-2.5-72B to evaluate the rewritten captions and filter out
 ## Towards an Efficient and Lightweight Video VAE
 
 In addition to the DiT backbone, the VAE decoder is another time-consuming component in video generation. Some video VAEs rely on  3D convolutional architectures [3], while others incorporate attention modules to achieve high reconstruction quality. Such designs significantly increase computational overhead. To address this issue, we introduce a more efficient and lightweight VAE decoder in Hummingbird-XT, which can be seamlessly substituted for the VAE in the Wan-2.2-5B model and significantly reduces the computational cost of video VAE decoding while preserving visual quality. The VAE decoder training pipeline is shown in Figure 2. Moreover, compared with the recent lightweight VAE work Taehv [9], the proposed lightweight VAE decoder achieves better visual quality in reconstruction and generation.
-
 
 ```{figure} ./images/figure2.png
 :align: center
@@ -132,11 +134,9 @@ Directly distilling a bidirectional teacher into an autoregressive student with 
 
 Even with ODE initialization, AR models suffer from severe exposure bias: they are trained on ground-truth context but must depend on self-generated history at inference, causing rapid error accumulation. To address this, we adopt Self-Forcing [15], which performs full autoregressive self-rollout during training using two techniques: training-time KV cache, which reuses previous-frame states to reduce long-sequence unrolling cost, and gradient truncation with few-step generation, where a lightweight diffusion approximation is used and gradients are backpropagated only through the final denoising step to control memory usage. This paradigm enables holistic distribution-matching optimization, allowing the model to learn to correct its own errors and achieve stable long-video generation.
 
-
 ### Mitigating Semantic Drift via Frame-Level Attention Sink
 
 To reduce the computational complexity of inference from quadratic $O(N^2)$ to linear $O(N)$ for long sequences, we adopted a Short Window Attention mechanism. However, standard sliding window mechanisms suffer from a critical limitation: as the window traverses the temporal axis, information from the initial frames is evicted from the context. Since the initial frames capture the core style, color, and subject identity, losing them causes later frames to gradually lose saturation and semantic detail, resulting in color degradation or style drift.
-
 
 ```{figure} ./images/figure3.png
 :align: center
@@ -144,12 +144,12 @@ To reduce the computational complexity of inference from quadratic $O(N^2)$ to l
 Figure 3: Frame Sink allocates a dedicated KV cache region to permanently retain initial frame features, acting as a global anchor to prevent color degradation in arbitrarily long sequence generation.
 ```
 
-Inspired by the concept of Attention Sinks in Large Language Models [16], we introduce the Frame Sink mechanism to address this problem. Specifically, we allocate a dedicated region within the KV cache to permanently retain the Key and Value features of the video's first chunk, which remain exempt from eviction regardless of the sliding window’s position. When generating the *t*-th frame, the model attends not only to the current local window 
-$W$ but also explicitly incorporates the persistent first-frame features KV sink (as seen in Figure 3). This establishes the first frame as a Global Anchor, ensuring that the model maintains access to the initial semantic and visual settings throughout arbitrarily long generation sequences. 
+Inspired by the concept of Attention Sinks in Large Language Models [16], we introduce the Frame Sink mechanism to address this problem. Specifically, we allocate a dedicated region within the KV cache to permanently retain the Key and Value features of the video's first chunk, which remain exempt from eviction regardless of the sliding window’s position. When generating the *t*-th frame, the model attends not only to the current local window
+$W$ but also explicitly incorporates the persistent first-frame features KV sink (as seen in Figure 3). This establishes the first frame as a Global Anchor, ensuring that the model maintains access to the initial semantic and visual settings throughout arbitrarily long generation sequences.
 
-### Long Video Decoding Optimization 
+### Long Video Decoding Optimization
 
-For decoding high-resolution long videos, directly applying 3D convolutions over the entire latent input leads to excessive memory consumption and computational cost, and may cause convolution kernels to fall back to inefficient implementations. To address this issue, we propose two frame-splitting strategies that decompose long videos into multiple short clips for decoding. You can see the two strategies in Figure 4. 
+For decoding high-resolution long videos, directly applying 3D convolutions over the entire latent input leads to excessive memory consumption and computational cost, and may cause convolution kernels to fall back to inefficient implementations. To address this issue, we propose two frame-splitting strategies that decompose long videos into multiple short clips for decoding. You can see the two strategies in Figure 4.
 
 ```{figure} ./images/figure4.png
 :align: center
@@ -157,9 +157,10 @@ For decoding high-resolution long videos, directly applying 3D convolutions over
 Figure 4: Two decoding strategies for long video.
 ```
 
-We first train two types of VAE decoders on short video clips: (1) Causal VAE decoder composed of causal convolutions, which uses only past frames as context, and (2) Non-causal VAE decoder composed of non-causal convolutions, which leverages both past and future frames as inputs. To extend these decoders to long-video decoding, we adopt different strategies for each architecture.  For the causal VAE decoder, we employ a causal cache mechanism, where the video latent sequence is split into multiple non-overlapped latent clips along the temporal dimension and decoded sequentially. Intermediate features from decoding of the previous clip are cached and reused as contextual input for decoding of the current clip. For the non-causal VAE decoder, we apply a tiling strategy, in which video latent sequence is divided into overlapping clips along the temporal dimension. The overlapping regions provide additional temporal context for each latent clip. To ensure temporal continuity, the decoded video clips corresponding to overlapping regions are linearly blended. Experimental comparisons indicate that integrating the non-causal VAE decoder with tiling improves reconstruction quality and substantially accelerates inference for both Hummingbird-XT and Hummingbird-XTX. 
+We first train two types of VAE decoders on short video clips: (1) Causal VAE decoder composed of causal convolutions, which uses only past frames as context, and (2) Non-causal VAE decoder composed of non-causal convolutions, which leverages both past and future frames as inputs. To extend these decoders to long-video decoding, we adopt different strategies for each architecture.  For the causal VAE decoder, we employ a causal cache mechanism, where the video latent sequence is split into multiple non-overlapped latent clips along the temporal dimension and decoded sequentially. Intermediate features from decoding of the previous clip are cached and reused as contextual input for decoding of the current clip. For the non-causal VAE decoder, we apply a tiling strategy, in which video latent sequence is divided into overlapping clips along the temporal dimension. The overlapping regions provide additional temporal context for each latent clip. To ensure temporal continuity, the decoded video clips corresponding to overlapping regions are linearly blended. Experimental comparisons indicate that integrating the non-causal VAE decoder with tiling improves reconstruction quality and substantially accelerates inference for both Hummingbird-XT and Hummingbird-XTX.
 
 ## Experimental Results
+
 In Table 1, we compare Wan-2.2-5B and our method on the text-to-video task evaluated on VBench, under settings with and without caption recaption. We report the Quality Score, Semantic Score, and the overall Total Score.
 | Model                     | Quality Score ↑ | Semantic Score ↑ | Total Score ↑ |
 |---------------------------|-----------------|------------------|-------------|
@@ -177,7 +178,6 @@ In Table 2, we compare Wan-2.2-5B and our method on the image-to-video task eval
 | Wan-2.2-5B-I2V with recap  | 97.63                             | 98.95                                | 81.06           |
 | Ours-I2V w/o recap        | 98.46                             | 98.91                                | 80.01           |
 | Ours-I2V with recap       | 98.42                             | 98.99                                | 80.57           |
-
 
 <p align="center">Table 2. Quantitative results for the image-to-video task on VBench.</p>
 
@@ -212,9 +212,10 @@ We compare our method with long-video generation models such as Self-Forcing [15
 
 ## Summary
 
-In this blog you learned video diffusion acceleration strategies and long video generation methods, and explored lightweight VAE architectural and training strategy optimization. By open-sourcing the training code, inference code based on [20], dataset, and model weights for the AMD Hummingbird-XT and Hummingbird-XTX, we aim to empower the AI developer community to build efficient and high-performing generative video models.  Developers are encouraged to download and explore the model on AMD hardware. For details on the training methodology, inference pipeline, and model insights, please visit the [Hummingbird-XT](https://github.com/AMD-AGI/HummingbirdXT) to access the source code and the Hugging Face model card to download the model weights. As an added benefit, AMD offers access to a dedicated cloud infrastructure featuring the latest GPU instances for AI development. To request access and learn more, please visit the [AMD developer cloud](https://devcloud.amd.com/). For further inquiries, contact the AMD team at amd_ai_mkt@amd.com. 
+In this blog you learned video diffusion acceleration strategies and long video generation methods, and explored lightweight VAE architectural and training strategy optimization. By open-sourcing the training code, inference code based on [20], dataset, and model weights for the AMD Hummingbird-XT and Hummingbird-XTX, we aim to empower the AI developer community to build efficient and high-performing generative video models.  Developers are encouraged to download and explore the model on AMD hardware. For details on the training methodology, inference pipeline, and model insights, please visit the [Hummingbird-XT](https://github.com/AMD-AGI/HummingbirdXT) to access the source code and the Hugging Face model card to download the model weights. As an added benefit, AMD offers access to a dedicated cloud infrastructure featuring the latest GPU instances for AI development. To request access and learn more, please visit the [AMD developer cloud](https://devcloud.amd.com/). For further inquiries, contact the AMD team at amd_ai_mkt@amd.com.
 
 ## Additional Resources
+
 Huggingface model cards: [AMD-HummingbirdXT](https://huggingface.co/amd/HummingbirdXT)
 
 Full training code: [AMD-AIG-AIMA/HummingbirdXT](https://github.com/AMD-AGI/HummingbirdXT)
@@ -231,6 +232,7 @@ Please refer to the following resources to get started with training on AMD ROCm
 - [Accelerating Large Language Models with Flash Attention on AMD GPUs — ROCm Blogs](https://rocm.blogs.amd.com/artificial-intelligence/flash-attention/README.html)
 
 ## References
+
 1. Ho J, Jain A, Abbeel P. Denoising diffusion probabilistic models[J]. Advances in neural information processing systems, 2020, 33: 6840-6851.
 
 2. Peebles W, Xie S. Scalable diffusion models with transformers[C]//Proceedings of the IEEE/CVF international conference on computer vision. 2023: 4195-4205.
@@ -270,7 +272,6 @@ Please refer to the following resources to get started with training on AMD ROCm
 19. Liu K, Hu W, Xu J, et al. Rolling forcing: Autoregressive long video diffusion in real time[J]. arXiv preprint arXiv:2509.25161, 2025.
 
 20. Moore-animateanyone. https://github.com/aigc-apps/VideoX-Fun, 2025.
-
 
 ## Disclaimers
 

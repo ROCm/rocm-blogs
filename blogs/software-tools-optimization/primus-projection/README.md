@@ -163,7 +163,7 @@ The performance projection tool estimates training throughput on multi-node clus
 
 A key capability of the performance projection is the ability to **benchmark on fewer GPUs than the target configuration requires** — even a single GPU — and analytically project performance to arbitrary multi-node deployments. The `--benchmark-gpus` flag controls how many GPUs are used for the benchmarking phase (defaults to `GPUS_PER_NODE`). This *downscale → measure → upscale* workflow eliminates the need to allocate a full target cluster for profiling.
 
-**Phase 1: Downscale (Configuration Reduction)**
+Phase 1: Downscale (Configuration Reduction)
 
 When the target configuration requires more GPUs than available for benchmarking, parallelism dimensions are automatically reduced in a carefully chosen priority order that minimizes analytical error during upscale:
 
@@ -182,7 +182,7 @@ Step 2:    EP 8 → 1               →  1 GPU  ✓
 Benchmark on 1 GPU with reduced config
 ```
 
-**Phase 2: Measure (Layer Benchmarking)**
+Phase 2: Measure (Layer Benchmarking)
 
 With the reduced configuration, the tool benchmarks a minimal set of layers that covers every distinct layer type in the model. Rather than running the full transformer stack, it selects one layer per type — for a pure dense model, one dense layer; for an all-MoE model, one MoE layer; for a mixed architecture (e.g. DeepSeek with 3 dense + 58 MoE layers), one dense and one MoE layer. Each selected layer is benchmarked for forward and backward time separately. This works because all layers of the same type (dense or MoE) share identical architecture and GEMM shapes, differing only in learned weights, which do not affect kernel execution time.
 
@@ -190,7 +190,7 @@ When **PP=1**, the per-type average time is multiplied by the number of layers o
 
 For MoE layers, the benchmarking uses **decomposed measurement**: compute time and All-to-All communication time are measured separately. This is critical because the A2A portion will be replaced analytically during upscale, while the compute portion is kept as-is.
 
-**Phase 3: Upscale (Analytical Restoration)**
+Phase 3: Upscale (Analytical Restoration)
 
 Each reduced dimension is restored analytically, composing the individual adjustments:
 
@@ -198,7 +198,7 @@ Each reduced dimension is restored analytically, composing the individual adjust
 - **Restoring EP**: Compute time is kept from the benchmark (experts-per-rank was preserved). The All-to-All communication delta between benchmark EP and target EP is added per MoE layer: `A2A_overhead = A2A(target_EP) − A2A(benchmark_EP)`. When decomposed A2A timings are available, the measured intra-node A2A anchors the model.
 - **Restoring TP**: Two adjustments per layer: (1) compute scaled by `benchmark_tp / target_tp`, and (2) TP AllReduce delta added. When GPU-measured AllReduce data is available, ratio-based scaling provides better accuracy: `target_AR = measured_AR(bench_tp) × [analytical(target_tp) / analytical(bench_tp)]`.
 
-**Why This Priority Order?**
+Why This Priority Order?
 
 The reduction order (PP → EP → TP) is ranked by analytical restoration fidelity:
 

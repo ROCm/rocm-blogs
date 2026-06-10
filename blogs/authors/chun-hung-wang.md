@@ -1,3 +1,12 @@
+---
+thumbnail: Chunhung-Wang.png
+myst:
+  html_meta:
+    "description lang=en": "Chunhung Wang"
+    "keywords": "AMD Container Toolkit, AMD GPUs, ROCm, GPU containerization, Kubernetes GPU, Docker GPU runtime, MI300, MI250, HPC, AI/ML workloads, GPU acceleration, container runtime, ROCm Docker, ROCm Kubernetes, AMD Instinct, GPU Operator, GPU driver container, AMD ROCm stack, containerized AI workloads, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
 <meta charset="UTF-8">
 <meta name="description" content="Chunhung Wang">
@@ -5,13 +14,6 @@
 </head>
 
 # Chunhung Wang
-
-```{image} ./data/Chunhung-Wang.png
-:alt: Chunghung
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 DCGPU Customer Software Engineer with a strong focus on supporting Tier-1 customers in the APAC region.
 Experienced in AMD ROCm ecosystem and responsible for enabling and debugging across the full software stack including HIP/ROCr Runtime,

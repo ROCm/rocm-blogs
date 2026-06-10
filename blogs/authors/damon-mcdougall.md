@@ -1,20 +1,21 @@
+---
+thumbnail: Damon-McDougall.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Damon McDougall"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Damon McDougall">
-  <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog
-  author">
+  <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
 (damomcdo)=
 
 # Damon Mcdougall
-
-```{image} ./data/Damon-Mcdougall.jpeg
-:alt: Damon
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Damon is a Principal Engineer in the Data Center GPU Solutions and Performance Analysis group at
 AMD. He obtained a PhD in Mathematics from the University of Warwick. Following his doctorate, he

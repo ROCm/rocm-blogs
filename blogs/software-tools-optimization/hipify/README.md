@@ -65,7 +65,7 @@ we can run the same code in both AMD and NVIDIA GPUs with a portable HIP build s
 ================
  ### Figure 1
 ================ -->
-<img src="images/apps-ported.jpg" width="90%">
+<img src="images/apps-ported.jpg" alt="Apps ported" width="90%">
 
 <p style="text-align:center">
 Figure 1: Porting scientific applications to support AMD Instinct™ GPUs wih HIP
@@ -86,7 +86,7 @@ run on both AMD and NVIDIA platforms.
 ================
  ### Figure 2
 ================ -->
-<img src="images/amd_porting_hip.jpg" width="50%">
+<img src="images/amd_porting_hip.jpg" alt="AMD porting HIP" width="50%">
 
 <p style="text-align:center">
 Figure 2: HIP to device flowchart illustrating the platform-independent abstraction layer.
@@ -109,7 +109,7 @@ open-source and you can contribute to it.
 ================
  ### Figure 3
 ================ -->
-<img src="images/abstraction-complexity.jpg" width="60%">
+<img src="images/abstraction-complexity.jpg" alt="Abstraction complexity" width="60%">
 
 <p style="text-align:center">
 Figure 3: GPU programming abstraction levels.

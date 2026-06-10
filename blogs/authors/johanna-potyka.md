@@ -1,3 +1,12 @@
+---
+thumbnail: Johanna-Potyka.jpg
+myst:
+  html_meta:
+    "description lang=en": "Johanna Potyka"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Johanna Potyka">
@@ -7,13 +16,6 @@
 (johapoty)=
 
 # Johanna Potyka
-
-```{image} ./data/Johanna-Potyka.jpg
-:alt: Johanna
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Johanna Potyka is a Member of Technical Staff (MTS) Software Development Engineer at AMD.
 She studied Aeronautical Engineering specializing in numerical simulation, and was a research

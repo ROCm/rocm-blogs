@@ -1,3 +1,12 @@
+---
+thumbnail: Bob-Robey.jpg
+myst:
+  html_meta:
+    "description lang=en": "Bob Robey"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Bob Robey">
@@ -7,13 +16,6 @@
 (bob-robe)=
 
 # Bob Robey
-
-```{image} ./data/Bob-Robey.jpg
-:alt: Bob
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Bob Robey is a Principal Member of Technical Staff in the Data Center GPU Software Solutions Group at AMD
 and is the global training Lead for GPU software. He has an extensive background in modeling

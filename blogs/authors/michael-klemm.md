@@ -1,3 +1,12 @@
+---
+thumbnail: Michael-Klemm.jpg
+myst:
+  html_meta:
+    "description lang=en": "Michael Klemm"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Michael Klemm">
@@ -7,13 +16,6 @@
 (michklem)=
 
 # Michael Klemm
-
-```{image} ./data/Michael-Klemm.jpg
-:alt: Michael
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Michael Klemm is a Principal Member of Technical Staff in the Compilers,
 Languages, Runtimes & Tools team of the Machine Learning & Software Engineering

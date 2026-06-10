@@ -77,7 +77,7 @@ be used for a limited set of operations, like integer and logical.
 The Local Data Share (LDS) is a fast on-CU software managed memory that can be used
 to efficiently share data between all work items in a block.
 
-<img src="img/gcn_compute_unit.png" width="600px">
+<img src="img/gcn_compute_unit.png" alt="GCN compute unit" width="600px">
 
 <p style="text-align:center">
 Figure 1: Schematic representation of a CU in the CDNA™2 architecture
@@ -96,7 +96,7 @@ limiters. Another common limiter is LDS. The following table summarizes the maxi
 level of occupancy achievable on CDNA™2 based GPUs as a function of the number
 of VGPRs used by a kernel.
 
-<img src="img/occupancy_vgpr.JPG" width="600px">
+<img src="img/occupancy_vgpr.JPG" alt="Occupancy VGPR" width="600px">
 
 <p style="text-align:center">
 Table 1: Occupancy related to VGPRs usage in MI200

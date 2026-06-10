@@ -67,11 +67,11 @@ AMD GPU users can now begin leveraging these optimizations.
 
 ## ROCm FlashInfer
 
-* [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/flashinfer-install.html)
+- [Installation](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/install/3rd-party/flashinfer-install.html)
 
-* [Docker image](https://hub.docker.com/r/rocm/flashinfer/tags)
+- [Docker image](https://hub.docker.com/r/rocm/flashinfer/tags)
 
-* [GitHub](https://github.com/rocm/flashinfer)
+- [GitHub](https://github.com/rocm/flashinfer)
 
 ## Prerequisites
 

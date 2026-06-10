@@ -1,3 +1,12 @@
+---
+thumbnail: ben-sander.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Ben Sander"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Ben Sander">
@@ -7,13 +16,6 @@
 (ben-sander)=
 
 # Ben Sander
-
-```{image} ./data/ben-sander.jpeg
-:alt: Bob
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Ben Sander has spent his entire 30-year career at AMD – from co-op to Corporate Fellow.
 He has worked on a wide variety of projects at AMD including CPU and GPU, HW and SW,

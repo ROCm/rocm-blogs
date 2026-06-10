@@ -1,3 +1,12 @@
+---
+thumbnail: dominic-widdows.jpg
+myst:
+  html_meta:
+    "description lang=en": "Dominic Widdows"
+    "keywords": "blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Dominic Widdows">
@@ -5,13 +14,6 @@
 </head>
 
 (dominic-widdows)=
-
-```{image} ./data/dominic-widdows.jpg
-:alt: Dominic
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 # Dominic Widdows
 

@@ -1,3 +1,12 @@
+---
+thumbnail: Sonali-Singh.jpg
+myst:
+  html_meta:
+    "description lang=en": "Sonali Singh"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Sonali Singh">
@@ -7,13 +16,6 @@
 (sonsingh)=
 
 # Sonali Singh
-
-```{image} ./data/Sonali-Singh.jpg
-:alt: Sonali
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Sonali Singh is a Member of Technical Staff (MTS) Software Development Engineer at AMD (RAD) Research and Advanced Development where she studies HPC and LLM performance bottlenecks on AMD hardware with a focus on Instinct architectures.
 She received her Ph.D. in Computer Science and Engineering from the Pennsylvania State University.

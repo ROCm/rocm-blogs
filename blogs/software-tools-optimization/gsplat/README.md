@@ -165,7 +165,7 @@ GSplat supports multi-GPU training, delivering over 3× faster training and more
 You can use the command below for a multi-GPU based training.
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python simple_trainer.py default  --data_dir data/360_v2/bicycle/ --data_factor 4  --result_dir ./results/bicycle 
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python simple_trainer.py default  --data_dir data/360_v2/bicycle/ --data_factor 4  --result_dir ./results/bicycle
 ```
 
 The benchmark results clearly show that a distributed training system leads to a reduction in training time and memory usage per GPU rank. This is due to the independent training of Gaussians trained per GPU rank as shown in the graph below, which indicates the total training time, memory usage, and number of Gaussians per GPU rank for different distributed training scenarios.
@@ -278,5 +278,3 @@ PROVIDED “AS IS” WITHOUT A WARRANTY OF ANY KIND. USE OF SUCH THIRD-PARTY CON
 IS DONE AT YOUR SOLE DISCRETION AND UNDER NO CIRCUMSTANCES WILL AMD BE LIABLE TO
 YOU FOR ANY THIRD-PARTY CONTENT. YOU ASSUME ALL RISK AND ARE SOLELY RESPONSIBLE
 FOR ANY DAMAGES THAT MAY ARISE FROM YOUR USE OF THIRD-PARTY CONTENT.
-
-[def]: images/Distributed-Training.png

@@ -88,7 +88,7 @@ Use vLLM as an example to illustrate the usage:
 vLLM server launch command
 
 ```shell
-VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT4 
+VLLM_ROCM_QUICK_REDUCE_QUANTIZATION=INT4
 vLLM serve /model_path/Qwen/Qwen2.5-72B \
   --no-enable-prefix-caching \
   --block_size=32 \
@@ -233,7 +233,7 @@ PYTORCH_VISION_REPO: https://github.com/pytorch/vision.git
 AITER_BRANCH: 0.1.2
 AITER_REPO: https://github.com/ROCm/aiter.git
 SGLANG_BRANCH: main+429bb0ef+(Integrate QuickReduce into SGLang)
-SGLANG _REPO: sgl-project/sglang: SGLang is a fast serving framework for large language models and vision language models.
+SGLANG_REPO: sgl-project/sglang: SGLang is a fast serving framework for large language models and vision language models.
 SYSTEM CONFIGURATION: AMD Instinct ™ MI300X platform
 System Model: Supermicro AS-8125GS-TNMR2
 CPU: 2x AMD EPYC 9554 64-Core Processor

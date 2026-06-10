@@ -1,3 +1,12 @@
+---
+thumbnail: Marco-Grond.jpg
+myst:
+  html_meta:
+    "description lang=en": "Marco Grond"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, ROCm-DS, ROCm-LS, Toolkit, Toolkits, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Marco Grond">
@@ -5,13 +14,6 @@
 </head>
 
 # Marco Grond
-
-```{image} ./data/Marco-Grond.jpg
-:alt: Marco Grond
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Marco is a Software Product Manager at AMD responsible for the Open Source ROCm expansion toolkits tailored for industry solutions.
 

@@ -1,3 +1,12 @@
+---
+thumbnail: victor-robles.jpg
+myst:
+  html_meta:
+    "description lang=en": "Victor Robles"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Victor Robles">
@@ -7,13 +16,6 @@
 (victorrobles)=
 
 # Victor Robles, PhD
-
-```{image} ./data/victor-robles.jpg
-:alt: Victor
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Victor Robles, PhD is an AI Architect at AMD, working in the Center of Excellence in AI and HPC.
 

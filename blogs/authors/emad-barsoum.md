@@ -1,3 +1,12 @@
+---
+thumbnail: emad-barsoum.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Emad Barsoum"
+    "keywords": "AMD GPU, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Emad Barsoum">
@@ -7,13 +16,6 @@
 (emadbarsoum)=
 
 # Emad Barsoum
-
-```{image} ./data/emad-barsoum.jpeg
- :alt: Emad Barsoum
- :class: bg-primary
- :height: 250px
- :align: left
- ```
 
 Emad Barsoum is tech executive, software architect and AI researcher, with a proven track record of starting and shipping products as well as growing a healthy multidisciplinary team of engineers and researchers across multiple regions. Emad brings decades of R&D and engineering experience in Generative AI, LLM, Multimodal, Computer Vision and Deep Learning frameworks.
 Emad is Corporate Vice President of AI at AMD leading a world class talent of applied researchers and engineers focusing on generative AI, optimization algorithms and distributed training on a wide set of ML domains across all AMD hardware.

@@ -46,8 +46,8 @@ By the end of this document, you will be able to profile your multi-process appl
 We build upon the flowchart depicting the profiling process from the previous blog and show how it varies when we are dealing with an application that runs with multiple processes communicating with each other. We refer to the flowchart shown in Figure 1 for the rest of this discussion.
 
 <p style="text-align: center">
-	
-<img src="../figs/advanced_flowchart.png" width="400px">
+
+<img src="../figs/advanced_flowchart.png" alt="Advanced flowchart" width="400px">
 
 </p>
 
@@ -320,8 +320,8 @@ running with 4 MPI ranks (note that only the information about the last rank is 
 MPI calls are automatically instrumented by this tool.
 
 <p style="text-align: center">
-	
-<img src="../figs/advanced_perfetto_overview.png" width="800px">
+
+<img src="../figs/advanced_perfetto_overview.png" alt="Advanced perfetto overview" width="800px">
 
 </p>
 
@@ -335,8 +335,8 @@ and device activity rows can bring them closer for analysis of computation-commu
 ranks can also be examined in a similar manner.
 
 <p style="text-align: center">
-	
-<img src="../figs/advanced_perfetto_pinned.png" width="800px">
+
+<img src="../figs/advanced_perfetto_pinned.png" alt="Advanced perfetto pinned" width="800px">
 
 </p>
 
@@ -394,8 +394,8 @@ The first command saves the timeline traces for each rank separately in `gpu_tra
 files. The second command simply merges these traces into a single file.
 
 <p style="text-align: center">
-	
-<img src="../figs/advanced_bl_kernel_hostAPI_mpi4_labeled.png" width="800px">
+
+<img src="../figs/advanced_bl_kernel_hostAPI_mpi4_labeled.png" alt="Advanced BL kernel host API MPI 4 labeled" width="800px">
 
 </p>
 
@@ -498,8 +498,8 @@ srun -N1 -n1 -c1 --gpu-bind=closest --gpus-per-task=1 -t 05:00 rocprof-compute p
 The resulting roofline for the `LocalLaplacianKernel` kernel is presented below:
 
 <p style="text-align: center">
-	
-<img src="../figs/empirRoof_locallap_baseline.png" width="600px">
+
+<img src="../figs/empirRoof_locallap_baseline.png" alt="Empirical roofline locallap baseline" width="600px">
 
 </p>
 
@@ -697,10 +697,10 @@ Following the command, several files will be generated. The relevant file will b
 summary will look like what was printed to the console by running the `hipcc` command above:
 
 ```bash
-	.size	_Z20LocalLaplacianKerneliiiddPKdPd, .Lfunc_end0-_Z20LocalLaplacianKerneliiiddPKdPd
-	.cfi_endproc
+ .size _Z20LocalLaplacianKerneliiiddPKdPd, .Lfunc_end0-_Z20LocalLaplacianKerneliiiddPKdPd
+ .cfi_endproc
                                         ; -- End function
-	.section	.AMDGPU.csdata,"",@progbits
+ .section .AMDGPU.csdata,"",@progbits
 ; Kernel info:
 ; codeLenInByte = 500
 ; NumSgprs: 16
@@ -763,6 +763,7 @@ void Jacobi_t::CreateMesh() {
   mesh.dx = mesh.Lx/(mesh.Nx*grid.Ncol+1);
   mesh.dy = mesh.Ly/(mesh.Ny*grid.Nrow+1);
 ```
+
 </td>
 <td style="vertical-align:top">
 
@@ -942,10 +943,10 @@ but if we look at the newly generated `Laplacian-hip-amdgcn-amd-amdhsa-gfx90a.s`
 on the kernel summary, we see a reduction in `codeLenInByte` by approximately 33%:
 
 ```bash
-	.size	_Z20LocalLaplacianKerneliiiddPKdPd, .Lfunc_end0-_Z20LocalLaplacianKerneliiiddPKdPd
-	.cfi_endproc
+ .size _Z20LocalLaplacianKerneliiiddPKdPd, .Lfunc_end0-_Z20LocalLaplacianKerneliiiddPKdPd
+ .cfi_endproc
                                         ; -- End function
-	.section	.AMDGPU.csdata,"",@progbits
+ .section .AMDGPU.csdata,"",@progbits
 ; Kernel info:
 ; codeLenInByte = 332
 ; NumSgprs: 16
@@ -1007,8 +1008,8 @@ instructions per wavefront have been reduced by almost 30%:
 ```
 
 Further, the following instruction mix block shows the details of the savings in arithmetic instructions.
-Particularly note that the *transcendental* 64-bit floating point instructions (`FP64-Trans`) value is now
-zero due to the absence of any *inverse* computations in `LocalLaplacianKernel()`.
+Particularly note that the _transcendental_ 64-bit floating point instructions (`FP64-Trans`) value is now
+zero due to the absence of any _inverse_ computations in `LocalLaplacianKernel()`.
 
 ```bash
 10.2 VALU Arithmetic Instr Mix
@@ -1073,8 +1074,8 @@ LocalLaplacianKernel - After
 <td style="vertical-align:top">
 
 <p style="text-align: center">
-	
-<img src="../figs/empirRoof_locallap_baseline.png" width="450px">
+
+<img src="../figs/empirRoof_locallap_baseline.png" alt="Empirical roofline locallap baseline" width="450px">
 </p>
 
 <p style="text-align:center">
@@ -1085,8 +1086,8 @@ Figure 6(a): Roofline model for the LocalLaplacianKernel without modifications (
 <td style="vertical-align:top">
 
 <p style="text-align: center">
-	
-<img src="../figs/new_roofline_locallaplacian.png" width="450px">
+
+<img src="../figs/new_roofline_locallaplacian.png" alt="New roofline locallaplacian" width="450px">
 
 </p>
 
@@ -1161,8 +1162,8 @@ and `papi_array*.txt`, both containing network counter data. This data is also a
 rows within the timeline Perfetto `*.proto` files as shown in Figure 7.
 
 <p style="text-align: center">
-	
-<img src="../figs/advanced_nic_2node.png" width="600px">
+
+<img src="../figs/advanced_nic_2node.png" alt="Advanced NIC 2 node" width="600px">
 
 </p>
 

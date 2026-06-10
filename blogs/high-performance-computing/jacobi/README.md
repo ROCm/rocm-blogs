@@ -128,7 +128,7 @@ code), the matrix-vector product $A{\bf u}$ (`h_AU`), the right-hand side vector
 $f$ (`h_RHS`), and the residual vector $f-A{\bf u}$ (`h_RES`). It also applies
 boundary conditions for these variables.
 
-<img src="figs/grid.png" width="200px">
+<img src="figs/grid.png" alt="grid" width="200px">
 
 <p style="text-align:center">
 Figure 1: A uniform rectangular grid to discretize the computational domain
@@ -348,7 +348,7 @@ void LaplacianKernel(const int localNx,
                      const dfloat fac_dx2,
                      const dfloat fac_dy2,
                      const dfloat * U,
-                     dfloat * AU) 
+                     dfloat * AU)
 {
     int tid = GET_GLOBAL_ID_0;
 
@@ -633,7 +633,7 @@ Looking at Figure 2, we observe that significant time spent on
 `hsa_signal_wait_scacquire` and especially `async-copy` kernels due to the
 mapping required in every iteration.
 
-<img src="figs/roctx_ompt_strMap.PNG" width="600px">
+<img src="figs/roctx_ompt_strMap.PNG" alt="roctx ompt strMap" width="600px">
 
 <p style="text-align:center">
 Figure 2: Timeline of Jacobi offload kernels using structured target data map
@@ -656,7 +656,7 @@ void Jacobi_t::Run()
   #pragma omp target enter data map(to: mesh,h_U[0:N],h_AU[0:N],h_RES[0:N],h_RHS[0:N])
 
   ...
-  while ((iterations < JACOBI_MAX_LOOPS) && (residual > JACOBI_TOLERANCE)) 
+  while ((iterations < JACOBI_MAX_LOOPS) && (residual > JACOBI_TOLERANCE))
   {
     Laplacian(mesh, _1bydx2, _1bydy2, HD_U, HD_AU);
     BoundaryConditions(mesh, _1bydx2, _1bydy2, HD_U, HD_AU);
@@ -703,7 +703,7 @@ clearly shows that the total number of `hsa_signal_wait_scacquire` kernel calls
 are reduced by a significant amount compared to what was observed in the first naive offload
 implementation in Figure 2.
 
-<img src="figs/roctx_ompt_opt.PNG" width="600px">
+<img src="figs/roctx_ompt_opt.PNG" alt="roctx ompt opt" width="600px">
 
 <p style="text-align:center">
 Figure 3: Timeline of the optimized Jacobi offload kernels using unstructured mapping
@@ -754,8 +754,8 @@ Update kernel. As observed from the roofline figures, the Update kernel from bot
 the implementations lie very close to the roofline in the memory bound regime.
 This agrees well with the observations made from the HBM table above.
 
-<img src="figs/roofline_Update_hip.png" width="45%" align="left">
-<img src="figs/roofline_Update_ompt.png" width="45%">
+<img src="figs/roofline_Update_hip.png" alt="roofline Update hip" width="45%" align="left">
+<img src="figs/roofline_Update_ompt.png" alt="roofline Update ompt" width="45%">
 
 <p style="text-align:center">
 Figure 4: Roofline of Update kernel using HIP (left) and OpenMP offload (right)
@@ -767,8 +767,8 @@ Similar observations about achieved BW for the Laplacian kernels are made
 from the rooflines below in Figure 5 from both the
 GPU offload implementations.
 
-<img src="figs/roofline_Laplacian_hip.png" width="45%" align="left">
-<img src="figs/roofline_Laplacian_ompt.png" width="45%">
+<img src="figs/roofline_Laplacian_hip.png" alt="roofline Laplacian hip" width="45%" align="left">
+<img src="figs/roofline_Laplacian_ompt.png" alt="roofline Laplacian ompt" width="45%">
 
 <p style="text-align:center">
 Figure 5: Roofline of Laplacian kernel using HIP (left) and OpenMP offload (right)

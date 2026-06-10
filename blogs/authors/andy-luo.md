@@ -1,3 +1,12 @@
+---
+thumbnail: Andy-Luo.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Alex Voicu"
+    "keywords": "AMD GPU, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Alex Voicu">
@@ -7,13 +16,6 @@
 (andyluo)=
 
 # Andy Luo
-
-```{image} ./data/Andy-Luo.jpeg
-:alt: Andy Luo
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Andy Luo is Director of AI Application Engineer in the Artificial Intelligence group at AMD,
 where he leads a team to optimize AI performance and contribute to open source communities.

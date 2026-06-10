@@ -229,7 +229,7 @@ When you load the trace in Perfetto, you will first see a high-level view of the
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_FOM.png" width="1600px" class="img-center">
+<img src="../figs/fortran_openmp_FOM.png" width="1600px" class="img-center" alt="Perfetto trace showing instrumented ROCTx markers and FoM region">
 
 </div>
 
@@ -249,7 +249,7 @@ When you zoom in as shown in Figure 2, you will observe several key elements in 
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_single_device.png" width="1600px" class="img-center">
+<img src="../figs/fortran_openmp_single_device.png" width="1600px" class="img-center" alt="Perfetto trace showing OMP activity, memory allocation, data transfers, and instrumented ROCTx markers">
 
 </div>
 
@@ -263,7 +263,7 @@ From the single-device trace we can conclude that there are consistent GPU kerne
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_pack_unpack.png" width="800px" class="img-center">
+<img src="../figs/fortran_openmp_pack_unpack.png" width="800px" class="img-center" alt="Multiple pack and unpack kernels seen under the Communication ROCTx region">
 
 </div>
 
@@ -383,7 +383,7 @@ Timeline traces can help you spot load imbalance, if any, between MPI ranks. For
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_411_high_level.png" width="1600px" class="img-center">
+<img src="../figs/fortran_openmp_411_high_level.png" width="1600px" class="img-center" alt="Snapshot from a multi-device trace showing the activity of 4 MPI ranks in a 1D process grid">
 
 </div>
 
@@ -397,7 +397,7 @@ Zooming in to the start of the FoM region as seen in Figure 5, we see vastly dif
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_411_ComputeTimeStep.png" width="1600px" class="img-center">
+<img src="../figs/fortran_openmp_411_ComputeTimeStep.png" width="1600px" class="img-center" alt="Snapshot of the start of the FoM region in multi-device trace showing imbalance in ComputeTimeStep region">
 
 </div>
 
@@ -411,7 +411,7 @@ Focusing on the activity that follows in the various timesteps as shown in Figur
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_411_ApplyBoundaryConditions.png" width="1600px" class="img-center">
+<img src="../figs/fortran_openmp_411_ApplyBoundaryConditions.png" width="1600px" class="img-center" alt="Snapshot of timesteps in the FoM region in multi-device trace showing imbalance in ApplyBoundaryConditions region">
 
 </div>
 
@@ -439,7 +439,7 @@ where network effects and synchronization costs may become more pronounced.
 
 <div style="text-align: center;">
 
-<img src="../figs/genasis_comm_imbalance.png" width="1600px" class="img-center">
+<img src="../figs/genasis_comm_imbalance.png" width="1600px" class="img-center" alt="Differences in the Communication ROCTx region between ranks">
 
 </div>
 
@@ -492,7 +492,7 @@ The traces in Figure 8 and Figure 9 illustrate the difference in memory transfer
 
 <div style="text-align: center;">
 
-<img src="../figs/riemannproblem_noxnack.png" width="1600px" class="img-center">
+<img src="../figs/riemannproblem_noxnack.png" width="1600px" class="img-center" alt="Perfetto trace with HSA_XNACK=0 showing 62,583 MEMORY_COPY instances">
 
 </div>
 
@@ -504,7 +504,7 @@ Figure 8: Perfetto trace with HSA_XNACK=0 showing 62,583 MEMORY_COPY instances.
 
 <div style="text-align: center;">
 
-<img src="../figs/riemannproblem_withxnack.png" width="1600px" class="img-center">
+<img src="../figs/riemannproblem_withxnack.png" width="1600px" class="img-center" alt="Perfetto trace with HSA_XNACK=1 showing only 9,660 MEMORY_COPY instances">
 
 </div>
 
@@ -590,7 +590,7 @@ We explored different workgroup sizes on the top hotspot kernel, `computeeigensp
 
 <div style="text-align: center;">
 
-<img src="../figs/fortran_openmp_workgroup_performance.png" width="600px" class="img-center">
+<img src="../figs/fortran_openmp_workgroup_performance.png" width="600px" class="img-center" alt="Workgroup size performance trends across top kernels">
 
 </div>
 

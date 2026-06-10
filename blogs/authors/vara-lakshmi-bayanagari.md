@@ -1,3 +1,12 @@
+---
+thumbnail: varalakshmi-bayanagari.PNG
+myst:
+  html_meta:
+    "description lang=en": "Vara Lakshmi Bayanagari"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Vara Lakshmi Bayanagari">

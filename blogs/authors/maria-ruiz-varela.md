@@ -1,3 +1,12 @@
+---
+thumbnail: Maria-Ruiz-Varela.jfif
+myst:
+  html_meta:
+    "description lang=en": "Maria Ruiz Varela"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Maria Ruiz Varela">
@@ -7,13 +16,6 @@
 (marivare)=
 
 # Maria Ruiz Varela
-
-```{image} ./data/Maria-Ruiz-Varela.jfif
-:alt: Maria
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Maria is Senior Member of Technical Staff (SMTS) at AMD where she focuses on the validation,
 debugging, and quality of HPC applications that run on AMD GPUs. Prior to joining AMD, Maria was

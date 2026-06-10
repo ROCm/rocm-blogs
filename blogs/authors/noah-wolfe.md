@@ -1,3 +1,12 @@
+---
+thumbnail: Noah-Wolfe.jpg
+myst:
+  html_meta:
+    "description lang=en": "Noah Wolfe"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Noah Wolfe">
@@ -7,13 +16,6 @@
 (noahwolf)=
 
 # Noah Wolfe
-
-```{image} ./data/Noah-Wolfe.jpg
-:alt: Noah
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Noah is a Member of Technical Staff (MTS) in the Data Center GPU Solutions and Performance Analysis
 group. He is also an AMD member of the Frontier and El Capitan Centers of Excellence (COE), where he

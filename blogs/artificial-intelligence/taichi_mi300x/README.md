@@ -341,7 +341,7 @@ Once execution of fractal.py has completed, a directory named `taichi_fractal_re
 
 The two video files, `video.mp4` and `video.gif`, are identical animations. When you open either video file, the animation should display this fractal:
 
-<img src="images/video.gif" height="320px">
+<img src="images/video.gif" alt="video" height="320px">
 
 To further demonstrate Taichi's graphics simulation capabilities, we introduce a ray trace implementation based on the tutorial [Ray Tracing in One Weekend](https://raytracing.github.io/books/RayTracingInOneWeekend.html). The instructions below show how to download and run the [Taichi implementation of Ray Tracing in One Weekend](https://github.com/bsavery/ray-tracing-one-weekend-taichi):
 
@@ -369,7 +369,7 @@ starting big wavefront
 
 Your code will have also generated a png file named `out.png`. The picture in this file should look like the picture below:
 
-<img src="images/raytrace_ex_out.png" height="320px">
+<img src="images/raytrace_ex_out.png" alt="raytrace ex out" height="320px">
 
 ## Summary
 

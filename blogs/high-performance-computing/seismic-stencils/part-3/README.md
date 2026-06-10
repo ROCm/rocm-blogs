@@ -203,7 +203,7 @@ to compute the finite difference for each of the `VEC_LEN` grid points.
 Below is a pictorial description of how the above definitions fit into the overall
 vectorization:
 
-<img src="../figures/vectorization.svg" width="600px">
+<img src="../figures/vectorization.svg" alt="Vectorization" width="600px">
 
 <p style="text-align:center">
 Figure 1: This figure illustrates how vectorized loads and stores affect the number
@@ -688,7 +688,7 @@ For this final monolithic kernel, we summarize few key ingredients below.
 
 Below is the result across various values of `nw`:
 
-<img src="../figures/sliding_window_xyz.png" width="500px">
+<img src="../figures/sliding_window_xyz.png" alt="Sliding window xyz" width="500px">
 
 <p style="text-align:center">
 Figure 1: The fully combined xyz kernel reach over 1000 GB/s in both the achieved

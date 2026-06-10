@@ -50,7 +50,7 @@ To help explain the profiling process at novice level, we will rely on the flow 
 
 <p style="text-align:center">
 
-<img src="../figs/NoviceBlog-2025-04-04-191126.png" width="300px">
+<img src="../figs/NoviceBlog-2025-04-04-191126.png" alt="Novice blog profiling flowchart" width="300px">
 
 </p>
 
@@ -262,7 +262,7 @@ Since we are profiling on an MI200 (MI210, MI250, MI250X) device, the relevant o
 
 A snapshot of the roofline for the `JacobiIterationKernel` saved in `workloads/jacobi/MI200/empirRoof_gpu-0_fp32_fp64.pdf` is shown below.
 
-<img src="../figs/roofline_jacobiIter.png" width="600px">
+<img src="../figs/roofline_jacobiIter.png" alt="Roofline jacobi iter" width="600px">
 
 <p style="text-align:center">
 Figure 2: Roofline model for the Jacobi example (FP32/FP64).
@@ -416,13 +416,13 @@ The total run-time now is 991.2 ms instead of 1298.7 ms, an overall application 
 
 Let us now compare the rooflines of the baseline (Fig. 3) to the optimized `NormKernel1` (Fig. 4). As observed from the optimized `NormKernel1` roofline figure below, the kernel now saturates the GPU HBM resource since it sits right on top of the HBM roofline.
 
-<img src="../figs/roofline_normBL.png" width="600px">
+<img src="../figs/roofline_normBL.png" alt="Roofline norm BL" width="600px">
 
 <p style="text-align:center">
 Figure 3: Roofline of baseline Normkernel1.
 </p>
 
-<img src="../figs/roofline_normOPT.png" width="600px">
+<img src="../figs/roofline_normOPT.png" alt="Roofline norm OPT" width="600px">
 
 <p style="text-align:center">
 Figure 4: Roofline of the optimized Normkernel1.
@@ -451,7 +451,7 @@ site https://ui.perfetto.dev/. Note that we have also added `--hip-trace`
 to trace HIP API activities in addition to the device kernel activities
 on the timeline trace. A snapshot of a trace of one iteration of the Jacobi run is shown in Fig. 5. It is visually clear that the kernels `JacobiIterationKernel` and `NormKernel1` take up the majority of the runtime of a typical iteration.
 
-<img src="../figs/jacobi_pftrace.png" width="900px">
+<img src="../figs/jacobi_pftrace.png" alt="Jacobi pftrace" width="900px">
 
 <p style="text-align:center">
 Figure 5: Time trace of one iteration of the Jacobi run.
@@ -459,7 +459,7 @@ Figure 5: Time trace of one iteration of the Jacobi run.
 
 We can also isolate an iteration and see the relative time taken by each kernel as shown in Fig. 6. This again shows `JacobiIterationKernel` has the largest timeline on the trace.
 
-<img src="../figs/jacobi_pftrace_baseline.png" width="900px">
+<img src="../figs/jacobi_pftrace_baseline.png" alt="Jacobi pftrace baseline" width="900px">
 
 <p style="text-align:center">
 Figure 6: Time trace summary of an iteration of the Jacobi run.
@@ -470,7 +470,7 @@ kernel as we have previously discussed by tracing the new binary in
 the same way. See Fig. 7 for the same isolated iteration with the
 optimized norm kernel.
 
-<img src="../figs/jacobi_pftrace_optnorm1.png" width="900px">
+<img src="../figs/jacobi_pftrace_optnorm1.png" alt="Jacobi pftrace optnorm 1" width="900px">
 
 <p style="text-align:center">
 Figure 7: Time trace summary of an iteration of the Jacobi run with the optimized NormKernel1 kernel.

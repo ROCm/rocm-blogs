@@ -135,15 +135,15 @@ To further enhance model efficiency and flexibility, PyTorch on ROCm is expandin
 
 AMD continues to invest in improving the developer experience for PyTorch on ROCm, making it easier to build, test, and deploy AI workloads across a wide range of hardware. Here’s a look at the key components of this streamlined ecosystem:
 
-**Nightly Builds for Rapid Development**
+Nightly Builds for Rapid Development
 
 - **Nightly Wheels**:
 PyTorch ROCm nightly wheels are built and published regularly via upstream CI, enabling developers to test the latest features and fixes without waiting for formal releases.
 
 - **Nightly Docker Images**:
-AMD hosts [nightly PyTorch ROCm Docker images](https://hub.docker.com/r/rocm/pytorch-nightly) to support fast iteration of development and testing. 
+AMD hosts [nightly PyTorch ROCm Docker images](https://hub.docker.com/r/rocm/pytorch-nightly) to support fast iteration of development and testing.
 
-**Official Releases and Flexible Deployment Options**
+Official Releases and Flexible Deployment Options
 
 - **Stable Docker Images**:
 The [rocm/pytorch Docker repository](https://hub.docker.com/r/rocm/pytorch/tags) provides official release images for PyTorch on ROCm, supporting a wide range of ROCm versions and Ubuntu configurations. These images are ideal for developers looking for prebuilt environments tailored to AMD GPUs.
@@ -154,7 +154,7 @@ AMD also publishes PyTorch ROCm wheels on repo.radeon.com that align with the Do
 - **Docker Advantage**:
 The ROCm Docker images often include combinations of PyTorch, ROCm, and Python versions that are not available in upstream CI, making them a valuable resource for testing and deployment.
 
-**Support PyTorch for N-1, N, N+1 releases across ROCm N-1, N, N+1**
+Support PyTorch for N-1, N, N+1 releases across ROCm N-1, N, N+1
 
 - AMD ROCm follows a rolling compatibility model for PyTorch, supporting:
 
@@ -164,7 +164,7 @@ The ROCm Docker images often include combinations of PyTorch, ROCm, and Python v
 
 - This applies similarly to ROCm versions, meaning PyTorch releases are tested against ROCm **N-1, N,** and **N+1** versions. This includes minor version. For example, today’s version (N) is ROCm 7.0, N-1 would be 6.4, N+1 would be 7.1.
 
-**Community Engagement**
+Community Engagement
 
 - AMD maintains an active cadence of reviewing issues reported by the PyTorch community, helping ensure that bugs are addressed and feedback is incorporated into future releases.
 
@@ -174,12 +174,12 @@ These efforts reflect commitment from AMD to build a robust and developer-friend
 
 The latest PyTorch updates (2.8, 2.9) bring powerful new features and optimizations that improve both training and inference across AMD GPUs. These enhancements are designed to support larger models, more efficient execution, and broader hardware compatibility.
 
-**Low Precision & Format Enablement**
+Low Precision & Format Enablement
 
 - **OCP Micro-Scaling Format Support (MXFP8/MXFP4)**:
 PyTorch on ROCm now supports OCP’s micro-scaling formats on **gfx950,** enabling ultra-low precision training and inference. These formats are ideal for memory-constrained environments and high-throughput workloads.
 
-**Compiler & Backend Improvements**
+Compiler & Backend Improvements
 
 - **AOT Inductor with CK Backend on MI350X and MI355X (gfx950)**:
 The Inductor compiler now supports **Ahead-of-Time (AOT)** compilation using the **Composable Kernel (CK)** backend for **gfx950,** enabling maximum autotuning and performance optimization.
@@ -188,7 +188,7 @@ SDPA and GEMM operations now leverage the CK backend, improving performance and 
 - **CK Backend Enabled in CI**:
 The CK backend is now integrated into PyTorch’s CI pipeline, ensuring consistent testing and validation across supported platforms.
 
-**Operator-Level Performance Enhancements**
+Operator-Level Performance Enhancements
 
 - **SDPA with AOTriton 0.11b**:
   Scaled Dot Product Attention now uses AOTriton 0.11b, delivering faster and more memory-efficient attention computation.
@@ -198,9 +198,9 @@ The CK backend is now integrated into PyTorch’s CI pipeline, ensuring consiste
   - Enabled `channels_last_3d` format for convolution and batch normalization.
   - Removed redundant transpose in NHWC convolutions, reducing overhead.
 - **FP8 Rowwise Support in hipBLASLt**:
-  Added support for FP8 rowwise operations in _scaled_grouped_mm, complementing existing _scaled_mm functionality.
+  Added support for FP8 rowwise operations in `_scaled_grouped_mm`, complementing existing `_scaled_mm` functionality.
 
-**Memory & Distributed Training Optimizations**
+Memory & Distributed Training Optimizations
 
 - **Symmetric Memory Enablement**:
   Improves memory efficiency and performance in distributed training setups, especially for two-shot AllReduce strategies.
@@ -219,7 +219,7 @@ In addition, AISWHUD is developed for monitoring the PyTorch ecosystem unit test
 
 In this blog, we feature two dashboards: the newly public PyTorch Unit Test Coverage and the upcoming externally available TorchInductor performance dashboard.
 
-**PyTorch Unit Tests Coverage Monitoring**
+PyTorch Unit Tests Coverage Monitoring
 
 [AISWHUD](https://aiswhud.amd.com/) tracks the status of PyTorch unit tests across key workloads like Default, Distributed, and Inductor on PyTorch Unit Test coverage. It provides detailed statistics on passed, skipped, and failed tests. Figure 1 shows the screenshot of PyTorch test status on MI350X on ROCm 7.0.
 
@@ -229,7 +229,7 @@ In this blog, we feature two dashboards: the newly public PyTorch Unit Test Cove
 Figure 1: AISWHUD PyTorch Unit Test Summary – MI350X
 ```
 
-**TorchInductor Performance Dashboard**
+TorchInductor Performance Dashboard
 
 AISWHUD’s TorchInductor Performance Dashboard shows the benchmarks (Huggingface, Torchbench, TIMM) for both MI300X and MI350X (as shown in Figure 2). Note that this dashboard is **not** externally accessible at the moment. We are working on making this internal dashboard externally available.
 
@@ -239,16 +239,18 @@ AISWHUD’s TorchInductor Performance Dashboard shows the benchmarks (Huggingfac
 Figure 2: AISWHUD TorchInductor Performance Dashboard
 ```
 
-**Work in progress**
+Work in progress
 
-The AISWHUD team is working on expanding more OSS repositories (including TorchAO, vLLM, etc) for monitoring and making the system accessible to the public audience. 
+The AISWHUD team is working on expanding more OSS repositories (including TorchAO, vLLM, etc) for monitoring and making the system accessible to the public audience.
 
 ## Summary and Next Steps
+
 In summary, the AMD's PyTorch ecosystem team continues to make impactful strides in delivering a seamless and powerful experience for developers. Through expanded ecosystem support, improved CI coverage, enhanced training and inference capabilities, and a streamlined developer journey, we are committed to building a robust and production-ready PyTorch experience on AMD ROCm™ Software. The introduction of the AISWHUD further strengthens our efforts by offering deep visibility into the health and performance of the PyTorch ecosystem, empowering developers with actionable insights and greater confidence in deploying on ROCm.
 
 Looking ahead, we plan to expand our CI coverage across more OSS repositories in the PyTorch ecosystem, expand [AISWHUD’s](https://aiswhud.amd.com/) capabilities to integrate broader ecosystem metrics, and collaborate closely with the community to drive further improvements across the PyTorch ecosystem software stack.
 
 ## Acknowledgements
+
 We would like to thank the PyTorch engineering team at **Meta Platforms** for their close collaboration and technical support. Their insights and responsiveness were instrumental to the success of this work, and we greatly appreciate the opportunity to work together.
 
 ## Disclaimers

@@ -49,7 +49,6 @@ SOFTWARE.
 
 # Nitro-AR: A Compact AR Transformer for High-Quality Image Generation
 
-
 Recent years have witnessed remarkable progress in image generation, driven by two major modeling paradigms: diffusion-based models and autoregressive (AR) models. Building upon our previously released [Nitro-E](https://rocm.blogs.amd.com/artificial-intelligence/nitro-e/README.html), a light-weight diffusion model for fast image synthesis, this blog explores a complementary direction, applying the architecture in an AR framework.
 
 We adapt our [E-MMDiT](https://arxiv.org/abs/2510.27135) model to a masked modeling AR framework. Instead of denoising the whole image at each step, the model is trained to predict a subset of image tokens per step, progressively completing the image. To support continuous token prediction and maintain seamless compatibility with the VAE, we employ an MLP head for token sampling. Figure 1 provides an overview of this architectural adaptation, contrasting the diffusion-based Nitro-E with the masked autoregressive Nitro-AR built on the same E-MMDiT backbone.
@@ -58,13 +57,11 @@ Our compact 0.3B-parameter AR model, Nitro-AR, achieves a GenEval score of 0.66,
 
 Our models and code have been released in line with AMD’s commitment to open-source research. We hope this work provides fresh perspectives on image generation and encourages further exploration in the field.
 
-
 ```{figure} ./images/fig1.png
 :align: center
 :alt: Overview
 Figure 1. Illustration of the Nitro-E (left) and Nitro-AR (right) models, both built on the E-MMDiT backbone. Nitro-E iteratively removes noise to refine the image, while Nitro-AR progressively generates the image by predicting masked tokens step by step.
 ```
-
 
 ## Technical Details
 
@@ -72,13 +69,13 @@ Figure 1. Illustration of the Nitro-E (left) and Nitro-AR (right) models, both b
 
 The standard and basic form of an AR model is next-token prediction [1], where the model is trained to predict the next token conditioned on the previously generated tokens. Beyond this classical setup, there are several alternative formulations that also gained attention, including next-scale [2], next-neighbor [3] or even generalized next-x modeling [4].
 
-In this work, we focus on another AR variant called masked modeling, which has been adopted by several recent and representative approaches such as MAR [5], Fluid [9], and LightGen [10]. Instead of predicting the next token, the model learns to reconstruct the masked regions conditioned on all visible tokens. 
+In this work, we focus on another AR variant called masked modeling, which has been adopted by several recent and representative approaches such as MAR [5], Fluid [9], and LightGen [10]. Instead of predicting the next token, the model learns to reconstruct the masked regions conditioned on all visible tokens.
 
 A key challenge for token-prediction models is that tokens are typically defined in a discrete space, as in Large Language Models (LLMs), which limits the expressiveness for images and requires a specific discrete tokenizer for the latent representation. MAR [5] addresses this by introducing a diffusion prediction head on top of the AR transformer, enabling sampling of continuous tokens while seamlessly compatible with any VAE models. We follow this design in our model.
 
-### Adapting E-MMDiT to the Paradigm 
+### Adapting E-MMDiT to the Paradigm
 
-E-MMDiT is the transformer architecture used in [Nitro-E](https://rocm.blogs.amd.com/artificial-intelligence/nitro-e/README.html) with several efficiency-oriented designs such as the token compression module, Alternating Subregion Attention (ASA), and AdaLN-affine. Although diffusion and AR paradigms differ (for example, AR models do not require timesteps), the core architecture can be easily adapted. We remove the timestep-injection module and add a diffusion MLP head on top of the E-MMDiT transformer to form our Nitro-AR base model. This simple adaptation works well in practice, achieving similar performance to the Nitro-E model, demonstrating the validity of our architecture. 
+E-MMDiT is the transformer architecture used in [Nitro-E](https://rocm.blogs.amd.com/artificial-intelligence/nitro-e/README.html) with several efficiency-oriented designs such as the token compression module, Alternating Subregion Attention (ASA), and AdaLN-affine. Although diffusion and AR paradigms differ (for example, AR models do not require timesteps), the core architecture can be easily adapted. We remove the timestep-injection module and add a diffusion MLP head on top of the E-MMDiT transformer to form our Nitro-AR base model. This simple adaptation works well in practice, achieving similar performance to the Nitro-E model, demonstrating the validity of our architecture.
 
 Building on this base model, we also explore some designs that enable few-step sampling, which is termed as the joint-sampling version. We describe these designs in detail in the following sections.
 
@@ -92,17 +89,15 @@ The original diffusion prediction head in MAR [5] is implemented as a simple Mul
 Figure 2. One-step generation results without (left) and with (right) joint sampling. With a standard MLP head, tokens are sampled independently, leading to degraded one-step generation quality. In contrast, joint sampling models token dependencies and produces more coherent results.
 ```
 
-
 To enable joint sampling and make tokens aware of each other, we replace the MLP head with a small transformer head, following [6]. The self-attention mechanism allows interactions between tokens, making the sampling perform in a joint manner. Although this transformer-based head introduces a modest amount of extra computation, it significantly improves generation quality in low-step sampling settings.
 
 ### Global Token
 
-Another challenge we aim to address in Nitro-AR is diversity. Because the model always starts with the same initial state with all tokens masked, the transformer backbone produces the same output for a given prompt. Although the diffusion prediction head introduces some randomness during sampling, the diversity remains limited. 
+Another challenge we aim to address in Nitro-AR is diversity. Because the model always starts with the same initial state with all tokens masked, the transformer backbone produces the same output for a given prompt. Although the diffusion prediction head introduces some randomness during sampling, the diversity remains limited.
 
-To enhance diversity, we introduce a global token that serves as the initial state of the masked tokens. During inference, we first sample this global token and different global tokens lead to various structural layouts, which in turn produce more diverse samples. 
+To enhance diversity, we introduce a global token that serves as the initial state of the masked tokens. During inference, we first sample this global token and different global tokens lead to various structural layouts, which in turn produce more diverse samples.
 
 The global token is a special token defined in the same latent space as regular image tokens. It is obtained by resizing the input image to a small thumbnail and encoding it with the VAE. Because predicting such a single token does not require the full transformer backbone or the heavy diffusion prediction head, we instead use features extracted from the first four blocks along with a very lightweight MLP head. This ensures that the additional computational overhead is kept minimal.
-
 
 ### Prediction Head Optimization
 
@@ -124,11 +119,9 @@ To this end, we introduce a discriminator that evaluates the realism of reconstr
 
 The diffusion prediction head is trained with an adversarial loss, encouraging few-step generation to match the real data distribution under a reduced step budget. Empirically, just 6k adversarial iterations enable the Nitro-AR diffusion prediction head to achieve three-step denoising quality comparable to 20-step denoising, outperforming DiSA and substantially reducing sampling latency with minimal quality loss.
 
-
 ## Experimental Results
 
 We train our model using the AMD Instinct™ MI325X GPU with the same amount of data as in Nitro-E. Our implementation is built on the training engine [Accelerate](https://github.com/huggingface/accelerate) with mixed precision training using the Bfloat16 datatype.
-
 
 ### Generated Samples by Nitro-AR
 
@@ -139,8 +132,6 @@ Figure 4. Generated samples by our Nitro-AR model.
 ```
 
 Figure 4 illustrates diverse image samples generated by Nitro-AR, covering a wide range of scenes and visual styles, including landscapes, indoor environments, urban scenes, food photography, and human portraits, demonstrating the model’s strong visual fidelity and compositional diversity.
-
-
 
 <html>
 <head>
@@ -224,14 +215,11 @@ Figure 4 illustrates diverse image samples generated by Nitro-AR, covering a wid
 </html>
 Table 1. Nitro-AR Performance Compared with Similar-scale Diffusion and Autoregressive Models. Latency is measured on AMD Instinct™ MI325X GPUs.
 
-
-
 ### Comparison with Existing Autoregressive Models
 
 Table 1 summarizes the quantitative comparison between Nitro-AR and representative diffusion-based and autoregressive image generation models. All latency measurements are conducted on AMD Instinct™ MI325X GPUs, reporting the end-to-end time required to generate a single 512×512 image. Generation quality is evaluated using GenEval [11], which assesses compositional reasoning abilities such as object counting, spatial relations, and color attributes.
 
 We compare Nitro-AR with prior autoregressive image generation methods of similar or larger scale. Despite its significantly smaller size (0.3B parameters), Nitro-AR achieves a high GenEval score of 0.66, demonstrating superior generation quality. At the same time, it offers a clear efficiency advantage, with an inference latency of 328 ms—roughly one to two orders of magnitude faster than existing AR models. Further optimizing with joint sampling reduces latency to 74 ms. These results show that Nitro-AR strikes a strong balance between model compactness, generation fidelity, and inference speed, establishing a favorable Pareto frontier among sub-1B autoregressive models.
-
 
 ### Comparison with Diffusion-Based Models
 
@@ -320,15 +308,11 @@ Finally, we introduce **Joint AR Sampling**, which enables a single AR step per 
 </html>
 Table 2. Ablation study of Nitro-AR optimization strategies, reporting latency and GenEval scores.
 
-
 ## Summary
 
 In this blog post, we extend our previous work Nitro-E by adapting the same E-MMDiT backbone to a masked modeling autoregressive framework, providing a complementary alternative to diffusion-based generation. Our AR variant, Nitro-AR, achieves comparable performance to its diffusion counterpart while significantly reducing inference latency, demonstrating that masked autoregressive generation with continuous token prediction differs fundamentally from traditional discrete-token AR models and can approach diffusion-level image quality in a compact setting.
 
 Beyond the base model, we explore a series of designs that enable high-quality few-step and single-step generation within the AR paradigm, including joint sampling and adversarial optimization of the prediction head. These results highlight an increasingly blurred boundary between autoregressive and diffusion-based generation, and suggest promising future directions such as stronger one-step or low-step AR models and exploration of architectures that could integrate understanding to assist generation. We hope this work offers a useful perspective and encourages further exploration of efficient image generation models.
-
-
-
 
 ## Resources
 
@@ -365,9 +349,6 @@ Related Work from AMD team:
 10. Wu, Xianfeng, Yajing Bai, Haoze Zheng, Harold Haodong Chen, Yexin Liu, Zihao Wang, Xuran Ma, et al. "LightGen: Efficient Image Generation through Knowledge Distillation and Direct Preference Optimization." arXiv preprint arXiv:2503.08619 (2025).
 
 11. Ghosh, Dhruba, Hannaneh Hajishirzi, and Ludwig Schmidt. "GenEval: An Object-Focused Framework for Evaluating Text-to-Image Alignment." Advances in Neural Information Processing Systems 36 (2023): 52132-52152.
-
-
-
 
 ## Disclaimers
 

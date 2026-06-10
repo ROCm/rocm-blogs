@@ -1,3 +1,13 @@
+---
+thumbnail: Suyash-Tandon.jpg
+myst:
+  html_meta:
+    "description lang=en": "Suyash Tandon"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor,
+  blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Suyash Tandon">
@@ -8,13 +18,6 @@
 (suyatand)=
 
 # Suyash Tandon
-
-```{image} ./data/Suyash-Tandon.jpg
-:alt: Suyash
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Suyash is a Senior Member of Technical Staff (SMTS) at AMD with a focus on performance engineering
 and the optimization of scientific applications using modern AMD GPUs, which drive the world's most
