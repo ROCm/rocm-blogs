@@ -1,3 +1,12 @@
+---
+thumbnail: Noel_Chalmers.png
+myst:
+  html_meta:
+    "description lang=en": "Noel Chalmers"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Noel Chalmers">
@@ -7,13 +16,6 @@
 (noelchal)=
 
 # Noel Chalmers
-
-```{image} ./data/Noel-Chalmers.avif
-:alt: Noel
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Noel is a Senior Member of Technical Staff (SMTS) in the Data Center GPU Solutions and Performance
 Analysis group at AMD. Noel is the lead developer of the rocHPL benchmark, AMD's optimized

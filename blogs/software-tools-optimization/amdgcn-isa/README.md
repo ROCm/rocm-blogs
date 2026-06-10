@@ -203,7 +203,7 @@ A single thread in a wavefront can use up to 256 VGPRs and 256 accumulate VGPRs
 The following diagram schematically represents the CU internal. Here SIMDs are
 the VALUs. See the [ORNL slides](https://www.olcf.ornl.gov/wp-content/uploads/03-MemoryHierarchy.pdf) for details.
 
-<img src="diagrams/gcn_cu.png" width="800px" height="100px">
+<img src="diagrams/gcn_cu.png" alt="GCN CU" width="800px" height="100px">
 
 ## Common instructions
 
@@ -258,7 +258,7 @@ While not explicitly necessary for reading AMDGCN ISA, having a reasonable
 understanding of the GPU memory spaces and hierarchy can be helpful.
 For example, on a single graphics compute die of the MI250X GPU, the memory hierarchy can be broken down into:
 
-<img src="diagrams/memory_hierarchy.png" width="400px" height="300px">
+<img src="diagrams/memory_hierarchy.png" alt="Memory hierarchy" width="400px" height="300px">
 
 Diagram remarks:
 
@@ -282,7 +282,7 @@ scratch instructions do not use LDS bandwidth. These instructions only use
 `vm_cnt` (used for global memory access) and not `lgmk_cnt`. The following
 diagram shows the scratch memory access by threads.
 
-<img src="diagrams/memory_and_registers.png" width="400px" height="300px">
+<img src="diagrams/memory_and_registers.png" alt="Memory and registers" width="400px" height="300px">
 
 Diagram remarks:
 

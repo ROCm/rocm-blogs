@@ -141,14 +141,14 @@ AMD hardware platforms.
 
 ![AMD Inference Microservice Architecture](images/AIMs-Tech_diagram-transparent.svg)
 
-*Figure 1: AMD Inference Microservice Architecture*
+Figure 1: AMD Inference Microservice Architecture
 
 The above figure illustrates how AIM is integrated with KServe, a
 leading open-source technology for orchestrating and scaling inference
 services. It also highlights how external tools such as [AMD AI
-Workbench](https://github.com/amd-enterprise-ai/amd-eai-suite) plug in 
-to manage the full AI lifecycle. Whether run stand-alone or alongside 
-KServe, the AIM container automatically detects available GPUs and 
+Workbench](https://github.com/amd-enterprise-ai/amd-eai-suite) plug in
+to manage the full AI lifecycle. Whether run stand-alone or alongside
+KServe, the AIM container automatically detects available GPUs and
 dynamically adapts configurations to achieve optimized performance.
 
 From a user perspective, a set of Custom Resource Definitions (CRDs)
@@ -159,13 +159,13 @@ minimum, users only need to select an AIM image when deploying the CRDs.
 KServe then deploys the AIM image using an appropriate inference engine,
 like vLLM. Each AIM image contains built-in logic that detects GPU
 resources and configures the engine. The logic that is executed in the
-AIM container is further explained in the following section. Once this 
-profile selection logic executes, the model is downloaded, cached and 
-deployed behind an API gateway, which manages access control and serves 
-the model through an OpenAI-compatible API. Users can also enable 
-monitoring and observability by following the How-to guide provided below. 
-Metrics from the inference engine instances are exported to Prometheus 
-and visualized through Grafana dashboards, providing insight into model 
+AIM container is further explained in the following section. Once this
+profile selection logic executes, the model is downloaded, cached and
+deployed behind an API gateway, which manages access control and serves
+the model through an OpenAI-compatible API. Users can also enable
+monitoring and observability by following the How-to guide provided below.
+Metrics from the inference engine instances are exported to Prometheus
+and visualized through Grafana dashboards, providing insight into model
 performance and resource utilization.
 
 All of these steps can be performed manually by applying the
@@ -184,26 +184,26 @@ as:
 
 ![AIM workflow](images/AIM_under_the_hood.png)
 
-*Figure 2: AIM deployment sequence*
+Figure 2: AIM deployment sequence
 
-As shown in Figure 2, AIM handles the full inference lifecycle through a 
+As shown in Figure 2, AIM handles the full inference lifecycle through a
 coordinated containerized runtime workflow:
 
-1.  **Initialize Runtime:** Load and validate configurations
+1. **Initialize Runtime:** Load and validate configurations
 
-2.  **Detect Available GPUs**: Discover and health-check available
+2. **Detect Available GPUs**: Discover and health-check available
     accelerators
 
-3.  **Select Optimal Profile**: Match model requirements with GPU
+3. **Select Optimal Profile**: Match model requirements with GPU
     capabilities
 
-4.  **Generate Launch Command**: Produce tuned runtime parameters
+4. **Generate Launch Command**: Produce tuned runtime parameters
 
-5.  **Launch Inference Engine**: Deploy inference (starting with vLLM)
+5. **Launch Inference Engine**: Deploy inference (starting with vLLM)
 
-6.  **Cache Model Weights**: Optimize future inference loads
+6. **Cache Model Weights**: Optimize future inference loads
 
-7.  **Deployment Complete**: Seamlessly serve models via
+7. **Deployment Complete**: Seamlessly serve models via
     OpenAI-compatible APIs
 
 ## How to deploy an AIM on AMD Instinct™ GPUs
@@ -228,7 +228,7 @@ The following command runs the container with the profile that the
 container automatically selects for optimized performance on the
 hardware it detects:
 
-```
+```bash
 docker run \
        --device=/dev/kfd \
        --device=/dev/dri \
@@ -240,7 +240,7 @@ Alternatively, with the [AMD Container
 Toolkit](https://instinct.docs.amd.com/projects/container-toolkit/en/latest/container-runtime/quick-start-guide.html)
 the same is achieved (in this and subsequent steps) with:
 
-```
+```bash
 docker run \
        --runtime=amd --gpus 1 \
        -p 8000:8000 \
@@ -251,7 +251,7 @@ docker run \
 
 Customize your deployment with optional environment variables:
 
-```
+```bash
 docker run \
        -e AIM_PRECISION=fp16 \
        -e AIM_GPU_COUNT=1 \
@@ -268,14 +268,14 @@ docker run \
 The general interface to get help is by adding a help flag to the basic
 command:
 
-```
+```bash
 docker run \
        amdenterpriseai/aim-qwen-qwen3-32b:0.8.4 --help
 ```
 
 For a comprehensive view of all profiles in the container:
 
-```
+```bash
 docker run \
        --device=/dev/kfd \
        --device=/dev/dri \
@@ -286,7 +286,7 @@ docker run \
 The help flag can be applied to list-profiles, or any other subcommand
 of the AIM runtime to obtain additional help
 
-```
+```bash
 docker run \
        amdenterpriseai/aim-qwen-qwen3-32b:0.8.4 <subcommand> --help
 ```
@@ -299,7 +299,7 @@ more.
 
 ## How to deploy an AIM on AMD Instinct™ GPUs on Kubernetes with KServe
 
-### Prerequisites
+**Prerequisites**:
 
 - Kubernetes **1.24+** with `kubectl` configured  
 - **Helm 3.8+**  
@@ -311,25 +311,31 @@ more.
 
 This step downloads the [AIM deployment repository](https://github.com/amd-enterprise-ai/aim-deploy) and navigates to the
 KServe installation directory.
-```
-git clone https://github.com/amd-enterprise-ai/aim-deploy.git 
+
+```bash
+git clone https://github.com/amd-enterprise-ai/aim-deploy.git
 cd aim-deploy/kserve/kserve-install
 ```
+
 ### Step 2: Install KServe infrastructure
 
 This installs the core KServe components including cert-manager, Gateway
 API CRDs, KServe CRDs, and the KServe controller for model serving.
 
 For basic deployment:
-```
+
+```bash
 bash ./install-deps.sh
 ```
+
 For deployment with observability and autoscaling (optional):
-```
+
+```bash
 # Requires a default storage class to be set, or overwrite storage
 # class in ./post-helm/base/otel-lgtm-stack-standalone/otel-lgtm.yaml
 bash ./install-deps.sh --enable=otel-lgtm-stack-standalone,keda
 ```
+
 This option additionally installs the OpenTelemetry LGTM (Loki, Grafana,
 Tempo, Mimir) stack for comprehensive metrics collection, logging, and
 distributed tracing capabilities, along with OpenTelemetry collectors
@@ -341,11 +347,13 @@ inference services.
 
 This deploys a ClusterServingRuntime (container specification) and
 InferenceService (compute resources and endpoint) for Qwen3-32B.
-```
+
+```bash
 cd ../sample-minimal-aims-deployment
 kubectl apply -f servingruntime-aim-qwen3-32b.yaml
 kubectl apply -f aim-qwen3-32b.yaml
 ```
+
 ### Step 4: Test the inference endpoint
 
 This checks the deployment status, port-forwards the service to your
@@ -354,7 +362,7 @@ is working correctly. KServe automatically creates a service with the
 name `<inferenceservice-name>-predictor` (in this case
 `aim-qwen3-32b-predictor`) that exposes port 80 by default.
 
-```
+```bash
 kubectl get inferenceservice
 kubectl port-forward service/aim-qwen3-32b-predictor 8000:80
 
@@ -374,7 +382,8 @@ running inference requests. The service will automatically scale between
 ScaledObject resource that monitors the Prometheus metrics and scales
 the deployment up or down based on the configured query and target
 values.
-```
+
+```bash
 # Make sure serving runtime from step 3 is applied.
 kubectl apply -f servingruntime-aim-qwen3-32b.yaml
 
@@ -424,24 +433,27 @@ EOF
 # Apply the manifest
 kubectl apply -f aim-qwen3-32b-scalable.yaml
 ```
+
 ### Step 6: Access Grafana dashboard (optional -- requires observability setup)
 
 This forwards the Grafana service port to your local machine, enabling
 access to the monitoring dashboard where you can view metrics, logs, and
 traces.
-```
+
+```bash
 kubectl port-forward -n otel-lgtm-stack svc/lgtm-stack 3000:3000
 # Open http://localhost:3000 in browser
 ```
+
 ### Step 7: Generate inference requests to view metrics and autoscaling (optional)
 
-This sends inference requests to generate vLLM metrics that are 
-collected by the OpenTelemetry sidecar and displayed through Grafana. As 
-shown in Figure 3, these metrics allow you to observe how the system 
-behaves under load, including how KEDA automatically scales service 
+This sends inference requests to generate vLLM metrics that are
+collected by the OpenTelemetry sidecar and displayed through Grafana. As
+shown in Figure 3, these metrics allow you to observe how the system
+behaves under load, including how KEDA automatically scales service
 replicas as request volume increases.
 
-```
+```bash
 # Port-forward the service to localhost
 kubectl port-forward service/aim-qwen3-32b-scalable-predictor 8080:80
 
@@ -450,6 +462,7 @@ curl -X POST http://localhost:8080/v1/chat/completions \
      -H "Content-Type: application/json" \
      -d '{"messages": [{"role": "user", "content": "Hello"}]}'
 ```
+
 ![vLLM Metrics from AIM deployment on Kubernetes with KServe displayed in Grafana UI](images/metrics.png)
 
 *Figure 3: vLLM Metrics from AIM deployment on Kubernetes with KServe,
@@ -479,10 +492,10 @@ AMD team.
 
 ## Get Started
 
-AIM is open-source and available now. Developers can start deploying optimized 
-inference workloads on AMD Instinct™ GPUs. Explore the [**AIM 
-catalog**](https://enterprise-ai.docs.amd.com/en/latest/aims/catalog/models.html) 
-for available deployments. Join the AMD developer community and help shape the 
+AIM is open-source and available now. Developers can start deploying optimized
+inference workloads on AMD Instinct™ GPUs. Explore the [**AIM
+catalog**](https://enterprise-ai.docs.amd.com/en/latest/aims/catalog/models.html)
+for available deployments. Join the AMD developer community and help shape the
 next generation of open-source AI inference infrastructure.
 
 ## Disclaimers

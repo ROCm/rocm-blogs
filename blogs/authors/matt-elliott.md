@@ -1,3 +1,12 @@
+---
+thumbnail: Matt-Elliott.png
+myst:
+  html_meta:
+    "description lang=en": "Matt Elliott"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Matt Elliott">
@@ -7,13 +16,6 @@
 (mattelli)=
 
 # Matt Elliott
-
-```{image} ./data/Matt-Elliott.png
-:alt: Matt
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Matt Elliott is a Technical Marketing Engineer at AMD with experience in several sectors,
 including healthcare, manufacturing, big law, VARs, CSPs and high tech. He is passionate about all

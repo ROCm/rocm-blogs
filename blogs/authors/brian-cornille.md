@@ -1,3 +1,12 @@
+---
+thumbnail: Brian-Cornille.jpg
+myst:
+  html_meta:
+    "description lang=en": "Brian Cornille"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Brian Cornille">
@@ -7,13 +16,6 @@
 (briacorn)=
 
 # Brian Cornille
-
-```{image} ./data/Brian-Cornille.jpg
-:alt: Brian
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Brian Cornille is a Member of Technical Staff in the Data Center GPU HPC Solutions and Performance Analysis group at AMD.
 He focuses on supporting Fortran and OpenMP applications targeting AMD GPUs.

@@ -85,7 +85,7 @@ The solution: a unified, multi-cloud and multi-vendor strategy that delivers sca
 
 [SkyPilot](https://docs.skypilot.co/en/latest/docs/index.html) is an open-source multi-cloud orchestration framework that abstracts infrastructure complexity. It allows developers to run LLMs, batch jobs, and distributed training across clouds and Kubernetes clusters using a single CLI and YAML file.
 
-**Key capabilities include:**
+Key capabilities include:
 
 - **Simplicity First**: Define workloads in a single YAML file — SkyPilot handles resource, networking, and storage orchestration behind the scenes (see “[AI on Kubernetes Without the Pain](https://blog.skypilot.co/ai-on-kubernetes)").
 - **Infrastructure-agnostic orchestration:** Deploy workloads seamlessly across on-prem, cloud, and hybrid GPU clusters.
@@ -105,14 +105,15 @@ Integrating with SkyPilot provides:
 
 - **Unified multi-cloud orchestration:** Treat multiple Kubernetes clusters across clouds as a single compute fabric.
 - **End-to-end visibility and control:** Manage all compute resources across on-prem, cloud, or hybrid infrastructure.
-- **Scalability and accessibility:** Lower barriers for developers to build, train, and deploy models efficiently. 
+- **Scalability and accessibility:** Lower barriers for developers to build, train, and deploy models efficiently.
 
 ```{figure} ./images/Skypilot1.jpg
 :align: center
 :alt: Scaling performance
 Figure 1: AMD open AI ecosystem + SkyPilot for multi-cloud orchestration.
 ```
-**Figure 1** illustrates the integrated architecture of SkyPilot with the AMD AI ecosystem across Instinct enabled GPU clouds, serving as a visual guide to walk through the steps of deploying AI workloads. 
+
+**Figure 1** illustrates the integrated architecture of SkyPilot with the AMD AI ecosystem across Instinct enabled GPU clouds, serving as a visual guide to walk through the steps of deploying AI workloads.
 
 Together, **AMD and SkyPilot** allow developers to run AI workloads on AMD Instinct GPUs using pre-built ROCm-optimized Docker images and even migrate CUDA-based NVIDIA workloads to AMD environments—effortlessly and transparently.
 
@@ -133,18 +134,18 @@ Begin by launching your AMD GPU virtual machines (VMs) on AMD Developer Cloud. F
 
 Table 1: Configuration used on AMD Developer Cloud
 
-> _Use the [onboarding guide](https://www.amd.com/en/developer/resources/technical-articles/2025/how-to-get-started-on-the-amd-developer-cloud-.html) for step-by-step instructions to launch and access the GPU VMs on the [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html "AMD Developer Cloud")._ 
+> _Use the [onboarding guide](https://www.amd.com/en/developer/resources/technical-articles/2025/how-to-get-started-on-the-amd-developer-cloud-.html) for step-by-step instructions to launch and access the GPU VMs on the [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html "AMD Developer Cloud")._
 
-Once your GPU VMs are ready, follow the steps outlined below: 
+Once your GPU VMs are ready, follow the steps outlined below:
+
 - **Install prerequisites** and log in as a user with root privileges (see  [Appendix 1](#appendix-1-prerequisites)).
-- **Set up Kubernetes:** 
-  - For a lightweight option, use ```k3s``` (refer to [Appendix 2](#appendix-2-byok8s-setup-with-k3s)). 
+- **Set up Kubernetes:**
+  - For a lightweight option, use ```k3s``` (refer to [Appendix 2](#appendix-2-byok8s-setup-with-k3s)).
   - Alternatively, bring your own Kubernetes (```BYOk8s```) or choose a supported cloud-managed K8s service.
-- **Deploy AMD GPU operator:** 
+- **Deploy AMD GPU operator:**
   - Install [```helm```](https://helm.sh/) for Kubernetes management.
   - Deploy the [```amd-gpu-operator```](https://github.com/ROCm/gpu-operator) to expose the GPU labels (```amd.com/gpu```)
   - Refer to [Appendix 3](#appendix-3-amd-gpu-operator-installation) for detailed instructions.
-
 
 2. **Install and Configure SkyPilot**
 
@@ -155,7 +156,7 @@ sky check kubernetes
 sky show-gpus --infra k8s
 ```
 
-These commands validate SkyPilot’s connection to your Kubernetes cluster and automatically detect available AMD Instinct™ GPUs, as illustrated in **Figure 2**. 
+These commands validate SkyPilot’s connection to your Kubernetes cluster and automatically detect available AMD Instinct™ GPUs, as illustrated in **Figure 2**.
 
 ```{figure} ./images/Skypilot2.png
 :align: center
@@ -198,11 +199,10 @@ run: |
   echo "Starting Inference Serving with vLLM on 1xAMD GPU"
   vllm serve --model="<model-name>"
 ```
-> SkyPilot ```YAML``` files are simpler than traditional Kubernetes configurations (see [SkyPilot vs vanilla-k8s YAML](https://docs.skypilot.co/en/latest/reference/kubernetes/skypilot-and-vanilla-k8s.html#simpler-yamls)). 
 
-By abstracting infrastructure complexity, SkyPilot streamlines deployment. Users only need to define key ```resources```-such as ```cloud```, docker ```image_id```, ```accelerators```—along with the workflow steps under ```run```. 
+> SkyPilot ```YAML``` files are simpler than traditional Kubernetes configurations (see [SkyPilot vs vanilla-k8s YAML](https://docs.skypilot.co/en/latest/reference/kubernetes/skypilot-and-vanilla-k8s.html#simpler-yamls)).
 
-
+By abstracting infrastructure complexity, SkyPilot streamlines deployment. Users only need to define key ```resources```-such as ```cloud```, docker ```image_id```, ```accelerators```—along with the workflow steps under ```run```.
 
 Launch the inference serving job using:
 
@@ -226,10 +226,9 @@ curl http://0.0.0.0:8000/v1/completions \
         "temperature": 0.8
       }'
 ```
+
 </details>
 <p>
-
-
 
 This setup is ideal for developers seeking cost-effective, single-GPU deployments without sacrificing model size or responsiveness. Scaling to multi-GPU setups or larger models is as simple as updating the ```YAML``` file without requiring any additional steps.
 
@@ -238,7 +237,8 @@ This setup is ideal for developers seeking cost-effective, single-GPU deployment
 [PRIMUS](https://github.com/AMD-AGI/Primus) is the AMD modular and scalable training framework optimized for LLMs, optimized for AMD Instinct GPUs. It supports both single and multi-node distributed training with backend-agnostic support via Megatron-Core.
 
 Training a model typically involves the following steps (see [blogpost](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/training/benchmark-docker/primus-megatron.html?model=primus_pyt_megatron_lm_train_llama-3.3-70b "Training a model with Primus and Megatron-Core")):
-- Set up the environment by pulling and launching the Docker container 
+
+- Set up the environment by pulling and launching the Docker container
 - Log in to the container, configure settings, and download datasets
 - Set the ```HF_TOKEN``` environment variable to access Hugging Face tokenizers
 - Run sample training examples
@@ -262,7 +262,7 @@ resources:
 
 setup: |
   echo "AMD PRIMUS TRAINING"
- 
+
 run: |
   echo " rocm-smi smoke test:"
   rocm-smi
@@ -286,8 +286,7 @@ Once workloads are successfully launched on AMD GPUs with SkyPilot, the next ste
 
 ## Seamless Migration From NVIDIA to AMD
 
- Many organizations operate heterogeneous GPU environments to reduce vendor lock-in and optimize cost, performance, and availability. However, migrating workloads between NVIDIA and AMD GPUs can be challenging due to differences in software stacks, drivers, and orchestration tools. SkyPilot simplifies this process by providing a unified, infrastructure-agnostic orchestration layer that allows developers to migrate CUDA-based NVIDIA workloads to AMD GPUs with minimal changes, often just a few lines in the YAML specification—while preserving performance and scalability across multi-cloud environments. 
-
+ Many organizations operate heterogeneous GPU environments to reduce vendor lock-in and optimize cost, performance, and availability. However, migrating workloads between NVIDIA and AMD GPUs can be challenging due to differences in software stacks, drivers, and orchestration tools. SkyPilot simplifies this process by providing a unified, infrastructure-agnostic orchestration layer that allows developers to migrate CUDA-based NVIDIA workloads to AMD GPUs with minimal changes, often just a few lines in the YAML specification—while preserving performance and scalability across multi-cloud environments.
 
 ```{figure} ./images/Skypilot3.jpg
 :align: center
@@ -295,7 +294,7 @@ Once workloads are successfully launched on AMD GPUs with SkyPilot, the next ste
 Figure 3: Testing Infrastructure: NVIDIA to AMD GPU infrastructure migration across neoclouds using SkyPilot
 ```
 
-**Figure 3** illustrates a multi-cloud testing infrastructure spanning emerging AI neoclouds with the configuration details in **Table 2**. The testing infrastructure is designed to serve as a blueprint to demonstrate the ease of migration of workloads from _NVIDIA to AMD GPUs_ using SkyPilot with minimal overhead. 
+**Figure 3** illustrates a multi-cloud testing infrastructure spanning emerging AI neoclouds with the configuration details in **Table 2**. The testing infrastructure is designed to serve as a blueprint to demonstrate the ease of migration of workloads from _NVIDIA to AMD GPUs_ using SkyPilot with minimal overhead.
 
 | **Component** | **NVIDIA H100 GPU Infrastructure** | **AMD MI300X GPU Infrastructure** | **AMD MI325X GPU Infrastructure** |
 |----------------|------------------------------------|------------------------------------|------------------------------------|
@@ -305,14 +304,13 @@ Figure 3: Testing Infrastructure: NVIDIA to AMD GPU infrastructure migration acr
 
 Table 2:  Multi-cloud Testing Infrastructure
 
-
-
 ### Configuring Multi-cloud Kubernetes Access
 
 To configure a multi-cloud Kubernetes environment for seamless AI workload orchestration using SkyPilot, follow these steps:
 
 1. **SkyPilot Orchestrator Machine**
-- This is the orchestration machine which needs access to all other k8s clusters across clouds. Could be any compute machine with CPUs. 
+
+- This is the orchestration machine which needs access to all other k8s clusters across clouds. Could be any compute machine with CPUs.
 - Install `kubectl` and `SkyPilot` and ensure all prerequisites are met (see [Appendix 1](#appendix-1-prerequisites)).
 
 2. **AMD Instinct MI300X GPU Cluster (AMD Developer Cloud)**
@@ -322,10 +320,11 @@ To configure a multi-cloud Kubernetes environment for seamless AI workload orche
 
 ```bash
 scp <usr>@<amd-devcloud-k8s-ip-address>:</path/to/kubeconfig>  $HOME/.kube/amd-mi300-devcloud-kubeconfig
-sed -i "s/127.0.0.1/$<amd-devcloud-k8s-ip-address>/g" $HOME/.kube/amd-mi300-devcloud-kubeconfig 
+sed -i "s/127.0.0.1/$<amd-devcloud-k8s-ip-address>/g" $HOME/.kube/amd-mi300-devcloud-kubeconfig
 ```
 
 3. **NVIDIA H100 GPU Cluster (Lambda cloud)**
+
 - Follow the [tutorial](https://docs.lambda.ai/education/scheduling-and-orchestration/skypilot-deploy-kubernetes/) to set up the **Lambda** account, configure firewall settings, and install prerequisites on the orchestrator node.
 - Use the following scripts to deploy the NVIDIA k8s cluster with ```4xH100``` on Lambda cloud, and generate a copy of the kubeconfig file at `$HOME/.kube/nvidia-h100-lambda-kubeconfig`
   - <a class="external" href="./images/launch_k8s_lambda.sh" rel="noopener noreferrer" target="_blank"><code>launch-k8s-lambda.sh</code></a> and <a class="external" href="./images/cloud-k8s-lambda.yaml" rel="noopener noreferrer" target="_blank"><code>cloud-k8s-lambda.yaml</code></a>
@@ -348,7 +347,7 @@ Combine all ```kubeconfig``` files into one consolidated `$HOME/.kube/config` (s
 
     <details>
     <summary><b>Consolidated sample kubeconfig</b></summary>
-    
+
     ```yaml
     apiVersion: v1
     clusters:
@@ -394,9 +393,9 @@ Combine all ```kubeconfig``` files into one consolidated `$HOME/.kube/config` (s
         client-certificate-data: ...
         client-key-data: ...
     ```
+
   </details>
   <p>
-
 
 6. **Set the `KUBECONFIG` environment variable**
 
@@ -419,9 +418,10 @@ allowed_contexts:
 8. **Validate** multi-cluster access
 
 ```bash
-$ sky check k8s
-$ sky show-gpus --infra k8s
+sky check k8s
+sky show-gpus --infra k8s
 ```
+
 **Figure 4** shows a sample SkyPilot output listing the expected GPU type and quantity for each Kubernetes context.
 
 ```{figure} ./images/Skypilot4.png
@@ -434,7 +434,7 @@ With the multi-cloud Kubernetes configuration complete, the next step is to vali
 
 ### Demo: Migrating PyTorch Reinforcement Learning Workload
 
-To demonstrate the migration from **NVIDIA to AMD** GPU infrastructure, we use a standard [PyTorch Reinforcement Learning example](https://github.com/pytorch/examples) using a single SkyPilot ```YAML``` file. 
+To demonstrate the migration from **NVIDIA to AMD** GPU infrastructure, we use a standard [PyTorch Reinforcement Learning example](https://github.com/pytorch/examples) using a single SkyPilot ```YAML``` file.
 
 ```bash
 name: migration-pytorch-rl
@@ -448,10 +448,10 @@ resources:
 
 setup: |
   echo "Reinforcement Learning example derived from https://github.com/pytorch/examples"
-  sleep 5 
+  sleep 5
 
 run: |
-  conda deactivate 
+  conda deactivate
   git clone https://github.com/pytorch/examples.git
   cd examples/reinforcement_learning
   pip install -r requirements.txt
@@ -477,7 +477,6 @@ sky launch -c <cluster-name> migration-pytorch-rl.yaml
 
 Simply update the image to an AMD ROCm-compatible Docker container- `image_id: docker:rocm/pytorch:latest`. SkyPilot automatically selects the appropriate cloud and provisions the required GPUs based on the ```accelerator``` type specified - here, ```MI300``` or ```MI325```.
 >Refer to [Appendix 5](#appendix-5-nvidia-to-amd-migration-guide) for feature set comparisons and cross-compatible container platforms for workload migration between NVIDIA and AMD.  
-
 
 **Watch how SkyPilot makes multi-cloud migration seamless!**
 <iframe
@@ -506,7 +505,7 @@ The **AMD + SkyPilot integration** unlocks a simple-yet-powerful platform—**_b
 
 We invite the developer community to try the SkyPilot + AMD integration, explore the quick-start examples, and share feedback to help shape the next generation of open AI infrastructure.
 
-**Get started today:**
+Get started today:
 
 - Visit [SkyPilot GitHub](https://github.com/skypilot-org/skypilot)
 - Explore [AMD Developer Cloud](https://www.amd.com/en/developer/resources/cloud-access/amd-developer-cloud.html) for ROCm-optimized GPU instances
@@ -522,12 +521,18 @@ Before getting started, it is recommended to check for the pre-requisites outlin
    a. Instructions to add a user with root privileges
 
 ```bash
+
 # login as root
+
 $ ssh root@<Public IP Address>
 $ adduser amd-user
+
 # create passwordless login
+
 $ visudo /etc/sudoers
+
 # add the following line to /etc/sudoers
+
 amd-user ALL=(ALL:ALL) NOPASSWD:ALL
 ```
 
@@ -537,10 +542,10 @@ You may need to restart the ssh service and log in as `amd-user`.
 
 ```bash
 sudo apt-get update
-sudo apt-get install pip 
+sudo apt-get install pip
 sudo apt-get install snapd
-sudo apt-get install socat 
-sudo apt-get install netcat-traditional 
+sudo apt-get install socat
+sudo apt-get install netcat-traditional
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 ```
 
@@ -565,17 +570,24 @@ For `k3s` installation, follow the instructions outlined in  [```k3s installatio
 
 ```bash
 curl -sfL https://get.k3s.io | sh –
+
 # verify status of installation
+
 systemctl status k3s
+
 # create sym-link - k3s yaml with $HOME/.kube/config
+
 mkdir -p $HOME/.kube
 ln -s /etc/rancher/k3s/k3s.yaml $HOME/.kube/config
 sudo chmod 755 $HOME/.kube/config
 export KUBECONFIG=$HOME/.kube/config
+
 # enable k3s service
-sudo systemctl enable k3s 
+
+sudo systemctl enable k3s
 ```
->_SkyPilot expects the k8s config file at ```$HOME/.kube/config.```_ 
+
+>_SkyPilot expects the k8s config file at ```$HOME/.kube/config.```_
 
 Optionally, you may have to remove other accelerator runtime.
 
@@ -592,7 +604,7 @@ If using a separate orchestrator machine for k8s, install `kubectl` and the `kub
    # copy remote kubeconfig to $HOME/.kube/config
    scp amd-usr@<k8s-ip-address>:/etc/rancher/k3s/k3s.yaml  $HOME/.kube/config
    #point to public-ip-address
-   sed -i "s/127.0.0.1/$<k8s-ip-address>/g" $HOME/.kube/config 
+   sed -i "s/127.0.0.1/$<k8s-ip-address>/g" $HOME/.kube/config
    export KUBECONFIG=$HOME/.kube/config
 ```
 
@@ -606,13 +618,13 @@ kubectl get nodes
 
 Here we use `amd-gpu-operator v1.3.0`, please refer to [ROCm amd-gpu-operator Github](https://github.com/ROCm/gpu-operator) for latest updates and installation procedure.
 
-**Install Helm**
+Install Helm
 
 ```bash
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
 
-**Install cert-manager**
+Install cert-manager
 
 ```bash
 helm repo add jetstack https://charts.jetstack.io --force-update
@@ -623,14 +635,14 @@ helm install cert-manager jetstack/cert-manager \
           		--set crds.enabled=true
 ```
 
-**Add AMD GPU operator Helm repo**
+Add AMD GPU operator Helm repo
 
 ```bash
 helm repo add rocm https://rocm.github.io/gpu-operator
 helm repo update
 ```
 
-**Install AMD GPU operator**
+Install AMD GPU operator
 
 ```bash
 helm install amd-gpu-operator rocm/gpu-operator-charts \
@@ -643,19 +655,19 @@ helm install amd-gpu-operator rocm/gpu-operator-charts \
 
 > For the AMD Developer Cloud setup in [Table 1](#getting-started-with-amd-developer-cloud-and-skypilot), this should expose ```amd.com/gpu``` label with the required GPU count (e.g.,```8```).
 
-Verify amd-gpu-operator installation 
+Verify amd-gpu-operator installation
 
 ```bash
 kubectl get all --namespace kube-amd-gpu
 ```
 
-**Check for AMD GPU Labels**
+Check for AMD GPU Labels
 
 ```bash
-kubectl get nodes -o json | jq '.items[] | {name: .metadata.name, labels: .metadata.labels}' | grep -e "amd.com/gpu" 
+kubectl get nodes -o json | jq '.items[] | {name: .metadata.name, labels: .metadata.labels}' | grep -e "amd.com/gpu"
 ```
 
-**Check Node Capacity**
+Check Node Capacity
 
 ```bash
 kubectl get nodes -o json | jq '.items[] | {name: .metadata.name, capacity: .status.capacity}'
@@ -667,15 +679,15 @@ SkyPilot now supports AMD Instinct GPUs (_refer_: [link](https://github.com/skyp
 
 a. SkyPilot installation instructions:
 
- - Install SkyPilot by following the official procedure [guide](https://docs.skypilot.co/en/latest/getting-started/installation.html "SkyPilot Installation"). 
- - Alternatively, follow the step-by-step instructions:
+- Install SkyPilot by following the official procedure [guide](https://docs.skypilot.co/en/latest/getting-started/installation.html "SkyPilot Installation").
+- Alternatively, follow the step-by-step instructions:
 
   ```bash
   conda create -y -n <amd-user> python=3.10
   conda activate amd-user
   # install skypilot and choose the infrastructure
   pip install ''skypilot[kubernetes]''
-  ``` 
+  ```
 
 b. Labeling of nodes for SkyPilot:
 
@@ -683,7 +695,9 @@ Switch to the correct context in-case there are more than one:
 
 ```bash
 kubectl config use-context <context-name>
+
 # find the nodes to be labelled
+
 kubectl get nodes
 ```
 
@@ -696,7 +710,6 @@ Use the following command to label the respective nodes:
 ```bash
 kubectl label node <node-name> skypilot.co/accelerator=<accelerator-name>
 ```
-
 
 Verify labels for `skypilot.co/accelerator`:
 

@@ -1,3 +1,12 @@
+---
+thumbnail: Haocong-Wang.jpg
+myst:
+  html_meta:
+    "description lang=en": "Haocong Wang"
+    "keywords": "AMD GPUs, ROCm, MI300, MI250, AI/ML workloads, GPU acceleration, AMD Instinct, GPU Operator, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Haocong Wang">
@@ -7,13 +16,6 @@
 (haocwang)=
 
 # Haocong Wang
-
-```{image} ./data/Haocong-Wang.jpg
-:alt: Haocong
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Haocong is member of Composable Kernel team, he is technical leader of kernel performance optimization. He contributed to AMDGPU and ROCm from RDNA2 and CDNA1 to RDNA4 and CDNA4 since 2022.
 

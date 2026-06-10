@@ -1,3 +1,12 @@
+---
+thumbnail: gulsum-gudukbay-akbulut.JPG
+myst:
+  html_meta:
+    "description lang=en": "Gulsum Gudukbay Akbulut"
+    "keywords": "blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Gulsum Gudukbay Akbulut">
@@ -7,13 +16,6 @@
 (gulsum-gudukbay-akbulut)=
 
 # Gulsum Gudukbay Akbulut
-
-```{image} ./data/gulsum-gudukbay-akbulut.JPG
-:alt: Gulsum
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Gulsum Gudukbay Akbulut is a Member of Technical Staff (MTS) software development engineer at AMD’s JAX team, advancing JAX on ROCm with a focus on backend integration, release engineering, and developer experience. She also helps maintain and evolve the ROCm/MaxText repository that is used for large‑scale training, making developer experience smoother and more reliable across the AMD ecosystem.
 

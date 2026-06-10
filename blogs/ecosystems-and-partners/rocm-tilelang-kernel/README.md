@@ -346,46 +346,48 @@ The main function implements operator autotuning triggering, correctness verific
 
 On the AMD MI300X GPU, performance test results for the typical scenario (batch=1, heads=8, seq_len=4096, dim=128) are shown in table 1:
 
-**Table 1: Performance results for batch=1, heads=8, seq_len=4096, dim=128**
+Table 1: Performance results for batch=1, heads=8, seq_len=4096, dim=128
 
-|Implementation|Latency (ms)|Performance Improvement|Core Parameters of Optimal Configuration| 
-|---|---|---|---| 
-|PyTorch Reference (ref_program)|0.97|——|None (Native Implementation)| 
-|TileLang Implementation (fast_flashattn)|0.36|2.69x|block_M=128, block_N=32, threads=512, enable_rasterization=True| 
-|Triton Implementation|0.55|1.53x|block_M=128, block_N=32, threads=512| 
+|Implementation|Latency (ms)|Performance Improvement|Core Parameters of Optimal Configuration|
+|---|---|---|---|
+|PyTorch Reference (ref_program)|0.97|——|None (Native Implementation)|
+|TileLang Implementation (fast_flashattn)|0.36|2.69x|block_M=128, block_N=32, threads=512, enable_rasterization=True|
+|Triton Implementation|0.55|1.53x|block_M=128, block_N=32, threads=512|
 
-Key Conclusions: 
+Key Conclusions:
 
-- **Significant Latency Reduction**: The latency of the TileLang implementation is only 37.1% of that of the native PyTorch implementation and 65.5% of that of the Triton implementation, achieving a performance improvement of nearly 2.7x over PyTorch and 1.53x over Triton [1]. This fully demonstrates the effectiveness of tiled computation and hardware optimization tailored for AMD GPUs. 
-- **Efficient Autotuning**: The search for 108 configurations takes only about 1 second. The optimal configuration achieves a balance between SRAM utilization and parallel efficiency through a tile size of 128×32 and 512 threads. 
-- **Reliable Precision**: The results are fully aligned with the PyTorch reference implementation, verifying the correctness of the TileLang implementation. 
+- **Significant Latency Reduction**: The latency of the TileLang implementation is only 37.1% of that of the native PyTorch implementation and 65.5% of that of the Triton implementation, achieving a performance improvement of nearly 2.7x over PyTorch and 1.53x over Triton [1]. This fully demonstrates the effectiveness of tiled computation and hardware optimization tailored for AMD GPUs.
+- **Efficient Autotuning**: The search for 108 configurations takes only about 1 second. The optimal configuration achieves a balance between SRAM utilization and parallel efficiency through a tile size of 128×32 and 512 threads.
+- **Reliable Precision**: The results are fully aligned with the PyTorch reference implementation, verifying the correctness of the TileLang implementation.
 
 ## Summary
 
-Through the complete case of implementing Flash Attention on the AMD Instinct MI300X GPU with TileLang, this blog verifies the core value of TileLang as a high-level operator development framework—it achieves performance comparable to handwritten low-level code with concise code while significantly lowering the development threshold for AMD GPU kernels. Compared with the native PyTorch implementation, the TileLang version achieves a 2.7x performance improvement through tiled computation, memory optimization, and autotuning, with more concise code and stronger maintainability. 
+Through the complete case of implementing Flash Attention on the AMD Instinct MI300X GPU with TileLang, this blog verifies the core value of TileLang as a high-level operator development framework—it achieves performance comparable to handwritten low-level code with concise code while significantly lowering the development threshold for AMD GPU kernels. Compared with the native PyTorch implementation, the TileLang version achieves a 2.7x performance improvement through tiled computation, memory optimization, and autotuning, with more concise code and stronger maintainability.
 
-In the future, with in-depth adaptation of TileLang in the AMD ecosystem (such as supporting Tensor Core acceleration of the AMD Instinct MI300X GPUs) and optimization of autotuning algorithms, it will have broader application prospects in the development of core operators for large models. For developers, TileLang provides a new operator development paradigm that "enables efficient utilization of hardware performance without in-depth knowledge of hardware details", facilitating the rapid deployment and performance release of large models on AMD GPUs. 
+In the future, with in-depth adaptation of TileLang in the AMD ecosystem (such as supporting Tensor Core acceleration of the AMD Instinct MI300X GPUs) and optimization of autotuning algorithms, it will have broader application prospects in the development of core operators for large models. For developers, TileLang provides a new operator development paradigm that "enables efficient utilization of hardware performance without in-depth knowledge of hardware details", facilitating the rapid deployment and performance release of large models on AMD GPUs.
 
 ## Endnotes
 
 [1] Test Environment
 
-**Hardware:**
-- AMD Instinct MI300X GPU
-- Intel(R) Xeon(R) Platinum 8568Y+. 
+Hardware:
 
-**Software:** 
+- AMD Instinct MI300X GPU
+- Intel(R) Xeon(R) Platinum 8568Y+.
+
+Software:
+
 - ROCm v7.0.1
 - Pytorch v2.9.0
 - Triton v3.0.0
-- TileLang v0.1.7. 
+- TileLang v0.1.7.
 
-**Input configuration:** 
+Input configuration:
+
 - batch_size = 1
 - head_nums = 8
-- seq_len = 4096 
-- dim = 128 
-
+- seq_len = 4096
+- dim = 128
 
 ## Disclaimers
 

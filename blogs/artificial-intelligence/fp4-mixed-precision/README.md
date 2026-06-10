@@ -48,6 +48,7 @@ SOFTWARE.
 --->
 
 # Optimizing FP4 Mixed-Precision Inference with Petit on AMD Instinct MI250 and MI300 GPUs: A Developer’s Perspective
+
 * Haohui Mai is affiliated with the company [CausalFlow.ai](https://www.causalflow.ai/).
 
 As frontier large language models (LLMs) continue scaling to unprecedented sizes, they demand increasingly more compute power and memory bandwidth from GPUs. Both GPU manufacturers and model developers are shifting toward low-precision floating-point formats. FP4 (4-bit floating point) quantization has emerged as a particularly compelling solution—for instance, FP4-quantized Llama 3.3 70B models achieve a 3.5x reduction in model size while maintaining minimal quality degradation on benchmarks such as Massive Multitask Language Understanding (MMLU).
@@ -58,10 +59,10 @@ To bridge this divide, we developed Petit – a collection of optimized FP16/BF1
 
 Petit delivers substantial performance improvements across the board:
 
-- 1.74x faster end-to-end inference performance on Llama 3.3 70B using SGLang
-- Up to 3.7x faster execution for equivalent matrix multiplication operations compared to hipBLASLt (AMD state-of-the-art GEMM library)
-- Open-source availability under BSD license
-- Production ready – already integrated into SGLang, enabling immediate deployment
+* 1.74x faster end-to-end inference performance on Llama 3.3 70B using SGLang
+* Up to 3.7x faster execution for equivalent matrix multiplication operations compared to hipBLASLt (AMD state-of-the-art GEMM library)
+* Open-source availability under BSD license
+* Production ready – already integrated into SGLang, enabling immediate deployment
 
 This blog explores our optimization journey and the techniques that made these performance gains possible. Petit leverages AMD open software ecosystem while introducing novel optimizations including offline shuffling and low-level hardware-specific enhancements.
 
@@ -90,9 +91,9 @@ Petit goes further by tailoring the bit packing format to AMD GPU capabilities. 
 GPUs like the AMD Instinct MI300 series feature extremely high arithmetic density (>500), meaning that compute units must perform hundreds of operations per byte to achieve peak FLOPS. Maximizing effective memory bandwidth is therefore essential for performant matrix multiplication kernels.
 Petit employs proven techniques such as tiling and double buffering using Local Data Store (LDS), while addressing several AMD-specific considerations:
 
-- *Avoiding LDS Bank Conflicts.* AMD GPU LDS is partitioned into 32 banks, allowing 32 concurrent accesses to unique banks per cycle. Bank conflicts serialize accesses, creating performance bottlenecks. This challenge is particularly acute on AMD GPUs since wavefronts contain 64 threads. Petit implements permuted data layouts based on [bank designs](https://github.com/nod-ai/shark-ai/blob/main/docs/amdgpu_kernel_optimization_guide.md) to achieve conflict-free LDS utilization.
+* _Avoiding LDS Bank Conflicts._ AMD GPU LDS is partitioned into 32 banks, allowing 32 concurrent accesses to unique banks per cycle. Bank conflicts serialize accesses, creating performance bottlenecks. This challenge is particularly acute on AMD GPUs since wavefronts contain 64 threads. Petit implements permuted data layouts based on [bank designs](https://github.com/nod-ai/shark-ai/blob/main/docs/amdgpu_kernel_optimization_guide.md) to achieve conflict-free LDS utilization.
 
-- *Chiplet and Interconnect.* Each AMD Instinct MI300 GPU chiplet (XCD) features a 4MB local L2 cache and shares a 256MB L3 cache across all XCDs via interconnects. While interconnects provide high bandwidth, they introduce significant latency. Petit implements topology-aware workload partitioning that minimizes interconnect traffic, favoring naive grid-based partitions over global stripe partitions when profiling shows that interconnect overhead outweighs the benefits.
+* _Chiplet and Interconnect._ Each AMD Instinct MI300 GPU chiplet (XCD) features a 4MB local L2 cache and shares a 256MB L3 cache across all XCDs via interconnects. While interconnects provide high bandwidth, they introduce significant latency. Petit implements topology-aware workload partitioning that minimizes interconnect traffic, favoring naive grid-based partitions over global stripe partitions when profiling shows that interconnect overhead outweighs the benefits.
 
 ### Generating High-Quality Machine Code
 
@@ -120,8 +121,8 @@ We then compared Petit's performance against HipBLASLt. HipBLASLt is AMD's state
 
 Note that these libraries target slightly different workloads:
 
-- Petit. Multiplies a BF16 matrix with an NVFP4 matrix (16 elements share an FP8 scale)
-- HipBLASLt. Multiplies two BF16 matrices.
+* Petit. Multiplies a BF16 matrix with an NVFP4 matrix (16 elements share an FP8 scale)
+* HipBLASLt. Multiplies two BF16 matrices.
 
 Though the workloads are not identical, the results present some quantitative ideas of how well Petit performs. We examined actual weight matrix sizes when serving Llama 3 70B, measuring performance with m=16 (decode workloads) and m=256 (prefill workloads), averaging 100 runs after 50 warmup iterations. Both libraries were tuned for optimal configurations.
 
@@ -149,9 +150,9 @@ We found that efficient dequantization and LDS optimization provide the largest 
 
 Our journey building Petit revealed several insights:
 
-- Hardware-software co-design is fundamental. Understanding and designing around hardware architecture should be the foundation of any GPU kernel optimization effort. Without proper co-design, significant performance potential remains untapped regardless of other optimization efforts.
-- Programming language and compiler support is invaluable. Tools like Triton dramatically improve productivity during prototyping and exploration phases. Petit's Tensor abstractions, inspired by CuTE, simplified offset calculations and reduced debugging time. While compilers may not fully utilize unique hardware features, exposing performance tuning knobs provides significant value.
-- Open ecosystems accelerate innovation. Access to open-source codebases provides substantial advantages over black-box approaches. The ability to study, adapt, and build upon existing optimizations accelerates both development and optimization efforts.
+* Hardware-software co-design is fundamental. Understanding and designing around hardware architecture should be the foundation of any GPU kernel optimization effort. Without proper co-design, significant performance potential remains untapped regardless of other optimization efforts.
+* Programming language and compiler support is invaluable. Tools like Triton dramatically improve productivity during prototyping and exploration phases. Petit's Tensor abstractions, inspired by CuTE, simplified offset calculations and reduced debugging time. While compilers may not fully utilize unique hardware features, exposing performance tuning knobs provides significant value.
+* Open ecosystems accelerate innovation. Access to open-source codebases provides substantial advantages over black-box approaches. The ability to study, adapt, and build upon existing optimizations accelerates both development and optimization efforts.
 
 ## Summary
 
@@ -159,13 +160,12 @@ In this blog, we introduced Petit, a mixed-precision FP4 kernel library tailored
 https://rocm.blogs.amd.com/ecosystems-and-partners/openai-day-0/README.html) and our soon-to-appear FP8 quantization strategies blog, reinforcing co-design as a central theme across our work. Together, these contributions aim to provide developers with both tools and methodology to unlock greater efficiency in modern inference pipelines.
 Looking ahead, we plan to address current limitations by fixing issues like denormal handling and scaling constraints, while giving users more flexibility in quantization workflows. We also aim to further increase acceleration benefits, extend model support beyond the Llama 3.3 70B model, and add precision formats beyond FP4. In parallel, we will broaden framework integration from SGLang to vLLM, and ensure Petit is ready for next-generation AMD platforms such as AMD Instinct MI355X (gfx950). By pursuing these directions, we intend to deliver both immediate usability and long-term scalability for efficient inference on AMD GPUs.
 
-
 Our work optimizing Petit for AMD Instinct MI250 and MI300 series GPUs demonstrates the transformative power of hardware-software co-design. Through careful attention to algorithms, memory hierarchy optimization, and low-level assembly techniques, we achieved performance improvements of up to 75x over naive implementations.
 
 The techniques and insights from Petit extend beyond this specific implementation – they represent a methodology for extracting maximum performance from specialized hardware through thoughtful co-design and optimization.
 
 The complete source code of Petit is [available at this link.](https://github.com/causalflow-ai/petit-kernel)
-[^1]: https://www.causalflow.ai/
+
 ## Disclaimers
 
 Third-party content is licensed to you directly by the third party that owns the

@@ -377,7 +377,7 @@ $^{[2]}$ ROCm GitHub repository
 
 The landscape of ROCm components is best laid out by the following graphic (Figure 1, below), taken from the [What is ROCm?](https://rocm.docs.amd.com/en/latest/what-is-rocm.html) page from the documentation.
 
-<img src="./images/rocm-software-stack-6_3_2.jpg">
+<img src="./images/rocm-software-stack-6_3_2.jpg" alt="ROCm software stack 6 3 2">
 
 <p style="text-align:center">
 Figure 1: The ROCm software stack
@@ -389,7 +389,7 @@ The ROCm stack relies on lower layers of runtimes and compilers which are genera
 
 As a package manager, Spack is also a great system for understanding the dependencies of the ROCm stack. The following graphic (Figure 2, below) has been generated using the outputs of `spack spec <package>`.
 
-<img src="./images/dep_matrix.png">
+<img src="./images/dep_matrix.png" alt="Dependency matrix">
 
 <p style="text-align:center">
 Figure 2: Dependency matrix for ROCm 6.3.2.

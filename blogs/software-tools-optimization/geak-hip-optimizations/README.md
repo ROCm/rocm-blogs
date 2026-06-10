@@ -65,7 +65,7 @@ Building on our GEAK framework ([GEAK — ROCm Blogs](https://rocm.blogs.amd.com
 
 The HIP kernel language is a CUDA-like C++ dialect for writing GPU kernels that run on AMD hardware while remaining portable to NVIDIA GPUs. It supports single-source C++ features, allowing developers to build code that is both portable and high-performance. Well-optimized HIP kernels are critical for achieving substantial speedups in demanding AI workloads—poorly tuned code can become a bottleneck, while refined implementations deliver significant gains in latency, throughput, and resource utilization on modern hardware.
 
-While GEAK's initial focus on Triton excelled at creating kernels from textual descriptions, adapting it for HIP optimization involves key modifications: handling pre-existing code as input, incorporating HIP-specific syntax in instructions, cultivating a compile/debug pipeline, and emphasizing iterative refinement for latency reduction rather than from-scratch generation. 
+While GEAK's initial focus on Triton excelled at creating kernels from textual descriptions, adapting it for HIP optimization involves key modifications: handling pre-existing code as input, incorporating HIP-specific syntax in instructions, cultivating a compile/debug pipeline, and emphasizing iterative refinement for latency reduction rather than from-scratch generation.
 We also invite readers to explore the newly introduced [GEAK-Triton v2 framework](https://rocm.blogs.amd.com/artificial-intelligence/geak-agents-family/README.html), which extends the GEAK family with advanced Triton kernel optimization support with additional hardware-aware feedback loops.
 
 ## HIP Kernel Optimization GEAK Framework

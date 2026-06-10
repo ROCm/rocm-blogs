@@ -1,3 +1,12 @@
+---
+thumbnail: Corbin-Robeck.jpg
+myst:
+  html_meta:
+    "description lang=en": "Corbin Robeck"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Corbin Robeck">
@@ -7,13 +16,6 @@
 (corbrobe)=
 
 # Corbin Robeck
-
-```{image} ./data/Corbin-Robeck.jpg
-:alt: Corbin
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Corbin Robeck is a Senior Member of Technical Staff on the ML Compiler and GPU kernel performance analysis and optimization team within
 AMD Research working on GPU compilers and kernel performance optimization of machine learning compilers and frameworks.

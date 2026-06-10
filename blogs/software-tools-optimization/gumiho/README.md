@@ -49,14 +49,13 @@ SOFTWARE.
 
 # Gumiho: A New Paradigm for Speculative Decoding — Earlier Tokens in a Draft Sequence Matter More
 
-
 Speculative decoding has emerged as a promising approach to accelerate large language model (LLM) inference, yet existing methods face a tradeoff: parallel designs achieve higher speed but lose accuracy, while serial designs gain accuracy at the cost of efficiency. In our recent paper [Gumiho: A Hybrid Architecture to Prioritize Early Tokens in Speculative Decoding](https://arxiv.org/abs/2503.10135), we introduce a new paradigm that addresses this bottleneck by prioritizing accuracy on the earliest draft tokens, which matters most for downstream acceptance. In this blog, we will discuss the motivation behind Gumiho, the theoretical foundation showing why early-token accuracy dominates, and the novel hybrid architecture that combines serial and parallel decoding to realize these insights. Our goal is to demonstrate both the scientific contributions and practical benefits of Gumiho, showing how it delivers state-of-the-art performance on AMD GPUs using the ROCm software stack, ensuring that the method is widely accessible and optimized for real-world deployment.
 
 Crucially, Gumiho is co-designed with the AMD ROCm™ software stack to fully exploit the parallel compute capabilities of AMD Instinct™ GPUs. The parallel MLP heads in Gumiho are specifically optimized to leverage ROCm’s high-throughput tensor operations and memory bandwidth, enabling near-linear scaling when generating multiple draft tokens simultaneously. Meanwhile, the serial Transformer heads benefit from ROCm’s low-latency kernel execution for autoregressive steps. This hardware-aware design ensures that Gumiho not only achieves theoretical gains but also delivers real-world, production-ready acceleration on AMD’s open, standards-based AI ecosystem.
 
 ## What Is Speculative Decoding (SPD)?
 
-Large-language models (LLMs) usually generate text in an auto-regressive fashion, emitting tokens one by one. This inherently limits throughput. Speculative Decoding (SPD) tackles this bottleneck losslessly by introducing a lightweight draft model that “guesses” a short future segment. The stronger—but slower—LLM then verifies that whole segment in parallel, accepting every token that matches its own prediction. When the acceptance rate is high, the amortised time per token drops sharply, yielding substantial speed-ups. 
+Large-language models (LLMs) usually generate text in an auto-regressive fashion, emitting tokens one by one. This inherently limits throughput. Speculative Decoding (SPD) tackles this bottleneck losslessly by introducing a lightweight draft model that “guesses” a short future segment. The stronger—but slower—LLM then verifies that whole segment in parallel, accepting every token that matches its own prediction. When the acceptance rate is high, the amortised time per token drops sharply, yielding substantial speed-ups.
 
 ## Motivation – The Shared Weakness of Existing SPD Methods
 
@@ -68,7 +67,7 @@ All prior work implicitly assumes every token in the draft is equally important,
 
 ## Core Theory – Early Tokens Are Crucial
 
-Because the verifier inspects the draft from left to right, the first mismatch causes that token and every subsequent one to be rejected. Consequently, an error early in the sequence has a much larger destructive effect than an error near the end. 
+Because the verifier inspects the draft from left to right, the first mismatch causes that token and every subsequent one to be rejected. Consequently, an error early in the sequence has a much larger destructive effect than an error near the end.
 
 To illustrate this more intuitively, we present a simple example: suppose the draft model predicts 3 tokens, and at each position the probability of being accepted by the target model is 0.8. Then the expected number of tokens accepted (τ) is:
 

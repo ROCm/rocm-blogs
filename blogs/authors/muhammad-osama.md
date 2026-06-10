@@ -1,3 +1,12 @@
+---
+thumbnail: Muhammad-Osama.jpg
+myst:
+  html_meta:
+    "description lang=en": "Muhammad Osama"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Muhammad Osama">
@@ -7,13 +16,6 @@
 (muhaosam)=
 
 # Muhammad Osama
-
-```{image} ./data/Muhammad-Osama.jpg
-:alt: Muhammad
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Muhammad Osama is a Member of Technical Staff (MTS) Software Development Engineer at
 AMD Research. He received his Ph.D. in Electrical Engineering from the University of

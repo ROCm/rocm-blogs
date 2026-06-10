@@ -1,3 +1,12 @@
+---
+thumbnail: Paul-Mullowney.jpg
+myst:
+  html_meta:
+    "description lang=en": "Paul Mullowney"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Paul Mullowney">
@@ -7,13 +16,6 @@
 (paulmull)=
 
 # Paul Mullowney
-
-```{image} ./data/Paul-Mullowney.jpg
-:alt: Paul
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Paul is a Principal Member of Technical Staff (PMTS) in the Data Center GPU Solutions and Performance
 Analysis group at AMD. He received his PhD in Applied Mathematics from the University of Colorado at

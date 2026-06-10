@@ -76,7 +76,7 @@ same length, for the rows, columns and values. We use 0-based indexing for the
 rows and columns. The data is sorted in row-major order so that all the data for
 row 0 is listed first. This is followed by row 1, row 2, ...
 
-<img src="diagrams/SparsityExample.png" width="500px">
+<img src="diagrams/SparsityExample.png" alt="Sparsity example" width="500px">
 
 ### Compressed sparse row (CSR) format
 
@@ -89,7 +89,7 @@ the result of the cumulative sum. This data structure is highly useful as it pro
 through adjacent reads, the starting and ending indices for each sparse matrix row
 times dense vector (i.e. sparse dot product) calculation.
 
-<img src="diagrams/SparsityCSR.png" width="500px">
+<img src="diagrams/SparsityCSR.png" alt="Sparsity CSR" width="500px">
 
 ### ELLPACK format
 
@@ -105,7 +105,7 @@ index and value pair that was previously loaded.
 One can visualize this data structure as shifting all values (and column indices)
 to the left in the array.
 
-<img src="diagrams/SparsityExampleEll.png" width="500px">
+<img src="diagrams/SparsityExampleEll.png" alt="Sparsity example ELL" width="500px">
 
 The ELLPACK format can be further optimized by forming the ELLPACK data structre
 in chunks of rows. This minimizes the amount of zero padding while achieving uniformity
@@ -496,8 +496,8 @@ average SpMV timing for the three formats where either a conversion from CSR for
 is required (ELLPACK and Block ELLPACK), or an analysis of the CSR matrix is needed
 (RocSparseWithAnalysis).
 
-<img src="diagrams/hip_vs_rocm_dt_2023-10-02_256.png" width="500px" align="left">
-<img src="diagrams/hip_setup_vs_spmv_2023-10-02_256.png" width="500px">
+<img src="diagrams/hip_vs_rocm_dt_2023-10-02_256.png" alt="HIP vs ROCm dt 2023-10-02 256" width="500px" align="left">
+<img src="diagrams/hip_setup_vs_spmv_2023-10-02_256.png" alt="HIP setup vs spmv 2023-10-02 256" width="500px">
 
 The data shows significant variation across the set of matrices considered here.
 Using RocSPARSE with analysis is typically the fastest, however it comes with
@@ -520,8 +520,8 @@ the RocSparse kernel with analysis is designed to handle these types of matrices
 well. Somewhat surprisingly, the simple Vector CSR kernel also handles these
 cases reasonably well.
 
-<img src="diagrams/nalu_large_level2_sparsity.png" width="450px" align="left">
-<img src="diagrams/nalu_large_level2_nnz_per_row.png" width="450px">
+<img src="diagrams/nalu_large_level2_sparsity.png" alt="Nalu large level2 sparsity" width="450px" align="left">
+<img src="diagrams/nalu_large_level2_nnz_per_row.png" alt="Nalu large level2 nnz per row" width="450px">
 
 ## Conclusions
 

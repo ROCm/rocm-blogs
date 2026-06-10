@@ -50,7 +50,7 @@ with relative ease.
  ### Figure 1
 ================ -->
 
-<img src="./images/dgpu-vs-apu.png" width="70%">
+<img src="./images/dgpu-vs-apu.png" alt="DGPU vs APU" width="70%">
 
 <p style="text-align:center">
 Figure 1: Schematic representation of a socket with a discrete CPU and GPU, and a socket with APU.
@@ -70,7 +70,7 @@ and will be referred to as the *APU Programming Model*.
  ### Figure 2
 ================ -->
 
-<img src="./images/pseudo-code.png" width="100%">
+<img src="./images/pseudo-code.png" alt="Pseudo code" width="100%">
 
 <p style="text-align:center">
 Figure 2: Pseudocode to demonstrate the ease of accelerating a CPU algorithm on the APU
@@ -105,7 +105,7 @@ can focus on porting and optimizing the compute kernels without worrying about t
  ### Figure 3
 ================ -->
 
-<img src="./images/benefits-vs-effort.png" width="100%">
+<img src="./images/benefits-vs-effort.png" alt="Benefits vs effort" width="100%">
 
 <p style="text-align:center">
 Figure 3: Porting strategies for OpenFOAM HPC Motorbike using PETSc and APU Programming Model
@@ -264,7 +264,7 @@ compiled with `-fopenmp-force-usm`.
  ### Figure 4
 ================ -->
 
-<img src="./images/pseudo-code-omp.png" width="100%">
+<img src="./images/pseudo-code-omp.png" alt="Pseudo code OMP" width="100%">
 
 <p style="text-align:center">
 Figure 4: Pseudocode for accelerating code with OpenMP on the APU

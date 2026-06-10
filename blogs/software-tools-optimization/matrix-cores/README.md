@@ -250,7 +250,7 @@ As previously noted, the input $C$ matrix is assumed to contain zeroes.
 
 ## Example 2 - V_MFMA_F64_16x16x4F64
 
-This example performs a matrix multiplication with the same dimensions as in Example 1: a 16×4 matrix multiplied by a 4×16 matrix, producing a 16×16 output matrix. However, in this case, **double-precision floating-point (FP64)** elements are used, and the computation is carried out via the intrinsic `__builtin_amdgcn_mfma_f64_16x16x4f64`. 
+This example performs a matrix multiplication with the same dimensions as in Example 1: a 16×4 matrix multiplied by a 4×16 matrix, producing a 16×16 output matrix. However, in this case, **double-precision floating-point (FP64)** elements are used, and the computation is carried out via the intrinsic `__builtin_amdgcn_mfma_f64_16x16x4f64`.
 
 The input matrices $A$ and $B$ maintain the same data layout as in the FP32 case. However, due to differences in the architecture of double-precision MFMA units, the output matrix $D$ is **packed differently**, the FP64 layout spreads the four elements across every 4th row in the same column group. This means the elements owned by a single lane are separated by four row strides, which is clearly visible in the output matrix and lane layout visualizations below.
 
@@ -260,7 +260,7 @@ The input matrices $A$ and $B$ maintain the same data layout as in the FP32 case
 
 A similar visualization can be obtained for the lane layout for the $D$ matrix using the [AMD Matrix Instruction Calculator](https://github.com/ROCm/amd_matrix_instruction_calculator), with command:
 
-```
+```text
 python3 matrix_calculator.py -a gfx90a --instruction v_mfma_f64_16x16x4f64  -M --D-matrix
 ```
 

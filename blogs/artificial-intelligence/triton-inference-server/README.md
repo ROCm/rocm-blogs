@@ -75,7 +75,7 @@ The ROCm build of Triton Inference Server has been upgraded to align with upstre
 
 ## ONNX Runtime Backend on AMD GPUs
 
-### What It Enables
+### What ONNX Runtime Backend Enables
 
 The ONNX Runtime backend enables models in the Open Neural Network Exchange (ONNX) format to be served using Triton Inference Server on ROCm-enabled AMD GPUs. Since ONNX is widely used as an interchange format, models trained in frameworks such as PyTorch and TensorFlow can be exported and deployed through a common runtime.
 
@@ -89,7 +89,7 @@ The ROCm-enabled Triton Inference Server container then loads the model through 
 
 ## Python Backend on AMD GPUs
 
-### What It Enables
+### What Python Backend Enables
 
 The Python backend allows developers to deploy models and inference pipelines written in Python using Triton Inference Server on ROCm-enabled AMD GPUs. It enables custom inference logic to be implemented directly in Python, including preprocessing, post-processing, and model orchestration.
 

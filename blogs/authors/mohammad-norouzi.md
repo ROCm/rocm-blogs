@@ -1,3 +1,12 @@
+---
+thumbnail: Mohammad-Norouzi.jpg
+myst:
+  html_meta:
+    "description lang=en": "Mohammad Norouzi"
+    "keywords": "blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Mohammad Norouzi">
@@ -7,13 +16,6 @@
 (mohammad-norouzi)=
 
 # Mohammad Norouzi
-
-```{image} ./data/Mohammad-Norouzi.jpeg
-:alt: Mohammad Norouzi
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Mohammad Norouzi is a Senior Member of Technical Staff (SMTS) and Software Development Engineer in AMD’s AI Open-Source Software (AIOSS) group.
 

@@ -1,3 +1,12 @@
+---
+thumbnail: chandan-sharma.png
+myst:
+  html_meta:
+    "description lang=en": "Chandan-Sharma"
+    "keywords": "AMD GPU, MI300, MI325, ROCm, ROCm-LS, AI, ML, DL, LLM, performance optimization, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Chandan-Sharma">
@@ -7,13 +16,6 @@
 (Chandan Sharma)=
 
 # Chandan Sharma
-
-```{image} ./data/chandan-sharma.png
-:alt: Chandan
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Chandan Sharma is a Member of Technical Staff (MTS) at AMD, where he focuses on advancing the AI/ML software ecosystem for AMD Instinct GPUs, with an emphasis on model training, inference acceleration, and performance optimization.
 

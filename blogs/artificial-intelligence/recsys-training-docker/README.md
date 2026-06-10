@@ -95,7 +95,7 @@ when the embedding dimension is large. Each of these sharding schemes
 offers a trade-off between communication complexity, load imbalance and
 memory. The sharding planner in TorchRec uses a performance model based
 on the system configuration (interconnect bandwidths, memory) to
-distribute tables across ranks for optimized end-to-end training and
+distributetables across ranks for optimized end-to-end training and
 inference performance.
 
 ```{figure}  ./images/image1.png
@@ -104,6 +104,7 @@ inference performance.
 :width: 75%
 
 Figure 1: Embedding Table Sharding Schemes [[3]](#ref3)
+
 ```
 
 With communication load being a bottleneck on recommendation workloads,
@@ -134,6 +135,7 @@ topology = Topology(
     hbm_to_ddr_mem_bw=hbm_to_ddr_mem_bw,
     intra_host_bw=intra_host_bw,
 )
+
 ```
 
 ## DLRM Training Using ROCm Training Docker
@@ -146,16 +148,20 @@ an example for single node DLRM training using the DLRM_v2 model at
 <https://github.com/AMD-AGI/DLRMBenchmark>.
 
 1. Clone the repository:
-   ```
+
+   ```bash
    git clone https://github.com/AMD-AGI/DLRMBenchmark.git
    ```
 
 2. Pull the ROCm training docker container:
-   ```
+
+   ```bash
    docker pull rocm/primus:v26.1
+
    ```
 
 3. Launch the container. Ensure all required paths, including the codebase, are mounted (similar to /home_dir/).
+
    ```bash
    docker run -d \
    --ipc=host \
@@ -174,21 +180,26 @@ an example for single node DLRM training using the DLRM_v2 model at
    --name dlrm_demo \
    -it rocm/primus:v26.1 \
    tail -f /dev/null
-   
-4. Start interactive shell session within container: 
+   ```
+
+4. Start interactive shell session within container:
+
    ```bash
    docker exec -it dlrm_demo bash
+
    ```
 
 5. Launch training via the single node training script in the repository. Note that a training configuration is available at ./training_config.sh.
-   ```bash 
-   ./launch_training_single_node.sh 
+
+   ```bash
+   ./launch_training_single_node.sh
+
    ```
 
 During a successful run, the training log shows stable performance:
 
-```
-Epoch 0:   8%|▊         | 75/1000 [02:01<00:42, 21.78it/s] 
+```text
+Epoch 0:   8%|▊         | 75/1000 [02:01<00:42, 21.78it/s]
  Mean loss: 0.69320858
  Mean loss: 0.69374704
  Mean loss: 0.69327664
@@ -197,6 +208,7 @@ Epoch 0:   8%|▊         | 78/1000 [02:01<00:41, 22.03it/s]
  Mean loss: 0.69344836
  Mean loss: 0.69318008
  Mean loss: 0.69339764
+
 ```
 
 The train_config.sh file can be updated to point to the Criteo-1B data if available. The training loss then converges, as shown in figure 2 below:
@@ -207,6 +219,7 @@ The train_config.sh file can be updated to point to the Criteo-1B data if availa
 :width: 67%
 
 Figure 2: DLRM Training Convergence
+
 ```
 
 ## Summary

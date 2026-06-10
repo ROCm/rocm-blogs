@@ -442,7 +442,7 @@ def calculate_settings(n: int):
 * The grid transformation fixed the core memory bottleneck. By moving from a (1 block : N heads) to a (1 block : 1 head) mapping, the agent eliminated the inner loop over heads, which was the source of serialization and poor memory access patterns on the Q tensor.
 
  **Comparing RoPE Implementation Strategies:**
- 
+
 To demonstrate the optimization progression, we examine how each approach implements the rotary position embedding (RoPE) transformation:
 <div style="overflow-x: auto;">
 <table style="min-width:1500px; table-layout:fixed;">
@@ -508,15 +508,15 @@ if head_idx < n_heads:
     q_base = row_position * Q_row_stride + head_idx * head_dim
     q1_ptr = Q + q_base + col_offsets
     q2_ptr = Q + q_base + col_offsets + half_head_dim
-    
+
     # Vectorized loads with type consistency
     Q1 = tl.load(q1_ptr, mask=mask, other=0.0).to(cos_vals.dtype)
     Q2 = tl.load(q2_ptr, mask=mask, other=0.0).to(cos_vals.dtype)
-    
+
     # Apply RoPE transformation with fused operations
     Q1_new = Q1 * cos_vals - Q2 * sin_vals
     Q2_new = Q2 * cos_vals + Q1 * sin_vals
-    
+
     # Vectorized stores
     tl.store(q1_ptr, Q1_new, mask=mask)
     tl.store(q2_ptr, Q2_new, mask=mask)
@@ -529,40 +529,40 @@ if head_idx < n_heads:
 # Memory tiling: Load cos/sin values into shared memory for reuse
  cos_base_idx = (row_position % seqlen) * cos_row_stride
  sin_base_idx = (row_position % seqlen) * sin_row_stride
- 
+
  # Prefetch cos/sin values with vectorized loads
  cos_ptr = cos + cos_base_idx + col_offsets
  sin_ptr = sin + sin_base_idx + col_offsets
- 
+
  cos_vals = tl.load(cos_ptr, mask=mask, other=0.0)
  sin_vals = tl.load(sin_ptr, mask=mask, other=0.0)
- 
+
  if BACKWARD_PASS:
    sin_vals = -sin_vals
- 
+
  # Optimized Q tensor access with better memory coalescing
  q_base_offset = row_position * Q_row_stride + head_idx * head_dim
- 
+
  # Vectorized Q loads with prefetching
  q1_ptr = Q + q_base_offset + col_offsets
  q2_ptr = Q + q_base_offset + col_offsets + half_head_dim
- 
+
  q1_vals = tl.load(q1_ptr, mask=mask, other=0.0)
  q2_vals = tl.load(q2_ptr, mask=mask, other=0.0)
- 
+
  # Ensure consistent data types for optimal vectorization
  q1_vals = q1_vals.to(cos_vals.dtype)
  q2_vals = q2_vals.to(cos_vals.dtype)
- 
+
  # Fused RoPE transformation with vectorized operations
  cos_q1 = q1_vals * cos_vals
  cos_q2 = q2_vals * cos_vals
  sin_q1 = q1_vals * sin_vals
  sin_q2 = q2_vals * sin_vals
- 
+
  new_q1 = cos_q1 - sin_q2
  new_q2 = cos_q2 + sin_q1
- 
+
  # Vectorized stores with optimal memory alignment
  tl.store(q1_ptr, new_q1, mask=mask)
  tl.store(q2_ptr, new_q2, mask=mask)
@@ -605,9 +605,9 @@ We applied an agent to optimize this kernel on an **AMD MI325X GPU**, resulting 
     triton.Config({'BLOCK_N_SIZE': 32}, num_warps=1, num_stages=4),
     triton.Config({'BLOCK_N_SIZE': 64}, num_warps=1, num_stages=4),
     triton.Config({'BLOCK_N_SIZE': 64}, num_warps=2, num_stages=3),
-    
+
     ...
-    
+
     # Additional specialized configs for common tensor sizes
     triton.Config({'BLOCK_N_SIZE': 512}, num_warps=1, num_stages=2),
     triton.Config({'BLOCK_N_SIZE': 1024}, num_warps=1, num_stages=2),
@@ -617,7 +617,7 @@ We applied an agent to optimize this kernel on an **AMD MI325X GPU**, resulting 
   ```
 
 * **Adaptive Algorithm: Single-Pass vs Two-Pass**:
- 
+
   * The agent's most impressive innovation was discovering an adaptive branching strategy.
   * For small sequences that fit in one block, it loads data once and computes variance + normalization in a single fused pass, saving 50% memory bandwidth. For larger sequences, it uses a blocked two-pass algorithm to stay within hardware limits.
   * As shown below, the reference uses a two-loop approach that reads data twice, while the optimized version fuses these operations into a single pass when possible:
@@ -648,7 +648,7 @@ We applied an agent to optimize this kernel on an **AMD MI325X GPU**, resulting 
     offs_n = block_n_start_idx + block_N
     x_ptr_mask = offs_n < N_SIZE
     rms_w = tl.load(rms_w_ptr + offs_n * stride_rms_w, mask=x_ptr_mask)
-    
+
     x = tl.load(x_ptr + offs_m + offs_n * stride_x_k, mask=x_ptr_mask, other=0.0).to(tl.float32)
     x_hat = x * rstd
     out = x_hat * rms_w
@@ -667,20 +667,20 @@ We applied an agent to optimize this kernel on an **AMD MI325X GPU**, resulting 
     # Single block case - truly single pass
     offs_n = block_N
     x_ptr_mask = offs_n < N_SIZE
-    
+
     # Load all data once
     x = tl.load(x_ptr + offs_m + offs_n * stride_x_k, mask=x_ptr_mask, other=0.0).to(tl.float32)
     rms_w = tl.load(rms_w_ptr + offs_n * stride_rms_w, mask=x_ptr_mask, other=1.0)
-    
+
     # Compute variance with numerically stable masking
     x_squared = x * x
     var_sum = tl.sum(tl.where(x_ptr_mask, x_squared, 0.0))
     var = var_sum / N_SIZE
     rstd = tl.math.rsqrt(var + eps)
-    
+
     # Apply normalization and weight
     out = x * rstd * rms_w
-    
+
     # Store result
     out_off = pid_batch * stride_out_batch + pid_m * stride_out_m + offs_n * stride_out_k
     tl.store(output_ptr + out_off, out, mask=x_ptr_mask)

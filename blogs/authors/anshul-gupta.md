@@ -1,3 +1,12 @@
+---
+thumbnail: anshul-gupta.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Anshul Gupta"
+    "keywords": "AMD GPU, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Anshul Gupta">
@@ -7,13 +16,6 @@
 (anshul gupta)=
 
 # Anshul Gupta
-
-```{image} ./data/anshul-gupta.jpeg
-:alt: Anshul Gupta
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Anshul Gupta is a Senior AI Product Marketing Manager with a passion for
 driving developer engagement and promoting cutting-edge AI technologies.

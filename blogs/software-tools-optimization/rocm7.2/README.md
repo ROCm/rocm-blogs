@@ -53,19 +53,19 @@ Modern AI workloads demand more than raw compute—they require a tightly integr
 
 In this blog, we highlight the latest ROCm 7.2 enhancements for AMD Instinct GPUs, designed to boost AI and HPC performance. Learn how hipBLASLt and GEMM optimizations, FP8/FP4 support in rocMLIR and MIGraphX, and topology-aware communication with GDA and RCCL deliver higher throughput and lower latency. We also cover AI model tuning for AMD Instinct™ MI300X and MI350 GPUs and Node Power Management (NPM) for efficient multi-GPU operation—together enabling faster, more scalable, and reliable AI workloads.
 
-## hipBLASLt Optimization and Enhancements 
+## hipBLASLt Optimization and Enhancements
 
-We introduced a set of targeted enhancements to hipBLASLt focused on improving developer productivity and runtime performance for GEMM-heavy workloads. These updates include expanded tuning capabilities, new features such as restore-from-log for reproducible performance, and swizzle A/B to optimize memory access patterns. In addition, benchmarking and reporting improvements provide deeper visibility into kernel selection and performance behavior. Together, these optimizations deliver measurable performance gains on AMD Instinct™ MI200 and MI300 GPUs compared to ROCm 7.1, directly supporting our end-customer workloads while strengthening internal benchmarking and performance analysis pipelines. 
+We introduced a set of targeted enhancements to hipBLASLt focused on improving developer productivity and runtime performance for GEMM-heavy workloads. These updates include expanded tuning capabilities, new features such as restore-from-log for reproducible performance, and swizzle A/B to optimize memory access patterns. In addition, benchmarking and reporting improvements provide deeper visibility into kernel selection and performance behavior. Together, these optimizations deliver measurable performance gains on AMD Instinct™ MI200 and MI300 GPUs compared to ROCm 7.1, directly supporting our end-customer workloads while strengthening internal benchmarking and performance analysis pipelines.
 
 ## Single Root IO Virtualization (SR-IOV)/RAS Features for MI350X/MI355X
 
 With ROCm 7.2, we enabled SR-IOV and RAS enhancements for MI350X and MI355X GPUs to support secure, reliable, and scalable multi-tenant deployments. Key updates include bad page avoidance to improve GPU availability under memory fault conditions, security hardening such as volatile memory clearing and MMIO fuzzing protections, and feature parity with competing platforms. These capabilities are essential for cloud and enterprise environments, directly addressing hyperscale requirements while improving GPU reliability, isolation, and security for virtualized workloads.
 
-## Performance Boost with GEMM Tuning  
+## Performance Boost with GEMM Tuning
 
 With this release, we performed extensive tuning of GEMM (general matrix multiplication) kernels across FP8, BF16, and FP16 data types on AMD MI300X, MI350, and MI355  platforms, with a strong focus on real customer use-case models such as GLM-4.6 and Llama 2. This work involved optimizing kernel selection, tiling strategies, memory layouts, and data movement to better match model shapes and execution patterns. The result is a direct, measurable performance uplift for AI training and inference workloads, improving throughput, latency, and overall customer experience.
 
-## rocMLIR  and MIGraphX New Data Types (FP8/FP4) Enablement 
+## rocMLIR  and MIGraphX New Data Types (FP8/FP4) Enablement
 
 We enabled next-generation low-precision data types—FP8 and FP4—across the ROCm compiler and graph stack,  rocMLIR and MIGraphX, to support emerging AI training and inference workloads. This work provides the foundational compiler, lowering, and execution support required for efficient use of these data types, and is a key enabler for MI350 new product introduction (NPI) bring-up. By expanding ROCm’s low-precision capabilities, these enhancements allow developers and customers to unlock higher performance and efficiency for advanced models while future-proofing the platform for upcoming AI architectures and workloads.
 
@@ -83,17 +83,17 @@ With ROCm 7.2, upgrades to the compiler infrastructure enable ThinLTO for AMD GP
 
 ## Optimizing AI Models for AMD Instinct MI300X and MI350 GPUs
 
-AMD has made significant progress in optimizing leading AI models on AMD Instinct MI300X and MI350 series GPUs, delivering higher throughput, lower latency, and more efficient large-scale inference performance. 
+AMD has made significant progress in optimizing leading AI models on AMD Instinct MI300X and MI350 series GPUs, delivering higher throughput, lower latency, and more efficient large-scale inference performance.
 
-On the MI355X and MI350X GPUs, the Llama 3.1 405B model has been tuned with kernel-level enhancements and memory bandwidth optimizations, while the Llama 3 70B and Llama 2 70B models have also been optimized to fully leverage the advanced architecture of these GPUs. 
+On the MI355X and MI350X GPUs, the Llama 3.1 405B model has been tuned with kernel-level enhancements and memory bandwidth optimizations, while the Llama 3 70B and Llama 2 70B models have also been optimized to fully leverage the advanced architecture of these GPUs.
 
 For the MI300X Series GPUs, AMD focused on GEMM-level optimization for the GLM-4.6 model and implemented performance improvements in DeepEP, enabling faster execution and more efficient GPU utilization. These optimizations highlight AMD’s commitment to maximizing AI model performance.
 
-## Node Power Management for Multi-GPU Nodes 
+## Node Power Management for Multi-GPU Nodes
 
 Node Power Management (NPM) dynamically manages power distribution and GPU frequencies across multiple GPUs within a node by leveraging built-in telemetry and advanced control algorithms. It automatically adjusts GPU frequencies to ensure that the total node power remains within defined limits. You can use AMD SMI to verify NPM status and monitor the node’s power allocation. This feature is supported on AMD Instinct MI355X and MI350X GPUs in both bare-metal and KVM SR-IOV virtualized environments when used with Platform Level Data Model (PLDM) bundle 01.25.17.07.
 
-## Summary 
+## Summary
 
 With this ROCm 7.2 release, the platform continues to mature as a high-performance, production-ready ecosystem for AI and HPC. These updates strengthen performance, scalability, and reliability across the ROCm software stack for real-world deployments.
 

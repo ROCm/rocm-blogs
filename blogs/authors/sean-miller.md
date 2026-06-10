@@ -1,3 +1,12 @@
+---
+thumbnail: Sean-Miller.png
+myst:
+  html_meta:
+    "description lang=en": "Sean Miller"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Sean Miller">
@@ -7,13 +16,6 @@
 (seanmill)=
 
 # Sean Miller
-
-```{image} ./data/Sean-Miller.png
-:alt: Sean
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Sean is a Senior Member of Technical Staff (SMTS), Software System Design Engineer in AMD's Data
 Center GPU Solutions and Performance Analysis group. He received his PhD from the University of

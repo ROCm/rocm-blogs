@@ -1,3 +1,12 @@
+---
+thumbnail: Soumitra-Chaterjee.png
+myst:
+  html_meta:
+    "description lang=en": "Soumitra Chatterjee"
+    "keywords": "blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Soumitra Chatterjee">
@@ -7,13 +16,6 @@
 (soumitra-chatterjee)=
 
 # Soumitra Chatterjee
-
-```{image} ./data/Soumitra-Chaterjee.png
-:alt: Soumitra Chaterjee
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Soumitra Chatterjee is a system software specialist with a deep-rooted passion for enabling cutting-edge platforms through robust, high-impact solutions.
 

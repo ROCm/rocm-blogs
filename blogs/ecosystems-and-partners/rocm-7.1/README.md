@@ -49,11 +49,11 @@ SOFTWARE.
 
 # Continuing the Momentum: Refining ROCm For The Next Wave Of AI and HPC
 
-Earlier this year, we introduced [ROCm 7.0](https://rocm.docs.amd.com/en/docs-7.0.0/about/release-notes.html), a major milestone that supercharged AI and HPC infrastructure with improved performance, expanded datatype support—including FP4 and FP6—and deeper integration across frameworks like PyTorch, TensorFlow, and Triton. 
+Earlier this year, we introduced [ROCm 7.0](https://rocm.docs.amd.com/en/docs-7.0.0/about/release-notes.html), a major milestone that supercharged AI and HPC infrastructure with improved performance, expanded datatype support—including FP4 and FP6—and deeper integration across frameworks like PyTorch, TensorFlow, and Triton.
 
 Building on this foundation, [ROCm 7.1](https://rocm.docs.amd.com/en/docs-7.1.0/about/release-notes.html) delivers targeted enhancements designed to make the platform faster, more reliable, and easier for developers and system builders to work with. In this blog, you’ll see how ROCm 7.1 continues to elevate GPU performance, scalability, and developer productivity across the AMD ecosystem. This release introduces smarter HIP runtime features for faster data movement, unified memory optimization, and better multi-GPU control. It also expands system support to new OS versions and enables flexible GPU partitioning on AMD Instinct MI350 and MI355X accelerators for scalable, efficient deployments. Enhanced RCCL communication delivers faster multi-GPU training and improved throughput, while upgraded profiling tools give developers deeper insights to fine-tune performance across AI and HPC workloads.
 
-## Elevating HIP Runtime for Faster, Smarter GPU Performance:  
+## Elevating HIP Runtime for Faster, Smarter GPU Performance
 
 ROCm 7.1 expands HIP with new CUDA-parity memory and stream controls plus runtime optimizations that reduce launch overheads and accelerate multi-GPU workflows. On the memory side, HIP adds 2D memset variants including `hipMemsetD2D8/16/32` and their async forms along with `hipMemcpyBatchAsync` and `hipMemcpy3DBatchAsync` to cut setup time for large tensors and batched transfers, and new 3D peer copies including `hipMemcpy3DPeer` and `hipMemcpy3DPeerAsync` for device-to-device pipelines. Managed memory gets smarter through `hipMemPrefetchAsync_v2` and `hipMemAdvise_v2` so applications can prefetch or hint placement based on observed access patterns, enabling more predictable performance under unified memory for developers.
 
@@ -72,7 +72,7 @@ From a performance perspective, hipBLASLt integrates TF32-optimized kernels for 
 The **hipBLAS 3.1.0** release complements these updates by modernizing build and deployment. A new `--clients-only` build mode lets teams compile only client applications against prebuilt libraries; ideal for CI/CD environments. The new build mode also adds Fortran enablement for Windows, extended GPU support, and shorter client build times. These changes align hipBLAS with other ROCm math libraries' modular build philosophy described in the [ROCm Core SDK and TheRock Build System Blog](https://rocm.blogs.amd.com/software-tools-optimization/therock/README.html).
 For more information you can see the [hipBLAS](https://rocm.docs.amd.com/en/docs-7.1.0/about/release-notes.html#hipblas-3-1-0) and [hipBLASLt](https://rocm.docs.amd.com/en/docs-7.1.0/about/release-notes.html#hipblaslt-1-1-0) Changelogs.
 
-## Expanded System Enablement:  
+## Expanded System Enablement
 
 ROCm 7.1 broadens system and virtualization support across the AMD Instinct™ accelerator family, giving developers more flexibility in deploying AI and HPC workloads on diverse infrastructures.
 
@@ -82,7 +82,7 @@ Additionally, the ROCm 7.1 Kernel Fusion Driver (KFD) now efficiently handles **
 
 ROCm 7.1 also adds **KVM SR-IOV** Guest OS Support for RHEL 10.0 on AMD Instinct MI355X and MI350X GPUs. This feature allows secure GPU pass-through and partitioned compute access inside virtual machines, ideal for multi-tenant clouds and AI research clusters. Developers can deploy containerized or virtualized workloads with near-native performance, fully managed by AMD's GPU Virtualization Host Driver. For more information on virtualization and GPU partitioning, see the [Virtualization Updates](https://rocm.docs.amd.com/en/docs-7.1.0/about/release-notes.html#virtualization-update-for-amd-instinct-mi350-series-gpus) and [Virtualization Support](https://rocm.docs.amd.com/projects/install-on-linux/en/docs-7.1.0/reference/system-requirements.html#virtualization-support).
 
-## Enhanced Multi-GPU Communication and Performance with RCCL:
+## Enhanced Multi-GPU Communication and Performance with RCCL
 
 ROCm 7.1 delivers significant enhancements to the [AMD ROCm Communication Collectives Library (RCCL)](https://github.com/ROCm/rccl), boosting performance and scalability for multi-GPU workloads. This release delivers higher throughput, reduced latency, and improved scaling across multi-GPU and multi-node configurations.
 
@@ -99,7 +99,7 @@ Extensive tuning for AMD Instinct™ MI350 series yields measurable throughput g
 
 Finally, RCCL 2.27.7 maintains API-level compatibility with NCCL 2.27.7, integrating **Parallel Aggregated Tree (PAT)** algorithms for enhanced hierarchical reductions. This ensures that frameworks built on top of NCCL continue to operate seamlessly with RCCL as the backend. Symmetric-memory kernels remain disabled in this release while AMD finalizes unified memory enablement within the HIP runtime; users can track progress via the [ROCm Release Notes](https://rocm.docs.amd.com/en/docs-7.1.0/about/release-notes.html#rccl-amd-instinct-mi350-series-enhancements).
 
-## Enhanced Profiling and Debugging Tools:     
+## Enhanced Profiling and Debugging Tools
 
 ROCm 7.1 significantly advances AMD's GPU profiling and debugging ecosystem, giving deeper visibility into performance across both runtime and framework levels. These improvements span **ROCprofiler-SDK, ROCm Compute Profiler, ROCgdb**, and the **ROCm Systems Profiler**, creating a unified toolchain for kernel-level analysis, AI workload tracing, and cross-process performance correlation.
 
@@ -111,15 +111,15 @@ ROCprofiler-SDK introduces experimental **Streaming Performance Monitor (SPM)** 
 
 [ROCgdb](https://rocm.docs.amd.com/projects/ROCgdb/en/docs-7.1.0/index.html) now achieves up to 80% code coverage, offering more robust break point handling and call-stack introspection for HIP kernels, while maintaining full compatibility with modern ROCm runtimes. The [ROCm Systems Profiler](https://rocm.docs.amd.com/projects/rocprofiler-systems/en/latest/index.html) (formerly Omnitrace) now validates JAX and PyTorch frameworks, defaults to AMD SMI for telemetry, and integrates directly with `rocpd` for multi-process summary generation, ideal for profiling large, distributed training runs.
 
-## Optimizing Efficiency with AMD SMI Power Cap:
+## Optimizing Efficiency with AMD SMI Power Cap
 
 The AMD SMI “Set Power Cap” improvement introduces finer power management control for AMD Instinct MI300X GPUs in virtualized environments. With this update, a virtual machine (VM) can now directly set a GPU power cap when running in a 1VF (single virtual function) configuration. The system automatically enforces the lowest power limit among those defined by the host, VM, and APML (Advanced Platform Management Link), ensuring safe and efficient operation. This allows users to tailor GPU power usage to their specific workload needs—balancing performance, thermal limits, and energy efficiency.
 
-## Summary  
+## Summary
 
-With [ROCm 7.1](https://rocm.docs.amd.com/en/latest/about/release-notes.html), the platform continues to evolve as a robust, production-ready ecosystem for AI and HPC. Each update strengthens the ROCm software stack, ensuring developers have the tools and performance they need to deploy next-generation workloads efficiently. We invite you to explore ROCm 7.1 and join the growing community pushing the frontiers of AI on an open platform. 
+With [ROCm 7.1](https://rocm.docs.amd.com/en/latest/about/release-notes.html), the platform continues to evolve as a robust, production-ready ecosystem for AI and HPC. Each update strengthens the ROCm software stack, ensuring developers have the tools and performance they need to deploy next-generation workloads efficiently. We invite you to explore ROCm 7.1 and join the growing community pushing the frontiers of AI on an open platform.
 
-For more information, visit [amd.com/ROCm](https://www.amd.com/en/products/software/rocm.html) and join the open AI/HPC community driving ROCm forward. 
+For more information, visit [amd.com/ROCm](https://www.amd.com/en/products/software/rocm.html) and join the open AI/HPC community driving ROCm forward.
 
 ## Additional Resources
 

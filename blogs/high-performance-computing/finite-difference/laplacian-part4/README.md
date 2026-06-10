@@ -154,7 +154,7 @@ FOM for each individual GPU on a `512` $\times$ `512` $\times$ `512` grid of poi
 From here on out, experiments on both the MI250 and MI250X GPUs shall be conducted on a single GCD.
 The figure below depicts the FOM[^1] across the various AMD GPUs and problem sizes.
 
-<img src="diagrams/all_hardware.svg" width="600px">
+<img src="diagrams/all_hardware.svg" alt="all hardware" width="600px">
 
 <p style="text-align:center">
 Figure 1: Performance of Kernel 5 across various AMD GPUs and problem sizes
@@ -178,7 +178,7 @@ GPUs all have 8 MB of L2 cache shared among the compute units (CUs) per GCD, so 
 will be useful in determining how well cached data is reused. The figure below
 illustrates our findings across the same spectrum of problem sizes:
 
-<img src="diagrams/mi250x_rocprof.svg" width="600px">
+<img src="diagrams/mi250x_rocprof.svg" alt="mi250x rocprof" width="600px">
 
 <p style="text-align:center">
 Figure 2: Fetch efficiency and L2 cache hit rates of Kernel 5 on a single MI250X GCD across various problem sizes
@@ -207,7 +207,7 @@ performance begins to degrade. From a starting z-stride of ~1 MB (equivalent to 
 with `nx` fixed to three different sizes, we incrementally increase `ny` until the xy-plane exceeds
 8 MB (`nx*ny*sizeof(double)`). See the figure below:
 
-<img src="diagrams/mi250x_degradation.svg" width="600px">
+<img src="diagrams/mi250x_degradation.svg" alt="mi250x degradation" width="600px">
 
 <p style="text-align:center">
 Figure 3: Performance impact from an increasing <code class="codesnippet">nx*ny</code> stride for various fixed values of <code class="codesnippet">nx</code> on a single MI250X GCD
@@ -233,7 +233,7 @@ Let us quickly perform a new scaling study to verify that the LLC of the two Rad
 factor of performance for larger sizes. To ensure that we do not run out of memory, let us begin with `nx,ny,nz = 1024,1024,32`
 and slowly increment the value of `ny`:
 
-<img src="diagrams/radeon_degradation.svg" width="600px">
+<img src="diagrams/radeon_degradation.svg" alt="radeon degradation" width="600px">
 
 <p style="text-align:center">
 Figure 4: Performance impact from an increasing <code class="codesnippet">nx*ny</code> stride on the RX 6900 XT and RX 7900 XTX GPUs
@@ -404,7 +404,7 @@ dim3 grid(
 
 
 laplacian_kernel<<<grid, block>>>(d_f, d_u,
-    nx, ny, nz, invhx2, invhy2, invhz2, 
+    nx, ny, nz, invhx2, invhy2, invhz2,
     invhxyz2);
 ```
 

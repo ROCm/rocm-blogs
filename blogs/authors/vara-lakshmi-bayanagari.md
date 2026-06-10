@@ -1,3 +1,12 @@
+---
+thumbnail: varalakshmi-bayanagari.PNG
+myst:
+  html_meta:
+    "description lang=en": "Vara Lakshmi Bayanagari"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Vara Lakshmi Bayanagari">
@@ -7,13 +16,6 @@
 (varabaya)=
 
 # Vara Lakshmi Bayanagari
-
-```{image} ./data/varalakshmi-bayanagari.PNG
-:alt: Vara
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Vara Lakshmi is a Machine Learning Engineer at AMD who specializes in experimenting and evaluating
 advanced machine learning (ML) models on AMD hardware. She holds a Master's degree in Computer

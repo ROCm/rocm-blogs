@@ -1,3 +1,12 @@
+---
+thumbnail: Rajneesh-Bhardwaj.jpg
+myst:
+  html_meta:
+    "description lang=en": "Rajneesh Bhardwaj"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Rajneesh Bhardwaj">
@@ -7,13 +16,6 @@
 (rajbhar)=
 
 # Rajneesh Bhardwaj
-
-```{image} ./data/Rajneesh-Bhardwaj.jpg
-:alt: Rajneesh
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Rajneesh Bhardwaj is a System Software Architect for AMD Instinct accelerators.
 

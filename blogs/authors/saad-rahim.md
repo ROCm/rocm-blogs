@@ -1,3 +1,12 @@
+---
+thumbnail: Saad-Rahim.jpg
+myst:
+  html_meta:
+    "description lang=en": "Saad Rahim"
+    "keywords": "AMD GPU, AI, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Saad Rahim">
@@ -5,13 +14,6 @@
 </head>
 
 # Saad Rahim
-
-```{image} ./data/Saad-Rahim.jpg
-:alt: Saad Rahim
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Saad is a software product manager for the Instinct GPU software stack responsible
 for packaging, documentation, drivers, and runtimes. He is the driving force behind

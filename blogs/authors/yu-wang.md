@@ -1,3 +1,12 @@
+---
+thumbnail: Yu-Wang.jpg
+myst:
+  html_meta:
+    "description lang=en": "Yu Wang"
+    "keywords": "AMD GPU, HPC, MI300, MI300, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Yu Wang">
@@ -7,13 +16,6 @@
 (yuwang)=
 
 # Yu Wang
-
-```{image} ./data/Yu-Wang.jpg
-:alt: Yu
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Yu Wang is a Principal AI Software Solution Architect at AMD, leading enterprise AI software product management in the Compute and Enterprise AI (CEAI) Business Unit. She drives the product roadmap for large-scale inference, orchestration, and production deployment on AMD Instinct GPUs, enabling scalable, open, and enterprise-ready AI solutions.
 

@@ -45,7 +45,7 @@ on which line or slice of the computational grid is accessed. The figure below d
 how an excessive number of cache lines can get accessed in an unaligned case (left) and
 how the optimal number of cache lines is accessed with a proper offset and padding.
 
-<img src="../figures/alignment.png" width="700px">
+<img src="../figures/alignment.png" alt="alignment" width="700px">
 
 <p style="text-align:center">
 Figure 1: Unaligned and aligned cache line accesses for a 2D array.
@@ -195,7 +195,7 @@ neighboring accesses hit on the same cache line regardless whether the
 data is cache-line aligned or not (Fig. 2). As a result, there is small
 difference in data movement across all levels of the memory subsystem.
 
-<img src="../figures/aligned_x.png" width="700px">
+<img src="../figures/aligned_x.png" alt="aligned x" width="700px">
 
 <p style="text-align:center">
 Figure 2: Due to the halo region of radius R, partial cache lines need to
@@ -203,7 +203,7 @@ Figure 2: Due to the halo region of radius R, partial cache lines need to
  whether the data is cache line-aligned or not.
 </p>
 
-<img src="../figures/unaligned_x.png" width="700px">
+<img src="../figures/unaligned_x.png" alt="Unaligned x" width="700px">
 
 <p style="text-align:center">
 Figure 3: The number of cache lines accessed when loading the neighboring
@@ -217,7 +217,7 @@ In contrast, for the y kernel, each neighboring access hits on a different cache
 Without alignment, the number of accessed cache lines per thread block is much greater
 compared to the aligned case (Fig. 3 and Fig 4.).
 
-<img src="../figures/aligned_y.png" width="700px">
+<img src="../figures/aligned_y.png" alt="Aligned y" width="700px">
 
 <p style="text-align:center">
 Figure 3:  The figure shows the cache lines that a group of threads along the bottom
@@ -228,7 +228,7 @@ lines are collinear and that minimizes the number of accesses needed when
 computing the y-direction stencil using the cache.
 </p>
 
-<img src="../figures/unaligned_y.png" width="700px">
+<img src="../figures/unaligned_y.png" alt="Unaligned y" width="700px">
 
 <p style="text-align:center">
 Figure 4:  Same as (Fig. 3) but with unaligned data. In this case, the y-direction
@@ -258,7 +258,7 @@ but the z-direction kernel is nowhere close:
 > and not 9.0. In our experimentation not shown in this blog post, a 1024 x 1024 x 1024
 > cube indeed has a read / write ratio of 9.0
 
-<img src="../figures/z_no_reuse.png" width="700px">
+<img src="../figures/z_no_reuse.png" alt="Z no reuse" width="700px">
 
 <p style="text-align:center">
 Figure 5: The stencil in the z-direction suffers from excessive HBM data
@@ -305,7 +305,7 @@ go to global memory. Fortunately, the type of stencil patterns that
 emerge from high order finite differences have a repeating pattern that
 can be handled using a sliding window technique (Fig. 6)
 
-<img src="../figures/sliding_window_overview.png" width="700px">
+<img src="../figures/sliding_window_overview.png" alt="Sliding window overview" width="700px">
 
 <p style="text-align:center">
 Figure 6: The key idea behind the sliding window technique for
@@ -331,26 +331,26 @@ Repeat steps 2 - 4 for each grid point that the sliding window updates.
 See the below images for a pictorial description of the above steps assuming
 `R=4` and an input array `p[i]` initialized with `p[i] = i * i` :
 
-<img src="../figures/sliding_window_1.svg" width="700px">
+<img src="../figures/sliding_window_1.svg" alt="Sliding window step 1" width="700px">
 
 <p style="text-align:center">
 Figure 7: Step 1 - priming the window by loading the first 8 values
 </p>
 
-<img src="../figures/sliding_window_2.svg" width="700px">
+<img src="../figures/sliding_window_2.svg" alt="Sliding window step 2" width="700px">
 
 <p style="text-align:center">
 Figure 8: Steps 2 and 3 - loading the last value of the window, computing the finite difference,
 and storing the result
 </p>
 
-<img src="../figures/sliding_window_3.svg" width="700px">
+<img src="../figures/sliding_window_3.svg" alt="Sliding window step 3" width="700px">
 
 <p style="text-align:center">
 Figure 9: Step 4 - updating the sliding window
 </p>
 
-<img src="../figures/sliding_window_4.svg" width="700px">
+<img src="../figures/sliding_window_4.svg" alt="Sliding window step 4" width="700px">
 
 <p style="text-align:center">
 Figure 10: Repeat steps 2 through 4 with the newly shifted sliding window
@@ -401,7 +401,7 @@ the z-direction:
 // Apply approximation in the x-direction for all interior grid points
 for (int j = R; j < ny + R; ++j) {
     for (int i = R; i < nx + R; ++i) {
-        const uint64_t pos = i + line * j;          
+        const uint64_t pos = i + line * j;
         compute_fd_z_sliding_window<R>(p_out, p_in, d, R, nz + R, pos, slice);
     }
 }
@@ -510,7 +510,7 @@ number of load and stores of the baseline kernel to the optimal number:
 $S \leq (1 + (2R + 1))/(1 + 1) = R+1$. For $R=4$, the speedup is at most
 5x.
 
-<img src="../figures/sliding_window.png" width="500px">
+<img src="../figures/sliding_window.png" alt="Sliding window" width="500px">
 
 <p style="text-align:center">
 Figure 11: The sliding window kernel exhibits up to an effective memory bandwidth of

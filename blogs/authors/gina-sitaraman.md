@@ -1,3 +1,13 @@
+---
+thumbnail: Gina-Sitaraman.png
+myst:
+  html_meta:
+    "description lang=en": "Gina Sitaraman"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor,
+  blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Gina Sitaraman">
@@ -8,13 +18,6 @@
 (ginasita)=
 
 # Gina Sitaraman
-
-```{image} ./data/Gina-Sitaraman.png
-:alt: Gina
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Gina Sitaraman is a Senior Member of Technical Staff (SMTS) Software System Design Engineer in the Data
 Center GPU Solutions and Performance Analysis group. She obtained her PhD in Computer Science from the

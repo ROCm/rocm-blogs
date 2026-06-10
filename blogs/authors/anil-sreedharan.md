@@ -1,3 +1,12 @@
+---
+thumbnail: Anil-Sreedharan.png
+myst:
+  html_meta:
+    "description lang=en": "Anil Sreedharan"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Anil Sreedharan">
@@ -7,13 +16,6 @@
 (askmi)=
 
 # Anil Sreedharan
-
-```{image} ./data/Anil-Sreedharan.png
-:alt: Anil
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Anil leads the AMD AI Infrastructure and MLOps product management team, bringing experience in enabling technological
 innovation at the intersection of artificial intelligence and platform engineering. Anil's career journey includes

@@ -1,3 +1,12 @@
+---
+thumbnail: ning-zhang.jpg
+myst:
+  html_meta:
+    "description lang=en": "George Wang"
+    "keywords": "AMD GPU, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="George Wang">
@@ -7,13 +16,6 @@
 (ningzhang)=
 
 # Ning Zhang
-
-```{image} ./data/ning-zhang.jpg
- :alt: Ning Zhang
- :class: bg-primary
- :height: 250px
- :align: left
- ```
 
 Ning Zhang is AI software architect in the AI Group at AMD, well experienced in software development
 and performance optimization on CPU, GPU, and DSP platforms. He has about 15 years of experience in

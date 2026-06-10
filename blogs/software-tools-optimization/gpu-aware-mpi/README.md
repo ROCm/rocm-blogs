@@ -284,7 +284,7 @@ through one hop, while GCD 0 is connected to GCD 3 at least through two hops. Th
 maximum achievable bandwidth between GCDs depends on the number of infinity fabric
 links between GCDs and also the number of hops between them.
 
-<img src="diagrams/mi250_diag.png" width="400px">
+<img src="diagrams/mi250_diag.png" alt="MI250 diagram" width="400px">
 
 <p style="text-align:center">
 Figure 1. Diagram of a node with 4 MI250 GPUs (8 GCDs). Each green box is one MI250

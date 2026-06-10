@@ -60,7 +60,7 @@ of the entities and their relationships.
 Can AMD GPUs help with graph analytic operations? We will show some cases where GPUs can improve
 the performance of these valuable algorithms.
 
-<img src="images/chesapeake.png" width="300px">
+<img src="images/chesapeake.png" alt="chesapeake" width="300px">
 
 <p style="text-align:center">
 Figure 1: Visualization of the "chesapeake" dataset, a graph with 34 nodes and 340 edges.
@@ -94,7 +94,7 @@ for a node that satisfies a given property.
 4. It also marks each node as explored or unexplored to avoid visiting the same node twice
 5. BFS can find the shortest path from the root node to any other node in the graph
 
-<img src="images/bfs-drawing.svg" width="400px">
+<img src="images/bfs-drawing.svg" alt="bfs drawing" width="400px">
 
 <p style="text-align:center">
 Figure 2: Visualization of BFS iterations operating on different levels of a graph.

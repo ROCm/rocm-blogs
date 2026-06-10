@@ -70,9 +70,9 @@ Each model was tested across:
 
 - **Concurrency levels:** 4, 8, 16, 32, 64, and 128 simultaneous requests.
 - **Sequence configurations:** Input and output Sequence Length (ISL/OSL)
- - **1024/1024** – Balanced input/output
- - **1024/8192** – Long-form generation
- - **8192/1024** – Large-context summarization
+- **1024/1024** – Balanced input/output
+- **1024/8192** – Long-form generation
+- **8192/1024** – Large-context summarization
 
 The benchmark configuration above reflects real-world workloads, from interactive chat to document summarization at scale.
 
@@ -89,7 +89,7 @@ DeepSeek-R1 is a widely adopted open reasoning model built on **Mixture-of-Exper
 ```{figure} ./images/DeepSeek-R1.png
 :align: center
 :alt: Scaling performance
-Total Throughput vs E2E Latency on DeepSeek-R1 (FP8) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM. 
+Total Throughput vs E2E Latency on DeepSeek-R1 (FP8) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM.
 ```
 
 ### GPT-OSS-120B
@@ -101,7 +101,7 @@ GPT-OSS-120B is OpenAI’s first open-weight LLM, and for this benchmark, both p
 ```{figure} ./images/GPT-OSS-120b.png
 :align: center
 :alt: Scaling performance
-Total Throughput vs E2E Latency on GPT-OSS-120B (FP4) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM. 
+Total Throughput vs E2E Latency on GPT-OSS-120B (FP4) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM.
 ```
 
 ### Qwen3-235B
@@ -118,7 +118,7 @@ Overall, MI355X GPU achieves **slightly above parity with B200**, with a **geome
 ```{figure} ./images/Qwen3-235B.png
 :align: center
 :alt: Scaling performance
-Total Throughput vs E2E Latency on Qwen3-235B (BF16) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM. 
+Total Throughput vs E2E Latency on Qwen3-235B (BF16) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM.
 ```
 
 ### Llama-3.3-70B
@@ -136,7 +136,7 @@ Overall, MI355X GPU delivers **0.94x of B200’s performance** across configurat
 ```{figure} ./images/Llama-3.3-70B.png
 :align: center
 :alt: Scaling performance
-Total Throughput vs E2E Latency on Llama-3.3-70B (FP8) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM. 
+Total Throughput vs E2E Latency on Llama-3.3-70B (FP8) across concurrencies 4, 8, 16, 32, 64, 128 for MI355X and B200 GPUs on vLLM.
 ```
 
 ## Summary
@@ -167,7 +167,7 @@ Learn more about our previous work on vLLM from the following ROCm Blogs:
 
 ### *DeepSeek-R1*
 
-#### MI355X
+#### DeepSeek-R1 on MI355X
 
 Docker: rocm/7.x-preview:rocm7.2_preview_ubuntu_22.04_vlm_0.10.1_instinct_20251029
 
@@ -197,7 +197,7 @@ vllm serve ${MODEL} \
     --enable-chunked-prefill
 ```
 
-#### B200
+#### DeepSeek-R1 on B200
 
 Docker: vllm/vllm-openai:v0.10.2
 
@@ -233,7 +233,7 @@ vllm serve ${MODEL} \
 
 ### *GPT-OSS-120B*
 
-#### MI355X
+#### GPT-OSS-120B on MI355X
 
 Docker: rocm/7.0:rocm7.0_ubuntu_22.04_vllm_0.10.1_instinct_20250927_rc1
 
@@ -241,8 +241,8 @@ Docker: rocm/7.0:rocm7.0_ubuntu_22.04_vllm_0.10.1_instinct_20250927_rc1
 MODEL="openai/gpt-oss-120b"
 
 cat > config.yaml << EOF
-compilation-config: '{"compile_sizes":[1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124,126,128,256,512,1024,2048,8192], 
-"cudagraph_capture_sizes":[1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124,126,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272,280,288,296,304,312,320,328,336,344,352,360,368,376,384,392,400,408,416,424,432,440,448,456,464,472,480,488,496,504,512,520,528,536,544,552,560,568,576,584,592,600,608,616,624,632,640,648,656,664,672,680,688,696,704,712,720,728,736,744,752,760,768,776,784,792,800,808,816,824,832,840,848,856,864,872,880,888,896,904,912,920,928,936,944,952,960,968,976,984,992,1000,1008,1016,1024,2048,4096,8192], "cudagraph_mode":"FULL_AND_PIECEWISE"}' 
+compilation-config: '{"compile_sizes":[1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124,126,128,256,512,1024,2048,8192],
+"cudagraph_capture_sizes":[1,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,110,112,114,116,118,120,122,124,126,128,136,144,152,160,168,176,184,192,200,208,216,224,232,240,248,256,264,272,280,288,296,304,312,320,328,336,344,352,360,368,376,384,392,400,408,416,424,432,440,448,456,464,472,480,488,496,504,512,520,528,536,544,552,560,568,576,584,592,600,608,616,624,632,640,648,656,664,672,680,688,696,704,712,720,728,736,744,752,760,768,776,784,792,800,808,816,824,832,840,848,856,864,872,880,888,896,904,912,920,928,936,944,952,960,968,976,984,992,1000,1008,1016,1024,2048,4096,8192], "cudagraph_mode":"FULL_AND_PIECEWISE"}'
 EOF
 
 export VLLM_USE_AITER_UNIFIED_ATTENTION=1
@@ -263,7 +263,7 @@ vllm serve $MODEL --port $PORT \
 
 ### *Qwen3-235B-A22B-Instruct-2507*
 
-#### MI355X
+#### Qwen3-235B-A22B-Instruct-2507 on MI355X
 
 Docker: amdsiloai/vllm:20251208-qwen3-1999bf5
 
@@ -284,7 +284,7 @@ vllm serve ${MODEL} \
     --no-enable-prefix-caching: true
 ```
 
-#### B200
+#### Qwen3-235B-A22B-Instruct-2507 on B200
 
 Docker: vllm/vllm-openai:v0.11.2
 
@@ -298,8 +298,7 @@ vllm serve ${MODEL} \
 
 ### *Llama-3.3-70B*
 
-#### MI355X
-
+#### Llama-3.3-70B on MI355X
 
 Docker: amdsiloai/vllm:rocm7.2_preview_ubuntu_22.04_vllm_0.10.1_instinct_20251120
 
@@ -307,7 +306,7 @@ Docker: amdsiloai/vllm:rocm7.2_preview_ubuntu_22.04_vllm_0.10.1_instinct_2025112
 MODEL=amd/Llama-3.3-70B-Instruct-FP8-KV
 
 export VLLM_ROCM_USE_AITER_MHA=1
-export VLLM_ROCM_USE_AITER=1 
+export VLLM_ROCM_USE_AITER=1
 export VLLM_ROCM_QUICK_REDUCE_QUANTIZATION="INT4"
 export VLLM_ROCM_USE_AITER_TRITON_FUSED_ROPE_ZEROS_KV_CACHE=1
 
@@ -327,6 +326,7 @@ vllm serve ${MODEL} \
 ```
 
 ## Endnotes
+
 Based on testing by AMD Silo AI on 05-Dec 2025, DeepSeek-R1 (FP8), GPT-OSS 120B (FP4), Qwen3 (BF16), and Llama 3.3 70B (FP8) were tested with a maximum sequence length of 8192 tokens using a maximum batch size of 128. Server manufacturers may vary configurations, yielding different results. Performance may vary based on the use of the latest drivers and optimizations.
 
 AMD system configuration: Dual Core AMD EPYC 9575F 64-core processor, AMD Instinct MI355X 8x GPU platform, 3072 GiB RAM (24 DIMMS, 6400 mts, 128 GiB/DIMM), System BIOS 1.5a, 1 NUMA node per socket, Host OS Ubuntu 22.04.5 LTS with Linux kernel 5.15.0-140-generic, Host GPU driver ROCm 7.0.1 + amdgpu 6.14.14, PyTorch 2.9.0, AMD ROCm 7.0.1 software

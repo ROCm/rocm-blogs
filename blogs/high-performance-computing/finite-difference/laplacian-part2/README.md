@@ -169,7 +169,7 @@ Circling back to the 3D Laplacian kernel, there are three potential directions f
 loop tiling. Let us tile in the `y`-direction for demonstration.
 Consider the figure below illustrating the reuse pattern:
 
-<img src="diagrams/reuse.png" width="700px">
+<img src="diagrams/reuse.png" alt="reuse" width="700px">
 
 <p style="text-align:center">
 Figure 1: Illustration of loop tiling for each thread on an  <code class="codesnippet">xy</code> plane. The number of grid points loaded and reused depends on the tile width.
@@ -606,13 +606,13 @@ requests sent to it) but failed to improve the reuse of the data loaded from glo
 L2 cache. To understand why the previous kernel achieves suboptimal L2 data reuse, let us visualize
 the 3D stencils and their read access patterns if `m = 2`:
 
-<img src="diagrams/5x5-stencil_pattern.png" width="500px">
+<img src="diagrams/5x5-stencil_pattern.png" alt="5x5 stencil pattern" width="500px">
 
 <p style="text-align:center">
 Figure 2: Finite difference stencil in 3D space with a tile factor of <code class="codesnippet">m = 2</code>. The black numbers represent the order each thread in Kernel 2 accesses elements of <code class="codesnippet">u</code>.
 </p>
 
-<img src="diagrams/access-pattern.png">
+<img src="diagrams/access-pattern.png" alt="access pattern">
 
 <p style="text-align:center">
 Figure 3: Kernel 2 memory access pattern of a single thread for the array <code class="codesnippet">u</code> with a tile factor of <code class="codesnippet">m = 2</code>. The numbers and black arrows correspond to the order the thread accesses elements of <code class="codesnippet">u</code>. The <code class="codesnippet">n = 0</code> and <code class="codesnippet">n = 1</code> rows represent <code class="codesnippet">u</code> elements needed for the stencil computation of grid points <code class="codesnippet">pos</code> and <code class="codesnippet">pos + nx</code>, respectively. The 1st accessed element (<code class="codesnippet">u[pos]</code>) is loaded during the <code class="codesnippet">n = 0</code> iteration and reused for the <code class="codesnippet">y - 1</code> element of the <code class="codesnippet">n = 1</code> iteration. Likewise the 7th accessed element (<code class="codesnippet">u[pos + nx]</code>) is loaded during the <code class="codesnippet">n = 1</code> iteration and reused for the <code class="codesnippet">y + 1</code> element of the <code class="codesnippet">n = 0</code> iteration.
@@ -624,12 +624,12 @@ the `x` direction elements for the next iteration of `n`. Frequently accessing `
 and backward in the memory address may prematurely evict reusable data from cache. We prefer to instead reorder the
 instructions in the kernel to only use a single direction i.e., accessing memory by ascending address:
 
-<img src="diagrams/5x5-stencil_pattern2.png" width="500px">
+<img src="diagrams/5x5-stencil_pattern2.png" alt="5x5 stencil pattern2" width="500px">
 
 <p style="text-align:center">
 Figure 4: Finite difference stencil in 3D space with a tile factor of <code class="codesnippet">m = 2</code>. The black numbers represent the order each thread the proposed kernel accesses elements of <code class="codesnippet">u</code>.
 </p>
-<img src="diagrams/access-pattern2.png" class="img-center">
+<img src="diagrams/access-pattern2.png" alt="access pattern2" class="img-center">
 <p style="text-align:center">
 Figure 5: Proposed memory access pattern of a single thread for the array <code class="codesnippet">u</code> with a tile factor of <code class="codesnippet">m = 2</code>. The numbers and black arrows correspond to the order the thread accesses elements of <code class="codesnippet">u</code>. The <code class="codesnippet">n = 0</code> and <code class="codesnippet">n = 1</code> rows represent <code class="codesnippet">u</code> elements needed for the stencil computation of grid points <code class="codesnippet">pos</code> and <code class="codesnippet">pos + nx</code>, respectively. The 5th accessed element (<code class="codesnippet">u[pos]</code>) is loaded during the <code class="codesnippet">n = 0</code> iteration and reused for the <code class="codesnippet">y - 1</code> element of the <code class="codesnippet">n = 1</code> iteration. Likewise the 8th accessed element (<code class="codesnippet">u[pos + nx]</code>) is loaded during the <code class="codesnippet">n = 1</code> iteration and reused for the <code class="codesnippet">y + 1</code> element of the <code class="codesnippet">n = 0</code> iteration.
 </p>
@@ -712,7 +712,7 @@ void laplacian(T *d_f, T *d_u, int nx, int ny, int nz, int BLK_X, int BLK_Y, int
     T invhxyz2 = -2. * (invhx2 + invhy2 + invhz2);
 
     laplacian_kernel<<<grid, block>>>(d_f, d_u, nx, ny, nz, invhx2, invhy2, invhz2, invhxyz2);
-} 
+}
 ```
 
 We now go into the details of the computational steps within this kernel. First, we access all `z - 1` grid points followed by a single `y - 1`:

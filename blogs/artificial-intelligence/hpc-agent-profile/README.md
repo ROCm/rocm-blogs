@@ -68,6 +68,7 @@ The architecture (Figure 1) combines three main components, GLM-4.6, Cline and o
 :class: dark-light
 
 Figure 1. Architecture diagram of the HPC coding agent with MCP tools for profiling.
+
 ```
 
 **GLM-4.6**:
@@ -114,7 +115,7 @@ The MCP Profile Server runs co-located with Cline on the profiling container. Cl
 
 First, we'll serve GLM-4.6 with vLLM to provide the LLM backend for our coding agent. The following steps cover the essential setup. For a comprehensive walkthrough with additional details and troubleshooting, refer to [Part 1](https://rocm.blogs.amd.com/artificial-intelligence/hpc-agent-rag/README.html#implementation-step-i-serving-glm-4-6-with-vllm) of this blog series.
 
-#### 1. Launch Container
+#### 1. Launch LLM Container
 
 Launch the LLM container:
 
@@ -125,6 +126,7 @@ docker run -it --rm --runtime=amd \
   --name serve-glm \
   -v $(pwd):/workspace -w /workspace \
   rocm/vllm-dev:nightly_main_20251127
+
 ```
 
 Note that launching a container with AMD runtime requires [AMD Container Toolkit](https://instinct.docs.amd.com/projects/container-toolkit/en/latest/index.html) installed on your system.
@@ -134,16 +136,17 @@ Note that launching a container with AMD runtime requires [AMD Container Toolkit
 Inside the LLM container, install the required dependencies:
 
 ```console
-pip uninstall vllm 
+pip uninstall vllm
 pip install --upgrade pip
 cd /workspace/GLM
 git clone https://github.com/zai-org/GLM-4.5.git
 cd GLM-4.5/example/AMD_GPU/
 pip install -r rocm-requirements.txt
 git clone https://github.com/vllm-project/vllm.git
-cd vllm 
+cd vllm
 export PYTORCH_ROCM_ARCH="gfx942"
 python3 setup.py develop
+
 ```
 
 #### 3. Download and Serve
@@ -153,6 +156,7 @@ Download the GLM-4.6 model from Hugging Face:
 ```console
 pip install "huggingface_hub[cli]"
 huggingface-cli download zai-org/GLM-4.6 --local-dir /localdir/GLM-4.6
+
 ```
 
 Start serving the model with the following command:
@@ -170,13 +174,14 @@ VLLM_USE_V1=1 vllm serve /localdir/GLM-4.6 \
   --port 8000 \
   --api-key <YOUR API KEY> \
   --served-model-name GLM-4.6
+
 ```
 
 ### Step II: Setup Profiling Environment
 
 Next, we'll set up a dedicated container for Cline and profiling tasks. This container uses an image with the latest profiling tools and runs independently from the GLM-4.6 serving container. Unlike Part 1 of this blog series, we'll use Cline through its VS Code extension rather than the CLI version, providing a more intuitive interface for interacting with the agent.
 
-#### 1. Launch Container
+#### 1. Launch Profiling Environment Container
 
 Launch a dedicated container for the profiling environment:
 
@@ -187,6 +192,7 @@ docker run -it --rm --runtime=amd \
   --name mcp-profiling \
   -v $(pwd):/workspace -w /workspace \
   rocm/pytorch:rocm7.1_ubuntu22.04_py3.10_pytorch_release_2.8.0
+
 ```
 
 #### 2. Install AMD-SMI Python API
@@ -195,6 +201,7 @@ In the profiling container, install the AMD-SMI Python API to enable GPU monitor
 
 ```console
 cd /opt/rocm/share/amd_smi && python3 -m pip install .
+
 ```
 
 Installing from the existing ROCm directory ensures compatibility between the AMD-SMI Python API and the installed ROCm version.
@@ -205,6 +212,7 @@ Install the Python dependencies required by rocprof-compute:
 
 ```console
 cd /opt/rocm/libexec/rocprofiler-compute && python3 -m pip install -r requirements.txt
+
 ```
 
 #### 4. Install OpenMPI
@@ -213,6 +221,7 @@ Install OpenMPI, which is required for running the example code we'll be profili
 
 ```console
 sudo apt-get install openmpi-bin openmpi-common libopenmpi-dev
+
 ```
 
 #### 5. Clone Example Repository
@@ -221,6 +230,7 @@ Clone the repository containing the example code we'll be profiling:
 
 ```console
 cd /workspace && git clone https://github.com/amd/HPCTrainingExamples.git
+
 ```
 
 Specifically, we'll use the [Jacobi solver implementation](https://github.com/amd/HPCTrainingExamples/tree/main/HIP/jacobi) as our test case for profiling and optimization.
@@ -228,6 +238,7 @@ Specifically, we'll use the [Jacobi solver implementation](https://github.com/am
 ### Step III: Setup MCP Profile Server
 
 #### 1. Copy MCP Profile Server
+
 Locate the `mcp-rocm-profile` folder in the [src/ directory for this blog](https://rocm.blogs.amd.com/artificial-intelligence/hpc-agent-profile/src/). Copy this folder to your profiling container's workspace directory (e.g., `/workspace/`).
 
 #### 2. Install MCP Profile Server
@@ -236,6 +247,7 @@ Install the Python dependencies required by the MCP Profile Server:
 
 ```console
 cd /workspace/mcp-rocm-profile/ && pip install -r requirements.txt
+
 ```
 
 ### Step IV: Setup Cline
@@ -283,6 +295,7 @@ Configure Cline's API settings to connect to the GLM-4.6 model. Follow these ste
 :scale: 50%
 
 Figure 2. Cline API configuration reference image.
+
 ```
 
 1. Open the Cline UI
@@ -304,6 +317,7 @@ Configure Cline to use the MCP Profile Server. In the Cline top bar, click the M
 :scale: 50%
 
 Figure 3. Cline MCP server configuration reference image.
+
 ```
 
 Replace the contents of `cline_mcp_settings.json` with the following configuration:
@@ -322,6 +336,7 @@ Replace the contents of `cline_mcp_settings.json` with the following configurati
     }
   }
 }
+
 ```
 
 #### 6. Open Example Directory
@@ -344,16 +359,23 @@ To ensure a fair evaluation, we modified the code to remove a pre-existing optim
 // #define OPTIMIZED
 
 #ifdef OPTIMIZED
+
 #define block_size 1024
+
 #else
+
 #define block_size 128
+
 #endif
+
 ```
 
 And set the block size uniformly to 128:
 
 ```cpp
+
 #define block_size 128
+
 ```
 
 This prevents the agent from simply toggling an existing optimization and requires it to identify and implement genuine performance improvements through profiling analysis.
@@ -371,6 +393,7 @@ I would also like to have roofline analysis figures for the baseline and optimiz
 Specify in the plan how you intend to gather the profiling results.
 
 Optimize the existing application, don't create new optimized versions.
+
 ```
 
 The prompt is intentionally slightly ambiguous to test Cline's ability to develop a sensible high-level profiling and optimization strategy. Rather than prescribing specific steps, we specified only the desired outcomes—baseline vs. optimized performance metrics and roofline analysis figures—allowing the agent to autonomously determine the methodology.
@@ -403,6 +426,7 @@ I'm currently in PLAN MODE, so I need to gather information about the codebase f
 Let me start by exploring the file structure and reading key files to understand the implementation.
 
 I'll help you profile and optimize the Jacobi solver implementation. Let me start by exploring the codebase to understand the current implementation and build process.
+
 ```
 
 Next, Cline read the following files:
@@ -516,6 +540,7 @@ The optimized implementation should show:
 - Improved computation-communication overlap
 
 Would you like me to proceed with this plan? The implementation will modify the existing files rather than creating new versions, as requested. Once you approve this plan, I'll need you to toggle to Act mode so I can begin the implementation and profiling work.
+
 ```
 
 Cline's plan follows a methodical approach: establish baseline performance through profiling and metrics collection, implement targeted optimizations, and re-profile to quantify improvements against the baseline.
@@ -534,6 +559,7 @@ First, Cline successfully built the application:
 
 ```console
 make clean && make
+
 ```
 
 Without first testing the application manually, Cline immediately proceeded to use the MCP profiling tools:
@@ -555,6 +581,7 @@ Perfect! Now I have the baseline profiling data. Let me analyze the results and 
 4. **JacobiIterationKernel** has good occupancy (80.08%) but there's still room for optimization
 
 Let me start by implementing the optimizations, beginning with the memory access patterns and kernel configurations.
+
 ```
 
 Cline identified NormKernel1 as the primary optimization target, noting its critically low occupancy (2.49%) despite consuming over half the execution time (54.88%). It also flagged suboptimal occupancy in HaloLaplacianKernel (56.28%) and LocalLaplacianKernel (75.83%), while recognizing JacobiIterationKernel's relatively better performance (80.08% occupancy) still had room for improvement.
@@ -569,6 +596,7 @@ Cline began by editing the Laplacian kernel:
 // Optimized computation with pre-computed constants
     const dfloat inv_dx2 = 1.0 / (dx*dx);
     const dfloat inv_dy2 = 1.0 / (dy*dy);
+
 ```
 
 While pre-computing these reciprocal factors is a sensible optimization, Cline implements this computation inside the kernel where it executes on each thread. A more effective approach would be to compute these constants on the host and pass them as kernel parameters, eliminating redundant computation across all threads. However, modern compilers can optimize such loop-invariant calculations automatically, so in practice this yields only a minor performance increase.
@@ -579,8 +607,11 @@ Next, Cline edited the Norm kernel, targeting it as the primary optimization can
 
 ```cpp
 // Optimized for better occupancy and performance
+
 #define block_size 256
+
 #define vec_size 4  // Vectorization factor
+
 ```
 
 Cline increased the block size from 128 to 256 threads and defined a vectorization factor of 4. However, the vectorization factor was never utilized in the actual kernel implementation. More notably, while the 256-thread block size did improve occupancy, the reference blog demonstrates that a block size of 1024 would have been both viable and more effective for this particular kernel.
@@ -599,11 +630,12 @@ Cline increased the block size from 128 to 256 threads and defined a vectorizati
     dfloat u_val = U[id];
     sum += u_val * u_val * dx_dy;
   }
+
 ```
 
 The code also precomputes the stride and the `dx_dy` product, improving code readability. While modern compilers can optimize such constant expressions automatically, explicitly precomputing these values can aid in code clarity and potentially reduce instruction dependencies. Similarly, storing `U[id]` in a local variable `u_val` before use may help the compiler better optimize register allocation, though advanced compilers often perform this optimization implicitly.
 
- ```cpp
+```cpp
  // Optimized reduction with warp-level operations when possible
   for (int k = block_size / 2; k > 32; k /= 2 ) {
     if ( t < k ) {
@@ -611,7 +643,7 @@ The code also precomputes the stride and the `dx_dy` product, improving code rea
     }
     __syncthreads();
   }
-  
+
   // Final reduction within warp (no need for __syncthreads)
   if (t < 32) {
     #pragma unroll
@@ -619,7 +651,8 @@ The code also precomputes the stride and the `dx_dy` product, improving code rea
       s_dot[t] += s_dot[t + k];
     }
   }
- ```
+
+```
 
 The reduction operation was split into two phases to optimize synchronization overhead. The first phase handles reductions for block sizes larger than a warp (32 threads), using `__syncthreads()` for each iteration step. The second phase targets the final warp reduction, eliminating the `__syncthreads()` overhead entirely. Since threads within a warp execute in lockstep (SIMT execution), explicit synchronization becomes unnecessary for the final 32-thread reduction, allowing for more efficient warp-level operations.
 
@@ -628,6 +661,7 @@ Next, Cline modified the JacobiIteration kernel.
 ```cpp
 // Pre-compute the denominator to avoid repeated division
   const dfloat inv_diag = 1.0 / (2.0/(dx*dx) + 2.0/(dy*dy));
+
 ```
 
 Again, Cline implements a sensible optimization by pre-computing the reciprocal value. However, this computation still occurs inside the kernel rather than on the host. Additionally, since division operations are significantly slower than multiplication on GPUs, computing the reciprocal once and then multiplying by it in each iteration provides a meaningful performance benefit compared to performing division in every loop iteration.
@@ -635,7 +669,9 @@ Again, Cline implements a sensible optimization by pre-computing the reciprocal 
 ```cpp
 // Optimized thread block size for better occupancy
   int xthreads = 256;
+
 ```
+
 Here it reduced the block size to improve occupancy. A 256-thread configuration often achieves better occupancy by reducing register pressure per thread block.
 
 Finally, Cline modified the Laplacian.hip file once more to optimize the HaloLaplacian kernel.
@@ -648,7 +684,9 @@ Finally, Cline modified the Laplacian.hip file once more to optimize the HaloLap
   int numBlocks = (N + xthreads - 1) / xthreads;
   // Ensure sufficient blocks for good occupancy
   numBlocks = max(numBlocks, 32);
+
 ```
+
 By reducing the block size from 512 to 256 threads, Cline aimed to improve kernel occupancy. This modification helps reduce register pressure per thread block, potentially allowing more thread blocks to execute concurrently on the GPU and thereby increasing overall occupancy.
 
 #### Performance Analysis
@@ -712,6 +750,7 @@ The profiling results were gathered using:
 - **Roofline Analysis**: `run_roofline_analysis` for memory bandwidth vs. compute performance characterization
 
 The optimization successfully addressed the primary performance bottleneck (NormKernel1) and achieved significant improvements in overall application performance, memory bandwidth utilization, and GPU resource efficiency. The roofline analysis confirms the optimized implementation achieves better positioning closer to the theoretical performance roofline.
+
 ```
 
 At this point, we considered the task complete. However, we asked Cline to explain its choice of a 256-thread block size for the Norm kernel. Cline responded with a detailed analysis document. You can review the full [Norm Kernel Thread Block Size Optimization Analysis](https://rocm.blogs.amd.com/artificial-intelligence/hpc-agent-profile/normkernel_optimization_analysis.md) for complete details. In summary, Cline argued that 256 threads represented the optimal configuration, noting that larger block sizes of 512 or 1024 threads could exceed register pressure limits and potentially reduce occupancy.
@@ -738,6 +777,7 @@ While Cline reported that "the roofline analysis confirms the optimized implemen
 :scale: 40%
 
 Figure 4. Roofline analysis of the baseline implementation, establishing the performance reference point before optimization.
+
 ```
 
 ```{figure} ./images/roofline_optimized_crop.png
@@ -745,6 +785,7 @@ Figure 4. Roofline analysis of the baseline implementation, establishing the per
 :scale: 40%
 
 Figure 5. Roofline analysis of the optimized version, showing improved positioning toward the theoretical performance ceiling.
+
 ```
 
 The roofline analysis in Figures 4 and 5 reveals that NormKernel1 achieved the most substantial performance improvement. Examining the High-Bandwidth Memory (HBM) roofline, the highest-level cache hierarchy, shows that the optimized kernel operates much closer to the theoretical performance ceiling, though optimization potential remains. With a block size of 1024 threads (as demonstrated in the reference blog), NormKernel1 would align directly with the HBM roofline, indicating optimal memory bandwidth saturation. While HaloLaplacianKernel and NormKernel2 remain distant from the roofline curve, their minimal contribution to total execution time makes them lower-priority optimization targets.

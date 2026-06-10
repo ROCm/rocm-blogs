@@ -1,3 +1,12 @@
+---
+thumbnail: Alex-Voicu.jpg
+myst:
+  html_meta:
+    "description lang=en": "Alex Voicu"
+    "keywords": "AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Alex Voicu">
@@ -7,13 +16,6 @@
 (alexvoic)=
 
 # Alex Voicu
-
-```{image} ./data/Alex-Voicu.jpg
-:alt: Alessandro
-:class: bg-primary
-:height: 250px
-:align: left
-```
 
 Alex Voicu is a Principal Member of Technical Staff at AMD,
 where he works on the LLVM compiler. He was the lead developer
