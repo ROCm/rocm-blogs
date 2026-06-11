@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Productionizing TurboQuant on AMD GPUs for KV-Cache-Bound LLM Inference"
-date: "11, Jun 2026"
+date: "11 Jun 2026"
 author: "Inesh Chakrabarti*, David Limpus*, Aditi Ghai Rana*, Bowen Bao, Spandan Tiwari, Thiago Crepaldi, Ashish Sirasao"
 thumbnail: 'turboquant-amd-thumbnail.png'
 tags: "AI/ML, LLM, Performance, Memory"
