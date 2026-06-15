@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="460" viewBox="0 0 1500 460" role="img" aria-labelledby="title desc">
+  <title id="title">ATOM Runtime Request Sequence Animation</title>
+  <desc id="desc">Animated request flow across Client, LLMEngine, InputOutputProcessor, CoreManager, EngineCore, Scheduler, and ModelRunner.</desc>
+
+  <defs>
+    <style>
+      .bg { fill: #0b1020; }
+      .lane { stroke: #2b3558; stroke-width: 2; stroke-dasharray: 6 6; opacity: 0.7; }
+      .node { fill: #17203b; stroke: #63c7ff; stroke-width: 2; rx: 10; }
+      .node-text { fill: #e8f0ff; font-family: Arial, sans-serif; font-size: 16px; text-anchor: middle; dominant-baseline: middle; }
+      .title { fill: #f6f9ff; font-family: Arial, sans-serif; font-size: 24px; font-weight: 700; }
+      .subtitle { fill: #a7b7dd; font-family: Arial, sans-serif; font-size: 14px; }
+      .step-text { fill: #b7c7ef; font-family: Arial, sans-serif; font-size: 13px; }
+      .flow { fill: none; stroke: #3ea6ff; stroke-width: 3; opacity: 0.32; }
+      .pulse { fill: #3ea6ff; opacity: 0.0; }
+      .token { fill: #ffcb4d; stroke: #ffd97b; stroke-width: 1.5; }
+      .branch { stroke: #77ffb3; stroke-width: 2; stroke-dasharray: 7 7; opacity: 0.7; }
+      .branch-text { fill: #93ffbf; font-family: Arial, sans-serif; font-size: 12px; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1500" height="460" />
+
+  <text class="title" x="34" y="38">ATOM Runtime Request Sequence</text>
+  <text class="subtitle" x="34" y="62">Client -> LLMEngine -> IOP -> CoreManager -> EngineCore -> Scheduler/BlockManager -> ModelRunner</text>
+
+  <line class="lane" x1="120" y1="120" x2="120" y2="408" />
+  <line class="lane" x1="300" y1="120" x2="300" y2="408" />
+  <line class="lane" x1="480" y1="120" x2="480" y2="408" />
+  <line class="lane" x1="660" y1="120" x2="660" y2="408" />
+  <line class="lane" x1="840" y1="120" x2="840" y2="408" />
+  <line class="lane" x1="1050" y1="120" x2="1050" y2="408" />
+  <line class="lane" x1="1280" y1="120" x2="1280" y2="408" />
+
+  <g>
+    <rect class="node" x="50" y="78" width="140" height="42" />
+    <text class="node-text" x="120" y="99">Client</text>
+
+    <rect class="node" x="220" y="78" width="160" height="42" />
+    <text class="node-text" x="300" y="99">LLMEngine</text>
+
+    <rect class="node" x="395" y="78" width="170" height="42" />
+    <text class="node-text" x="480" y="99">InputOutputProcessor</text>
+
+    <rect class="node" x="575" y="78" width="170" height="42" />
+    <text class="node-text" x="660" y="99">CoreManager</text>
+
+    <rect class="node" x="760" y="78" width="160" height="42" />
+    <text class="node-text" x="840" y="99">EngineCore</text>
+
+    <rect class="node" x="955" y="78" width="190" height="42" />
+    <text class="node-text" x="1050" y="99">Scheduler+BlockMgr</text>
+
+    <rect class="node" x="1200" y="78" width="160" height="42" />
+    <text class="node-text" x="1280" y="99">ModelRunner</text>
+  </g>
+
+  <path id="mainPath" class="flow" d="M120 178 H480 H660 V220 H840 V252 H1050 V286 H840 V320 H1280 V352 H840 H660 V386 H120" />
+  <path class="branch" d="M840 320 L1280 320" />
+  <text class="branch-text" x="1030" y="314">decode path prefers captured graph replay</text>
+
+  <circle class="token" r="8">
+    <animateMotion dur="14s" repeatCount="indefinite" rotate="auto">
+      <mpath href="#mainPath" />
+    </animateMotion>
+  </circle>
+
+  <circle class="pulse" cx="120" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="0s;14s" />
+  </circle>
+  <circle class="pulse" cx="300" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="1.2s;15.2s" />
+  </circle>
+  <circle class="pulse" cx="480" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="2.4s;16.4s" />
+  </circle>
+  <circle class="pulse" cx="660" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="4.2s;18.2s" />
+  </circle>
+  <circle class="pulse" cx="840" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="5.5s;19.5s" />
+  </circle>
+  <circle class="pulse" cx="1050" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="6.8s;20.8s" />
+  </circle>
+  <circle class="pulse" cx="1280" cy="99" r="14">
+    <animate attributeName="opacity" values="0;0.7;0" dur="14s" begin="8.1s;22.1s" />
+  </circle>
+
+  <text class="step-text" x="120" y="160" text-anchor="middle">1) submit request</text>
+  <text class="step-text" x="390" y="160" text-anchor="middle">2) tokenize + sequence</text>
+  <text class="step-text" x="660" y="202" text-anchor="middle">3) dispatch via ZMQ</text>
+  <text class="step-text" x="945" y="238" text-anchor="middle">4) schedule prefill/decode + KV blocks</text>
+  <text class="step-text" x="1060" y="370" text-anchor="middle">5) forward, sampling, stop checks, return output + TTFT/TPOT</text>
+</svg>
