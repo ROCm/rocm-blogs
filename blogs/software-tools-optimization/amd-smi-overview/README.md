@@ -29,7 +29,9 @@ For system administrators and power users working with AMD hardware, performance
 
 `amd-smi` is a versatile command-line utility designed to manage and monitor AMD hardware, with a primary focus on GPUs. As the future replacement for `rocm-smi`, `amd-smi` is poised to become the primary tool for AMD hardware management across a wide range of devices. For those new to hardware management or transitioning from other tools, `amd-smi` provides an extensive set of features to help optimize AMD hardware usage.
 
-In this blog post, we will provide you with a practical walkthrough of `amd-smi`. We will show you, step-by-step, how to verify the installation of `amd-smi` and how to use its main features: access your AMD GPU’s information and metrics, monitor its performance and running processes in real-time, configure its hardware parameters, inspect your AMD GPU’s topology and memory, and more.
+In this blog post, we will provide you with a practical walkthrough of `amd-smi`. We will show you, step-by-step, how to verify the installation of `amd-smi` and how to use its main features: access your AMD GPU’s information and metrics, monitor its performance and running processes in real-time, inspect your AMD GPU’s topology and memory, and more.
+
+Since `amd-smi` is updated with each ROCm release, its features may change over time. For the most complete and up-to-date command reference, see the [AMD SMI documentation](https://rocm.docs.amd.com/projects/amdsmi/en/latest/).
 
 ## Understanding system management interfaces
 
@@ -215,22 +217,6 @@ GPU: 1
         MEM_USAGE: 7.6 GB
  
 [output truncated]
-```
-
-### Set configurable hardware parameters
-
-The `amd-smi set` command can be used to change hardware parameters such as fan speed, memory and compute partitioning, and power limits. For example, to adjust the power limit of a GPU using the `set` command:
-
-```text
-amd-smi set -g 0 -o 650
-```
-
-This sets the power limit of GPU 0 to 650 watts. Remember to check the supported power range for your specific GPU model before making adjustments.
-
-Use the `amd-smi reset` command to remove the custom power limit:
-
-```text
-amd-smi reset -g 0 -o
 ```
 
 ## Additional capabilities
