@@ -502,6 +502,8 @@ The comparison below is useful for context, but it is not a controlled same-syst
 
 For this reason, the MXFP4 numbers should be read as a gfx950 enablement result and a method-aligned workload comparison. A strict speedup claim would require a same-system baseline, such as another Kimi-K2.5 format on the same 8x MI355X ATOM stack, or an MXFP4 fallback path on the same hardware.
 
+Results may vary based on system configuration, software versions, model settings, and workload characteristics.
+
 ### Method-aligned comparison with the previous post
 
 The table below mirrors the benchmark comparison style from the W4A8/W8A8 post, but the interpretation is different. The W4A16, W4A8, and W8A8 rows were reported on an 8x MI325X SGLang/AITER setup; the MXFP4 row here is measured on an 8x MI355X ATOM/AITER setup. The workload shape and GPU count are aligned, but the hardware generation, quantization format, and serving stack are not identical, so this is context rather than a same-system speedup claim.
