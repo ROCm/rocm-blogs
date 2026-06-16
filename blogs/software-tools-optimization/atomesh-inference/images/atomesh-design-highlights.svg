@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1250" height="706" viewBox="0 0 1250 706" role="img" aria-labelledby="title desc">
+  <title id="title">Atomesh Fixture-Driven Test Harness Architecture</title>
+  <desc id="desc">Fixture-driven test harness architecture with MockTestCase, VirtualRequest, TestHarness, Atomesh, Golden Assertions, HTTP VirtualWorker, and gRPC VirtualGrpcWorker.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f2937"/>
+    </marker>
+    <style>
+      .title { font: 700 17px Arial, sans-serif; fill: #111827; }
+      .boxTitle { font: 700 12px Arial, sans-serif; fill: #111827; }
+      .line { font: 10px Arial, sans-serif; fill: #111827; }
+      .small { font: 9px Arial, sans-serif; fill: #111827; }
+      .tiny { font: 8px Arial, sans-serif; fill: #111827; }
+      .flow { stroke: #1f2937; stroke-width: 2.1; fill: none; marker-end: url(#arrow); stroke-linecap: round; stroke-linejoin: round; }
+      .dash { stroke: #6b7280; stroke-width: 1.6; stroke-dasharray: 5 6; fill: none; marker-end: url(#arrow); stroke-linecap: round; stroke-linejoin: round; }
+      .case { fill: #dbeafe; stroke: #1f2937; stroke-width: 1.4; }
+      .request { fill: #dbeafe; stroke: #1f2937; stroke-width: 1.4; }
+      .harness { fill: #fef3c7; stroke: #1f2937; stroke-width: 1.4; }
+      .atomesh { fill: #ead7f5; stroke: #1f2937; stroke-width: 1.4; }
+      .pool { fill: #38bdf8; stroke: #0f172a; stroke-width: 1.4; }
+      .chip { fill: #c7e8ff; stroke: #0f172a; stroke-width: 1.2; }
+      .assert { fill: #fee2e2; stroke: #1f2937; stroke-width: 1.4; }
+      .worker { fill: #dcfce7; stroke: #1f2937; stroke-width: 1.4; }
+    </style>
+  </defs>
+
+  <rect width="1250" height="706" fill="#ffffff"/>
+  <text class="title" x="625" y="47" text-anchor="middle">Atomesh Fixture-Driven Test Harness Architecture</text>
+
+  <path class="flow" d="M298 154 C352 112 402 120 446 121"/>
+  <path class="flow" d="M633 170 L633 210"/>
+  <path class="flow" d="M633 298 L633 332"/>
+  <path class="flow" d="M896 404 L1080 318"/>
+  <path class="flow" d="M494 528 L274 588"/>
+  <path class="flow" d="M584 528 L746 568"/>
+  <path class="flow" d="M650 528 L962 568"/>
+  <path class="dash" d="M298 254 C250 334 246 456 300 588"/>
+  <path class="dash" d="M300 254 C376 284 438 334 532 412"/>
+  <path class="dash" d="M660 528 C666 552 690 566 746 596"/>
+
+  <rect class="case" x="16" y="116" width="282" height="150" rx="8"/>
+  <text class="boxTitle" x="157" y="140" text-anchor="middle">MockTestCase</text>
+  <text class="small" x="40" y="178">request</text>
+  <text class="small" x="40" y="202">endpoint / route_mode / test</text>
+  <text class="small" x="40" y="226">expected_response</text>
+  <text class="small" x="40" y="250">golden JSON / SSE events</text>
+  <text class="small" x="40" y="274">routes worker_kind</text>
+  <text class="small" x="40" y="298">regular / prefill_decode</text>
+  <text class="small" x="40" y="322">route_connection_mode / backend</text>
+  <text class="small" x="40" y="346">http / grpc, SGLang / vLLM</text>
+
+  <text class="small" x="34" y="414">fixture-driven</text>
+  <text class="small" x="34" y="438">backend responses</text>
+
+  <rect class="request" x="446" y="88" width="374" height="82" rx="8"/>
+  <text class="boxTitle" x="633" y="120" text-anchor="middle">VirtualRequest</text>
+  <text class="small" x="633" y="141" text-anchor="middle">Build real Atomesh API request</text>
+  <text class="small" x="633" y="158" text-anchor="middle">from fixture data</text>
+
+  <rect class="harness" x="420" y="210" width="428" height="86" rx="8"/>
+  <text class="boxTitle" x="634" y="240" text-anchor="middle">TestHarness</text>
+  <text class="small" x="634" y="262" text-anchor="middle">start workers, initialize registry</text>
+  <text class="small" x="634" y="279" text-anchor="middle">create app, send request, assert result</text>
+
+  <rect class="assert" x="950" y="214" width="282" height="104" rx="8"/>
+  <text class="boxTitle" x="1091" y="242" text-anchor="middle">Golden Assertions</text>
+  <text class="small" x="1091" y="270" text-anchor="middle">status / response subset</text>
+  <text class="small" x="1091" y="290" text-anchor="middle">SSE events / worker path</text>
+  <text class="small" x="1091" y="310" text-anchor="middle">runtime router and worker state</text>
+
+  <rect class="atomesh" x="374" y="332" width="522" height="196" rx="8"/>
+  <text class="boxTitle" x="635" y="360" text-anchor="middle">Atomesh</text>
+  <text class="small" x="635" y="385" text-anchor="middle">real app / RouterFactory / worker registry</text>
+  <text class="small" x="635" y="405" text-anchor="middle">router execution and backend forwarding</text>
+
+  <rect class="pool" x="406" y="430" width="230" height="78" rx="8"/>
+  <text class="boxTitle" x="521" y="460" text-anchor="middle">regular_worker_pool</text>
+  <rect class="chip" x="428" y="476" width="82" height="24" rx="10"/>
+  <text class="small" x="469" y="493" text-anchor="middle">HTTP</text>
+  <rect class="chip" x="534" y="476" width="82" height="24" rx="10"/>
+  <text class="small" x="575" y="493" text-anchor="middle">gRPC</text>
+
+  <rect class="pool" x="640" y="430" width="230" height="78" rx="8"/>
+  <text class="boxTitle" x="755" y="460" text-anchor="middle">pd_worker_pool</text>
+  <rect class="chip" x="662" y="476" width="82" height="24" rx="10"/>
+  <text class="small" x="703" y="493" text-anchor="middle">HTTP</text>
+  <rect class="chip" x="768" y="476" width="82" height="24" rx="10"/>
+  <text class="small" x="809" y="493" text-anchor="middle">gRPC</text>
+
+  <rect class="worker" x="72" y="588" width="412" height="88" rx="8"/>
+  <text class="boxTitle" x="278" y="613" text-anchor="middle">HTTP VirtualWorker</text>
+  <text class="small" x="278" y="636" text-anchor="middle">Axum reply backend</text>
+  <text class="small" x="278" y="656" text-anchor="middle">/generate, chat_completions, responses</text>
+  <text class="small" x="278" y="674" text-anchor="middle">regular / PD topology, basic SSE replay</text>
+
+  <text class="small" x="590" y="616" text-anchor="middle">same harness abstraction</text>
+  <text class="small" x="590" y="634" text-anchor="middle">over HTTP and gRPC backends</text>
+
+  <rect class="worker" x="746" y="568" width="430" height="122" rx="8"/>
+  <text class="boxTitle" x="961" y="592" text-anchor="middle">gRPC VirtualGrpcWorker</text>
+  <text class="small" x="961" y="616" text-anchor="middle">pure public worker interface</text>
+  <text class="small" x="961" y="636" text-anchor="middle">selected by fixture route_backend</text>
+  <rect class="chip" x="776" y="656" width="170" height="24" rx="10"/>
+  <text class="tiny" x="861" y="672" text-anchor="middle">SGLangVirtualGrpcService</text>
+  <rect class="chip" x="970" y="656" width="170" height="24" rx="10"/>
+  <text class="tiny" x="1055" y="672" text-anchor="middle">vLLMVirtualGrpcService</text>
+</svg>
