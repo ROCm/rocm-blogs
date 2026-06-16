@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="660" viewBox="0 0 1180 750" role="img" aria-labelledby="title desc">
+  <title id="title">ATOMesh placement routing core</title>
+  <desc id="desc">Dark architecture diagram showing request entry points, worker pool, policy factory, placement plan, HTTP and gRPC routers, and backend adapters for SGLang, ATOM, and vLLM.</desc>
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06111f"/>
+      <stop offset="50%" stop-color="#091728"/>
+      <stop offset="100%" stop-color="#07101d"/>
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="50%" cy="32%" r="58%">
+      <stop offset="0%" stop-color="#00d7ff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#00d7ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="purpleGlow" cx="50%" cy="58%" r="54%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="panelShadow" x="-10%" y="-16%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.36"/>
+    </filter>
+    <filter id="neon" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00d7ff" flood-opacity="0.50"/>
+    </filter>
+    <filter id="softCyanGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d7ff" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softGreenGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#20d498" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softPurpleGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#a78bfa" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softSteelGlow" x="-12%" y="-20%" width="124%" height="140%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#8ba3bd" flood-opacity="0.24"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8ba3bd"/>
+    </marker>
+    <marker id="cyanArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00d7ff"/>
+    </marker>
+    <style>
+      .title { font: 800 34px Arial, sans-serif; fill: #f6fbff; letter-spacing: -0.3px; }
+      .subtitle { font: 17px Arial, sans-serif; fill: #9fb2c8; }
+      .label { font: 800 12px Arial, sans-serif; fill: #7f95ad; letter-spacing: 0.6px; }
+      .boundary { fill: rgba(12, 24, 40, 0.42); stroke: #8ba3bd; stroke-width: 2.2; filter: url(#softSteelGlow); }
+      .entry { fill: #18172d; stroke: #a78bfa; stroke-width: 2; filter: url(#softPurpleGlow); }
+      .pool { fill: #0c2b26; stroke: #20d498; stroke-width: 1.8; filter: url(#softGreenGlow); }
+      .policy { fill: #0c2b26; stroke: #20d498; stroke-width: 1.8; filter: url(#softGreenGlow); }
+      .routerGroup { fill: #0c1828; stroke: #2e4862; stroke-width: 1.7; filter: url(#softCyanGlow); }
+      .routerHttp { fill: #2a1c10; stroke: #ff9d2e; stroke-width: 1.8; filter: url(#panelShadow); }
+      .routerGrpc { fill: #2a1218; stroke: #fb7185; stroke-width: 1.8; filter: url(#panelShadow); }
+      .backendGroup { fill: #0c1828; stroke: #2e4862; stroke-width: 1.7; filter: url(#softCyanGlow); }
+      .backend { fill: #121b2a; stroke: #4a5d74; stroke-width: 1.6; filter: url(#panelShadow); }
+      .request { fill: #111b2b; stroke: #8ba3bd; stroke-width: 1.8; filter: url(#softSteelGlow); }
+      .text { font: 20px Arial, sans-serif; fill: #c8d6e5; }
+      .small { font: 14px Arial, sans-serif; fill: #9fb2c8; }
+      .micro { font: 12px Arial, sans-serif; fill: #84a9bd; }
+      .whiteHead { font: 800 19px Arial, sans-serif; fill: #eef6ff; }
+      .greenText { font: 800 18px Arial, sans-serif; fill: #20d498; }
+      .orangeText { font: 800 16px Arial, sans-serif; fill: #ffad45; }
+      .redText { font: 800 16px Arial, sans-serif; fill: #fb7185; }
+      .flow { stroke: #8ba3bd; stroke-width: 2.2; fill: none; marker-end: url(#arrow); stroke-linecap: round; stroke-linejoin: round; }
+      .cyanFlow { stroke: #00d7ff; stroke-width: 2.3; fill: none; marker-end: url(#cyanArrow); stroke-linecap: round; stroke-linejoin: round; }
+      .join { stroke: #8ba3bd; stroke-width: 2.2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <rect width="1180" height="750" fill="url(#pageBg)"/>
+  <rect width="1180" height="750" fill="url(#cyanGlow)"/>
+  <rect width="1180" height="750" fill="url(#purpleGlow)"/>
+
+  <text class="title" x="590" y="44" text-anchor="middle">ATOMesh Placement Routing Core</text>
+  <text class="subtitle" x="590" y="76" text-anchor="middle">A transport-neutral placement plan feeds HTTP and gRPC routers while backend adapters stay isolated.</text>
+
+  <rect class="request" x="430" y="108" width="320" height="70" rx="18"/>
+  <text class="whiteHead" x="590" y="149" text-anchor="middle">Request</text>
+
+  <rect class="boundary" x="95" y="198" width="990" height="426" rx="20"/>
+  <text class="label" x="125" y="226">ATOMESH ROUTING CORE</text>
+  <text class="micro" x="125" y="246">
+    <tspan x="125" dy="0">shared placement logic for entry points, policies, routers,</tspan>
+    <tspan x="125" dy="15">and backend dispatch</tspan>
+  </text>
+
+  <rect class="entry" x="455" y="220" width="270" height="78" rx="16"/>
+  <text class="whiteHead" x="590" y="266" text-anchor="middle">EntryPoints</text>
+
+  <rect class="pool" x="165" y="370" width="270" height="86" rx="16"/>
+  <text class="greenText" x="300" y="421" text-anchor="middle">Worker Pool</text>
+
+  <rect class="policy" x="745" y="370" width="270" height="86" rx="16"/>
+  <text class="greenText" x="880" y="421" text-anchor="middle">Policy Factory</text>
+
+  <rect class="routerGroup" x="105" y="520" width="970" height="105" rx="18"/>
+  <text class="label" x="135" y="547">ROUTER EXECUTION</text>
+
+  <rect class="routerHttp" x="120" y="555" width="220" height="58" rx="12"/>
+  <text class="orangeText" x="230" y="590" text-anchor="middle">http_regular_router</text>
+
+  <rect class="routerHttp" x="350" y="555" width="220" height="58" rx="12"/>
+  <text class="orangeText" x="460" y="590" text-anchor="middle">http_pd_router</text>
+
+  <rect class="routerGrpc" x="610" y="555" width="220" height="58" rx="12"/>
+  <text class="redText" x="720" y="590" text-anchor="middle">grpc_regular_router</text>
+
+  <rect class="routerGrpc" x="840" y="555" width="220" height="58" rx="12"/>
+  <text class="redText" x="950" y="590" text-anchor="middle">grpc_pd_router</text>
+
+  <rect class="backendGroup" x="220" y="650" width="740" height="82" rx="18"/>
+  <text class="label" x="245" y="674">FRAMEWORK BACKEND</text>
+
+  <rect class="backend" x="315" y="686" width="160" height="34" rx="14"/>
+  <text class="whiteHead" x="395" y="709" text-anchor="middle">SGLang</text>
+
+  <rect class="backend" x="510" y="686" width="160" height="34" rx="14"/>
+  <text class="whiteHead" x="590" y="709" text-anchor="middle">ATOM</text>
+
+  <rect class="backend" x="705" y="686" width="160" height="34" rx="14"/>
+  <text class="whiteHead" x="785" y="709" text-anchor="middle">vLLM</text>
+
+  <path class="cyanFlow" d="M590 178 L590 220"/>
+  <path class="flow" d="M590 298 L590 330 L300 330 L300 370"/>
+  <path class="flow" d="M590 298 L590 330 L880 330 L880 370"/>
+
+  <path class="join" d="M435 412 L745 412"/>
+  <path class="flow" d="M745 412 L435 412"/>
+  <text class="small" x="590" y="400" text-anchor="middle">worker describer</text>
+
+  <path class="join" d="M300 456 L300 492 L590 492"/>
+  <path class="join" d="M880 456 L880 492 L590 492"/>
+  <path class="flow" d="M590 492 L590 520"/>
+  <text class="whiteHead" x="590" y="484" text-anchor="middle">PlacementPlan</text>
+
+  <path class="flow" d="M590 625 L590 650"/>
+</svg>

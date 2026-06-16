@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="640" viewBox="0 0 1180 720" role="img" aria-labelledby="title desc">
+  <title id="title">ATOMesh fixture-driven mock worker framework</title>
+  <desc id="desc">Dark architecture diagram showing the ATOMesh fixture-driven mock worker framework, including test fixtures, virtual requests, test harness, real ATOMesh request path, virtual HTTP and gRPC workers, and golden assertions.</desc>
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06111f"/>
+      <stop offset="50%" stop-color="#091728"/>
+      <stop offset="100%" stop-color="#07101d"/>
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="52%" cy="30%" r="58%">
+      <stop offset="0%" stop-color="#00d7ff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#00d7ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="purpleGlow" cx="52%" cy="56%" r="52%">
+      <stop offset="0%" stop-color="#a78bfa" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="panelShadow" x="-10%" y="-16%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.36"/>
+    </filter>
+    <filter id="neon" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00d7ff" flood-opacity="0.50"/>
+    </filter>
+    <filter id="softCyanGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d7ff" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softGreenGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#20d498" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softOrangeGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ff9d2e" flood-opacity="0.32"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softPurpleGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#a78bfa" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softRedGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#fb7185" flood-opacity="0.30"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8ba3bd"/>
+    </marker>
+    <marker id="cyanArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00d7ff"/>
+    </marker>
+    <marker id="purpleArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a78bfa"/>
+    </marker>
+    <style>
+      .title { font: 800 34px Arial, sans-serif; fill: #f6fbff; letter-spacing: -0.3px; }
+      .subtitle { font: 17px Arial, sans-serif; fill: #9fb2c8; }
+      .panel { fill: #0c1828; stroke: #24364c; stroke-width: 1.4; filter: url(#panelShadow); }
+      .fixture { fill: #162236; stroke: #67e8f9; stroke-width: 1.8; filter: url(#softCyanGlow); }
+      .request { fill: #082538; stroke: #00d7ff; stroke-width: 2; filter: url(#softCyanGlow); }
+      .harness { fill: #2a1c10; stroke: #ff9d2e; stroke-width: 1.8; filter: url(#softOrangeGlow); }
+      .atomesh { fill: #18172d; stroke: #a78bfa; stroke-width: 2; filter: url(#softPurpleGlow); }
+      .pool { fill: #062334; stroke: #00d7ff; stroke-width: 1.8; filter: url(#softCyanGlow); }
+      .worker { fill: #0c2b26; stroke: #20d498; stroke-width: 1.8; filter: url(#softGreenGlow); }
+      .assert { fill: #2a1218; stroke: #fb7185; stroke-width: 1.8; filter: url(#softRedGlow); }
+      .chip { fill: #111b2b; stroke: #3b4b60; stroke-width: 1.2; filter: url(#softCyanGlow); }
+      .greenChip { fill: #0c2b26; stroke: #20d498; stroke-width: 1.2; filter: url(#softGreenGlow); }
+      .text { font: 14px Arial, sans-serif; fill: #c8d6e5; }
+      .small { font: 12px Arial, sans-serif; fill: #8fa4bb; }
+      .micro { font: 10px Arial, sans-serif; fill: #84a9bd; }
+      .whiteHead { font: 800 15px Arial, sans-serif; fill: #eef6ff; }
+      .cyanText { font: 800 16px Arial, sans-serif; fill: #00d7ff; }
+      .orangeText { font: 800 14px Arial, sans-serif; fill: #ffad45; }
+      .purpleText { font: 800 14px Arial, sans-serif; fill: #c4b5fd; }
+      .greenText { font: 800 14px Arial, sans-serif; fill: #20d498; }
+      .redText { font: 800 14px Arial, sans-serif; fill: #fb7185; }
+      .flow { stroke: #8ba3bd; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+      .cyanFlow { stroke: #00d7ff; stroke-width: 2.2; fill: none; marker-end: url(#cyanArrow); stroke-linecap: round; }
+      .dash { stroke: #a78bfa; stroke-width: 1.8; stroke-dasharray: 7 6; fill: none; marker-end: url(#purpleArrow); stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <rect width="1180" height="720" fill="url(#pageBg)"/>
+  <rect width="1180" height="720" fill="url(#cyanGlow)"/>
+  <rect width="1180" height="720" fill="url(#purpleGlow)"/>
+
+  <text class="title" x="590" y="44" text-anchor="middle">Atomesh Fixture-Driven Test Harness Architecture</text>
+
+  <path class="cyanFlow" d="M305 176 C365 130 430 126 475 126"/>
+  <path class="cyanFlow" d="M590 172 L590 218"/>
+  <path class="cyanFlow" d="M590 300 L590 338"/>
+  <path class="flow" d="M800 440 C878 410 965 352 1038 304"/>
+  <path class="flow" d="M492 514 C430 548 350 580 270 596"/>
+  <path class="flow" d="M723 514 C770 550 835 578 900 596"/>
+  <path class="dash" d="M300 380 C250 430 245 520 270 596"/>
+  <path class="dash" d="M300 380 C395 392 480 410 555 440"/>
+  <path class="dash" d="M870 596 C804 562 760 538 690 500"/>
+
+  <rect class="fixture" x="75" y="118" width="230" height="262" rx="16"/>
+  <text class="whiteHead" x="190" y="150" text-anchor="middle">MockTestCase</text>
+  <text class="small" x="104" y="184">request</text>
+  <text class="small" x="104" y="206">prompt / messages / text</text>
+  <text class="small" x="104" y="235">expected_response</text>
+  <text class="small" x="104" y="257">golden JSON / SSE events</text>
+  <text class="small" x="104" y="286">route.worker_kind</text>
+  <text class="small" x="104" y="308">regular / prefill_decode</text>
+  <text class="small" x="104" y="337">route.connection_mode / backend</text>
+  <text class="small" x="104" y="359">http / grpc, SGLang / vLLM</text>
+
+  <rect class="request" x="475" y="104" width="230" height="68" rx="16"/>
+  <text class="cyanText" x="590" y="132" text-anchor="middle">VirtualRequest</text>
+  <text class="small" x="590" y="148" text-anchor="middle">Build real Atomesh API request</text>
+  <text class="small" x="590" y="164" text-anchor="middle">from fixture data</text>
+
+  <rect class="harness" x="430" y="218" width="320" height="82" rx="16"/>
+  <text class="orangeText" x="590" y="250" text-anchor="middle">TestHarness</text>
+  <text class="small" x="590" y="272" text-anchor="middle">start workers, initialize registry</text>
+  <text class="small" x="590" y="290" text-anchor="middle">creates app, sends request, asserts result</text>
+
+  <rect class="assert" x="910" y="218" width="230" height="100" rx="16"/>
+  <text class="redText" x="1025" y="250" text-anchor="middle">Golden Assertions</text>
+  <text class="small" x="1025" y="276" text-anchor="middle">status / response subset</text>
+  <text class="small" x="1025" y="294" text-anchor="middle">SSE events / worker path</text>
+  <text class="small" x="1025" y="312" text-anchor="middle">runtime router and worker state</text>
+
+  <rect class="atomesh" x="350" y="338" width="500" height="204" rx="18"/>
+  <text class="purpleText" x="600" y="368" text-anchor="middle">Atomesh</text>
+  <text class="small" x="600" y="394" text-anchor="middle">real app / RouterFactory / worker registry</text>
+  <text class="small" x="600" y="414" text-anchor="middle">router execution and backend forwarding</text>
+
+  <rect class="pool" x="385" y="448" width="215" height="66" rx="14"/>
+  <text class="cyanText" x="492.5" y="476" text-anchor="middle">regular_worker_pool</text>
+  <rect class="chip" x="415" y="490" width="72" height="22" rx="11"/>
+  <text class="micro" x="451" y="505" text-anchor="middle">HTTP</text>
+  <rect class="chip" x="500" y="490" width="72" height="22" rx="11"/>
+  <text class="micro" x="536" y="505" text-anchor="middle">gRPC</text>
+
+  <rect class="pool" x="615" y="448" width="215" height="66" rx="14"/>
+  <text class="cyanText" x="722.5" y="476" text-anchor="middle">pd_worker_pool</text>
+  <rect class="chip" x="645" y="490" width="72" height="22" rx="11"/>
+  <text class="micro" x="681" y="505" text-anchor="middle">HTTP</text>
+  <rect class="chip" x="730" y="490" width="72" height="22" rx="11"/>
+  <text class="micro" x="766" y="505" text-anchor="middle">gRPC</text>
+
+  <text class="small" x="82" y="398">fixtures drive</text>
+  <text class="small" x="82" y="416">backend responses</text>
+
+  <rect class="worker" x="85" y="596" width="365" height="100" rx="16"/>
+  <text class="greenText" x="267.5" y="624" text-anchor="middle">HTTP VirtualWorker</text>
+  <text class="small" x="267.5" y="642" text-anchor="middle">Axum replay backend</text>
+  <text class="small" x="267.5" y="660" text-anchor="middle">/generate, chat_completions, responses</text>
+  <text class="small" x="267.5" y="678" text-anchor="middle">regular / PD topology, basic SSE replay</text>
+
+  <rect class="worker" x="705" y="596" width="390" height="100" rx="16"/>
+  <text class="greenText" x="900" y="624" text-anchor="middle">gRPC VirtualGrpcWorker</text>
+  <text class="small" x="900" y="642" text-anchor="middle">one public worker interface</text>
+  <text class="small" x="900" y="660" text-anchor="middle">selected by fixture route.backend</text>
+  <rect class="greenChip" x="735" y="672" width="160" height="22" rx="11"/>
+  <text class="micro" x="815" y="687" text-anchor="middle">SGLangVirtualGrpcService</text>
+  <rect class="greenChip" x="910" y="672" width="160" height="22" rx="11"/>
+  <text class="micro" x="990" y="687" text-anchor="middle">vLLMVirtualGrpcService</text>
+
+  <rect class="chip" x="470" y="608" width="210" height="50" rx="18"/>
+  <text class="small" x="575" y="629" text-anchor="middle">same harness abstraction</text>
+  <text class="small" x="575" y="647" text-anchor="middle">over HTTP and gRPC backends</text>
+</svg>

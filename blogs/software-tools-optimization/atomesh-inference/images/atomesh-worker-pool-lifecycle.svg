@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="640" viewBox="0 0 1180 720" role="img" aria-labelledby="title desc">
+  <title id="title">ATOMesh worker pool structure and backend routing</title>
+  <desc id="desc">Dark architecture diagram showing how ATOMesh organizes model backends into regular and prefill/decode worker pools, tracks worker lifecycle states, and keeps worker mutations out of the request scheduling hot path.</desc>
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06111f"/>
+      <stop offset="50%" stop-color="#091728"/>
+      <stop offset="100%" stop-color="#07101d"/>
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="50%" cy="30%" r="58%">
+      <stop offset="0%" stop-color="#00d7ff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#00d7ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="greenGlow" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#20d498" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#20d498" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="panelShadow" x="-10%" y="-16%" width="120%" height="135%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000000" flood-opacity="0.36"/>
+    </filter>
+    <filter id="neon" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00d7ff" flood-opacity="0.50"/>
+    </filter>
+    <filter id="softCyanGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d7ff" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softGreenGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#20d498" flood-opacity="0.34"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softOrangeGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ff9d2e" flood-opacity="0.32"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softPurpleGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#a78bfa" flood-opacity="0.32"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <filter id="softRedGlow" x="-18%" y="-30%" width="136%" height="160%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#fb7185" flood-opacity="0.30"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.30"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8ba3bd"/>
+    </marker>
+    <marker id="cyanArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00d7ff"/>
+    </marker>
+    <marker id="greenArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#20d498"/>
+    </marker>
+    <style>
+      .title { font: 800 34px Arial, sans-serif; fill: #f6fbff; letter-spacing: -0.3px; }
+      .subtitle { font: 17px Arial, sans-serif; fill: #9fb2c8; }
+      .label { font: 800 13px Arial, sans-serif; fill: #7f95ad; letter-spacing: 0.3px; text-transform: uppercase; }
+      .panel { fill: #0c1828; stroke: #2e4862; stroke-width: 1.5; filter: url(#softCyanGlow); }
+      .model { fill: #0c2b26; stroke: #20d498; stroke-width: 2.2; filter: url(#softGreenGlow); }
+      .backend { fill: #082538; stroke: #00d7ff; stroke-width: 2; filter: url(#softCyanGlow); }
+      .poolRegular { fill: #2a1c10; stroke: #ff9d2e; stroke-width: 1.8; filter: url(#softOrangeGlow); }
+      .poolPD { fill: #18172d; stroke: #a78bfa; stroke-width: 1.8; filter: url(#softPurpleGlow); }
+      .worker { fill: #121b2a; stroke: #4a5d74; stroke-width: 1.5; filter: url(#panelShadow); }
+      .workerHot { fill: #0c2b26; stroke: #20d498; stroke-width: 1.8; filter: url(#softGreenGlow); }
+      .workerCold { fill: #162236; stroke: #67e8f9; stroke-width: 1.5; filter: url(#softCyanGlow); }
+      .workerDrain { fill: #2a1c10; stroke: #ff9d2e; stroke-width: 1.5; filter: url(#softOrangeGlow); }
+      .workerBad { fill: #2a1218; stroke: #fb7185; stroke-width: 1.5; filter: url(#softRedGlow); }
+      .chip { fill: #111b2b; stroke: #3b4b60; stroke-width: 1.2; filter: url(#softCyanGlow); }
+      .text { font: 14px Arial, sans-serif; fill: #c8d6e5; }
+      .small { font: 12px Arial, sans-serif; fill: #8fa4bb; }
+      .micro { font: 10px Arial, sans-serif; fill: #84a9bd; }
+      .whiteHead { font: 800 15px Arial, sans-serif; fill: #eef6ff; }
+      .cyanText { font: 800 16px Arial, sans-serif; fill: #00d7ff; }
+      .greenText { font: 800 16px Arial, sans-serif; fill: #20d498; }
+      .orangeText { font: 800 14px Arial, sans-serif; fill: #ffad45; }
+      .purpleText { font: 800 14px Arial, sans-serif; fill: #c4b5fd; }
+      .flow { stroke: #8ba3bd; stroke-width: 2; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+      .cyanFlow { stroke: #00d7ff; stroke-width: 2.2; fill: none; marker-end: url(#cyanArrow); stroke-linecap: round; }
+      .greenFlow { stroke: #20d498; stroke-width: 2; fill: none; marker-end: url(#greenArrow); stroke-linecap: round; }
+      .dash { stroke: #8ba3bd; stroke-width: 1.8; stroke-dasharray: 7 6; fill: none; marker-end: url(#arrow); stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <rect width="1180" height="720" fill="url(#pageBg)"/>
+  <rect width="1180" height="720" fill="url(#cyanGlow)"/>
+  <rect width="1180" height="720" fill="url(#greenGlow)"/>
+
+  <text class="title" x="590" y="44" text-anchor="middle">ATOMesh Worker Pool Structure</text>
+  <text class="subtitle" x="590" y="76" text-anchor="middle">A model can map to multiple backends, each backend owns regular and prefill/decode worker pools.</text>
+
+  <rect class="model" x="340" y="108" width="500" height="62" rx="18"/>
+  <text class="greenText" x="590" y="145" text-anchor="middle">Model: DeepSeek / Qwen / GPT-OSS / Gemma</text>
+
+  <path class="flow" d="M590 170 L590 204"/>
+  <path class="flow" d="M590 204 L225 204 L225 236"/>
+  <path class="flow" d="M590 204 L590 236"/>
+  <path class="flow" d="M590 204 L955 204 L955 236"/>
+
+  <rect class="backend" x="65" y="236" width="320" height="66" rx="16"/>
+  <text class="cyanText" x="225" y="264" text-anchor="middle">Backend: vLLM / vLLM-ATOM</text>
+  <text class="small" x="225" y="286" text-anchor="middle">ecosystem path with ATOM plugin option</text>
+
+  <rect class="backend" x="430" y="236" width="320" height="66" rx="16"/>
+  <text class="cyanText" x="590" y="264" text-anchor="middle">Backend: SGLang / SGLang-ATOM</text>
+  <text class="small" x="590" y="286" text-anchor="middle">serving compatibility plus ROCm acceleration</text>
+
+  <rect class="backend" x="795" y="236" width="320" height="66" rx="16"/>
+  <text class="cyanText" x="955" y="264" text-anchor="middle">Backend: ATOM</text>
+  <text class="small" x="955" y="286" text-anchor="middle">ROCm-native execution path</text>
+
+  <path class="flow" d="M225 302 L225 330"/>
+  <path class="flow" d="M590 302 L590 330"/>
+  <path class="flow" d="M955 302 L955 330"/>
+
+  <rect class="panel" x="40" y="330" width="350" height="300" rx="18"/>
+  <rect class="panel" x="405" y="330" width="350" height="300" rx="18"/>
+  <rect class="panel" x="770" y="330" width="350" height="300" rx="18"/>
+
+  <path class="flow" d="M225 330 L145 360"/>
+  <path class="flow" d="M225 330 L305 360"/>
+  <path class="flow" d="M590 330 L505 360"/>
+  <path class="flow" d="M590 330 L675 360"/>
+  <path class="flow" d="M955 330 L875 360"/>
+  <path class="flow" d="M955 330 L1035 360"/>
+
+  <rect class="poolRegular" x="65" y="360" width="150" height="52" rx="12"/>
+  <text class="orangeText" x="140" y="392" text-anchor="middle">regular_pool</text>
+  <rect class="poolPD" x="225" y="360" width="150" height="52" rx="12"/>
+  <text class="purpleText" x="300" y="392" text-anchor="middle">pd_pool</text>
+
+  <rect class="poolRegular" x="430" y="360" width="150" height="52" rx="12"/>
+  <text class="orangeText" x="505" y="392" text-anchor="middle">regular_pool</text>
+  <rect class="poolPD" x="600" y="360" width="150" height="52" rx="12"/>
+  <text class="purpleText" x="675" y="392" text-anchor="middle">pd_pool</text>
+
+  <rect class="poolRegular" x="800" y="360" width="150" height="52" rx="12"/>
+  <text class="orangeText" x="875" y="392" text-anchor="middle">regular_pool</text>
+  <rect class="poolPD" x="960" y="360" width="150" height="52" rx="12"/>
+  <text class="purpleText" x="1035" y="392" text-anchor="middle">pd_pool</text>
+
+  <rect class="workerHot" x="70" y="440" width="140" height="36" rx="10"/>
+  <text class="text" x="140" y="464" text-anchor="middle">worker 01</text>
+  <rect class="workerCold" x="70" y="488" width="140" height="36" rx="10"/>
+  <text class="text" x="140" y="512" text-anchor="middle">worker 02</text>
+
+  <rect class="workerHot" x="230" y="440" width="140" height="36" rx="10"/>
+  <text class="text" x="300" y="464" text-anchor="middle">p-worker 01</text>
+  <rect class="workerCold" x="230" y="488" width="140" height="36" rx="10"/>
+  <text class="text" x="300" y="512" text-anchor="middle">p-worker 02</text>
+  <rect class="workerDrain" x="230" y="536" width="140" height="36" rx="10"/>
+  <text class="text" x="300" y="560" text-anchor="middle">d-worker 01</text>
+
+  <rect class="workerHot" x="435" y="440" width="140" height="36" rx="10"/>
+  <text class="text" x="505" y="464" text-anchor="middle">worker 01</text>
+  <rect class="workerHot" x="605" y="440" width="140" height="36" rx="10"/>
+  <text class="text" x="675" y="464" text-anchor="middle">p-worker 01</text>
+  <rect class="workerDrain" x="605" y="488" width="140" height="36" rx="10"/>
+  <text class="text" x="675" y="512" text-anchor="middle">d-worker 01</text>
+  <rect class="workerBad" x="605" y="536" width="140" height="36" rx="10"/>
+  <text class="text" x="675" y="560" text-anchor="middle">d-worker 02</text>
+
+  <rect class="workerHot" x="805" y="440" width="140" height="36" rx="10"/>
+  <text class="text" x="875" y="464" text-anchor="middle">worker 01</text>
+  <rect class="workerCold" x="805" y="488" width="140" height="36" rx="10"/>
+  <text class="text" x="875" y="512" text-anchor="middle">worker 02</text>
+  <rect class="workerHot" x="805" y="536" width="140" height="36" rx="10"/>
+  <text class="text" x="875" y="560" text-anchor="middle">worker 03</text>
+  <rect class="workerDrain" x="805" y="584" width="140" height="36" rx="10"/>
+  <text class="text" x="875" y="608" text-anchor="middle">worker 04</text>
+
+  <rect class="workerHot" x="965" y="440" width="140" height="36" rx="10"/>
+  <text class="text" x="1035" y="464" text-anchor="middle">p-worker 01</text>
+  <rect class="workerCold" x="965" y="488" width="140" height="36" rx="10"/>
+  <text class="text" x="1035" y="512" text-anchor="middle">p-worker 02</text>
+  <rect class="workerDrain" x="965" y="536" width="140" height="36" rx="10"/>
+  <text class="text" x="1035" y="560" text-anchor="middle">d-worker 01</text>
+  <rect class="workerBad" x="965" y="584" width="140" height="36" rx="10"/>
+  <text class="text" x="1035" y="608" text-anchor="middle">d-worker 02</text>
+
+  <rect class="chip" x="85" y="650" width="1010" height="38" rx="19"/>
+  <text class="small" x="590" y="674" text-anchor="middle">Worker lifecycle states: cold warmup | normal scheduling | lazy-delete draining | unhealthy exclusion | background reconnect and cleanup</text>
+
+  <path class="greenFlow" d="M140 412 L140 440"/>
+  <path class="greenFlow" d="M300 412 L300 440"/>
+  <path class="greenFlow" d="M505 412 L505 440"/>
+  <path class="greenFlow" d="M675 412 L675 440"/>
+  <path class="greenFlow" d="M875 412 L875 440"/>
+  <path class="greenFlow" d="M1035 412 L1035 440"/>
+</svg>
