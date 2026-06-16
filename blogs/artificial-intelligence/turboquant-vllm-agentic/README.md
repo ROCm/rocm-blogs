@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Productionizing TurboQuant on AMD GPUs for KV-Cache-Bound LLM Inference"
 date: "11 Jun 2026"
-author: "Inesh Chakrabarti*, David Limpus*, Aditi Ghai Rana*, Bowen Bao, Spandan Tiwari, Thiago Crepaldi, Ashish Sirasao"
+author: "Inesh Chakrabarti, David Limpus, Aditi Ghai Rana, Bowen Bao, Spandan Tiwari, Thiago Crepaldi, Ashish Sirasao"
 thumbnail: 'turboquant-amd-thumbnail.png'
 tags: "AI/ML, LLM, Performance, Memory"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Production-ready 4-bit KV-cache quantization on AMD GPU
 language: English
 myst:
     html_meta:
-        "author": "Inesh Chakrabarti*, David Limpus*, Aditi Ghai Rana*, Bowen Bao, Spandan Tiwari, Thiago Crepaldi, Ashish Sirasao"
+        "author": "Inesh Chakrabarti, David Limpus, Aditi Ghai Rana, Bowen Bao, Spandan Tiwari, Thiago Crepaldi, Ashish Sirasao"
         "description lang=en": "Productionized TurboQuant 4-bit KV-cache quantization on AMD GPUs via vLLM, with custom kernels and accuracy analysis on agentic workloads."
         "keywords": "AI, Agentic, Cache, Quantization, TurboQuant, vLLM, FlyDSL"
         "vertical": "AI"
@@ -49,7 +49,7 @@ SOFTWARE.
 
 # Productionizing TurboQuant on AMD GPUs for KV-Cache-Bound LLM Inference
 
-<sup id="fn1">*\*Equal contributions.*</sup>
+<sup id="fn1">*\*The first three authors (Chakrabarti, Limpus, Rana) contributed equally to this work.*</sup>
 
 The KV cache management is critical to modern LLM inference workloads. Previously decoded key and value vectors were cached per attention block to avoid repeated attention calculations. While saving compute, the burden is now shifted to the memory as every new token processed or generated adds another set of keys and values to the cache. As agentic and long-context workloads push sequence lengths into the hundreds of thousands, this cache quickly comes to dominate both memory footprint and token throughput.
 
