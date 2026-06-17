@@ -1,0 +1,320 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Derived from the xArm6 URDF and mesh assets in xarm_ros:
+  https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/urdf/xarm
+
+  Copyright (c) 2018, UFACTORY Inc. All rights reserved.
+  Used under the BSD-3-Clause license. See the "Additional resources" section
+  of this blog post for the full license text.
+
+  Conversion to MJCF by Advanced Micro Devices, Inc.
+-->
+<mujoco model="xarm6">
+  
+  
+
+  
+  <compiler angle="radian" meshdir="../meshes" autolimits="true" />
+
+  <option timestep="0.002" integrator="implicitfast" solver="Newton" iterations="4" tolerance="1e-6">
+    <flag eulerdamp="disable"/>
+  </option>
+
+  <default>
+    <default class="xarm6">
+      <joint axis="0 0 1" armature="0.1" damping="5.0" frictionloss="0.1" />
+      <position kp="500" kv="50" forcerange="-100 100" />
+    </default>
+    <default class="visual">
+      
+      <geom type="mesh" contype="0" conaffinity="0" group="2" rgba="1 1 1 1" />
+    </default>
+    <default class="collision">
+      
+      <geom type="capsule" group="3" rgba="0.5 0.5 1 0.3" condim="4" friction="1 0.01 0.01" />
+    </default>
+    <default class="gripper">
+      <joint axis="1 0 0" armature="0.01" damping="0.05" frictionloss="0.01" />
+      <position kp="50" kv="5" forcerange="-50 50" />
+    </default>
+    <default class="gripper_visual">
+      
+      <geom type="mesh" contype="0" conaffinity="0" group="2" rgba="0.753 0.753 0.753 1" />
+    </default>
+    <default class="finger_pad">
+      <geom type="box" condim="4" friction="1 0.1 0.01" rgba="0.3 0.3 0.3 1" solimp="0.95 0.99 0.001" solref="0.004 1" />
+    </default>
+    <default class="camera_visual">
+      
+      <geom type="mesh" contype="0" conaffinity="0" group="2" rgba="0.75 0.75 0.75 1" />
+    </default>
+    <default class="camera_collision">
+      
+      <geom type="box" group="3" rgba="0.5 0.8 0.5 0.3" condim="4" friction="1 0.01 0.01" />
+    </default>
+  </default>
+
+  <asset>
+    
+    <mesh name="link_base" file="xarm6/visual/link_base.stl" />
+    <mesh name="link1" file="xarm6/visual/link1.stl" />
+    <mesh name="link2" file="xarm6/visual/link2.stl" />
+    <mesh name="link3" file="xarm6/visual/link3.stl" />
+    <mesh name="link4" file="xarm6/visual/link4.stl" />
+    <mesh name="link5" file="xarm6/visual/link5.stl" />
+    <mesh name="link6" file="xarm6/visual/link6.stl" />
+    
+    <mesh name="gripper_base" file="gripper/xarm/base_link.stl" />
+    <mesh name="left_outer_knuckle" file="gripper/xarm/left_outer_knuckle.stl" />
+    <mesh name="left_finger" file="gripper/xarm/left_finger.stl" />
+    <mesh name="left_inner_knuckle" file="gripper/xarm/left_inner_knuckle.stl" />
+    <mesh name="right_outer_knuckle" file="gripper/xarm/right_outer_knuckle.stl" />
+    <mesh name="right_finger" file="gripper/xarm/right_finger.stl" />
+    <mesh name="right_inner_knuckle" file="gripper/xarm/right_inner_knuckle.stl" />
+    
+    <mesh name="d435_with_cam_stand" file="camera/realsense/visual/d435_with_cam_stand.stl" />
+  </asset>
+
+  <worldbody>
+    
+    <geom name="robot_stand_visual" type="cylinder" pos="0 0 0.06" size="0.06 0.06"
+          contype="0" conaffinity="0" group="2" rgba="0.3 0.3 0.3 1" />
+    <geom name="robot_stand_collision" type="cylinder" pos="0 0 0.06" size="0.06 0.06"
+          group="3" rgba="0.5 0.5 1 0.3" condim="4" friction="1 0.01 0.01" />
+
+    <body name="link_base" pos="0 0 0.12" childclass="xarm6">
+        <inertial pos="0.0 0.0 0.09103" mass="2.7" diaginertia="0.00494875 0.00494174 0.002219" />
+        
+        <geom class="visual" mesh="link_base" />
+        
+        <geom class="collision" type="capsule" size="0.06" fromto="0 0 0.02 0 0 0.12" />
+
+        
+        <body name="link1" pos="0 0 0.267">
+          <inertial pos="0.00022 0.02951 -0.0124" mass="2.3814" fullinertia="0.0058562 0.0050316 0.003536652 -1.79e-05 3.55e-06 -0.000888336" />
+          <joint name="joint1" range="-6.2832 6.2832" />
+          
+          <geom class="visual" mesh="link1" />
+          
+          <geom name="link1_collision" class="collision" type="capsule" size="0.055" fromto="0 0 -0.05 0 0.03 0.02" />
+
+          
+          <body name="link2" pos="0 0 0" euler="-1.5708 0 0">
+            <inertial pos="0.03881 -0.22783 0.03496" mass="2.2675" fullinertia="0.028315776 0.0058 0.0273447 0.005 0.00066546 -0.0045741" />
+            <joint name="joint2" range="-2.059 2.0944" />
+            
+            <geom class="visual" mesh="link2" />
+            
+            <geom name="link2_collision" class="collision" type="capsule" size="0.045" fromto="0.04 -0.02 0.03 0.04 -0.27 0.03" />
+
+            
+            <body name="link3" pos="0.0535 -0.2845 0">
+              <inertial pos="0.07041 0.11631 0.0107" mass="1.875" fullinertia="0.0063483 0.00379758 0.00595768 -0.0015397 0.00096858 0.00186567" />
+              <joint name="joint3" range="-3.927 0.19198" />
+              
+              <geom class="visual" mesh="link3" />
+              
+              <geom name="link3_collision" class="collision" type="capsule" size="0.04" fromto="0 0 0 0.07 0.12 0" />
+
+              
+              <body name="link4" pos="0.0775 0.3425 0" euler="-1.5708 0 0">
+                <inertial pos="-0.00018 0.01798 -0.02291" mass="1.3192" fullinertia="0.004896 0.00445694 0.00134332 -6.925e-06 -1.418e-05 -0.00023186" />
+                <joint name="joint4" range="-6.2832 6.2832" />
+                
+                <geom class="visual" mesh="link4" />
+                
+                <geom name="link4_collision" class="collision" type="capsule" size="0.035" fromto="0 0 -0.03 0 0.03 -0.03" />
+
+                
+                <body name="link5" pos="0 0 0" euler="1.5708 0 0">
+                  <inertial pos="0.0651 0.03096 0.00315" mass="1.33854" fullinertia="0.00146378 0.00184192 0.002333524 -0.000450624 0.000284306 0.000130866" />
+                  <joint name="joint5" range="-1.69297 3.14159" />
+                  
+                  <geom class="visual" mesh="link5" />
+                  
+                  <geom name="link5_collision" class="collision" type="capsule" size="0.035" fromto="0.03 0 0 0.076 0.05 0" />
+
+                  
+                  <body name="link6" pos="0.076 0.097 0" euler="-1.5708 0 0">
+                    <inertial pos="0 -0.00677 -0.01098" mass="0.17" fullinertia="9.3e-05 5.87e-05 0.000132 0.0 0.0 -3.6e-06" />
+                    <joint name="joint6" range="-6.2832 6.2832" />
+                    
+                    <geom class="visual" mesh="link6" rgba="0.753 0.753 0.753 1" />
+                    
+                    <geom name="link6_collision" class="collision" type="sphere" size="0.025" pos="0 0 -0.01" />
+
+                    
+                    <body name="xarm_gripper_base_link" pos="0 0 0" childclass="gripper">
+                      <inertial pos="-0.00065489 -0.0018497 0.048028" mass="0.54156" fullinertia="0.00047106 0.00033072 0.00025642 3.9292e-07 2.6537e-06 -1.0975e-05" />
+                      
+                      <geom class="gripper_visual" mesh="gripper_base" rgba="1 1 1 1" />
+                      
+                      <geom name="gripper_base_collision" class="collision" type="capsule" size="0.025" fromto="0 -0.03 0.03 0 0.03 0.03" />
+
+                      
+                      <body name="left_outer_knuckle" pos="0 0.035 0.059098">
+                        <inertial pos="0 0.021559 0.015181" mass="0.033618" fullinertia="1.9111e-05 6.6256e-06 1.3185e-05 0 0 -7.3008e-06" />
+                        <joint name="left_driver_joint" range="0 0.85" />
+                        
+                        <geom class="gripper_visual" mesh="left_outer_knuckle" />
+
+                        
+                        <body name="left_finger" pos="0 0.035465 0.042039">
+                          <inertial pos="0 -0.016413 0.029258" mass="0.048304" fullinertia="1.7493e-05 1.7225e-05 5.1466e-06 0 0 4.6433e-06" />
+                          <joint name="left_finger_joint" axis="-1 0 0" range="0 0.85" />
+                          
+                          <geom class="gripper_visual" mesh="left_finger" />
+                          
+                          <geom name="left_finger_pad_1" class="finger_pad" pos="0 -0.0135 0.032" size="0.012 0.004 0.012" />
+                          <geom name="left_finger_pad_2" class="finger_pad" pos="0 -0.0135 0.055" size="0.012 0.004 0.012" />
+                        </body>
+                      </body>
+
+                      
+                      <body name="left_inner_knuckle" pos="0 0.02 0.074098">
+                        <inertial pos="1.866e-06 0.0220467 0.0261334" mass="0.0230126" fullinertia="6.0949e-06 6.01955e-06 5.0786e-06 0 0 -2.7532e-06" />
+                        <joint name="left_inner_knuckle_joint" range="0 0.85" />
+                        
+                        <geom class="gripper_visual" mesh="left_inner_knuckle" />
+                      </body>
+
+                      
+                      <body name="right_outer_knuckle" pos="0 -0.035 0.059098">
+                        <inertial pos="0 -0.021559 0.015181" mass="0.033618" fullinertia="1.9111e-05 6.6256e-06 1.3185e-05 0 0 7.3008e-06" />
+                        <joint name="right_driver_joint" axis="-1 0 0" range="0 0.85" />
+                        
+                        <geom class="gripper_visual" mesh="right_outer_knuckle" />
+
+                        
+                        <body name="right_finger" pos="0 -0.035465 0.042039">
+                          <inertial pos="0 0.016413 0.029258" mass="0.048304" fullinertia="1.7493e-05 1.7225e-05 5.1466e-06 0 0 -4.6435e-06" />
+                          <joint name="right_finger_joint" range="0 0.85" />
+                          
+                          <geom class="gripper_visual" mesh="right_finger" />
+                          
+                          <geom name="right_finger_pad_1" class="finger_pad" pos="0 0.0135 0.032" size="0.012 0.004 0.012" />
+                          <geom name="right_finger_pad_2" class="finger_pad" pos="0 0.0135 0.055" size="0.012 0.004 0.012" />
+                        </body>
+                      </body>
+
+                      
+                      <body name="right_inner_knuckle" pos="0 -0.02 0.074098">
+                        <inertial pos="1.866e-06 -0.022047 0.026133" mass="0.023013" fullinertia="6.0949e-06 6.0197e-06 5.0784e-06 0 0 2.7531e-06" />
+                        <joint name="right_inner_knuckle_joint" axis="-1 0 0" range="0 0.85" />
+                        
+                        <geom class="gripper_visual" mesh="right_inner_knuckle" />
+                      </body>
+
+                      
+                      <site name="link_tcp" pos="0 0 0.172" size="0.01" rgba="0 1 0 0" />
+                      <site name="link_eef" pos="0 0 0" size="0.008" rgba="1 0 0 0.5" />
+
+                      
+                      
+                      <body name="realsense_d435i" pos="0 0 0">
+                        
+                        <inertial pos="0.034 -0.009 0.012" mass="0.122" diaginertia="0.00008 0.00012 0.00008" />
+                        
+                        
+                        <geom class="camera_visual" mesh="d435_with_cam_stand" />
+                        
+                        
+                        <geom name="realsense_d435i_collision" class="camera_collision" pos="0.034 -0.009 0.012" size="0.04 0.015 0.015" />
+
+                        
+                        <site name="camera_link" pos="0.06746 -0.0175 0.0237" euler="3.14159 -1.5708 0" size="0.003" rgba="1 0 0 0" />
+                        
+                        
+                        
+                        <camera name="d435i_rgb" pos="0.06746 -0.0175 0.0237" xyaxes="0 1 0 1 0 0" fovy="62" mode="fixed" resolution="64 64" />
+                        
+                        
+                        <camera name="d435i_depth" pos="0.06746 -0.0175 0.0237" xyaxes="0 1 0 1 0 0" fovy="58" mode="fixed" resolution="64 64" />
+                      </body>
+                      
+                    </body>
+                    
+
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+  </worldbody>
+
+  
+  <contact>
+    <exclude body1="link_base" body2="link1" />
+    <exclude body1="right_inner_knuckle" body2="right_outer_knuckle" />
+    <exclude body1="right_inner_knuckle" body2="right_finger" />
+    <exclude body1="left_inner_knuckle" body2="left_outer_knuckle" />
+    <exclude body1="left_inner_knuckle" body2="left_finger" />
+    <exclude body1="xarm_gripper_base_link" body2="left_outer_knuckle" />
+    <exclude body1="xarm_gripper_base_link" body2="right_outer_knuckle" />
+    <exclude body1="xarm_gripper_base_link" body2="left_inner_knuckle" />
+    <exclude body1="xarm_gripper_base_link" body2="right_inner_knuckle" />
+    
+    <exclude body1="xarm_gripper_base_link" body2="realsense_d435i" />
+    <exclude body1="link6" body2="realsense_d435i" />
+  </contact>
+
+  
+  <tendon>
+    
+    <fixed name="left_coupling">
+      <joint joint="left_driver_joint" coef="1" />
+      <joint joint="left_finger_joint" coef="-1" />
+    </fixed>
+    <fixed name="left_inner_coupling">
+      <joint joint="left_driver_joint" coef="1" />
+      <joint joint="left_inner_knuckle_joint" coef="-1" />
+    </fixed>
+    
+    <fixed name="right_coupling">
+      <joint joint="left_driver_joint" coef="1" />
+      <joint joint="right_driver_joint" coef="-1" />
+    </fixed>
+    <fixed name="right_finger_coupling">
+      <joint joint="left_driver_joint" coef="1" />
+      <joint joint="right_finger_joint" coef="-1" />
+    </fixed>
+    <fixed name="right_inner_coupling">
+      <joint joint="left_driver_joint" coef="1" />
+      <joint joint="right_inner_knuckle_joint" coef="-1" />
+    </fixed>
+  </tendon>
+
+  
+  <equality>
+    <tendon tendon1="left_coupling" solimp="0.90 0.98 0.001" solref="0.02 1" />
+    <tendon tendon1="left_inner_coupling" solimp="0.90 0.98 0.001" solref="0.02 1" />
+    <tendon tendon1="right_coupling" solimp="0.90 0.98 0.001" solref="0.02 1" />
+    <tendon tendon1="right_finger_coupling" solimp="0.90 0.98 0.001" solref="0.02 1" />
+    <tendon tendon1="right_inner_coupling" solimp="0.90 0.98 0.001" solref="0.02 1" />
+  </equality>
+
+  <actuator>
+    
+    <position name="joint1_act" joint="joint1" class="xarm6" ctrlrange="-6.2832 6.2832" />
+    <position name="joint2_act" joint="joint2" class="xarm6" ctrlrange="-2.059 2.0944" />
+    <position name="joint3_act" joint="joint3" class="xarm6" ctrlrange="-3.927 0.19198" />
+    <position name="joint4_act" joint="joint4" class="xarm6" ctrlrange="-6.2832 6.2832" />
+    <position name="joint5_act" joint="joint5" class="xarm6" ctrlrange="-1.69297 3.14159" />
+    <position name="joint6_act" joint="joint6" class="xarm6" ctrlrange="-6.2832 6.2832" />
+    
+    <position name="gripper_act" joint="left_driver_joint" class="gripper" ctrlrange="0 0.85" />
+  </actuator>
+
+  <sensor>
+    
+    <framepos name="tcp_pos" objtype="site" objname="link_tcp" />
+  </sensor>
+
+  <keyframe>
+    
+    
+    <key name="home" qpos="0 -0.247 0 0.909 0 1.15644 0 0 0 0 0 0" ctrl="0 -0.247 0 0.909 0 1.15644 0" />
+  </keyframe>
+</mujoco>
