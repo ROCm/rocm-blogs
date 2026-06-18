@@ -53,14 +53,14 @@ A great reinforcement learning (RL) training environment excels along many axes.
 
 [AMD Schola](https://github.com/GPUOpen-LibrariesAndSDKs/Schola) is an open-source Unreal Engine plugin that brings standard Gymnasium-compatible RL training directly into the Unreal Editor, connecting to Python training frameworks over [gRPC](https://grpc.io/).  
 [Unreal Robotics Lab (URLab)](https://github.com/URLab-Sim/UnrealRoboticsLab) is a plugin that embeds [MuJoCo](https://mujoco.org/) inside Unreal, letting you define robots in the MuJoCo XML format (MJCF) and drive them with fast, accurate contact physics.  
-The bundled C++ source under [`source/`](source/) connects those two plugins in your game module, and together they form a pipeline that takes MuJoCo's physics through Unreal's rendering and tooling, with Schola exposing the result to a Python training loop on AMD hardware.
+The bundled C++ source under [`source/`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source) connects those two plugins in your game module, and together they form a pipeline that takes MuJoCo's physics through Unreal's rendering and tooling, with Schola exposing the result to a Python training loop on AMD hardware.
 This post walks through how that pipeline is structured and how to implement a reach task for a 6 degrees-of-freedom (DOF) robot arm from scratch.
 
 ## Prerequisites
 
 Before continuing, make sure you have the following installed and configured:
 
-- **Unreal® Engine 5.7** with the **Schola** [version 2.1.1](https://github.com/GPUOpen-LibrariesAndSDKs/Schola/releases/tag/v2.1.1) and **UnrealRoboticsLab** [commit `352a9ea`](https://github.com/URLab-Sim/UnrealRoboticsLab/commit/352a9ea7bdce0eaa9e1bd365454f3b7ea421d44c) plugins enabled in your project. Copy the bundled C++ glue from [`source/`](source/) into your game module (see [Step 2](#step-2-copy-the-bundled-source)); that is the only integration code required beyond those two plugins.
+- **Unreal® Engine 5.7** with the **Schola** [version 2.1.1](https://github.com/GPUOpen-LibrariesAndSDKs/Schola/releases/tag/v2.1.1) and **UnrealRoboticsLab** [commit `352a9ea`](https://github.com/URLab-Sim/UnrealRoboticsLab/commit/352a9ea7bdce0eaa9e1bd365454f3b7ea421d44c) plugins enabled in your project. Copy the bundled C++ glue from [`source/`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source) into your game module (see [Step 2](#step-2-copy-the-bundled-source)); that is the only integration code required beyond those two plugins.
 - **Python 3.10-3.12** with the requirements of the **Schola** plugin installed.
 - Familiarity with MJCF robot descriptions. The [MuJoCo documentation](https://mujoco.readthedocs.io/) is a useful reference if you are new to the format.
 - A basic understanding of reinforcement learning concepts (observations, actions, reward, and episode termination).
@@ -104,7 +104,7 @@ Content/
       ...                    ← other mesh paths as listed in the MJCF <asset> block
 ```
 
-Copy [`source/xarm6_reach.xml`](source/xarm6_reach.xml) into `Content/MuJoCo/mjcf/`, download the meshes referenced in its `<asset>` block from [`xarm_description/meshes/`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/meshes) (starting with [`xarm6/visual/`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/meshes/xarm6/visual)), and mirror that directory layout before importing. The MJCF is derived from UFACTORY's xArm Unified Robot Description Format (URDF); see [Acknowledgements](#acknowledgements) for license terms.
+Copy [`source/xarm6_reach.xml`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source/xarm6_reach.xml) into `Content/MuJoCo/mjcf/`, download the meshes referenced in its `<asset>` block from [`xarm_description/meshes/`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/meshes) (starting with [`xarm6/visual/`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/meshes/xarm6/visual)), and mirror that directory layout before importing. The MJCF is derived from UFACTORY's xArm Unified Robot Description Format (URDF); see [Acknowledgements](#acknowledgements) for license terms.
 
 ### Import the MJCF into Unreal
 
@@ -124,10 +124,10 @@ See [Sensor Naming](#sensor-naming) under [Configuration Notes](#configuration-n
 
 ## Step 2: Copy the Bundled Source
 
-This post ships four C++ files under [`source/`](source/) that handle connecting the MuJoCo components on your xArm6 to Schola. Copy them into your game module:
+This post ships four C++ files under [`source/`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source) that handle connecting the MuJoCo components on your xArm6 to Schola. Copy them into your game module:
 
-1. Copy [`source/XArmEnvironment/XArmEnvironment.h`](source/XArmEnvironment/XArmEnvironment.h) and [`source/XArmEnvironment/XArmEnvironment.cpp`](source/XArmEnvironment/XArmEnvironment.cpp) into your game module's `Public/` and `Private/` folders.
-2. Copy [`source/GymConnector/URLabScholaGymConnectorManager.h`](source/GymConnector/URLabScholaGymConnectorManager.h) and [`source/GymConnector/URLabScholaGymConnectorManager.cpp`](source/GymConnector/URLabScholaGymConnectorManager.cpp) into the same module.
+1. Copy [`source/XArmEnvironment/XArmEnvironment.h`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source/XArmEnvironment/XArmEnvironment.h) and [`source/XArmEnvironment/XArmEnvironment.cpp`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source/XArmEnvironment/XArmEnvironment.cpp) into your game module's `Public/` and `Private/` folders.
+2. Copy [`source/GymConnector/URLabScholaGymConnectorManager.h`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source/GymConnector/URLabScholaGymConnectorManager.h) and [`source/GymConnector/URLabScholaGymConnectorManager.cpp`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source/GymConnector/URLabScholaGymConnectorManager.cpp) into the same module.
 3. Replace `YOURPROJECT_API` with your module's API macro in all four files. You can find it on any existing class in your game module's `Public/` headers. It follows the pattern `{MODULENAME}_API` (for example, a module folder `Source/MyGame/` uses `MYGAME_API`; `Source/UnrealRoboticsLab/` uses `UNREALROBOTICSLAB_API`).
 4. Add `URLab`, `Schola`, and `ScholaTraining` to your game module's `Build.cs` dependencies, then rebuild.
 
@@ -636,7 +636,7 @@ Omit the `--headless` parameter to visually inspect the trained policy's behavio
 
 ## Summary
 
-This post covered the URLab + Schola pipeline for training a robot arm policy in Unreal Engine. Starting from an MJCF robot description, you imported the xArm6 into Unreal using URLab, connected it to Schola's RL loop through the bundled C++ code under [`source/`](source/) (`AXArmEnvironment` plus `AURLabScholaGymConnectorManager`), and implemented a reach task covering reward shaping, observation normalization, and per-episode target randomization. On the Python side, Schola exposes the Unreal environment as a standard Gymnasium interface, making it immediately compatible with [Stable Baselines 3](https://stable-baselines3.readthedocs.io/en/master/) and exportable to the Open Neural Network Exchange ([ONNX](https://onnx.ai/)) format for inference.
+This post covered the URLab + Schola pipeline for training a robot arm policy in Unreal Engine. Starting from an MJCF robot description, you imported the xArm6 into Unreal using URLab, connected it to Schola's RL loop through the bundled C++ code under [`source/`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source) (`AXArmEnvironment` plus `AURLabScholaGymConnectorManager`), and implemented a reach task covering reward shaping, observation normalization, and per-episode target randomization. On the Python side, Schola exposes the Unreal environment as a standard Gymnasium interface, making it immediately compatible with [Stable Baselines 3](https://stable-baselines3.readthedocs.io/en/master/) and exportable to the Open Neural Network Exchange ([ONNX](https://onnx.ai/)) format for inference.
 
 The combination of MuJoCo's accurate contact physics, Unreal's rendering and editor tooling, and Schola's gRPC-based training loop creates a pipeline that is practical to develop against: iterate on the reward in the editor, visualize the policy live in the scene, and deploy the trained ONNX model without framework changes. The xArm6 reach task in this post is a foundation for more complex manipulation scenarios that build on the same architecture.
 
@@ -675,7 +675,7 @@ If you still see camera meshes in the viewport, deactivate the `d435i_rgb` / `d4
 
 This tutorial uses [Unreal Robotics Lab (URLab)](https://github.com/URLab-Sim/UnrealRoboticsLab) (Embley-Riches et al., ICRA 2026; [arXiv:2504.14135](https://arxiv.org/abs/2504.14135)). URLab is distributed under the Apache License 2.0.
 
-The xArm6 MJCF bundled with this post ([`source/xarm6_reach.xml`](source/xarm6_reach.xml)) was created from the xArm Unified Robot Description Format (URDF) in the [xArm Robot Operating System (ROS) repository](https://github.com/xArm-Developer/xarm_ros), specifically [`xarm_description/urdf/xarm`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/urdf/xarm). Mesh files are **not** included with this post; download them separately from [`xarm_description/meshes/`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/meshes) as referenced in the MJCF.
+The xArm6 MJCF bundled with this post ([`source/xarm6_reach.xml`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/artificial-intelligence/schola-urlab/source/xarm6_reach.xml)) was created from the xArm Unified Robot Description Format (URDF) in the [xArm Robot Operating System (ROS) repository](https://github.com/xArm-Developer/xarm_ros), specifically [`xarm_description/urdf/xarm`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/urdf/xarm). Mesh files are **not** included with this post; download them separately from [`xarm_description/meshes/`](https://github.com/xArm-Developer/xarm_ros/tree/master/xarm_description/meshes) as referenced in the MJCF.
 
 That upstream project is Copyright (c) 2018, UFACTORY Inc., and is distributed under the BSD-3-Clause license:
 
