@@ -49,7 +49,7 @@ SOFTWARE.
 
 # Technical Dive into AMD's MLPerf Training v6.0 Submission
 
-AMD is proud to share its MLPerf Training v6.0 results, marking another step forward in our commitment to delivering competitive AI training performance using the latest AMD Instinct GPUs. This round covers three benchmarks — Llama 2 70B LoRA fine-tuning, Llama 3.1 8B pretraining, and FLUX.1 Schnell text-to-image pretraining — with hardware coverage spanning the MI325X, MI350X, and MI355X Instinct GPUs.
+AMD is proud to share its MLPerf Training v6.0 results, marking another step forward in our commitment to delivering competitive AI training performance using the latest AMD Instinct GPUs. This round covers three benchmarks — Llama 2 70B LoRA fine-tuning, Llama 3.1 8B pretraining, and Flux.1-schnell text-to-image pretraining — with AMD's own submissions spanning the MI325X, MI350X, and MI355X Instinct GPUs, alongside a large-scale 512-GPU MI300X submission from OCI in partnership with AMD.
 
 MLPerf Training is the industry's most rigorous public benchmark suite for AI training workloads, covering a broad range of model architectures and use cases. Participation in each successive round allows AMD to demonstrate generational progress, validate our software stack under competitive scrutiny, and provide transparency to customers evaluating AI infrastructure options.
 
@@ -70,7 +70,7 @@ This submission round brings significant advances in our software stack. The two
 
 ## Primus: First Use in MLPerf Training Submissions
 
-[Primus](https://github.com/AMD-AGI/Primus) is AMD's unified, modular training framework for large-scale foundation model training on AMD Instinct GPUs. It presents a single CLI and configuration system over multiple training backends — Megatron-LM, Megatron-Bridge, and TorchTitan — so the same workflow drives pretraining, supervised fine-tuning, and post-training without users having to manage each framework separately. This round's two LLM submissions exercise that design directly: Llama 3.1 8B pretraining runs on the Megatron-LM backend, while Llama 2 70B LoRA fine-tuning runs on the Megatron-Bridge backend, each from one configuration entry point.
+[Primus](https://github.com/AMD-AGI/Primus) is AMD's unified, modular training framework for large-scale foundation model training on AMD Instinct GPUs. It presents a single CLI and configuration system over multiple training backends — Megatron-LM, Megatron-Bridge, and TorchTitan — so the same workflow drives pretraining, post-training, and reinforcement learning without users having to manage each framework separately. This round's two LLM submissions exercise that design directly: Llama 3.1 8B pretraining runs on the Megatron-LM backend, while Llama 2 70B LoRA fine-tuning runs on the Megatron-Bridge backend, each from one configuration entry point.
 
 Primus is part of a three-component ecosystem:
 
@@ -208,9 +208,9 @@ This ensures that the two sets of weights are never co-resident on the GPU.
 Notably, activation recomputation is not used in either phase of this
 submission's recipe.
 
-### FLUX.1 Schnell: Targeted Kernel and Graph Optimizations
+### Flux.1-schnell: Targeted Kernel and Graph Optimizations
 
-The FLUX.1 Schnell image generation model benefits from a series of targeted
+The Flux.1-schnell image generation model benefits from a series of targeted
 optimizations, each contributing measurable throughput gains:
 
 - **torch.compile region fusion (+4.1%):** Compiling the double and
@@ -266,24 +266,24 @@ MI355X. Compared to those submissions, the scores for Llama 2 70B fine-tuning im
 
 The figure below shows competitive performance of AMD MI355X GPUs compared to NVIDIA B200 GPU for Llama 2 70B LoRA and Llama 3.1 8B pretraining. The results show that for both benchmarks, MI355X delivers performance very similar to the NVIDIA GPU system, with a difference being about 5%.
 
-<img src="images/Training60CompetitivePerf.png" alt="MLPerf Training 5.1 AMD Results" width="100%">
+<img src="images/Training60CompetitivePerf.png" alt="MLPerf Training v6.0 AMD Results" width="100%">
 
-### Multi-Node Training for Flux.1
+### Multi-Node Training for Flux.1-schnell
 
-One of the highlights of this round of MLPerf Training is AMD embracing multi-node submissions. This is demonstrated in two submissions: AMD's own on 8 nodes of MI325X GPU (64 GPU total) and in collaboration with OCI on 64 nodes of MI300X GPUs (512 GPUs). These results demonstrate the scalability of AMD software stack and the ability to deliver efficient training at scale. The results from the collaboration with OCI are especially impressive due to the large scale, which equals the highest scale submitted for this benchmark in this round (see figure below). 
+One of the highlights of this round of MLPerf Training is AMD embracing multi-node submissions. This is demonstrated in two submissions: AMD's own on 8 nodes of MI325X GPUs (64 GPUs total) and in collaboration with OCI on 64 nodes of MI300X GPUs (512 GPUs). These results demonstrate the scalability of AMD software stack and the ability to deliver efficient training at scale. The results from the collaboration with OCI are especially impressive due to the large scale, which equals the highest scale submitted for this benchmark in this round (see figure below).
 
 <img src="images/60TrainingMN.png" alt="MLPerf Training v6.0 Results - multi-node training" width="100%">
 
 ## Summary
 
-AMD's MLPerf Training v6.0 submission demonstrates continued progress across both hardware and software. On the hardware side, the CDNA4-generation MI355X delivers competitive time-to-train results against NVIDIA B200 on both single-node LLM benchmarks — Llama 2 70B LoRA fine-tuning and Llama 3.1 8B pretraining — at an iso-GPU count of 8, while the MI325X powers an 8-node Flux.1 Schnell text-to-image submission. On the software side, this round marks the first MLPerf Training submission powered by Primus, AMD's unified training framework, used across both LLM benchmarks, alongside the debut of a production MXFP4 training recipe on the MI355X's native FP4 hardware. The combination of MXFP4 and FP8 precision with optimized ROCm kernel libraries delivers measurable improvements in training throughput on AMD Instinct hardware. AMD remains committed to transparent, round-over-round participation in MLPerf Training as a mechanism for publicly validating progress across both hardware generations and the broader ROCm software ecosystem. For instructions on how to reproduce the submission results by AMD, check out the blog [Reproducing AMD MLPerf Training v6.0 Submission Result](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-training6.0-repro/README.html).
+AMD's MLPerf Training v6.0 submission demonstrates continued progress across both hardware and software. On the hardware side, the CDNA4-generation MI355X delivers competitive time-to-train results against NVIDIA B200 on both single-node LLM benchmarks — Llama 2 70B LoRA fine-tuning and Llama 3.1 8B pretraining — at an iso-GPU count of 8, while the MI325X powers an 8-node Flux.1-schnell text-to-image submission. On the software side, this round marks the first MLPerf Training submission powered by Primus, AMD's unified training framework, used across both LLM benchmarks, alongside the debut of a production MXFP4 training recipe on the MI355X's native FP4 hardware. The combination of MXFP4 and FP8 precision with optimized ROCm kernel libraries delivers measurable improvements in training throughput on AMD Instinct hardware. AMD remains committed to transparent, round-over-round participation in MLPerf Training as a mechanism for publicly validating progress across both hardware generations and the broader ROCm software ecosystem. For instructions on how to reproduce the submission results by AMD, check out the blog [Reproducing AMD MLPerf Training v6.0 Submission Result](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-training6.0-repro/README.html).
 
 ## Additional Resources 
 
 1. [Cim, M., Palangappa, P., Hodak, M., Dwivedula, R., Arunachalam, M., & Kandemir, M. T. (2026). *Pretraining large language models with MXFP4 on native FP4 hardware*. arXiv.](https://arxiv.org/abs/2605.09825)
 2. [Technical Dive into AMD MLPerf Training v5.1 Submission](https://rocm.blogs.amd.com/artificial-intelligence/mlperf-training-v5.1/README.html)
 3. [AMD CDNA 4 Architecture Whitepaper](https://www.amd.com/content/dam/amd/en/documents/instinct-tech-docs/white-papers/amd-cdna-4-architecture-whitepaper.pdf)
-4. [OCP Microscaling Formats (MX) v1.0 Specification](https://github.com/Justi255/OCPMX/blob/main/OCP_Microscaling%20Formats%20(MX)%20v1.0%20Spec_Final.pdf)
+4. [OCP Microscaling Formats (MX) v1.0 Specification](https://www.opencompute.org/documents/ocp-microscaling-formats-mx-v1-0-spec-final-pdf)
 
 ## Disclaimers
 

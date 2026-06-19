@@ -56,11 +56,11 @@ In the following sections, you will first find instructions to set up the enviro
 
 ## Primus
 
-The LLM benchmarks submitted by AMD in this round are powered by **[Primus](https://github.com/AMD-AGI/Primus)**, AMD's unified, modular training framework for large-scale foundation model training on AMD Instinct GPUs. Primus abstracts over multiple training backends — Megatron-LM and TorchTitan — through a single CLI and configuration system, enabling pretraining, fine-tuning, and RLHF workflows without managing each backend separately.
+The LLM benchmarks submitted by AMD in this round are powered by **[Primus](https://github.com/AMD-AGI/Primus)**, AMD's unified, modular training framework for large-scale foundation model training on AMD Instinct GPUs. Primus abstracts over multiple training backends — Megatron-LM, Megatron-Bridge, and TorchTitan — through a single CLI and configuration system, enabling pretraining, post-training, and reinforcement learning without managing each backend separately.
 
 The Primus ecosystem used in these submissions consists of three components:
 
-- **Primus (Primus-LM):** The unified training framework. Provides the `primus-cli`, configuration templates, workflow orchestration, and ROCm-native integrations with Megatron-LM and TorchTitan.
+- **Primus (Primus-LM):** The unified training framework. Provides the `primus-cli`, configuration templates, workflow orchestration, and ROCm-native integrations with Megatron-LM, Megatron-Bridge, and TorchTitan.
 - **Primus-Turbo:** A high-performance operator library delivering optimized FlashAttention, GEMM, and communication kernels for Instinct GPUs via AITER, Composable Kernel, and ROCm Triton — activated as a non-intrusive drop-in over the training framework.
 - **Primus-SaFE:** A cluster management and fault tolerance layer for enterprise-grade training resilience at scale.
 
@@ -70,12 +70,12 @@ Users interested in using Primus for their own workloads can get started at [git
 
 ## Llama 2 70B LoRA Fine-tuning
 
-The Llama 2 70B LoRA fine-tuning benchmark measures how quickly a model can be fine-tuned to reach a target ROUGE-2 score on the GovReport summarization dataset, using Low-Rank Adaptation (LoRA) with FP8 precision.
+The Llama 2 70B LoRA fine-tuning benchmark measures how quickly a model can be fine-tuned to reach a target evaluation (cross-entropy) loss on the GovReport summarization dataset, using Low-Rank Adaptation (LoRA). The recipe trains in MXFP4 and then "heals" to FP8 mid-training to recover the required accuracy.
 
 - **Disk space required:** ~270 GB for model download and conversion  
 - **Dataset:** [GovReport](https://gov-report-data.github.io/) (pre-tokenized, packed to sequence length 8,192)  
 - **Model:** Llama 2 70B with fused QKV  
-- **Convergence target:** ROUGE-2 score of 0.925
+- **Convergence target:** Evaluation (cross-entropy) loss of 0.925
 - **Docker image:** `rocm/amd-mlperf:llama2_70b_training_6.0`
 
 ### Set up Docker Image - Llama 2 70B
@@ -203,11 +203,11 @@ Note: To optimize the machine's performance, the training script will also execu
 
 ## Llama 3.1 8B Pretraining
 
-AMD led the development of the Llama 3.1 8B pretraining benchmark in MLPerf Training. Unlike Llama 2 70B LoRA, this benchmark starts from **random weights** — no checkpoint conversion is required. It trains on a subset of the C4 (Colossal Cleaned Common Crawl) dataset and targets a validation loss perplexity of **3.3**.
+AMD led the development of the Llama 3.1 8B pretraining benchmark in MLPerf Training. Unlike Llama 2 70B LoRA, this benchmark starts from **random weights** — no checkpoint conversion is required. It trains on a subset of the C4 (Colossal Cleaned Common Crawl) dataset and targets a validation log perplexity of **3.3**.
 
 - **Disk space required:** ~80 GB dataset + ~30 GB tokenizer  
 - **Dataset:** C4 (last 256 of 1,024 training shards, randomly shuffled)  
-- **Convergence target:** Validation loss perplexity ≤ 3.3  
+- **Convergence target:** Validation log perplexity ≤ 3.3
 - **Docker image:** `rocm/amd-mlperf:llama31_8b_training_6.0`
 
 ### Setup Docker Image - Llama 3.1 8B
@@ -240,8 +240,6 @@ bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/he
 
 # download model tokenizer
 bash <(curl -s https://raw.githubusercontent.com/mlcommons/r2-downloader/refs/heads/main/mlc-r2-downloader.sh) -d model https://training.mlcommons-storage.org/metadata/llama-3-1-8b-tokenizer.uri
-
-mv llama3_1_8b_tokenizer model
 ```
 
 After the download is completed, you should see files with the following naming conventions under the data directory, ending with both `.idx` and `.bin` extensions:
@@ -310,17 +308,21 @@ This benchmark trains the Flux.1-schnell model using preprocessed CC12M training
 - At least 6TB disk space is required.
 - GPUs are not required for dataset preparation.
 
-### Set up Docker Image - Flux.1
+### Set up Docker Image - Flux.1-schnell
 
 Pull the docker image from the registry and copy the `/workspace/code` folder (benchmark code and launch scripts) from the container to the host:
 
 ```bash
 docker pull rocm/amd-mlperf:flux1_training_6.0
+
+container_id=$(docker create rocm/amd-mlperf:flux1_training_6.0) && \
+docker cp $container_id:/workspace/code ./code && \
+docker rm $container_id
 ```
 
 Make sure the image is accessible on every node of the run environment.
 
-### Prepare Dataset - Flux.1
+### Prepare Dataset - Flux.1-schnell
 
 The dataset download and preprocessing scripts are included in the container. GPUs are not required for dataset preparation. In this example, `/data/mlperf_flux1/data` is used as the host download directory. The dataset path must be on a shared filesystem reachable from every node in the Slurm job.
 
@@ -433,7 +435,7 @@ The evaluation of the training run is summarized in the following table:
 | Evaluation frequency    | Every 262,144 training samples   |
 | Evaluation thoroughness | 29,696 samples                   |
 
-### Run Training
+### Scoring and Time-to-Train
 
 Use the same `run_start` / `run_stop` timestamps for time-to-train. Convergence is validation loss at or below **0.586** (see Evaluation above). For a submission score, average the 8 of 10 runs after dropping the fastest and slowest.
 
@@ -473,7 +475,7 @@ Below is the log from one of the training runs on the AMD MI355X platform for th
 
 From the logs, the `run_start` and `run_stop` events happened at timestamp `1778651870949` and `1778657049089` in milliseconds respectively. The difference between these two timestamps is the time taken for the training to finish, and is equal to `86.3 min`. In most cases, this should serve as a reliable estimate of the MLPerf Training score, but obtaining an MLPerf compliant score is more involved, as described below.
 
-Time-to-train is determined by two components: throughput and number of processed samples. Throughput is a measure of hardware performance and from the log above, it is about 30.7 samples per second for the Llama 3.1 8B pretraining benchmark running on MI355X. You can find throughput printed in your output file by searching for the last occurrence of `throughput` in the file. If your throughput is significantly lower, this indicates a misconfiguration or hardware issue that needs to be addressed.
+Time-to-train is determined by two components: throughput and number of processed samples. Throughput is a measure of hardware performance and from the log above, it is about 35.6 samples per second for the Llama 3.1 8B pretraining benchmark running on MI355X. You can find throughput printed in your output file by searching for the last occurrence of `throughput` in the file. If your throughput is significantly lower, this indicates a misconfiguration or hardware issue that needs to be addressed.
 
 Number of processed samples, given by `samples_count` in the output file, is determined by how fast the training converges to the defined accuracy target. In MLPerf Training, convergence needs to match the [Reference Convergence Checkpoints](https://github.com/mlcommons/training_policies/blob/master/training_rules.adoc#13-reference-convergence-points-rcps) (RCPs). For hyperparameters used in the AMD submission for an individual run of the Llama 3.1 8B pretraining benchmark on MI355X, a value of `184,320` as in the log shown above is most common.
 
