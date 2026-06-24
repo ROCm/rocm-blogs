@@ -96,7 +96,7 @@ The model used in this submission is the Llama 2 70B with fused QKV. You will ne
 
 To download the model from Huggingface, you will need to sign the LLAMA 2 COMMUNITY LICENSE AGREEMENT as well as obtain a Huggingface Token (`HF_TOKEN`).
 
-Start the docker container by mounting the volume you want to use for downloading the data under `/data` within the container. In this example we use `/data/mlperf_llama2` as the host download directory:
+Copy the folder `/workspace/code`, which contains the scripts needed to run the benchmark, from the docker container to the host. Then start the docker container by mounting the volume you want to use for downloading the data under `/data` within the container. In this example we use `/data/mlperf_llama2` as the host download directory:
 
 ```bash
 container_id=$(docker create rocm/amd-mlperf:llama2_70b_training_6.0) && \
@@ -159,9 +159,13 @@ After completion of the above step, your data directory, on the host, should loo
 Set the directory for the data, model and results. Ensure that `$LOGDIR` has write access for the results to be written by running `sudo chmod -R 777 $LOGDIR`. In this example we use `/data/mlperf_llama2/results` as the results directory, so please make sure to create this directory
 
 ```bash
+cd ./code
+
 export DATADIR=/data/mlperf_llama2
 export LOGDIR=/data/mlperf_llama2/results
 export CONT=rocm/amd-mlperf:llama2_70b_training_6.0
+
+sudo chmod -R 777 $LOGDIR
 ```
 
 To set appropriate configuration and system-specific hyperparameters for each AMD Instinct platform, use the appropriate configuration file listed in the table below:
@@ -212,7 +216,7 @@ AMD led the development of the Llama 3.1 8B pretraining benchmark in MLPerf Trai
 
 ### Setup Docker Image - Llama 3.1 8B
 
-Pull the docker image from the registry:
+Pull the docker image from the registry and copy the `/workspace/code` folder from the container to the host:
 
 ```bash
 docker pull rocm/amd-mlperf:llama31_8b_training_6.0
@@ -256,10 +260,14 @@ The size of the data directory is ~80 GB, and ~30 GB for the model directory.
 Set the directory for the data, model and results. Ensure that `$LOGDIR` has write access for the results to be written by running `sudo chmod -R 777 $LOGDIR`, In this example the folder `/data/mlperf_llama31_8b/results` is used as the results directory, so please make sure to create this directory.
 
 ```bash
+cd ./code
+
 export DATADIR=/data/mlperf_llama31_8b/data
-export MODEL=/data/mlperf_llama31_8b/model/
+export MODELDIR=/data/mlperf_llama31_8b/model/
 export LOGDIR=/data/mlperf_llama31_8b/results
 export CONT=rocm/amd-mlperf:llama31_8b_training_6.0
+
+sudo chmod -R 777 $LOGDIR
 ```
 
 #### Set Configurations - Llama 3.1 8B
