@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<defs>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+  <style>
+    text{font-family:Inter,Arial,Helvetica,sans-serif;fill:#111827}
+    .title{font-size:30px;font-weight:850;fill:#152e7a}.sub{font-size:16px;fill:#4f5f7a}
+    .h{font-size:15px;font-weight:740}.label{font-size:13px;font-weight:720}.m{font-size:12px;fill:#475569}.tiny{font-size:11px;fill:#64748b}
+    .note{font-size:15px;font-weight:740;fill:#0f766e}
+    .panel{fill:#ffffff;stroke:#d7e2f0;stroke-width:1.4;filter:url(#shadow)}
+    .decode{fill:#dcf7ee;stroke:#18a878;stroke-width:2}.prefill{fill:#e6f0ff;stroke:#4f7ee8;stroke-width:2}
+    .idle{fill:#f5f6fa;stroke:#6b7280;stroke-width:2}.comm{fill:#e8fbff;stroke:#06a6c8;stroke-width:2}
+    .moe{fill:#fff0db;stroke:#f08c00;stroke-width:2}.overlap{fill:#ecfdf5;fill-opacity:.60;stroke:#10b981;stroke-width:2;stroke-dasharray:7 5}
+    .overlapText{font-size:13px;font-weight:700;fill:#047857}.ubComm{fill:#a5f3fc;stroke:#0891b2;stroke-width:1.5}.ubMoe{fill:#fed7aa;stroke:#ea580c;stroke-width:1.5}
+    .flow{stroke:#94a3b8;stroke-width:1.8;stroke-dasharray:5 5}
+  </style>
+</defs>
+<rect width="1200" height="720" fill="#f8fbff"/>
+<text class="title" x="600" y="52" text-anchor="middle">DP Attention + TP/EP MoE Communication Flow</text>
+<text class="sub" x="600" y="80" text-anchor="middle">DP Attention -> AllGather / All2All dispatch -> MoE -> ReduceScatter / All2All combine</text>
+
+<!-- Left: main flow -->
+<rect class="panel" x="55" y="104" width="805" height="590" rx="26"/>
+<text class="h" x="92" y="149">Execution path across four ranks</text>
+<text class="m" x="92" y="172">DP Attention feeds MoE collectives; TBO overlaps communication and compute at collective boundaries.</text>
+
+<line class="flow" x1="180" y1="192" x2="180" y2="646"/>
+<line class="flow" x1="360" y1="192" x2="360" y2="646"/>
+<line class="flow" x1="540" y1="192" x2="540" y2="646"/>
+<line class="flow" x1="720" y1="192" x2="720" y2="646"/>
+
+<!-- Batch headers -->
+<rect class="prefill" x="135" y="198" width="90" height="34" rx="10"/><text class="label" x="180" y="221" text-anchor="middle">batch1</text>
+<rect class="prefill" x="315" y="198" width="90" height="34" rx="10"/><text class="label" x="360" y="221" text-anchor="middle">batch2</text>
+<rect class="idle" x="495" y="198" width="90" height="34" rx="10"/><text class="label" x="540" y="221" text-anchor="middle">batch3</text>
+<rect class="decode" x="675" y="198" width="90" height="34" rx="10"/><text class="label" x="720" y="221" text-anchor="middle">batch4</text>
+
+<!-- DP Attention row -->
+<rect class="prefill" x="135" y="258" width="90" height="92" rx="14"/><text class="h" x="180" y="294" text-anchor="middle">DP</text><text class="h" x="180" y="320" text-anchor="middle">Attention</text><text class="tiny" x="180" y="340" text-anchor="middle">rank1</text>
+<rect class="prefill" x="315" y="258" width="90" height="92" rx="14"/><text class="h" x="360" y="294" text-anchor="middle">DP</text><text class="h" x="360" y="320" text-anchor="middle">Attention</text><text class="tiny" x="360" y="340" text-anchor="middle">rank2</text>
+<rect class="idle" x="495" y="258" width="90" height="92" rx="14"/><text class="h" x="540" y="294" text-anchor="middle">DP</text><text class="h" x="540" y="320" text-anchor="middle">Attention</text><text class="tiny" x="540" y="340" text-anchor="middle">rank3</text>
+<rect class="decode" x="675" y="258" width="90" height="92" rx="14"/><text class="h" x="720" y="294" text-anchor="middle">DP</text><text class="h" x="720" y="320" text-anchor="middle">Attention</text><text class="tiny" x="720" y="340" text-anchor="middle">rank4</text>
+
+<!-- TBO overlap: includes AG, MoE, and RS -->
+<rect class="overlap" x="115" y="374" width="685" height="258" rx="20"/>
+<text class="overlapText" x="457" y="400" text-anchor="middle">TBO overlap window</text>
+
+<rect class="comm" x="155" y="416" width="625" height="48" rx="10"/>
+<text class="tiny" x="177" y="437">Collective 1</text>
+<text class="h" x="467" y="439" text-anchor="middle">AllGather / All2All Dispatch</text>
+<text class="m" x="467" y="457" text-anchor="middle">collect tokens before MoE expert compute</text>
+
+<rect class="moe" x="135" y="490" width="90" height="70" rx="12"/><text class="h" x="180" y="518" text-anchor="middle">TP/EP</text><text class="h" x="180" y="542" text-anchor="middle">MoE</text>
+<rect class="moe" x="315" y="490" width="90" height="70" rx="12"/><text class="h" x="360" y="518" text-anchor="middle">TP/EP</text><text class="h" x="360" y="542" text-anchor="middle">MoE</text>
+<rect class="moe" x="495" y="490" width="90" height="70" rx="12"/><text class="h" x="540" y="518" text-anchor="middle">TP/EP</text><text class="h" x="540" y="542" text-anchor="middle">MoE</text>
+<rect class="moe" x="675" y="490" width="90" height="70" rx="12"/><text class="h" x="720" y="518" text-anchor="middle">TP/EP</text><text class="h" x="720" y="542" text-anchor="middle">MoE</text>
+
+<rect class="comm" x="155" y="580" width="625" height="46" rx="10"/>
+<text class="tiny" x="177" y="600">Collective 2</text>
+<text class="h" x="467" y="603" text-anchor="middle">ReduceScatter / All2All Combine</text>
+<text class="m" x="467" y="620" text-anchor="middle">return expert outputs to per-rank batches</text>
+
+<!-- Final batch row, outside TBO window -->
+<rect class="prefill" x="135" y="646" width="90" height="24" rx="8"/><text class="tiny" x="180" y="662" text-anchor="middle">batch1</text>
+<rect class="prefill" x="315" y="646" width="90" height="24" rx="8"/><text class="tiny" x="360" y="662" text-anchor="middle">batch2</text>
+<rect class="idle" x="495" y="646" width="90" height="24" rx="8"/><text class="tiny" x="540" y="662" text-anchor="middle">batch3</text>
+<rect class="decode" x="675" y="646" width="90" height="24" rx="8"/><text class="tiny" x="720" y="662" text-anchor="middle">batch4</text>
+
+<!-- Right: legend and notes -->
+<rect class="panel" x="890" y="104" width="255" height="590" rx="26"/>
+<text class="h" x="920" y="149">Legend</text>
+<text class="m" x="920" y="172">Communication backends</text>
+<text class="m" x="920" y="190">share this order.</text>
+
+<rect class="prefill" x="920" y="220" width="58" height="28" rx="8"/><text class="label" x="1000" y="239">Prefill</text>
+<rect class="decode" x="920" y="260" width="58" height="28" rx="8"/><text class="label" x="1000" y="279">Decode</text>
+<rect class="idle" x="920" y="300" width="58" height="28" rx="8"/><text class="label" x="1000" y="319">Idle</text>
+<rect class="comm" x="920" y="352" width="58" height="28" rx="8"/><text class="label" x="1000" y="371">Collective</text>
+<rect class="moe" x="920" y="392" width="58" height="28" rx="8"/><text class="label" x="1000" y="411">TP/EP MoE</text>
+
+<rect class="overlap" x="910" y="452" width="220" height="92" rx="12"/>
+<text class="overlapText" x="1020" y="477" text-anchor="middle">TBO overlap</text>
+<rect class="ubComm" x="940" y="494" width="58" height="18" rx="4"/><text class="tiny" x="1014" y="508">uB1 comm</text>
+<rect class="ubMoe" x="940" y="520" width="58" height="18" rx="4"/><text class="tiny" x="1014" y="534">uB0 MoE</text>
+
+<text class="note" x="920" y="574">ATOM AG/RS path</text>
+<text class="m" x="920" y="598">uses standard NCCL</text>
+<text class="m" x="920" y="618">AllGather + ReduceScatter.</text>
+<text class="m" x="920" y="642">All2All uses dispatch</text>
+<text class="m" x="920" y="660">and combine collectives.</text>
+</svg>
