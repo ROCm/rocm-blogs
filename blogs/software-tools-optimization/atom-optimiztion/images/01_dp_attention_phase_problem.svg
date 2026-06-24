@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<defs>
+  <pattern id="padding" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
+    <rect width="10" height="10" fill="#fff7ed"/>
+    <path d="M0 0H10" stroke="#fdba74" stroke-width="2" opacity=".45"/>
+  </pattern>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2 2L10 6L2 10Z" fill="#64748b"/></marker>
+  <style>
+    text{font-family:Inter,Arial,Helvetica,sans-serif;fill:#111827}
+    .title{font-size:30px;font-weight:850;fill:#152e7a}.sub{font-size:16px;fill:#4f5f7a}
+    .h{font-size:16px;font-weight:760}.label{font-size:14px;font-weight:740}.m{font-size:13px;fill:#475569}.tiny{font-size:12px;fill:#64748b}
+    .note{font-size:16px;font-weight:760;fill:#0f766e}.danger{font-size:16px;font-weight:760;fill:#be123c}
+    .panel{fill:#ffffff;stroke:#d7e2f0;stroke-width:1.4;filter:url(#shadow)}
+    .decode{fill:#dcf7ee;stroke:#18a878;stroke-width:2}.prefill{fill:#e6f0ff;stroke:#4f7ee8;stroke-width:2}
+    .shape{fill:#fff7ed;stroke:#f97316;stroke-width:2}.warn{fill:#fff1f2;stroke:#e11d48;stroke-width:2}
+    .padding{fill:url(#padding);stroke:#fb923c;stroke-width:1.5;stroke-dasharray:6 4}
+    .line{stroke:#64748b;stroke-width:1.8;fill:none;marker-end:url(#arrow)}
+  </style>
+</defs>
+<rect width="1200" height="720" fill="#f8fbff"/>
+<text class="title" x="600" y="52" text-anchor="middle">DP Attention Phase Mismatch</text>
+<text class="sub" x="600" y="80" text-anchor="middle">rank 4 enters prefill while seven peers are decoding, forcing eager decode and padding to the prefill length.</text>
+
+<rect class="panel" x="55" y="112" width="1090" height="205" rx="26"/>
+<text class="h" x="92" y="149">MIXED DP STEP: 7 decode ranks + 1 prefill rank</text>
+<text class="m" x="92" y="172">rank 4 is placed in the middle to show the single prefill rank among decode peers.</text>
+
+<rect class="decode" x="82" y="208" width="78" height="78" rx="14"/><text class="label" x="121" y="231" text-anchor="middle">DP1</text><text class="h" x="121" y="255" text-anchor="middle">Decode</text><text class="tiny" x="121" y="276" text-anchor="middle">16 tok</text>
+<rect class="decode" x="207" y="208" width="78" height="78" rx="14"/><text class="label" x="246" y="231" text-anchor="middle">DP2</text><text class="h" x="246" y="255" text-anchor="middle">Decode</text><text class="tiny" x="246" y="276" text-anchor="middle">16 tok</text>
+<rect class="decode" x="332" y="208" width="78" height="78" rx="14"/><text class="label" x="371" y="231" text-anchor="middle">DP3</text><text class="h" x="371" y="255" text-anchor="middle">Decode</text><text class="tiny" x="371" y="276" text-anchor="middle">16 tok</text>
+<rect class="prefill" x="457" y="180" width="92" height="120" rx="14"/><text class="label" x="503" y="217" text-anchor="middle">rank 4</text><text class="h" x="503" y="246" text-anchor="middle">Prefill</text><text class="tiny" x="503" y="270" text-anchor="middle">1024 tok</text>
+<rect class="decode" x="582" y="208" width="78" height="78" rx="14"/><text class="label" x="621" y="231" text-anchor="middle">DP5</text><text class="h" x="621" y="255" text-anchor="middle">Decode</text><text class="tiny" x="621" y="276" text-anchor="middle">16 tok</text>
+<rect class="decode" x="707" y="208" width="78" height="78" rx="14"/><text class="label" x="746" y="231" text-anchor="middle">DP6</text><text class="h" x="746" y="255" text-anchor="middle">Decode</text><text class="tiny" x="746" y="276" text-anchor="middle">16 tok</text>
+<rect class="decode" x="832" y="208" width="78" height="78" rx="14"/><text class="label" x="871" y="231" text-anchor="middle">DP7</text><text class="h" x="871" y="255" text-anchor="middle">Decode</text><text class="tiny" x="871" y="276" text-anchor="middle">16 tok</text>
+<rect class="decode" x="957" y="208" width="78" height="78" rx="14"/><text class="label" x="996" y="231" text-anchor="middle">DP8</text><text class="h" x="996" y="255" text-anchor="middle">Decode</text><text class="tiny" x="996" y="276" text-anchor="middle">16 tok</text>
+
+<path class="line" d="M503 305 L503 352"/>
+<path class="line" d="M620 305 L620 352"/>
+
+<rect class="panel" x="55" y="360" width="1090" height="215" rx="26"/>
+<text class="h" x="92" y="397">Padding to prefill length before MoE</text>
+<text class="m" x="92" y="420">Vertical bars make the shape problem explicit: decode has only 16 real tokens, but every rank is padded up to rank 4's 1024-token prefill length.</text>
+
+<rect class="padding" x="95" y="448" width="52" height="100" rx="8"/><rect class="decode" x="95" y="532" width="52" height="16" rx="5"/><text class="tiny" x="121" y="565" text-anchor="middle">DP1</text>
+<rect class="padding" x="220" y="448" width="52" height="100" rx="8"/><rect class="decode" x="220" y="532" width="52" height="16" rx="5"/><text class="tiny" x="246" y="565" text-anchor="middle">DP2</text>
+<rect class="padding" x="345" y="448" width="52" height="100" rx="8"/><rect class="decode" x="345" y="532" width="52" height="16" rx="5"/><text class="tiny" x="371" y="565" text-anchor="middle">DP3</text>
+<rect class="prefill" x="477" y="448" width="52" height="100" rx="8"/><text class="tiny" x="503" y="502" text-anchor="middle">1024</text><text class="tiny" x="503" y="565" text-anchor="middle">rank 4</text>
+<rect class="padding" x="595" y="448" width="52" height="100" rx="8"/><rect class="decode" x="595" y="532" width="52" height="16" rx="5"/><text class="tiny" x="621" y="565" text-anchor="middle">DP5</text>
+<rect class="padding" x="720" y="448" width="52" height="100" rx="8"/><rect class="decode" x="720" y="532" width="52" height="16" rx="5"/><text class="tiny" x="746" y="565" text-anchor="middle">DP6</text>
+<rect class="padding" x="845" y="448" width="52" height="100" rx="8"/><rect class="decode" x="845" y="532" width="52" height="16" rx="5"/><text class="tiny" x="871" y="565" text-anchor="middle">DP7</text>
+<rect class="padding" x="970" y="448" width="52" height="100" rx="8"/><rect class="decode" x="970" y="532" width="52" height="16" rx="5"/><text class="tiny" x="996" y="565" text-anchor="middle">DP8</text>
+
+<text class="danger" x="600" y="603" text-anchor="middle">~86% padded payload with 1 prefill rank and 7 decode ranks</text>
+
+<rect class="panel" x="160" y="620" width="880" height="58" rx="20"/>
+<text class="h" x="210" y="655">Decode fallback rule:</text>
+<rect class="prefill" x="420" y="633" width="165" height="32" rx="10"/><text class="label" x="502" y="654" text-anchor="middle">peer has prefill</text>
+<path class="line" d="M598 649 L665 649"/>
+<rect class="warn" x="680" y="633" width="145" height="32" rx="10"/><text class="label" x="752" y="654" text-anchor="middle">eager decode</text>
+<text class="m" x="600" y="704" text-anchor="middle">PrefillDelayer fixes the source by aligning prefill admission across DP ranks before MoE.</text>
+</svg>

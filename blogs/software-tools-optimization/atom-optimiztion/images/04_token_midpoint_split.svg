@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="720" viewBox="0 0 1200 720">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fbff"/><stop offset="0.55" stop-color="#eef6ff"/><stop offset="1" stop-color="#fbf7ff"/></linearGradient>
+  <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6fbff"/></linearGradient>
+  <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbeafe"/><stop offset="1" stop-color="#60a5fa"/></linearGradient>
+  <linearGradient id="purple" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ede9fe"/><stop offset="1" stop-color="#a78bfa"/></linearGradient>
+  <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffedd5"/><stop offset="1" stop-color="#fb923c"/></linearGradient>
+  <linearGradient id="green" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dcfce7"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+  <linearGradient id="yellow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fef9c3"/><stop offset="1" stop-color="#facc15"/></linearGradient>
+  <linearGradient id="red" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fee2e2"/><stop offset="1" stop-color="#fb7185"/></linearGradient>
+  <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.13"/></filter>
+  <filter id="soft" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.10"/></filter>
+  <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M2 2L10 6L2 10Z" fill="#64748b"/></marker>
+  <style>
+    text{font-family:Inter,Arial,Helvetica,sans-serif}
+    .title{font-size:30px;font-weight:850;fill:#152e7a}.sub{font-size:16px;fill:#4f5f7a}
+    .h{font-size:16px;font-weight:760;fill:#111827}.label{font-size:14px;font-weight:740;fill:#1f2937}
+    .m{font-size:13px;fill:#475569}.tiny{font-size:12px;fill:#64748b}
+    .panel{fill:url(#panel);stroke:#d7e2f0;stroke-width:1.3;filter:url(#shadow)}
+    .blue{fill:url(#blue);stroke:#2563eb}.purple{fill:url(#purple);stroke:#7c3aed}.orange{fill:url(#orange);stroke:#ea580c}
+    .green{fill:url(#green);stroke:#16a34a}.yellow{fill:url(#yellow);stroke:#ca8a04}.red{fill:url(#red);stroke:#e11d48}
+    .card{fill:#fff;stroke:#dbe7f4;stroke-width:1.2;filter:url(#soft)}
+    .axis{stroke:#94a3b8;stroke-width:1.3;fill:none;marker-end:url(#arrow)}
+    .danger{font-size:16px;font-weight:760;fill:#9f1239}.success{font-size:16px;font-weight:760;fill:#166534}.note{font-size:16px;font-weight:760;fill:#0f766e}
+  </style>
+</defs>
+<rect width="1200" height="720" fill="url(#bg)"/>
+<text class="title" x="600" y="52" text-anchor="middle">Token-Midpoint Split Removes UBatch Imbalance</text>
+<text class="sub" x="600" y="80" text-anchor="middle">Total tokens = 16384, so the global midpoint produces two 8192-token ubatches.</text>
+
+<rect class="panel" x="80" y="120" width="1040" height="165" rx="26"/>
+<text class="h" x="120" y="160">Original token stream</text>
+<rect class="blue" x="170" y="190" width="386" height="50" rx="14"/>
+<text class="label" x="363" y="221" text-anchor="middle">req0: 7003</text>
+<rect class="purple" x="556" y="190" width="381" height="50" rx="14"/>
+<text class="label" x="746" y="221" text-anchor="middle">req1: 6928</text>
+<rect class="orange" x="937" y="190" width="135" height="50" rx="14"/>
+<text class="label" x="1004" y="221" text-anchor="middle">req2: 2453</text>
+<line x1="621" y1="168" x2="621" y2="260" stroke="#be123c" stroke-width="5" stroke-dasharray="10 6"/>
+<text class="label" x="642" y="184">midpoint = 8192</text>
+
+<rect class="panel" x="80" y="320" width="500" height="300" rx="26"/>
+<rect class="panel" x="620" y="320" width="500" height="300" rx="26"/>
+<text class="h" x="120" y="360">Request-boundary split</text>
+<text class="h" x="660" y="360">Token-midpoint split</text>
+
+<text class="label" x="120" y="415">ub0</text>
+<rect class="green" x="170" y="390" width="226" height="42" rx="12"/>
+<text class="tiny" x="283" y="417" text-anchor="middle">7003</text>
+<text class="label" x="120" y="495">ub1</text>
+<rect class="yellow" x="170" y="470" width="302" height="42" rx="12"/>
+<text class="tiny" x="321" y="497" text-anchor="middle">9381</text>
+<text class="danger" x="395" y="455">ub1 is longer</text>
+<rect class="red" x="130" y="540" width="390" height="58" rx="16"/>
+<text class="danger" x="325" y="565" text-anchor="middle">Imbalance: 1.34x</text>
+<text class="tiny" x="325" y="586" text-anchor="middle">Uneven token work limits overlap.</text>
+
+<text class="label" x="660" y="415">ub0</text>
+<rect class="blue" x="710" y="390" width="256" height="42" rx="12"/>
+<text class="tiny" x="838" y="417" text-anchor="middle">req0 7003</text>
+<rect class="purple" x="966" y="390" width="44" height="42" rx="12"/>
+<text class="tiny" x="988" y="417" text-anchor="middle">1189</text>
+<line x1="966" y1="383" x2="966" y2="439" stroke="#be123c" stroke-width="3" stroke-dasharray="7 5"/>
+
+<text class="label" x="660" y="495">ub1</text>
+<rect class="purple" x="710" y="470" width="210" height="42" rx="12"/>
+<text class="tiny" x="815" y="497" text-anchor="middle">req1 suffix 5739</text>
+<rect class="orange" x="920" y="470" width="90" height="42" rx="12"/>
+<text class="tiny" x="965" y="497" text-anchor="middle">req2 2453</text>
+<line x1="920" y1="463" x2="920" y2="519" stroke="#be123c" stroke-width="3" stroke-dasharray="7 5"/>
+<text class="tiny" x="825" y="373">req boundary shifts in local ubatch view</text>
+<rect class="green" x="670" y="540" width="390" height="58" rx="16"/>
+<text class="success" x="865" y="565" text-anchor="middle">Balanced: 8192 / 8192 tokens</text>
+<text class="tiny" x="865" y="586" text-anchor="middle">ub0 = req0 + req1 prefix; ub1 = req1 suffix + req2</text>
+
+<text class="note" x="600" y="672" text-anchor="middle">The global cut is one point, but each local ubatch shows different internal request composition.</text>
+</svg>
