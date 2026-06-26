@@ -2527,3 +2527,17 @@ prefillable
 ub
 ubatch
 ubatches
+CTAs
+Callouts
+Preshuffle
+QDQ
+RMS
+SQNR
+len
+mathrm
+microbenchmarks
+operatorname
+parallelizes
+preshuffle
+quantizers
+sqrt
