@@ -1,0 +1,389 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="850" viewBox="0 0 1500 850" role="img" aria-labelledby="title desc">
+<title id="title">BF16 Model-Shape Sweep: LDS-Pipelined Split-K Speedup</title>
+<desc id="desc">Hand-drawn LDS-Pipelined Split-K speedup table.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 C3,1 6,3 9,4 C6,5 3,7 0,8 Z" fill="#3f3f46"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.paper{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.stripe{fill:#fff7ed;opacity:.32}.plot{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:18}
+    .title{font:800 32px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 16px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 14px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 11px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.backend{font:700 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.legend{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.tagtext{font:600 9.5px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.axis{font:700 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}
+    .num{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.stat{font:800 26px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.note{font:600 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#7c4a03}
+    .grid{stroke:#e8dccd;stroke-width:1.15;stroke-dasharray:5 8}.axisline{stroke:#a89a89;stroke-width:1.8;stroke-linecap:round}
+    .line{fill:none;stroke-linecap:round;stroke-linejoin:round}.dot{stroke:#fffdf7;stroke-width:2}.tag{fill:#fffdf7;stroke:#c9bfae;stroke-width:1.3;rx:8}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="850"/>
+<text x="42" y="54" class="title">BF16 Model-Shape Sweep: LDS-Pipelined Split-K Speedup</text>
+<text x="44" y="84" class="subtitle">Additional BF16 model-trace shapes. Cell = faster generic backend latency / AITER FLYDSL latency.</text>
+<g transform="rotate(-0.8 155 151)">
+<rect class="" x="60" y="116" width="190" height="72" rx="18" fill="#fffdf7" stroke="#c9bfae" stroke-width="2"/>
+<rect x="59.3" y="115.4" width="190" height="72" rx="18" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="84" y="151" class="stat">48</text>
+<text x="84" y="174" class="tiny">model shapes</text>
+</g>
+<g transform="rotate(0.6 375 151)">
+<rect class="" x="280" y="116" width="190" height="72" rx="18" fill="#fffdf7" stroke="#c9bfae" stroke-width="2"/>
+<rect x="279.3" y="115.4" width="190" height="72" rx="18" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="304" y="151" class="stat">1.49x</text>
+<text x="304" y="174" class="tiny">avg speedup</text>
+</g>
+<g transform="rotate(-0.4 595 151)">
+<rect class="" x="500" y="116" width="190" height="72" rx="18" fill="#fffdf7" stroke="#c9bfae" stroke-width="2"/>
+<rect x="499.3" y="115.4" width="190" height="72" rx="18" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="524" y="151" class="stat">1.60x</text>
+<text x="524" y="174" class="tiny">M &lt;= 8 avg</text>
+</g>
+<g transform="rotate(0.7 815 151)">
+<rect class="" x="720" y="116" width="190" height="72" rx="18" fill="#fffdf7" stroke="#c9bfae" stroke-width="2"/>
+<rect x="719.3" y="115.4" width="190" height="72" rx="18" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="744" y="151" class="stat">2.34x</text>
+<text x="744" y="174" class="tiny">best shape</text>
+</g>
+<rect class="" x="935" y="126" width="125" height="28" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="934.3" y="125.4" width="125" height="28" rx="12" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<circle cx="952" cy="140" r="4.5" fill="#7c3aed"/>
+<text x="965" y="145" class="legend">AITER FLYDSL</text>
+<rect class="" x="1075" y="126" width="125" height="28" rx="12" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<rect x="1074.3" y="125.4" width="125" height="28" rx="12" fill="none" stroke="#f97316" stroke-width="1" opacity="0.45"/>
+<circle cx="1092" cy="140" r="4.5" fill="#f97316"/>
+<text x="1105" y="145" class="legend">AITER ASM</text>
+<rect class="" x="1215" y="126" width="125" height="28" rx="12" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<rect x="1214.3" y="125.4" width="125" height="28" rx="12" fill="none" stroke="#64748b" stroke-width="1" opacity="0.45"/>
+<circle cx="1232" cy="140" r="4.5" fill="#64748b"/>
+<text x="1245" y="145" class="legend">HipblasLT</text>
+<rect class="" x="1360" y="126" width="125" height="28" rx="12" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
+<rect x="1359.3" y="125.4" width="125" height="28" rx="12" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.45"/>
+<circle cx="1377" cy="140" r="4.5" fill="#06b6d4"/>
+<text x="1390" y="145" class="legend">AITER Triton</text>
+<rect class="" x="70" y="215" width="1360" height="585" rx="22" fill="#fffdf7" stroke="#c9bfae" stroke-width="2"/>
+<rect x="69.3" y="214.4" width="1360" height="585" rx="22" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="105" y="264" class="label">shape / M</text>
+<rect class="" x="373" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="372.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="395" y="256" class="axis">1</text>
+<rect class="" x="501" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="500.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="523" y="256" class="axis">2</text>
+<rect class="" x="629" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="628.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="651" y="256" class="axis">4</text>
+<rect class="" x="757" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="756.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="779" y="256" class="axis">8</text>
+<rect class="" x="885" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="884.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="907" y="256" class="axis">16</text>
+<rect class="" x="1013" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="1012.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="1035" y="256" class="axis">32</text>
+<rect class="" x="1141" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="1140.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="1163" y="256" class="axis">64</text>
+<rect class="" x="1269" y="238" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="1268.3" y="237.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="1291" y="256" class="axis">128</text>
+<rect class="stripe" x="92" y="276" width="1315" height="82" rx="18"/>
+<text x="105" y="309" class="label">N=128  K=2880</text>
+<text x="105" y="329" class="tiny">bias</text>
+<g transform="rotate(-0.28 401 317)">
+<rect class="" x="345" y="285" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="344.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="366" y="313" class="num" fill="#1f2937">1.34x</text>
+<text x="357" y="334" class="tiny" fill="#1f2937">4.1us / 5.5us</text>
+</g>
+<g transform="rotate(-0.08 529 317)">
+<rect class="" x="473" y="285" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="472.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="494" y="313" class="num" fill="#1f2937">1.34x</text>
+<text x="485" y="334" class="tiny" fill="#1f2937">4.1us / 5.5us</text>
+</g>
+<g transform="rotate(0.12 657 317)">
+<rect class="" x="601" y="285" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="600.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="622" y="313" class="num" fill="#1f2937">1.34x</text>
+<text x="613" y="334" class="tiny" fill="#1f2937">4.2us / 5.6us</text>
+</g>
+<g transform="rotate(0.26 785 317)">
+<rect class="" x="729" y="285" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="728.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="750" y="313" class="num" fill="#1f2937">1.28x</text>
+<text x="741" y="334" class="tiny" fill="#1f2937">4.1us / 5.3us</text>
+</g>
+<g transform="rotate(-0.18 913 317)">
+<rect class="" x="857" y="285" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="856.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="878" y="313" class="num" fill="#1f2937">1.44x</text>
+<text x="869" y="334" class="tiny" fill="#1f2937">4.1us / 5.9us</text>
+</g>
+<g transform="rotate(0.03 1041 317)">
+<rect class="" x="985" y="285" width="112" height="64" rx="14" fill="#ddd6fe" stroke="#ffffff" stroke-width="2"/>
+<rect x="984.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1006" y="313" class="num" fill="#1f2937">1.70x</text>
+<text x="997" y="334" class="tiny" fill="#1f2937">4.2us / 7.1us</text>
+</g>
+<g transform="rotate(0.20 1169 317)">
+<rect class="" x="1113" y="285" width="112" height="64" rx="14" fill="#a78bfa" stroke="#ffffff" stroke-width="2"/>
+<rect x="1112.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1134" y="313" class="num" fill="#fffdf7">1.91x</text>
+<text x="1125" y="334" class="tiny" fill="#fffdf7">4.2us / 8.1us</text>
+</g>
+<g transform="rotate(-0.24 1297 317)">
+<rect class="" x="1241" y="285" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="1240.3" y="284.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1262" y="313" class="num" fill="#fffdf7">2.12x</text>
+<text x="1253" y="334" class="tiny" fill="#fffdf7">4.6us / 9.8us</text>
+</g>
+<text x="105" y="393" class="label">N=640  K=2880</text>
+<text x="105" y="413" class="tiny">bias</text>
+<g transform="rotate(-0.08 401 401)">
+<rect class="" x="345" y="369" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="344.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="366" y="397" class="num" fill="#fffdf7">2.34x</text>
+<text x="357" y="418" class="tiny" fill="#fffdf7">4.7us / 11.1us</text>
+</g>
+<g transform="rotate(0.12 529 401)">
+<rect class="" x="473" y="369" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="472.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="494" y="397" class="num" fill="#fffdf7">2.18x</text>
+<text x="485" y="418" class="tiny" fill="#fffdf7">4.8us / 10.4us</text>
+</g>
+<g transform="rotate(0.26 657 401)">
+<rect class="" x="601" y="369" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="600.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="622" y="397" class="num" fill="#fffdf7">2.11x</text>
+<text x="613" y="418" class="tiny" fill="#fffdf7">5.0us / 10.6us</text>
+</g>
+<g transform="rotate(-0.18 785 401)">
+<rect class="" x="729" y="369" width="112" height="64" rx="14" fill="#a78bfa" stroke="#ffffff" stroke-width="2"/>
+<rect x="728.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="750" y="397" class="num" fill="#fffdf7">1.99x</text>
+<text x="741" y="418" class="tiny" fill="#fffdf7">4.9us / 9.8us</text>
+</g>
+<g transform="rotate(0.03 913 401)">
+<rect class="" x="857" y="369" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="856.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="878" y="397" class="num" fill="#fffdf7">2.13x</text>
+<text x="869" y="418" class="tiny" fill="#fffdf7">4.9us / 10.5us</text>
+</g>
+<g transform="rotate(0.20 1041 401)">
+<rect class="" x="985" y="369" width="112" height="64" rx="14" fill="#ddd6fe" stroke="#ffffff" stroke-width="2"/>
+<rect x="984.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1006" y="397" class="num" fill="#1f2937">1.61x</text>
+<text x="997" y="418" class="tiny" fill="#1f2937">5.7us / 9.2us</text>
+</g>
+<g transform="rotate(-0.24 1169 401)">
+<rect class="" x="1113" y="369" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="1112.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1134" y="397" class="num" fill="#1f2937">1.26x</text>
+<text x="1125" y="418" class="tiny" fill="#1f2937">6.6us / 8.3us</text>
+</g>
+<g transform="rotate(-0.28 1297 401)">
+<rect class="" x="1241" y="369" width="112" height="64" rx="14" fill="#ddd6fe" stroke="#ffffff" stroke-width="2"/>
+<rect x="1240.3" y="368.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1262" y="397" class="num" fill="#1f2937">1.60x</text>
+<text x="1253" y="418" class="tiny" fill="#1f2937">7.6us / 12.1us</text>
+</g>
+<rect class="stripe" x="92" y="444" width="1315" height="82" rx="18"/>
+<text x="105" y="477" class="label">N=2112  K=7168</text>
+<text x="105" y="497" class="tiny">no bias</text>
+<g transform="rotate(0.12 401 485)">
+<rect class="" x="345" y="453" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="344.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="366" y="481" class="num" fill="#fffdf7">2.02x</text>
+<text x="357" y="502" class="tiny" fill="#fffdf7">8.1us / 16.3us</text>
+</g>
+<g transform="rotate(0.26 529 485)">
+<rect class="" x="473" y="453" width="112" height="64" rx="14" fill="#a78bfa" stroke="#ffffff" stroke-width="2"/>
+<rect x="472.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="494" y="481" class="num" fill="#fffdf7">1.99x</text>
+<text x="485" y="502" class="tiny" fill="#fffdf7">8.2us / 16.4us</text>
+</g>
+<g transform="rotate(-0.18 657 485)">
+<rect class="" x="601" y="453" width="112" height="64" rx="14" fill="#a78bfa" stroke="#ffffff" stroke-width="2"/>
+<rect x="600.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="622" y="481" class="num" fill="#fffdf7">1.96x</text>
+<text x="613" y="502" class="tiny" fill="#fffdf7">8.4us / 16.4us</text>
+</g>
+<g transform="rotate(0.03 785 485)">
+<rect class="" x="729" y="453" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="728.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="750" y="481" class="num" fill="#1f2937">1.45x</text>
+<text x="741" y="502" class="tiny" fill="#1f2937">8.5us / 12.3us</text>
+</g>
+<g transform="rotate(0.20 913 485)">
+<rect class="" x="857" y="453" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="856.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="878" y="481" class="num" fill="#1f2937">1.44x</text>
+<text x="869" y="502" class="tiny" fill="#1f2937">9.1us / 13.1us</text>
+</g>
+<g transform="rotate(-0.24 1041 485)">
+<rect class="" x="985" y="453" width="112" height="64" rx="14" fill="#ddd6fe" stroke="#ffffff" stroke-width="2"/>
+<rect x="984.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1006" y="481" class="num" fill="#1f2937">1.57x</text>
+<text x="997" y="502" class="tiny" fill="#1f2937">10.6us / 16.7us</text>
+</g>
+<g transform="rotate(-0.28 1169 485)">
+<rect class="" x="1113" y="453" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="1112.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1134" y="481" class="num" fill="#1f2937">1.22x</text>
+<text x="1125" y="502" class="tiny" fill="#1f2937">14.6us / 17.9us</text>
+</g>
+<g transform="rotate(-0.08 1297 485)">
+<rect class="" x="1241" y="453" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="1240.3" y="452.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1262" y="481" class="num" fill="#1f2937">1.18x</text>
+<text x="1253" y="502" class="tiny" fill="#1f2937">20.9us / 24.6us</text>
+</g>
+<text x="105" y="561" class="label">N=2880  K=2048</text>
+<text x="105" y="581" class="tiny">bias</text>
+<g transform="rotate(0.26 401 569)">
+<rect class="" x="345" y="537" width="112" height="64" rx="14" fill="#7c3aed" stroke="#ffffff" stroke-width="2"/>
+<rect x="344.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="366" y="565" class="num" fill="#fffdf7">2.27x</text>
+<text x="357" y="586" class="tiny" fill="#fffdf7">5.4us / 12.2us</text>
+</g>
+<g transform="rotate(-0.18 529 569)">
+<rect class="" x="473" y="537" width="112" height="64" rx="14" fill="#ddd6fe" stroke="#ffffff" stroke-width="2"/>
+<rect x="472.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="494" y="565" class="num" fill="#1f2937">1.68x</text>
+<text x="485" y="586" class="tiny" fill="#1f2937">5.5us / 9.3us</text>
+</g>
+<g transform="rotate(0.03 657 569)">
+<rect class="" x="601" y="537" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="600.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="622" y="565" class="num" fill="#1f2937">1.23x</text>
+<text x="613" y="586" class="tiny" fill="#1f2937">5.7us / 7.0us</text>
+</g>
+<g transform="rotate(0.20 785 569)">
+<rect class="" x="729" y="537" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="728.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="750" y="565" class="num" fill="#1f2937">1.16x</text>
+<text x="741" y="586" class="tiny" fill="#1f2937">5.8us / 6.7us</text>
+</g>
+<g transform="rotate(-0.24 913 569)">
+<rect class="" x="857" y="537" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="856.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="878" y="565" class="num" fill="#1f2937">1.20x</text>
+<text x="869" y="586" class="tiny" fill="#1f2937">6.1us / 7.4us</text>
+</g>
+<g transform="rotate(-0.28 1041 569)">
+<rect class="" x="985" y="537" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="984.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1006" y="565" class="num" fill="#1f2937">1.27x</text>
+<text x="997" y="586" class="tiny" fill="#1f2937">7.3us / 9.3us</text>
+</g>
+<g transform="rotate(-0.08 1169 569)">
+<rect class="" x="1113" y="537" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="1112.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1134" y="565" class="num" fill="#1f2937">1.13x</text>
+<text x="1125" y="586" class="tiny" fill="#1f2937">8.8us / 9.9us</text>
+</g>
+<g transform="rotate(0.12 1297 569)">
+<rect class="" x="1241" y="537" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="1240.3" y="536.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1262" y="565" class="num" fill="#1f2937">1.08x</text>
+<text x="1253" y="586" class="tiny" fill="#1f2937">10.0us / 10.8us</text>
+</g>
+<rect class="stripe" x="92" y="612" width="1315" height="82" rx="18"/>
+<text x="105" y="645" class="label">N=2880  K=4096</text>
+<text x="105" y="665" class="tiny">bias</text>
+<g transform="rotate(-0.18 401 653)">
+<rect class="" x="345" y="621" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="344.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="366" y="649" class="num" fill="#1f2937">1.46x</text>
+<text x="357" y="670" class="tiny" fill="#1f2937">7.0us / 10.3us</text>
+</g>
+<g transform="rotate(0.03 529 653)">
+<rect class="" x="473" y="621" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="472.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="494" y="649" class="num" fill="#1f2937">1.23x</text>
+<text x="485" y="670" class="tiny" fill="#1f2937">7.2us / 8.9us</text>
+</g>
+<g transform="rotate(0.20 657 653)">
+<rect class="" x="601" y="621" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="600.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="622" y="649" class="num" fill="#1f2937">1.16x</text>
+<text x="613" y="670" class="tiny" fill="#1f2937">7.2us / 8.4us</text>
+</g>
+<g transform="rotate(-0.24 785 653)">
+<rect class="" x="729" y="621" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="728.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="750" y="649" class="num" fill="#1f2937">1.17x</text>
+<text x="741" y="670" class="tiny" fill="#1f2937">7.3us / 8.5us</text>
+</g>
+<g transform="rotate(-0.28 913 653)">
+<rect class="" x="857" y="621" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="856.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="878" y="649" class="num" fill="#1f2937">1.12x</text>
+<text x="869" y="670" class="tiny" fill="#1f2937">8.0us / 9.0us</text>
+</g>
+<g transform="rotate(-0.08 1041 653)">
+<rect class="" x="985" y="621" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="984.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1006" y="649" class="num" fill="#1f2937">1.15x</text>
+<text x="997" y="670" class="tiny" fill="#1f2937">9.4us / 10.8us</text>
+</g>
+<g transform="rotate(0.12 1169 653)">
+<rect class="" x="1113" y="621" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="1112.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1134" y="649" class="num" fill="#1f2937">1.36x</text>
+<text x="1125" y="670" class="tiny" fill="#1f2937">11.1us / 15.1us</text>
+</g>
+<g transform="rotate(0.26 1297 653)">
+<rect class="" x="1241" y="621" width="112" height="64" rx="14" fill="#fee2e2" stroke="#ffffff" stroke-width="2"/>
+<rect x="1240.3" y="620.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1262" y="649" class="num" fill="#1f2937">0.94x</text>
+<text x="1253" y="670" class="tiny" fill="#1f2937">16.5us / 15.4us</text>
+</g>
+<text x="105" y="729" class="label">N=5120  K=2880</text>
+<text x="105" y="749" class="tiny">bias</text>
+<g transform="rotate(0.03 401 737)">
+<rect class="" x="345" y="705" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="344.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="366" y="733" class="num" fill="#1f2937">1.41x</text>
+<text x="357" y="754" class="tiny" fill="#1f2937">7.9us / 11.1us</text>
+</g>
+<g transform="rotate(0.20 529 737)">
+<rect class="" x="473" y="705" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="472.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="494" y="733" class="num" fill="#1f2937">1.34x</text>
+<text x="485" y="754" class="tiny" fill="#1f2937">8.0us / 10.6us</text>
+</g>
+<g transform="rotate(-0.24 657 737)">
+<rect class="" x="601" y="705" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="600.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="622" y="733" class="num" fill="#1f2937">1.42x</text>
+<text x="613" y="754" class="tiny" fill="#1f2937">7.9us / 11.3us</text>
+</g>
+<g transform="rotate(-0.28 785 737)">
+<rect class="" x="729" y="705" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="728.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="750" y="733" class="num" fill="#1f2937">1.39x</text>
+<text x="741" y="754" class="tiny" fill="#1f2937">8.2us / 11.4us</text>
+</g>
+<g transform="rotate(-0.08 913 737)">
+<rect class="" x="857" y="705" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="856.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="878" y="733" class="num" fill="#1f2937">1.32x</text>
+<text x="869" y="754" class="tiny" fill="#1f2937">9.0us / 11.9us</text>
+</g>
+<g transform="rotate(0.12 1041 737)">
+<rect class="" x="985" y="705" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="984.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1006" y="733" class="num" fill="#1f2937">1.18x</text>
+<text x="997" y="754" class="tiny" fill="#1f2937">10.5us / 12.4us</text>
+</g>
+<g transform="rotate(0.26 1169 737)">
+<rect class="" x="1113" y="705" width="112" height="64" rx="14" fill="#dbeafe" stroke="#ffffff" stroke-width="2"/>
+<rect x="1112.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1134" y="733" class="num" fill="#1f2937">1.31x</text>
+<text x="1125" y="754" class="tiny" fill="#1f2937">11.8us / 15.4us</text>
+</g>
+<g transform="rotate(-0.18 1297 737)">
+<rect class="" x="1241" y="705" width="112" height="64" rx="14" fill="#ecfdf5" stroke="#ffffff" stroke-width="2"/>
+<rect x="1240.3" y="704.4" width="112" height="64" rx="14" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.45"/>
+<text x="1262" y="733" class="num" fill="#1f2937">1.13x</text>
+<text x="1253" y="754" class="tiny" fill="#1f2937">15.0us / 17.1us</text>
+</g>
+<text x="92" y="835" class="note">Rows are additional BF16 model-trace shapes beyond the regular K=7168 sweep.</text>
+</svg>
