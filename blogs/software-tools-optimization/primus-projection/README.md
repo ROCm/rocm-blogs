@@ -516,7 +516,7 @@ Multinode Scaling Projection Results
 
 ## Validation: Projected vs. Measured Results
 
-To validate the projection tool's accuracy, we compared projected performance against measured results published on the [AMD ROCm™ Performance Results](https://www.amd.com/en/developer/resources/rocm-hub/dev-ai/performance-results.html#ai-training) page. The workflow is straightforward: benchmark on a single node, then project to 8 nodes and compare against the published multi-node measurements. The projections were obtained by providing the corresponding hardware configuration files via `--hardware-config`.
+To validate the projection tool's accuracy, we compared projected performance against measured results published on the [AMD ROCm™ Performance Results](https://www.amd.com/en/developer/resources/rocm-hub/dev-ai/performance-results.html#ai-training) page. The workflow is straightforward: benchmark on a single node, then project to target multi-node configuration and compare against the published multi-node measurements. The projections were obtained by providing the corresponding hardware configuration files via `--hardware-config`.
 
 The projection results were obtained at Primus commit [`2d937b9`](https://github.com/AMD-AGI/Primus/tree/2d937b9eab4e6c0a6e423d34592a8cebf9a4a5b6). Each table below lists the Docker container and release date used for the measured runs. The external results page is updated over time and may differ from the values shown here.
 
@@ -540,9 +540,9 @@ The following table reflects runs using this container and release:
 - **Docker container:** `rocm/primus:v26.2`
 - **Release date:** Apr 4, 2026
 
-| Model | Precision | Batch | SeqLen | TP | PP | VPP | CP | EP | Measured 8-Node (tok/s/GPU) | Projected 8-Node (tok/s/GPU) | Error |
+| Model | Precision | Batch | SeqLen | TP | PP | VPP | CP | EP | Measured 4-Node (tok/s/GPU) | Projected 4-Node (tok/s/GPU) | Error |
 |-------|-----------|-------|--------|----|----|-----|----|----|-----------------------------|-----------------------------|-------|
-| Mixtral 8×22B | BF16 | 1 | 8192 | 1 | 4 | 2 | 1 | 8 | 3,475 | 3,426 | -1.4% |
+| Mixtral 8×22B | BF16 | 1 | 8192 | 1 | 4 | 2 | 1 | 8 | 3,475 | 3,532 | +1.6% |
 
 ### Key Takeaways
 
