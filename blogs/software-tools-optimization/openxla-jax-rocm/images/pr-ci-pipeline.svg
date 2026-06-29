@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 620" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arr-dot" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .box { stroke-width: 1.5; rx: 8; ry: 8; }
+      .title  { font-size: 15px; font-weight: 600; }
+      .sub    { font-size: 11.5px; }
+      .stage  { font-size: 10px; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase; opacity: 0.65; }
+      .item   { font-size: 12px; }
+      .edge   { stroke: #9ca3af; stroke-width: 1.6; fill: none; }
+      .edge-dotted { stroke: #94a3b8; stroke-width: 1.6; fill: none; stroke-dasharray: 5 4; }
+      .edge-label { font-size: 10.5px; font-style: italic; fill: #475569; }
+    </style>
+  </defs>
+
+  <!-- Top row: PR triggers -->
+  <rect x="120" y="20" width="200" height="56" class="box" fill="#eef6ff" stroke="#377dff"/>
+  <text x="220" y="42" text-anchor="middle" class="stage" fill="#0b3d91">PULL REQUEST</text>
+  <text x="220" y="64" text-anchor="middle" class="title" fill="#0b3d91">openxla/xla</text>
+
+  <rect x="560" y="20" width="200" height="56" class="box" fill="#eef6ff" stroke="#377dff"/>
+  <text x="660" y="42" text-anchor="middle" class="stage" fill="#0b3d91">PULL REQUEST</text>
+  <text x="660" y="64" text-anchor="middle" class="title" fill="#0b3d91">jax-ml/jax</text>
+
+  <line x1="220" y1="76" x2="220" y2="118" class="edge" marker-end="url(#arr)"/>
+  <line x1="660" y1="76" x2="660" y2="118" class="edge" marker-end="url(#arr)"/>
+
+  <!-- XLA CI box (green) -->
+  <rect x="40" y="124" width="360" height="240" class="box" fill="#eaf7ee" stroke="#2ea043"/>
+  <text x="60"  y="148" class="stage" fill="#0b5d23">XLA CI</text>
+  <text x="220" y="170" text-anchor="middle" class="title" fill="#0b5d23">rocm_ci.yml</text>
+  <text x="220" y="188" text-anchor="middle" class="sub" fill="#0b5d23">one workflow, two jobs</text>
+
+  <rect x="60" y="208" width="320" height="60" rx="6" ry="6" fill="#ffffff" stroke="#2ea043" stroke-width="1"/>
+  <text x="76" y="228" class="item" font-weight="600" fill="#0b5d23">jax job</text>
+  <text x="76" y="246" class="sub" fill="#0b5d23">1× AMD GPU  ·  JAX tests built against this XLA</text>
+  <text x="76" y="262" class="sub" fill="#0b5d23">pre-flights the PR through JAX before merge</text>
+
+  <rect x="60" y="284" width="320" height="60" rx="6" ry="6" fill="#ffffff" stroke="#2ea043" stroke-width="1"/>
+  <text x="76" y="304" class="item" font-weight="600" fill="#0b5d23">xla job</text>
+  <text x="76" y="322" class="sub" fill="#0b5d23">1× AMD GPU  ·  ci_single_gpu config</text>
+  <text x="76" y="338" class="sub" fill="#0b5d23">RBE pool: linux_x64_gpu_gfx90a</text>
+
+  <!-- JAX CI box (yellow) -->
+  <rect x="480" y="124" width="360" height="240" class="box" fill="#fff7e6" stroke="#f5a524"/>
+  <text x="500" y="148" class="stage" fill="#7a4b00">JAX CI</text>
+  <text x="660" y="170" text-anchor="middle" class="title" fill="#7a4b00">4 workflows</text>
+  <text x="660" y="188" text-anchor="middle" class="sub" fill="#7a4b00">presubmit  ·  sweep  ·  pytest  ·  artifacts</text>
+
+  <rect x="500" y="208" width="320" height="36" rx="6" ry="6" fill="#ffffff" stroke="#f5a524" stroke-width="1"/>
+  <text x="516" y="231" class="item" fill="#7a4b00"><tspan font-weight="600">bazel_rocm_presubmit</tspan>  ·  1× AMD GPU smoke</text>
+
+  <rect x="500" y="250" width="320" height="36" rx="6" ry="6" fill="#ffffff" stroke="#f5a524" stroke-width="1"/>
+  <text x="516" y="273" class="item" fill="#7a4b00"><tspan font-weight="600">bazel_rocm</tspan>  ·  1× / 4× AMD GPU sweep</text>
+
+  <rect x="500" y="292" width="320" height="36" rx="6" ry="6" fill="#ffffff" stroke="#f5a524" stroke-width="1"/>
+  <text x="516" y="315" class="item" fill="#7a4b00"><tspan font-weight="600">pytest_rocm</tspan>  ·  1× / 4× / 8× AMD GPU</text>
+
+  <rect x="500" y="334" width="320" height="36" rx="6" ry="6" fill="#ffffff" stroke="#f5a524" stroke-width="1"/>
+  <text x="516" y="357" class="item" fill="#7a4b00"><tspan font-weight="600">build_rocm_artifacts</tspan>  ·  manylinux_2_28 wheels</text>
+
+  <!-- Cross-pin dotted arrows -->
+  <path d="M 400 230 L 480 230" class="edge-dotted" marker-end="url(#arr-dot)"/>
+  <text x="440" y="222" text-anchor="middle" class="edge-label">checks out jax-ml/jax</text>
+  <text x="440" y="245" text-anchor="middle" class="edge-label">--override_repository=xla=PR</text>
+
+  <path d="M 480 310 L 400 310" class="edge-dotted" marker-end="url(#arr-dot)"/>
+  <text x="440" y="302" text-anchor="middle" class="edge-label">JAXCI_CLONE_MAIN_XLA=1</text>
+  <text x="440" y="325" text-anchor="middle" class="edge-label">pins XLA HEAD</text>
+
+  <!-- Arrows down from CI boxes to infra -->
+  <line x1="220" y1="368" x2="220" y2="430" class="edge" marker-end="url(#arr)"/>
+  <line x1="660" y1="368" x2="660" y2="430" class="edge" marker-end="url(#arr)"/>
+
+  <!-- Shared infrastructure (red border) -->
+  <rect x="40" y="436" width="800" height="160" class="box" fill="#fdecea" stroke="#d93025"/>
+  <text x="60"  y="460" class="stage" fill="#7a1d12">SHARED INFRASTRUCTURE</text>
+  <text x="440" y="484" text-anchor="middle" class="title" fill="#7a1d12">Everything terminates at the same backing systems</text>
+
+  <rect x="80" y="500" width="220" height="76" rx="6" ry="6" fill="#ffffff" stroke="#d93025" stroke-width="1"/>
+  <text x="190" y="522" text-anchor="middle" class="item" font-weight="600" fill="#7a1d12">EngFlow RBE</text>
+  <text x="190" y="540" text-anchor="middle" class="sub" fill="#7a1d12">wardite.cluster.engflow.com</text>
+  <text x="190" y="558" text-anchor="middle" class="sub" fill="#7a1d12">200 parallel jobs · TLS client cert</text>
+
+  <rect x="330" y="500" width="220" height="76" rx="6" ry="6" fill="#ffffff" stroke="#d93025" stroke-width="1"/>
+  <text x="440" y="522" text-anchor="middle" class="item" font-weight="600" fill="#7a1d12">ROCm Docker images</text>
+  <text x="440" y="540" text-anchor="middle" class="sub" fill="#7a1d12">rocm/tensorflow-build</text>
+  <text x="440" y="558" text-anchor="middle" class="sub" fill="#7a1d12">ghcr.io/rocm/jax-* · pinned by digest</text>
+
+  <rect x="580" y="500" width="220" height="76" rx="6" ry="6" fill="#f0f0f0" stroke="#6b7280" stroke-width="1"/>
+  <text x="690" y="522" text-anchor="middle" class="item" font-weight="600" fill="#222">AMD Instinct runners</text>
+  <text x="690" y="540" text-anchor="middle" class="sub" fill="#222">gfx90a gated today</text>
+  <text x="690" y="558" text-anchor="middle" class="sub" fill="#222">gfx942 / gfx950 ramping</text>
+</svg>
