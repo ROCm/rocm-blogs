@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="430" viewBox="0 0 1280 430" role="img" aria-labelledby="title desc">
+<title id="title">Split-K synchronization protocol</title>
+<desc id="desc">Single-launch protocol for initializing C, accumulating partials, and resetting state.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}
+    .title{font:800 32px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 16px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 14px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 11px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.axis{font:700 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.num{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.stat{font:800 26px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.a{fill:#dbeafe;stroke:#2563eb;stroke-width:1.7}.b{fill:#ccfbf1;stroke:#0f766e;stroke-width:1.7}.c{fill:#ffedd5;stroke:#f97316;stroke-width:1.5}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:3}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+    .stage{fill:#eef2ff;stroke:#4f46e5;stroke-width:2;rx:12}.lds{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.mfma{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.ok{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.warn{fill:#fff7ed;stroke:#f59e0b;stroke-width:2;rx:12}.bad{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:6 6}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.2}.line{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.tick{stroke:#e2e8f0;stroke-width:1}
+  </style>
+</defs>
+<rect class="bg" width="1280" height="430"/>
+<text x="44" y="52" class="title">Single-Launch Split-K Synchronization</text>
+<text x="44" y="82" class="subtitle">All Split-K CTAs contribute to the same C tile without a separate initialization kernel.</text>
+
+<rect class="panel" x="50" y="105" width="1180" height="305" data-sketch="1"/>
+<rect x="49.3" y="104.4" width="1180" height="305" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+
+<rect class="stage" x="88" y="160" width="160" height="108" data-sketch="1"/>
+<rect x="88.3" y="160.3" width="160" height="108" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="110" y="194" class="label">1. init C</text>
+<text x="106" y="220" class="tiny">partition 0 zeroes C</text>
+<text x="106" y="238" class="tiny">or writes bias</text>
+
+<path class="arrow" d="M248 214 L298 214" data-sketch="1"/>
+<path d="M248 214 L298 214" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/>
+
+<rect class="warn" x="308" y="160" width="160" height="108" data-sketch="1"/>
+<rect x="308.4" y="160.3" width="160" height="108" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="330" y="194" class="label">2. signal ready</text>
+<text x="326" y="220" class="tiny">other partitions</text>
+<text x="326" y="238" class="tiny">wait for signal</text>
+
+<path class="arrow" d="M468 214 L518 214" data-sketch="1"/>
+<path d="M468 214 L518 214" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/>
+
+<rect class="mfma" x="528" y="160" width="160" height="108" data-sketch="1"/>
+<rect x="528.4" y="160.3" width="160" height="108" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="550" y="194" class="label">3. compute partial</text>
+<text x="546" y="220" class="tiny">each CTA owns</text>
+<text x="546" y="238" class="tiny">one K range</text>
+
+<path class="arrow" d="M688 214 L738 214" data-sketch="1"/>
+<path d="M688 214 L738 214" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/>
+
+<rect class="hot" x="748" y="160" width="160" height="108" data-sketch="1"/>
+<rect x="748.4" y="160.3" width="160" height="108" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="770" y="194" class="label">4. atomic add</text>
+<text x="766" y="220" class="tiny">partial C accumulates</text>
+<text x="766" y="238" class="tiny">globally</text>
+
+<path class="arrow" d="M908 214 L958 214" data-sketch="1"/>
+<path d="M908 214 L958 214" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/>
+
+<rect class="ok" x="968" y="160" width="160" height="108" data-sketch="1"/>
+<rect x="968.4" y="160.3" width="160" height="108" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="990" y="194" class="label">5. reset state</text>
+<text x="986" y="220" class="tiny">last partition</text>
+<text x="986" y="238" class="tiny">clears counters</text>
+
+<rect class="panel2" x="300" y="310" width="680" height="68" data-sketch="1"/>
+<rect x="299.3" y="309.4" width="680" height="68" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="330" y="338" class="label">Invariant: C initialization is visible</text>
+<text x="330" y="360" class="label">before any partition accumulates partial C</text>
+</svg>

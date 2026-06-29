@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="755" viewBox="0 0 1500 755" role="img" aria-labelledby="title desc">
+<title id="title">Multi-stage LDS pipeline</title>
+<desc id="desc">A single CTA uses ring-buffered LDS stages to overlap global-to-LDS copy, LDS reads, MFMA compute, and C accumulation.</desc>
+<defs>
+  <marker id="arrow" markerWidth="6" markerHeight="6" refX="5.5" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 C2,0.8 4.2,2.2 6,3 C4.2,3.8 2,5.2 0,6 Z" fill="#3f3f46"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}
+    .title{font:800 32px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 16px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 14px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 11px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.axis{font:700 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.num{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.stat{font:800 26px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.a{fill:#dbeafe;stroke:#2563eb;stroke-width:1.7}.b{fill:#ccfbf1;stroke:#0f766e;stroke-width:1.7}.c{fill:#ffedd5;stroke:#f97316;stroke-width:1.5}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:3}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+    .stage{fill:#eef2ff;stroke:#4f46e5;stroke-width:2;rx:12}.lds{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.mfma{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.ok{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.warn{fill:#fff7ed;stroke:#f59e0b;stroke-width:2;rx:12}.bad{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.arrow{stroke:#3f3f46;stroke-width:1.8;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.ringarrow{stroke:#6366f1;stroke-width:2.2;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round;opacity:.78}.copyarrow{stroke:#14b8a6;stroke-width:2.2;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round;opacity:.82}.computearrow{stroke:#fb923c;stroke-width:2.2;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round;opacity:.82}.dash{stroke-dasharray:6 6}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.2}.line{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.tick{stroke:#e2e8f0;stroke-width:1}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="755"/>
+<text x="42" y="54" class="title">Multi-Stage LDS Pipeline</text>
+<text x="44" y="84" class="subtitle">The math is still C += A_i x B_i; STAGES is a ring of LDS tiles, not another K-parallel split.</text>
+
+<rect class="panel" x="50" y="130" width="560" height="300" data-sketch="1"/>
+<rect x="49.3" y="129.4" width="560" height="300" rx="20" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="82" y="170" class="section">1. Same tiled GEMM math</text>
+<text x="92" y="220" class="label">A row over K</text>
+<rect class="k0" x="92" y="240" width="40" height="38"/><rect class="k0" x="132" y="240" width="40" height="38"/>
+<rect class="k1" x="172" y="240" width="40" height="38"/><rect class="k1" x="212" y="240" width="40" height="38"/>
+<rect class="k2" x="252" y="240" width="40" height="38"/><rect class="k2" x="292" y="240" width="40" height="38"/>
+<rect class="grid" x="332" y="240" width="40" height="38"/><rect class="grid" x="372" y="240" width="40" height="38"/>
+<text x="92" y="320" class="label">B column over K</text>
+<rect class="k0" x="258" y="310" width="46" height="16"/><rect class="k0" x="258" y="326" width="46" height="16"/>
+<rect class="k1" x="258" y="342" width="46" height="16"/><rect class="k1" x="258" y="358" width="46" height="16"/>
+<rect class="k2" x="258" y="374" width="46" height="16"/><rect class="k2" x="258" y="390" width="46" height="16"/>
+<path class="arrow" d="M418 258 C470 268 512 292 545 330" data-sketch="1"/>
+<path d="M418 258 C470 268 512 292 545 330" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/>
+<path class="arrow" d="M304 366 C386 366 466 358 542 358" data-sketch="1"/>
+<path d="M304 366 C386 366 466 358 542 358" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/>
+<rect class="hot" x="530" y="334" width="58" height="46" data-sketch="1"/>
+<rect x="530.4" y="334.3" width="58" height="46" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="540" y="362" class="tiny">C tile</text>
+
+<rect class="panel" x="660" y="130" width="780" height="300" data-sketch="1"/>
+<rect x="659.3" y="129.4" width="780" height="300" rx="20" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="692" y="170" class="section">2. LDS stages form a modulo ring</text>
+<text x="694" y="196" class="small">Example 4-stage view; actual STAGES is tunable. Write is STAGES-1 slots ahead.</text>
+<path class="ringarrow" d="M1114 258 C1186 244 1248 274 1264 310" data-sketch="1"/>
+<path class="ringarrow" d="M1252 364 C1208 420 1092 432 1022 390" data-sketch="1"/>
+<path class="ringarrow" d="M938 332 C940 268 1010 228 1080 236" data-sketch="1"/>
+<text x="1244" y="242" class="tiny">advance</text>
+<text x="940" y="248" class="tiny">wrap</text>
+<rect class="mfma" x="1050" y="222" width="140" height="62" data-sketch="1"/><rect x="1049.5" y="222.4" width="140" height="62" rx="12" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="1082" y="250" class="label">stage s</text><text x="1082" y="272" class="tiny">read + MFMA</text>
+<rect class="lds" x="1210" y="305" width="140" height="62" data-sketch="1"/><rect x="1209.5" y="305.4" width="140" height="62" rx="12" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="1241" y="333" class="label">stage s+1</text><text x="1254" y="355" class="tiny">ready</text>
+<rect class="stage" x="1050" y="352" width="140" height="62" data-sketch="1"/><rect x="1049.5" y="352.4" width="140" height="62" rx="12" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="1070" y="380" class="label">write stage</text><text x="1090" y="402" class="tiny">future K</text>
+<rect class="muted" x="890" y="305" width="140" height="62" data-sketch="1"/><rect x="889.5" y="305.4" width="140" height="62" rx="12" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="930" y="333" class="label">stage</text><text x="932" y="355" class="tiny">in flight</text>
+<text x="1068" y="320" class="label">LDS ring</text><text x="1074" y="342" class="tiny">mod STAGES</text>
+<path class="copyarrow" d="M740 382 C835 382 950 382 1042 382" data-sketch="1"/>
+<text x="742" y="368" class="label">global copy</text>
+<path class="computearrow" d="M1190 244 C1248 236 1298 234 1344 234" data-sketch="1"/>
+<rect class="ok" x="1350" y="208" width="72" height="50" data-sketch="1"/><rect x="1350.2" y="208.3" width="72" height="50" rx="12" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="1366" y="238" class="tiny">C frag</text>
+
+<rect class="panel" x="50" y="490" width="1390" height="230" data-sketch="1"/>
+<rect x="49.3" y="489.4" width="1390" height="230" rx="20" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<text x="82" y="530" class="section">3. Roles rotate around fixed LDS slots</text>
+<text x="92" y="604" class="label">time t</text>
+<rect class="mfma" x="210" y="556" width="150" height="60" data-sketch="1"/><text x="268" y="582" class="label">s</text><text x="264" y="604" class="label">read</text>
+<rect class="lds" x="390" y="556" width="150" height="60" data-sketch="1"/><text x="448" y="582" class="label">s+1</text><text x="442" y="604" class="label">ready</text>
+<rect class="muted" x="570" y="556" width="150" height="60" data-sketch="1"/><text x="628" y="582" class="label">...</text><text x="626" y="604" class="label">hold</text>
+<rect class="stage" x="750" y="556" width="150" height="60" data-sketch="1"/><text x="808" y="582" class="label">w</text><text x="804" y="604" class="label">write</text>
+<path class="ringarrow" d="M360 586 L384 586"/><path class="ringarrow" d="M540 586 L564 586"/><path class="ringarrow" d="M720 586 L744 586"/>
+<text x="950" y="590" class="label">read s, write w</text>
+<path class="ringarrow" d="M286 622 C374 646 666 646 822 622" data-sketch="1"/>
+<text x="950" y="636" class="label">roles shift one slot</text>
+<text x="92" y="686" class="label">time t+1</text>
+<rect class="stage" x="210" y="648" width="150" height="60" data-sketch="1"/><text x="268" y="674" class="label">s</text><text x="264" y="696" class="label">write</text>
+<rect class="mfma" x="390" y="648" width="150" height="60" data-sketch="1"/><text x="448" y="674" class="label">s+1</text><text x="444" y="696" class="label">read</text>
+<rect class="lds" x="570" y="648" width="150" height="60" data-sketch="1"/><text x="628" y="674" class="label">...</text><text x="622" y="696" class="label">ready</text>
+<rect class="muted" x="750" y="648" width="150" height="60" data-sketch="1"/><text x="808" y="674" class="label">w</text><text x="806" y="696" class="label">hold</text>
+<path class="ringarrow" d="M360 678 L384 678"/><path class="ringarrow" d="M540 678 L564 678"/><path class="ringarrow" d="M720 678 L744 678"/>
+<text x="950" y="682" class="label">read s+1, write s</text>
+</svg>

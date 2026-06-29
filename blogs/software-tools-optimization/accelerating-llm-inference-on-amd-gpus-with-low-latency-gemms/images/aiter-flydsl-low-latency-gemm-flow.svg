@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="920" viewBox="0 0 1500 920" role="img" aria-labelledby="title desc">
+<title id="title">LDS-Pipelined Split-K tiled GEMM flow</title>
+<desc id="desc">Selected C tile computed from A and B K ranges, then reduced across local and global parallelism.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}
+    .title{font:800 32px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 16px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 14px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 11px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.axis{font:700 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.num{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.stat{font:800 26px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.a{fill:#dbeafe;stroke:#2563eb;stroke-width:1.7}.b{fill:#ccfbf1;stroke:#0f766e;stroke-width:1.7}.c{fill:#ffedd5;stroke:#f97316;stroke-width:1.5}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:3}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+    .stage{fill:#eef2ff;stroke:#4f46e5;stroke-width:2;rx:12}.lds{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.mfma{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.ok{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.warn{fill:#fff7ed;stroke:#f59e0b;stroke-width:2;rx:12}.bad{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:6 6}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.2}.line{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}.tick{stroke:#e2e8f0;stroke-width:1}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="920"/>
+<text x="42" y="54" class="title">LDS-Pipelined Split-K: one C tile, many K ranges</text>
+<text x="44" y="84" class="subtitle">Start from ordinary tiled GEMM; then make the long K reduction visible as parallel work.</text>
+<rect class="panel" x="44" y="122" width="850" height="360" data-sketch="1"/><rect x="43.6" y="122.0" width="850" height="360" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="72" y="160" class="section">1. Tiled GEMM view</text>
+<text x="84" y="212" class="label">A[M,K]</text><rect class="grid" x="84" y="232" width="34" height="32"/>
+<rect class="grid" x="118" y="232" width="34" height="32"/>
+<rect class="grid" x="152" y="232" width="34" height="32"/>
+<rect class="grid" x="186" y="232" width="34" height="32"/>
+<rect class="grid" x="220" y="232" width="34" height="32"/>
+<rect class="grid" x="254" y="232" width="34" height="32"/>
+<rect class="grid" x="288" y="232" width="34" height="32"/>
+<rect class="grid" x="322" y="232" width="34" height="32"/>
+<rect class="grid" x="356" y="232" width="34" height="32"/>
+<rect class="k0" x="84" y="264" width="34" height="32"/>
+<rect class="k0" x="118" y="264" width="34" height="32"/>
+<rect class="k0" x="152" y="264" width="34" height="32"/>
+<rect class="k1" x="186" y="264" width="34" height="32"/>
+<rect class="k1" x="220" y="264" width="34" height="32"/>
+<rect class="k1" x="254" y="264" width="34" height="32"/>
+<rect class="k2" x="288" y="264" width="34" height="32"/>
+<rect class="k2" x="322" y="264" width="34" height="32"/>
+<rect class="k2" x="356" y="264" width="34" height="32"/>
+<rect class="grid" x="84" y="296" width="34" height="32"/>
+<rect class="grid" x="118" y="296" width="34" height="32"/>
+<rect class="grid" x="152" y="296" width="34" height="32"/>
+<rect class="grid" x="186" y="296" width="34" height="32"/>
+<rect class="grid" x="220" y="296" width="34" height="32"/>
+<rect class="grid" x="254" y="296" width="34" height="32"/>
+<rect class="grid" x="288" y="296" width="34" height="32"/>
+<rect class="grid" x="322" y="296" width="34" height="32"/>
+<rect class="grid" x="356" y="296" width="34" height="32"/><text x="84" y="370" class="label">B^T[K,N]</text><rect class="grid" x="84" y="386" width="36" height="9"/>
+<rect class="grid" x="120" y="386" width="36" height="9"/>
+<rect class="k0" x="156" y="386" width="36" height="9"/>
+<rect class="grid" x="192" y="386" width="36" height="9"/>
+<rect class="grid" x="228" y="386" width="36" height="9"/>
+<rect class="grid" x="84" y="395" width="36" height="9"/>
+<rect class="grid" x="120" y="395" width="36" height="9"/>
+<rect class="k0" x="156" y="395" width="36" height="9"/>
+<rect class="grid" x="192" y="395" width="36" height="9"/>
+<rect class="grid" x="228" y="395" width="36" height="9"/>
+<rect class="grid" x="84" y="404" width="36" height="9"/>
+<rect class="grid" x="120" y="404" width="36" height="9"/>
+<rect class="k0" x="156" y="404" width="36" height="9"/>
+<rect class="grid" x="192" y="404" width="36" height="9"/>
+<rect class="grid" x="228" y="404" width="36" height="9"/>
+<rect class="grid" x="84" y="413" width="36" height="9"/>
+<rect class="grid" x="120" y="413" width="36" height="9"/>
+<rect class="k1" x="156" y="413" width="36" height="9"/>
+<rect class="grid" x="192" y="413" width="36" height="9"/>
+<rect class="grid" x="228" y="413" width="36" height="9"/>
+<rect class="grid" x="84" y="422" width="36" height="9"/>
+<rect class="grid" x="120" y="422" width="36" height="9"/>
+<rect class="k1" x="156" y="422" width="36" height="9"/>
+<rect class="grid" x="192" y="422" width="36" height="9"/>
+<rect class="grid" x="228" y="422" width="36" height="9"/>
+<rect class="grid" x="84" y="431" width="36" height="9"/>
+<rect class="grid" x="120" y="431" width="36" height="9"/>
+<rect class="k1" x="156" y="431" width="36" height="9"/>
+<rect class="grid" x="192" y="431" width="36" height="9"/>
+<rect class="grid" x="228" y="431" width="36" height="9"/>
+<rect class="grid" x="84" y="440" width="36" height="9"/>
+<rect class="grid" x="120" y="440" width="36" height="9"/>
+<rect class="k2" x="156" y="440" width="36" height="9"/>
+<rect class="grid" x="192" y="440" width="36" height="9"/>
+<rect class="grid" x="228" y="440" width="36" height="9"/>
+<rect class="grid" x="84" y="449" width="36" height="9"/>
+<rect class="grid" x="120" y="449" width="36" height="9"/>
+<rect class="k2" x="156" y="449" width="36" height="9"/>
+<rect class="grid" x="192" y="449" width="36" height="9"/>
+<rect class="grid" x="228" y="449" width="36" height="9"/>
+<rect class="grid" x="84" y="458" width="36" height="9"/>
+<rect class="grid" x="120" y="458" width="36" height="9"/>
+<rect class="k2" x="156" y="458" width="36" height="9"/>
+<rect class="grid" x="192" y="458" width="36" height="9"/>
+<rect class="grid" x="228" y="458" width="36" height="9"/><text x="590" y="212" class="label">C[M,N]</text><rect class="c" x="590" y="232" width="54" height="44"/>
+<rect class="c" x="644" y="232" width="54" height="44"/>
+<rect class="c" x="698" y="232" width="54" height="44"/>
+<rect class="c" x="752" y="232" width="54" height="44"/>
+<rect class="c" x="806" y="232" width="54" height="44"/>
+<rect class="c" x="590" y="276" width="54" height="44"/>
+<rect class="c" x="644" y="276" width="54" height="44"/>
+<rect class="hot" x="698" y="276" width="54" height="44" data-sketch="1"/><rect x="697.3" y="275.7" width="54" height="44" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<rect class="c" x="752" y="276" width="54" height="44"/>
+<rect class="c" x="806" y="276" width="54" height="44"/>
+<rect class="c" x="590" y="320" width="54" height="44"/>
+<rect class="c" x="644" y="320" width="54" height="44"/>
+<rect class="c" x="698" y="320" width="54" height="44"/>
+<rect class="c" x="752" y="320" width="54" height="44"/>
+<rect class="c" x="806" y="320" width="54" height="44"/><path class="arrow" d="M410 280 C500 250 560 244 586 250" data-sketch="1"/><path d="M410 280 C500 250 560 244 586 250" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><path class="arrow" d="M292 438 C430 430 540 356 646 280" data-sketch="1"/><path d="M292 438 C430 430 540 356 646 280" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><text x="470" y="424" class="section">Ctile = sum over K blocks</text><rect class="panel" x="940" y="122" width="500" height="360" data-sketch="1"/><rect x="940.0" y="122.3" width="500" height="360" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="970" y="160" class="section">2. Inter-CTA Split-K</text><text x="970" y="186" class="small">Each CTA owns one K range and produces a partial C tile.</text><rect class="k0" x="984" y="230" width="96" height="58"/><text x="1014" y="264" class="label">K0</text><path class="arrow" d="M1032 288 L1032 338" data-sketch="1"/><path d="M1032 288 L1032 338" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="hot" x="1002" y="350" width="62" height="48" data-sketch="1"/><rect x="1002.0" y="350.0" width="62" height="48" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1009" y="379" class="tiny">partial</text><rect class="k1" x="1129" y="230" width="96" height="58"/><text x="1159" y="264" class="label">K1</text><path class="arrow" d="M1177 288 L1177 338" data-sketch="1"/><path d="M1177 288 L1177 338" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="hot" x="1147" y="350" width="62" height="48" data-sketch="1"/><rect x="1147.0" y="350.0" width="62" height="48" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1154" y="379" class="tiny">partial</text><rect class="k2" x="1274" y="230" width="96" height="58"/><text x="1304" y="264" class="label">K2</text><path class="arrow" d="M1322 288 L1322 338" data-sketch="1"/><path d="M1322 288 L1322 338" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="hot" x="1292" y="350" width="62" height="48" data-sketch="1"/><rect x="1292.0" y="350.0" width="62" height="48" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1299" y="379" class="tiny">partial</text><path class="arrow" d="M1050 405 C1124 450 1228 450 1300 405" data-sketch="1"/><path d="M1050 405 C1124 450 1228 450 1300 405" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="ok" x="1128" y="436" width="154" height="48" data-sketch="1"/><rect x="1128.7" y="436.0" width="154" height="48" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1160" y="458" class="label">reduce later</text><text x="1148" y="476" class="tiny">after local compute</text><rect class="panel" x="44" y="540" width="640" height="330" data-sketch="1"/><rect x="44.7" y="540.6" width="640" height="330" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="72" y="578" class="section">3. Multi-stage LDS pipeline</text><text x="72" y="604" class="small">Example 4-stage ring; actual STAGES is tunable.</text><path d="M210 704 C226 670 252 650 284 650" stroke="#6366f1" stroke-width="1.7" opacity="0.72" fill="none" marker-end="url(#arrow)" stroke-linecap="round"/><path d="M374 650 C408 650 438 672 454 704" stroke="#6366f1" stroke-width="1.7" opacity="0.72" fill="none" marker-end="url(#arrow)" stroke-linecap="round"/><path d="M454 754 C438 790 408 810 374 810" stroke="#6366f1" stroke-width="1.7" opacity="0.72" fill="none" marker-end="url(#arrow)" stroke-linecap="round"/><path d="M284 810 C252 810 226 790 210 754" stroke="#6366f1" stroke-width="1.7" opacity="0.72" fill="none" marker-end="url(#arrow)" stroke-linecap="round"/><rect class="mfma" x="96" y="690" width="116" height="64" data-sketch="1"/><rect x="95.6" y="690.6" width="116" height="64" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="142" y="716" class="label">s</text><text x="138" y="738" class="tiny">read</text><rect class="lds" x="284" y="618" width="116" height="64" data-sketch="1"/><rect x="283.6" y="618.6" width="116" height="64" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="330" y="644" class="label">s+1</text><text x="316" y="666" class="tiny">ready</text><rect class="muted" x="456" y="690" width="116" height="64" data-sketch="1"/><rect x="455.6" y="690.6" width="116" height="64" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="502" y="716" class="label">...</text><text x="500" y="738" class="tiny">held</text><rect class="stage" x="284" y="778" width="116" height="64" data-sketch="1"/><rect x="283.6" y="778.6" width="116" height="64" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="330" y="804" class="label">w</text><text x="322" y="826" class="tiny">write</text><path d="M90 810 C145 810 215 810 278 810" stroke="#14b8a6" stroke-width="1.9" opacity="0.78" fill="none" marker-end="url(#arrow)" stroke-linecap="round"/><text x="92" y="794" class="tiny">global copy</text><path d="M212 722 C250 720 410 720 450 722" stroke="#fb923c" stroke-width="1.7" opacity="0.74" fill="none" marker-end="url(#arrow)" stroke-linecap="round"/><text x="270" y="724" class="tiny">read feeds MFMA</text><text x="450" y="834" class="label">roles rotate</text><rect class="panel" x="740" y="540" width="700" height="330" data-sketch="1"/><rect x="739.3" y="539.4" width="700" height="330" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="768" y="578" class="section">4. Intra-CTA LDS reduce + global add</text><text x="768" y="604" class="small">K-slice partials combine locally, then Split-K partials accumulate globally.</text><rect class="k1" x="780" y="654" width="90" height="44"/><text x="804" y="682" class="tiny">slice 0</text><path class="arrow" d="M825 698 L825 746" data-sketch="1"/><path d="M825 698 L825 746" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="warn" x="776" y="750" width="98" height="46" data-sketch="1"/><rect x="776.0" y="750.0" width="98" height="46" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="798" y="779" class="tiny">warp group</text><rect class="k1" x="900" y="654" width="90" height="44"/><text x="924" y="682" class="tiny">slice 1</text><path class="arrow" d="M945 698 L945 746" data-sketch="1"/><path d="M945 698 L945 746" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="warn" x="896" y="750" width="98" height="46" data-sketch="1"/><rect x="896.0" y="750.0" width="98" height="46" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="918" y="779" class="tiny">warp group</text><rect class="k1" x="1020" y="654" width="90" height="44"/><text x="1044" y="682" class="tiny">slice 2</text><path class="arrow" d="M1065 698 L1065 746" data-sketch="1"/><path d="M1065 698 L1065 746" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="warn" x="1016" y="750" width="98" height="46" data-sketch="1"/><rect x="1016.0" y="750.0" width="98" height="46" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1038" y="779" class="tiny">warp group</text><rect class="k1" x="1140" y="654" width="90" height="44"/><text x="1164" y="682" class="tiny">slice 3</text><path class="arrow" d="M1185 698 L1185 746" data-sketch="1"/><path d="M1185 698 L1185 746" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="warn" x="1136" y="750" width="98" height="46" data-sketch="1"/><rect x="1136.0" y="750.0" width="98" height="46" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1158" y="779" class="tiny">warp group</text><path class="arrow" d="M824 796 C894 838 1096 838 1174 796" data-sketch="1"/><path d="M824 796 C894 838 1096 838 1174 796" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="lds" x="925" y="810" width="150" height="44" data-sketch="1"/><rect x="925.4" y="810.3" width="150" height="44" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="960" y="838" class="label">LDS reduce</text><path class="arrow" d="M1075 832 L1126 832" data-sketch="1"/><path d="M1075 832 L1126 832" stroke="#3f3f46" stroke-width="1.1" opacity="0.45" fill="none"/><rect class="ok" x="1134" y="810" width="150" height="44" data-sketch="1"/><rect x="1134.4" y="810.3" width="150" height="44" rx="10" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/><text x="1168" y="838" class="label">atomic add</text></svg>
