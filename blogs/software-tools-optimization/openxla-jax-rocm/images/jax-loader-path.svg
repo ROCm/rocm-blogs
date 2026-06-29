@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 320" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    </marker>
+    <style>
+      .box { stroke-width: 1.5; rx: 8; ry: 8; }
+      .title  { font-size: 13.5px; font-weight: 600; }
+      .sub    { font-size: 11.5px; }
+      .stage  { font-size: 10px; font-weight: 600; letter-spacing: 1.1px; text-transform: uppercase; opacity: 0.65; }
+      .num    { font-size: 11.5px; font-weight: 700; }
+      .edge   { stroke: #9ca3af; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Stage 1: import jax (py / yellow) -->
+  <rect x="20" y="130" width="120" height="60" class="box" fill="#fff7e6" stroke="#f5a524"/>
+  <text x="80" y="156" text-anchor="middle" class="title" fill="#7a4b00">import jax</text>
+  <text x="80" y="174" text-anchor="middle" class="sub" fill="#7a4b00">user code</text>
+
+  <line x1="140" y1="160" x2="172" y2="160" class="edge" marker-end="url(#arr)"/>
+
+  <!-- Stage 2: Loader probe -->
+  <rect x="178" y="50" width="280" height="220" class="box" fill="#fff7e6" stroke="#f5a524"/>
+  <text x="318" y="74" text-anchor="middle" class="stage" fill="#7a4b00">PLUGIN LOADER</text>
+  <text x="318" y="98" text-anchor="middle" class="title" fill="#7a4b00">jax_plugins/rocm/__init__.py</text>
+  <text x="318" y="118" text-anchor="middle" class="sub" fill="#7a4b00">probes in order, first hit wins</text>
+
+  <rect x="198" y="132" width="240" height="36" rx="6" ry="6" fill="#ffffff" stroke="#f5a524" stroke-width="1"/>
+  <text x="212" y="155" class="num" fill="#7a4b00">1.</text>
+  <text x="226" y="155" class="sub" fill="#7a4b00">jax_rocm7_plugin   (ROCm 7.x)</text>
+
+  <rect x="198" y="174" width="240" height="36" rx="6" ry="6" fill="#ffffff" stroke="#f5a524" stroke-width="1"/>
+  <text x="212" y="197" class="num" fill="#7a4b00">2.</text>
+  <text x="226" y="197" class="sub" fill="#7a4b00">jax_rocm60_plugin   (ROCm 6.0)</text>
+
+  <rect x="198" y="216" width="240" height="36" rx="6" ry="6" fill="#f5f5f5" stroke="#9ca3af" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="212" y="239" class="num" fill="#444">3.</text>
+  <text x="226" y="239" class="sub" fill="#444">jaxlib.rocm   (bundled fallback)</text>
+
+  <line x1="458" y1="160" x2="492" y2="160" class="edge" marker-end="url(#arr)"/>
+
+  <!-- Stage 3: native plugin loaded (green) -->
+  <rect x="498" y="130" width="160" height="60" class="box" fill="#eaf7ee" stroke="#2ea043"/>
+  <text x="578" y="148" text-anchor="middle" class="stage" fill="#0b5d23">NATIVE</text>
+  <text x="578" y="167" text-anchor="middle" class="title" fill="#0b5d23">xla_rocm_plugin.so</text>
+  <text x="578" y="183" text-anchor="middle" class="sub" fill="#0b5d23">PJRT C-API library</text>
+
+  <line x1="658" y1="160" x2="690" y2="160" class="edge" marker-end="url(#arr)"/>
+
+  <!-- Stage 4: register + devices (combined yellow) -->
+  <rect x="696" y="100" width="164" height="120" class="box" fill="#fff7e6" stroke="#f5a524"/>
+  <text x="778" y="124" text-anchor="middle" class="stage" fill="#7a4b00">REGISTRATION</text>
+  <text x="778" y="148" text-anchor="middle" class="title" fill="#7a4b00">xla_bridge.</text>
+  <text x="778" y="164" text-anchor="middle" class="title" fill="#7a4b00">register_plugin</text>
+  <text x="778" y="184" text-anchor="middle" class="sub" fill="#7a4b00">'ROCM', priority=500</text>
+  <line x1="716" y1="195" x2="840" y2="195" stroke="#f5a524" stroke-width="0.8"/>
+  <text x="778" y="212" text-anchor="middle" class="sub" fill="#7a4b00">jax.devices() → RocmDevice(..)</text>
+</svg>

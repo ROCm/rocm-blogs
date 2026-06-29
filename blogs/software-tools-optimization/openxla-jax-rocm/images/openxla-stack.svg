@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 700" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b7280"/>
+    </marker>
+    <style>
+      .band { stroke-width: 1.5; rx: 8; ry: 8; }
+      .title { font-size: 16px; font-weight: 600; letter-spacing: 0.2px; }
+      .sub   { font-size: 12px; font-weight: 400; }
+      .layer-tag { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; opacity: 0.65; }
+      .arrow { stroke: #9ca3af; stroke-width: 1.6; fill: none; }
+    </style>
+  </defs>
+
+  <!-- Layer 1: Application (blue) -->
+  <rect x="40" y="20" width="540" height="80" class="band" fill="#eef6ff" stroke="#377dff"/>
+  <text x="60"  y="42" class="layer-tag" fill="#0b3d91">APPLICATION</text>
+  <text x="310" y="68" text-anchor="middle" class="title" fill="#0b3d91">Your Python code</text>
+  <text x="310" y="88" text-anchor="middle" class="sub"   fill="#0b3d91">JAX  ·  Flax  ·  Equinox  ·  TensorFlow  ·  ...</text>
+  <line x1="310" y1="100" x2="310" y2="124" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Layer 2: JAX Python (yellow) -->
+  <rect x="40" y="128" width="540" height="92" class="band" fill="#fff7e6" stroke="#f5a524"/>
+  <text x="60"  y="150" class="layer-tag" fill="#7a4b00">JAX  ·  PYTHON</text>
+  <text x="310" y="176" text-anchor="middle" class="title" fill="#7a4b00">JAX core  +  jax-rocm{N}-plugin</text>
+  <text x="310" y="196" text-anchor="middle" class="sub"   fill="#7a4b00">tracing, transforms, pjit</text>
+  <text x="310" y="212" text-anchor="middle" class="sub"   fill="#7a4b00">plugin registers ROCm with xla_bridge</text>
+  <line x1="310" y1="220" x2="310" y2="244" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Layer 3: XLA / PJRT (green) -->
+  <rect x="40" y="248" width="540" height="92" class="band" fill="#eaf7ee" stroke="#2ea043"/>
+  <text x="60"  y="270" class="layer-tag" fill="#0b5d23">XLA  ·  PJRT</text>
+  <text x="310" y="296" text-anchor="middle" class="title" fill="#0b5d23">jax-rocm{N}-pjrt  →  XLA compiler</text>
+  <text x="310" y="316" text-anchor="middle" class="sub"   fill="#0b5d23">xla_rocm_plugin.so over the PJRT C API</text>
+  <text x="310" y="332" text-anchor="middle" class="sub"   fill="#0b5d23">HLO  →  fusion  →  Triton  /  LLVM AMDGPU codegen</text>
+  <line x1="310" y1="340" x2="310" y2="364" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Layer 4: ROCm runtime (red) -->
+  <rect x="40" y="368" width="540" height="92" class="band" fill="#fdecea" stroke="#d93025"/>
+  <text x="60"  y="390" class="layer-tag" fill="#7a1d12">ROCm  ·  RUNTIME</text>
+  <text x="310" y="416" text-anchor="middle" class="title" fill="#7a1d12">HIP runtime  +  kernel driver</text>
+  <text x="310" y="436" text-anchor="middle" class="sub"   fill="#7a1d12">hipBLASLt  ·  RCCL  ·  rocPRIM  ·  MIOpen  ·  ...</text>
+  <text x="310" y="452" text-anchor="middle" class="sub"   fill="#7a1d12">ROCm kernel driver</text>
+  <line x1="310" y1="460" x2="310" y2="484" class="arrow" marker-end="url(#arrow)"/>
+
+  <!-- Layer 5: Hardware (stack of GPUs) -->
+  <rect x="40" y="488" width="540" height="192" class="band" fill="#f7f8fa" stroke="#6b7280"/>
+  <text x="60"  y="510" class="layer-tag" fill="#222">HARDWARE</text>
+
+  <!-- GPU card 1 -->
+  <g>
+    <rect x="160" y="528" width="300" height="22" rx="4" ry="4" fill="#1f2937" stroke="#374151"/>
+    <rect x="160" y="528" width="300" height="3" fill="#d4a017"/>
+    <rect x="164" y="534" width="8"   height="10" fill="#ed1c24"/>
+    <line x1="428" y1="534" x2="428" y2="544" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="434" y1="534" x2="434" y2="544" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="440" y1="534" x2="440" y2="544" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="446" y1="534" x2="446" y2="544" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="452" y1="534" x2="452" y2="544" stroke="#9ca3af" stroke-width="1"/>
+  </g>
+
+  <!-- GPU card 2 -->
+  <g>
+    <rect x="160" y="554" width="300" height="22" rx="4" ry="4" fill="#1f2937" stroke="#374151"/>
+    <rect x="160" y="554" width="300" height="3" fill="#d4a017"/>
+    <rect x="164" y="560" width="8"   height="10" fill="#ed1c24"/>
+    <line x1="428" y1="560" x2="428" y2="570" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="434" y1="560" x2="434" y2="570" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="440" y1="560" x2="440" y2="570" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="446" y1="560" x2="446" y2="570" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="452" y1="560" x2="452" y2="570" stroke="#9ca3af" stroke-width="1"/>
+  </g>
+
+  <!-- GPU card 3 -->
+  <g>
+    <rect x="160" y="580" width="300" height="22" rx="4" ry="4" fill="#1f2937" stroke="#374151"/>
+    <rect x="160" y="580" width="300" height="3" fill="#d4a017"/>
+    <rect x="164" y="586" width="8"   height="10" fill="#ed1c24"/>
+    <line x1="428" y1="586" x2="428" y2="596" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="434" y1="586" x2="434" y2="596" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="440" y1="586" x2="440" y2="596" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="446" y1="586" x2="446" y2="596" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="452" y1="586" x2="452" y2="596" stroke="#9ca3af" stroke-width="1"/>
+  </g>
+
+  <!-- GPU card 4 -->
+  <g>
+    <rect x="160" y="606" width="300" height="22" rx="4" ry="4" fill="#1f2937" stroke="#374151"/>
+    <rect x="160" y="606" width="300" height="3" fill="#d4a017"/>
+    <rect x="164" y="612" width="8"   height="10" fill="#ed1c24"/>
+    <line x1="428" y1="612" x2="428" y2="622" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="434" y1="612" x2="434" y2="622" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="440" y1="612" x2="440" y2="622" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="446" y1="612" x2="446" y2="622" stroke="#9ca3af" stroke-width="1"/>
+    <line x1="452" y1="612" x2="452" y2="622" stroke="#9ca3af" stroke-width="1"/>
+  </g>
+
+  <!-- Caption -->
+  <text x="310" y="658" text-anchor="middle" class="title" fill="#222">AMD Instinct multi-GPU node  —  4 × MI350 (gfx950)</text>
+</svg>
