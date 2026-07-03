@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "AgentKernelArena: Benchmarking AI Coding Agents for GPU Kernel Optimization on AMD Instinct GPUs"
-date: "17 Jun 2026"
+date: "3 Jul 2026"
 author: "Sharareh Younesian, Wenwen Ouyang, Sina Rafati, Mehdi Rezagholizadeh, Sharon Zhou, Vikram Appia, Zhenyu Gu, and Emad Barsoum"
 thumbnail: 'AKA_thumbnail.png'
 tags: "AI/ML, GenAI, LLM, Optimization, Performance, PyTorch"
