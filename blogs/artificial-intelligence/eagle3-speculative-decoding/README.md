@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Accelerating Large-Scale LLM Inference on AMD Instinct™ MI350X/MI355X with Eagle3 and AMD Quark"
-date: 11 Jun 2026
+date: 3 Jul 2026
 author: "Larry Li, Chun Fang, Chao Li, Xikai Meng, Andy Luo, Haichen Zhang, Bowen Bao, Spandan Tiwari, Ashish Sirasao"
 thumbnail: 'eagle3-thumbnail.png'
 tags: LLM, AI/ML, Serving, Performance, Benchmarking
