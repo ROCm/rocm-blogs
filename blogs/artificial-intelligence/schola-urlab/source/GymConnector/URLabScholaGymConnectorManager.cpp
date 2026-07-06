@@ -19,7 +19,8 @@ AURLabScholaGymConnectorManager::AURLabScholaGymConnectorManager()
 
 void AURLabScholaGymConnectorManager::BeginPlay()
 {
-	Super::BeginPlay();
+
+	AActor::BeginPlay();
 
 	if (!Connector)
 	{
@@ -53,6 +54,16 @@ void AURLabScholaGymConnectorManager::BeginPlay()
 			0.05f,
 			true);
 	}
+}
+
+void AURLabScholaGymConnectorManager::Tick(float DeltaTime)
+{
+	if (!bInitDone)
+	{
+		return;
+	}
+
+	Super::Tick(DeltaTime);
 }
 
 bool AURLabScholaGymConnectorManager::TryInitNow()

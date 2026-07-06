@@ -1,8 +1,5 @@
 // Copyright (c) 2026 Advanced Micro Devices, Inc. All Rights Reserved.
 
-// Copy into your game module's Public/ folder.
-// Replace YOURPROJECT_API with your module's API macro (for example MYGAME_API).
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -33,6 +30,8 @@ public:
 	/** Optional cap on how long we wait for the URLab manager to compile (seconds). 0 = wait forever. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Schola|URLab", meta = (ClampMin = "0.0"))
 	float MaxWaitForManagerCompileSeconds = 30.f;
+
+	virtual void Tick(float DeltaTime) override;
 
 protected:
 	virtual void BeginPlay() override;
