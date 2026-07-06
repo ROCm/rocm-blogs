@@ -71,7 +71,7 @@ The system architecture presented in this blog (see diagram below) follows a sta
 
 [vLLM](https://docs.vllm.ai/en/stable/index.html) is one of the most popular open source LLM serving platforms. vLLM optimizes LLM serving by using innovative algorithms such as Paged Attention and continuous batching to improve GPU utilization, increase throughput, and reduce latency. This section will walk through the steps to start multiple vLLM servers in a cluster. For more details on using vLLM with ROCm, please visit our [blog on vLLM](https://rocm.blogs.amd.com/artificial-intelligence/vllm/README.html) and our [tutorial on deploying vLLM](https://rocm.docs.amd.com/projects/ai-developer-hub/en/latest/notebooks/inference/3_inference_ver3_HF_vllm.html).
 
-To configure the vLLM inference backend layer, disable automatic NUMA balancing on *every* compute node in the cluster that will power the vLLM servers as [recommended](https://instinct.docs.amd.com/projects/amdgpu-docs/en/latest/system-optimization/mi300x.html#disable-numa-auto-balancing) by AMD to mitigate the overhead incurred during memory scanning and binding operations.
+To configure the vLLM inference backend layer, disable automatic NUMA balancing on *every* compute node in the cluster that will power the vLLM servers as [NUMA configuration](https://instinct.docs.amd.com/projects/system-acceptance/en/latest/common/os-tuning.html#numa-configuration) by AMD to mitigate the overhead incurred during memory scanning and binding operations.
 
 ```bash
 # disable automatic NUMA balancing 
