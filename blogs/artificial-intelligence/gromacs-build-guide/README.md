@@ -70,7 +70,7 @@ This guide targets systems equipped with AMD Instinct accelerators:
 - **Memory:** Sufficient system RAM for your molecular systems (workload-dependent)
 - **Network:** High-bandwidth interconnect recommended for multi-node deployments
 
-For detailed system configuration and BIOS settings, see the [AMD Instinct MI300X system optimization guide](https://instinct.docs.amd.com/projects/amdgpu-docs/en/latest/system-optimization/mi300x.html).
+For detailed system configuration and BIOS settings, see the [AMD Instinct MI300X Customer Acceptance Guide](https://instinct.docs.amd.com/projects/system-acceptance/en/latest/gpus/mi300x.html).
 
 This installation procedure has been validated on MI300X systems from both Vultr and TensorWave cloud providers.
 
