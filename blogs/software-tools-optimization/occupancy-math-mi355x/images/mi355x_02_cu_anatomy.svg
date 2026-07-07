@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="680" viewBox="0 0 1040 680" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="1040" height="680" fill="#ffffff"/>
+<rect x="60" y="80" width="920" height="470" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="3"/>
+<rect x="90" y="140" width="192" height="210" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="106" y="218" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="106" y="270" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="312" y="140" width="192" height="210" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="328" y="218" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="328" y="270" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="534" y="140" width="192" height="210" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="550" y="218" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="550" y="270" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="756" y="140" width="192" height="210" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="772" y="218" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="772" y="270" width="160" height="44" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="90" y="370" width="858" height="64" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="90" y="448" width="858" height="50" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="852" y1="124" x2="852" y2="138" stroke="#5f3dc4" stroke-width="2" marker-end="url(#ah)" />
+<line x1="190" y1="576" x2="250" y2="396" stroke="#2b8a3e" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">Inside a Compute Unit: what&#x27;s private, what&#x27;s shared</text>
+<text x="80" y="111.0" font-size="20" text-anchor="start" fill="#1e1e1e" font-weight="normal">Compute Unit (CU)</text>
+<text x="102" y="169.1" font-size="18" text-anchor="start" fill="#1e1e1e" font-weight="normal">SIMD 0</text>
+<text x="102" y="193.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">64 lanes</text>
+<text x="186.0" y="243.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">VGPR ×512</text>
+<text x="186.0" y="295.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">AccVGPR pool</text>
+<text x="118" y="335.4" font-size="12" text-anchor="start" fill="#1e1e1e" font-weight="normal">≤ 8 waves resident</text>
+<text x="324" y="169.1" font-size="18" text-anchor="start" fill="#1e1e1e" font-weight="normal">SIMD 1</text>
+<text x="324" y="193.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">64 lanes</text>
+<text x="408.0" y="243.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">VGPR ×512</text>
+<text x="408.0" y="295.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">AccVGPR pool</text>
+<text x="340" y="335.4" font-size="12" text-anchor="start" fill="#1e1e1e" font-weight="normal">≤ 8 waves resident</text>
+<text x="546" y="169.1" font-size="18" text-anchor="start" fill="#1e1e1e" font-weight="normal">SIMD 2</text>
+<text x="546" y="193.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">64 lanes</text>
+<text x="630.0" y="243.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">VGPR ×512</text>
+<text x="630.0" y="295.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">AccVGPR pool</text>
+<text x="562" y="335.4" font-size="12" text-anchor="start" fill="#1e1e1e" font-weight="normal">≤ 8 waves resident</text>
+<text x="768" y="169.1" font-size="18" text-anchor="start" fill="#1e1e1e" font-weight="normal">SIMD 3</text>
+<text x="768" y="193.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">64 lanes</text>
+<text x="852.0" y="243.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">VGPR ×512</text>
+<text x="852.0" y="295.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">AccVGPR pool</text>
+<text x="784" y="335.4" font-size="12" text-anchor="start" fill="#1e1e1e" font-weight="normal">≤ 8 waves resident</text>
+<text x="519.0" y="406.05" font-size="18" text-anchor="middle" fill="#1e1e1e" font-weight="normal">LDS — 160 KB   (one scratchpad, shared by all 4 SIMDs)</text>
+<text x="519.0" y="476.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Scalar unit · SGPRs ~800/SIMD · L1 cache · wave scheduler</text>
+<text x="680" y="114.25" font-size="15" text-anchor="start" fill="#5f3dc4" font-weight="normal">Registers = PER-SIMD (private)</text>
+<text x="70" y="594.25" font-size="15" text-anchor="start" fill="#2b8a3e" font-weight="normal">LDS = PER-CU (shared)  —  this split is why the three</text>
+<text x="70" y="613.0" font-size="15" text-anchor="start" fill="#2b8a3e" font-weight="normal">occupancy limiters in Part 2 use different denominators</text>
+</svg>
