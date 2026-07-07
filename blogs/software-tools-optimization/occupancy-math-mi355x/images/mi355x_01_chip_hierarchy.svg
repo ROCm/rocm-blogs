@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="640" viewBox="0 0 820 640" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="820" height="640" fill="#ffffff"/>
+<rect x="80.0" y="80" width="720" height="90" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="140.0" y="208" width="600" height="80" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="440.0" y1="170" x2="440.0" y2="208" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<rect x="180.0" y="326" width="520" height="80" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="440.0" y1="288" x2="440.0" y2="326" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<rect x="220.0" y="444" width="440" height="80" rx="12" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="440.0" y1="406" x2="440.0" y2="444" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<rect x="260.0" y="562" width="360" height="80" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="440.0" y1="524" x2="440.0" y2="562" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="44.7" font-size="26" text-anchor="start" fill="#1e1e1e" font-weight="bold">MI355X: from chip to lane</text>
+<text x="440.0" y="118.2" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">AMD Instinct MI355X  —  CDNA4 / gfx950</text>
+<text x="440.0" y="139.45" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">288 GB HBM3E · 8 TB/s · 256 MB Infinity Cache · 2.4 GHz</text>
+<text x="440.0" y="241.2" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">8 × XCD  (Accelerator Complex Die)</text>
+<text x="440.0" y="262.45" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">each with its own L2 slice</text>
+<text x="440.0" y="359.2" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">32 × Compute Unit  per XCD</text>
+<text x="440.0" y="380.45" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">256 Compute Units total</text>
+<text x="440.0" y="477.2" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">4 × SIMD  per Compute Unit</text>
+<text x="440.0" y="498.45" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">register file is private to each SIMD</text>
+<text x="440.0" y="595.2" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">64 lanes  per SIMD</text>
+<text x="440.0" y="616.45" font-size="17" text-anchor="middle" fill="#1e1e1e" font-weight="normal">1 wavefront = 64 threads in lockstep</text>
+</svg>

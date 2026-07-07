@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="720" viewBox="0 0 1040 720" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="1040" height="720" fill="#ffffff"/>
+<rect x="70" y="70" width="380" height="46" rx="12" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="70" y="134" width="380" height="54" rx="12" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="260.0" y1="116" x2="260.0" y2="134" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="70" y="212" width="380" height="54" rx="12" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="260.0" y1="188" x2="260.0" y2="212" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="70" y="290" width="380" height="54" rx="12" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="260.0" y1="266" x2="260.0" y2="290" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="70" y="368" width="380" height="54" rx="12" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="260.0" y1="344" x2="260.0" y2="368" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="70" y="446" width="380" height="54" rx="12" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="260.0" y1="422" x2="260.0" y2="446" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="70" y="524" width="380" height="54" rx="12" fill="#ffe3e3" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="260.0" y1="500" x2="260.0" y2="524" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="580" y="70" width="380" height="46" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="580" y="134" width="380" height="54" rx="12" fill="#ebfbee" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="770.0" y1="116" x2="770.0" y2="134" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="580" y="212" width="380" height="54" rx="12" fill="#ebfbee" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="770.0" y1="188" x2="770.0" y2="212" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="580" y="290" width="380" height="54" rx="12" fill="#ebfbee" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="770.0" y1="266" x2="770.0" y2="290" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="580" y="368" width="380" height="54" rx="12" fill="#ebfbee" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="770.0" y1="344" x2="770.0" y2="368" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="580" y="446" width="380" height="54" rx="12" fill="#ebfbee" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="770.0" y1="422" x2="770.0" y2="446" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<rect x="580" y="524" width="380" height="54" rx="12" fill="#ebfbee" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="770.0" y1="500" x2="770.0" y2="524" stroke="#adb5bd" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">Why chasing occupancy can backfire</text>
+<text x="260.0" y="96.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Chasing occupancy</text>
+<text x="260.0" y="164.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">more waves / SIMD</text>
+<text x="260.0" y="242.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">fewer VGPRs per wave</text>
+<text x="260.0" y="320.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">smaller accumulator tile</text>
+<text x="260.0" y="398.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">lower arithmetic intensity</text>
+<text x="260.0" y="476.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">matrix core waits on data</text>
+<text x="260.0" y="554.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">throughput ↓</text>
+<text x="770.0" y="96.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Lower occupancy, bigger tiles</text>
+<text x="770.0" y="164.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">fewer waves / SIMD</text>
+<text x="770.0" y="242.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">more VGPRs per wave</text>
+<text x="770.0" y="320.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">bigger tile + ILP</text>
+<text x="770.0" y="398.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">higher arithmetic intensity</text>
+<text x="770.0" y="476.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">matrix core stays fed</text>
+<text x="770.0" y="554.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">throughput ↑</text>
+</svg>

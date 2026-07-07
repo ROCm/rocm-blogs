@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<rect width="960" height="560" fill="#ffffff"/>
+<text x="40" y="40" font-size="21" fill="#1e1e1e" font-weight="bold">ILP substitutes for occupancy: the matrix core stays fed with fewer waves</text>
+<text x="40" y="63" font-size="14" fill="#adb5bd">MXFP8 v_mfma_f32_16x16x128_f8f6f4 on MI355X · occupancy throttled separately via LDS · higher ILP = more throughput at lower occupancy</text>
+<line x1="135" y1="387.7" x2="845" y2="387.7" stroke="#eef0f2" stroke-width="1"/>
+<text x="125" y="391.7" font-size="13" text-anchor="end" fill="#1e1e1e">3.5</text>
+<line x1="135" y1="300.6" x2="845" y2="300.6" stroke="#eef0f2" stroke-width="1"/>
+<text x="125" y="304.6" font-size="13" text-anchor="end" fill="#1e1e1e">4.0</text>
+<line x1="135" y1="213.5" x2="845" y2="213.5" stroke="#eef0f2" stroke-width="1"/>
+<text x="125" y="217.5" font-size="13" text-anchor="end" fill="#1e1e1e">4.5</text>
+<text x="135.0" y="462" font-size="13" text-anchor="middle" fill="#1e1e1e">0</text>
+<text x="277.0" y="462" font-size="13" text-anchor="middle" fill="#1e1e1e">20</text>
+<text x="419.0" y="462" font-size="13" text-anchor="middle" fill="#1e1e1e">40</text>
+<text x="561.0" y="462" font-size="13" text-anchor="middle" fill="#1e1e1e">60</text>
+<text x="703.0" y="462" font-size="13" text-anchor="middle" fill="#1e1e1e">80</text>
+<text x="845.0" y="462" font-size="13" text-anchor="middle" fill="#1e1e1e">100</text>
+<line x1="135" y1="126.4" x2="845" y2="126.4" stroke="#e03131" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="125" y="130.4" font-size="13" text-anchor="end" fill="#e03131">5.0</text>
+<text x="845" y="119.4" font-size="12.5" text-anchor="end" fill="#e03131" font-weight="bold">~5 PFLOP/s — MXFP8 dense matrix peak</text>
+<line x1="135" y1="440" x2="135" y2="90" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="135" y1="440" x2="850" y2="440" stroke="#1e1e1e" stroke-width="2"/>
+<text x="38" y="268" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="bold" transform="rotate(-90 38 268)">Throughput (PFLOP/s)</text>
+<text x="490" y="490" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="bold">Achieved occupancy (%)  —  more waves →</text>
+<polyline points="220.6,393.6 303.3,206.9 428.3,205.0 556.9,205.5" fill="none" stroke="#e03131" stroke-width="3"/>
+<circle cx="220.6" cy="393.6" r="5" fill="#ffffff" stroke="#e03131" stroke-width="3"/>
+<circle cx="303.3" cy="206.9" r="5" fill="#ffffff" stroke="#e03131" stroke-width="3"/>
+<circle cx="428.3" cy="205.0" r="5" fill="#ffffff" stroke="#e03131" stroke-width="3"/>
+<circle cx="556.9" cy="205.5" r="5" fill="#ffffff" stroke="#e03131" stroke-width="3"/>
+<polyline points="220.2,188.0 305.2,186.2 475.4,192.0 815.9,184.4" fill="none" stroke="#f08c00" stroke-width="3"/>
+<circle cx="220.2" cy="188.0" r="5" fill="#ffffff" stroke="#f08c00" stroke-width="3"/>
+<circle cx="305.2" cy="186.2" r="5" fill="#ffffff" stroke="#f08c00" stroke-width="3"/>
+<circle cx="475.4" cy="192.0" r="5" fill="#ffffff" stroke="#f08c00" stroke-width="3"/>
+<circle cx="815.9" cy="184.4" r="5" fill="#ffffff" stroke="#f08c00" stroke-width="3"/>
+<polyline points="220.6,221.4 306.5,192.3 476.7,189.8 818.8,180.2" fill="none" stroke="#7048e8" stroke-width="3"/>
+<circle cx="220.6" cy="221.4" r="5" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+<circle cx="306.5" cy="192.3" r="5" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+<circle cx="476.7" cy="189.8" r="5" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+<circle cx="818.8" cy="180.2" r="5" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+<polyline points="221.1,157.1 307.4,157.0 479.6,157.1" fill="none" stroke="#2f9e44" stroke-width="3"/>
+<circle cx="221.1" cy="157.1" r="5" fill="#ffffff" stroke="#2f9e44" stroke-width="3"/>
+<circle cx="307.4" cy="157.0" r="5" fill="#ffffff" stroke="#2f9e44" stroke-width="3"/>
+<circle cx="479.6" cy="157.1" r="5" fill="#ffffff" stroke="#2f9e44" stroke-width="3"/>
+<rect x="456" y="338" width="368" height="104" rx="10" fill="#ffffff" stroke="#dee2e6" stroke-width="1.5"/>
+<line x1="470" y1="360" x2="500" y2="360" stroke="#e03131" stroke-width="3.5"/>
+<circle cx="485" cy="360" r="5" fill="#ffffff" stroke="#e03131" stroke-width="3"/>
+<text x="510" y="364" font-size="13" fill="#1e1e1e">ILP=1  — one dependent chain</text>
+<line x1="470" y1="382" x2="500" y2="382" stroke="#f08c00" stroke-width="3.5"/>
+<circle cx="485" cy="382" r="5" fill="#ffffff" stroke="#f08c00" stroke-width="3"/>
+<text x="510" y="386" font-size="13" fill="#1e1e1e">ILP=2  — two independent chains</text>
+<line x1="470" y1="404" x2="500" y2="404" stroke="#7048e8" stroke-width="3.5"/>
+<circle cx="485" cy="404" r="5" fill="#ffffff" stroke="#7048e8" stroke-width="3"/>
+<text x="510" y="408" font-size="13" fill="#1e1e1e">ILP=4  — four independent chains</text>
+<line x1="470" y1="426" x2="500" y2="426" stroke="#2f9e44" stroke-width="3.5"/>
+<circle cx="485" cy="426" r="5" fill="#ffffff" stroke="#2f9e44" stroke-width="3"/>
+<text x="510" y="430" font-size="13" fill="#1e1e1e">ILP=8  — eight independent chains</text>
+</svg>
