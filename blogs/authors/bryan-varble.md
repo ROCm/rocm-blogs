@@ -3,14 +3,14 @@ thumbnail: bryan-varble.png
 myst:
   html_meta:
     "description lang=en": "Bryan Varble"
-    "keywords": "blog, contributor, blog author"
+    "keywords": "scale-out networking, AI infrastructure, RoCE, RDMA, data center networking, GPU clusters, AI training, network traffic, congestion control, HPC, AMD Instinct, ROCm, blog, contributor, blog author"
     "property=og:locale": "en_US"
 ---
 
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Bryan Varble">
-  <meta name="keywords" content="blog, contributor, blog author">
+  <meta name="keywords" content="scale-out networking, AI infrastructure, RoCE, RDMA, data center networking, GPU clusters, AI training, network traffic, congestion control, HPC, AMD Instinct, ROCm, blog, contributor, blog author">
 </head>
 
 (bryan-varble)=
