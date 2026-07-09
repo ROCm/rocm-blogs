@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "SGLang-ATOM: Bring ROCm-Native Acceleration to SGLang Serving"
 date: 08 Jul 2026
-author: "Yuechao Guo, Yuhua Zhu, Qianyun Chu, Zhiwei Yan, Zhen Wan, Ling Zhang, Hattie Wu, Peng Sun, Barsoum Emad"
+author: "Yuechao Guo, Yuhua Zhu, Qianyun Chu, Zhiwei Yan, Zhen Wan, Ling Zhang, Hattie Wu, Lingpeng Jin, Carlus Huang, Peng Sun, Emad Barsoum"
 thumbnail: 'sglang-atom-thumbnail.png'
 tags: AI/ML, LLM, Serving, Optimization, Performance
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: SGLang-ATOM brings ROCm-native ATOM execution into the S
 language: English
 myst:
     html_meta:
-        "author": "Yuechao Guo, Yuhua Zhu, Qianyun Chu, Zhiwei Yan, Zhen Wan, Ling Zhang, Hattie Wu, Peng Sun, Barsoum Emad"
+        "author": "Yuechao Guo, Yuhua Zhu, Qianyun Chu, Zhiwei Yan, Zhen Wan, Ling Zhang, Hattie Wu, Lingpeng Jin, Carlus Huang, Peng Sun, Emad Barsoum "
         "description lang=en": "Explore how SGLang-ATOM connects SGLang serving applications with ROCm-native ATOM execution to accelerate LLM inference on AMD Instinct GPUs."
         "keywords": "SGLang-ATOM, SGLang, ATOM, ATOMesh, ROCm, LLM inference, AMD Instinct, AITER, MORI, RCCL"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
-        "amd_blog_authors": "Yuechao Guo, Yuhua Zhu, Qianyun Chu, Zhiwei Yan, Zhen Wan, Ling Zhang, Hattie Wu, Peng Sun, Barsoum Emad"
+        "amd_blog_authors": "Yuechao Guo, Yuhua Zhu, Qianyun Chu, Zhiwei Yan, Zhen Wan, Ling Zhang, Hattie Wu, Lingpeng Jin, Carlus Huang, Peng Sun, Emad Barsoum"
 ---
 
 # SGLang-ATOM: Bring ROCm-Native Acceleration to SGLang Serving
@@ -30,6 +30,12 @@ myst:
 Large language model serving teams often face two competing goals: keeping the flexibility and developer velocity of an ecosystem serving framework, while also reaching strong throughput, latency, and cost efficiency on production accelerators. In this blog, you will explore how SGLang-ATOM bridges these needs for AMD Instinct GPUs by connecting the SGLang serving experience with ATOM's ROCm-native execution path.
 
 By the end of this blog, you will understand where SGLang-ATOM fits in the ROCm LLM software stack, how its SGLang model registration design integrates ATOM-backed execution into upstream SGLang, why this approach reduces migration effort for existing SGLang applications, and how benchmark dashboard results on MI355X and MI308X can help guide deployment evaluation.
+
+SGLang-ATOM has also been successfully deployed in a major customer business scenario, further validating both the feasibility of the integration path and the serving performance of the ATOM-backed execution model.
+
+> *"To accommodate diverse, fast-changing LLM usage scenarios across our advertising business, our AI infrastructure inference team partnered with the AMD team. Leveraging the SGLang-ATOM Plugin Mode solution, the two parties deployed the Qwen 3.5/3.6 model family on AMD Instinct GPUs. With well-defined role split and teamwork, optimization work progressed concurrently along two axes: runtime performance and engineering productivity. Benchmark measurements prove that Qwen 3.5 delivers inference performance matching or outperforming peer alternatives on the MI308X accelerator, reliably meeting the advertising business's core requirements for low latency and high throughput."*
+>
+> *-- Advertising team of a major customer*
 
 ## Architecture Overview
 
@@ -92,7 +98,7 @@ The value of this approach centers on three areas:
 - **Time-to-market**: SGLang-ATOM preserves the ecosystem surface that SGLang users already understand. Teams can keep familiar SGLang request handling and serving workflows, adopt ROCm optimization through a plugin path rather than a full serving stack migration, and evaluate optimized execution on AMD GPUs while keeping application-facing behavior stable.
 - **Zero-friction migration**: Customers already serving workloads through SGLang can integrate SGLang-ATOM with minimal changes to their existing business logic, APIs, deployment scripts, and operational workflows. This enables a near-zero migration path from a standard SGLang serving stack to an ATOM-backed SGLang-ATOM deployment.
 
-For SGLang users, the intended benefit is not only peak performance. It is also access to AMD-tuned recipes that can reduce the amount of manual performance engineering needed for each model and deployment shape. This approach is especially useful when teams need to validate AMD Instinct GPU deployments quickly, compare serving configurations, or move from experimentation toward production readiness without rewriting the full application integration layer. SGLang-ATOM has also been successfully deployed in a major customer business scenario, further validating both the feasibility of the integration path and the serving performance of the ATOM-backed execution model.
+For SGLang users, the intended benefit is not only peak performance. It is also access to AMD-tuned recipes that can reduce the amount of manual performance engineering needed for each model and deployment shape. This approach is especially useful when teams need to validate AMD Instinct GPU deployments quickly, compare serving configurations, or move from experimentation toward production readiness without rewriting the full application integration layer.
 
 ## Benchmark Dashboard
 
