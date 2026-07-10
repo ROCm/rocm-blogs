@@ -48,6 +48,8 @@ Anuya
 Welling
 Arseny
 Moskvichev
+Arthur
+Huang
 Arttu
 Niemela
 Ashish
@@ -128,6 +130,8 @@ Corbin
 Robeck
 Damon
 McDougall
+Dan
+Li
 Daniel
 Gustafsson
 Daniel
@@ -601,7 +605,7 @@ Fink
 Steven
 Reinhardt
 Subrahmanya
-Dubaguntta
+Dubagunta
 Sudhanshu
 Ranjan
 Sujin
@@ -682,6 +686,8 @@ Ximeng
 Sun
 Xinjun
 Niu
+Xinyu
+Kang
 Xuanwu
 Yin
 Xun
