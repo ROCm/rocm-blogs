@@ -57,7 +57,7 @@ SOFTWARE.
 
 * [Docker image](https://hub.docker.com/r/rocm/taichi/tags)
 
-* [GitHub](https://github.com/ROCm/taichi)
+* [GitHub](https://github.com/AMD-Ecosystem/taichi)
 
 ## Getting Started with Taichi
 
@@ -160,7 +160,7 @@ RUN wget https://apt.llvm.org/llvm.sh \
         lsb-release software-properties-common gnupg \
         && ./llvm.sh ${LLVM_VERSION} llvm clang lld
 
-RUN git clone --recursive -b amd-integration https://github.com/ROCm/taichi.git \
+RUN git clone --recursive -b amd-integration https://github.com/AMD-Ecosystem/taichi.git \
         && cd  taichi/external/spdlog \
         && git apply /app/taichi/spdlog_fmt.patch \
         && cd /app/taichi \
