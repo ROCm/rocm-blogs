@@ -1,7 +1,16 @@
+---
+thumbnail: Chun-Fang.png
+myst:
+  html_meta:
+    "description lang=en": "Chun Fang"
+    "keywords": "AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Chun Fang">
-  <meta name="keywords" content="blog, contributor, blog author">
+  <meta name="keywords" content="AMD GPU, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
 (chun-fang)=
