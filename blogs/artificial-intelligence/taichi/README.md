@@ -77,7 +77,7 @@ instructions for installing Taichi and several examples for running a Taichi pro
 
 * [Docker image](https://hub.docker.com/r/rocm/taichi/tags)
 
-* [GitHub](https://github.com/ROCm/taichi)
+* [GitHub](https://github.com/AMD-Ecosystem/taichi)
 
 ## Getting Started with Taichi
 
@@ -179,7 +179,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-RUN git clone --recursive -b amd-integration https://github.com/ROCm/taichi.git \
+RUN git clone --recursive -b amd-integration https://github.com/AMD-Ecosystem/taichi.git \
     && cd taichi \
     && ./build.py \
     && python3 -m pip install /app/taichi/dist/taichi*.whl 
