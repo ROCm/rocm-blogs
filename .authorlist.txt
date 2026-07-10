@@ -601,7 +601,7 @@ Fink
 Steven
 Reinhardt
 Subrahmanya
-Dubaguntta
+Dubagunta
 Sudhanshu
 Ranjan
 Sujin
@@ -682,6 +682,8 @@ Ximeng
 Sun
 Xinjun
 Niu
+Xinyu
+Kang
 Xuanwu
 Yin
 Xun
