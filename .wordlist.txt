@@ -309,6 +309,7 @@ Denoising
 denoising
 Dequantization
 dequantization
+dequantizing
 denormalize
 Dependabot
 DepthU
@@ -579,6 +580,7 @@ Huayu
 Huggingface
 HuggingFace
 HuggingFace's
+Huidong
 Humanvid
 HumanVid
 HummingbirdXT
@@ -654,6 +656,7 @@ JAX
 JAX's
 Jian
 Jianyu
+Ji
 Jie
 JIT
 Jiyan
@@ -924,6 +927,8 @@ NuminaMath
 NumPy
 NVCC
 NVIDIA
+NVFP
+nvfp
 NVPTX
 OAM
 OAMs
@@ -1083,6 +1088,7 @@ Qiang
 Qiao
 Qihang
 Qinyu
+QDQ
 QKV
 QMC
 QPS
@@ -2784,6 +2790,7 @@ P99
 Pallas
 Raffel
 RedHat
+RedHatAI
 Shazeer
 SMIs
 UUIDs
