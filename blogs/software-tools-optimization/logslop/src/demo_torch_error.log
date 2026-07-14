@@ -1,0 +1,145 @@
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+[rank7]: Traceback (most recent call last):
+[rank7]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank7]:     main()
+[rank7]:   File "src/demo_torch_error.py", line 8, in main
+[rank7]:     print(f"This a coding error ... {1 / 0}")
+[rank7]:                                      ~~^~~
+[rank7]: ZeroDivisionError: division by zero
+[rank1]: Traceback (most recent call last):
+[rank1]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank1]:     main()
+[rank1]:   File "src/demo_torch_error.py", line 8, in main
+[rank1]:     print(f"This a coding error ... {1 / 0}")
+[rank1]:                                      ~~^~~
+[rank1]: ZeroDivisionError: division by zero
+[rank3]: Traceback (most recent call last):
+[rank3]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank3]:     main()
+[rank3]:   File "src/demo_torch_error.py", line 8, in main
+[rank3]:     print(f"This a coding error ... {1 / 0}")
+[rank3]:                                      ~~^~~
+[rank3]: ZeroDivisionError: division by zero
+[rank2]: Traceback (most recent call last):
+[rank2]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank2]:     main()
+[rank2]:   File "src/demo_torch_error.py", line 8, in main
+[rank2]:     print(f"This a coding error ... {1 / 0}")
+[rank2]:                                      ~~^~~
+[rank2]: ZeroDivisionError: division by zero
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank0]:     main()
+[rank0]:   File "src/demo_torch_error.py", line 8, in main
+[rank0]:     print(f"This a coding error ... {1 / 0}")
+[rank0]:                                      ~~^~~
+[rank0]: ZeroDivisionError: division by zero
+[rank4]: Traceback (most recent call last):
+[rank4]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank4]:     main()
+[rank4]:   File "src/demo_torch_error.py", line 8, in main
+[rank4]:     print(f"This a coding error ... {1 / 0}")
+[rank4]:                                      ~~^~~
+[rank4]: ZeroDivisionError: division by zero
+[rank5]: Traceback (most recent call last):
+[rank5]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank5]:     main()
+[rank5]:   File "src/demo_torch_error.py", line 8, in main
+[rank5]:     print(f"This a coding error ... {1 / 0}")
+[rank5]:                                      ~~^~~
+[rank5]: ZeroDivisionError: division by zero
+[rank6]: Traceback (most recent call last):
+[rank6]:   File "src/demo_torch_error.py", line 12, in <module>
+[rank6]:     main()
+[rank6]:   File "src/demo_torch_error.py", line 8, in main
+[rank6]:     print(f"This a coding error ... {1 / 0}")
+[rank6]:                                      ~~^~~
+[rank6]: ZeroDivisionError: division by zero
+W0526 11:03:28.268000 6327 torch/distributed/elastic/multiprocessing/api.py:1012] Sending process 6348 closing signal SIGTERM
+W0526 11:03:28.269000 6327 torch/distributed/elastic/multiprocessing/api.py:1012] Sending process 6350 closing signal SIGTERM
+W0526 11:03:28.269000 6327 torch/distributed/elastic/multiprocessing/api.py:1012] Sending process 6352 closing signal SIGTERM
+E0526 11:03:28.301000 6327 torch/distributed/elastic/multiprocessing/api.py:986] failed (exitcode: 1) local_rank: 0 (pid: 6345) of binary: python3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File ".../site-packages/torch/distributed/run.py", line 994, in <module>
+    main()
+  File ".../site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 362, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File ".../site-packages/torch/distributed/run.py", line 990, in main
+    run(args)
+  File ".../site-packages/torch/distributed/run.py", line 981, in run
+    elastic_launch(
+  File ".../site-packages/torch/distributed/launcher/api.py", line 170, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ".../site-packages/torch/distributed/launcher/api.py", line 317, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+demo_torch_error.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 6346)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 6347)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 4 (local_rank: 4)
+  exitcode  : 1 (pid: 6349)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[4]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 6 (local_rank: 6)
+  exitcode  : 1 (pid: 6351)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[5]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 6348)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[6]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 5 (local_rank: 5)
+  exitcode  : 1 (pid: 6350)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[7]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 7 (local_rank: 7)
+  exitcode  : 1 (pid: 6352)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-05-26_11:03:28
+  host      : example-host
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 6345)
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================
