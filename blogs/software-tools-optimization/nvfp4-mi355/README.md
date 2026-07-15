@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Serving NVFP4 Models on AMD Instinct™ MI355 Accelerators"
 date: "13 Jul 2026"
-author: "Lin Zhao, Huidong Ji, Felix Marty, Jiaxin Wang, Wei Luo, Bowen Bao, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
+author: "Lin Zhao, Huidong Ji, Felix Marty, Jiaxin Wang, Ke Wang, Wei Luo, Bowen Bao, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
 thumbnail: 'nvfp4_mi355.jpg'
 tags: "Optimization"
 category: "Software tools & optimizations"
@@ -11,7 +11,7 @@ key_value_propositions: "Demonstrate how to deploy NVFP4 checkpoints on MI355"
 language: English
 myst:
     html_meta:
-        "author": "Lin Zhao, Huidong Ji, Felix Marty, Jiaxin Wang, Wei Luo, Bowen Bao, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
+        "author": "Lin Zhao, Huidong Ji, Felix Marty, Jiaxin Wang, Ke Wang, Wei Luo, Bowen Bao, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
         "description lang=en": "Learn how to serve NVFP4 models on AMD Instinct™ MI355 using an emulation pipeline in vLLM — no format conversion needed."
         "keywords": "nvfp4, mi355, emulation, inference"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_authors": "Lin Zhao, Huidong Ji, Felix Marty, Jiaxin Wang, Wei Luo, Bowen Bao, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
+        "amd_blog_authors": "Lin Zhao, Huidong Ji, Felix Marty, Jiaxin Wang, Ke Wang, Wei Luo, Bowen Bao, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
 ---
 
 <!---
