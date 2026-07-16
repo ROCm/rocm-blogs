@@ -143,11 +143,11 @@ For HPC users, ROCm 7.14 adds pre-built hipTensor and rocALUTION packages on rep
 
 ## Summary
 
-In this blog, you explored the key updates and improvements that make ROCm 7.14 a major milestone in AMD's open AI software ecosystem. This includes the production debut of TheRock, expanded hardware support, stronger AI frameworks, enhanced profiling tools, faster communication libraries, and streamlined enterprise deployment.
+In this blog, you explored the key updates and improvements that make ROCm 7.14 a major milestone in AMD’s open-source AI software ecosystem. This includes the production debut of TheRock, expanded hardware support, stronger AI frameworks, enhanced profiling tools, faster communication libraries, and streamlined enterprise deployment.
 
 ROCm 7.14 represents more than a feature release—it establishes a new foundation for the future of AMD's AI software platform. With TheRock now serving as ROCm's production build and release infrastructure, ROCm is now a modular software platform capable of delivering innovation more rapidly while improving software quality and simplifying deployment.
 
-Whether you're developing on Ryzen AI workstations, scaling distributed training across AMD Instinct clusters, or deploying enterprise AI services in production, ROCm 7.14 provides the tools, performance, and flexibility needed to build the next generation of AI applications. Stay tuned for more updates from Advancing AI Day.
+Whether you're developing on Ryzen AI workstations, scaling distributed training across AMD Instinct clusters, or deploying enterprise AI services in production, ROCm 7.14 provides the tools, performance, and flexibility needed to build the next generation of AI applications. Stay tuned for more updates from AMD Advancing AI Day.
 
 For complete [release notes](https://rocm.docs.amd.com/en/docs-7.14.0/about/release-notes.html), installation guidance, and migration documentation, visit the [ROCm documentation](https://rocm.docs.amd.com/en/docs-7.14.0/index.html).
 
