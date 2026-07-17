@@ -153,7 +153,7 @@ Whether you're developing on Ryzen AI workstations, scaling distributed training
 
 For complete [release notes](https://rocm.docs.amd.com/en/docs-7.14.0/about/release-notes.html), installation guidance, and migration documentation, visit the [ROCm documentation](https://rocm.docs.amd.com/en/docs-7.14.0/index.html).
 
-```{update} Jul 16, 2026
+```{update} Jul 17, 2026
 Updated the blog with additional content to Enterprise AI Reference Stack.
 ```
 
