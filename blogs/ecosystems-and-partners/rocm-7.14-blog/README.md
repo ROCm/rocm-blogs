@@ -79,11 +79,13 @@ ComfyUI support now spans Radeon RX 7000 and 9000 series, Radeon PRO, Ryzen AI M
 
 ## Expanding Enterprise AI Software Support
 
-The [AMD Enterprise AI](https://enterprise-ai.docs.amd.com/en/latest/index.html) Reference Stack continues to expand its support for production AI deployments on AMD platforms. AMD Solution Blueprints will also expand with industry-focused solutions for healthcare, telecommunications, and financial services, providing validated starting points for deploying enterprise AI workloads tailored to vertical-specific use cases.
+The [AMD Enterprise AI](https://enterprise-ai.docs.amd.com/en/latest/index.html) Reference Stack now supports PCIe-based inferencing, with support for AMD Radeon™ and Instinct™ MI350P GPUs.  This provides Kubernetes and OpenAI-based AMD AI Inferencing Microservices to customers looking to deploy scalable inferencing on traditional workstation and server hardware.  Optimized AIMs profiles are provided for RDNA4-based Radeon AI PRO R9700, R9700S, and R9600 GPUs as well as RDNA3-based Radeon PRO W7900 and W7800.
 
-AMD Enterprise AI Reference Stack now includes support for AMD Radeon™ GPUs as well as additional capabilities for AMD Inference Microservices (AIMs) and AMD AI Workbench. RDNA 4 (Radeon AI PRO R9600 & R9700) and RDNA 3 (Radeon PRO W7900 & W7800) GPUs are now supported. AIMs now expose an OpenAI-compatible API for LLM serving, with prebuilt inference containers that automatically configure based on the detected hardware profile, built-in model download and caching, and native integration with Kubernetes and Red Hat OpenShift for enterprise deployment. AMD AI Workbench complements this with prebuilt training and fine-tuning pipelines, automatically configured developer workspaces, GPU-as-a-Service support, and built-in ROCm profiling integration.
+AMD Solution Blueprints have been expanded with new industry-focused reference implementations for healthcare, telecommunications, and financial services.  Solution Blueprints also now support Radeon™ and Instinct™ MI350P GPUs, providing organizations with proven starting points for deploying enterprise AI workloads.
 
-ROCm 7.14 introduces the first-ever SGLang support on AMD Radeon™ GPUs, bringing one of the industry's most popular LLM serving frameworks beyond Instinct™ accelerators. Optimized for multi-user, multi-request inference, SGLang is widely adopted for chatbots, AI assistants, and agentic AI workloads, and can deliver better performance in multi-turn and long-context scenarios compared to general-purpose serving frameworks. With SGLang now available on Radeon, customers gain greater flexibility to choose the framework best suited to their workload while leveraging AMD's unified ROCm software experience across Radeon™ and Instinct™ platforms.
+AMD AI Workbench complements the stack with automatically configured developer workspaces, prebuilt training and fine-tuning pipelines, integrated ROCm profiling, and GPU-as-a-Service support, streamlining the path from model development to production deployment.
+
+ROCm 7.14 also introduces SGLang support on AMD Radeon™ GPUs, bringing one of the industry’s most popular LLM serving frameworks to customers deploying traditional PCIe-based workstations and servers. Optimized for multi-user, multi-request inference, SGLang is widely adopted for chatbots, AI assistants, and agentic AI workloads, and can deliver better performance in multi-turn and long-context scenarios compared to general-purpose serving frameworks. With SGLang now available on Radeon, customers gain greater flexibility to choose the framework best suited to their workload while leveraging AMD’s unified ROCm software experience across Radeon™ and Instinct™ platforms.
 
 ## Improved Collective Communication for Distributed AI
 
@@ -150,6 +152,10 @@ ROCm 7.14 represents more than a feature release—it establishes a new foundati
 Whether you're developing on Ryzen AI workstations, scaling distributed training across AMD Instinct clusters, or deploying enterprise AI services in production, ROCm 7.14 provides the tools, performance, and flexibility needed to build the next generation of AI applications. Stay tuned for more updates from AMD Advancing AI Day.
 
 For complete [release notes](https://rocm.docs.amd.com/en/docs-7.14.0/about/release-notes.html), installation guidance, and migration documentation, visit the [ROCm documentation](https://rocm.docs.amd.com/en/docs-7.14.0/index.html).
+
+```{update} Jul 16, 2026
+Updated the blog with additional content to Enterprise AI Reference Stack.
+```
 
 ## Disclaimers
 
