@@ -3,14 +3,14 @@ thumbnail: Onil-Gunawardana.jpg
 myst:
   html_meta:
     "description lang=en": "Onil Gunawardana"
-    "keywords": "blog, contributor, blog author"
+    "keywords": "AMD, ROCm, AI inference, distributed inference, LLM serving, vLLM, SGLang, product management, blog, contributor, blog author"
     "property=og:locale": "en_US"
 ---
 
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Onil Gunawardana">
-  <meta name="keywords" content="blog, contributor, blog author">
+  <meta name="keywords" content="AMD, ROCm, AI inference, distributed inference, LLM serving, vLLM, SGLang, product management, blog, contributor, blog author">
 </head>
 
 (onil-gunawardana)=
