@@ -77,7 +77,7 @@ When a workload's activity drops below the administrator configured threshold an
 
 The AMD Resource Manager provides three different quota and priority features, which are used to handle priority, quotas and pre-emption and are targeting either project level (applies to all workloads in a project) or workload level (applies to the specific workload). The three features differ in the following way:
 
-**Workload and project level settings:""
+**Workload and project level settings:**
 
 [**Idle workload pre-emption**](https://enterprise-ai.docs.amd.com/en/latest/resource-manager/projects/gpu-preemption.html) (this article) applies to **every** GPU workload in the specific project. AMD Resource Manager watches each workload's GPU activity, and if it stays below the configured threshold for the full idle timer, the workload is **terminated**.
 
