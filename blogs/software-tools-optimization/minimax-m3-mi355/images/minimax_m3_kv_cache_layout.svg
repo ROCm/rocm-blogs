@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700" role="img" aria-labelledby="title desc">
+  <title id="title">MiniMax-M3 sparse attention indexer and KV cache layout</title>
+  <desc id="desc">Three-column diagram showing MiniMax-M3 query heads grouped into four KV-head sparse attention groups, indexer top-16 logical block selection with shape token by KV head by top-k, and page-16 SHUFFLE KV cache layout.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f8fa; }
+      .panel { fill: #ffffff; stroke: #8c959f; stroke-width: 1.5; }
+      .title { fill: #24292f; font: 700 28px Arial, Helvetica, sans-serif; }
+      .section-title { fill: #24292f; font: 700 19px Arial, Helvetica, sans-serif; }
+      .body { fill: #57606a; font: 14px Arial, Helvetica, sans-serif; }
+      .small { fill: #57606a; font: 12px Arial, Helvetica, sans-serif; }
+      .code { fill: #24292f; font: 13px "DejaVu Sans Mono", Consolas, monospace; }
+      .label { fill: #24292f; font: 700 14px Arial, Helvetica, sans-serif; }
+      .blue { fill: #ddf4ff; stroke: #54aeef; stroke-width: 1.2; }
+      .green { fill: #dafbe1; stroke: #2da44e; stroke-width: 1.2; }
+      .yellow { fill: #fff8c5; stroke: #d4a72c; stroke-width: 1.2; }
+      .red { fill: #ffebe9; stroke: #ff8182; stroke-width: 1.2; }
+      .purple { fill: #fbefff; stroke: #bc8cff; stroke-width: 1.2; }
+      .gray { fill: #f6f8fa; stroke: #8c959f; stroke-width: 1.2; }
+      .arrow { stroke: #57606a; stroke-width: 2.3; fill: none; marker-end: url(#arrowhead); }
+      .thin-arrow { stroke: #8c959f; stroke-width: 1.5; fill: none; marker-end: url(#small-arrowhead); }
+      .dash { stroke: #8c959f; stroke-width: 1.5; stroke-dasharray: 5 5; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#57606a" />
+    </marker>
+    <marker id="small-arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8c959f" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="700" rx="18" />
+  <text class="title" x="700" y="46" text-anchor="middle">MiniMax-M3 Sparse Attention Indexer and KV Cache Layout</text>
+  <text class="body" x="700" y="74" text-anchor="middle">MiniMax-M3: q_head=64, kv_head=4 -> 4 KV-head sparse attention groups; topk shape is [token, kv_head, topk]</text>
+
+  <!-- Column 1: KV-head sparse attention groups -->
+  <rect class="panel" x="40" y="115" width="360" height="445" rx="14" />
+  <text class="section-title" x="70" y="150">1. KV-head sparse attention groups</text>
+  <text class="body" x="70" y="178">q_head=64 and kv_head=4 can be viewed</text>
+  <text class="body" x="70" y="199">as 4 groups of (q_head=16, kv_head=1).</text>
+
+  <g transform="translate(70, 232)">
+    <rect class="blue" x="0" y="0" width="130" height="42" rx="8" />
+    <text class="label" x="65" y="18" text-anchor="middle">Group 0</text>
+    <text class="small" x="65" y="35" text-anchor="middle">qh0-qh15</text>
+    <path class="thin-arrow" d="M138 21 H168" />
+    <rect class="gray" x="176" y="0" width="80" height="42" rx="8" />
+    <text class="label" x="216" y="26" text-anchor="middle">kvh0</text>
+    <rect class="purple" x="267" y="0" width="58" height="42" rx="8" />
+    <text class="small" x="296" y="18" text-anchor="middle">topk</text>
+    <text class="small" x="296" y="34" text-anchor="middle">idx0</text>
+
+    <rect class="blue" x="0" y="58" width="130" height="42" rx="8" />
+    <text class="label" x="65" y="76" text-anchor="middle">Group 1</text>
+    <text class="small" x="65" y="93" text-anchor="middle">qh16-qh31</text>
+    <path class="thin-arrow" d="M138 79 H168" />
+    <rect class="gray" x="176" y="58" width="80" height="42" rx="8" />
+    <text class="label" x="216" y="84" text-anchor="middle">kvh1</text>
+    <rect class="purple" x="267" y="58" width="58" height="42" rx="8" />
+    <text class="small" x="296" y="76" text-anchor="middle">topk</text>
+    <text class="small" x="296" y="92" text-anchor="middle">idx1</text>
+
+    <rect class="blue" x="0" y="116" width="130" height="42" rx="8" />
+    <text class="label" x="65" y="140" text-anchor="middle">...</text>
+    <path class="thin-arrow" d="M138 137 H168" />
+    <rect class="gray" x="176" y="116" width="80" height="42" rx="8" />
+    <text class="label" x="216" y="140" text-anchor="middle">...</text>
+    <rect class="purple" x="267" y="116" width="58" height="42" rx="8" />
+    <text class="small" x="296" y="140" text-anchor="middle">...</text>
+
+    <rect class="blue" x="0" y="174" width="130" height="42" rx="8" />
+    <text class="label" x="65" y="192" text-anchor="middle">Group 3</text>
+    <text class="small" x="65" y="209" text-anchor="middle">qh48-qh63</text>
+    <path class="thin-arrow" d="M138 195 H168" />
+    <rect class="gray" x="176" y="174" width="80" height="42" rx="8" />
+    <text class="label" x="216" y="200" text-anchor="middle">kvh3</text>
+    <rect class="purple" x="267" y="174" width="58" height="42" rx="8" />
+    <text class="small" x="296" y="192" text-anchor="middle">topk</text>
+    <text class="small" x="296" y="208" text-anchor="middle">idx3</text>
+  </g>
+
+  <text class="small" x="220" y="500" text-anchor="middle">Each KV head owns one top-k indexer/cache list.</text>
+  <text class="small" x="220" y="522" text-anchor="middle">Different KV heads can select different KV blocks.</text>
+
+  <!-- Column arrows -->
+  <path class="arrow" d="M410 340 H455" />
+  <text class="small" x="432" y="325" text-anchor="middle">index</text>
+
+  <!-- Column 2: top-16 logical block selection -->
+  <rect class="panel" x="465" y="115" width="360" height="445" rx="14" />
+  <text class="section-title" x="495" y="150">2. Indexer selects blocks</text>
+  <text class="body" x="495" y="178">For each token and each of 4 KV heads,</text>
+  <text class="body" x="495" y="199">one indexer selects top-16 logical blocks.</text>
+
+  <rect class="gray" x="525" y="226" width="240" height="48" rx="9" />
+  <text class="label" x="645" y="246" text-anchor="middle">topk[qt, kvh_j, :]</text>
+  <text class="small" x="645" y="266" text-anchor="middle">shape = [token, kv_head, topk]</text>
+
+  <g transform="translate(505, 305)">
+    <rect class="blue" x="0" y="0" width="62" height="40" rx="8" />
+    <text class="label" x="31" y="25" text-anchor="middle">B0</text>
+    <rect class="blue" x="75" y="0" width="62" height="40" rx="8" />
+    <text class="label" x="106" y="25" text-anchor="middle">B3</text>
+    <rect class="blue" x="150" y="0" width="62" height="40" rx="8" />
+    <text class="label" x="181" y="25" text-anchor="middle">B7</text>
+    <rect class="blue" x="225" y="0" width="62" height="40" rx="8" />
+    <text class="label" x="256" y="25" text-anchor="middle">B12</text>
+
+    <rect class="blue" x="0" y="52" width="62" height="40" rx="8" />
+    <text class="label" x="31" y="77" text-anchor="middle">B21</text>
+    <rect class="blue" x="75" y="52" width="62" height="40" rx="8" />
+    <text class="label" x="106" y="77" text-anchor="middle">B34</text>
+    <rect class="blue" x="150" y="52" width="62" height="40" rx="8" />
+    <text class="label" x="181" y="77" text-anchor="middle">...</text>
+    <rect class="blue" x="225" y="52" width="62" height="40" rx="8" />
+    <text class="label" x="256" y="77" text-anchor="middle">B15</text>
+  </g>
+
+  <text class="small" x="645" y="430" text-anchor="middle">B = selected logical block ID; lists differ by KV head</text>
+  <text class="small" x="645" y="452" text-anchor="middle">one top-k list per (token, kv_head)</text>
+  <text class="label" x="645" y="480" text-anchor="middle">= 2048 selected KV tokens</text>
+  <text class="code" x="645" y="520" text-anchor="middle">index cache: [logical_blocks, 128, idx_head_dim]</text>
+
+  <path class="arrow" d="M835 340 H880" />
+  <text class="small" x="858" y="325" text-anchor="middle">expand</text>
+
+  <!-- Column 3: page-16 SHUFFLE KV cache -->
+  <rect class="panel" x="890" y="115" width="470" height="445" rx="14" />
+  <text class="section-title" x="920" y="150">3. Page-16 SHUFFLE KV cache</text>
+  <text class="body" x="920" y="178">Each logical block expands to 8 page-16 entries.</text>
+  <text class="body" x="920" y="199">16 x 128 becomes 16 x 8 x 16.</text>
+
+  <text class="label" x="1125" y="235" text-anchor="middle">One selected block Bk -> 8 physical pages</text>
+  <g transform="translate(930, 255)">
+    <rect class="green" x="0" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="23" y="24" text-anchor="middle">P0</text>
+    <rect class="green" x="54" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="77" y="24" text-anchor="middle">P1</text>
+    <rect class="green" x="108" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="131" y="24" text-anchor="middle">P2</text>
+    <rect class="green" x="162" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="185" y="24" text-anchor="middle">P3</text>
+    <rect class="green" x="216" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="239" y="24" text-anchor="middle">P4</text>
+    <rect class="green" x="270" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="293" y="24" text-anchor="middle">P5</text>
+    <rect class="green" x="324" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="347" y="24" text-anchor="middle">P6</text>
+    <rect class="green" x="378" y="0" width="46" height="38" rx="7" />
+    <text class="label" x="401" y="24" text-anchor="middle">P7</text>
+  </g>
+
+  <path class="dash" d="M930 320 H1315" />
+  <text class="small" x="1125" y="342" text-anchor="middle">phys16 = logical_block_id x 8 + page16_offset, page16_offset in [0, 7]</text>
+  <text class="small" x="1125" y="364" text-anchor="middle">Total selected physical pages per (token, kv_head): 16 blocks x 8 pages = 128 pages</text>
+
+  <g transform="translate(930, 395)">
+    <rect class="yellow" x="0" y="0" width="125" height="80" rx="9" />
+    <text class="label" x="62" y="25" text-anchor="middle">K cache</text>
+    <text class="code" x="62" y="49" text-anchor="middle">[phys16,</text>
+    <text class="code" x="62" y="68" text-anchor="middle">kv_heads, ...]</text>
+
+    <rect class="red" x="148" y="0" width="125" height="80" rx="9" />
+    <text class="label" x="210" y="25" text-anchor="middle">V cache</text>
+    <text class="code" x="210" y="49" text-anchor="middle">[phys16,</text>
+    <text class="code" x="210" y="68" text-anchor="middle">kv_heads, ...]</text>
+
+    <rect class="purple" x="296" y="0" width="125" height="80" rx="9" />
+    <text class="label" x="358" y="25" text-anchor="middle">FP8 scales</text>
+    <text class="code" x="358" y="49" text-anchor="middle">[phys16,</text>
+    <text class="code" x="358" y="68" text-anchor="middle">kv_heads, 16]</text>
+  </g>
+
+  <!-- Footer note -->
+  <rect class="panel" x="40" y="600" width="1320" height="58" rx="12" />
+  <text class="body" x="70" y="625">Summary: each (query token, KV head) has one top-16 logical page-128 block list, or 2048 selected KV tokens.</text>
+  <text class="body" x="70" y="648">The K/V cache is stored and consumed as page-16 SHUFFLE physical pages for AITER asm_layout=True kernels.</text>
+</svg>
