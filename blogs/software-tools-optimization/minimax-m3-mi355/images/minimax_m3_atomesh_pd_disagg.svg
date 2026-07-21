@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="700" viewBox="0 0 1400 700" role="img" aria-labelledby="title desc">
+  <title id="title">ATOMesh P/D disaggregation with Mooncake RDMA KV and indexer-key cache transfer</title>
+  <desc id="desc">Flow diagram showing a client request entering ATOMesh, ATOMesh's Router, Policy, Placement, and Worker Registry modules selecting a Prefill and a Decode worker and forwarding the request to Prefill, Prefill computing the forward pass, the Mooncake transfer engine pushing the resulting KV cache and MiniMax-M3 sparse indexer-key cache to Decode over RDMA, and Decode resuming generation.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f8fa; }
+      .panel { fill: #ffffff; stroke: #8c959f; stroke-width: 1.5; }
+      .dashed-panel { fill: #ffffff; stroke: #8c959f; stroke-width: 1.5; stroke-dasharray: 8 6; }
+      .title { fill: #24292f; font: 700 26px Arial, Helvetica, sans-serif; }
+      .subtitle { fill: #57606a; font: 15px Arial, Helvetica, sans-serif; }
+      .section-title { fill: #24292f; font: 700 18px Arial, Helvetica, sans-serif; }
+      .box-title { fill: #24292f; font: 700 14px Arial, Helvetica, sans-serif; }
+      .body { fill: #57606a; font: 14px Arial, Helvetica, sans-serif; }
+      .small { fill: #57606a; font: 12px Arial, Helvetica, sans-serif; }
+      .label { fill: #24292f; font: 700 14px Arial, Helvetica, sans-serif; }
+      .blue { fill: #ddf4ff; stroke: #54aeef; stroke-width: 1.2; }
+      .green { fill: #dafbe1; stroke: #2da44e; stroke-width: 1.2; }
+      .yellow { fill: #fff8c5; stroke: #d4a72c; stroke-width: 1.2; }
+      .purple { fill: #fbefff; stroke: #bc8cff; stroke-width: 1.2; }
+      .mooncake-title { fill: #8250df; font: 700 15px Arial, Helvetica, sans-serif; }
+      .zmq-title { fill: #218bff; font: 700 13px Arial, Helvetica, sans-serif; }
+      .arrow { stroke: #57606a; stroke-width: 2.4; fill: none; }
+      .arrow-bidir { stroke: #57606a; stroke-width: 2.4; fill: none; }
+      .rdma-arrow { stroke: #bc8cff; stroke-width: 3.4; fill: none; }
+      .zmq-arrow { stroke: #218bff; stroke-width: 2; stroke-dasharray: 7 5; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#57606a" />
+    </marker>
+    <marker id="arrowhead-sm" markerWidth="7" markerHeight="6" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#57606a" />
+    </marker>
+    <marker id="arrowhead-sm-rev" markerWidth="7" markerHeight="6" refX="1" refY="3" orient="auto">
+      <path d="M7,0 L0,3 L7,6 Z" fill="#57606a" />
+    </marker>
+    <marker id="rdma-arrowhead" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L12,5 L0,10 Z" fill="#bc8cff" />
+    </marker>
+    <marker id="zmq-arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#218bff" />
+    </marker>
+    <marker id="zmq-arrowhead-rev" markerWidth="10" markerHeight="8" refX="1" refY="4" orient="auto">
+      <path d="M10,0 L0,4 L10,8 Z" fill="#218bff" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="700" rx="18" />
+  <text class="title" x="700" y="50" text-anchor="middle">MiniMax-M3 P/D Disaggregation on ATOMesh with Mooncake RDMA Transfer</text>
+
+  <!-- Client -->
+  <rect class="panel" x="610" y="90" width="180" height="55" rx="12" />
+  <text class="section-title" x="700" y="124" text-anchor="middle">Client</text>
+
+  <path class="arrow-bidir" marker-start="url(#arrowhead-sm-rev)" marker-end="url(#arrowhead-sm)" d="M700 148 V191" />
+
+  <!-- ATOMesh -->
+  <rect class="panel" x="270" y="195" width="860" height="200" rx="16" />
+  <text class="section-title" x="700" y="234" text-anchor="middle">ATOMesh</text>
+
+  <rect class="blue" x="300" y="265" width="192" height="120" rx="10" />
+  <text class="box-title" x="396" y="290" text-anchor="middle">Router</text>
+  <text class="small" x="396" y="312" text-anchor="middle">• HTTP (OpenAI API)</text>
+  <text class="small" x="396" y="328" text-anchor="middle">• gRPC</text>
+
+  <rect class="yellow" x="506" y="265" width="192" height="120" rx="10" />
+  <text class="box-title" x="602" y="290" text-anchor="middle">Policy</text>
+  <text class="small" x="602" y="311" text-anchor="middle">• Round-robin</text>
+  <text class="small" x="602" y="327" text-anchor="middle">• Cache-aware</text>
+  <text class="small" x="602" y="343" text-anchor="middle">• Power-of-two</text>
+  <text class="small" x="602" y="359" text-anchor="middle">• Prefix-hash</text>
+
+  <rect class="green" x="712" y="265" width="192" height="120" rx="10" />
+  <text class="box-title" x="808" y="290" text-anchor="middle">Placement</text>
+  <text class="small" x="808" y="315" text-anchor="middle">• ATOM</text>
+  <text class="small" x="808" y="333" text-anchor="middle">• SGLang-ATOM</text>
+  <text class="small" x="808" y="351" text-anchor="middle">• vLLM-ATOM</text>
+
+  <rect class="purple" x="918" y="265" width="192" height="120" rx="10" />
+  <text class="box-title" x="1014" y="290" text-anchor="middle">Worker Registry</text>
+  <text class="small" x="1014" y="320" text-anchor="middle">• Health &amp; capacity</text>
+  <text class="small" x="1014" y="338" text-anchor="middle">• Circuit breaking</text>
+
+  <path class="arrow-bidir" marker-start="url(#arrowhead-sm-rev)" marker-end="url(#arrowhead-sm)" d="M480 398 V441" />
+  <path class="arrow-bidir" marker-start="url(#arrowhead-sm-rev)" marker-end="url(#arrowhead-sm)" d="M990 398 V441" />
+
+  <!-- Prefill group -->
+  <rect class="dashed-panel" x="270" y="445" width="420" height="230" rx="14" />
+  <text class="section-title" x="480" y="475" text-anchor="middle">Prefill (P)</text>
+
+  <rect class="panel" x="284" y="510" width="180" height="145" rx="12" />
+  <text class="box-title" x="374" y="530" text-anchor="middle">Prefill worker</text>
+  <text class="small" x="374" y="545" text-anchor="middle">M3 long-context prefill</text>
+  <rect class="green" x="299" y="555" width="150" height="40" rx="8" />
+  <text class="small" x="374" y="579" text-anchor="middle">sparse-attention forward</text>
+  <rect class="purple" x="299" y="603" width="150" height="42" rx="8" />
+  <text class="small" x="374" y="621" text-anchor="middle">produces KV +</text>
+  <text class="small" x="374" y="636" text-anchor="middle">M3 indexer-key cache</text>
+
+  <rect class="panel" x="474" y="510" width="180" height="145" rx="12" />
+  <text class="box-title" x="564" y="530" text-anchor="middle">Prefill worker</text>
+  <text class="small" x="564" y="545" text-anchor="middle">M3 long-context prefill</text>
+  <rect class="green" x="489" y="555" width="150" height="40" rx="8" />
+  <text class="small" x="564" y="579" text-anchor="middle">sparse-attention forward</text>
+  <rect class="purple" x="489" y="603" width="150" height="42" rx="8" />
+  <text class="small" x="564" y="621" text-anchor="middle">produces KV +</text>
+  <text class="small" x="564" y="636" text-anchor="middle">M3 indexer-key cache</text>
+
+  <!-- Mooncake band -->
+  <text class="mooncake-title" x="770" y="490" text-anchor="middle">Mooncake</text>
+
+  <path class="rdma-arrow" marker-end="url(#rdma-arrowhead)" d="M692 535 H848" />
+  <text class="small" x="770" y="555" text-anchor="middle">RDMA WRITE</text>
+  <text class="small" x="770" y="570" text-anchor="middle">KV + indexer-key cache</text>
+
+  <path class="zmq-arrow" marker-start="url(#zmq-arrowhead-rev)" marker-end="url(#zmq-arrowhead)" d="M696 605 H844" />
+  <text class="zmq-title" x="770" y="628" text-anchor="middle">ZMQ</text>
+  <text class="small" x="770" y="645" text-anchor="middle">transfer metadata</text>
+
+  <!-- Decode -->
+  <rect class="panel" x="850" y="445" width="280" height="230" rx="14" />
+  <text class="section-title" x="990" y="475" text-anchor="middle">Decode (D)</text>
+  <text class="small" x="990" y="492" text-anchor="middle">M3 sparse-attention decode</text>
+
+  <rect class="blue" x="866" y="505" width="248" height="55" rx="9" />
+  <text class="small" x="990" y="528" text-anchor="middle">receives request +</text>
+  <text class="small" x="990" y="544" text-anchor="middle">KV + M3 indexer-key cache</text>
+
+  <rect class="green" x="866" y="570" width="248" height="90" rx="9" />
+  <text class="label" x="990" y="595" text-anchor="middle">Resume decode</text>
+  <text class="small" x="990" y="613" text-anchor="middle">larger batch decode,</text>
+  <text class="small" x="990" y="629" text-anchor="middle">independent of prefill</text>
+</svg>
