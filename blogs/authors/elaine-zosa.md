@@ -8,4 +8,4 @@
 
 # Elaine Zosa
 
-Elaine is an MTS Software Development Engineer at AMD. She is passionate about advancing natural language processing and machine learning technologies for low-resource languages. Elaine holds a PhD and Master's degree in Computer Science from the University of Helsinki.
+Elaine is an SMTS Software Development Engineer at AMD. She is passionate about advancing natural language processing and machine learning technologies for low-resource languages. Elaine holds a PhD and Master's degree in Computer Science from the University of Helsinki.
