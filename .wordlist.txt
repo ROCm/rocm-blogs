@@ -3242,6 +3242,15 @@ wrappable
 SGLang-ATOM
 plugin-style
 time-to-market
+
+AIC
+AgentX
+DRAM
+NVMe
+etcd
+kvd
+Mooncake
+SLO
 MSA
 PTPC
 atomesh
