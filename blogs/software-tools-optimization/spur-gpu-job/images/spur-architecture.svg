@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="720" viewBox="0 0 1120 720" role="img" aria-labelledby="title desc">
+  <title id="title">Spur architecture overview</title>
+  <desc id="desc">Layered architecture diagram. A user access layer (CLI/SDK, REST API, C FFI, Kubernetes CRD, and Web UI) connects to the spurctld controller, which runs the scheduler and Raft-based high availability. The controller talks over a gRPC API to spurd agents running on each compute node, each with eight GPUs, and each agent executes the jobs placed on its node.</desc>
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06111f"/>
+      <stop offset="50%" stop-color="#091728"/>
+      <stop offset="100%" stop-color="#07101d"/>
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#00d7ff" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#00d7ff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orangeGlow" cx="50%" cy="55%" r="50%">
+      <stop offset="0%" stop-color="#ff8a1f" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#ff8a1f" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ctrlFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f2a44"/>
+      <stop offset="100%" stop-color="#0b2036"/>
+    </linearGradient>
+    <linearGradient id="agentFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#10263c"/>
+      <stop offset="100%" stop-color="#0c1c2e"/>
+    </linearGradient>
+    <linearGradient id="userFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#122c1f"/>
+      <stop offset="100%" stop-color="#0d2016"/>
+    </linearGradient>
+    <linearGradient id="jobFill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2a1c3a"/>
+      <stop offset="100%" stop-color="#1e142b"/>
+    </linearGradient>
+    <filter id="panelShadow" x="-12%" y="-18%" width="124%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000000" flood-opacity="0.38"/>
+    </filter>
+    <filter id="ctrlGlow" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d7ff" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8ba3bd"/>
+    </marker>
+    <marker id="cyanArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#00d7ff"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1120" height="720" fill="url(#pageBg)"/>
+  <rect x="0" y="0" width="1120" height="720" fill="url(#cyanGlow)"/>
+  <rect x="0" y="0" width="1120" height="720" fill="url(#orangeGlow)"/>
+
+  <style>
+    text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+    .layerLabel { fill: #7f97b0; font-size: 13px; letter-spacing: 2px; font-weight: 600; }
+    .boxTitle { fill: #eaf2fb; font-size: 17px; font-weight: 700; }
+    .boxSub { fill: #9fb4cc; font-size: 12.5px; }
+    .chip { fill: #dbe8f6; font-size: 13px; font-weight: 600; }
+    .edgeLabel { fill: #b7c6d8; font-size: 12px; font-weight: 600; }
+    .gpu { fill: #cfe0f2; font-size: 11px; font-weight: 600; }
+  </style>
+
+  <!-- ===================== USERS LAYER ===================== -->
+  <text class="layerLabel" x="60" y="52">ACCESS LAYER</text>
+  <rect x="60" y="66" width="1000" height="96" rx="16" fill="url(#userFill)" stroke="#2f6b47" stroke-width="1.5" filter="url(#panelShadow)"/>
+
+  <!-- user access chips -->
+  <g>
+    <rect x="86" y="94" width="176" height="42" rx="10" fill="#123222" stroke="#3f8a5c" stroke-width="1.3"/>
+    <text class="chip" x="174" y="120" text-anchor="middle">CLI / SDK</text>
+
+    <rect x="278" y="94" width="176" height="42" rx="10" fill="#123222" stroke="#3f8a5c" stroke-width="1.3"/>
+    <text class="chip" x="366" y="120" text-anchor="middle">REST API</text>
+
+    <rect x="470" y="94" width="176" height="42" rx="10" fill="#123222" stroke="#3f8a5c" stroke-width="1.3"/>
+    <text class="chip" x="558" y="120" text-anchor="middle">C FFI</text>
+
+    <rect x="662" y="94" width="176" height="42" rx="10" fill="#123222" stroke="#3f8a5c" stroke-width="1.3"/>
+    <text class="chip" x="750" y="120" text-anchor="middle">Kubernetes CRD</text>
+
+    <rect x="854" y="94" width="180" height="42" rx="10" fill="#123222" stroke="#3f8a5c" stroke-width="1.3"/>
+    <text class="chip" x="944" y="120" text-anchor="middle">Web UI (Cloud)</text>
+  </g>
+
+  <!-- users -> controller -->
+  <path d="M 560 162 L 560 210" fill="none" stroke="#8ba3bd" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===================== CONTROLLER ===================== -->
+  <text class="layerLabel" x="60" y="204">CONTROLLER</text>
+  <rect x="370" y="214" width="380" height="104" rx="16" fill="url(#ctrlFill)" stroke="#1f9ecf" stroke-width="1.8" filter="url(#ctrlGlow)"/>
+  <text class="boxTitle" x="560" y="252" text-anchor="middle">spurctld</text>
+  <text class="boxSub" x="560" y="275" text-anchor="middle">Scheduler · Raft HA · Accounting</text>
+  <rect x="486" y="286" width="148" height="24" rx="12" fill="#0a2740" stroke="#1f9ecf" stroke-width="1.1"/>
+  <text class="boxSub" x="560" y="303" text-anchor="middle" fill="#7fd6f2">gRPC API</text>
+
+  <!-- controller -> agents (fan out) with gRPC label -->
+  <text class="edgeLabel" x="576" y="344">gRPC</text>
+  <path d="M 560 318 L 560 352" fill="none" stroke="#00d7ff" stroke-width="2"/>
+  <path d="M 220 352 L 900 352" fill="none" stroke="#00d7ff" stroke-width="2"/>
+  <path d="M 220 352 L 220 402" fill="none" stroke="#00d7ff" stroke-width="2" marker-end="url(#cyanArrow)"/>
+  <path d="M 560 352 L 560 402" fill="none" stroke="#00d7ff" stroke-width="2" marker-end="url(#cyanArrow)"/>
+  <path d="M 900 352 L 900 402" fill="none" stroke="#00d7ff" stroke-width="2" marker-end="url(#cyanArrow)"/>
+
+  <!-- ===================== AGENTS ===================== -->
+  <text class="layerLabel" x="60" y="398">COMPUTE NODES</text>
+
+  <!-- Node 1 -->
+  <g>
+    <rect x="104" y="406" width="232" height="104" rx="14" fill="url(#agentFill)" stroke="#2b5f86" stroke-width="1.5" filter="url(#panelShadow)"/>
+    <text class="boxTitle" x="220" y="438" text-anchor="middle">spurd</text>
+    <text class="boxSub" x="220" y="460" text-anchor="middle">Node 1</text>
+    <rect x="128" y="472" width="184" height="30" rx="9" fill="#0b2136" stroke="#3679a6" stroke-width="1.1"/>
+    <text class="gpu" x="220" y="492" text-anchor="middle">8 × GPU</text>
+  </g>
+
+  <!-- Node 2 -->
+  <g>
+    <rect x="444" y="406" width="232" height="104" rx="14" fill="url(#agentFill)" stroke="#2b5f86" stroke-width="1.5" filter="url(#panelShadow)"/>
+    <text class="boxTitle" x="560" y="438" text-anchor="middle">spurd</text>
+    <text class="boxSub" x="560" y="460" text-anchor="middle">Node 2</text>
+    <rect x="468" y="472" width="184" height="30" rx="9" fill="#0b2136" stroke="#3679a6" stroke-width="1.1"/>
+    <text class="gpu" x="560" y="492" text-anchor="middle">8 × GPU</text>
+  </g>
+
+  <!-- Node N -->
+  <g>
+    <rect x="784" y="406" width="232" height="104" rx="14" fill="url(#agentFill)" stroke="#2b5f86" stroke-width="1.5" filter="url(#panelShadow)"/>
+    <text class="boxTitle" x="900" y="438" text-anchor="middle">spurd</text>
+    <text class="boxSub" x="900" y="460" text-anchor="middle">Node N</text>
+    <rect x="808" y="472" width="184" height="30" rx="9" fill="#0b2136" stroke="#3679a6" stroke-width="1.1"/>
+    <text class="gpu" x="900" y="492" text-anchor="middle">8 × GPU</text>
+  </g>
+
+  <!-- ellipsis between node 2 and node N -->
+  <text x="730" y="466" text-anchor="middle" fill="#67809a" font-size="26" font-weight="700">···</text>
+
+  <!-- agents -> jobs -->
+  <path d="M 220 510 L 220 566" fill="none" stroke="#8ba3bd" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 560 510 L 560 566" fill="none" stroke="#8ba3bd" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 900 510 L 900 566" fill="none" stroke="#8ba3bd" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- ===================== JOBS ===================== -->
+  <text class="layerLabel" x="60" y="560">WORKLOADS</text>
+  <g>
+    <rect x="104" y="572" width="232" height="56" rx="12" fill="url(#jobFill)" stroke="#6b4b93" stroke-width="1.4" filter="url(#panelShadow)"/>
+    <text class="chip" x="220" y="606" text-anchor="middle">Jobs</text>
+
+    <rect x="444" y="572" width="232" height="56" rx="12" fill="url(#jobFill)" stroke="#6b4b93" stroke-width="1.4" filter="url(#panelShadow)"/>
+    <text class="chip" x="560" y="606" text-anchor="middle">Jobs</text>
+
+    <rect x="784" y="572" width="232" height="56" rx="12" fill="url(#jobFill)" stroke="#6b4b93" stroke-width="1.4" filter="url(#panelShadow)"/>
+    <text class="chip" x="900" y="606" text-anchor="middle">Jobs</text>
+  </g>
+
+  <!-- footer note -->
+  <text x="560" y="678" text-anchor="middle" fill="#6f8aa6" font-size="12.5">Deployable standalone (bare metal / VMs) or within Kubernetes.</text>
+</svg>
