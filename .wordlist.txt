@@ -320,6 +320,7 @@ Dewei
 Devang
 deserializers
 detections
+deployable
 dev
 Devang
 deviceID
@@ -334,6 +335,7 @@ Dhulipala
 diag
 DiLoCo
 dimensionality
+DigitalOcean
 Dimitry
 DINOv
 dir
@@ -465,6 +467,7 @@ GDS
 GELU
 GEMM
 GEMMs
+Gemma
 GenAI
 GenASiS
 generalizable
@@ -951,6 +954,9 @@ OMPI
 OMPT
 OMPX
 onboarded
+onboarding
+Onboarding
+onboards
 ONNX
 OO
 OOM
@@ -1039,6 +1045,7 @@ pre
 prebuilt
 precisions
 precompiled
+preconfigured
 prefetch
 prefetched
 prefetches
@@ -1046,10 +1053,7 @@ PrefetchGlobalRead
 prefetching
 PrefetchLocalRead
 prefill
-preflight
-Preflight
-pregrasp
-preload
+prefilled
 prem
 preprint
 preprocess
@@ -1252,6 +1256,7 @@ sccache
 SCServo
 sdk
 SDK
+SDKs
 SDMA
 SDRAM
 SDXL
@@ -1465,9 +1470,8 @@ ui
 UI
 UIF
 uncached
-Uncached
-uncommenting
-undercounted
+undeploy
+Undeploy
 Unhandled
 uninstallation
 unmerge
