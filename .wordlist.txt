@@ -3,6 +3,7 @@ Aakash
 Aarti
 Abbeel
 ABI
+Accordo
 accross
 accuracies
 activations
@@ -592,6 +593,8 @@ HunyuanVideo
 Hur
 HWE
 hwLat
+Hyperloom
+Hyperloom's
 hyperparameter
 hyperparameters
 Hyperparameters
@@ -626,6 +629,7 @@ Instinct
 Instruct
 integrations
 integrators
+IntelliKit
 IntelliSense
 InternVL
 interprocedural
@@ -683,6 +687,7 @@ kdb
 Keerthana
 Kemppi
 Keras
+Kerncap
 keyframe
 keyframes
 Keyu
@@ -737,6 +742,7 @@ Lifecycle
 LightGen
 Lijie
 linearized
+Linex
 linter
 Liwei
 LLaMA
@@ -1408,6 +1414,7 @@ Threadripper
 ThreadTile
 Thumma
 Tianhong
+TileLang
 timestep
 timesteps
 ToC
