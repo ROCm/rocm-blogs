@@ -106,7 +106,7 @@ ROCm AIC launches with **vLLM** as its primary serving framework, one of the mos
 
 ### KV Transfer Engine: NIXL, with Mooncake to follow
 
-**NIXL** (Notional Inference Transfer Layer) is a high-performance, RDMA-capable transfer engine for moving KV blocks between GPU memory and the storage tier. NIXL is open-source and AMD co-maintains it. It supports standard file-based NVMe paths as well as AMD Infinity Storage (AIS) object store paths. NIXL also enables cross-node KV migration, which allows KV cache blocks to move between GPU nodes. This is a key requirement for prefill/decode disaggregation, where the prefill and decode phases of inference run on separate hardware to improve overall throughput.
+**NIXL** (NVIDIA Inference Transfer Engine) is a high-performance, RDMA-capable transfer engine for moving KV blocks between GPU memory and the storage tier. NIXL is open-source and AMD co-maintains it. It supports standard file-based NVMe paths as well as AMD Infinity Storage (AIS) object store paths. NIXL also enables cross-node KV migration, which allows KV cache blocks to move between GPU nodes. This is a key requirement for prefill/decode disaggregation, where the prefill and decode phases of inference run on separate hardware to improve overall throughput.
 
 ### GPU to Storage Fast Path: ROCm hipFile + AMD Infinity Storage
 
