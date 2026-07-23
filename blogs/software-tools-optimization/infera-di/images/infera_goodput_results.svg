@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 700" font-family="Segoe UI, Arial, sans-serif" role="img" aria-label="Relative goodput per GPU: 2.7x on the 1K/1K synthetic workload, 1.7x and 2.6x on the long-context agentic workload at 30 and 50 tokens per second per user, versus a single-instance baseline of 1.0x.">
+  <title>Infera goodput per GPU vs single-instance baseline</title>
+  <defs>
+    <!-- faint AMD-red glow behind the red bars -->
+    <filter id="redGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="10" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- slide-56 style whole-image red tint, VERY subtle (~4% red): near-black with a faint warm center -->
+    <radialGradient id="slideRed" cx="42%" cy="72%" r="80%" gradientTransform="rotate(-18 0.42 0.72)">
+      <stop offset="0%"  stop-color="#180507"/>
+      <stop offset="40%" stop-color="#0d0304"/>
+      <stop offset="72%" stop-color="#050102"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+    <linearGradient id="teal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fd0e0"/><stop offset="1" stop-color="#1aa9bd"/></linearGradient>
+    <linearGradient id="redDark" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d3131b"/><stop offset="1" stop-color="#9a0d13"/></linearGradient>
+    <linearGradient id="redBright" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff2a30"/><stop offset="1" stop-color="#e01018"/></linearGradient>
+    <linearGradient id="redAura" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ED1C24"/><stop offset="1" stop-color="#ED1C24"/></linearGradient>
+  </defs>
+  <style>
+    .axis{stroke:#f2f4f5;stroke-width:2}
+    .grid{stroke:#3f4448;stroke-width:1;stroke-dasharray:5 6;opacity:.9}
+    .base{stroke:#ffffff;stroke-width:2;stroke-dasharray:9 7;opacity:.9}
+    .ylab{fill:#e9eef0;font-size:20px;text-anchor:end}
+    .yttl{fill:#e9eef0;font-size:22px;font-weight:600}
+    .xcat{fill:#f2f6f7;font-size:22px;text-anchor:middle}
+    .xsub{fill:#b9c3c6;font-size:16px;text-anchor:middle}
+    .val{fill:#ffffff;font-size:38px;font-weight:800;text-anchor:middle}
+    .basel{fill:#e2e8ea;font-size:15px;text-anchor:middle}
+  </style>
+
+  <!-- whole-image red-tint background (slide 56) -->
+  <rect width="1120" height="700" fill="#000000"/>
+  <rect width="1120" height="700" fill="url(#slideRed)"/>
+
+  <!-- plot geometry: x-axis y=600, top(3.5)=80 ; value->y = 600-(v/3.5)*520 -->
+  <!-- even borders: content x=52 (y-title) ... 1068 (plot right). left border 52, right border 52. -->
+
+  <!-- gridlines + y labels -->
+  <line class="axis" x1="150" y1="600" x2="1068" y2="600"/>
+  <text class="ylab" x="130" y="607">0.0</text>
+  <line class="grid" x1="150" y1="526" x2="1068" y2="526"/><text class="ylab" x="130" y="533">0.5</text>
+  <text class="ylab" x="130" y="459">1.0</text>
+  <line class="grid" x1="150" y1="377" x2="1068" y2="377"/><text class="ylab" x="130" y="384">1.5</text>
+  <line class="grid" x1="150" y1="303" x2="1068" y2="303"/><text class="ylab" x="130" y="310">2.0</text>
+  <line class="grid" x1="150" y1="229" x2="1068" y2="229"/><text class="ylab" x="130" y="236">2.5</text>
+  <line class="grid" x1="150" y1="155" x2="1068" y2="155"/><text class="ylab" x="130" y="162">3.0</text>
+  <line class="grid" x1="150" y1="81"  x2="1068" y2="81"/><text class="ylab" x="130" y="88">3.5</text>
+
+  <!-- y axis + title -->
+  <line class="axis" x1="150" y1="80" x2="150" y2="600"/>
+  <text class="yttl" x="52" y="360" transform="rotate(-90 52 360)" text-anchor="middle">Relative goodput per GPU (×)</text>
+
+  <!-- baseline 1.0x dashed white; label centered in the gap between bars 1 and 2 (x 425..540 -> mid 482), below the line -->
+  <line class="base" x1="150" y1="452" x2="1068" y2="452"/>
+  <text class="basel" x="482" y="476">Baseline 1.0×</text>
+
+  <!-- ===== BARS ===== width 160; centers spread across plot: 345, 620, 895 -->
+  <!-- 2.7x teal -> y=600-(2.67/3.5)*520=203.3 ; h=396.7 -->
+  <rect x="265" y="203" width="160" height="397" fill="url(#teal)"/>
+  <text class="val" x="345" y="186">2.7×</text>
+
+  <!-- 1.7x dark red + faint glow -> y=350.4 ; h=249.6 -->
+  <g filter="url(#redGlow)"><rect x="540" y="350" width="160" height="250" fill="url(#redAura)" opacity="0.30"/></g>
+  <rect x="540" y="350" width="160" height="250" fill="url(#redDark)"/>
+  <text class="val" x="620" y="333">1.7×</text>
+
+  <!-- 2.6x bright red + faint glow -> y=216.7 ; h=383.3 -->
+  <g filter="url(#redGlow)"><rect x="815" y="217" width="160" height="383" fill="url(#redAura)" opacity="0.32"/></g>
+  <rect x="815" y="217" width="160" height="383" fill="url(#redBright)"/>
+  <text class="val" x="895" y="200">2.6×</text>
+
+  <!-- ===== X CATEGORY LABELS ===== -->
+  <text class="xcat" x="345" y="634">1K/1K synthetic</text>
+  <text class="xsub" x="345" y="658">30 tok/s per user</text>
+
+  <text class="xcat" x="620" y="634">Long-context agentic</text>
+  <text class="xsub" x="620" y="658">30 tok/s per user</text>
+
+  <text class="xcat" x="895" y="634">Long-context agentic</text>
+  <text class="xsub" x="895" y="658">50 tok/s per user</text>
+</svg>
