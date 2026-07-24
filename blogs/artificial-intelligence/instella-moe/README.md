@@ -49,7 +49,7 @@ SOFTWARE.
 
 # Introducing Instella-MoE: A State-of-the-Art Fully Open Mixture-of-Experts Language Model
 
-AMD is excited to introduce Instella-MoE, a state-of-the-art fully open Mixture-of-Experts (MoE) language model with 16 billion total parameters and 2.8 billion active parameters. Trained from scratch on AMD Instinct™ MI300X and MI325X GPUs with AMD ROCm™ software stack, Instella-MoE combines a sparsely activated MoE design with architectural innovations such as Gated Multi-head Latent Attention (Gated MLA) and [FarSkip-Collective](https://rocm.blogs.amd.com/artificial-intelligence/farskip-collective-moe/README.html) connectivity. Instella-MoE delivers competitive performance across a broad suite of benchmarks against both dense and MoE baselines (as shown in Figure 1) including models with comparable or larger active parameter counts, establishing it as one of the strongest fully open language models at its scale.
+AMD is excited to introduce Instella-MoE, a state-of-the-art fully open Mixture-of-Experts (MoE) language model with 16 billion total parameters and 2.8 billion active parameters. Trained from scratch on AMD Instinct™ MI300X and MI325X GPUs with the AMD ROCm™ software stack, Instella-MoE combines a sparsely activated MoE design with architectural innovations such as Gated Multi-head Latent Attention (Gated MLA) and [FarSkip-Collective](https://rocm.blogs.amd.com/artificial-intelligence/farskip-collective-moe/README.html) connectivity. Instella-MoE delivers competitive performance across a broad suite of benchmarks against both dense and MoE baselines (as shown in Figure 1) including models with comparable or larger active parameter counts, establishing it as one of the strongest fully open language models at its scale.
 
 Instella-MoE advances AMD’s broader effort to train advanced language models fully on AMD hardware and software with open tools and open research practices. Trained end-to-end with the open-source [Primus](https://rocm.blogs.amd.com/software-tools-optimization/primus/README.html) and [Miles](https://www.lmsys.org/blog/2026-03-17-rocm-miles-rl-amd/) frameworks, this model highlights the scalability and efficiency of AMD hardware and software stack for large-scale MoE training and inference, spanning from pre-training to post-training. Beyond strong model quality, it incorporates architecture- and system-level innovations that improve both training and serving efficiency.
 
@@ -69,8 +69,8 @@ This blog introduces the Instella-MoE model and then describes the architecture 
 | **Instella-MoE-16B-A3B-Midtrain** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-Midtrain)) | Mid-training | Pretrained model further trained on high-quality data mixtures to refine key capabilities. |
 | **Instella-MoE-16B-A3B-Base** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-Base)) | Long-context | Long-context training to extend the model’s ability to process and reason over longer sequences. **We use this as our final base checkpoint**. |
 | **Instella-MoE-16B-A3B-SFT** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-SFT)) | SFT | Base checkpoint extended via supervised fine-tuning (SFT) to enable instruction following and chain-of-thought reasoning capabilities. |
-| **Instella-MoE-16B-3AB-DPO** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-DPO)) | DPO | Direct preference optimization (DPO) on contrastive preference data to improve model performance. |
-| **Instella-MoE-16B-3AB-Think** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-Think)) | RL | Final thinking checkpoint refined with reinforcement learning (RL) to further strengthen instruction following and overall response quality. |
+| **Instella-MoE-16B-A3B-DPO** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-DPO)) | DPO | Direct preference optimization (DPO) on contrastive preference data to improve model performance. |
+| **Instella-MoE-16B-A3B-Think** ([Link](https://huggingface.co/amd/Instella-MoE-16B-A3B-Think)) | RL | Final thinking checkpoint refined with reinforcement learning (RL) to further strengthen instruction following and overall response quality. |
 
 <em><strong>Table 1:</strong> Instella-MoE-16B-A3B models and training stages.</em>
 
@@ -102,7 +102,7 @@ During pre-training, FarSkip-Collective sped up model pre-training by 12.7% by o
 
 ## Training Pipeline
 
-The Instella-MoE model is trained through a multi-stage pipeline (Figure 3), with each stage progressively enhancing the model’s capabilities from broad foundational language understanding to long-context processing, instruction following, alignment, and reasoning. The full training pipeline is shown in Figure 2.
+The Instella-MoE model is trained through a multi-stage pipeline (Figure 3), with each stage progressively enhancing the model’s capabilities from broad foundational language understanding to long-context processing, instruction following, alignment, and reasoning. The full training pipeline is shown in Figure 3.
 
 ```{figure} ./images/training_pipeline.png
 :align: center
@@ -136,7 +136,7 @@ For the final phase of SFT, we use fine-grained error analysis to identify areas
 
 #### Preference Tuning
 
-We then apply DPO on top of the SFT model on contrastive preference data to exploit capability-relevant differences between chosen and rejected responses. This provides an additional training signal beyond imitation-based SFT and further improves the model’s reasoning, instruction-following, and general task performance [^8] . In our preliminary experiments, we found that directly applying DPO to the MoE model led to performance degradation. We hypothesize that this behavior is related to the load-balancing objective, which can rapidly change the experts’ router affinity. To improve training stability, during DPO we disable router bias updates and the auxiliary load-balancing loss. With these adjustments, we observe no further degradation during DPO training. The resulting model retains the reasoning and instruction-following capabilities acquired during SFT while improving performance across a broad suite of tasks.
+We then apply DPO on top of the SFT model on contrastive preference data to exploit capability-relevant differences between chosen and rejected responses. This provides an additional training signal beyond imitation-based SFT and further improves the model’s reasoning, instruction-following, and general task performance [^8]. In our preliminary experiments, we found that directly applying DPO to the MoE model led to performance degradation. We hypothesize that this behavior is related to the load-balancing objective, which can rapidly change the experts’ router affinity. To improve training stability, during DPO we disable router bias updates and the auxiliary load-balancing loss. With these adjustments, we observe no further degradation during DPO training. The resulting model retains the reasoning and instruction-following capabilities acquired during SFT while improving performance across a broad suite of tasks.
 
 ### Reinforcement Learning
 
@@ -150,11 +150,11 @@ On top of the DPO model, a final reinforcement learning (RL) stage is used to fu
 
 We focus our RL efforts primarily on improving instruction following (IF) capabilities because our DPO model already scores highly on other domains. To achieve this, as shown in Figure 4, we first perform IF-specialized RL training to obtain an IF expert, and then perform [Multi-Teacher On-Policy Distillation (MOPD)](https://arxiv.org/abs/2606.30406) to integrate the enhanced IF capabilities into the DPO model while maintaining the performance on all other domains. The final Instella-MoE-Think results are reported in the [Results](#results) section.
 
-#### Stage 1: IF-specialized RL Training Setup
+#### Stage 1: IF-specialized RL Training Stage
 
 For the IF RL training, we use the IF-RLVR subset from the [Dolci-Think-RL-7B](https://huggingface.co/datasets/allenai/Dolci-Think-RL-7B) dataset and train for 1,400 steps. We use asynchronous training and a maximum response length of up to 16K tokens. We incorporate several improvements [^9] [^10] to GRPO [^11] such as zero-gradient signal filtering, active sampling, token-level loss, no KL loss, clip-higher, no standard-deviation normalization, and Rollout Routing Replay (R3) [^12].
 
-#### Stage 2: MOPD
+#### Stage 2: Multi-Teacher On-Policy Distillation
 
 We apply [Multi-Teacher On-Policy Distillation (MOPD)](https://arxiv.org/abs/2606.30406) to integrate the IF capability of the teacher model into the DPO model. Specifically, we distill on the student's own on-policy rollouts and route each rollout to a teacher by its prompt domain: instruction-following prompts are scored by the IF-RL teacher, while all remaining prompts (math, code, and general) are scored by the frozen DPO model itself. The student is initialized from the DPO model, so on the non-IF domains the teacher is the student's own initialization and acts as a self-anchoring regularizer that preserves math and general capabilities while the IF-domain signal does the lifting. As shown in Table 2, MOPD recovers most of the IF expert’s instruction-following gain on IFEval while maintaining math, code, MMLU, and AGIEval at the DPO level. The final results for our post-trained Instella-MoE-16B-A3B-Think model are presented in the [Results](#results) section (Table 5).
 
@@ -170,7 +170,7 @@ We evaluate Instella-MoE at two key stages of the pipeline: the final base model
 
 ### Base Model Results
 
-On standard benchmarks (Table 3), our final base checkpoint (Instella-MoE-16B-A3B-Base) attains an average score of 76.7, the strongest among fully open models—well ahead of SmolLM3-3B-Base (70.5), OLMo-3-7B (70.1), and OLMoE-1B-7B (61.9). It is also highly competitive with leading open weight models, surpassing Moonlight-16B-A3B (76.2) on average and trailing only Qwen3.5-4B-Base (79.5). Instella-MoE-16B-A3B-Base leads all evaluated models on WinoGrande (86.5) and delivers strong coding results (HumanEval+ 65.7), with balanced performance across knowledge, reasoning, math, and code. Notably, it achieves these results while activating only 2.8B parameters per token, outperforming fully open dense models such as OLMo-3-7B that activate more than twice as many parameters.
+On standard benchmarks (Table 3), our final base checkpoint (Instella-MoE-16B-A3B-Base) attains an average score of 76.7, the strongest among fully open models—well ahead of SmolLM3-3B-Base (70.5), OLMo-3-7B (70.1), and OLMoE-1B-7B (61.9). It is also highly competitive with leading open-weight models, surpassing Moonlight-16B-A3B (76.2) on average and trailing only Qwen3.5-4B-Base (79.5). Instella-MoE-16B-A3B-Base leads all evaluated models on WinoGrande (86.5) and delivers strong coding results (HumanEval+ 65.7), with balanced performance across knowledge, reasoning, math, and code. Notably, it achieves these results while activating only 2.8B parameters per token, outperforming fully open dense models such as OLMo-3-7B that activate more than twice as many parameters.
 
 ```{figure} ./images/result_table_base_standard.png
 :align: center
@@ -200,7 +200,7 @@ Model quality improves steadily through post-training (Table 5), from Instella-M
 
 In this blog, we introduced Instella-MoE, a fully open Mixture-of-Experts language model that advances both model quality and efficiency in the open LLM ecosystem. We showed that a 16B-parameter MoE model with 2.8B active parameters per token can deliver strong performance while keeping compute costs closer to those of a much smaller dense model. We also demonstrated that AMD hardware and software can support large-scale end-to-end MoE development, from pretraining through post-training, using an entirely open stack built on AMD Instinct™ MI300X and MI325X GPUs, ROCm™, Primus, and Miles.
 
-We used this blog to present the main technical contributions behind Instella-MoE, including Multi-head Gated Latent Attention (MGLA) and FarSkip-Collective, and to describe the full training pipeline: pretraining, mid-training, long-context extension to 64K context, supervised fine-tuning, DPO, and reinforcement learning. We also highlighted the main deliverables of this release: model weights for every stage, training configurations, data mixtures, intermediate checkpoints, and code.
+We used this blog to present the main technical contributions behind Instella-MoE, including Gated Multi-head Latent Attention (Gated MLA) and FarSkip-Collective, and to describe the full training pipeline: pretraining, mid-training, long-context extension to 64K context, supervised fine-tuning, DPO, and reinforcement learning. We also highlighted the main deliverables of this release: model weights for every stage, training configurations, data mixtures, intermediate checkpoints, and code.
 
 Through this release, we provide the blog’s key deliverables: model weights for every training stage, training configurations, data mixtures, intermediate checkpoints, and code. We believe these resources will help researchers and developers reproduce our results, study open MoE training recipes in detail, and build new models and systems on top of the Instella-MoE foundation. We view Instella-MoE as an important step toward more transparent, reproducible, and high-performance open language models, and we plan to continue extending this line of work with larger models, better reasoning, stronger instruction following, and further efficiency improvements.
 
@@ -242,7 +242,7 @@ Please refer to the following blogs to dive deeper into AMD’s training framewo
 
 ## Contributors
 
-> **Core contributors**:
+> **Core contributors:**
 > Jiang Liu, Sudhanshu Ranjan, Prakamya Mishra, Yonatan Dukler, Gowtham Ramesh, Zicheng Liu
 >
 > **Contributors:**
