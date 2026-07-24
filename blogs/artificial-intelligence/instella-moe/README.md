@@ -49,7 +49,7 @@ SOFTWARE.
 
 # Introducing Instella-MoE: A State-of-the-Art Fully Open Mixture-of-Experts Language Model
 
-AMD is excited to introduce Instella-MoE, a state-of-the-art fully open Mixture-of-Experts (MoE) language model with 16 billion total parameters and 2.8 billion active parameters. Trained from scratch on AMD Instinct™ MI300X and MI325X GPUs with AMD ROCm™ software stack, Instella-MoE combines a sparsely activated MoE design with architectural innovations such as Gated Multi-head Latent Attention (Gated MLA) and [FarSkip-Collective connectivity](https://rocm.blogs.amd.com/artificial-intelligence/farskip-collective-moe/README.html). Instella-MoE delivers competitive performance across a broad suite of benchmarks against both dense and MoE baselines (as shown in Figure 1), including models with comparable or larger active parameter counts, establishing it as one of the strongest fully open language models at its scale.
+AMD is excited to introduce Instella-MoE, a state-of-the-art fully open Mixture-of-Experts (MoE) language model with 16 billion total parameters and 2.8 billion active parameters. Trained from scratch on AMD Instinct™ MI300X and MI325X GPUs with AMD ROCm™ software stack, Instella-MoE combines a sparsely activated MoE design with architectural innovations such as Gated Multi-head Latent Attention (Gated MLA) and [FarSkip-Collective](https://rocm.blogs.amd.com/artificial-intelligence/farskip-collective-moe/README.html) connectivity. Instella-MoE delivers competitive performance across a broad suite of benchmarks against both dense and MoE baselines (as shown in Figure 1) including models with comparable or larger active parameter counts, establishing it as one of the strongest fully open language models at its scale.
 
 Instella-MoE advances AMD’s broader effort to train advanced language models fully on AMD hardware and software with open tools and open research practices. Trained end-to-end with the open-source [Primus](https://rocm.blogs.amd.com/software-tools-optimization/primus/README.html) and [Miles](https://www.lmsys.org/blog/2026-03-17-rocm-miles-rl-amd/) frameworks, this model highlights the scalability and efficiency of AMD hardware and software stack for large-scale MoE training and inference, spanning from pre-training to post-training. Beyond strong model quality, it incorporates architecture- and system-level innovations that improve both training and serving efficiency.
 
@@ -92,7 +92,7 @@ We augment Multi-head Latent Attention (MLA) [^3] with a lightweight learned out
 
 In addition, we apply FarSkip-Collective [^5] which modifies the standard MoE connectivity to better overlap communication with computation during expert-parallel training. By passing outdated and partial activations into the MoE and attention layers, FarSkip-Collective reduces communication bubbles and improves overall training and inference efficiency while maintaining model accuracy.
 
-During pre-training, FarSkip-Collective sped up model pre-training by 12.7% by overlapping communication arising from expert-parallelism, as shown in Figure 2. To realize these savings, we implemented an optimized communication-overlapped algorithm in the Primus framework that allows us to overlap both the forward and backward communication of model training. For more details see [^5], [^6]. For inference, we implement Instella-MoE using the SGLang inference framework. By overlapping communication with computation, this implementation delivers up to a 39.2% reduction in Time to First Token (TTFT) when the model is served with expert parallelism.
+During pre-training, FarSkip-Collective sped up model pre-training by 12.7% by overlapping communication arising from expert-parallelism, as shown in Figure 2. To realize these savings, we implemented an optimized communication-overlapped algorithm in the Primus framework that allows us to overlap both the forward and backward communication of model training. For more details see [^5], [^6]. For inference, we implement Instella-MoE using the SGLang inference framework. By overlapping communication with computation, this implementation delivers up to a 39.2% reduction in Time to First Token (TTFT) when the model is served with expert parallelism [^7].
 
 ```{figure} ./images/training_inference_efficiancy.png
 :align: center
@@ -136,7 +136,7 @@ For the final phase of SFT, we use fine-grained error analysis to identify areas
 
 #### Preference Tuning
 
-We then apply DPO on top of the SFT model on contrastive preference data to exploit capability-relevant differences between chosen and rejected responses. This provides an additional training signal beyond imitation-based SFT and further improves the model’s reasoning, instruction-following, and general task performance [^7] . In our preliminary experiments, we found that directly applying DPO to the MoE model led to performance degradation. We hypothesize that this behavior is related to the load-balancing objective, which can rapidly change the experts’ router affinity. To improve training stability, during DPO we disable router bias updates and the auxiliary load-balancing loss. With these adjustments, we observe no further degradation during DPO training. The resulting model retains the reasoning and instruction-following capabilities acquired during SFT while improving performance across a broad suite of tasks.
+We then apply DPO on top of the SFT model on contrastive preference data to exploit capability-relevant differences between chosen and rejected responses. This provides an additional training signal beyond imitation-based SFT and further improves the model’s reasoning, instruction-following, and general task performance [^8] . In our preliminary experiments, we found that directly applying DPO to the MoE model led to performance degradation. We hypothesize that this behavior is related to the load-balancing objective, which can rapidly change the experts’ router affinity. To improve training stability, during DPO we disable router bias updates and the auxiliary load-balancing loss. With these adjustments, we observe no further degradation during DPO training. The resulting model retains the reasoning and instruction-following capabilities acquired during SFT while improving performance across a broad suite of tasks.
 
 ### Reinforcement Learning
 
@@ -152,7 +152,7 @@ We focus our RL efforts primarily on improving instruction following (IF) capabi
 
 #### Stage 1: IF-specialized RL Training Setup
 
-For the IF RL training, we use the IF-RLVR subset from the [Dolci-Think-RL-7B](https://huggingface.co/datasets/allenai/Dolci-Think-RL-7B) dataset and train for 1,400 steps. We use asynchronous training and a maximum response length of up to 16K tokens. We incorporate several improvements [^8] [^9] to GRPO [^10] such as zero-gradient signal filtering, active sampling, token-level loss, no KL loss, clip-higher, no standard-deviation normalization, and Rollout Routing Replay (R3) [^11].
+For the IF RL training, we use the IF-RLVR subset from the [Dolci-Think-RL-7B](https://huggingface.co/datasets/allenai/Dolci-Think-RL-7B) dataset and train for 1,400 steps. We use asynchronous training and a maximum response length of up to 16K tokens. We incorporate several improvements [^9] [^10] to GRPO [^11] such as zero-gradient signal filtering, active sampling, token-level loss, no KL loss, clip-higher, no standard-deviation normalization, and Rollout Routing Replay (R3) [^12].
 
 #### Stage 2: MOPD
 
@@ -170,7 +170,7 @@ We evaluate Instella-MoE at two key stages of the pipeline: the final base model
 
 ### Base Model Results
 
-On standard benchmarks (Table 3), our final base checkpoint (Instella-MoE-16B-A3B-Base) attains an average score of 76.7, the strongest among fully open models—well ahead of SmolLM3-3B-Base (70.5), OLMo-3-7B (70.1), and OLMoE-1B-7B (61.9). It is also highly competitive with leading closed models, surpassing Moonlight-16B-A3B (76.2) on average and trailing only Qwen3.5-4B-Base (79.5). Instella-MoE-16B-A3B-Base leads all evaluated models on WinoGrande (86.5) and delivers strong coding results (HumanEval+ 65.7), with balanced performance across knowledge, reasoning, math, and code. Notably, it achieves these results while activating only 2.8B parameters per token, outperforming fully open dense models such as OLMo-3-7B that activate more than twice as many parameters.
+On standard benchmarks (Table 3), our final base checkpoint (Instella-MoE-16B-A3B-Base) attains an average score of 76.7, the strongest among fully open models—well ahead of SmolLM3-3B-Base (70.5), OLMo-3-7B (70.1), and OLMoE-1B-7B (61.9). It is also highly competitive with leading open weight models, surpassing Moonlight-16B-A3B (76.2) on average and trailing only Qwen3.5-4B-Base (79.5). Instella-MoE-16B-A3B-Base leads all evaluated models on WinoGrande (86.5) and delivers strong coding results (HumanEval+ 65.7), with balanced performance across knowledge, reasoning, math, and code. Notably, it achieves these results while activating only 2.8B parameters per token, outperforming fully open dense models such as OLMo-3-7B that activate more than twice as many parameters.
 
 ```{figure} ./images/result_table_base_standard.png
 :align: center
@@ -188,7 +188,7 @@ The base model also demonstrates strong long-context capability on the HELMET an
 
 ### Post-trained Model Results
 
-Model quality improves steadily through post-training (Table 5), from Instella-MoE-16B-A3B-SFT (71.58) to DPO (72.67) to the final Instella-MoE-16B-A3B-Think (73.22). The Think model achieves the highest average among all fully open models, ahead of Olmo3-7B-Think (71.97), and also outperforms strong closed models such as Gemma-4-E4B (think) (70.47) and Qwen3.5-4B (69.73). Consistent with our RL focus on instruction following, the final stage delivers its largest gains on IFEval—raising it from 77.08 (DPO) to 83.70—while preserving math, code, and MMLU performance, with the Think model also leading on AGIEval (82.50) and AIME25 (73.40).
+Model quality improves steadily through post-training (Table 5), from Instella-MoE-16B-A3B-SFT (71.58) to DPO (72.67) to the final Instella-MoE-16B-A3B-Think (73.22). The Think model achieves the highest average among all fully open models, ahead of Olmo3-7B-Think (71.97), and also outperforms strong open-weight models such as Gemma-4-E4B (think) (70.47) and Qwen3.5-4B (69.73). Consistent with our RL focus on instruction following, the final stage delivers its largest gains on IFEval—raising it from 77.08 (DPO) to 83.70—while preserving math, code, and MMLU performance, with the Think model also leading on AGIEval (82.50) and AIME25 (73.40).
 
 ```{figure} ./images/result_table_instruct.png
 :align: center
@@ -200,7 +200,7 @@ Model quality improves steadily through post-training (Table 5), from Instella-M
 
 In this blog, we introduced Instella-MoE, a fully open Mixture-of-Experts language model that advances both model quality and efficiency in the open LLM ecosystem. We showed that a 16B-parameter MoE model with 2.8B active parameters per token can deliver strong performance while keeping compute costs closer to those of a much smaller dense model. We also demonstrated that AMD hardware and software can support large-scale end-to-end MoE development, from pretraining through post-training, using an entirely open stack built on AMD Instinct™ MI300X and MI325X GPUs, ROCm™, Primus, and Miles.
 
-We used this blog to present the main technical contributions behind Instella-MoE, including Multi-head Gated Latent Attention (MGLA) and FarSkip-Collective, and to describe the full training pipeline: pretraining, mid-training, long-context extension to 64K, supervised fine-tuning, DPO, and reinforcement learning. We also highlighted the main deliverables of this release: model weights for every stage, training configurations, data mixtures, intermediate checkpoints, and code.
+We used this blog to present the main technical contributions behind Instella-MoE, including Multi-head Gated Latent Attention (MGLA) and FarSkip-Collective, and to describe the full training pipeline: pretraining, mid-training, long-context extension to 64K context, supervised fine-tuning, DPO, and reinforcement learning. We also highlighted the main deliverables of this release: model weights for every stage, training configurations, data mixtures, intermediate checkpoints, and code.
 
 Through this release, we provide the blog’s key deliverables: model weights for every training stage, training configurations, data mixtures, intermediate checkpoints, and code. We believe these resources will help researchers and developers reproduce our results, study open MoE training recipes in detail, and build new models and systems on top of the Instella-MoE foundation. We view Instella-MoE as an important step toward more transparent, reproducible, and high-performance open language models, and we plan to continue extending this line of work with larger models, better reasoning, stronger instruction following, and further efficiency improvements.
 
@@ -283,15 +283,17 @@ url={https://openreview.net/forum?id=ruOpvLzsGV}
 
 [^6]: github.com/AMD-AGI/Primus/blob/dev/farskip/README.md
 
-[^7]: Olmo Team. "Olmo 3." arXiv preprint arXiv:2512.13961, 2025.
+[^7]: https://github.com/AMD-AGI/FarSkip-Collective
 
-[^8]: Yu, Q., et al. DAPO: An Open-Source LLM Reinforcement Learning System at Scale. Advances in Neural Information Processing Systems (NeurIPS), 2025.
+[^8]: Olmo Team. "Olmo 3." arXiv preprint arXiv:2512.13961, 2025.
 
-[^9]: Liu, Z., et al. Understanding R1-Zero-Like Training: A Critical Perspective. Conference on Language Modeling (COLM), 2025.
+[^9]: Yu, Q., et al. DAPO: An Open-Source LLM Reinforcement Learning System at Scale. Advances in Neural Information Processing Systems (NeurIPS), 2025.
 
-[^10]: Shao, Zhihong, et al. "Deepseekmath: Pushing the limits of mathematical reasoning in open language models." arXiv preprint arXiv:2402.03300 (2024).
+[^10]: Liu, Z., et al. Understanding R1-Zero-Like Training: A Critical Perspective. Conference on Language Modeling (COLM), 2025.
 
-[^11]: Ma, W., et al. Stabilizing MoE Reinforcement Learning by Aligning Training and Inference Routers. arXiv preprint arXiv:2510.11370, 2025.
+[^11]: Shao, Zhihong, et al. "Deepseekmath: Pushing the limits of mathematical reasoning in open language models." arXiv preprint arXiv:2402.03300 (2024).
+
+[^12]: Ma, W., et al. Stabilizing MoE Reinforcement Learning by Aligning Training and Inference Routers. arXiv preprint arXiv:2510.11370, 2025.
 
 ## Disclaimers
 
