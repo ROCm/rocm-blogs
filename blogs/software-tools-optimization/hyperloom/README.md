@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Hyperloom - Autonomous Agentic Inference Optimization for AMD GPUs"
 date: "23 Jul 2026"
-author: "Marco Grond, Tanya Roosta, Arsalan Farooq, Emad Barsoum, Zhenyu Gu, Marilyn Basanta"
+author: "Arsalan Farooq, Marco Grond, Tanya Roosta, Marilyn Basanta, Zhenyu Gu, Emad Barsoum"
 thumbnail: 'Hyperloom_blog.png'
 tags: "Optimization"
 category: "Software tools & optimizations"
@@ -11,7 +11,7 @@ key_value_propositions: "Automates the manual workload optimization loop"
 language: English
 myst:
     html_meta:
-        "author": "Marco Grond, Tanya Roosta, Arsalan Farooq, Emad Barsoum, Zhenyu Gu, Marilyn Basanta"
+        "author": "Arsalan Farooq, Marco Grond, Tanya Roosta, Marilyn Basanta, Zhenyu Gu, Emad Barsoum"
         "description lang=en": "Hyperloom is a new open-source, agentic system aimed at automating the time-consuming task of optimizing end-to-end inference workloads."
         "keywords": "Hyperloom, Agents, Optimization, Optimize, Profile, Analyze, Inference, TraceLens, Magpie, IntelliKit, GEAK, Arbor, AgentKernelArena, LLM, AI, Automation, Automated, Autonomous"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Marco Grond, Tanya Roosta, Arsalan Farooq, Emad Barsoum, Zhenyu Gu, Marilyn Basanta"
+        "amd_blog_authors": "Arsalan Farooq, Marco Grond, Tanya Roosta, Marilyn Basanta, Zhenyu Gu, Emad Barsoum"
 ---
 
 <!---
