@@ -62,6 +62,7 @@ animateanyone
 Anisha
 Ansha
 Anshu
+antiagainst
 AOCC
 AOMP
 API
@@ -258,6 +259,7 @@ CTA
 CTOs
 CU
 cuBLAS
+cuBLASMp
 CUDA
 cudnn
 cuDNN
@@ -399,6 +401,7 @@ Eisenman
 ELMo
 embeddings
 enablement
+Endnotes
 ENDPGM
 entrypoint
 env
