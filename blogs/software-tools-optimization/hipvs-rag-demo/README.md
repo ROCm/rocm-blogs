@@ -49,7 +49,7 @@ SOFTWARE.
 
 # From Vector Search to Agentic RAG: Building an Enterprise Research Analyst with hipVS
 
-hipVS and hipRAFT were introduced in this [earlier blog post](https://rocm.blogs.amd.com/software-tools-optimization/hipvs/README.html), which walked through the core vector search APIs. This post takes the next step: it shows what you can **build** with hipVS by walking through an [**Enterprise Research Analyst**](https://github.com/ROCm-DS/hipVS/tree/main/amd-integration/examples/demos/enterprise_research_analyst) demo — an end-to-end working agentic RAG (Retrieval-Augmented Generation) system that uses hipVS as its retrieval backbone. This demo combines multi-document ingestion, LLM-powered query decomposition, parallel GPU-accelerated vector search, and cross-document synthesis with source citations, all running on AMD hardware. Along the way, it highlights the specific hipVS and hipRAFT APIs the demo exercises and shares code snippets you can adapt for your own applications.
+hipVS and hipRAFT were introduced in this [earlier blog post](https://rocm.blogs.amd.com/software-tools-optimization/hipvs/README.html), which walked through the core vector search APIs. This post takes the next step: it shows what you can **build** with hipVS by walking through an [**Enterprise Research Analyst**](https://github.com/AMD-Ecosystem/hipVS/tree/HEAD/examples/demos/enterprise_research_analyst) demo — an end-to-end working agentic RAG (Retrieval-Augmented Generation) system that uses hipVS as its retrieval backbone. This demo combines multi-document ingestion, LLM-powered query decomposition, parallel GPU-accelerated vector search, and cross-document synthesis with source citations, all running on AMD hardware. Along the way, it highlights the specific hipVS and hipRAFT APIs the demo exercises and shares code snippets you can adapt for your own applications.
 
 The table below provides a list of links for the key hipVS algorithms used in this blog.
 >
@@ -58,10 +58,10 @@ The table below provides a list of links for the key hipVS algorithms used in th
 > | **CAGRA** | Graph-based ANN | [Python](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/python_api/neighbors_cagra.html) | [C++](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/cpp_api/neighbors_cagra.html) |
 > | **IVF-Flat** | Cluster-based ANN | [Python](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/python_api/neighbors_ivf_flat.html) | [C++](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/cpp_api/neighbors_ivf_flat.html) |
 > | **IVF-PQ** | Compressed ANN | [Python](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/python_api/neighbors_ivf_pq.html) | [C++](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/cpp_api/neighbors_ivf_pq.html) |
-> | **Brute-Force** | Exact k-NN | [Python](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/python_api/neighbors_brute_force.html) | [C++](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/cpp_api/neighbors_brute_force.html) |
+> | **Brute-Force** | Exact k-NN | [Python](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/python_api/neighbors_brute_force.html) | [C++](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/cpp_api/neighbors_bruteforce.html) |
 > | **HNSW** | CPU graph search | [Python](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/python_api/neighbors_hnsw.html) | [C++](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/cpp_api/neighbors_hnsw.html) |
 >
-> **Documentation links:** [hipVS documentation](https://rocm.docs.amd.com/projects/hipVS/en/latest/index.html) &bull; [Python API reference](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/reference-python.html) &bull; [ROCm docs](https://rocm.docs.amd.com/en/latest/) &bull; [GitHub](https://github.com/ROCm-DS/hipVS)
+> **Documentation links:** [hipVS documentation](https://rocm.docs.amd.com/projects/hipVS/en/latest/index.html) &bull; [Python API reference](https://rocm.docs.amd.com/projects/hipVS/en/latest/reference/reference-python.html) &bull; [ROCm docs](https://rocm.docs.amd.com/en/latest/) &bull; [GitHub](https://github.com/AMD-Ecosystem/hipVS)
 
 ## What is an Agentic RAG System?
 
@@ -369,7 +369,7 @@ If you're new to hipVS, start with our [introductory blog post](https://rocm.blo
 
 For API documentation, installation instructions, and further examples:
 
-- **Demo source code**: [Enterprise Research Analyst on GitHub](https://github.com/ROCm-DS/hipVS/tree/main/amd-integration/examples/demos/enterprise_research_analyst)
+- **Demo source code**: [Enterprise Research Analyst on GitHub](https://github.com/AMD-Ecosystem/hipVS/tree/HEAD/examples/demos/enterprise_research_analyst)
 - **hipVS documentation**: [ROCm-DS hipVS docs](https://rocm.docs.amd.com/projects/hipVS/en/latest/index.html)
 - **hipRAFT documentation**: [ROCm-DS hipRAFT docs](https://rocm.docs.amd.com/projects/hipRaft/en/latest)
 - **Installation**: `pip install amd-hipvs` from the AMD ROCm PyPI
