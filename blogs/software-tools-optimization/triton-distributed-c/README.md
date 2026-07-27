@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Unleash Full GPU Potential: Overlap Communication and Computation with Triton-Distributed"
 date: 06 May 2025
-author: 'Lei Zhang (antiagainst), George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta'
+author: 'Lei Zhang antiagainst, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta'
 thumbnail: 'triton-distributed-communication.png'
 tags: Compiler
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Removes bottlenecks in inter-GPU communication causing d
 language: English
 myst:
     html_meta:
-        "author": "Lei Zhang (antiagainst), George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta"
+        "author": "Lei Zhang antiagainst, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta"
         "description lang=en": "Unlock the full power of AMD GPUs—write portable, efficient kernels with Triton-Distributed, overlapping computation and communication with ease and flexibility"
         "keywords": "Triton-Distributed Compiler, Open AI, AMD CDNA3, AI Inference"
         "amd_category": "Developer Resources"
