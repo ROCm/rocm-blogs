@@ -369,4 +369,10 @@ Principal Member of Technical Staff
 Senior Software Development Manager at AMD
 :::
 
+:::{grid-item-card} [Pengzhan Zhao](./authors/pengzhan-zhao.md)
+:padding: 1
+
+Member of Technical Staff at AMD
+:::
+
 ::::
