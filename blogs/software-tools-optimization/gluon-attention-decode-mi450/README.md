@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Attention Decode on AMD MI450 GPUs: A Gluon Kernel Optimization Guide"
 date: 27 July 2026
-author: 'Pengzhan Zhao, Lixun Zhang, Lei Zhang (antiagainst)'
+author: 'Pengzhan Zhao, Lixun Zhang, Lei Zhang antiagainst'
 thumbnail: '00-cover.png'
 tags: AI/ML, Linear Algebra, Performance, Profiling, Optimization, Hardware, Compiler
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Learn how to design a high-performance attention decode 
 language: English
 myst:
     html_meta:
-        "author": "Pengzhan Zhao, Lixun Zhang, Lei Zhang (antiagainst)"
+        "author": "Pengzhan Zhao, Lixun Zhang, Lei Zhang antiagainst"
         "description lang=en": "Learn how to design a high-performance attention decode kernel on AMD MI450 GPUs using Gluon."
         "keywords": "Gluon, Attention Decode, ROCm, Triton, AMD MI450, WMMA, TDM, LDS, pipelining, optimization"
         "vertical": "HPC"
