@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Unleash Full GPU Potential: Overlap Communication and Computation with Triton-Distributed"
 date: 06 May 2025
-author: 'Lei Zhang, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta'
+author: 'Lei Zhang antiagainst, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta'
 thumbnail: 'triton-distributed-communication.png'
 tags: Compiler
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Removes bottlenecks in inter-GPU communication causing d
 language: English
 myst:
     html_meta:
-        "author": "Lei Zhang, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta"
+        "author": "Lei Zhang antiagainst, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta"
         "description lang=en": "Unlock the full power of AMD GPUs—write portable, efficient kernels with Triton-Distributed, overlapping computation and communication with ease and flexibility"
         "keywords": "Triton-Distributed Compiler, Open AI, AMD CDNA3, AI Inference"
         "amd_category": "Developer Resources"
@@ -21,7 +21,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_authors": "Lei Zhang, George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta"
+        "amd_blog_authors": "Lei Zhang (antiagainst), George Wang, Fan Wu, Peng Sun, Kyle Wang, Anshul Gupta"
 ---
 
 <!---
@@ -119,7 +119,7 @@ num_ranks(axis=-1, _builder=None)
 symm_at(ptr, rank, _builder=None) 
 ```
 
-Low-level primitives - Singal Control Primitives
+Low-level primitives - Signal Control Primitives
 
 ```shell
 
@@ -244,6 +244,7 @@ configuration, usage, software version, and optimizations.
 
 SYSTEM CONFIGURATION
 
+<!-- spellcheck-disable -->
 AMD CDNA3 platformSystem Model: Supermicro
 AS-8125GS-TNMR2\
 CPU: 2x AMD EPYC 9654 96-Core Processor\
@@ -257,12 +258,14 @@ Host OS: Ubuntu 22.04.4\
 System BIOS: 3.2\
 System Bios Vendor: American Megatrends International, LLC.\
 Host GPU Driver: (amdgpu version): ROCm 6.3.1
+<!-- spellcheck-enable -->
 
 [2] Testing done by AMD on 04/28/2025, results may vary based on
 configuration, usage, software version, and optimizations.
 
 SYSTEM CONFIGURATION
 
+<!-- spellcheck-disable -->
 AMD CDNA3 platformSystem Model: Supermicro
 AS-8125GS-TNMR2\
 CPU: 2x AMD EPYC 9654 96-Core Processor\
@@ -276,6 +279,7 @@ Host OS: Ubuntu 22.04.4\
 System BIOS: 3.2\
 System Bios Vendor: American Megatrends International, LLC.\
 Host GPU Driver: (amdgpu version): ROCm 6.3.1
+<!-- spellcheck-enable -->
 
 ### Disclaimers
 

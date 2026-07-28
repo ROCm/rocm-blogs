@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Attention Decode on AMD MI450 GPUs: A Gluon Kernel Optimization Guide"
 date: 27 July 2026
-author: 'Pengzhan Zhao, Lixun Zhang, Lei Zhang antiagainst'
+author: 'Pengzhan Zhao, Lixun Zhang, Jeffrey Byrnes, Austin Kerbow, Lei Zhang antiagainst'
 thumbnail: '00-cover.png'
 tags: AI/ML, Linear Algebra, Performance, Profiling, Optimization, Hardware, Compiler
 category: Software tools & optimizations
@@ -11,7 +11,7 @@ key_value_propositions: Learn how to design a high-performance attention decode 
 language: English
 myst:
     html_meta:
-        "author": "Pengzhan Zhao, Lixun Zhang, Lei Zhang antiagainst"
+        "author": "Pengzhan Zhao, Lixun Zhang, Jeffrey Byrnes, Austin Kerbow, Lei Zhang antiagainst"
         "description lang=en": "Learn how to design a high-performance attention decode kernel on AMD MI450 GPUs using Gluon."
         "keywords": "Gluon, Attention Decode, ROCm, Triton, AMD MI450, WMMA, TDM, LDS, pipelining, optimization"
         "vertical": "HPC"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "AI Inference, Deploying AI at Scale"
         "amd_blog_topic_categories": "Software & Ecosystem, AI & Intelligent Systems"
-        "amd_blog_authors": "Pengzhan Zhao, Lixun Zhang, Lei Zhang (antiagainst)"
+        "amd_blog_authors": "Pengzhan Zhao, Lixun Zhang, Jeffrey Byrnes, Austin Kerbow, Lei Zhang antiagainst"
         "property=og:locale": "en_US"
 ---
 
@@ -47,7 +47,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
-
 
 # Attention Decode on AMD MI450 GPUs: A Gluon Kernel Optimization Guide
 
@@ -137,11 +136,9 @@ Following the [Flash Attention](https://arxiv.org/abs/2407.08608) algorithm, the
 Attention decode workload mapping across batches and KV heads.
 ```
 
-
 ## Decode Kernel Optimizations
 
 So far, we have introduced a baseline implementation of an MQA decode kernel on MI450. This section will further discuss a series of optimizations that push the kernel toward peak performance on MI450. We will cover 4 major optimizations: tensor layout, data loading, pipelining, and parallelization with Split-k.
-
 
 ### Optimize Tensor Layout
 
@@ -166,7 +163,6 @@ Two-wave WMMA layout with waves distributed across rows.
 ```
 
 Another important factor to keep in mind is layout conversion. When two tensors in Gluon use different layouts, the kernel must use an explicit layout conversion operation to match them. Depending on the source and destination layouts, this conversion can happen in registers or through LDS. In attention, the output of the QK WMMA becomes the input of the PV WMMA after softmax. If the QK output layout is not compatible with the PV input layout, the hot loop pays an extra conversion cost. One useful technique is to "transpose" the WMMA output layout. This can be done by simply setting `transpose=True` in `AMDWMMALayout`, and the compiler will generate corresponding instruction to produce the transposed output. Note that this transpose operation does not incur extra instructions. For more details, please refer to [this talk](https://youtu.be/8o7Jhbv8xek?si=WvmsHTson1GbKvis).
-
 
 ```{figure} ./images/04-wmma-instr-shape.png
 :align: center

@@ -5,7 +5,6 @@ AAC
 Aarti
 Abbeel
 ABI
-Aakash
 Accordo
 accross
 accuracies
@@ -20,7 +19,6 @@ Adi
 Adithya
 adversarially
 agentic
-AER
 AGIEval
 ai
 AIE
@@ -258,6 +256,7 @@ CTA
 CTOs
 CU
 cuBLAS
+cuBLASMp
 CUDA
 cuBLASMp
 cudnn
@@ -324,6 +323,7 @@ Dewei
 Devang
 deserializers
 detections
+deployable
 dev
 deployable
 deviceID
@@ -337,6 +337,7 @@ Dhruba
 Dhulipala
 DiLoCo
 dimensionality
+DigitalOcean
 Dimitry
 dir
 diag
@@ -471,6 +472,7 @@ GDS
 GELU
 GEMM
 GEMMs
+Gemma
 GenAI
 generalizable
 GenEval
@@ -591,6 +593,9 @@ HummingbirdXT
 hunyuan
 Hur
 HWE
+hwLat
+Hyperloom
+Hyperloom's
 hyperparameter
 Hyperparameters
 hyperparameters
@@ -689,8 +694,6 @@ Kang
 kdb
 Keerthana
 Keras
-Keyu
-Kemppi
 Kerncap
 keyframe
 keyframes
@@ -745,6 +748,7 @@ Lifecycle
 LightGen
 Lijie
 linearized
+Linex
 linter
 Liwei
 Linex
@@ -963,6 +967,9 @@ OMPI
 OMPT
 OMPX
 onboarded
+onboarding
+Onboarding
+onboards
 ONNX
 OOM
 OpenAI
@@ -1053,6 +1060,7 @@ pragma
 pre
 prebuilt
 precompiled
+preconfigured
 prefetch
 prefill
 prem
@@ -1064,7 +1072,10 @@ prefetches
 PrefetchGlobalRead
 prefetching
 PrefetchLocalRead
+prefill
 prefilled
+prem
+preprint
 preprocess
 preprocessed
 preprocessor
@@ -1263,6 +1274,7 @@ ScaledMM
 sccache
 SCServo
 SDK
+SDKs
 SDMA
 SDRAM
 ScalingConfig
@@ -1420,7 +1432,11 @@ thon
 Threadripper
 ThreadTile
 Thumma
+Tianhong
 TileLang
+timestep
+timesteps
+ToC
 Todorov
 tok
 tokenization
@@ -1479,8 +1495,9 @@ Udit
 UI
 ui
 UIF
-Uncached
 uncached
+undeploy
+Undeploy
 Unhandled
 uninstallation
 Unmerge
@@ -2449,9 +2466,17 @@ speculative
 time-to-market
 upscaled
 wrappable
+Microscaling
 OOT
 Stderr
+deployable
+dtypes
+microbenchmarks
 uint
+warmup
+SGLang-ATOM
+plugin-style
+time-to-market
 Gluon
 TDM
 CGA
@@ -2459,6 +2484,7 @@ WGPs
 multicast
 DSA
 CVT
+antiagainst
 AGI
 AlpacaEval
 BBH
@@ -2468,6 +2494,7 @@ Dolma
 Dolmino
 FarSkip
 FineMath
+Gemma
 HSwag
 HumanEval
 IFEval
@@ -2506,6 +2533,7 @@ DRAM
 NVMe
 etcd
 kvd
+Mooncake
 SLO
 MSA
 atomesh
@@ -2586,6 +2614,7 @@ Yunikorn
 backfill
 chargebacks
 containerd
+etcd
 failover
 fractionalize
 hardcoded
