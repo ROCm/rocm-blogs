@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 920" font-family="Segoe UI, Arial, sans-serif" role="img" aria-label="ROCm Infera architecture in six layers: API layer, routing and coordination, core capabilities, inference engines, KV transfer, and KV-cache and storage; with a control-plane sidebar.">
+  <title>ROCm Infera architecture</title>
+  <defs>
+    <marker id="tArr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0,1.5 L8,5 L0,8.5" fill="none" stroke="#34d0d9" stroke-width="2"/></marker>
+    <marker id="gArr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0,1.5 L8,5 L0,8.5" fill="none" stroke="#f2c744" stroke-width="2"/></marker>
+    <marker id="gArrS" viewBox="0 0 10 10" refX="4" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,1.5 L8,5 L0,8.5" fill="none" stroke="#f2c744" stroke-width="2"/></marker>
+    <marker id="pArr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto"><path d="M0,1.5 L8,5 L0,8.5" fill="none" stroke="#a06cff" stroke-width="2"/></marker>
+    <marker id="pArrS" viewBox="0 0 10 10" refX="4" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse"><path d="M0,1.5 L8,5 L0,8.5" fill="none" stroke="#a06cff" stroke-width="2"/></marker>
+    <!-- small ABSOLUTE-sized purple heads for the tight vertical AIC links (default strokeWidth units make 5.5 heads ~12u tall, too big for the 14u gap) -->
+    <marker id="pArrSm" markerUnits="userSpaceOnUse" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#a06cff" stroke-width="1.6"/></marker>
+    <marker id="pArrSmS" markerUnits="userSpaceOnUse" viewBox="0 0 10 10" refX="2.5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M1,2 L8,5 L1,8" fill="none" stroke="#a06cff" stroke-width="1.6"/></marker>
+  </defs>
+  <style>
+    .lyr{fill:#9fb0b5;font-size:17px;font-weight:700;letter-spacing:1px}
+    .box{fill:#050607;stroke-width:2}
+    .teal{stroke:#34d0d9}.orange{stroke:#ff9838}.red{stroke:#ff5a5a}.gold{stroke:#f2c744}.purple{stroke:#a06cff}
+    .name{fill:#f2f6f7;font-size:21px;font-weight:700}
+    .ico{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .flow{fill:none;stroke:#34d0d9;stroke-width:2}
+    .flowd{fill:none;stroke:#34d0d9;stroke-width:2;stroke-dasharray:5 5}
+    .bus{fill:none;stroke:#f2c744;stroke-width:2;stroke-dasharray:6 5}
+    .pflow{fill:none;stroke:#a06cff;stroke-width:2.2}
+  </style>
+  <rect width="1200" height="920" fill="#000000"/>
+
+  <!-- layer rail labels -->
+  <text class="lyr" x="40" y="80">API LAYER</text>
+  <text class="lyr" x="40" y="188">ROUTING &amp;</text><text class="lyr" x="40" y="210">COORDINATION</text>
+  <text class="lyr" x="40" y="328">CORE</text><text class="lyr" x="40" y="350">CAPABILITIES</text>
+  <text class="lyr" x="40" y="448">INFERENCE</text><text class="lyr" x="40" y="470">ENGINES</text>
+  <text class="lyr" x="40" y="584">KV TRANSFER</text>
+  <text class="lyr" x="40" y="765">KV-CACHE &amp;</text><text class="lyr" x="40" y="787">STORAGE</text>
+
+  <!-- ================= API LAYER ================= -->
+  <rect class="box teal" x="200" y="36" width="360" height="76" rx="10"/>
+  <g class="ico teal" transform="translate(250,74)"><path d="M-18,-10 h30 a5,5 0 0 1 5,5 v8 a5,5 0 0 1 -5,5 h-18 l-10,8 v-8 a5,5 0 0 1 -5,-5 v-8 a5,5 0 0 1 5,-5 z"/><circle cx="-8" cy="1" r="1.6" fill="#34d0d9"/><circle cx="-1" cy="1" r="1.6" fill="#34d0d9"/><circle cx="6" cy="1" r="1.6" fill="#34d0d9"/></g>
+  <text class="name" x="298" y="82">OpenAI-Compatible API</text>
+
+  <rect class="box teal" x="580" y="36" width="360" height="76" rx="10"/>
+  <g class="ico teal" transform="translate(628,74)"><rect x="-16" y="-14" width="26" height="30" rx="3"/><path d="M-10,-6 h14 M-10,0 h14 M-10,6 h9"/></g>
+  <text class="name" x="672" y="82">Anthropic Messages</text>
+
+  <!-- ================= ROUTING ================= -->
+  <rect class="box teal" x="200" y="150" width="740" height="94" rx="10"/>
+  <!-- router icon: 4-way arrow cross, consistent with Figure 3's Router -->
+  <g class="ico teal" transform="translate(268,197) scale(0.82)"><path d="M0,-15 L0,15 M-15,0 L15,0"/><path d="M0,-15 l-4,5 M0,-15 l4,5 M0,15 l-4,-5 M0,15 l4,-5 M-15,0 l5,-4 M-15,0 l5,4 M15,0 l-5,-4 M15,0 l-5,4"/></g>
+  <text class="name" x="570" y="205" text-anchor="middle" font-size="24">KV-Aware Router</text>
+
+  <!-- ================= CORE CAPABILITIES ================= -->
+  <rect class="box teal" x="200" y="282" width="228" height="92" rx="10"/>
+  <g class="ico teal" transform="translate(238,336)"><path d="M-12,-8 a12,12 0 1 1 -3,16" /><path d="M-15,2 l0,8 l8,-2"/><path d="M12,8 a12,12 0 1 1 3,-16"/><path d="M15,-2 l0,-8 l-8,2"/></g>
+  <text class="name" x="272" y="334" font-size="17">KV-Aware</text>
+  <text class="name" x="272" y="356" font-size="17">Routing</text>
+
+  <rect class="box teal" x="456" y="282" width="228" height="92" rx="10"/>
+  <g class="ico teal" transform="translate(496,336)"><rect x="-6" y="-16" width="12" height="12" rx="2"/><rect x="-16" y="6" width="12" height="12" rx="2"/><rect x="4" y="6" width="12" height="12" rx="2"/><path d="M0,-4 v6 M0,2 h-10 v4 M0,2 h10 v4"/></g>
+  <text class="name" x="530" y="334" font-size="17">Prefill-Decode</text>
+  <text class="name" x="530" y="356" font-size="17">Disaggregation</text>
+
+  <rect class="box teal" x="712" y="282" width="228" height="92" rx="10"/>
+  <g class="ico teal" transform="translate(752,336)"><ellipse cx="0" cy="-10" rx="13" ry="5"/><path d="M-13,-10 v18 a13,5 0 0 0 26,0 v-18"/><path d="M-13,-1 a13,5 0 0 0 26,0"/><circle cx="3" cy="9" r="2" fill="#34d0d9"/></g>
+  <text class="name" x="786" y="334" font-size="17">KV-Cache</text>
+  <text class="name" x="786" y="356" font-size="17">Tiering</text>
+
+  <!-- ================= INFERENCE ENGINES ================= -->
+  <rect class="box orange" x="200" y="410" width="228" height="94" rx="10"/>
+  <g class="ico orange" transform="translate(244,457)"><path d="M0,-14 L16,-6 L0,2 L-16,-6 Z"/><path d="M-16,0 L0,8 L16,0 M-16,7 L0,15 L16,7"/></g>
+  <text class="name" x="286" y="464">vLLM</text>
+
+  <rect class="box red" x="456" y="410" width="228" height="94" rx="10"/>
+  <g class="ico red" transform="translate(500,457)"><path d="M0,-15 L14,-7 L14,8 L0,16 L-14,8 L-14,-7 Z"/><path d="M0,-15 L0,0 M0,0 L14,-7 M0,0 L-14,-7"/></g>
+  <text class="name" x="542" y="464">SGLang</text>
+
+  <rect class="box teal" x="712" y="410" width="228" height="94" rx="10"/>
+  <g class="ico teal" transform="translate(756,457)"><circle cx="0" cy="0" r="14"/><circle cx="0" cy="-14" r="3"/><circle cx="12" cy="7" r="3"/><circle cx="-12" cy="7" r="3"/><path d="M0,-11 L0,-3 M2,2 l8,4 M-2,2 l-8,4"/><circle cx="0" cy="0" r="2.5" fill="#34d0d9"/></g>
+  <text class="name" x="798" y="464">ATOM</text>
+
+  <!-- ================= KV TRANSFER ================= -->
+  <rect class="box teal" x="200" y="540" width="360" height="76" rx="10"/>
+  <g class="ico teal" transform="translate(250,578)"><path d="M-14,-6 a8,8 0 0 0 0,12 M14,-6 a8,8 0 0 1 0,12" /><path d="M-8,-3 a6,6 0 0 0 0,6 M8,-3 a6,6 0 0 1 0,6" /><path d="M-4,0 h8"/></g>
+  <text class="name" x="298" y="584">Mooncake</text>
+
+  <rect class="box teal" x="580" y="540" width="360" height="76" rx="10"/>
+  <g class="ico teal" transform="translate(630,578)"><rect x="-14" y="-6" width="16" height="12" rx="2" transform="rotate(-20 -6 0)"/><rect x="2" y="-8" width="14" height="16" rx="2" transform="rotate(-20 9 0)"/><path d="M-16,4 l-4,4 M16,-6 l4,-4"/></g>
+  <text class="name" x="672" y="584">MoRI</text>
+
+  <!-- ================= KV-CACHE & STORAGE (AIC) ================= -->
+  <rect class="box purple" x="200" y="650" width="740" height="248" rx="12"/>
+  <text x="570" y="686" fill="#a06cff" font-size="22" font-weight="700" text-anchor="middle">AMD Infinity Context</text>
+
+  <rect class="box purple" x="232" y="704" width="248" height="52" rx="8"/>
+  <g class="ico purple" transform="translate(268,730)"><rect x="-11" y="-9" width="22" height="18" rx="2"/><rect x="-6" y="-4" width="12" height="8" rx="1"/><path d="M-11,-4 h-5 M-11,2 h-5 M11,-4 h5 M11,2 h5 M-4,-9 v-5 M4,-9 v-5 M-4,9 v5 M4,9 v5"/></g>
+  <text class="name" x="300" y="737" font-size="18">GPU HBM / L1</text>
+
+  <rect class="box purple" x="232" y="770" width="248" height="52" rx="8"/>
+  <g class="ico purple" transform="translate(268,796)"><rect x="-13" y="-7" width="26" height="14" rx="2"/><path d="M-9,-3 h3 v6 h-3 z M-3,-3 h3 v6 h-3 z M3,-3 h3 v6 h-3 z M9,-3 h2 v6 h-2 z" fill="#a06cff" fill-opacity=".25"/></g>
+  <text class="name" x="300" y="803" font-size="18">Host memory / L2</text>
+
+  <rect class="box purple" x="316" y="836" width="330" height="52" rx="8"/>
+  <g class="ico purple" transform="translate(352,862)"><ellipse cx="0" cy="-7" rx="10" ry="4"/><path d="M-10,-7 v14 a10,4 0 0 0 20,0 v-14"/><path d="M-10,0 a10,4 0 0 0 20,0"/><rect x="-13" y="6" width="26" height="6" rx="1"/></g>
+  <text class="name" x="392" y="868" font-size="18">Durable backend</text>
+
+  <!-- global KV-cache pool (cylinder w/ node graph) -->
+  <g class="ico purple" transform="translate(700,760)"><ellipse cx="0" cy="-34" rx="46" ry="14"/><path d="M-46,-34 v56 a46,14 0 0 0 92,0 v-56"/><path d="M-46,-16 a46,14 0 0 0 92,0 M-46,2 a46,14 0 0 0 92,0"/><circle cx="0" cy="-30" r="5"/><circle cx="-20" cy="-16" r="5"/><circle cx="20" cy="-16" r="5"/><path d="M-4,-27 l-13,9 M4,-27 l13,9 M-15,-16 h30"/></g>
+  <text x="700" y="824" fill="#e9eef0" font-size="16" text-anchor="middle">Global KV-Cache Pool</text>
+
+  <!-- ================= CONTROL PLANE SIDEBAR ================= -->
+  <!-- ONE enclosing CONTROL PLANE box (matches the original reference), wrapping the three inner services -->
+  <rect class="box gold" x="1000" y="150" width="168" height="748" rx="12"/>
+  <g class="ico gold" transform="translate(1084,178)"><circle cx="0" cy="0" r="11"/><circle cx="0" cy="0" r="4"/><path d="M0,-11 v-6 M0,11 v6 M-11,0 h-6 M11,0 h6 M-8,-8 l-4,-4 M8,8 l4,4 M-8,8 l-4,4 M8,-8 l4,-4"/></g>
+  <text x="1084" y="212" fill="#f2c744" font-size="18" font-weight="700" text-anchor="middle" letter-spacing="1">CONTROL PLANE</text>
+
+  <!-- inner service: Service Discovery -->
+  <rect class="box gold" x="1018" y="236" width="132" height="180" rx="8"/>
+  <g class="ico gold" transform="translate(1084,290)"><path d="M-14,4 a10,10 0 0 1 2,-20 a13,10 0 0 1 24,-2 a10,9 0 0 1 4,22 z"/><path d="M0,10 v10 M-8,14 l8,6 8,-6"/></g>
+  <text x="1084" y="360" fill="#f2f6f7" font-size="15" font-weight="700" text-anchor="middle">Service</text>
+  <text x="1084" y="380" fill="#f2f6f7" font-size="15" font-weight="700" text-anchor="middle">Discovery</text>
+
+  <!-- inner service: Request and Event Transport -->
+  <rect class="box gold" x="1018" y="440" width="132" height="180" rx="8"/>
+  <g class="ico gold" transform="translate(1084,496)"><path d="M-16,-6 h28 M-16,-6 l6,-5 M-16,-6 l6,5 M16,8 h-28 M16,8 l-6,-5 M16,8 l-6,5"/></g>
+  <text x="1084" y="560" fill="#f2f6f7" font-size="15" font-weight="700" text-anchor="middle">Request and</text>
+  <text x="1084" y="580" fill="#f2f6f7" font-size="15" font-weight="700" text-anchor="middle">Event Transport</text>
+
+  <!-- inner service: Deployment and Operations -->
+  <rect class="box gold" x="1018" y="644" width="132" height="180" rx="8"/>
+  <g class="ico gold" transform="translate(1068,700)"><path d="M-8,8 v-10 M-2,8 v-16 M4,8 v-6 M10,8 v-20"/></g>
+  <g class="ico gold" transform="translate(1104,700)"><circle cx="0" cy="0" r="11"/><path d="M-7,0 h3 l2,-6 l3,12 l2,-6 h4"/></g>
+  <text x="1084" y="764" fill="#f2f6f7" font-size="15" font-weight="700" text-anchor="middle">Deployment and</text>
+  <text x="1084" y="784" fill="#f2f6f7" font-size="15" font-weight="700" text-anchor="middle">Operations</text>
+
+  <!-- ================= FLOW ARROWS ================= -->
+  <!-- API layer -> Router: TWO separate down-arrows, one from OpenAI, one from Anthropic -->
+  <path class="flow" marker-end="url(#tArr)" d="M380,112 L380,150"/>
+  <path class="flow" marker-end="url(#tArr)" d="M760,112 L760,150"/>
+  <!-- Router -> 3 core caps: three clean vertical down-arrows -->
+  <path class="flow" marker-end="url(#tArr)" d="M314,244 L314,282"/>
+  <path class="flow" marker-end="url(#tArr)" d="M570,244 L570,282"/>
+  <path class="flow" marker-end="url(#tArr)" d="M826,244 L826,282"/>
+  <!-- Core caps -> engines: three clean vertical down-arrows -->
+  <path class="flow" marker-end="url(#tArr)" d="M314,374 L314,410"/>
+  <path class="flow" marker-end="url(#tArr)" d="M570,374 L570,410"/>
+  <path class="flow" marker-end="url(#tArr)" d="M826,374 L826,410"/>
+  <!-- Engines -> KV transfer: one straight-down arrow under each engine (vLLM, SGLang, ATOM) -->
+  <path class="flow" marker-end="url(#tArr)" d="M314,504 L314,540"/>
+  <path class="flow" marker-end="url(#tArr)" d="M570,504 L570,540"/>
+  <path class="flow" marker-end="url(#tArr)" d="M826,504 L826,540"/>
+  <!-- KV transfer -> AIC: two purple dashed down-arrows -->
+  <path class="pflow" marker-end="url(#pArr)" d="M380,616 L380,650" stroke-dasharray="5 5"/>
+  <path class="pflow" marker-end="url(#pArr)" d="M760,616 L760,650" stroke-dasharray="5 5"/>
+  <!-- AIC internal purple links; short vertical links get extra clearance so the two heads don't meet the box borders -->
+  <path class="pflow" marker-end="url(#pArr)" marker-start="url(#pArrS)" d="M492,730 L640,730"/>
+  <path class="pflow" marker-end="url(#pArrSm)" marker-start="url(#pArrSmS)" d="M356,757 L356,769"/>
+  <path class="pflow" marker-end="url(#pArrSm)" marker-start="url(#pArrSmS)" d="M356,823 L356,835"/>
+  <path class="pflow" marker-end="url(#pArr)" marker-start="url(#pArrS)" d="M492,796 L640,796"/>
+
+  <!-- gold bus: ONE horizontal double-headed line, stack (router) <-> Control Plane box; endpoints pulled in so heads clear both borders -->
+  <path class="bus" marker-end="url(#gArr)" marker-start="url(#gArrS)" d="M946,197 L994,197"/>
+</svg>

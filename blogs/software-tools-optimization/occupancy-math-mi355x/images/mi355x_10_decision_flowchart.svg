@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="840" height="850" viewBox="0 0 840 850" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="840" height="850" fill="#ffffff"/>
+<rect x="300" y="70" width="220" height="50" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="265" y="150" width="290" height="60" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="245" width="320" height="64" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<polygon points="410.0,345 530,415.0 410.0,485 290,415.0" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="610" y="382" width="200" height="66" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<polygon points="410.0,540 530,610.0 410.0,680 290,610.0" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="610" y="577" width="200" height="66" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="740" width="320" height="84" rx="12" fill="#d3f9d8" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="410" y1="120" x2="410" y2="150" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<line x1="410" y1="210" x2="410" y2="245" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<line x1="410" y1="309" x2="410" y2="345" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<line x1="530" y1="415" x2="608" y2="415" stroke="#2b8a3e" stroke-width="2" marker-end="url(#ah)" />
+<line x1="410" y1="485" x2="410" y2="540" stroke="#868e96" stroke-width="2" marker-end="url(#ah)" />
+<line x1="530" y1="610" x2="608" y2="610" stroke="#1971c2" stroke-width="2" marker-end="url(#ah)" />
+<line x1="410" y1="680" x2="410" y2="740" stroke="#2b8a3e" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">The workflow, in one chart</text>
+<text x="410.0" y="98.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Open the kernel</text>
+<text x="410.0" y="174.4" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Read real resource usage</text>
+<text x="410.0" y="191.9" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">(binary, not your head)</text>
+<text x="410.0" y="271.4" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Compute 4 limiters → min = ceiling,</text>
+<text x="410.0" y="288.9" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">argmin = binding resource</text>
+<text x="330" y="401.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">Matrix core / VALU</text>
+<text x="330" y="418.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">already saturated?</text>
+<text x="710.0" y="409.4" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Occupancy isn&#x27;t your</text>
+<text x="710.0" y="426.9" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">problem — stop</text>
+<text x="345" y="596.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">Latency-bound?</text>
+<text x="345" y="613.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">(units idle, waiting)</text>
+<text x="710.0" y="604.4" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Add ILP / wider loads</text>
+<text x="710.0" y="621.9" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">(keep occupancy)</text>
+<text x="410.0" y="767.65" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Grow register tile to just-before-spill</text>
+<text x="410.0" y="785.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">let occupancy fall</text>
+<text x="410.0" y="802.65" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">LDS → pipeline depth</text>
+<text x="545" y="403.4" font-size="12" text-anchor="start" fill="#2b8a3e" font-weight="normal">YES</text>
+<text x="420" y="513.4" font-size="12" text-anchor="start" fill="#868e96" font-weight="normal">NO</text>
+<text x="545" y="598.4" font-size="12" text-anchor="start" fill="#1971c2" font-weight="normal">YES</text>
+<text x="420" y="711.4" font-size="12" text-anchor="start" fill="#2b8a3e" font-weight="normal">NO</text>
+</svg>

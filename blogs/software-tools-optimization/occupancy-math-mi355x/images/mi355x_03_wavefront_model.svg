@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="900" height="560" fill="#ffffff"/>
+<rect x="60" y="90" width="360" height="410" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="3"/>
+<rect x="80" y="140" width="320" height="38" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="184" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="228" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="272" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="316" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="360" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="404" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="80" y="448" width="320" height="38" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="470" y="400" width="380" height="90" rx="12" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">Occupancy is counted in wavefronts per SIMD</text>
+<text x="80" y="119.1" font-size="18" text-anchor="start" fill="#1e1e1e" font-weight="normal">1 SIMD  (64 lanes)</text>
+<text x="240.0" y="161.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 0  ← executing this cycle</text>
+<text x="240.0" y="205.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 1  (resident, waiting)</text>
+<text x="240.0" y="249.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 2  (resident, waiting)</text>
+<text x="240.0" y="293.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 3  (resident, waiting)</text>
+<text x="240.0" y="337.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 4  (resident, waiting)</text>
+<text x="240.0" y="381.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 5  (resident, waiting)</text>
+<text x="240.0" y="425.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 6  (resident, waiting)</text>
+<text x="240.0" y="469.925" font-size="13" text-anchor="middle" fill="#1e1e1e" font-weight="normal">wave 7  (resident, waiting)</text>
+<text x="470" y="144.25" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">1 wavefront = 64 threads (one per lane)</text>
+<text x="470" y="163.0" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">run in lockstep.</text>
+<text x="470" y="181.75" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal"></text>
+<text x="470" y="200.5" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">AMD wave = wavefront = NVIDIA warp,</text>
+<text x="470" y="219.25" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">but 64 wide instead of 32.</text>
+<text x="470" y="238.0" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal"></text>
+<text x="470" y="256.75" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">Up to 8 wavefronts sit resident on a</text>
+<text x="470" y="275.5" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">SIMD at once. The scheduler issues from</text>
+<text x="470" y="294.25" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">one ready wave per cycle and hides</text>
+<text x="470" y="313.0" font-size="15" text-anchor="start" fill="#1e1e1e" font-weight="normal">stalls by switching to another.</text>
+<text x="660.0" y="438.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">occupancy = active waves / 8  per SIMD</text>
+<text x="660.0" y="458.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">(×4 SIMDs = up to 32 waves / CU)</text>
+</svg>

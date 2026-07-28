@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="620" viewBox="0 0 980 620" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="980" height="620" fill="#ffffff"/>
+<rect x="60" y="64" width="860" height="56" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="405" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="370" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="335" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="300" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="265" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="230" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="195" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="250" y="160" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="405" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="370" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="335" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="300" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="265" width="160" height="32" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="230" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="195" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="620" y="160" width="160" height="32" rx="12" fill="#ffffff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="210" y="454" width="240" height="96" rx="12" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="580" y="454" width="240" height="96" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="450" y1="380" x2="580" y2="340" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">Same tile, two generations</text>
+<text x="490.0" y="95.375" font-size="15" text-anchor="middle" fill="#1e1e1e" font-weight="normal">MXFP8 GEMM tile  —  256 threads (4 waves)  ·  96 VGPR/thread  ·  48 SGPR/wave  ·  32 KB LDS / workgroup</text>
+<text x="70" y="263.3" font-size="14" text-anchor="start" fill="#868e96" font-weight="normal">waves</text>
+<text x="70" y="280.8" font-size="14" text-anchor="start" fill="#868e96" font-weight="normal">/ SIMD</text>
+<text x="70" y="298.3" font-size="14" text-anchor="start" fill="#868e96" font-weight="normal">(max 8)</text>
+<text x="250" y="146.15" font-size="17" text-anchor="start" fill="#1e1e1e" font-weight="normal">MI300X · CDNA3</text>
+<text x="620" y="146.15" font-size="17" text-anchor="start" fill="#1e1e1e" font-weight="normal">MI355X · CDNA4</text>
+<text x="330.0" y="487.65" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">64 KB LDS</text>
+<text x="330.0" y="505.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">→ 2 workgroups / CU</text>
+<text x="330.0" y="522.65" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">LDS-bound  ·  2/8 = 25%</text>
+<text x="700.0" y="487.65" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">160 KB LDS</text>
+<text x="700.0" y="505.15" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">→ 5 workgroups / CU</text>
+<text x="700.0" y="522.65" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">register-bound  ·  5/8 = 62.5%</text>
+<text x="70" y="574.25" font-size="15" text-anchor="start" fill="#1971c2" font-weight="normal">Tripling LDS doesn&#x27;t just raise occupancy — it moves the bottleneck from LDS to registers.</text>
+</svg>

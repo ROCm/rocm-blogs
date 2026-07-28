@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="940" height="640" viewBox="0 0 940 640" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="940" height="640" fill="#ffffff"/>
+<rect x="280.0" y="80" width="380" height="62" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="240.0" y="158" width="460" height="62" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="210.0" y="236" width="520" height="62" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="170.0" y="314" width="600" height="62" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="120.0" y="392" width="700" height="62" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="70.0" y="470" width="800" height="62" rx="12" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="720" y="82" width="170" height="120" rx="12" fill="#ffc9c9" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="662" y1="113" x2="718" y2="130" stroke="#c92a2a" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">The memory hierarchy that feeds the Matrix Core</text>
+<text x="470.0" y="114.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">VGPR / AccVGPR  —  register file (per-SIMD)</text>
+<text x="470.0" y="192.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">LDS  —  160 KB / CU</text>
+<text x="470.0" y="270.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">L1 cache</text>
+<text x="470.0" y="348.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">L2 cache  (per XCD)</text>
+<text x="470.0" y="426.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Infinity Cache  —  256 MB  (LLC)</text>
+<text x="470.0" y="504.6" font-size="16" text-anchor="middle" fill="#1e1e1e" font-weight="normal">HBM3E  —  288 GB  @  8 TB/s</text>
+<text x="805.0" y="118.9" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Matrix Core</text>
+<text x="805.0" y="136.4" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">(MFMA)</text>
+<text x="805.0" y="153.9" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">operands from</text>
+<text x="805.0" y="171.4" font-size="14" text-anchor="middle" fill="#1e1e1e" font-weight="normal">registers</text>
+<text x="40" y="374.25" font-size="15" text-anchor="start" fill="#868e96" font-weight="normal">bandwidth</text>
+<text x="40" y="393.0" font-size="15" text-anchor="start" fill="#868e96" font-weight="normal">↓ down</text>
+<text x="40" y="411.75" font-size="15" text-anchor="start" fill="#868e96" font-weight="normal"></text>
+<text x="40" y="430.5" font-size="15" text-anchor="start" fill="#868e96" font-weight="normal">capacity</text>
+<text x="40" y="449.25" font-size="15" text-anchor="start" fill="#868e96" font-weight="normal">↑ down</text>
+<text x="40" y="573.3" font-size="14" text-anchor="start" fill="#1971c2" font-weight="normal">Only the register file feeds the Matrix Core fast enough to hit peak.</text>
+<text x="40" y="590.8" font-size="14" text-anchor="start" fill="#1971c2" font-weight="normal">The gap between registers and everything below is what Part 3 exploits.</text>
+</svg>

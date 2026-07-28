@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 580" font-family="system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arr-gray5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7280"/>
+    </marker>
+    <marker id="arr-red5" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#b91c1c"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="540" y="36" text-anchor="middle" font-size="17" font-weight="600" fill="#111827">Late-resolved feature predicates: end-to-end pipeline</text>
+  <text x="540" y="56" text-anchor="middle" font-size="12" fill="#6b7280">__builtin_amdgcn_processor_is(...) becomes a SPIR-V spec constant, resolved at first kernel launch on the actual device.</text>
+
+  <!-- Build-time region -->
+  <rect x="20" y="80" width="1040" height="220" fill="#fafafa" stroke="#e5e7eb" stroke-width="1" rx="6"/>
+  <text x="40" y="105" font-size="12" font-weight="600" fill="#6b7280" letter-spacing="1.5">BUILD TIME</text>
+
+  <!-- Runtime region -->
+  <rect x="20" y="340" width="1040" height="200" fill="#fef7f6" stroke="#fecaca" stroke-width="1" rx="6"/>
+  <text x="40" y="365" font-size="12" font-weight="600" fill="#b91c1c" letter-spacing="1.5">RUN TIME</text>
+
+  <!-- Build-time boxes (5 in a row) -->
+  <!-- Box 1: HIP source -->
+  <rect x="40" y="135" width="180" height="120" fill="#ffffff" stroke="#9ca3af" stroke-width="1.2" rx="6"/>
+  <text x="130" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">HIP source</text>
+  <text x="130" y="183" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">__builtin_amdgcn_</text>
+  <text x="130" y="197" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">processor_is(</text>
+  <text x="130" y="211" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">"gfx950")</text>
+  <text x="130" y="237" text-anchor="middle" font-size="10" fill="#6b7280">in if/while/?:</text>
+
+  <!-- Box 2: Clang Sema -->
+  <rect x="240" y="135" width="180" height="120" fill="#ffffff" stroke="#9ca3af" stroke-width="1.2" rx="6"/>
+  <text x="330" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Clang Sema</text>
+  <text x="330" y="183" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">SemaAMDGPU.cpp</text>
+  <text x="330" y="207" text-anchor="middle" font-size="11" fill="#374151">type-checks the</text>
+  <text x="330" y="222" text-anchor="middle" font-size="11" fill="#374151">opaque predicate type;</text>
+  <text x="330" y="237" text-anchor="middle" font-size="11" fill="#374151">restricts to bool ctx</text>
+
+  <!-- Box 3: Clang CodeGen -->
+  <rect x="440" y="135" width="180" height="120" fill="#ffffff" stroke="#9ca3af" stroke-width="1.2" rx="6"/>
+  <text x="530" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">Clang CodeGen</text>
+  <text x="530" y="183" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">CGExprScalar.cpp</text>
+  <text x="530" y="206" text-anchor="middle" font-size="11" fill="#374151">emits</text>
+  <text x="530" y="221" text-anchor="middle" font-size="10" fill="#374151" font-family="monospace">llvm.spv.named.</text>
+  <text x="530" y="235" text-anchor="middle" font-size="10" fill="#374151" font-family="monospace">boolean.spec.constant</text>
+
+  <!-- Box 4: SPIR-V Prep -->
+  <rect x="640" y="135" width="180" height="120" fill="#ffffff" stroke="#9ca3af" stroke-width="1.2" rx="6"/>
+  <text x="730" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#111827">SPIR-V lowering</text>
+  <text x="730" y="183" text-anchor="middle" font-size="10" fill="#374151" font-family="monospace">SPIRVPrepareGlobals.cpp</text>
+  <text x="730" y="207" text-anchor="middle" font-size="11" fill="#374151">assigns IDs, emits</text>
+  <text x="730" y="222" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">OpSpecConstantTrue</text>
+  <text x="730" y="237" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">/False</text>
+
+  <!-- Box 5: SPIR-V binary -->
+  <rect x="840" y="135" width="180" height="120" fill="#eef2ff" stroke="#4338ca" stroke-width="1.5" rx="6"/>
+  <text x="930" y="160" text-anchor="middle" font-size="13" font-weight="600" fill="#1e1b4b">SPIR-V binary</text>
+  <text x="930" y="183" text-anchor="middle" font-size="11" fill="#3730a3">portable; ships with</text>
+  <text x="930" y="198" text-anchor="middle" font-size="11" fill="#3730a3">a small predicate</text>
+  <text x="930" y="213" text-anchor="middle" font-size="11" fill="#3730a3">table (unresolved)</text>
+  <text x="930" y="237" text-anchor="middle" font-size="10" fill="#6b7280" font-style="italic">arch-agnostic artifact</text>
+
+  <!-- Arrows between build-time boxes -->
+  <line x1="222" y1="195" x2="238" y2="195" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arr-gray5)"/>
+  <line x1="422" y1="195" x2="438" y2="195" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arr-gray5)"/>
+  <line x1="622" y1="195" x2="638" y2="195" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arr-gray5)"/>
+  <line x1="822" y1="195" x2="838" y2="195" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arr-gray5)"/>
+
+  <!-- Cross-region arrow: SPIR-V binary → comgr (drawn before runtime box) -->
+  <path d="M 930 255 L 930 312 L 330 312 L 330 395" fill="none" stroke="#b91c1c" stroke-width="1.8" marker-end="url(#arr-red5)"/>
+
+  <!-- Gap labels -->
+  <text x="640" y="305" text-anchor="middle" font-size="11.5" font-weight="600" fill="#b91c1c">first kernel launch</text>
+  <text x="640" y="325" text-anchor="middle" font-size="10" fill="#7f1d1d" font-style="italic">device-specific lowering happens here, once</text>
+
+  <!-- Runtime boxes -->
+  <!-- Box A: comgr / translator -->
+  <rect x="140" y="395" width="380" height="120" fill="#ffffff" stroke="#fca5a5" stroke-width="1.2" rx="6"/>
+  <text x="330" y="420" text-anchor="middle" font-size="13" font-weight="600" fill="#7f1d1d">amd_comgr + SPIRV-LLVM Translator</text>
+  <text x="330" y="442" text-anchor="middle" font-size="11" fill="#374151">told the actual gfx of the device,</text>
+  <text x="330" y="458" text-anchor="middle" font-size="11" fill="#374151">folds each spec-constant to a concrete i1,</text>
+  <text x="330" y="474" text-anchor="middle" font-size="11" fill="#374151">runs DCE + constant propagation</text>
+  <text x="330" y="498" text-anchor="middle" font-size="10" fill="#6b7280" font-style="italic">cached under ~/.cache/comgr after first launch</text>
+
+  <!-- Box B: AMDGCN ISA -->
+  <rect x="560" y="395" width="380" height="120" fill="#ffffff" stroke="#fca5a5" stroke-width="1.2" rx="6"/>
+  <text x="750" y="420" text-anchor="middle" font-size="13" font-weight="600" fill="#7f1d1d">AMDGCN ISA</text>
+  <text x="750" y="442" text-anchor="middle" font-size="11" fill="#374151">exactly one branch of</text>
+  <text x="750" y="458" text-anchor="middle" font-size="10.5" fill="#374151" font-family="monospace">__builtin_amdgcn_processor_is(...)</text>
+  <text x="750" y="474" text-anchor="middle" font-size="11" fill="#374151">survives; surrounding loops folded</text>
+  <text x="750" y="498" text-anchor="middle" font-size="10" fill="#6b7280" font-style="italic">native speed; no runtime predicate cost</text>
+
+  <!-- Arrow A → B (runtime row) -->
+  <line x1="522" y1="455" x2="558" y2="455" stroke="#b91c1c" stroke-width="1.8" marker-end="url(#arr-red5)"/>
+
+  <!-- Caption -->
+  <text x="540" y="568" text-anchor="middle" font-size="17" fill="#4b5563" font-style="italic" font-family="sans-serif">Figure 3. The late-resolved feature predicate pipeline, build time to JIT.</text>
+</svg>

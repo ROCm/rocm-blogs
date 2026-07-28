@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="650" viewBox="0 0 1400 650" role="img" aria-labelledby="title desc">
+  <title id="title">MiniMax-M3 online quantization from 1x32 block-scale weights to PTPC FP8 GEMM</title>
+  <desc id="desc">Flow diagram showing MiniMax-M3-FP8 attention GEMM weights stored with 1x32 block scales, selected by ATOM at model load time, converted online to PTPC FP8 weights, and dispatched to the AITER FP8 GEMM path while excluded layers keep their original format.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f6f8fa; }
+      .panel { fill: #ffffff; stroke: #8c959f; stroke-width: 1.5; }
+      .title { fill: #24292f; font: 700 27px Arial, Helvetica, sans-serif; }
+      .subtitle { fill: #57606a; font: 15px Arial, Helvetica, sans-serif; }
+      .section-title { fill: #24292f; font: 700 18px Arial, Helvetica, sans-serif; }
+      .body { fill: #57606a; font: 14px Arial, Helvetica, sans-serif; }
+      .small { fill: #57606a; font: 12px Arial, Helvetica, sans-serif; }
+      .code { fill: #24292f; font: 13px "DejaVu Sans Mono", Consolas, monospace; }
+      .label { fill: #24292f; font: 700 14px Arial, Helvetica, sans-serif; }
+      .muted-label { fill: #57606a; font: 700 13px Arial, Helvetica, sans-serif; }
+      .blue { fill: #ddf4ff; stroke: #54aeef; stroke-width: 1.2; }
+      .green { fill: #dafbe1; stroke: #2da44e; stroke-width: 1.2; }
+      .yellow { fill: #fff8c5; stroke: #d4a72c; stroke-width: 1.2; }
+      .purple { fill: #fbefff; stroke: #bc8cff; stroke-width: 1.2; }
+      .red { fill: #ffebe9; stroke: #ff8182; stroke-width: 1.2; }
+      .gray { fill: #f6f8fa; stroke: #8c959f; stroke-width: 1.2; }
+      .dark-line { stroke: #57606a; stroke-width: 2.2; fill: none; }
+      .arrow { stroke: #57606a; stroke-width: 2.4; fill: none; marker-end: url(#arrowhead); }
+      .thin-arrow { stroke: #8c959f; stroke-width: 1.6; fill: none; marker-end: url(#small-arrowhead); }
+      .dash { stroke: #8c959f; stroke-width: 1.4; stroke-dasharray: 5 5; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#57606a" />
+    </marker>
+    <marker id="small-arrowhead" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8c959f" />
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1400" height="650" rx="18" />
+  <text class="title" x="700" y="45" text-anchor="middle">MiniMax-M3 Online Quantization for Attention GEMMs</text>
+  <text class="subtitle" x="700" y="74" text-anchor="middle">At load time, selected GEMM weights are converted from 1x32 block-scale storage to PTPC FP8 execution format</text>
+
+  <!-- Stage 1: checkpoint storage -->
+  <rect class="panel" x="45" y="118" width="285" height="355" rx="14" />
+  <text class="section-title" x="73" y="148">1. MiniMax-M3-FP8</text>
+  <text class="section-title" x="73" y="170">checkpoint</text>
+  <text class="body" x="73" y="195">Attention GEMM weights are loaded</text>
+  <text class="body" x="73" y="216">from the model checkpoint.</text>
+
+  <g transform="translate(72,232)">
+    <rect class="blue" x="0" y="0" width="225" height="46" rx="8" />
+    <text class="label" x="112.5" y="19" text-anchor="middle">Wq / Wk / Wv / Wo</text>
+    <text class="small" x="112.5" y="36" text-anchor="middle">attention linear GEMM weights</text>
+
+    <rect class="yellow" x="0" y="78" width="225" height="120" rx="10" />
+    <text class="muted-label" x="112.5" y="104" text-anchor="middle">1x32 block-scale format</text>
+    <g transform="translate(25,122)">
+      <rect class="gray" x="0" y="0" width="38" height="34" rx="5" />
+      <rect class="gray" x="43" y="0" width="38" height="34" rx="5" />
+      <rect class="gray" x="86" y="0" width="38" height="34" rx="5" />
+      <rect class="gray" x="129" y="0" width="38" height="34" rx="5" />
+      <text class="small" x="19" y="22" text-anchor="middle">32</text>
+      <text class="small" x="62" y="22" text-anchor="middle">32</text>
+      <text class="small" x="105" y="22" text-anchor="middle">32</text>
+      <text class="small" x="148" y="22" text-anchor="middle">...</text>
+      <path class="thin-arrow" d="M84 44 V66" />
+      <rect class="purple" x="30" y="70" width="108" height="28" rx="5" />
+      <text class="small" x="84" y="89" text-anchor="middle">scale per block</text>
+    </g>
+  </g>
+
+  <path class="arrow" d="M340 295 H426" />
+
+  <!-- Stage 2: layer selection -->
+  <rect class="panel" x="430" y="118" width="280" height="355" rx="14" />
+  <text class="section-title" x="458" y="153">2. ATOM selects layers</text>
+  <text class="body" x="458" y="181">Online quantization runs during</text>
+  <text class="body" x="458" y="202">model load, before serving starts.</text>
+
+  <g transform="translate(458,232)">
+    <rect class="green" x="0" y="0" width="224" height="52" rx="9" />
+    <text class="label" x="112" y="21" text-anchor="middle">Convert attention linears</text>
+    <text class="small" x="112" y="39" text-anchor="middle">compute-heavy GEMM path</text>
+
+    <rect class="red" x="0" y="82" width="224" height="52" rx="9" />
+    <text class="label" x="112" y="103" text-anchor="middle">Keep excluded modules</text>
+    <text class="small" x="112" y="121" text-anchor="middle">lm_head, embeddings, MoE</text>
+
+    <rect class="gray" x="0" y="164" width="224" height="58" rx="9" />
+    <text class="code" x="112" y="188" text-anchor="middle">global_quant_config</text>
+    <text class="code" x="112" y="208" text-anchor="middle">"ptpc_fp8"</text>
+  </g>
+
+  <path class="arrow" d="M720 295 H806" />
+
+  <!-- Stage 3: online conversion -->
+  <rect class="panel" x="810" y="118" width="285" height="355" rx="14" />
+  <text class="section-title" x="838" y="153">3. Online quantize to PTPC</text>
+  <text class="body" x="838" y="181">ATOM converts selected weights into</text>
+  <text class="body" x="838" y="202">the FP8 format expected by GEMM.</text>
+
+  <g transform="translate(838,232)">
+    <rect class="yellow" x="0" y="0" width="225" height="58" rx="9" />
+    <text class="label" x="112.5" y="23" text-anchor="middle">source weight</text>
+    <text class="small" x="112.5" y="42" text-anchor="middle">1x32 block-scale tensor</text>
+
+    <path class="thin-arrow" d="M112.5 58 V78" />
+    <rect class="purple" x="0" y="82" width="225" height="58" rx="9" />
+    <text class="label" x="112.5" y="105" text-anchor="middle">load-time conversion</text>
+    <text class="small" x="112.5" y="124" text-anchor="middle">rescale + repack for GEMM</text>
+
+    <path class="thin-arrow" d="M112.5 140 V160" />
+    <rect class="green" x="0" y="164" width="225" height="58" rx="9" />
+    <text class="label" x="112.5" y="187" text-anchor="middle">PTPC FP8 weight</text>
+    <text class="small" x="112.5" y="206" text-anchor="middle">ready for FP8 GEMM execution</text>
+  </g>
+
+  <path class="arrow" d="M1105 295 H1191" />
+
+  <!-- Stage 4: execution -->
+  <rect class="panel" x="1195" y="118" width="160" height="355" rx="14" />
+  <text class="section-title" x="1217" y="153">4. FP8 GEMM</text>
+  <text class="body" x="1217" y="181">AITER kernels</text>
+  <text class="body" x="1217" y="202">use the PTPC</text>
+  <text class="body" x="1217" y="223">weight layout.</text>
+
+  <g transform="translate(1221,242)">
+    <rect class="green" x="0" y="0" width="108" height="44" rx="9" />
+    <text class="label" x="54" y="19" text-anchor="middle">X FP8</text>
+    <text class="small" x="54" y="35" text-anchor="middle">activation</text>
+    <text class="label" x="54" y="65" text-anchor="middle">x</text>
+    <rect class="green" x="0" y="78" width="108" height="44" rx="9" />
+    <text class="label" x="54" y="97" text-anchor="middle">W FP8</text>
+    <text class="small" x="54" y="113" text-anchor="middle">PTPC</text>
+    <path class="thin-arrow" d="M54 126 V146" />
+    <rect class="blue" x="0" y="150" width="108" height="44" rx="9" />
+    <text class="label" x="54" y="169" text-anchor="middle">Y</text>
+    <text class="small" x="54" y="185" text-anchor="middle">output</text>
+  </g>
+
+  <!-- Bypass note for excluded layers -->
+  <text class="small" x="700" y="541" text-anchor="middle">Excluded modules bypass the conversion and keep their checkpoint format, keeping the optimization focused on attention GEMMs.</text>
+
+  <!-- Bottom summary -->
+  <rect class="panel" x="210" y="565" width="980" height="32" rx="16" />
+  <text class="body" x="700" y="586" text-anchor="middle">1x32 block-scale checkpoint weight -> ATOM load-time online quantization -> PTPC FP8 weight -> faster AITER FP8 GEMM</text>
+</svg>

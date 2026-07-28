@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="650" viewBox="0 0 1500 650" role="img" aria-labelledby="title desc">
+<title id="title">Fastest Backend by Shape</title>
+<desc id="desc">Hand-drawn fastest backend table.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 C3,1 6,3 9,4 C6,5 3,7 0,8 Z" fill="#3f3f46"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.paper{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.stripe{fill:#fff7ed;opacity:.32}.plot{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:18}
+    .title{font:800 32px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 16px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 14px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 11px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.backend{font:700 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.legend{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.tagtext{font:600 9.5px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.axis{font:700 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}
+    .num{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.stat{font:800 26px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.note{font:600 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#7c4a03}
+    .grid{stroke:#e8dccd;stroke-width:1.15;stroke-dasharray:5 8}.axisline{stroke:#a89a89;stroke-width:1.8;stroke-linecap:round}
+    .line{fill:none;stroke-linecap:round;stroke-linejoin:round}.dot{stroke:#fffdf7;stroke-width:2}.tag{fill:#fffdf7;stroke:#c9bfae;stroke-width:1.3;rx:8}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="650"/>
+<text x="42" y="54" class="title">Fastest Backend by Shape</text>
+<text x="44" y="84" class="subtitle">K=7168. Purple = AITER FLYDSL, orange = AITER ASM, gray = HipblasLT, cyan = AITER Triton.</text>
+<rect class="" x="760" y="122" width="105" height="28" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="759.3" y="121.4" width="105" height="28" rx="12" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<circle cx="777" cy="136" r="4.5" fill="#7c3aed"/>
+<text x="790" y="141" class="legend">AITER FLYDSL</text>
+<rect class="" x="905" y="122" width="105" height="28" rx="12" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<rect x="904.3" y="121.4" width="105" height="28" rx="12" fill="none" stroke="#f97316" stroke-width="1" opacity="0.45"/>
+<circle cx="922" cy="136" r="4.5" fill="#f97316"/>
+<text x="935" y="141" class="legend">AITER ASM</text>
+<rect class="" x="1050" y="122" width="105" height="28" rx="12" fill="#f1f5f9" stroke="#64748b" stroke-width="2"/>
+<rect x="1049.3" y="121.4" width="105" height="28" rx="12" fill="none" stroke="#64748b" stroke-width="1" opacity="0.45"/>
+<circle cx="1067" cy="136" r="4.5" fill="#64748b"/>
+<text x="1080" y="141" class="legend">HipblasLT</text>
+<rect class="" x="1195" y="122" width="105" height="28" rx="12" fill="#cffafe" stroke="#06b6d4" stroke-width="2"/>
+<rect x="1194.3" y="121.4" width="105" height="28" rx="12" fill="none" stroke="#06b6d4" stroke-width="1" opacity="0.45"/>
+<circle cx="1212" cy="136" r="4.5" fill="#06b6d4"/>
+<text x="1225" y="141" class="legend">AITER Triton</text>
+<rect class="" x="70" y="165" width="1360" height="410" rx="22" fill="#fffdf7" stroke="#c9bfae" stroke-width="2"/>
+<rect x="69.3" y="164.4" width="1360" height="410" rx="22" fill="none" stroke="#c9bfae" stroke-width="1" opacity="0.45"/>
+<rect class="" x="1040" y="169" width="300" height="26" rx="13" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1039.3" y="168.4" width="300" height="26" rx="13" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1082" y="187" class="tiny">AITER FLYDSL wins 29/32 shapes</text>
+<text x="105" y="222" class="label">shape / M</text>
+<rect class="" x="373" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="372.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="395" y="218" class="axis">1</text>
+<rect class="" x="501" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="500.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="523" y="218" class="axis">2</text>
+<rect class="" x="629" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="628.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="651" y="218" class="axis">4</text>
+<rect class="" x="757" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="756.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="779" y="218" class="axis">8</text>
+<rect class="" x="885" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="884.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="907" y="218" class="axis">16</text>
+<rect class="" x="1013" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="1012.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="1035" y="218" class="axis">32</text>
+<rect class="" x="1141" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="1140.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="1163" y="218" class="axis">64</text>
+<rect class="" x="1269" y="200" width="58" height="26" rx="13" fill="#fff7ed" stroke="#ead7bd" stroke-width="1.4"/>
+<rect x="1268.3" y="199.4" width="58" height="26" rx="13" fill="none" stroke="#ead7bd" stroke-width="1" opacity="0.45"/>
+<text x="1291" y="218" class="axis">128</text>
+<rect class="stripe" x="92" y="237" width="1315" height="74" rx="18"/>
+<text x="105" y="268" class="label">N=64  K=7168</text>
+<text x="105" y="288" class="tiny">no bias</text>
+<g transform="rotate(-0.26 401 274)">
+<rect class="" x="345" y="245" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="344.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="365" y="269" class="backend">AITER FLYDSL</text>
+<text x="365" y="289" class="tiny">4.6us</text>
+</g>
+<g transform="rotate(0.04 529 274)">
+<rect class="" x="473" y="245" width="112" height="58" rx="14" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<rect x="472.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#f97316" stroke-width="1" opacity="0.45"/>
+<text x="493" y="269" class="backend">AITER ASM</text>
+<text x="493" y="289" class="tiny">4.9us</text>
+</g>
+<g transform="rotate(0.26 657 274)">
+<rect class="" x="601" y="245" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="600.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="621" y="269" class="backend">AITER FLYDSL</text>
+<text x="621" y="289" class="tiny">4.9us</text>
+</g>
+<g transform="rotate(-0.12 785 274)">
+<rect class="" x="729" y="245" width="112" height="58" rx="14" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<rect x="728.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#f97316" stroke-width="1" opacity="0.45"/>
+<text x="749" y="269" class="backend">AITER ASM</text>
+<text x="749" y="289" class="tiny">4.9us</text>
+</g>
+<g transform="rotate(0.18 913 274)">
+<rect class="" x="857" y="245" width="112" height="58" rx="14" fill="#ffedd5" stroke="#f97316" stroke-width="2"/>
+<rect x="856.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#f97316" stroke-width="1" opacity="0.45"/>
+<text x="877" y="269" class="backend">AITER ASM</text>
+<text x="877" y="289" class="tiny">5.0us</text>
+</g>
+<g transform="rotate(-0.18 1041 274)">
+<rect class="" x="985" y="245" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="984.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1005" y="269" class="backend">AITER FLYDSL</text>
+<text x="1005" y="289" class="tiny">5.1us</text>
+</g>
+<g transform="rotate(0.10 1169 274)">
+<rect class="" x="1113" y="245" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1112.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1133" y="269" class="backend">AITER FLYDSL</text>
+<text x="1133" y="289" class="tiny">5.0us</text>
+</g>
+<g transform="rotate(-0.24 1297 274)">
+<rect class="" x="1241" y="245" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1240.3" y="244.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1261" y="269" class="backend">AITER FLYDSL</text>
+<text x="1261" y="289" class="tiny">5.9us</text>
+</g>
+<text x="105" y="346" class="label">N=384  K=7168</text>
+<text x="105" y="366" class="tiny">no bias</text>
+<g transform="rotate(0.04 401 352)">
+<rect class="" x="345" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="344.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="365" y="347" class="backend">AITER FLYDSL</text>
+<text x="365" y="367" class="tiny">5.8us</text>
+</g>
+<g transform="rotate(0.26 529 352)">
+<rect class="" x="473" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="472.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="493" y="347" class="backend">AITER FLYDSL</text>
+<text x="493" y="367" class="tiny">5.8us</text>
+</g>
+<g transform="rotate(-0.12 657 352)">
+<rect class="" x="601" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="600.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="621" y="347" class="backend">AITER FLYDSL</text>
+<text x="621" y="367" class="tiny">5.8us</text>
+</g>
+<g transform="rotate(0.18 785 352)">
+<rect class="" x="729" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="728.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="749" y="347" class="backend">AITER FLYDSL</text>
+<text x="749" y="367" class="tiny">6.0us</text>
+</g>
+<g transform="rotate(-0.18 913 352)">
+<rect class="" x="857" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="856.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="877" y="347" class="backend">AITER FLYDSL</text>
+<text x="877" y="367" class="tiny">6.3us</text>
+</g>
+<g transform="rotate(0.10 1041 352)">
+<rect class="" x="985" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="984.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1005" y="347" class="backend">AITER FLYDSL</text>
+<text x="1005" y="367" class="tiny">6.8us</text>
+</g>
+<g transform="rotate(-0.24 1169 352)">
+<rect class="" x="1113" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1112.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1133" y="347" class="backend">AITER FLYDSL</text>
+<text x="1133" y="367" class="tiny">7.6us</text>
+</g>
+<g transform="rotate(-0.26 1297 352)">
+<rect class="" x="1241" y="323" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1240.3" y="322.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1261" y="347" class="backend">AITER FLYDSL</text>
+<text x="1261" y="367" class="tiny">9.7us</text>
+</g>
+<rect class="stripe" x="92" y="393" width="1315" height="74" rx="18"/>
+<text x="105" y="424" class="label">N=512  K=7168</text>
+<text x="105" y="444" class="tiny">no bias</text>
+<g transform="rotate(0.26 401 430)">
+<rect class="" x="345" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="344.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="365" y="425" class="backend">AITER FLYDSL</text>
+<text x="365" y="445" class="tiny">6.1us</text>
+</g>
+<g transform="rotate(-0.12 529 430)">
+<rect class="" x="473" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="472.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="493" y="425" class="backend">AITER FLYDSL</text>
+<text x="493" y="445" class="tiny">6.0us</text>
+</g>
+<g transform="rotate(0.18 657 430)">
+<rect class="" x="601" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="600.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="621" y="425" class="backend">AITER FLYDSL</text>
+<text x="621" y="445" class="tiny">6.1us</text>
+</g>
+<g transform="rotate(-0.18 785 430)">
+<rect class="" x="729" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="728.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="749" y="425" class="backend">AITER FLYDSL</text>
+<text x="749" y="445" class="tiny">6.4us</text>
+</g>
+<g transform="rotate(0.10 913 430)">
+<rect class="" x="857" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="856.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="877" y="425" class="backend">AITER FLYDSL</text>
+<text x="877" y="445" class="tiny">6.8us</text>
+</g>
+<g transform="rotate(-0.24 1041 430)">
+<rect class="" x="985" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="984.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1005" y="425" class="backend">AITER FLYDSL</text>
+<text x="1005" y="445" class="tiny">7.0us</text>
+</g>
+<g transform="rotate(-0.26 1169 430)">
+<rect class="" x="1113" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1112.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1133" y="425" class="backend">AITER FLYDSL</text>
+<text x="1133" y="445" class="tiny">7.8us</text>
+</g>
+<g transform="rotate(0.04 1297 430)">
+<rect class="" x="1241" y="401" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1240.3" y="400.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1261" y="425" class="backend">AITER FLYDSL</text>
+<text x="1261" y="445" class="tiny">9.7us</text>
+</g>
+<text x="105" y="502" class="label">N=1024  K=7168</text>
+<text x="105" y="522" class="tiny">no bias</text>
+<g transform="rotate(-0.12 401 508)">
+<rect class="" x="345" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="344.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="365" y="503" class="backend">AITER FLYDSL</text>
+<text x="365" y="523" class="tiny">6.6us</text>
+</g>
+<g transform="rotate(0.18 529 508)">
+<rect class="" x="473" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="472.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="493" y="503" class="backend">AITER FLYDSL</text>
+<text x="493" y="523" class="tiny">6.5us</text>
+</g>
+<g transform="rotate(-0.18 657 508)">
+<rect class="" x="601" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="600.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="621" y="503" class="backend">AITER FLYDSL</text>
+<text x="621" y="523" class="tiny">6.6us</text>
+</g>
+<g transform="rotate(0.10 785 508)">
+<rect class="" x="729" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="728.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="749" y="503" class="backend">AITER FLYDSL</text>
+<text x="749" y="523" class="tiny">6.9us</text>
+</g>
+<g transform="rotate(-0.24 913 508)">
+<rect class="" x="857" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="856.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="877" y="503" class="backend">AITER FLYDSL</text>
+<text x="877" y="523" class="tiny">7.3us</text>
+</g>
+<g transform="rotate(-0.26 1041 508)">
+<rect class="" x="985" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="984.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1005" y="503" class="backend">AITER FLYDSL</text>
+<text x="1005" y="523" class="tiny">7.8us</text>
+</g>
+<g transform="rotate(0.04 1169 508)">
+<rect class="" x="1113" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1112.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1133" y="503" class="backend">AITER FLYDSL</text>
+<text x="1133" y="523" class="tiny">9.6us</text>
+</g>
+<g transform="rotate(0.26 1297 508)">
+<rect class="" x="1241" y="479" width="112" height="58" rx="14" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+<rect x="1240.3" y="478.4" width="112" height="58" rx="14" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.45"/>
+<text x="1261" y="503" class="backend">AITER FLYDSL</text>
+<text x="1261" y="523" class="tiny">11.2us</text>
+</g>
+<text x="92" y="620" class="note">Regular K=7168 decode sweep. Win count: AITER FLYDSL 29, AITER ASM 3, HipblasLT 0, AITER Triton 0.</text>
+</svg>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" font-family="Comic Sans MS, Segoe Print, sans-serif">
+<defs><marker id="ah" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,3 L0,6 Z" fill="#1e1e1e"/></marker></defs>
+<rect width="1200" height="600" fill="#ffffff"/>
+<rect x="40" y="80" width="250" height="140" rx="12" fill="#d0bfff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="325" y="80" width="250" height="140" rx="12" fill="#e9ecef" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="610" y="80" width="250" height="140" rx="12" fill="#b2f2bb" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="895" y="80" width="250" height="140" rx="12" fill="#a5d8ff" stroke="#1e1e1e" stroke-width="2"/>
+<rect x="495" y="310" width="210" height="72" rx="12" fill="#ffec99" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="165" y1="220" x2="540" y2="310" stroke="#5f3dc4" stroke-width="2" marker-end="url(#ah)" />
+<line x1="450" y1="220" x2="575" y2="310" stroke="#868e96" stroke-width="2" marker-end="url(#ah)" />
+<line x1="735" y1="220" x2="625" y2="310" stroke="#2b8a3e" stroke-width="2" marker-end="url(#ah)" />
+<line x1="1020" y1="220" x2="660" y2="310" stroke="#1971c2" stroke-width="2" marker-end="url(#ah)" />
+<rect x="410" y="440" width="380" height="70" rx="12" fill="#ffd8a8" stroke="#1e1e1e" stroke-width="2"/>
+<line x1="600" y1="382" x2="600" y2="440" stroke="#1e1e1e" stroke-width="2" marker-end="url(#ah)" />
+<text x="40" y="42.8" font-size="24" text-anchor="start" fill="#1e1e1e" font-weight="bold">Four limiters, the lowest one wins</text>
+<text x="54" y="108.15" font-size="17" text-anchor="start" fill="#1e1e1e" font-weight="normal">VGPR limit</text>
+<text x="54" y="139.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">⌊ 512 / VGPRs-per-thread ⌋</text>
+<text x="54" y="156.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">= waves / SIMD</text>
+<text x="54" y="174.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal"></text>
+<text x="54" y="191.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">per-SIMD</text>
+<text x="339" y="108.15" font-size="17" text-anchor="start" fill="#1e1e1e" font-weight="normal">SGPR limit</text>
+<text x="339" y="139.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">⌊ ~800 / SGPRs-per-wave ⌋</text>
+<text x="339" y="156.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">= waves / SIMD</text>
+<text x="339" y="174.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal"></text>
+<text x="339" y="191.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">per-SIMD (rarely binds)</text>
+<text x="624" y="108.15" font-size="17" text-anchor="start" fill="#1e1e1e" font-weight="normal">LDS limit</text>
+<text x="624" y="139.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">⌊ 160 KB / LDS-per-WG ⌋</text>
+<text x="624" y="156.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">= workgroups / CU</text>
+<text x="624" y="174.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal"></text>
+<text x="624" y="191.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">per-CU</text>
+<text x="909" y="108.15" font-size="17" text-anchor="start" fill="#1e1e1e" font-weight="normal">Workgroup limit</text>
+<text x="909" y="139.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">max workgroups / CU</text>
+<text x="909" y="156.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">(hard cap + barrier slots)</text>
+<text x="909" y="174.3" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal"></text>
+<text x="909" y="191.8" font-size="14" text-anchor="start" fill="#1e1e1e" font-weight="normal">bites small workgroups</text>
+<text x="600.0" y="338.8" font-size="18" text-anchor="middle" fill="#1e1e1e" font-weight="normal">min( · )</text>
+<text x="600.0" y="361.3" font-size="18" text-anchor="middle" fill="#1e1e1e" font-weight="normal">binding limit</text>
+<text x="600.0" y="479.05" font-size="18" text-anchor="middle" fill="#1e1e1e" font-weight="normal">Occupancy = resident waves / max</text>
+<text x="250" y="553.3" font-size="14" text-anchor="start" fill="#495057" font-weight="normal">Also clamped by the hardware: 8 waves/SIMD, 32 waves/CU.   Convert all four to a</text>
+<text x="250" y="570.8" font-size="14" text-anchor="start" fill="#495057" font-weight="normal">common unit (waves/SIMD or waves/CU) before taking the min — they don&#x27;t start the same.</text>
+</svg>
