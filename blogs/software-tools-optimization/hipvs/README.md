@@ -104,7 +104,7 @@ The rest of this blog is an interactive walkthrough using a Jupyter notebook tha
 - ROCm 7.0.2: See the [ROCm installation for Linux](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/index.html) for installation instructions.
 - Docker: See [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) for installation instructions.
 
-This blog utilizes a [custom Dockerfile](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/hipvs/docker/Dockerfile) that provides all the necessary instructions to build a Docker image, allowing you to run the blog without manually installing any dependencies.
+This blog utilizes a [custom Dockerfile](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/hipvs/src/docker/Dockerfile) that provides all the necessary instructions to build a Docker image, allowing you to run the blog without manually installing any dependencies.
 
 We recommend using the provided Docker container to run the examples in this blog, as it is the easiest and most reliable way to construct the required environment.
 
@@ -117,7 +117,7 @@ We recommend using the provided Docker container to run the examples in this blo
     cd rocm-blogs/blogs/software-tools-optimization/hipvs 
     ```
 
-- Build and start the container. For details on the build process, see the [`hipvs/docker/Dockerfile`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/hipvs/docker/Dockerfile).
+- Build and start the container. For details on the build process, see the [`hipvs/src/docker/Dockerfile`](https://github.com/ROCm/rocm-blogs/tree/release/blogs/software-tools-optimization/hipvs/src/docker/Dockerfile).
 
     ```shell
     cd src/docker
