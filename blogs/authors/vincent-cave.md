@@ -1,0 +1,1 @@
+Vincent works on distributed AI inference at AMD. His expertise spans the complete software stack for parallel and distributed programming, including compilers, runtimes, simulators, libraries, and frameworks for general-purpose and custom silicon.
