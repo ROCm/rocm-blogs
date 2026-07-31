@@ -131,7 +131,7 @@ There is no requirement to adopt a specific SmartNIC. ROCm AIC works with existi
 
 ### Storage Backend: NFS over RDMA, with Object over RDMA, WekaFS, Lustre, and IBM GPFS to follow
 
-The initial storage backend is **NFS (Network File System) over RDMA**, an open standard that enables high-performance access to networked file storage without buffering data through CPU memory. Storage vendors including VAST, Dell PowerScale (formerly Isilon), and NetApp support this standard. This means you can use your existing NAS/NFS storage infrastructure as the KV cache tier, as long as it is RDMA-capable. Later phases expand to object over RDMA, WekaFS, Lustre, and IBM GPFS for broader storage ecosystem support.
+The initial storage backend is **NFS (Network File System) over RDMA**, an open standard that enables high-performance access to networked file storage without buffering data through CPU memory. Storage vendors including VAST, Dell PowerScale (formerly Isilon), HPE, and NetApp support this standard. This means you can use your existing NAS/NFS storage infrastructure as the KV cache tier, as long as it is RDMA-capable. Later phases expand to object over RDMA, WekaFS, Lustre, and IBM GPFS for broader storage ecosystem support.
 
 ## Architecture: How It Flows
 
