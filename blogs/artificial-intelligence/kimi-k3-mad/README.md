@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "Benchmarking Kimi-K3 with vLLM, SGLang, and ATOM on MI350X/MI355X in MAD"
+blog_title: "Benchmarking Kimi-K3 Across vLLM, SGLang, and ATOM on MI350X/MI355X"
 date: "02 Aug 2026"
 author: "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
 thumbnail: ''
@@ -12,7 +12,7 @@ language: English
 myst:
     html_meta:
         "author": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
-        "description lang=en": "One declarative madengine command benchmarks day-0 Kimi-K3 across vLLM, SGLang, and ATOM on AMD Instinct MI350X/MI355X."
+        "description lang=en": "One declarative madengine command benchmarks day-0 Kimi-K3 across vLLM, SGLang, and ATOM on AMD Instinct MI350X/MI355X, with a shared harness for extending the sweep to your own workload."
         "keywords": "Kimi-K3, MAD, madengine, vLLM, SGLang, ATOM, MI355X, MI350X, benchmarking, MXFP4, reproducibility"
         "vertical": "AI, HPC"
         "amd_category": "Developer Resources"
@@ -47,7 +47,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 --->
 
-# Benchmarking Kimi-K3 with vLLM, SGLang, and ATOM on MI350X/MI355X in MAD
+# Benchmarking Kimi-K3 Across vLLM, SGLang, and ATOM on MI350X/MI355X
 
 When Moonshot AI released the weights for **Kimi-K3** — a 2.8-trillion-parameter,
 1M-context, natively-MXFP4 Mixture-of-Experts model — the AMD Instinct™ ecosystem was
@@ -262,9 +262,9 @@ there is no hidden state.
 The single most important reliability decision is that **all three engines run the
 exact same sweep**: `inp=8192, out=1024, concurrency 1·4·8·16·32·64·128·256, TP8`.
 
-This is not an accident of three teams happening to agree — it is engineered. The
-SGLang config file even documents how the sweep shape was *reverse-engineered* from
-the framework's public day-0 tracking issue so the numbers stay comparable:
+Three teams did not land on this by coincidence — it is engineered. The SGLang config
+file documents how the sweep shape was *reverse-engineered* from the framework's public
+day-0 tracking issue so the numbers stay comparable:
 
 > *"(E2EL − TTFT) / TPOT + 1 lands on ~1024 output tokens for every row, and
 > concurrency × (inp + out) / E2EL reproduces the reported total throughput only at
@@ -295,21 +295,21 @@ and KV cache dtype are distinct settings: vLLM and SGLang expose only a general
 model/activation `dtype` flag for this recipe, while ATOM's config sets a genuine
 `kv_cache_dtype`; neither vLLM nor SGLang override their (bf16) KV cache dtype here.
 
-The last two rows are the honest caveat, and they are worth reading carefully. Each
-engine's benchmark client has its own defaults, and the runners do not currently
-normalize them. vLLM omits `--random-range-ratio` entirely, whose client default of
-`0.0` pins every prompt at exactly 8192 tokens. SGLang passes `1.0`, which under its
-own `[input_len × ratio, input_len + 1]` sampling convention is likewise effectively
-exact. **ATOM passes `0.8`, so its prompt lengths are sampled over a range rather than
-pinned** — ATOM is measuring a nearby but not identical workload. Separately, SGLang
-does not pass `--ignore-eos`, so a request that emits an EOS token can finish before
-1024 output tokens, where vLLM and ATOM force the full output length.
+The last two rows are the caveat: each engine's benchmark client has its own defaults,
+and the runners do not currently normalize them. vLLM omits `--random-range-ratio`
+entirely, whose client default of `0.0` pins every prompt at exactly 8192 tokens.
+SGLang passes `1.0`, which under its own `[input_len × ratio, input_len + 1]` sampling
+convention is likewise effectively exact. **ATOM passes `0.8`, so its prompt lengths
+are sampled over a range rather than pinned** — ATOM is measuring a nearby but not
+identical workload. Separately, SGLang does not pass `--ignore-eos`, so a request that
+emits an EOS token can finish before 1024 output tokens, where vLLM and ATOM force the
+full output length.
 
 Neither difference is large enough to reorder Figure 3's high-concurrency ranking, but
-both are real, and they are exactly the kind of silent divergence this post argues
-automation should eliminate. They are tracked as a follow-up to align the three bench
-invocations; until then, treat single-digit-percent gaps between engines as within
-measurement noise rather than as engine differences.
+both are real, and both are the kind of silent divergence this post argues automation
+should eliminate. They are tracked as a follow-up to align the three bench invocations;
+until then, treat single-digit-percent gaps between engines as within measurement noise
+rather than as engine differences.
 
 The sweep expansion itself is handled generically by the runner — `max_concurrency`
 is a space-separated list that the runner takes a Cartesian product over, so adding a
@@ -425,8 +425,10 @@ yet," not "impossible."
 The shared 8192/1024 sweep exists to make the three engines comparable to each other
 and to the framework authors' published figures. It is almost certainly not *your*
 workload. A summarization service runs long-in/short-out; a code assistant runs the
-reverse; an agentic loop runs neither. Because the recipe is just a file, retargeting
-the benchmark is a copy and an edit — not a fork of the harness.
+reverse; an agentic loop runs neither. And Kimi-K3's headline spec is a 1M-token
+context — 8192 barely touches it. This post does not include a long-context sweep: no
+one has pointed `inp` at 32k, 128k, or beyond on any of the three engines yet. That's
+the natural next data point, and the harness below is what you'd use to go generate it.
 
 ### 1. Copy the config, change the shape
 
@@ -479,7 +481,7 @@ madengine run --tags pyt_vllm_kimi-k3 --keep-model-dir --live-output \
                          "docker_env_vars": {"MAD_DATAHOME": "/model_weights"}}'
 ```
 
-Two things are easy to get wrong here, both worth stating plainly:
+Two things are easy to get wrong here:
 
 - **`model_args` replaces the registry's `args` string — it does not merge with it.**
   Whatever you pass is the *complete* argument list handed to the run script, so
@@ -570,7 +572,7 @@ independent enablement efforts, not a leaderboard — the ranking here is a pict
 where each stack's K3-specific tuning stood on launch day, and it is the thing most
 likely to have changed by the time you re-run the command.
 
-Two properties of the shape are worth more than the ordering. First, this is a
+Two properties of the shape matter more than the ordering. First, this is a
 *functional* signal before it is a performance one: a 2.8T-parameter MoE with a brand-new
 attention design serves correctly on a single 8× MI355X node, on three separate engines,
 on day 0. Second, through concurrency 32 all three land on essentially the same curve —
