@@ -50,14 +50,13 @@ SOFTWARE.
 
 Video generation powered by diffusion transformers has achieved remarkable quality, but the computational cost of attention mechanisms remains a critical bottleneck. With sequence lengths reaching tens of thousands of tokens in video generation tasks, the quadratic complexity of standard attention becomes prohibitively expensive.
 
-This blog introduces **[VSA (Video Sparse Attention)](https://arxiv.org/abs/2505.13389)** implemented with CK Tile, a hardware-efficient sparse attention mechanism that significantly accelerates video diffusion inference. We demonstrate how VSA, implemented through AMD's CK Tile library, delivers significant speedups across various sparsity levels, achieving a **3.31× attention kernel-time speedup** at 70% sparsity over FlashAttention on AMD Instinct™ MI308X GPUs, with qualitative visual checks included as a sanity check.
+This blog introduces **[VSA (Video Sparse Attention)](https://arxiv.org/abs/2505.13389)** implemented with CK Tile, a hardware-efficient sparse attention mechanism that significantly accelerates video diffusion inference. We demonstrate how VSA, implemented through AMD's CK Tile library, delivers significant speedups across various sparsity levels, achieving a **3.31× attention kernel-time speedup** at 70% sparsity over FlashAttention on AMD Instinct™ MI308X GPUs, with qualitative visual checks included as a sanity check. This VSA CK Tile implementation was developed by the **AMD Quark team**.
 
 *Results may vary based on model, prompt, resolution, frame count, sequence length, sparsity level, inference settings, software versions, system configuration, and other factors.*
 
 ## The Attention Bottleneck in Video Diffusion
 
 Modern video diffusion models like [Wan2.1](https://github.com/Wan-Video/Wan2.1), [HunyuanVideo](https://github.com/Tencent/HunyuanVideo), and [CogVideoX](https://github.com/THUDM/CogVideo) rely on transformer architectures where attention dominates both compute and memory costs. For a typical video generation task:
-
 
 | Parameter                | Typical Value                            |
 | -------------------------- | ------------------------------------------ |
@@ -90,11 +89,11 @@ VSA implements a two-stage coarse-to-fine selection mechanism. The goal is to av
 
 ![VSA two-stage coarse-to-fine architecture](images/vsa_architecture.png)
 
-**Pre-stage: 3D Space-Filling Curve (SFC) Token Reordering**
+#### Pre-stage: 3D Space-Filling Curve (SFC) Token Reordering
 
 Before any attention computation, video tokens are reordered using a **3D space-filling curve (SFC)**—a technique adopted from [Jenga](https://arxiv.org/abs/2505.16864). In native linear layout (T, H, W), tokens that are spatially adjacent in 3D but far apart in the flattened 1D sequence can end up in different attention blocks, breaking spatial locality. SFC reordering remaps token positions so that tokens close together in 3D space are also close together in the 1D sequence. This ensures that when the sequence is partitioned into fixed-size blocks for the attention kernel, each block corresponds to a contiguous spatial-temporal region of the video—which is the prerequisite for block-sparse patterns to be meaningful.
 
-**Stage 1: Coarse Selection**
+#### Stage 1: Coarse Selection
 
 After SFC reordering, VSA groups neighboring video tokens into spatial-temporal cubes. In the VSA paper, a typical setting is `(Ct, Ch, Cw) = (4, 4, 4)`, so each cube contains 64 tokens. Each cube is mean-pooled into one cube-level representation, producing cube-level `Qc`, `Kc`, and `Vc`.
 
@@ -104,7 +103,7 @@ The coarse stage then computes cube-to-cube attention scores. For each query cub
 
 Conceptually, each selected cube-level entry expands into a `B x B` block in the full attention mask. In practice, VSA does not materialize this full-resolution mask. Instead, it passes the selected block indices directly to the fine-grained attention kernel.
 
-**Stage 2: Fine Computation**
+#### Stage 2: Fine Computation
 
 The fine stage performs normal token-level attention, but only over the K/V cubes selected by the coarse stage. Unselected cubes are skipped entirely, reducing both memory traffic and attention computation while keeping the work aligned with block-sparse GPU kernels.
 
@@ -131,7 +130,6 @@ We provide high-performance implementations of VSA optimized for AMD Instinct GP
 
 ### Key Components
 
-
 | Component            | File Path                                                                             |
 | ---------------------- | --------------------------------------------------------------------------------------- |
 | **VSA Entry Point**  | `example/ck_tile/50_sparse_attn/vsa_sparse_attention.cpp`                              |
@@ -143,22 +141,22 @@ We provide high-performance implementations of VSA optimized for AMD Instinct GP
 
 The CK Tile VSA kernel implements a three-stage pipeline with double buffering, enabling asynchronous overlap of computation and memory access:
 
-**Stage 1: QK GEMM + Softmax Statistics**
+#### Stage 1: QK GEMM + Softmax Statistics
 
-```
+```text
 Q tiles × K tiles → attention scores
 Compute running max (M) and sum (L) for online softmax
 ```
 
-**Stage 2: Softmax + Post-ops**
+#### Stage 2: Softmax + Post-ops
 
-```
+```text
 Apply softmax normalization using M and L
 ```
 
-**Stage 3: KV GEMM**
+#### Stage 3: KV GEMM
 
-```
+```text
 Softmax output × V tiles → attention output
 Accumulate with previous tiles
 ```
@@ -202,7 +200,7 @@ When both methods are implemented as CK Tile kernels, the difference in how they
 ![Block-sparse encoding: Jenga 0/1 matrix vs VSA compact index list](images/vsa_vs_jenga_encoding.png)
 
 - **VSA** stores only the *selected* K/V block indices plus a valid-count per query block (compact index list / LUT). The kernel jumps directly to active blocks.
-- **Jenga** stores the full M×M one-hot block relation matrix **B** and skips cells where B[i][j]=0 during traversal.
+- **Jenga** stores the full M×M one-hot block relation matrix **B** and skips cells where B\[i\]\[j\]=0 during traversal.
 
 VSA's encoding is more compact when sparsity is high; Jenga's encoding naturally represents the union of its three heterogeneous masks (Importance ∪ Condition ∪ Adjacency) without converting to a list.
 
@@ -397,7 +395,7 @@ def generate_sparsity_lut(query, key, block_size, top_k_ratio):
 
 ## Acknowledgements
 
-The authors would like to thank the AMD CK Tile and AITER teams for their support in developing and optimizing the sparse attention kernels on AMD Instinct GPUs. We also thank the original VSA authors from UC San Diego, MBZUAI, and UC Berkeley for open-sourcing their work and making this collaboration possible.
+The authors would like to thank the AMD CK Tile and AITER teams for their support in developing and optimizing the sparse attention kernels on AMD Instinct GPUs — in particular Letao Qin, Poyen Chen, and Hanwen (Kevin) Chang for their guidance on the kernel implementation. We would also like to thank our colleagues on the AMD Quark team, in particular Han Lin, for their insightful feedback and technical discussions. We also thank the original VSA authors from UC San Diego, MBZUAI, and UC Berkeley for open-sourcing their work and making this collaboration possible.
 
 ## Additional Resources
 
