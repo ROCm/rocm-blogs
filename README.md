@@ -1,12 +1,12 @@
-[!IMPORTANT]
- **Scheduled Repository Migration**
+> [!IMPORTANT]
+> **Scheduled Repository Migration**
 
-This repository will be archived during the migration window:
-**August 7th, 2026, 11:00AM – 8:00 PM MST**
+> This repository will be archived during the migration window:
+> **August 7th, 2026, 11:00AM – 8:00 PM MST**
 
-During this period, pushes, pull requests, and other repository operations may be unavailable.
-
-Please avoid making changes during the maintenance window.
+> During this period, pushes, pull requests, and other repository operations may be unavailable.
+> Please avoid making changes during the maintenance window.
+> **Migration details and updates:** https://amd.atlassian.net/wiki/spaces/DCGPUPM/pages/788890399/ROCm+Tech+Blogs+Mission+Stakeholders+Processes+Style+and+Metadata#Migration-in-Progress
 
 # ROCm blogs
 
