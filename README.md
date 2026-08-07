@@ -1,3 +1,13 @@
+[!IMPORTANT]
+ **Scheduled Repository Migration**
+
+This repository will be archived during the migration window:
+**August 7th, 2026, 11:00AM – 8:00 PM MST**
+
+During this period, pushes, pull requests, and other repository operations may be unavailable.
+
+Please avoid making changes during the maintenance window.
+
 # ROCm blogs
 
 Welcome to the ROCm blog repository.
