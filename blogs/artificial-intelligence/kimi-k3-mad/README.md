@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Benchmarking Kimi-K3 Across vLLM, SGLang, and ATOM on MI350X/MI355X"
 date: "02 Aug 2026"
-author: "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
+author: "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun, Mrinal Karvir"
 thumbnail: ''
 tags: "AI/ML, LLM, Performance, HPC, Serving"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Shows how MAD's declarative model registry and madengin
 language: English
 myst:
     html_meta:
-        "author": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
+        "author": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun, Mrinal Karvir"
         "description lang=en": "One declarative madengine command benchmarks day-0 Kimi-K3 across vLLM, SGLang, and ATOM on AMD Instinct MI350X/MI355X, with a shared harness for extending the sweep to your own workload."
         "keywords": "Kimi-K3, MAD, madengine, vLLM, SGLang, ATOM, MI355X, MI350X, benchmarking, MXFP4, reproducibility"
         "vertical": "AI, HPC"
