@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Benchmarking Kimi-K3 Across vLLM, SGLang, and ATOM on MI350X"
 date: "02 Aug 2026"
-author: "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
+author: "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun, Mrinal Karvir"
 thumbnail: ''
 tags: "AI/ML, LLM, Performance, HPC, Serving"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Shows how MAD's declarative model registry and madengin
 language: English
 myst:
     html_meta:
-        "author": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
+        "author": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun, Mrinal Karvir"
         "description lang=en": "One declarative madengine command benchmarks day-0 Kimi-K3 across vLLM, SGLang, and ATOM on AMD Instinct MI350X, with a shared harness for extending the sweep to your own workload."
         "keywords": "Kimi-K3, MAD, madengine, vLLM, SGLang, ATOM, MI350X, MI355X, benchmarking, MXFP4, reproducibility"
         "vertical": "AI, HPC"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun"
+        "amd_blog_authors": "Yu Shao, Tej Kiran, Gurpreet Dhami, Chaitanya Sri Krishna Lolla, Aswin Mathews, Rahul Garg, Peng Sun, Mrinal Karvir"
 ---
 
 <!---
