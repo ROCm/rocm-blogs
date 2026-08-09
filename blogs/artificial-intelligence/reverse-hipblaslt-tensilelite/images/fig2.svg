@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="960" height="560" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="480" y="38" text-anchor="middle" font-size="21" font-weight="700" fill="#1f2937">Keep the pool's best kernel inside the tuning search space</text>
+  <text x="480" y="62" text-anchor="middle" font-size="14" fill="#6b7280">A TensileLite run can only return a kernel that lies inside the search space its config defines</text>
+
+  <!-- ===== Panel A: Stage 1 ===== -->
+  <rect x="36" y="84" width="406" height="396" rx="12" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="239" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2937">Stage 1 - Reverse-engineer &amp; pin</text>
+
+  <!-- universe -->
+  <ellipse cx="239" cy="300" rx="168" ry="120" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="239" y="196" text-anchor="middle" font-size="12.5" fill="#9ca3af">Parameter universe (all valid kernels)</text>
+
+  <!-- search-space label (above the circle, clear of the arrow) -->
+  <text x="239" y="250" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">Search space = exactly 1 kernel</text>
+
+  <!-- pinned search space = single kernel -->
+  <circle cx="239" cy="300" r="30" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <g transform="translate(239,300)">
+    <path d="M0,-18 L4.41,-6.07 L17.1,-5.56 L7.13,2.32 L10.58,14.56 L0,7.5 L-10.58,14.56 L-7.13,2.32 L-17.1,-5.56 L-4.41,-6.07 Z" fill="#f59e0b" stroke="#b45309" stroke-width="1.2"/>
+  </g>
+  <text x="285" y="304" font-size="12.5" font-weight="600" fill="#b45309">pool's best kernel</text>
+
+  <!-- decode arrow (below, no text crossing) -->
+  <line x1="239" y1="430" x2="239" y2="336" stroke="#374151" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="239" y="450" text-anchor="middle" font-size="12.5" fill="#374151">decode SolutionNameMin</text>
+  <text x="239" y="468" text-anchor="middle" font-size="12.5" fill="#374151">+ bench command</text>
+
+  <!-- ===== expand arrow between panels ===== -->
+  <line x1="450" y1="300" x2="506" y2="300" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrowblue)"/>
+  <text x="478" y="288" text-anchor="middle" font-size="12" fill="#2563eb">expand</text>
+
+  <!-- ===== Panel B: Stage 2 ===== -->
+  <rect x="518" y="84" width="406" height="396" rx="12" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="721" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2937">Stage 2 - Expand (anchor stays in)</text>
+
+  <!-- universe -->
+  <ellipse cx="721" cy="300" rx="170" ry="120" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="721" y="160" text-anchor="middle" font-size="12.5" fill="#9ca3af">Parameter universe (all valid kernels)</text>
+
+  <!-- widened search space -->
+  <circle cx="721" cy="312" r="100" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="721" y="232" text-anchor="middle" font-size="13" font-weight="600" fill="#1d4ed8">Widened search space</text>
+
+  <!-- new candidate kernels -->
+  <circle cx="678" cy="332" r="5" fill="#60a5fa"/>
+  <circle cx="760" cy="300" r="5" fill="#60a5fa"/>
+  <circle cx="700" cy="360" r="5" fill="#60a5fa"/>
+  <circle cx="755" cy="352" r="5" fill="#60a5fa"/>
+  <circle cx="690" cy="282" r="5" fill="#60a5fa"/>
+  <text x="700" y="392" text-anchor="middle" font-size="11.5" fill="#3b82f6">new candidates</text>
+
+  <!-- anchor star (same kernel, still inside) -->
+  <g transform="translate(733,306)">
+    <path d="M0,-18 L4.41,-6.07 L17.1,-5.56 L7.13,2.32 L10.58,14.56 L0,7.5 L-10.58,14.56 L-7.13,2.32 L-17.1,-5.56 L-4.41,-6.07 Z" fill="#f59e0b" stroke="#b45309" stroke-width="1.2"/>
+  </g>
+  <text x="785" y="310" text-anchor="middle" font-size="11.5" font-weight="600" fill="#b45309">anchor still inside</text>
+
+  <!-- ===== bottom guarantee bar ===== -->
+  <rect x="36" y="500" width="888" height="44" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="480" y="527" text-anchor="middle" font-size="13.5" fill="#065f46">Guarantee: the anchor never leaves the search space, so the winner is at least as fast as the pool's best (usually faster).</text>
+
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 L8 4.5 L0 9 z" fill="#374151"/>
+    </marker>
+    <marker id="arrowblue" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0 L8 4.5 L0 9 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+</svg>

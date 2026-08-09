@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="0" y="0" width="960" height="560" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="480" y="38" text-anchor="middle" font-size="21" font-weight="700" fill="#1f2937">Why the search space must contain the pool's best kernel</text>
+  <text x="480" y="62" text-anchor="middle" font-size="14" fill="#6b7280">A tuning run can only return a kernel that lies inside the search space its config defines</text>
+
+  <!-- ===== Panel A: Generic ===== -->
+  <rect x="36" y="84" width="406" height="396" rx="12" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="239" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2937">Generic config: golden can fall outside</text>
+  <text x="239" y="132" text-anchor="middle" font-size="12" fill="#6b7280">built from a template, blind to your golden</text>
+
+  <!-- universe -->
+  <ellipse cx="239" cy="308" rx="176" ry="126" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="239" y="176" text-anchor="middle" font-size="12.5" fill="#9ca3af">Parameter universe (all valid kernels)</text>
+
+  <!-- generic search space (misses golden) -->
+  <circle cx="205" cy="320" r="108" fill="#fee2e2" stroke="#ef4444" stroke-width="2"/>
+  <text x="188" y="244" text-anchor="middle" font-size="12.5" font-weight="600" fill="#b91c1c">Search space</text>
+
+  <!-- candidate kernels inside generic space -->
+  <circle cx="170" cy="300" r="5" fill="#f87171"/>
+  <circle cx="150" cy="345" r="5" fill="#f87171"/>
+  <circle cx="215" cy="360" r="5" fill="#f87171"/>
+  <circle cx="240" cy="315" r="5" fill="#f87171"/>
+  <circle cx="185" cy="380" r="5" fill="#f87171"/>
+
+  <!-- generic winner (best found, still slower than golden) -->
+  <circle cx="245" cy="290" r="8" fill="#dc2626" stroke="#7f1d1d" stroke-width="1.5"/>
+  <text x="245" y="272" text-anchor="middle" font-size="11.5" font-weight="600" fill="#b91c1c">best found &gt; golden</text>
+
+  <!-- golden star OUTSIDE the generic space -->
+  <g transform="translate(360,262)">
+    <path d="M0,-18 L4.41,-6.07 L17.1,-5.56 L7.13,2.32 L10.58,14.56 L0,7.5 L-10.58,14.56 L-7.13,2.32 L-17.1,-5.56 L-4.41,-6.07 Z" fill="#f59e0b" stroke="#b45309" stroke-width="1.2"/>
+  </g>
+  <text x="360" y="300" text-anchor="middle" font-size="11.5" font-weight="600" fill="#b45309">golden</text>
+  <text x="360" y="316" text-anchor="middle" font-size="11.5" font-weight="600" fill="#b45309">unreachable</text>
+
+  <!-- ===== Panel B: Reverse ===== -->
+  <rect x="518" y="84" width="406" height="396" rx="12" fill="#f9fafb" stroke="#e5e7eb" stroke-width="1.5"/>
+  <text x="721" y="112" text-anchor="middle" font-size="16" font-weight="700" fill="#1f2937">Reverse-anchored config: golden pinned in</text>
+  <text x="721" y="132" text-anchor="middle" font-size="12" fill="#6b7280">search space built around your golden</text>
+
+  <!-- universe -->
+  <ellipse cx="721" cy="308" rx="176" ry="126" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <text x="721" y="176" text-anchor="middle" font-size="12.5" fill="#9ca3af">Parameter universe (all valid kernels)</text>
+
+  <!-- reverse search space containing golden -->
+  <circle cx="721" cy="318" r="90" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+  <text x="721" y="246" text-anchor="middle" font-size="12.5" font-weight="600" fill="#1d4ed8">Search space</text>
+
+  <!-- candidate kernels inside reverse space -->
+  <circle cx="688" cy="332" r="5" fill="#60a5fa"/>
+  <circle cx="756" cy="306" r="5" fill="#60a5fa"/>
+  <circle cx="706" cy="366" r="5" fill="#60a5fa"/>
+  <circle cx="752" cy="356" r="5" fill="#60a5fa"/>
+
+  <!-- golden star INSIDE the reverse space -->
+  <g transform="translate(721,314)">
+    <path d="M0,-18 L4.41,-6.07 L17.1,-5.56 L7.13,2.32 L10.58,14.56 L0,7.5 L-10.58,14.56 L-7.13,2.32 L-17.1,-5.56 L-4.41,-6.07 Z" fill="#f59e0b" stroke="#b45309" stroke-width="1.2"/>
+  </g>
+  <text x="772" y="300" text-anchor="middle" font-size="11.5" font-weight="600" fill="#b45309">golden pinned</text>
+  <text x="721" y="424" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1d4ed8">best found &lt;= golden</text>
+
+  <!-- ===== bottom bar ===== -->
+  <rect x="36" y="500" width="888" height="44" rx="10" fill="#ecfdf5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="480" y="527" text-anchor="middle" font-size="13.5" fill="#065f46">If the golden lies outside the space, no run can return it. Reverse-engineering keeps it inside, so the result can only match or beat it.</text>
+</svg>

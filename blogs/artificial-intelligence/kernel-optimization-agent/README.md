@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "GEAK V3: Agent-Driven, Repository-Level GPU Kernel Optimization across HIP, Triton, and FlyDSL on AMD GPUs"
 date: "20 Jul 2026"
-author: "Saptarshi Majumder, Umang Pandey, Subrahmanya Pavankumar Dubagunta, Aditya Kumar Singh, Yue Liu, Chao Xu, Ethan Yang, Dan Li, Jianghui Wang, HongTao Meng, Puyuan Yang, Fan Wang, Bin Ding, Zheng Yao, Arthur Huang, Fuwei Yang, Manem Chaitanya, Johanna Xuyue Yang, Kristoffer Peyron, Balazs Toth, Yashvardhan Agarwal, Baiqiang Xia, Mehdi Saeedi, Ziqiong Liu, Arsalan Farooq, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
+author: "Saptarshi Majumder, Umang Pandey, Subrahmanya Pavankumar Dubagunta, Aditya Kumar Singh, Yue Liu, Chao Xu, Ethan Yang, Dan Li, Jianghui Wang, HongTao Meng, Puyuan Yang, Fan Wang, Bin Ding, Zheng Yao, Arthur Huang, Fuwei Yang, Manem Chaitanya, Johanna Yang, Kristoffer Peyron, Balazs Toth, Yashvardhan Agarwal, Baiqiang Xia, Mehdi Saeedi, Ziqiong Liu, Arsalan Farooq, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
 thumbnail: 'geak-v3-teaser.png'
 tags: "AI/ML, GenAI, LLM"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "This blog introduces GEAK-v3 that expands GEAK-v2, a ke
 language: English
 myst:
     html_meta:
-        "author": "Saptarshi Majumder, Umang Pandey, Subrahmanya Pavankumar Dubagunta, Aditya Kumar Singh, Yue Liu, Chao Xu, Ethan Yang, Dan Li, Jianghui Wang, HongTao Meng, Puyuan Yang, Fan Wang, Bin Ding, Zheng Yao, Arthur Huang, Fuwei Yang, Manem Chaitanya, Johanna Xuyue Yang, Kristoffer Peyron, Balazs Toth, Yashvardhan Agarwal, Baiqiang Xia, Mehdi Saeedi, Ziqiong Liu, Arsalan Farooq, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
+        "author": "Saptarshi Majumder, Umang Pandey, Subrahmanya Pavankumar Dubagunta, Aditya Kumar Singh, Yue Liu, Chao Xu, Ethan Yang, Dan Li, Jianghui Wang, HongTao Meng, Puyuan Yang, Fan Wang, Bin Ding, Zheng Yao, Arthur Huang, Fuwei Yang, Manem Chaitanya, Johanna Yang, Kristoffer Peyron, Balazs Toth, Yashvardhan Agarwal, Baiqiang Xia, Mehdi Saeedi, Ziqiong Liu, Arsalan Farooq, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
         "description lang=en": "Explore GEAK v3: agent-driven, repository-level GPU kernel optimization across HIP, Triton, and FlyDSL on AMD Instinct™ GPUs."
         "keywords": "Kernel Optimization, HIP, Triton, FlyDSL, GEAK, LLM, Inference, Efficiency"
         "vertical": "AI, Developers, Data Science"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "Open-Source Tools"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Saptarshi Majumder, Umang Pandey, Subrahmanya Pavankumar Dubagunta, Aditya Kumar Singh, Yue Liu, Chao Xu, Ethan Yang, Dan Li, Jianghui Wang, HongTao Meng, Puyuan Yang, Fan Wang, Bin Ding, Zheng Yao, Arthur Huang, Fuwei Yang, Manem Chaitanya, Johanna Xuyue Yang, Kristoffer Peyron, Balazs Toth, Yashvardhan Agarwal, Baiqiang Xia, Mehdi Saeedi, Ziqiong Liu, Arsalan Farooq, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
+        "amd_blog_authors": "Saptarshi Majumder, Umang Pandey, Subrahmanya Pavankumar Dubagunta, Aditya Kumar Singh, Yue Liu, Chao Xu, Ethan Yang, Dan Li, Jianghui Wang, HongTao Meng, Puyuan Yang, Fan Wang, Bin Ding, Zheng Yao, Arthur Huang, Fuwei Yang, Manem Chaitanya, Johanna Yang, Kristoffer Peyron, Balazs Toth, Yashvardhan Agarwal, Baiqiang Xia, Mehdi Saeedi, Ziqiong Liu, Arsalan Farooq, Pratik Prabhanjan Brahma, Dong Li, Zicheng Liu, Emad Barsoum"
 ---
 
 <!---

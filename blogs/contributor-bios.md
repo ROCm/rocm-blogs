@@ -141,10 +141,22 @@ Member of Technical Staff at AMD
 Technical Marketing Engineer at AMD
 :::
 
+:::{grid-item-card} [Maanasa Mohanambal Sathianarayanan](./authors/maanasa-mohanambal-sathianarayanan.md)
+:padding: 1
+
+Technical Marketing at AMD
+:::
+
 :::{grid-item-card} [Maria Ruiz Varela](./authors/maria-ruiz-varela.md)
 :padding: 1
 
 Senior Member of Technical Staff at AMD
+:::
+
+:::{grid-item-card} [Michael Roy](./authors/michael-roy.md)
+:padding: 1
+
+Principal Member of Technical Staff at AMD
 :::
 
 :::{grid-item-card} [Michael Zhang](./authors/michael-zhang.md)
@@ -374,5 +386,36 @@ Senior Software Development Manager at AMD
 
 Member of Technical Staff at AMD
 :::
+
+:::{grid-item-card} [Evan Groenke](./authors/evan-groenke.md)
+:padding: 1
+
+Director, Product Management at AMD
+:::
+
+:::{grid-item-card} [Mark Chubb](./authors/mark-chubb.md)
+:padding: 1
+
+Corporate Vice President, Systems Design Engineering at AMD
+:::
+
+:::{grid-item-card} [Vamsi Alla](./authors/vamsi-alla.md)
+:padding: 1
+
+Fellow Silicon Design Engineer at AMD
+:::
+
+:::{grid-item-card} [Taniya Siddiqua](./authors/taniya-siddiqua.md)
+:padding: 1
+
+Director, Silicon Design Engineering at AMD
+:::
+
+:::{grid-item-card} [Abhishek Vashisth](./authors/abhishek-vashisth.md) *
+:padding: 1
+
+Senior Product Manager at AMD
+:::
+
 
 ::::
