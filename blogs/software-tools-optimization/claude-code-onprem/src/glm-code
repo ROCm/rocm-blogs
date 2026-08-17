@@ -1,0 +1,389 @@
+#!/bin/bash
+# glm-code: one command to run Claude Code against your self-hosted GLM-5.2.
+# It reads the settings glm-setup saved (SSH target, ports, model, key), brings
+# up the SSH tunnel, checks the layers (ssh / router / model server), and starts
+# Claude Code. Nothing here is tied to a particular node or user; everything
+# comes from the saved config, the environment, or the prompts on first run.
+# Author: adlashab <adlashab@amd.com>
+set -u
+
+CONFIG_DIR="${GLM_CONFIG_DIR:-$HOME/.config/glm-selfservice}"
+CONFIG_FILE="$CONFIG_DIR/config"
+ROOT="${GLM_ROOT:-$HOME/.glm-selfservice}"
+BACKEND_TIMEOUT="${GLM_PROBE_TIMEOUT:-90}"
+LAUNCH_PROBE_TIMEOUT="${GLM_LAUNCH_PROBE_TIMEOUT:-8}"
+
+# built-in defaults (only the shared, non-personal ones have a value)
+DEF_SSH_PORT="22"
+DEF_LOCAL_PORT="4000"
+DEF_ROUTER_PORT="4000"
+DEF_SERVER_PORT="31090"
+DEF_KEY="sk-glm-local"
+DEF_MODEL="glm-5.2-fp8"
+DEF_REMOTE_BASE="~/glm-selfservice"
+
+# env wins over the saved file and the defaults, so CI can force values
+ENV_SSH_USER="${GLM_SSH_USER-}"
+ENV_SSH_HOST="${GLM_SSH_HOST-}"
+ENV_SSH_PORT="${GLM_SSH_PORT-}"
+ENV_LOCAL_PORT="${GLM_LOCAL_PORT-}"
+ENV_ROUTER_PORT="${GLM_ROUTER_PORT-}"
+ENV_SERVER_PORT="${GLM_SERVER_PORT-}"
+ENV_KEY="${GLM_KEY-}"
+ENV_MODEL="${GLM_MODEL-}"
+ENV_CA="${GLM_CA-}"
+ENV_REMOTE_BASE="${GLM_REMOTE_BASE-}"
+
+RECONFIGURE=0
+NONINTERACTIVE=0
+CHECK_ONLY=0
+PREFLIGHT_MSG=""
+
+usage() {
+  cat <<EOF
+glm-code - run Claude Code against your self-hosted GLM-5.2 with one command.
+
+It uses the settings glm-setup saved to:
+  $CONFIG_FILE
+then brings up the SSH tunnel, checks the layers, and starts Claude Code.
+
+Usage:
+  glm-code [claude args...]     start Claude Code (interactive if no args)
+  glm-code -p "prompt"          headless one-shot through GLM
+  glm-code --check              run the connection check only, do not start Claude
+  glm-code --reconfigure        ask the setup questions again and re-save
+  glm-code --non-interactive    never prompt; use saved config, env vars, or defaults
+  glm-code --yes                alias for --non-interactive
+  glm-code --help               this text
+
+Settings (env vars override the saved config and the defaults):
+  GLM_SSH_USER     ssh username on the node
+  GLM_SSH_HOST     node IP or hostname
+  GLM_SSH_PORT     ssh port                  (default $DEF_SSH_PORT)
+  GLM_LOCAL_PORT   local port to listen on   (default $DEF_LOCAL_PORT)
+  GLM_ROUTER_PORT  router port on the node   (default $DEF_ROUTER_PORT)
+  GLM_SERVER_PORT  GLM server port on node   (default $DEF_SERVER_PORT)
+  GLM_KEY          router API key            (default $DEF_KEY)
+  GLM_MODEL        model id                  (default $DEF_MODEL)
+  GLM_CA           corp CA cert path         (optional)
+  GLM_REMOTE_BASE  router install dir on node (default $DEF_REMOTE_BASE)
+EOF
+}
+
+ask() {
+  local q="$1" d="$2" ans
+  if [ -n "$d" ]; then printf '%s [%s]: ' "$q" "$d" >&2
+  else printf '%s []: ' "$q" >&2; fi
+  IFS= read -r ans || ans=""
+  [ -z "$ans" ] && ans="$d"
+  printf '%s' "$ans"
+}
+
+node() { printf '%s@%s' "$GLM_SSH_USER" "$GLM_SSH_HOST"; }
+
+save_config() {
+  mkdir -p "$CONFIG_DIR"
+  ( umask 077; cat > "$CONFIG_FILE" <<EOF
+# glm-selfservice settings. Edit by hand or re-run: glm-code --reconfigure
+GLM_SSH_USER="$GLM_SSH_USER"
+GLM_SSH_HOST="$GLM_SSH_HOST"
+GLM_SSH_PORT="$GLM_SSH_PORT"
+GLM_LOCAL_PORT="$GLM_LOCAL_PORT"
+GLM_ROUTER_PORT="$GLM_ROUTER_PORT"
+GLM_SERVER_PORT="$GLM_SERVER_PORT"
+GLM_KEY="$GLM_KEY"
+GLM_MODEL="$GLM_MODEL"
+GLM_CA="$GLM_CA"
+GLM_REMOTE_BASE="$GLM_REMOTE_BASE"
+EOF
+  )
+  chmod 600 "$CONFIG_FILE" 2>/dev/null || true
+}
+
+tunnel_spec() { printf '%s:127.0.0.1:%s' "$GLM_LOCAL_PORT" "$GLM_ROUTER_PORT"; }
+port_listening() { (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null; }
+
+start_tunnel() {
+  ssh -f -N -p "$GLM_SSH_PORT" -L "$(tunnel_spec)" \
+    -o ServerAliveInterval=30 -o ExitOnForwardFailure=yes "$(node)" 2>/dev/null
+}
+
+# Is our tunnel (right forward spec AND right node) the one on the local port?
+# Keying reuse on the local port alone would silently reuse a stale tunnel to a
+# previous host after the node is changed.
+tunnel_ours() {
+  pgrep -f "$(tunnel_spec).*$(node)" >/dev/null 2>&1
+}
+
+ensure_tunnel() {
+  if port_listening "$GLM_LOCAL_PORT"; then
+    tunnel_ours && return 0
+    # a stale tunnel (e.g. to a previous host) holds our local port; drop it.
+    pkill -f "$(tunnel_spec)" 2>/dev/null || true
+    sleep 1
+  fi
+  start_tunnel || true
+  local i
+  for i in $(seq 1 10); do
+    port_listening "$GLM_LOCAL_PORT" && tunnel_ours && return 0
+    sleep 1
+  done
+  return 1
+}
+
+restart_tunnel() {
+  pkill -f "$(tunnel_spec)" 2>/dev/null || true
+  sleep 1
+  ensure_tunnel
+}
+
+http_models() {
+  local c
+  c="$(curl -s -m 6 -o /dev/null -w '%{http_code}' \
+        -H "Authorization: Bearer $GLM_KEY" \
+        "http://127.0.0.1:$GLM_LOCAL_PORT/v1/models" 2>/dev/null)"
+  [ -n "$c" ] && printf '%s' "$c" || printf '000'
+}
+
+# Real inference ping. The router serves /v1/models from its own config even when
+# the model server is gone, so the model list alone can't prove the backend is
+# alive. This exercises it. $1 = timeout in seconds.
+probe_backend() {
+  local tmp code body
+  tmp="$(mktemp)"
+  code="$(curl -s -m "$1" -o "$tmp" -w '%{http_code}' \
+    "http://127.0.0.1:$GLM_LOCAL_PORT/v1/messages" \
+    -H 'content-type: application/json' \
+    -H "x-api-key: $GLM_KEY" \
+    -H 'anthropic-version: 2023-06-01' \
+    -d "{\"model\":\"$GLM_MODEL\",\"max_tokens\":64,\"stream\":false,\"messages\":[{\"role\":\"user\",\"content\":\"ping\"}]}" 2>/dev/null)"
+  [ -n "$code" ] || code="000"
+  body="$(cat "$tmp" 2>/dev/null)"; rm -f "$tmp"
+  if [ "$code" = "200" ]; then printf 'ok'; return 0; fi
+  case "$body $code" in
+    *":$GLM_SERVER_PORT"*|*"Cannot connect"*|*"Connection error"*|*"connection refused"*|*"Errno 111"*)
+      printf 'backenddown'; return 0;;
+  esac
+  printf 'unknown:%s' "$code"
+}
+
+# classify <backend_timeout> <strict>
+# 0 ok, 2 ssh/tunnel, 3 router, 4 backend down, 5 backend not responding.
+classify() {
+  local btimeout="$1" strict="$2"
+  if ! port_listening "$GLM_LOCAL_PORT"; then
+    PREFLIGHT_MSG="ssh tunnel to $(node) did not come up (local :$GLM_LOCAL_PORT is not listening).
+This is the ssh layer. Check the VPN, your SSH key, and that your node reservation is still active.
+Try it by hand:  ssh -p $GLM_SSH_PORT $(node) true"
+    return 2
+  fi
+  local code; code="$(http_models)"
+  if [ "$code" != "200" ]; then
+    PREFLIGHT_MSG="tunnel is up but the router did not answer /v1/models (got $code).
+This is the router layer. On the node:
+  ssh -p $GLM_SSH_PORT $(node) $GLM_REMOTE_BASE/router_ctl.sh status
+  ssh -p $GLM_SSH_PORT $(node) $GLM_REMOTE_BASE/router_ctl.sh restart"
+    return 3
+  fi
+  local b; b="$(probe_backend "$btimeout")"
+  case "$b" in
+    ok)
+      PREFLIGHT_MSG="tunnel up, router answering, model server reachable."
+      return 0;;
+    backenddown)
+      PREFLIGHT_MSG="router is up but the GLM server behind it is down (it refused with a :$GLM_SERVER_PORT connection error).
+The model server is being cycled or is still loading. Wait for it, or contact whoever runs it; do not restart it yourself.
+Look on the node:  ssh -p $GLM_SSH_PORT $(node) \"curl -s http://127.0.0.1:$GLM_SERVER_PORT/v1/models\""
+      return 4;;
+    *)
+      if [ "$strict" -eq 0 ]; then
+        PREFLIGHT_MSG="router is up; the model server did not answer a quick ping in ${btimeout}s (likely first-token compile). Starting anyway."
+        return 0
+      fi
+      PREFLIGHT_MSG="router answered /v1/models but a real request did not complete ($b).
+The model server is probably loading (first-token compile) or overloaded. Wait a bit and retry.
+Look on the node:  ssh -p $GLM_SSH_PORT $(node) \"curl -s http://127.0.0.1:$GLM_SERVER_PORT/v1/models\""
+      return 5;;
+  esac
+}
+
+preflight() {
+  local btimeout="${1:-$BACKEND_TIMEOUT}" strict="${2:-1}"
+  ensure_tunnel || true
+  classify "$btimeout" "$strict"; local rc=$?
+  if [ "$rc" -eq 2 ] || [ "$rc" -eq 3 ]; then
+    restart_tunnel || true
+    classify "$btimeout" "$strict"; rc=$?
+  fi
+  return "$rc"
+}
+
+resolve_claude() {
+  if [ -n "${CLAUDE_BIN-}" ] && [ -x "${CLAUDE_BIN-}" ]; then CLAUDE="$CLAUDE_BIN"; return 0; fi
+  if [ -x "$ROOT/npm-global/bin/claude" ]; then CLAUDE="$ROOT/npm-global/bin/claude"; return 0; fi
+  local c; c="$(command -v claude 2>/dev/null || true)"
+  [ -n "$c" ] && { CLAUDE="$c"; return 0; }
+  return 1
+}
+
+# Isolated install: own node 22 + Claude Code under $ROOT, nothing system-wide.
+install_claude() {
+  local os arch nodeos nodearch ver
+  os="$(uname -s)"; arch="$(uname -m)"
+  case "$os" in Linux) nodeos=linux;; Darwin) nodeos=darwin;; *) echo "unsupported OS: $os" >&2; return 1;; esac
+  case "$arch" in x86_64|amd64) nodearch=x64;; aarch64|arm64) nodearch=arm64;; *) echo "unsupported arch: $arch" >&2; return 1;; esac
+  mkdir -p "$ROOT/node"
+  ver="$(curl -s https://nodejs.org/dist/index.json \
+    | "${PYTHON:-python3}" -c "import sys,json;print(next(x['version'] for x in json.load(sys.stdin) if x['version'].startswith('v22.')))" 2>/dev/null)"
+  [ -n "$ver" ] || { echo "could not resolve a node 22 version from nodejs.org" >&2; return 1; }
+  curl -fL "https://nodejs.org/dist/$ver/node-$ver-$nodeos-$nodearch.tar.gz" -o /tmp/glmcode-node22.tgz || return 1
+  tar -xzf /tmp/glmcode-node22.tgz -C "$ROOT/node" --strip-components=1 || return 1
+  rm -f /tmp/glmcode-node22.tgz
+  PATH="$ROOT/node/bin:$PATH" NPM_CONFIG_PREFIX="$ROOT/npm-global" \
+    "$ROOT/node/bin/npm" install -g @anthropic-ai/claude-code@latest || return 1
+}
+
+ensure_claude() {
+  resolve_claude && return 0
+  echo "Claude Code (claude) is not installed or not on PATH." >&2
+  if [ "$NONINTERACTIVE" -eq 1 ]; then
+    echo "Install it, then re-run. The isolated install lives under $ROOT (node 22 + @anthropic-ai/claude-code)." >&2
+    return 1
+  fi
+  local a; a="$(ask "Install the latest Claude Code now under $ROOT? [Y/n]" "Y")"
+  case "$a" in n|N|no|NO|No) echo "Skipping install. Install Claude Code and re-run glm-code." >&2; return 1;; esac
+  echo "Installing node 22 + @anthropic-ai/claude-code (isolated under $ROOT)..." >&2
+  install_claude || { echo "Install failed." >&2; return 1; }
+  resolve_claude
+}
+
+run_wizard() {
+  echo "glm-code setup. Press Enter to accept the default in [brackets]." >&2
+  echo "For the full node-side setup (server + router), run glm-setup instead." >&2
+  echo >&2
+  local attempts=0
+  while :; do
+    attempts=$((attempts + 1))
+    if [ "$attempts" -gt 5 ]; then echo "Too many attempts, aborting." >&2; exit 1; fi
+    GLM_SSH_USER="$(ask 'SSH username on the node' "$GLM_SSH_USER")"
+    GLM_SSH_HOST="$(ask 'Node IP or hostname' "$GLM_SSH_HOST")"
+    GLM_SSH_PORT="$(ask 'SSH port' "$GLM_SSH_PORT")"
+    GLM_LOCAL_PORT="$(ask 'Local port to listen on' "$GLM_LOCAL_PORT")"
+    GLM_ROUTER_PORT="$(ask 'Router port on the node' "$GLM_ROUTER_PORT")"
+    GLM_SERVER_PORT="$(ask 'GLM server port on the node' "$GLM_SERVER_PORT")"
+    GLM_KEY="$(ask 'Router API key' "$GLM_KEY")"
+    GLM_MODEL="$(ask 'Model id' "$GLM_MODEL")"
+    GLM_CA="$(ask 'Corp CA cert path (blank if none)' "$GLM_CA")"
+    if [ -z "$GLM_SSH_USER" ] || [ -z "$GLM_SSH_HOST" ]; then
+      echo "SSH username and node are required." >&2; continue
+    fi
+    echo >&2; echo "Checking the connection..." >&2
+    preflight; local rc=$?
+    if [ "$rc" -eq 0 ]; then echo "OK: $PREFLIGHT_MSG" >&2; break; fi
+    echo >&2; echo "$PREFLIGHT_MSG" >&2; echo >&2
+    if [ "$rc" -ge 4 ]; then
+      local a; a="$(ask 'Settings look fine but the model server is down. [s]ave and continue / [r]e-enter / [a]bort' 's')"
+      case "$a" in r|R*) continue;; a|A*) echo "Aborted." >&2; exit 1;; *) break;; esac
+    else
+      local a; a="$(ask 'Re-enter the settings? [y] / [a]bort' 'y')"
+      case "$a" in a|A*) echo "Aborted." >&2; exit 1;; *) continue;; esac
+    fi
+  done
+  save_config
+  echo "Saved to $CONFIG_FILE" >&2; echo >&2
+}
+
+launch() {
+  export PATH="$ROOT/node/bin:$ROOT/npm-global/bin:$PATH"
+  export CLAUDE_CONFIG_DIR="${CLAUDE_CONFIG_DIR:-$ROOT/config}"
+  mkdir -p "$CLAUDE_CONFIG_DIR" 2>/dev/null || true
+  if [ -n "$GLM_CA" ] && [ -f "$GLM_CA" ]; then
+    export NODE_EXTRA_CA_CERTS="$GLM_CA" CURL_CA_BUNDLE="$GLM_CA"
+  fi
+  export ANTHROPIC_BASE_URL="http://127.0.0.1:$GLM_LOCAL_PORT"
+  export ANTHROPIC_API_KEY="$GLM_KEY"
+  export ANTHROPIC_AUTH_TOKEN="$GLM_KEY"
+  export ANTHROPIC_MODEL="$GLM_MODEL"
+  export ANTHROPIC_SMALL_FAST_MODEL="$GLM_MODEL"
+  export CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC="1"
+  exec "$CLAUDE" ${PASS[@]+"${PASS[@]}"}
+}
+
+PASS=()
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help) usage; exit 0;;
+    --check) CHECK_ONLY=1;;
+    --reconfigure) RECONFIGURE=1;;
+    --non-interactive|--yes) NONINTERACTIVE=1;;
+    --) shift; while [ $# -gt 0 ]; do PASS+=("$1"); shift; done; break;;
+    *) PASS+=("$1");;
+  esac
+  shift
+done
+
+GLM_SSH_USER=""
+GLM_SSH_HOST=""
+GLM_SSH_PORT="$DEF_SSH_PORT"
+GLM_LOCAL_PORT="$DEF_LOCAL_PORT"
+GLM_ROUTER_PORT="$DEF_ROUTER_PORT"
+GLM_SERVER_PORT="$DEF_SERVER_PORT"
+GLM_KEY="$DEF_KEY"
+GLM_MODEL="$DEF_MODEL"
+GLM_CA=""
+GLM_REMOTE_BASE="$DEF_REMOTE_BASE"
+
+have_config=0
+if [ -f "$CONFIG_FILE" ] && [ "$RECONFIGURE" -eq 0 ]; then
+  . "$CONFIG_FILE"
+  have_config=1
+fi
+
+[ -n "$ENV_SSH_USER" ] && GLM_SSH_USER="$ENV_SSH_USER"
+[ -n "$ENV_SSH_HOST" ] && GLM_SSH_HOST="$ENV_SSH_HOST"
+[ -n "$ENV_SSH_PORT" ] && GLM_SSH_PORT="$ENV_SSH_PORT"
+[ -n "$ENV_LOCAL_PORT" ] && GLM_LOCAL_PORT="$ENV_LOCAL_PORT"
+[ -n "$ENV_ROUTER_PORT" ] && GLM_ROUTER_PORT="$ENV_ROUTER_PORT"
+[ -n "$ENV_SERVER_PORT" ] && GLM_SERVER_PORT="$ENV_SERVER_PORT"
+[ -n "$ENV_KEY" ] && GLM_KEY="$ENV_KEY"
+[ -n "$ENV_MODEL" ] && GLM_MODEL="$ENV_MODEL"
+[ -n "$ENV_CA" ] && GLM_CA="$ENV_CA"
+[ -n "$ENV_REMOTE_BASE" ] && GLM_REMOTE_BASE="$ENV_REMOTE_BASE"
+
+need_wizard=0
+[ "$have_config" -eq 0 ] && need_wizard=1
+[ "$RECONFIGURE" -eq 1 ] && need_wizard=1
+[ "$NONINTERACTIVE" -eq 1 ] && need_wizard=0
+
+if [ "$need_wizard" -eq 1 ]; then
+  run_wizard
+elif [ "$RECONFIGURE" -eq 1 ] && [ "$NONINTERACTIVE" -eq 1 ]; then
+  save_config
+fi
+
+if [ -z "$GLM_SSH_USER" ] || [ -z "$GLM_SSH_HOST" ]; then
+  echo "No node configured. Run glm-setup (recommended) or set GLM_SSH_USER and GLM_SSH_HOST." >&2
+  exit 2
+fi
+
+if [ "$CHECK_ONLY" -eq 1 ]; then
+  preflight; rc=$?
+  if [ "$rc" -eq 0 ]; then
+    echo "OK: $PREFLIGHT_MSG"
+    echo "node=$(node)  local=:$GLM_LOCAL_PORT  router=:$GLM_ROUTER_PORT  server=:$GLM_SERVER_PORT  model=$GLM_MODEL"
+    exit 0
+  fi
+  echo "NOT READY:" >&2
+  echo "$PREFLIGHT_MSG" >&2
+  exit "$rc"
+fi
+
+ensure_claude || exit 1
+preflight "$LAUNCH_PROBE_TIMEOUT" 0; rc=$?
+if [ "$rc" -ne 0 ]; then
+  echo "Cannot start Claude Code against GLM:" >&2
+  echo "$PREFLIGHT_MSG" >&2
+  exit "$rc"
+fi
+echo "glm-code: $PREFLIGHT_MSG" >&2
+launch

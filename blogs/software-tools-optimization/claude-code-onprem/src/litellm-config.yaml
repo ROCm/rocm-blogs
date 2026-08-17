@@ -1,0 +1,37 @@
+# LiteLLM router config for the self-hosted GLM-5.2.
+# Claude Code speaks the Anthropic Messages API; LiteLLM translates that to the
+# GLM server's OpenAI API and gets the tool-call and reasoning translation right.
+#
+# This file is the default/reference. glm-setup writes a copy of it on the node
+# with your chosen model id, GLM server port, and router key substituted, so if
+# your answers differ from the defaults below the deployed copy will match them.
+#
+# Defaults: model id glm-5.2-fp8, GLM server on 127.0.0.1:31090, master key
+# sk-glm-local (a local dummy; the tunnel is what keeps this private).
+
+model_list:
+  - model_name: glm-5.2-fp8
+    litellm_params:
+      model: openai/glm-5.2-fp8
+      api_base: http://127.0.0.1:31090/v1
+      api_key: dummy
+  # catch-all so whatever model name a client sends (for example the VS Code
+  # extension's Claude-Sonnet default) still resolves to GLM-5.2.
+  - model_name: "*"
+    litellm_params:
+      model: openai/glm-5.2-fp8
+      api_base: http://127.0.0.1:31090/v1
+      api_key: dummy
+
+litellm_settings:
+  drop_params: true
+  telemetry: false
+  # Route Claude Code's /v1/messages through chat/completions, not the Responses
+  # API. With an openai/ model the Responses path forwards tool_choice as the
+  # object {"type":"auto"} and SGLang rejects it (it wants the string "auto",
+  # "required" or "none"), so tool-use requests 400. chat/completions translates
+  # tool_choice to the right string, which SGLang accepts.
+  use_chat_completions_url_for_anthropic_messages: true
+
+general_settings:
+  master_key: sk-glm-local
