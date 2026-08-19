@@ -70,6 +70,7 @@ APU
 ar
 AR’s
 Arb
+architected
 Ardestani
 AR's
 arXiv
@@ -1627,6 +1628,7 @@ Xianjie
 Xiao
 Xiaofei
 Xiaohui
+Xilinx
 Xing
 Xiong
 Xnack
