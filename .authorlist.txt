@@ -48,7 +48,7 @@ Anton
 Smirnov
 Anuya
 Welling
-Aref 
+Aref
 Jafari
 Arseny
 Moskvichev
@@ -450,8 +450,6 @@ Piero
 Ranalli
 Pin
 Tan
-Po-Wei (Blake)
-Chi
 Po-Wei
 Chi
 Poovaiah
