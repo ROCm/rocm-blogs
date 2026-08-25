@@ -88,15 +88,15 @@ boundaries lie.
 - **Your sweep, same harness.** Copy the config, set your own ISL/OSL and concurrency, and
   point a run at it with `--additional-context`. Same containers, same CSV schema.
 - **Hardware-aware guardrails.** `skip_gpu_arch: "gfx942"` keeps today's gfx950 recipe
-  from silently mis-running on MI300X/MI325X, which it hasn't been validated for;
-  `arch_overrides` is the same mechanism a future MI300X wideEP recipe would use once one
-  is validated.
-- **Reliability by design.** Automatic server-health gating, unbuffered logging, model-cache
-  reuse, and a common core CSV schema make a run on your cluster reproduce a run on ours.
-- **An out-of-box snapshot.** A default `madengine run` on 8× MI350X shows all three
-  engines within 0.5% of each other through concurrency 32, then separating as batching
-  policy starts to dominate. Read it as a launch-day picture of three enablement efforts
-  at different stages, not as an engine comparison. See Figure 3.
+  from silently mis-running on MI300X/MI325X, which it has not been validated for;
+  `arch_overrides` is the general mechanism the shipped configs use to vary settings by
+  GPU architecture.
+- **Consistency by design.** Automatic server-health gating, unbuffered logging, model-cache
+  reuse, and a common core CSV schema help a run on your cluster line up with a run on ours.
+- **An out-of-box snapshot.** A default `madengine run` on 8× MI350X shows the three
+  engines converging to within 0.5% of each other at concurrency 32, with a wider spread
+  both below and above that point. Read it as a launch-day picture of three day-0
+  out-of-box configurations, not as an engine comparison. See Figure 3.
 
 ---
 
@@ -124,13 +124,13 @@ and ATOM images is the build date of the K3-enabled container.
 |---|---|
 | System | Supermicro AS-8126GS-TNMR (H14DSG-OD baseboard) |
 | GPUs | 8× AMD Instinct™ MI350X (gfx950), TP8 |
-| CPU | 2× AMD EPYC 9575F, 64 cores each |
+| CPU | 2× AMD EPYC™ 9575F, 64 cores each |
 | Host memory | 3 TiB (24× 128 GiB DDR5-6400 RDIMM) |
 | Storage | 2× Micron 7450 3.84 TB NVMe (PCIe Gen 5) |
 | Host networking | 2× Broadcom BCM57508 (up to 200 GbE), 2× Intel X710, 2× Intel X550 |
-| GPU interconnect | Infinity Fabric, single node; no multi-node fabric used |
+| GPU interconnect | Single node; no multi-node fabric used |
 | OS | Ubuntu 24.04 |
-| ROCm version | 7.2.3 (`rocm-core 7.2.3.70203-90`) |
+| AMD ROCm™ version | 7.2.3 (`rocm-core 7.2.3.70203-90`) |
 | amdgpu driver | 6.16.13 (`amdgpu-dkms 1:6.16.13.30300100-2303411.24.04`) |
 | VBIOS / firmware | `113-M350-01-1K1-030A` (identical across all 8 GPUs) |
 | GPU details | gfx950, device ID `0x75a0`, 256 CUs, HSA runtime 1.18 |
@@ -158,8 +158,8 @@ tag points at today. That distinction matters here: Docker Hub tags are mutable,
 both the vLLM and SGLang tags a `docker manifest inspect` run during the same build
 session already returned a *different* digest than the build had pulled
 (`a8798d4a…` and `c75ce7a3…` respectively). Pull by digest, not by tag, to reproduce
-these runs. The ATOM Dockerfile is the only one of the three that already pins by digest
-in-repo.
+these runs. The ATOM Dockerfile already pins by digest in-repo; the vLLM and SGLang
+Dockerfiles reference their base images by tag.
 
 ---
 
@@ -203,16 +203,16 @@ workload — and one command executes the whole pipeline.
 ![Figure 1: The madengine execution pipeline](images/kimi-k3-madengine-pipeline.png)
 
 Figure 1: The madengine execution pipeline. One registry entry drives all five stages;
-the only thing that changes between engines is which row of `models.json` you select.
+what changes between engines is which row of `models.json` you select.
 
 For every model, madengine performs the same five steps — **Build → Start → Resolve →
 Execute → Report** — regardless of which engine sits underneath. That uniformity is the
-whole point: the *operator experience* is identical across vLLM, SGLang, and ATOM, even
-though the internals could not be more different.
+whole point: the *operator experience* is the same across vLLM, SGLang, and ATOM, even
+though the internals differ substantially.
 
 ### The registry entry is the contract
 
-Here are the fields that make Kimi-K3-on-vLLM a first-class, one-command benchmark
+Here are the fields that make Kimi-K3-on-vLLM a one-command benchmark
 (the real entry also carries bookkeeping fields — `url`, `owner`,
 `training_precision`, `timeout` — omitted here for readability):
 
@@ -298,25 +298,26 @@ disables the GSM8K accuracy run is omitted:
     --mm-encoder-tp-mode: data                  # MoonViT-V2 is 401M; TP is pure overhead
     --max-num-seqs: 256
     --max-num-batched-tokens: 4096
-    --reasoning-parser: kimi_k3                  # K3 always thinks
+    --reasoning-parser: kimi_k3                  # K3 emits reasoning tokens by default
     --language-model-only: true                 # text-only bench frees VRAM for KV
 ```
 
 Notice that the comments encode *why* each knob is set — `AITER_SITUV2_A8W4: 1`
 "selects the AITER a8w4 MoE path"; `--mm-encoder-tp-mode: data` because "MoonViT-V2
 is only 401M params; TP on it is pure comm overhead." The recipe is self-documenting,
-and re-running it a month later on a different cluster reproduces the same run, because
-there is no hidden state.
+and re-running it a month later on a different cluster repeats the same configuration,
+because the run parameters live in the config rather than in the shell it was launched
+from.
 
 ### One shared sweep across three engines
 
-The primary reliability decision is that **all three engines run the same workload
+The primary alignment decision is that **all three engines run the same workload
 axes**: `inp=8192, out=1024, TP8`, swept over concurrency. The shipped configs list
 concurrency points `1·4·8·16·32·64·128·256`; the results in this post were measured
 through 128, and the 256 point has not been run on any engine.
 
 The sweep shape was chosen, not inherited. The SGLang config file documents how it was
-reverse-engineered from the framework's public day-0 tracking issue so the numbers stay
+derived from the framework's published day-0 tracking issue so the numbers stay
 comparable:
 
 > *"(E2EL − TTFT) / TPOT + 1 lands on ~1024 output tokens for every row, and
@@ -325,6 +326,8 @@ comparable:
 > MAD's usual 1024/1024 would produce numbers that cannot be compared against the
 > tracking issue."*
 
+The reported SGLang figures referenced in that comment are published in the SGLang
+day-0 tracking issue ([sgl-project/sglang#32548](https://github.com/sgl-project/sglang/issues/32548)).
 The workload was chosen so that MAD's output can be checked against the framework
 authors' own published figures, which gives the harness a cross-check against
 measurement error.
@@ -360,9 +363,9 @@ emits an EOS token can finish before 1024 output tokens, where vLLM and ATOM for
 full output length.
 
 These differences are real and unquantified: no controlled A/B run has isolated their
-effect on the reported throughput. Aligning the three bench invocations is tracked as a
-follow-up. Until then, treat cross-engine gaps as indicative rather than as measured
-engine differences.
+effect on the reported throughput, and the three bench invocations are not aligned on
+these secondary axes. Cross-engine gaps should therefore be read as indicative rather
+than as measured engine differences.
 
 The sweep expansion itself is handled generically by the runner — `max_concurrency`
 is a space-separated list that the runner takes a Cartesian product over, so adding a
@@ -376,7 +379,7 @@ SUPPORTED_LIST_ARGS = ['model', 'tp', 'inp', 'out', 'bs', 'num_prompts', 'max_co
 
 ---
 
-## Reliability Engineering: The Guardrails
+## Harness Guardrails
 
 Automation that produces wrong numbers quickly is worse than no automation. The MAD flow
 includes several guardrails so that a run that reports success is a run that measured
@@ -385,8 +388,8 @@ what it claims to measure.
 ### 1. Server-health gating before measurement
 
 Every serving runner launches the server as a subprocess and **polls it to readiness**
-before sending a single benchmark request — so a slow 1.56 TB load never gets
-mis-measured as high latency:
+before sending a benchmark request, so that the load time of a 1.56 TB checkpoint is not
+counted as request latency:
 
 ```sh
 # the server is polled until healthy; only then does the benchmark client start
@@ -396,13 +399,13 @@ until curl -s http://localhost:8000/v1/models; do sleep 30; done
 vLLM's runner allows 30 minutes for that poll. Both SGLang and ATOM raise it to 5400
 seconds, appropriate for a multi-terabyte checkpoint — SGLang polls `/health` rather
 than `/v1/models`, and ATOM's `_wait_for_server()` also watches the server process
-itself, returning as soon as it exits so an OOM during initialization fails fast
-instead of looking like a hang until the timeout expires.
+itself, returning as soon as that process exits rather than waiting for the full
+timeout to elapse.
 
 ### 2. Common core output schema
 
 Every engine — no matter its native JSON format — is parsed into a **common CSV core**,
-so downstream dashboards and regression checks never special-case the engine:
+so downstream dashboards and regression checks do not need to special-case the engine:
 
 ```text
 model, benchmark, tp, inp, out, num_prompts,
@@ -413,13 +416,13 @@ Each runner adds a few engine-native columns on top of that shared core — vLLM
 `dtype` and `bs`; SGLang adds `variant` (for the `nospec`/`dspark` split) and `dtype`;
 ATOM adds `kv_cache_dtype`, `hf_pipeline_tag`, and `bs`. Each engine's run produces its
 own `perf_Kimi-K3.csv`, and `update_perf_csv` merges each into the run-level `perf.csv`,
-carrying over any columns the base file doesn't already have — so no column is silently
-dropped even though the three engines don't emit byte-identical headers.
+carrying over any columns the base file doesn't already have — so engine-specific columns
+are preserved even though the three engines don't emit byte-identical headers.
 
 The runner records not just throughput but a set of common latency metrics —
-`median_ttft`, `median_tpot`, `median_itl`, `median_e2el` — plus the exact `cmd` that
-produced the row, so any number in the CSV can be traced back to the precise invocation
-that generated it. These are medians; the CSV does not carry the full latency
+`median_ttft`, `median_tpot`, `median_itl`, `median_e2el` — plus the `cmd` that
+produced the row, so each row in the CSV records the invocation that generated it.
+These are medians; the CSV does not carry the full latency
 distribution, though each engine's raw result JSON retains the percentiles requested via
 `--percentile-metrics`.
 
@@ -452,7 +455,7 @@ madengine run --tags pyt_vllm_kimi-k3 --keep-model-dir --live-output \
 `--keep-model-dir` preserves that cache between runs; `--live-output` streams the
 unbuffered logs so a long sweep is observable in real time rather than a black box.
 
-### 4. Hardware-aware gating — a default, not a hard law
+### 4. Hardware-aware gating
 
 Today's registry entries mark Kimi-K3 `skip_gpu_arch: gfx942`, because the day-0
 recipes on all three engines assume the model's native MXFP4 weights sit on the gfx950
@@ -464,17 +467,11 @@ generation (MI350X and MI355X) and run a dense TP8 layout:
 
 madengine reads the host's `MAD_SYSTEM_GPU_ARCHITECTURE` (the ROCm architecture
 string `rocminfo` reports — `gfx942` on MI300X/MI325X) and skips the workload rather
-than silently producing a result under the wrong assumptions.
-That gate is a property of *this recipe*, though, not of the model itself —
-MI300X/MI325X lack gfx950's native MXFP4 support, but a config
-built around wide expert-parallel (wideEP) sharding and a matched concurrency
-profile could still place Kimi-K3's 896 experts across enough MI300X GPUs to serve
-it, just with different quantization and a different parallelism shape than the
-TP8 recipe this post benchmarks. The same `arch_overrides` block the shipped configs
-already use elsewhere — e.g. `scripts/vllm/configs/default.yaml` forcing TP8 on gfx942
-where TP4 would OOM for other MoE models — is exactly the hook a future MI300X Kimi-K3
-config would use, so `skip_gpu_arch` here should be read as "no validated recipe
-yet," not "impossible."
+than silently producing a result under the wrong assumptions. That gate records the
+validated scope of *this recipe*: the configurations benchmarked here were written and
+validated for gfx950, and `skip_gpu_arch` keeps them from running outside it. madengine's
+`arch_overrides` block is the general mechanism the shipped configs use to vary settings
+by GPU architecture.
 
 ---
 
@@ -572,7 +569,7 @@ pass an absolute container path instead:
                        "docker_env_vars": {"CONFIG": "/cfg/custom.yaml"}}'
 ```
 
-The same three flags work for the other two engines; the only difference is which
+The same three flags work for the other two engines; the difference is which
 config the entry starts from — `scripts/sglang/configs/kimi_k3.yaml` for SGLang
 (which also takes `--variant nospec|dspark`) and `scripts/atom/configs/default.yaml`
 for ATOM.
@@ -580,7 +577,7 @@ for ATOM.
 ### What you give up
 
 A custom sweep is no longer comparable to Figure 3, Table 7, or the framework tracking
-issue — those numbers are only meaningful at 8192/1024. That is a fair trade when the
+issue — those numbers apply at 8192/1024. That is a fair trade when the
 question is "how does K3 serve *my* traffic on this node," and the wrong tool when the
 question is "is this engine faster than that one." Keep the shared sweep for the second
 question; because the core schema is shared, both sets of numbers land in the same
@@ -590,7 +587,7 @@ question; because the core schema is shared, both sets of numbers land in the sa
 |---|---|---|
 | `inp` / `out` | Input / output sequence length | Long `inp` raises KV pressure; may need lower `max_concurrency` |
 | `max_concurrency` | Sweep points (space-separated) | Each value is a full server-side run — cost scales linearly |
-| `tp` | Tensor parallel degree | K3 needs ~1680 GB; TP8 is the only fit on one 8-GPU node |
+| `tp` | Tensor parallel degree | TP8 is the configuration measured here; lower TP degrees were not evaluated |
 | `extra_args` | vLLM server flags | Passed through verbatim to `vllm serve` |
 | `env` | Kernel-path selection | Dropping `AITER_SITUV2_A8W4` costs real throughput |
 
@@ -619,33 +616,33 @@ CSVs lines the concurrency axis up row-for-row.
 Below is an out-of-box `madengine run` on 8× MI350X, all three engines, no tuning beyond
 the shared config in this post.
 
-![Kimi-K3 day-0 OOB serving throughput: vLLM vs SGLang vs ATOM on MI350X](images/kimi-k3-vllm-sglang-throughput.png)
+![Total token throughput against max concurrency for Kimi-K3 served on 8x MI350X, with vLLM, SGLang, and ATOM each running its own unmodified day-0 configuration](images/kimi-k3-vllm-sglang-throughput.png)
 
 Figure 3: **Out-of-box snapshot.** Total token throughput vs. max concurrency, 8192 in /
 1024 out, TP8, 8× MI350X, measured 2026-07-29. All three engines from the same madengine
 sweep, each using its day-0 out-of-box configuration; one run per concurrency point, no
 repetitions. This is not a tuned comparison and not a leaderboard — it is a picture of
-where each stack's K3-specific work stood on launch day, and it is the thing most likely
-to have changed by the time you re-run the command.
+how each stack's day-0 out-of-box configuration behaved on launch day, and it is the
+thing most likely to have changed by the time you re-run the command.
 
 Two properties of the shape matter more than the ordering. First, this is a *functional*
 result before it is a performance one: a 2.8T-parameter MoE with a new attention design
-serves correctly on a single 8× MI350X node, on three separate engines, on day 0.
-Second, through concurrency 32 all three land on essentially the same curve — 4,676 /
-4,694 / 4,692 tok/s, a spread under 0.5%. That convergence is an observation about this
-configuration; a single throughput point does not isolate which component — scheduler,
-kernels, precision, benchmark client, or hardware — sets the ceiling there.
+completes the full sweep on a single 8× MI350X node, on three separate engines, on day 0.
+No accuracy evaluation was run as part of this sweep, so these results establish that the
+model serves and produces output at the requested lengths — not that its output quality
+was assessed. Second, at concurrency 32 all three land on essentially the same point —
+4,676 / 4,694 / 4,692 tok/s, a spread under 0.5%. The spread is considerably wider below
+that point (at concurrency 1 the three values differ by more than 40%) and widens again
+above it. That single-point convergence is an observation about this configuration; one
+throughput point does not isolate which component — scheduler, kernels, precision,
+benchmark client, or hardware — sets the ceiling there.
 
-The curves separate past 32, and that is where engine-specific maturity is visible:
-continuous-batching policy, MoE dispatch at large batch, KV-cache layout. vLLM keeps
-climbing to 8,228 tok/s at concurrency 128; SGLang and ATOM flatten. ATOM's curve in
-particular reflects a generic serving path rather than a K3-tuned one — its day-0 recipe
-carries no model-specific kernel or batching work, so the high-concurrency numbers
-measure an un-optimized baseline, not a ceiling. The useful reading is the *gap between
-the low- and high-concurrency regimes* for each engine, as an indication of how much
-batching work remains. Because the primary sweep axes are aligned, those gaps are
-comparable across engines subject to the out-of-box differences in Table 4, whose effect
-on these numbers has not been measured.
+The curves separate past concurrency 32, where the engines' differing scheduling and
+batching defaults have more room to act. Because each engine runs its own out-of-box
+day-0 configuration, these high-concurrency values reflect those default settings rather
+than a tuned result for any engine, and the differences between the three benchmark
+clients noted in Table 4 remain unquantified. Each engine's day-0 configuration is a
+snapshot of one point in its development, and all three continue to change.
 
 | Concurrency | vLLM (tok/s) | SGLang (tok/s) | ATOM (tok/s) |
 |---:|---:|---:|---:|
@@ -665,18 +662,21 @@ through 128 only; 256 has not been measured on any of the three engines.
 
 ---
 
-## Limitations and Follow-Ups
+## Limitations
 
 The measurements above are a day-0 snapshot, and the following bound what they support:
 
 - **MI350X only.** The recipes target gfx950 (MI350X and MI355X), but every number here
   comes from an 8× MI350X node. MI355X has not been measured.
+- **Throughput only, no accuracy evaluation.** The sweep measures serving throughput and
+  latency; the GSM8K accuracy run is disabled in the configs used here, so output quality
+  was not assessed on any of the three engines.
 - **Single run per point.** Each concurrency point is one measurement over
   `10 × concurrency` prompts, with no repetitions and no warm-up iterations on the
   serving path. There is no run-to-run variance estimate, so small cross-engine
   differences should not be over-read.
-- **Concurrency 256 unmeasured.** The shipped configs list it; no engine has run it.
-  Aligning the configs with what was actually measured is a follow-up in the MAD repo.
+- **Concurrency 256 unmeasured.** The shipped configs list it; no engine has run it, so
+  the config's sweep list is wider than the measured range reported here.
 - **Bench-client defaults not normalized.** The prompt-length sampling and EOS
   differences in Table 4 are unquantified; no A/B run has isolated their effect.
 - **No long-context data.** Kimi-K3 supports a 1M-token context; the sweep uses 8192.
@@ -735,7 +735,7 @@ hf download moonshotai/Kimi-K3 \
 ```
 
 - **madengine:** [github.com/ROCm/madengine](https://github.com/ROCm/madengine)
-- **Model:** [moonshotai/Kimi-K3 on HuggingFace](https://huggingface.co/moonshotai/Kimi-K3)
+- **Model:** [moonshotai/Kimi-K3 on Hugging Face](https://huggingface.co/moonshotai/Kimi-K3)
 
 ## References
 
@@ -773,6 +773,6 @@ model, and system configuration.
 
 The information presented in this document is for informational purposes only and may contain technical inaccuracies, omissions, and typographical errors. The information contained herein is subject to change and may be rendered inaccurate for many reasons, including but not limited to product and roadmap changes, component and motherboard version changes, new model and/or product releases, product differences between differing manufacturers, software changes, BIOS flashes, firmware upgrades, or the like. Any computer system has risks of security vulnerabilities that cannot be completely prevented or mitigated. AMD assumes no obligation to update or otherwise correct or revise this information.
 However, AMD reserves the right to revise this information and to make changes from time to time to the content hereof without obligation of AMD to notify any person of such revisions or changes.
-THIS INFORMATION IS PROVIDED 'AS IS." AMD MAKES NO REPRESENTATIONS OR WARRANTIES WITH RESPECT TO THE CONTENTS HEREOF AND ASSUMES NO RESPONSIBILITY FOR ANY INACCURACIES, ERRORS, OR OMISSIONS THAT MAY APPEAR IN THIS INFORMATION. AMD SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR ANY PARTICULAR PURPOSE. IN NO EVENT WILL AMD BE LIABLE TO ANY PERSON FOR ANY RELIANCE, DIRECT, INDIRECT, SPECIAL, OR OTHER CONSEQUENTIAL DAMAGES ARISING FROM THE USE OF ANY INFORMATION CONTAINED HEREIN, EVEN IF AMD IS EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-AMD, the AMD Arrow logo, AMD Instinct, AMD ROCm, CDNA, and combinations thereof are trademarks of Advanced Micro Devices, Inc. Other product names used in this publication are for identification purposes only and may be trademarks of their respective companies. Linux is the registered trademark of Linus Torvalds in the U.S. and other countries. PyTorch, the PyTorch logo and any related marks are trademarks of The Linux Foundation. vLLM is a trademark of vLLM Project. All other trademarks and product names referenced in this publication, including Kimi-K3, Moonshot AI, SGLang, ATOM, and HuggingFace, are the property of their respective owners.
-© 2026 Advanced Micro Devices, Inc. All rights reserved
+THIS INFORMATION IS PROVIDED "AS IS." AMD MAKES NO REPRESENTATIONS OR WARRANTIES WITH RESPECT TO THE CONTENTS HEREOF AND ASSUMES NO RESPONSIBILITY FOR ANY INACCURACIES, ERRORS, OR OMISSIONS THAT MAY APPEAR IN THIS INFORMATION. AMD SPECIFICALLY DISCLAIMS ANY IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, OR FITNESS FOR ANY PARTICULAR PURPOSE. IN NO EVENT WILL AMD BE LIABLE TO ANY PERSON FOR ANY RELIANCE, DIRECT, INDIRECT, SPECIAL, OR OTHER CONSEQUENTIAL DAMAGES ARISING FROM THE USE OF ANY INFORMATION CONTAINED HEREIN, EVEN IF AMD IS EXPRESSLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+AMD, the AMD Arrow logo, AMD Instinct, AMD EPYC, AMD ROCm, and combinations thereof are trademarks of Advanced Micro Devices, Inc. Other product names used in this publication are for identification purposes only and may be trademarks of their respective companies. Linux is the registered trademark of Linus Torvalds in the U.S. and other countries. PyTorch, the PyTorch logo, vLLM, and any related marks are trademarks of The Linux Foundation. All other trademarks and product names referenced in this publication, including Kimi-K3, Moonshot AI, SGLang, and Hugging Face, are the property of their respective owners.
+© 2026 Advanced Micro Devices, Inc. All rights reserved.
