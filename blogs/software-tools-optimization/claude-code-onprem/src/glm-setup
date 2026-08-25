@@ -1,0 +1,515 @@
+#!/bin/bash
+# glm-setup: get your own node serving GLM-5.2 to Claude Code, end to end.
+#
+# It asks for your node access (SSH user + host, and a few ports if you don't
+# want the defaults), then works through the layers and fixes what it can:
+#   1. SSH: can we reach your node at all?
+#   2. Model server (:31090): is GLM-5.2 up? what model id is it serving?
+#   3. Router (:4000): is LiteLLM in front of it? if not, deploy it under your
+#      own home on the node and start it, then prove it translates a tool call.
+#   4. Tunnel: forward a local port to the node router.
+#   5. Client: install the glm-code launcher and (optionally) flip the VS Code
+#      extension over with a reversible toggle.
+# Answers are saved so re-runs skip the questions; --reconfigure asks again.
+#
+# Nothing here is tied to a particular node or user. Run it as yourself against
+# your own reservation.
+# Author: adlashab <adlashab@amd.com>
+set -u
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CONFIG_DIR="${GLM_CONFIG_DIR:-$HOME/.config/glm-selfservice}"
+CONFIG_FILE="$CONFIG_DIR/config"
+ROOT="${GLM_ROOT:-$HOME/.glm-selfservice}"
+BIN_DIR="${GLM_BIN_DIR:-$HOME/.local/bin}"
+# empty = install the current litellm[proxy] (fast, wheels). Pin a specific one
+# with GLM_LITELLM_VERSION=1.93.0 (the originally verified build; an old pin can
+# make pip's resolver backtrack for a long time).
+LITELLM_VERSION="${GLM_LITELLM_VERSION:-}"
+PYTHON="${PYTHON:-python3}"
+
+DEF_SSH_PORT="22"
+DEF_LOCAL_PORT="4000"
+DEF_ROUTER_PORT="4000"
+DEF_SERVER_PORT="31090"
+DEF_KEY="sk-glm-local"
+DEF_MODEL="glm-5.2-fp8"
+DEF_REMOTE_BASE="glm-selfservice"
+
+ENV_SSH_USER="${GLM_SSH_USER-}"
+ENV_SSH_HOST="${GLM_SSH_HOST-}"
+ENV_SSH_PORT="${GLM_SSH_PORT-}"
+ENV_LOCAL_PORT="${GLM_LOCAL_PORT-}"
+ENV_ROUTER_PORT="${GLM_ROUTER_PORT-}"
+ENV_SERVER_PORT="${GLM_SERVER_PORT-}"
+ENV_KEY="${GLM_KEY-}"
+ENV_MODEL="${GLM_MODEL-}"
+ENV_CA="${GLM_CA-}"
+ENV_REMOTE_BASE="${GLM_REMOTE_BASE-}"
+ENV_SERVE_SCRIPT="${GLM_SERVE_SCRIPT-}"
+
+RECONFIGURE=0
+NONINTERACTIVE=0
+CHECK_ONLY=0
+SKIP_VSCODE=0
+DO_VSCODE=0
+SERVER_MODEL_ID=""
+RB_ABS=""
+
+usage() {
+  cat <<EOF
+glm-setup - point your own node's GLM-5.2 at Claude Code, end to end.
+
+Usage:
+  glm-setup                 interactive setup (asks for node access, fixes layers)
+  glm-setup --check         check ssh / server / router only, change nothing
+  glm-setup --reconfigure   ask the questions again and re-save
+  glm-setup --non-interactive   use saved config / env vars, don't prompt
+  glm-setup --vscode        also configure the VS Code extension (WSL)
+  glm-setup --skip-vscode   never touch VS Code
+  glm-setup --help          this text
+
+Answers are saved to $CONFIG_FILE.
+Env vars override the saved config and the defaults: GLM_SSH_USER, GLM_SSH_HOST,
+GLM_SSH_PORT, GLM_LOCAL_PORT, GLM_ROUTER_PORT, GLM_SERVER_PORT, GLM_KEY,
+GLM_MODEL, GLM_CA, GLM_REMOTE_BASE, GLM_SERVE_SCRIPT.
+Install locations (override for a throwaway run): GLM_CONFIG_DIR, GLM_ROOT,
+GLM_BIN_DIR.
+EOF
+}
+
+say() { printf '%s\n' "$*" >&2; }
+sec() { printf '\n== %s ==\n' "$*" >&2; }
+
+ask() {
+  local q="$1" d="$2" ans
+  if [ "$NONINTERACTIVE" -eq 1 ]; then printf '%s' "$d"; return; fi
+  if [ -n "$d" ]; then printf '%s [%s]: ' "$q" "$d" >&2
+  else printf '%s []: ' "$q" >&2; fi
+  IFS= read -r ans || ans=""
+  [ -z "$ans" ] && ans="$d"
+  printf '%s' "$ans"
+}
+
+node() { printf '%s@%s' "$GLM_SSH_USER" "$GLM_SSH_HOST"; }
+
+# ssh that runs a plain command string on the node
+sshx() { ssh -p "$GLM_SSH_PORT" -o ConnectTimeout=15 "$(node)" "$@"; }
+
+# extract the first served model id from a /v1/models json blob
+first_model_id() {
+  if command -v "$PYTHON" >/dev/null 2>&1; then
+    "$PYTHON" -c 'import sys,json
+try:
+    print(json.load(sys.stdin)["data"][0]["id"])
+except Exception:
+    print("")'
+  else
+    grep -o '"id":"[^"]*"' | head -1 | sed 's/.*:"//; s/"$//'
+  fi
+}
+
+save_config() {
+  mkdir -p "$CONFIG_DIR"
+  ( umask 077; cat > "$CONFIG_FILE" <<EOF
+# glm-selfservice settings. Edit by hand or re-run: glm-setup --reconfigure
+GLM_SSH_USER="$GLM_SSH_USER"
+GLM_SSH_HOST="$GLM_SSH_HOST"
+GLM_SSH_PORT="$GLM_SSH_PORT"
+GLM_LOCAL_PORT="$GLM_LOCAL_PORT"
+GLM_ROUTER_PORT="$GLM_ROUTER_PORT"
+GLM_SERVER_PORT="$GLM_SERVER_PORT"
+GLM_KEY="$GLM_KEY"
+GLM_MODEL="$GLM_MODEL"
+GLM_CA="$GLM_CA"
+GLM_REMOTE_BASE="$GLM_REMOTE_BASE"
+EOF
+  )
+  chmod 600 "$CONFIG_FILE" 2>/dev/null || true
+}
+
+wizard() {
+  say "Answer a few questions about your node. Press Enter to take the default."
+  say "You need SSH access to the node and an active reservation."
+  echo >&2
+  GLM_SSH_USER="$(ask 'SSH username on the node' "$GLM_SSH_USER")"
+  GLM_SSH_HOST="$(ask 'Node IP or hostname' "$GLM_SSH_HOST")"
+  GLM_SSH_PORT="$(ask 'SSH port' "$GLM_SSH_PORT")"
+  GLM_LOCAL_PORT="$(ask 'Local port for the tunnel' "$GLM_LOCAL_PORT")"
+  GLM_ROUTER_PORT="$(ask 'Router port on the node' "$GLM_ROUTER_PORT")"
+  GLM_SERVER_PORT="$(ask 'GLM server port on the node' "$GLM_SERVER_PORT")"
+  GLM_MODEL="$(ask 'Model id' "$GLM_MODEL")"
+  GLM_KEY="$(ask 'Router API key (local dummy is fine)' "$GLM_KEY")"
+  GLM_CA="$(ask 'Corp CA cert path on this machine (blank if none)' "$GLM_CA")"
+  GLM_REMOTE_BASE="$(ask 'Where to install the router on the node (under your home, or an absolute path)' "$GLM_REMOTE_BASE")"
+  if [ -z "$GLM_SSH_USER" ] || [ -z "$GLM_SSH_HOST" ]; then
+    say "SSH username and node are required."; exit 2
+  fi
+}
+
+# ---- layer 1: ssh ----
+check_ssh() {
+  sec "SSH to $(node) (port $GLM_SSH_PORT)"
+  local err
+  if ssh -p "$GLM_SSH_PORT" -o BatchMode=yes -o ConnectTimeout=12 "$(node)" true 2>/dev/null; then
+    say "ssh OK (key auth)."; return 0
+  fi
+  # key auth failed; allow an interactive attempt (passphrase / host key) unless non-interactive
+  if [ "$NONINTERACTIVE" -eq 0 ]; then
+    say "Key auth didn't go through. Trying once interactively (you may be asked for a passphrase or to accept the host key)..."
+    if ssh -p "$GLM_SSH_PORT" -o ConnectTimeout=15 "$(node)" true; then
+      say "ssh OK."; return 0
+    fi
+  fi
+  err="$(ssh -p "$GLM_SSH_PORT" -o BatchMode=yes -o ConnectTimeout=12 "$(node)" true 2>&1)"
+  say "Cannot reach the node over ssh. This is the ssh layer, not the model."
+  say "  $err"
+  say "Check: VPN is up, your SSH key is loaded (ssh-add -l), the host/user are right,"
+  say "  and your node reservation is still active. Try by hand: ssh -p $GLM_SSH_PORT $(node) true"
+  return 2
+}
+
+# resolve the remote install dir to an absolute path (creating it if needed)
+resolve_remote_base() {
+  RB_ABS="$(sshx "mkdir -p \"$GLM_REMOTE_BASE\" 2>/dev/null; cd \"$GLM_REMOTE_BASE\" 2>/dev/null && pwd" 2>/dev/null)"
+  [ -n "$RB_ABS" ] && GLM_REMOTE_BASE="$RB_ABS"
+}
+
+# ---- layer 2: model server ----
+check_server() {
+  sec "GLM server on :$GLM_SERVER_PORT"
+  local models
+  models="$(sshx "curl -s -m 8 http://127.0.0.1:$GLM_SERVER_PORT/v1/models" 2>/dev/null)"
+  if ! printf '%s' "$models" | grep -q '"data"'; then
+    say "The GLM server is NOT answering on :$GLM_SERVER_PORT."
+    return 1
+  fi
+  SERVER_MODEL_ID="$(printf '%s' "$models" | first_model_id)"
+  say "GLM server is up. Served model id: ${SERVER_MODEL_ID:-unknown}"
+  # a real chat completion, using the id the server actually serves
+  local chat mid="${SERVER_MODEL_ID:-$GLM_MODEL}"
+  chat="$(ssh -p "$GLM_SSH_PORT" -o ConnectTimeout=30 "$(node)" "bash -s -- '$GLM_SERVER_PORT' '$mid'" <<'REMOTE'
+curl -s -m 30 "http://127.0.0.1:$1/v1/chat/completions" \
+  -H 'Content-Type: application/json' \
+  -d "{\"model\":\"$2\",\"messages\":[{\"role\":\"user\",\"content\":\"say hi in one word\"}],\"max_tokens\":16,\"temperature\":0}"
+REMOTE
+)"
+  if printf '%s' "$chat" | grep -q '"choices"'; then
+    say "Real /v1/chat/completions works against the server."
+  else
+    say "The model list is served but a real completion did not come back (it may be loading / compiling)."
+  fi
+  if [ -n "$SERVER_MODEL_ID" ] && [ "$SERVER_MODEL_ID" != "$GLM_MODEL" ]; then
+    say "Note: your model id is '$GLM_MODEL' but the server serves '$SERVER_MODEL_ID'. The router's catch-all still routes it, but you can set the model id to match."
+  fi
+  return 0
+}
+
+handle_server_down() {
+  local script
+  script="$(ssh -p "$GLM_SSH_PORT" -o ConnectTimeout=15 "$(node)" "bash -s -- '$ENV_SERVE_SCRIPT' '$GLM_REMOTE_BASE'" <<'REMOTE'
+for f in "$1" "$2/serve_glm52.sh" "$HOME/serve_glm52.sh" "$HOME/serve_glm52_mi355x.sh" "$HOME/deploy/serve_glm52_mi355x.sh"; do
+  [ -n "$f" ] && [ -f "$f" ] && { echo "$f"; exit 0; }
+done
+exit 0
+REMOTE
+)"
+  if [ -n "$script" ]; then
+    say "Found a serve script on the node: $script"
+    local a; a="$(ask 'Start the GLM server now? It can take several minutes to load. [y/N]' 'N')"
+    case "$a" in
+      y|Y|yes|YES|Yes)
+        say "Starting the server (streaming output; this blocks until it is READY or fails)..."
+        ssh -p "$GLM_SSH_PORT" "$(node)" "$script" || say "The serve script exited non-zero. Check its log on the node."
+        ;;
+      *)
+        say "Leaving it. Start it yourself with:  ssh -p $GLM_SSH_PORT $(node) $script"
+        ;;
+    esac
+  else
+    say "No serve script found on the node, and I can't deploy the weights for you."
+    say "You need, on the node: the GLM-5.2-FP8 checkpoint on local NVMe and a serve"
+    say "script that launches SGLang with --tool-call-parser glm47 --reasoning-parser glm45."
+    local a; a="$(ask 'Copy the bundled serve_glm52.sh to the node so you can edit MODEL_PATH and run it? [y/N]' 'N')"
+    case "$a" in
+      y|Y|yes|YES|Yes)
+        resolve_remote_base
+        scp -P "$GLM_SSH_PORT" "$SCRIPT_DIR/serve_glm52.sh" "$(node):$GLM_REMOTE_BASE/serve_glm52.sh" >/dev/null 2>&1 \
+          && { sshx "chmod +x \"$GLM_REMOTE_BASE/serve_glm52.sh\""; say "Copied to $GLM_REMOTE_BASE/serve_glm52.sh on the node. Edit MODEL_PATH inside it (or export it) and run it."; } \
+          || say "Copy failed."
+        ;;
+    esac
+  fi
+}
+
+# ---- layer 3: router ----
+router_up() {
+  local models
+  models="$(sshx "curl -s -m 8 -H 'Authorization: Bearer $GLM_KEY' http://127.0.0.1:$GLM_ROUTER_PORT/v1/models" 2>/dev/null)"
+  printf '%s' "$models" | grep -q '"data"'
+}
+
+verify_router_toolcall() {
+  local out
+  out="$(ssh -p "$GLM_SSH_PORT" -o ConnectTimeout=45 "$(node)" "bash -s -- '$GLM_ROUTER_PORT' '$GLM_KEY' '$GLM_MODEL'" <<'REMOTE'
+curl -s -m 45 "http://127.0.0.1:$1/v1/messages" \
+  -H 'content-type: application/json' \
+  -H "x-api-key: $2" \
+  -H 'anthropic-version: 2023-06-01' \
+  -d "{\"model\":\"$3\",\"max_tokens\":512,\"stream\":false,\"messages\":[{\"role\":\"user\",\"content\":\"Use the write_file tool to create hello.txt containing exactly: banana\"}],\"tools\":[{\"name\":\"write_file\",\"description\":\"Write text to a file\",\"input_schema\":{\"type\":\"object\",\"properties\":{\"path\":{\"type\":\"string\"},\"content\":{\"type\":\"string\"}},\"required\":[\"path\",\"content\"]}}]}"
+REMOTE
+)"
+  if printf '%s' "$out" | grep -q '"type":"tool_use"' && printf '%s' "$out" | grep -q '"stop_reason":"tool_use"'; then
+    say "Router translates a tool call correctly (got a tool_use with parsed input)."
+    return 0
+  fi
+  say "Router answered but the tool-call translation didn't look right. Raw reply:"
+  say "  $out"
+  return 1
+}
+
+deploy_router() {
+  sec "Deploying the LiteLLM router on the node"
+  resolve_remote_base
+  [ -n "$RB_ABS" ] || { say "Could not create the install dir '$GLM_REMOTE_BASE' on the node."; return 1; }
+  say "Install dir: $RB_ABS"
+
+  # render config.yaml from the shipped reference with this user's values
+  local cfg_tmp; cfg_tmp="$(mktemp)"
+  sed -e "s#glm-5.2-fp8#$GLM_MODEL#g" \
+      -e "s#31090#$GLM_SERVER_PORT#g" \
+      -e "s#sk-glm-local#$GLM_KEY#g" \
+      "$SCRIPT_DIR/litellm-config.yaml" > "$cfg_tmp"
+
+  sshx "mkdir -p \"$RB_ABS/litellm\" \"$RB_ABS/logs\""
+  scp -P "$GLM_SSH_PORT" "$SCRIPT_DIR/router_ctl.sh" "$(node):$RB_ABS/router_ctl.sh" >/dev/null 2>&1 || { say "scp router_ctl.sh failed."; rm -f "$cfg_tmp"; return 1; }
+  scp -P "$GLM_SSH_PORT" "$cfg_tmp" "$(node):$RB_ABS/litellm/config.yaml" >/dev/null 2>&1 || { say "scp config.yaml failed."; rm -f "$cfg_tmp"; return 1; }
+  rm -f "$cfg_tmp"
+
+  # router.env so a later 'router_ctl.sh restart' on the node uses the same port/key
+  ssh -p "$GLM_SSH_PORT" "$(node)" "bash -s -- '$RB_ABS' '$GLM_ROUTER_PORT' '$GLM_KEY'" <<'REMOTE'
+cat > "$1/router.env" <<EOF
+GLM_ROUTER_PORT=$2
+GLM_ROUTER_KEY=$3
+EOF
+chmod +x "$1/router_ctl.sh" 2>/dev/null || true
+REMOTE
+
+  say "Setting up the venv and installing litellm[proxy] (${LITELLM_VERSION:-current}; first time only, can take a couple minutes)..."
+  ssh -p "$GLM_SSH_PORT" "$(node)" "bash -s -- '$RB_ABS' '$LITELLM_VERSION' '$PYTHON'" <<'REMOTE'
+set -e
+BASE="$1"; VER="$2"; PY="$3"
+if [ ! -f "$BASE/litellm/venv/bin/activate" ]; then
+  "$PY" -m venv "$BASE/litellm/venv"
+fi
+. "$BASE/litellm/venv/bin/activate"
+python -m pip install -q --upgrade pip
+if ! python -c "import litellm" 2>/dev/null; then
+  if [ -n "$VER" ]; then pip install -q "litellm[proxy]==$VER"; else pip install -q "litellm[proxy]"; fi
+fi
+python -c "import litellm" || { echo "litellm import failed after install" >&2; exit 1; }
+python -c "from importlib.metadata import version; print('litellm', version('litellm'), 'ready')" 1>&2 \
+  || echo "litellm imported (version lookup skipped)" >&2
+REMOTE
+  local rc=$?
+  if [ "$rc" -ne 0 ]; then
+    say "Could not install litellm on the node. Common cause: the node can't reach PyPI (no proxy)."
+    say "Fix pip connectivity on the node, or pre-install 'litellm[proxy]' into $RB_ABS/litellm/venv, then re-run."
+    return 1
+  fi
+
+  say "Starting the router on :$GLM_ROUTER_PORT ..."
+  sshx "GLM_ROUTER_PORT='$GLM_ROUTER_PORT' GLM_ROUTER_KEY='$GLM_KEY' \"$RB_ABS/router_ctl.sh\" start" || true
+  sleep 2
+  if router_up; then
+    say "Router is up on :$GLM_ROUTER_PORT."
+    verify_router_toolcall || true
+    return 0
+  fi
+  say "Router did not come up. On the node: \"$RB_ABS/router_ctl.sh\" status  (log: $RB_ABS/logs/litellm.log)"
+  return 1
+}
+
+check_or_deploy_router() {
+  sec "Router on :$GLM_ROUTER_PORT"
+  resolve_remote_base
+  if router_up; then
+    say "Router is already up on :$GLM_ROUTER_PORT."
+    verify_router_toolcall || true
+    return 0
+  fi
+  say "No router answering on :$GLM_ROUTER_PORT."
+  if [ "$CHECK_ONLY" -eq 1 ]; then return 3; fi
+  local a; a="$(ask 'Deploy the LiteLLM router on the node now? [Y/n]' 'Y')"
+  case "$a" in n|N|no|NO|No) say "Skipped. Deploy it later by re-running glm-setup."; return 3;; esac
+  deploy_router
+}
+
+# ---- layer 4: tunnel ----
+tunnel_spec() { printf '%s:127.0.0.1:%s' "$GLM_LOCAL_PORT" "$GLM_ROUTER_PORT"; }
+port_listening() { (exec 3<>"/dev/tcp/127.0.0.1/$1") 2>/dev/null; }
+
+ensure_tunnel() {
+  sec "SSH tunnel  local :$GLM_LOCAL_PORT -> $(node) :$GLM_ROUTER_PORT"
+  if port_listening "$GLM_LOCAL_PORT"; then say "Local :$GLM_LOCAL_PORT already listening."; return 0; fi
+  ssh -f -N -p "$GLM_SSH_PORT" -L "$(tunnel_spec)" \
+    -o ServerAliveInterval=30 -o ExitOnForwardFailure=yes "$(node)" 2>/dev/null || true
+  local i
+  for i in $(seq 1 10); do port_listening "$GLM_LOCAL_PORT" && { say "Tunnel up on local :$GLM_LOCAL_PORT."; return 0; }; sleep 1; done
+  say "Tunnel did not come up on local :$GLM_LOCAL_PORT (something may already hold that port)."
+  return 1
+}
+
+# ---- layer 5: client ----
+install_cli() {
+  sec "Installing the glm-code launcher"
+  mkdir -p "$BIN_DIR"
+  cp "$SCRIPT_DIR/glm-code" "$BIN_DIR/glm-code" && chmod +x "$BIN_DIR/glm-code"
+  say "Installed $BIN_DIR/glm-code"
+  case ":$PATH:" in
+    *":$BIN_DIR:"*) : ;;
+    *) say "Note: $BIN_DIR is not on your PATH. Add it, e.g.:  export PATH=\"$BIN_DIR:\$PATH\"" ;;
+  esac
+}
+
+configure_vscode() {
+  # WSL only. The toggle flips both surfaces the extension uses: the WSL
+  # integrated terminal (terminal.integrated.env.linux) and the Windows sidebar,
+  # which runs claude.exe against %USERPROFILE%\.claude\settings.json.
+  if ! grep -qi microsoft /proc/version 2>/dev/null && [ -z "${WSL_DISTRO_NAME:-}" ]; then
+    return 0
+  fi
+  if [ "$SKIP_VSCODE" -eq 1 ]; then return 0; fi
+  if [ "$DO_VSCODE" -eq 0 ]; then
+    local a; a="$(ask 'Point the VS Code Claude Code extension (terminal and sidebar) at GLM too? [y/N]' 'N')"
+    case "$a" in y|Y|yes|YES|Yes) : ;; *) return 0;; esac
+  fi
+  sec "VS Code extension (WSL terminal + Windows sidebar)"
+  local ps="$SCRIPT_DIR/glm-vscode.ps1"
+  [ -f "$ps" ] || { say "glm-vscode.ps1 not found next to glm-setup; skipping."; return 0; }
+  local winprofile winprofile_wsl psdest
+  winprofile="$(cmd.exe /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r')"
+  if [ -z "$winprofile" ]; then say "Could not find the Windows user profile; run glm-vscode.ps1 by hand."; return 0; fi
+  winprofile_wsl="$(wslpath -u "$winprofile" 2>/dev/null)"
+  psdest="$winprofile_wsl/.glm-selfservice/glm-vscode.ps1"
+  mkdir -p "$winprofile_wsl/.glm-selfservice" 2>/dev/null || true
+  # a stale copy of the toggle here is exactly how the sidebar write got skipped
+  # while the terminal write still succeeded, so make the copy overwrite and be
+  # loud if it can't.
+  if ! cp "$ps" "$psdest"; then
+    say "Could not copy glm-vscode.ps1 to $psdest. Fix that and re-run; leaving VS Code alone."
+    return 1
+  fi
+  local ca_arg=""
+  [ -n "$GLM_CA" ] && ca_arg="-Ca '$GLM_CA'"
+  say "Flipping VS Code to GLM (backs up the VS Code settings and ~/.claude/settings.json first)..."
+  # run the toggle through a temp file so we keep its real exit code; piping
+  # straight into sed would throw the exit code away (that hid the failure).
+  local ps_log rc
+  ps_log="$(mktemp)"
+  powershell.exe -ExecutionPolicy Bypass -File "$winprofile\\.glm-selfservice\\glm-vscode.ps1" \
+    on -Port "$GLM_LOCAL_PORT" -Model "$GLM_MODEL" -Key "$GLM_KEY" -Root "$ROOT" $ca_arg >"$ps_log" 2>&1
+  rc=$?
+  sed 's/^/  /' "$ps_log" >&2
+  rm -f "$ps_log"
+  if [ "$rc" -ne 0 ]; then
+    say "VS Code toggle FAILED (powershell exit $rc). The sidebar (~/.claude/settings.json) was NOT flipped."
+    say "Run it by hand to see the real error:"
+    say "  powershell.exe -ExecutionPolicy Bypass -File \"$winprofile\\.glm-selfservice\\glm-vscode.ps1\" on -Port $GLM_LOCAL_PORT -Model $GLM_MODEL -Key $GLM_KEY -Root \"$ROOT\""
+    return 1
+  fi
+  # a clean exit isn't proof: an old toggle writes the terminal and exits 0
+  # without ever touching ~/.claude. Confirm the sidebar half actually landed.
+  local sidebar
+  sidebar="$(powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "\$p = Join-Path \$env:USERPROFILE '.claude\\settings.json'; if (Test-Path \$p) { \$u = (Get-Content -Raw -LiteralPath \$p | ConvertFrom-Json).env.ANTHROPIC_BASE_URL; if (\"\$u\" -like '*127.0.0.1*') { 'ok' } else { 'stale' } } else { 'missing' }" 2>/dev/null | tr -d '\r')"
+  if [ "$sidebar" != "ok" ]; then
+    say "The WSL terminal was flipped but the sidebar (~/.claude/settings.json) did NOT get the GLM env block (state: ${sidebar:-unknown})."
+    say "That usually means an old glm-vscode.ps1 is deployed on this machine. The shipped one writes both surfaces."
+    return 1
+  fi
+  say "Both surfaces flipped: WSL terminal and the Windows sidebar (~/.claude/settings.json) point at the GLM router."
+  say "Done. Fully restart VS Code (quit all windows, not just reload) so both the terminal and the sidebar pick it up."
+  say "Revert any time:  powershell.exe -ExecutionPolicy Bypass -File \"$winprofile\\.glm-selfservice\\glm-vscode.ps1\" off"
+}
+
+summary() {
+  sec "Ready"
+  say "node    : $(node)  (ssh port $GLM_SSH_PORT)"
+  say "server  : :$GLM_SERVER_PORT  model ${SERVER_MODEL_ID:-$GLM_MODEL}"
+  say "router  : :$GLM_ROUTER_PORT  key $GLM_KEY"
+  say "tunnel  : local :$GLM_LOCAL_PORT -> node :$GLM_ROUTER_PORT"
+  say "config  : $CONFIG_FILE"
+  echo >&2
+  say "Use it:"
+  say "  glm-code                       interactive Claude Code on your GLM-5.2"
+  say "  glm-code -p \"explain this repo\"  headless one-shot"
+  say "  glm-code --check               re-check the layers"
+  say "Ground truth that it's really your node: watch the router log while you use it:"
+  say "  ssh -p $GLM_SSH_PORT $(node) tail -f $GLM_REMOTE_BASE/logs/litellm.log"
+}
+
+# ---- args ----
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help) usage; exit 0;;
+    --check) CHECK_ONLY=1;;
+    --reconfigure) RECONFIGURE=1;;
+    --non-interactive|--yes) NONINTERACTIVE=1;;
+    --vscode) DO_VSCODE=1;;
+    --skip-vscode) SKIP_VSCODE=1;;
+    *) say "unknown option: $1"; usage; exit 2;;
+  esac
+  shift
+done
+
+# ---- load config, apply env overrides ----
+GLM_SSH_USER=""; GLM_SSH_HOST=""
+GLM_SSH_PORT="$DEF_SSH_PORT"; GLM_LOCAL_PORT="$DEF_LOCAL_PORT"
+GLM_ROUTER_PORT="$DEF_ROUTER_PORT"; GLM_SERVER_PORT="$DEF_SERVER_PORT"
+GLM_KEY="$DEF_KEY"; GLM_MODEL="$DEF_MODEL"; GLM_CA=""; GLM_REMOTE_BASE="$DEF_REMOTE_BASE"
+
+have_config=0
+if [ -f "$CONFIG_FILE" ] && [ "$RECONFIGURE" -eq 0 ]; then . "$CONFIG_FILE"; have_config=1; fi
+
+[ -n "$ENV_SSH_USER" ] && GLM_SSH_USER="$ENV_SSH_USER"
+[ -n "$ENV_SSH_HOST" ] && GLM_SSH_HOST="$ENV_SSH_HOST"
+[ -n "$ENV_SSH_PORT" ] && GLM_SSH_PORT="$ENV_SSH_PORT"
+[ -n "$ENV_LOCAL_PORT" ] && GLM_LOCAL_PORT="$ENV_LOCAL_PORT"
+[ -n "$ENV_ROUTER_PORT" ] && GLM_ROUTER_PORT="$ENV_ROUTER_PORT"
+[ -n "$ENV_SERVER_PORT" ] && GLM_SERVER_PORT="$ENV_SERVER_PORT"
+[ -n "$ENV_KEY" ] && GLM_KEY="$ENV_KEY"
+[ -n "$ENV_MODEL" ] && GLM_MODEL="$ENV_MODEL"
+[ -n "$ENV_CA" ] && GLM_CA="$ENV_CA"
+[ -n "$ENV_REMOTE_BASE" ] && GLM_REMOTE_BASE="$ENV_REMOTE_BASE"
+
+need_wizard=0
+[ "$have_config" -eq 0 ] && need_wizard=1
+[ "$RECONFIGURE" -eq 1 ] && need_wizard=1
+[ "$NONINTERACTIVE" -eq 1 ] && need_wizard=0
+[ "$CHECK_ONLY" -eq 1 ] && [ "$have_config" -eq 1 ] && need_wizard=0
+
+[ "$need_wizard" -eq 1 ] && wizard
+
+if [ -z "$GLM_SSH_USER" ] || [ -z "$GLM_SSH_HOST" ]; then
+  say "No node configured. Provide GLM_SSH_USER and GLM_SSH_HOST, or run without --non-interactive."
+  exit 2
+fi
+
+# ---- run the layers ----
+check_ssh || exit $?
+
+if [ "$CHECK_ONLY" -eq 1 ]; then
+  if check_server; then :; else say "(server down: see above)"; fi
+  if router_up; then say "Router is up on :$GLM_ROUTER_PORT."; verify_router_toolcall || true; else say "Router is DOWN on :$GLM_ROUTER_PORT."; fi
+  exit 0
+fi
+
+if check_server; then :; else handle_server_down; fi
+
+check_or_deploy_router || true
+ensure_tunnel || true
+install_cli
+save_config
+say "Saved settings to $CONFIG_FILE"
+configure_vscode
+summary
