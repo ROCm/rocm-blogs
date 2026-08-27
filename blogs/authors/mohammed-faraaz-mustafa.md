@@ -6,8 +6,10 @@
 
 # Mohammed Faraaz Mustafa
 
-Faraaz is a Product Management intern with the Datacenter GPU business unit at AMD, currently pursuing a degree in Computer Engineering at Toronto Metropolitan University.
+Faraaz is a Product Management intern in AMD’s Data Center GPU business and a Computer Engineering student at Toronto Metropolitan University.
 
-He has contributed to technical documentation for AMD’s Instinct Datacenter GPUs, authored content for ROCm blogs, and supported various ROCm-related initiatives. His interests lie in machine learning and AI, computer architecture, and staying up-to-date with AMD’s latest hardware innovations.
+At AMD, Faraaz contributes to product requirements, release planning, technical documentation, and process improvements across ROCm. His work includes supporting hardware and software enablement initiatives, coordinating requirements with engineering teams, improving Jira and GitHub workflows, and contributing to documentation.
 
-Outside of work, Faraaz enjoys playing basketball, building and flying FPV drones, and driving.
+Faraaz also supports the ROCm technical blog program, where he has contributed to release and technical content, improved publishing automation, and helps guide new authors through the blog development and publication process.
+
+His interests include machine learning and artificial intelligence, computer architecture, and emerging hardware technologies. Outside of work, he enjoys playing basketball, building and flying FPV drones, and driving.
