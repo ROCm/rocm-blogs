@@ -1,0 +1,181 @@
+Lowering local_load: %17293 = "ttg.local_load"(%17292) {ttg.amdgpu.syncedViaAsyncWait = false} : (!ttg.memdesc<128x128xf8E5M2, #ttg.swizzled_shared<{vec = 16, perPhase = 2, maxPhase = 8, order = [1, 0]}>, #ttg.shared_memory>) -> tensor<128x128xf8E5M2, #ttg.dot_op<{opIdx = 1, parent = #ttg.amd_mfma<{version = 4, warpsPerCTA = [8, 1], instrShape = [32, 32, 64], isTransposed = true}>, kWidth = 16}>>
+shape: 128, 128
+bitwidth = 8
+
+***** Just combine the dstLL with shared layout, easy to see contiguity that way
+cvtDstLL: 
+ - register=1 -> (128, 0)
+   register=2 -> (272, 0)
+   register=4 -> (544, 0)
+   register=8 -> (1088, 0)
+   register=16 -> (4096, 0)
+   register=32 -> (8192, 0)
+   register=64 -> (32, 0)
+   register=128 -> (64, 0)
+ - lane=1 -> (1, 0)
+   lane=2 -> (2, 0)
+   lane=4 -> (4, 0)
+   lane=8 -> (8, 0)
+   lane=16 -> (16, 0)
+   lane=32 -> (2048, 0)
+ - warp=1 -> (0, 0)
+   warp=2 -> (0, 0)
+   warp=4 -> (0, 0)
+ - block is a size 1 dimension
+where out dims are: [offset (size 16384), block (size 1)]
+
+***** Remove block dimension as we don't really care
+cvtDstLL after sublayout: 
+ - register=1 -> (128)
+   register=2 -> (272)
+   register=4 -> (544)
+   register=8 -> (1088)
+   register=16 -> (4096)
+   register=32 -> (8192)
+   register=64 -> (32)
+   register=128 -> (64)
+ - lane=1 -> (1)
+   lane=2 -> (2)
+   lane=4 -> (4)
+   lane=8 -> (8)
+   lane=16 -> (16)
+   lane=32 -> (2048)
+ - warp=1 -> (0)
+   warp=2 -> (0)
+   warp=4 -> (0)
+where out dims are: [offset (size 16384)]
+
+***** Define the tile, we expect M/N contiguous data in LDS so we want this data to be contiguous that way we can then load and share it with other threads
+tile: 
+ - lane=1 -> (1)
+   lane=2 -> (2)
+   lane=4 -> (4)
+where out dims are: [offset (size 8)]
+
+***** The full tile defines how the small tile is distributed in the thread. This basically defines which logical addresses ("tile id") each thread will load. I've defined it basing it on the NV one was, modified by how our instruction works and then fixed it by doing some debugging (easy to spot which parts of the tiles are going the wrong way with a small gluon local_load unit test)
+fullTile: 
+ - lane=1 -> (1, 0)
+   lane=2 -> (2, 0)
+   lane=4 -> (4, 0)
+   lane=8 -> (0, 1)    ////////// This can be inferred by looking at the MFMA "base tile" that is 8x16, thread 1
+   lane=16 -> (0, 16)  ////////////// fullTile is 8x16 for fp8 which is what a base tile is (refer to slides)
+   lane=32 -> (0, 32)  ////////////// then we extend to the other lanes to finish the tile
+ - register=1 -> (0, 2)
+   register=2 -> (0, 4)
+   register=4 -> (0, 8)
+ - warp is a size 1 dimension
+where out dims are: [offset (size 8), addr (size 64)]
+
+***** Here we check if we can divide the destination layout (in offsets) by our tile (in offsets). Result is the "adjusted offsets" which will then become the addresses
+maybeQuot: 
+ - register=1 -> (16)
+   register=2 -> (34)
+   register=4 -> (68)
+   register=8 -> (136)
+   register=16 -> (512)
+   register=32 -> (1024)
+   register=64 -> (4)
+   register=128 -> (8)
+ - lane=1 -> (1)
+   lane=2 -> (2)
+   lane=4 -> (256)
+ - warp=1 -> (0)
+   warp=2 -> (0)
+   warp=4 -> (0)
+where out dims are: [offset (size 2048)]
+
+***** Basically the input layout with masked out the input tile
+reps: 
+ - register=1 -> (128)
+   register=2 -> (272)
+   register=4 -> (544)
+   register=8 -> (1088)
+   register=16 -> (4096)
+   register=32 -> (8192)
+   register=64 -> (32)
+   register=128 -> (64)
+ - lane=1 -> (0)
+   lane=2 -> (0)
+   lane=4 -> (0)
+   lane=8 -> (8)
+   lane=16 -> (16)
+   lane=32 -> (2048)
+ - warp=1 -> (0)
+   warp=2 -> (0)
+   warp=4 -> (0)
+where out dims are: [offset (size 16384)]
+
+***** fullTile.invert().compose(reps) doing this gives a map of which offset in memory for each of the logical addresses (tiles in the fullTile)
+
+fullTile
+ - lane=1 -> (1, 0)
+   lane=2 -> (2, 0)
+   lane=4 -> (4, 0)
+   lane=8 -> (0, 1)
+   lane=16 -> (0, 16)
+   lane=32 -> (0, 32)
+ - register=1 -> (0, 2)
+   register=2 -> (0, 4)
+   register=4 -> (0, 8)
+ - warp is a size 1 dimension
+where out dims are: [offset (size 8), addr (size 64)]
+fullTile.invert()
+ - offset=1 -> (1, 0, 0)
+   offset=2 -> (2, 0, 0)
+   offset=4 -> (4, 0, 0)
+ - addr=1 -> (8, 0, 0)
+   addr=2 -> (0, 1, 0)
+   addr=4 -> (0, 2, 0)
+   addr=8 -> (0, 4, 0)
+   addr=16 -> (16, 0, 0)
+   addr=32 -> (32, 0, 0)
+where out dims are: [lane (size 64), register (size 8), warp (size 1)]
+
+addrToOffset: 
+ - offset=1 -> (0)
+   offset=2 -> (0)
+   offset=4 -> (0)
+ - addr=1 -> (8)
+   addr=2 -> (128)
+   addr=4 -> (272)
+   addr=8 -> (544)
+   addr=16 -> (16)
+   addr=32 -> (2048)
+where out dims are: [offset (size 16384)]
+reps after permStride: 
+ - register=1 -> (128)
+   register=2 -> (272)
+   register=4 -> (544)
+   register=8 -> (1088)
+   register=16 -> (4096)
+   register=32 -> (8192)
+   register=64 -> (64)
+   register=128 -> (32)
+ - lane=1 -> (0)
+   lane=2 -> (0)
+   lane=4 -> (0)
+   lane=8 -> (8)
+   lane=16 -> (16)
+   lane=32 -> (2048)
+ - warp=1 -> (0)
+   warp=2 -> (0)
+   warp=4 -> (0)
+where out dims are: [offset (size 16384)]
+
+***** Each addr in addrToOffset maps to a specific lane. Equivalent to addrToOffset and find/replace addr with lane (and removing offset dim)
+
+addrLayout: 
+ - lane=1 -> (8)
+   lane=2 -> (128)
+   lane=4 -> (272)
+   lane=8 -> (544)
+   lane=16 -> (16)
+   lane=32 -> (2048)
+ - warp=1 -> (0)
+   warp=2 -> (0)
+   warp=4 -> (0)
+where out dims are: [offset (size 16384)]
+
+fused-attention-batch4-head32-d128-fwd-causal=False-warp_specialize=False:
+    N_CTX  Triton [FP8] (TFLOPS)
+0  8192.0            1267.579802
