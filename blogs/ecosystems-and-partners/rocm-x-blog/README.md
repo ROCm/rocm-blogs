@@ -105,7 +105,7 @@ Figure 2: The Hyperloom Workflow
 
 ### Turnkey Serving Containers
 
-ROCm 10.0 ships production-ready containers and Python wheels for **[vLLM](https://github.com/vllm-project/vllm)** (v0.2x), built and validated through TheRock's multi-architecture CI pipeline. These cover Instinct, Radeon, and Ryzen targets and are published to Docker Hub, with upstream contributions back to the respective communities. Teams that want to run LLM inference on AMD hardware can pull a validated container rather than building the inference stack from source — these go through the same release validation as the rest of the ROCm stack.
+ROCm 10.0 delivers production-ready support for **[vLLM](https://github.com/vllm-project/vllm)** and **[SGLang](https://github.com/sgl-project/sglang)**, enabling teams to run LLM inference on AMD Instinct, Radeon, and Ryzen hardware without building the stack from source. Both frameworks undergo the same release validation as the rest of ROCm, with upstream contributions flowing back to their respective communities. Validated containers and Python wheels are available on Docker Hub, built through TheRock's multi-architecture CI pipeline.
 
 ### Local LLM Fine-Tuning on Ryzen™ AI MAX
 
