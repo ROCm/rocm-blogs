@@ -1,0 +1,94 @@
+# Chaos Monkey — Kills oldest vLLM worker pod every N seconds
+#
+# Used with Stage 3 to prove distributed cache resilience.
+# Demonstrates that Mooncake-backed instances recover from pod kills
+# without catastrophic TTFT degradation.
+#
+# Deploy AFTER workers are running and benchmark is in progress:
+#   kubectl apply -f chaos-monkey.yaml
+#
+# Remove:
+#   kubectl delete -f chaos-monkey.yaml
+# =============================================================================
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: chaos-monkey
+  namespace: vllm-serving
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: chaos-monkey
+  namespace: vllm-serving
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "delete"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: chaos-monkey
+  namespace: vllm-serving
+subjects:
+  - kind: ServiceAccount
+    name: chaos-monkey
+    namespace: vllm-serving
+roleRef:
+  kind: Role
+  name: chaos-monkey
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: chaos-monkey
+  namespace: vllm-serving
+  labels:
+    app: chaos-monkey
+spec:
+  serviceAccountName: chaos-monkey
+  restartPolicy: Always
+  containers:
+    - name: chaos
+      image: bitnami/kubectl:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo "Chaos monkey started. Kill interval: ${KILL_INTERVAL_SECONDS}s"
+          echo "Target selector: app=vllm-worker"
+          echo "---"
+          while true; do
+            sleep ${KILL_INTERVAL_SECONDS}
+
+            # Find the oldest running vLLM worker pod
+            TARGET=$(kubectl get pods -n vllm-serving -l app=vllm-worker \
+              --field-selector=status.phase=Running \
+              --sort-by=.metadata.creationTimestamp \
+              -o jsonpath='{.items[0].metadata.name}' 2>/dev/null)
+
+            if [ -n "$TARGET" ]; then
+              echo "[$(date -u '+%Y-%m-%d %H:%M:%S UTC')] Killing pod: $TARGET"
+              kubectl delete pod "$TARGET" -n vllm-serving --grace-period=0 --force
+              echo "[$(date -u '+%Y-%m-%d %H:%M:%S UTC')] Pod $TARGET terminated"
+            else
+              echo "[$(date -u '+%Y-%m-%d %H:%M:%S UTC')] No running worker pods found, skipping"
+            fi
+
+            echo "---"
+          done
+      env:
+        - name: KILL_INTERVAL_SECONDS
+          value: "300"  # Kill a pod every 5 minutes
+      resources:
+        requests:
+          cpu: "50m"
+          memory: 64Mi
+        limits:
+          cpu: "100m"
+          memory: 128Mi

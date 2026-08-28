@@ -1,0 +1,135 @@
+# RDMA Infrastructure — Kubernetes Shared Device Plugin
+#
+# Deploys the Mellanox RDMA shared device plugin as a DaemonSet.
+# After deployment, pods can request `rdma/hca_shared: 1` in resource limits.
+#
+# Prerequisites:
+#   - RDMA-capable NICs with working links on each node
+#   - Required kernel modules: ib_core, ib_uverbs, ib_umad, rdma_ucm, mlx5_ib
+#   - UPDATE ifNames in the ConfigMap to match your cluster's RDMA interfaces
+#
+# Discovery (find interface names on each node):
+#   for node in $(kubectl get nodes -o name | sed 's#node/##'); do
+#     echo "===== ${node} ====="
+#     kubectl debug node/${node} -it --image=ubuntu -- \
+#       chroot /host bash -lc 'ibdev2netdev' || true
+#   done
+#
+# Apply:  kubectl apply -f rdma-infra.yaml
+# Verify: kubectl get nodes -o json | \
+#           jq -r '.items[] | [.metadata.name, .status.allocatable["rdma/hca_shared"]] | @tsv'
+# =============================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rdma-system
+
+---
+# ---------------------------------------------------------------------------
+# ConfigMap — RDMA device selection
+#
+# UPDATE ifNames to match your cluster's RDMA-capable interfaces.
+# Use `ibdev2netdev` output to find the correct interface names.
+#
+# Example output:
+#   mlx5_0 port 1 ==> ens51f0np0 (Up)   ← public network (skip)
+#   mlx5_1 port 1 ==> ens51f1np1 (Up)   ← private network (use this)
+#
+# Only include interfaces on the PRIVATE network used for inter-node traffic.
+# ---------------------------------------------------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rdma-devices
+  namespace: rdma-system
+data:
+  config.json: |
+    {
+      "configList": [{
+        "resourceName": "hca_shared",
+        "rdmaHcaMax": 63,
+        "selectors": {
+          "ifNames": ["ens51f1np1"]
+        }
+      }]
+    }
+
+---
+# ---------------------------------------------------------------------------
+# DaemonSet — RDMA shared device plugin
+#
+# Runs on every node, exposes rdma/hca_shared as an allocatable resource.
+# Pods requesting this resource get access to the RDMA device.
+# ---------------------------------------------------------------------------
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rdma-shared-dp-ds
+  namespace: rdma-system
+spec:
+  selector:
+    matchLabels:
+      name: rdma-shared-dp-ds
+  template:
+    metadata:
+      labels:
+        name: rdma-shared-dp-ds
+    spec:
+      hostNetwork: true
+      priorityClassName: system-node-critical
+      tolerations:
+        - operator: Exists  # Run on all nodes including GPU nodes
+      containers:
+        - name: k8s-rdma-shared-dp-ds
+          image: ghcr.io/mellanox/k8s-rdma-shared-dev-plugin
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: device-plugin
+              mountPath: /var/lib/kubelet/device-plugins
+              readOnly: false
+            - name: plugins-registry
+              mountPath: /var/lib/kubelet/plugins_registry
+              readOnly: false
+            - name: config
+              mountPath: /k8s-rdma-shared-dev-plugin
+            - name: devs
+              mountPath: /dev/
+      volumes:
+        - name: device-plugin
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
+        - name: plugins-registry
+          hostPath:
+            path: /var/lib/kubelet/plugins_registry
+        - name: config
+          configMap:
+            name: rdma-devices
+            items:
+              - key: config.json
+                path: config.json
+        - name: devs
+          hostPath:
+            path: /dev/
+
+---
+# ===========================================================================
+# Usage: After deploying this manifest, add to vLLM worker pods:
+#
+#   resources:
+#     limits:
+#       rdma/hca_shared: 1
+#
+# And update LMCache config:
+#
+#   extra_config:
+#     protocol: rdma
+#     device_name: mlx5_1
+#
+# Plus environment variables:
+#
+#   MC_MTU: "4096"      # Use "1024" for RoCE v2 with ETH MTU < 4096
+#   MC_GID_INDEX: "3"   # May need tuning per cluster
+# ===========================================================================
