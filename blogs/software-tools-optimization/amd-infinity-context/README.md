@@ -110,7 +110,7 @@ ROCm AIC launches with **vLLM** as its primary serving framework, one of the mos
 
 ### GPU to Storage Fast Path: ROCm hipFile + AMD Infinity Storage
 
-**ROCm [hipFile](https://rocm.docs.amd.com/projects/hipFile/en/latest/)** is AMD's file I/O library. It enables data transfers directly between GPU HBM and storage, bypassing the host CPU memory bus. hipFile reached GA with [ROCm 7.14](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-7.14-blog/README.html) (July 2026) and is the critical AMD asset that makes the remote KV tier practical in production. **AIS** is the umbrella for hipFile and future libraries, including hipObject for object store support, to provide optimized, GPU-aware I/O management across local and networked storage backends.
+**ROCm [hipFile](https://rocm.docs.amd.com/projects/hipFile/en/latest/)** is AMD's file I/O library. It enables data transfers directly between GPU HBM and storage, bypassing the host CPU memory bus. hipFile reached GA with [ROCm 7.14](https://rocm.blogs.amd.com/ecosystems-and-partners/rocm-7.14-blog/README.html) (July 2026) and is the critical AMD asset that makes the remote KV tier practical in production. **AIS** is the umbrella for hipFile and future libraries, including [hipObject](https://github.com/ROCm/hipObject) for object store support, to provide optimized, GPU-aware I/O management across local and networked storage backends.
 
 ### Network Fabric: Dual-Mode Attach
 
@@ -176,7 +176,7 @@ ROCm AIC delivers the most value when the same context, document, or prompt hist
 ## Platform Support
 
 | Platform | Network Attach | Status |
-|----------|---------------|--------|
+| -------- | -------------- | ------ |
 | AMD Instinct MI300X Series | Front-side Ethernet | Supported |
 | AMD Instinct MI350 Series | Front-side Ethernet | Supported |
 | AMD MI450 Series / Helios | Front-side Ethernet + MI455X Scale-Out | Upcoming |
