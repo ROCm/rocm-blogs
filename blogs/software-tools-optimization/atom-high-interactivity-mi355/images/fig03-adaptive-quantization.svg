@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="700" viewBox="0 0 1500 700" role="img" aria-labelledby="title desc">
+<title id="title">Adaptive quantization avoids work that does not amortize</title>
+<desc id="desc">Adaptive activation format selection for MoE expert GEMMs.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}.shadow{fill:none;stroke:#c9bfae;stroke-width:1;opacity:.45}
+    .title{font:800 30px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 15px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.stat{font:800 20px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .blue{fill:#dbeafe;stroke:#2563eb;stroke-width:2;rx:12}.green{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.yellow{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.red{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.purple{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.pink{fill:#fce7f3;stroke:#db2777;stroke-width:2;rx:12}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;rx:10}
+    .arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7}.thin{stroke-width:1.4}.line{stroke:#3f3f46;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:2.4}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="700"/>
+<text x="42" y="54" class="title"><tspan x="42" dy="0">Adaptive quantization avoids work that does not amortize</tspan></text>
+<text x="44" y="84" class="subtitle"><tspan x="44" dy="0">At small M, ATOM keeps activations in bf16 and skips the activation-quantization pass.</tspan></text>
+<rect class="panel" x="80" y="145" width="1340" height="500" data-sketch="1"/>
+<rect class="shadow" x="80.5" y="145.4" width="1340" height="500" rx="12"/>
+<text x="120" y="190" class="section"><tspan x="120" dy="0">Activation format selected by token count</tspan></text>
+<rect class="blue" x="155" y="285" width="210" height="80" data-sketch="1"/>
+<rect class="shadow" x="155.5" y="285.4" width="210" height="80" rx="12"/>
+<text x="260.0" y="322.0" class="label" text-anchor="middle"><tspan x="260.0" dy="0">MoE expert</tspan><tspan x="260.0" dy="17">GEMM</tspan></text>
+<path class="arrow" d="M365 325 C432.5 325 432.5 325 500 325" data-sketch="1"/>
+<rect class="yellow" x="500" y="270" width="210" height="110" data-sketch="1"/>
+<rect class="shadow" x="500.5" y="270.4" width="210" height="110" rx="12"/>
+<text x="605.0" y="322.0" class="label" text-anchor="middle"><tspan x="605.0" dy="0">Token count M</tspan><tspan x="605.0" dy="17">default split: 256</tspan></text>
+<path class="arrow" d="M710 305 C787.5 275 787.5 275 865 245" data-sketch="1"/>
+<rect class="green" x="865" y="200" width="230" height="96" data-sketch="1"/>
+<rect class="shadow" x="865.5" y="200.4" width="230" height="96" rx="12"/>
+<text x="980.0" y="245.0" class="label" text-anchor="middle"><tspan x="980.0" dy="0">Small M</tspan><tspan x="980.0" dy="17">bf16 activations</tspan></text>
+<path class="arrow" d="M1095 248 C1157.5 248 1157.5 248 1220 248" data-sketch="1"/>
+<rect class="green" x="1220" y="205" width="150" height="86" data-sketch="1"/>
+<rect class="shadow" x="1220.5" y="205.4" width="150" height="86" rx="12"/>
+<text x="1295.0" y="245.0" class="label" text-anchor="middle"><tspan x="1295.0" dy="0">a16w4</tspan><tspan x="1295.0" dy="17">skip act quant</tspan></text>
+<path class="arrow" d="M710 355 C787.5 385 787.5 425 865 455" data-sketch="1"/>
+<rect class="purple" x="865" y="430" width="230" height="96" data-sketch="1"/>
+<rect class="shadow" x="865.5" y="430.4" width="230" height="96" rx="12"/>
+<text x="980.0" y="475.0" class="label" text-anchor="middle"><tspan x="980.0" dy="0">Larger M</tspan><tspan x="980.0" dy="17">fp4/fp8 activations</tspan></text>
+<path class="arrow" d="M1095 478 C1157.5 478 1157.5 478 1220 478" data-sketch="1"/>
+<rect class="purple" x="1220" y="435" width="150" height="86" data-sketch="1"/>
+<rect class="shadow" x="1220.5" y="435.4" width="150" height="86" rx="12"/>
+<text x="1295.0" y="475.0" class="label" text-anchor="middle"><tspan x="1295.0" dy="0">a4w4/a8w4</tspan><tspan x="1295.0" dy="17">quant amortized</tspan></text>
+<rect class="muted" x="300" y="510" width="500" height="70" data-sketch="1"/>
+<rect class="shadow" x="300.5" y="510.4" width="500" height="70" rx="12"/>
+<text x="550.0" y="542.0" class="label" text-anchor="middle"><tspan x="550.0" dy="0">High interactivity is weight-bandwidth-bound:</tspan><tspan x="550.0" dy="17">int4/fp4 weights already carry the main bandwidth win</tspan></text>
+</svg>

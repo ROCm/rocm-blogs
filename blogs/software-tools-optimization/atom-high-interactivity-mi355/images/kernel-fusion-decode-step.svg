@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="800" viewBox="0 0 1500 800" role="img" aria-labelledby="title desc">
+<title id="title">Kernel fusion collapses the decode step</title>
+<desc id="desc">Unfused decode launches many small kernels and writes intermediate tensors to HBM. The fused path keeps the tensor-parallel epilogue in one kernel and emits the next GEMM input directly.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#dc2626"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}
+    .title{font:800 30px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 15px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.stat{font:800 20px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .kernel{fill:#dbeafe;stroke:#2563eb;stroke-width:2;rx:12}.mem{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.sync{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.fused{fill:#ecfdf5;stroke:#10b981;stroke-width:2.4;rx:16}.next{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;rx:10}.warn{fill:#fff7ed;stroke:#f59e0b;stroke-width:2;rx:12}.bad{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.ok{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}
+    .arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.arrow-red{stroke:#dc2626;stroke-width:2.2;fill:none;marker-end:url(#arrow-red);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7}.thin{stroke-width:1.4}.shadow{fill:none;stroke:#c9bfae;stroke-width:1;opacity:.45}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="800"/>
+<text x="42" y="54" class="title">Kernel fusion: collapse the repeated decode epilogue</text>
+<text x="44" y="84" class="subtitle">At high interactivity, every tiny launch and HBM round-trip is visible in each generated token.</text>
+
+<rect class="panel" x="44" y="122" width="605" height="540" data-sketch="1"/>
+<rect class="shadow" x="43.3" y="121.4" width="605" height="540" rx="20"/>
+<text x="74" y="162" class="section">Before fusion: small kernels in a row</text>
+<text x="74" y="190" class="small">Each step launches separately and spills the hidden state to memory.</text>
+
+<rect class="sync" x="82" y="238" width="138" height="54" data-sketch="1"/>
+<rect class="shadow" x="82.6" y="238.4" width="138" height="54" rx="12"/>
+<text x="112" y="270" class="label">AllReduce</text>
+
+<path class="arrow" d="M220 265 C246 265 258 265 282 265" data-sketch="1"/>
+<rect class="mem" x="282" y="238" width="78" height="54" data-sketch="1"/>
+<rect class="shadow" x="281.4" y="238.6" width="78" height="54" rx="12"/>
+<text x="298" y="270" class="label">HBM</text>
+
+<path class="arrow" d="M360 265 C386 265 398 265 422 265" data-sketch="1"/>
+<rect class="kernel" x="422" y="238" width="138" height="54" data-sketch="1"/>
+<rect class="shadow" x="421.7" y="237.4" width="138" height="54" rx="12"/>
+<text x="446" y="270" class="label">Residual add</text>
+
+<path class="arrow" d="M491 292 C491 326 151 326 151 360" data-sketch="1"/>
+<rect class="mem" x="112" y="360" width="78" height="54" data-sketch="1"/>
+<rect class="shadow" x="112.4" y="360.4" width="78" height="54" rx="12"/>
+<text x="128" y="392" class="label">HBM</text>
+
+<path class="arrow" d="M190 387 C222 387 244 387 274 387" data-sketch="1"/>
+<rect class="kernel" x="274" y="360" width="138" height="54" data-sketch="1"/>
+<rect class="shadow" x="273.5" y="360.8" width="138" height="54" rx="12"/>
+<text x="306" y="392" class="label">RMSNorm</text>
+
+<path class="arrow" d="M412 387 C440 387 456 387 482 387" data-sketch="1"/>
+<rect class="mem" x="482" y="360" width="78" height="54" data-sketch="1"/>
+<rect class="shadow" x="481.4" y="360.3" width="78" height="54" rx="12"/>
+<text x="498" y="392" class="label">HBM</text>
+
+<path class="arrow" d="M521 414 C521 450 150 450 150 486" data-sketch="1"/>
+<rect class="kernel" x="82" y="486" width="138" height="54" data-sketch="1"/>
+<rect class="shadow" x="82.3" y="485.3" width="138" height="54" rx="12"/>
+<text x="121" y="518" class="label">Quant</text>
+
+<path class="arrow" d="M220 513 C246 513 258 513 282 513" data-sketch="1"/>
+<rect class="mem" x="282" y="486" width="78" height="54" data-sketch="1"/>
+<rect class="shadow" x="281.6" y="486.5" width="78" height="54" rx="12"/>
+<text x="298" y="518" class="label">HBM</text>
+
+<path class="arrow" d="M360 513 C386 513 398 513 422 513" data-sketch="1"/>
+<rect class="kernel" x="422" y="486" width="138" height="54" data-sketch="1"/>
+<rect class="shadow" x="422.6" y="486.4" width="138" height="54" rx="12"/>
+<text x="451" y="510" class="label">Scale</text>
+<text x="440" y="528" class="tiny">transpose</text>
+
+<rect class="bad" x="94" y="568" width="440" height="58" data-sketch="1"/>
+<rect class="shadow" x="94.6" y="567.4" width="440" height="58" rx="12"/>
+<text x="132" y="592" class="label">Launch tax + HBM traffic</text>
+<text x="132" y="611" class="label">repeat every decode token</text>
+
+<rect class="panel" x="752" y="122" width="660" height="540" data-sketch="1"/>
+<rect class="shadow" x="751.4" y="122.4" width="660" height="540" rx="20"/>
+<text x="782" y="162" class="section">After fusion: one epilogue kernel</text>
+<text x="782" y="190" class="small">Keep intermediate values in registers; emit the next GEMM input directly.</text>
+
+<rect class="muted" x="806" y="238" width="150" height="60" data-sketch="1"/>
+<rect class="shadow" x="806.5" y="238.3" width="150" height="60" rx="10"/>
+<text x="834" y="264" class="label">row-parallel</text>
+<text x="842" y="284" class="tiny">projection output</text>
+
+<path class="arrow" d="M956 268 C986 268 1002 268 1032 268" data-sketch="1"/>
+<rect class="fused" x="1032" y="220" width="260" height="220" data-sketch="1"/>
+<rect class="shadow" x="1031.2" y="220.5" width="260" height="220" rx="16"/>
+<text x="1082" y="258" class="section">Fused kernel</text>
+<rect class="panel2" x="1060" y="276" width="204" height="34" data-sketch="1"/>
+<text x="1094" y="299" class="label">AllReduce</text>
+<rect class="panel2" x="1060" y="316" width="204" height="34" data-sketch="1"/>
+<text x="1094" y="339" class="label">Residual add</text>
+<rect class="panel2" x="1060" y="356" width="204" height="34" data-sketch="1"/>
+<text x="1094" y="379" class="label">RMSNorm</text>
+<rect class="panel2" x="1060" y="396" width="204" height="34" data-sketch="1"/>
+<text x="1094" y="419" class="label">FP8/MXFP4 quant</text>
+
+<path class="arrow" d="M1162 440 C1162 484 1030 506 990 532" data-sketch="1"/>
+<rect class="next" x="806" y="510" width="184" height="70" data-sketch="1"/>
+<rect class="shadow" x="806.4" y="509.6" width="184" height="70" rx="12"/>
+<text x="838" y="538" class="label">aligned output</text>
+<text x="832" y="558" class="tiny">activation + scale layout</text>
+
+<path class="arrow" d="M990 545 C1038 545 1066 545 1114 545" data-sketch="1"/>
+<rect class="next" x="1114" y="510" width="150" height="70" data-sketch="1"/>
+<rect class="shadow" x="1114.3" y="510.5" width="150" height="70" rx="12"/>
+<text x="1150" y="538" class="label">Next GEMM</text>
+<text x="1146" y="558" class="tiny">no extra quant</text>
+
+<path class="arrow-red dash" d="M1312 330 C1368 330 1368 236 1308 236" data-sketch="1"/>
+<text x="1168" y="202" class="tiny">no separate</text>
+<text x="1168" y="216" class="tiny">scale-transpose launch</text>
+
+<rect class="ok" x="820" y="588" width="500" height="58" data-sketch="1"/>
+<rect class="shadow" x="819.5" y="587.5" width="500" height="58" rx="12"/>
+<text x="868" y="612" class="label">One launch, fewer HBM trips</text>
+<text x="868" y="631" class="label">graph-friendly decode replay</text>
+
+<rect class="panel" x="150" y="684" width="1200" height="58" data-sketch="1"/>
+<rect class="shadow" x="150.5" y="684.4" width="1200" height="58" rx="20"/>
+<text x="194" y="720" class="stat">Decode-layer accounting:</text>
+<text x="500" y="720" class="label">launches: 4-5 -> 1</text>
+<text x="752" y="720" class="label">fewer HBM trips</text>
+<text x="1004" y="720" class="label">next GEMM input ready</text>
+</svg>

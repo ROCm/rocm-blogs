@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="700" viewBox="0 0 1500 700" role="img" aria-labelledby="title desc">
+<title id="title">Fixed costs take over at high interactivity</title>
+<desc id="desc">Comparison of high-throughput and high-interactivity cost composition.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}.shadow{fill:none;stroke:#c9bfae;stroke-width:1;opacity:.45}
+    .title{font:800 30px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 15px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.stat{font:800 20px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .blue{fill:#dbeafe;stroke:#2563eb;stroke-width:2;rx:12}.green{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.yellow{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.red{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.purple{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.pink{fill:#fce7f3;stroke:#db2777;stroke-width:2;rx:12}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;rx:10}
+    .arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7}.thin{stroke-width:1.4}.line{stroke:#3f3f46;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:2.4}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="700"/>
+<text x="42" y="54" class="title"><tspan x="42" dy="0">Fixed costs take over at high interactivity</tspan></text>
+<text x="44" y="84" class="subtitle"><tspan x="44" dy="0">Useful compute shrinks, but launches, memory trips, syncs, and idle gaps do not shrink with it.</tspan></text>
+<rect class="panel" x="70" y="140" width="620" height="500" data-sketch="1"/>
+<rect class="shadow" x="70.5" y="140.4" width="620" height="500" rx="12"/>
+<text x="105" y="185" class="section"><tspan x="105" dy="0">High throughput / prefill</tspan></text>
+<rect class="green" x="170" y="255" width="400" height="170" data-sketch="1"/>
+<rect class="shadow" x="170.5" y="255.4" width="400" height="170" rx="12"/>
+<text x="370.0" y="337.0" class="stat" text-anchor="middle"><tspan x="370.0" dy="0">Useful matrix work</tspan><tspan x="370.0" dy="17">dominates the step</tspan></text>
+<rect class="muted" x="160" y="470" width="105" height="52" data-sketch="1"/>
+<rect class="shadow" x="160.5" y="470.4" width="105" height="52" rx="12"/>
+<text x="212.5" y="501.0" class="label" text-anchor="middle"><tspan x="212.5" dy="0">Launch</tspan></text>
+<rect class="muted" x="295" y="470" width="105" height="52" data-sketch="1"/>
+<rect class="shadow" x="295.5" y="470.4" width="105" height="52" rx="12"/>
+<text x="347.5" y="501.0" class="label" text-anchor="middle"><tspan x="347.5" dy="0">HBM</tspan></text>
+<rect class="muted" x="430" y="470" width="105" height="52" data-sketch="1"/>
+<rect class="shadow" x="430.5" y="470.4" width="105" height="52" rx="12"/>
+<text x="482.5" y="501.0" class="label" text-anchor="middle"><tspan x="482.5" dy="0">Host</tspan></text>
+<rect class="panel" x="780" y="140" width="650" height="500" data-sketch="1"/>
+<rect class="shadow" x="780.5" y="140.4" width="650" height="500" rx="12"/>
+<text x="815" y="185" class="section"><tspan x="815" dy="0">High interactivity / decode</tspan></text>
+<rect class="green" x="855" y="285" width="190" height="92" data-sketch="1"/>
+<rect class="shadow" x="855.5" y="285.4" width="190" height="92" rx="12"/>
+<text x="950.0" y="326.0" class="label" text-anchor="middle"><tspan x="950.0" dy="0">Useful</tspan><tspan x="950.0" dy="17">matrix work</tspan></text>
+<text x="950" y="420" class="small" text-anchor="middle"><tspan x="950" dy="0">shrinks with batch size</tspan></text>
+<path class="arrow" d="M1045 330 C1092.5 330 1092.5 330 1140 330" data-sketch="1"/>
+<rect class="yellow" x="1140" y="205" width="210" height="380" data-sketch="1"/>
+<rect class="shadow" x="1140.5" y="205.4" width="210" height="380" rx="12"/>
+<text x="1245.0" y="238.0" class="section" text-anchor="middle"><tspan x="1245.0" dy="0">Fixed costs</tspan></text>
+<rect class="red" x="1170" y="270" width="150" height="42" data-sketch="1"/>
+<rect class="shadow" x="1170.5" y="270.4" width="150" height="42" rx="12"/>
+<text x="1245.0" y="296.0" class="label" text-anchor="middle"><tspan x="1245.0" dy="0">Launch</tspan></text>
+<rect class="yellow" x="1170" y="325" width="150" height="42" data-sketch="1"/>
+<rect class="shadow" x="1170.5" y="325.4" width="150" height="42" rx="12"/>
+<text x="1245.0" y="351.0" class="label" text-anchor="middle"><tspan x="1245.0" dy="0">HBM trips</tspan></text>
+<rect class="purple" x="1170" y="380" width="150" height="42" data-sketch="1"/>
+<rect class="shadow" x="1170.5" y="380.4" width="150" height="42" rx="12"/>
+<text x="1245.0" y="406.0" class="label" text-anchor="middle"><tspan x="1245.0" dy="0">Idle CUs</tspan></text>
+<rect class="red" x="1170" y="435" width="150" height="42" data-sketch="1"/>
+<rect class="shadow" x="1170.5" y="435.4" width="150" height="42" rx="12"/>
+<text x="1245.0" y="461.0" class="label" text-anchor="middle"><tspan x="1245.0" dy="0">CPU-GPU sync</tspan></text>
+<rect class="yellow" x="1170" y="490" width="150" height="42" data-sketch="1"/>
+<rect class="shadow" x="1170.5" y="490.4" width="150" height="42" rx="12"/>
+<text x="1245.0" y="516.0" class="label" text-anchor="middle"><tspan x="1245.0" dy="0">Quant overhead</tspan></text>
+<text x="1245" y="560" class="small" text-anchor="middle"><tspan x="1245" dy="0">paid every token</tspan></text>
+</svg>

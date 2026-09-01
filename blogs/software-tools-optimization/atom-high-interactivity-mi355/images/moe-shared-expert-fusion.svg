@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="720" viewBox="0 0 1500 720" role="img" aria-labelledby="title desc">
+<title id="title">MoE shared-expert fusion folds the shared expert into the routed kernel</title>
+<desc id="desc">Before fusion, the shared expert runs as a separate dense MLP with its own launches and a residual add. After fusion, the router, routed experts, and shared expert share one fused-MoE kernel.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}.shadow{fill:none;stroke:#c9bfae;stroke-width:1;opacity:.45}
+    .title{font:800 30px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 15px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.stat{font:800 20px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .kernel{fill:#dbeafe;stroke:#2563eb;stroke-width:2;rx:12}.mem{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.fused{fill:#ecfdf5;stroke:#10b981;stroke-width:2.4;rx:16}.next{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;rx:10}.bad{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.ok{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}
+    .arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="720"/>
+<text x="42" y="54" class="title">MoE shared-expert fusion: one kernel for shared and routed experts</text>
+<text x="44" y="84" class="subtitle">Folding the shared expert into the routed fused-MoE kernel removes a separate dense MLP, its launches, and an extra residual add.</text>
+
+<rect class="panel" x="44" y="120" width="620" height="480" data-sketch="1"/>
+<rect class="shadow" x="44.5" y="120.4" width="620" height="480" rx="20"/>
+<text x="74" y="160" class="section">Before fusion: shared expert runs separately</text>
+<text x="74" y="186" class="small">A separate dense MLP and a combine step add launches and a residual pass.</text>
+
+<rect class="muted" x="278" y="212" width="150" height="52" data-sketch="1"/>
+<rect class="shadow" x="278.5" y="212.4" width="150" height="52" rx="10"/>
+<text x="353" y="244" class="label" text-anchor="middle">Hidden states</text>
+
+<path class="arrow" d="M338 262 C250 286 190 292 190 318" data-sketch="1"/>
+<path class="arrow" d="M370 262 C470 286 530 292 530 318" data-sketch="1"/>
+
+<rect class="kernel" x="92" y="318" width="196" height="66" data-sketch="1"/>
+<rect class="shadow" x="92.5" y="318.4" width="196" height="66" rx="12"/>
+<text x="190" y="346" class="label" text-anchor="middle"><tspan x="190" dy="0">Shared expert</tspan><tspan x="190" dy="17">(dense MLP)</tspan></text>
+
+<rect class="kernel" x="430" y="318" width="200" height="66" data-sketch="1"/>
+<rect class="shadow" x="430.5" y="318.4" width="200" height="66" rx="12"/>
+<text x="530" y="346" class="label" text-anchor="middle"><tspan x="530" dy="0">Routed fused-MoE</tspan><tspan x="530" dy="17">(router + experts)</tspan></text>
+
+<path class="arrow" d="M190 384 C190 412 250 420 300 442" data-sketch="1"/>
+<path class="arrow" d="M530 384 C530 412 470 420 420 442" data-sketch="1"/>
+
+<rect class="kernel" x="258" y="434" width="204" height="56" data-sketch="1"/>
+<rect class="shadow" x="258.5" y="434.4" width="204" height="56" rx="12"/>
+<text x="360" y="467" class="label" text-anchor="middle">Residual add + combine</text>
+
+<rect class="bad" x="104" y="518" width="500" height="62" data-sketch="1"/>
+<rect class="shadow" x="104.5" y="518.4" width="500" height="62" rx="12"/>
+<text x="354" y="545" class="label" text-anchor="middle"><tspan x="354" dy="0">Separate dense MLP + extra launches</tspan><tspan x="354" dy="17">+ extra residual add, every MoE layer</tspan></text>
+
+<rect class="panel" x="700" y="120" width="756" height="480" data-sketch="1"/>
+<rect class="shadow" x="700.5" y="120.4" width="756" height="480" rx="20"/>
+<text x="730" y="160" class="section">After fusion: shared expert folded in</text>
+<text x="730" y="186" class="small">Router, routed experts, and the shared expert live in one kernel.</text>
+
+<rect class="muted" x="736" y="300" width="150" height="64" data-sketch="1"/>
+<rect class="shadow" x="736.5" y="300.4" width="150" height="64" rx="10"/>
+<text x="811" y="337" class="label" text-anchor="middle">Hidden states</text>
+
+<path class="arrow" d="M886 332 C930 332 940 332 966 332" data-sketch="1"/>
+
+<rect class="fused" x="966" y="208" width="300" height="252" data-sketch="1"/>
+<rect class="shadow" x="965.2" y="208.5" width="300" height="252" rx="16"/>
+<text x="1116" y="246" class="section" text-anchor="middle">Fused MoE kernel</text>
+<rect class="panel2" x="996" y="280" width="240" height="34" data-sketch="1"/>
+<text x="1116" y="302" class="label" text-anchor="middle">Router + top-k</text>
+<rect class="panel2" x="996" y="320" width="240" height="34" data-sketch="1"/>
+<text x="1116" y="342" class="label" text-anchor="middle">Routed experts</text>
+<rect class="panel2" x="996" y="360" width="240" height="34" data-sketch="1"/>
+<text x="1116" y="382" class="label" text-anchor="middle">Shared expert (folded in)</text>
+<rect class="panel2" x="996" y="400" width="240" height="34" data-sketch="1"/>
+<text x="1116" y="422" class="label" text-anchor="middle">Combine</text>
+
+<path class="arrow" d="M1266 332 C1300 332 1310 332 1330 332" data-sketch="1"/>
+<rect class="next" x="1330" y="298" width="112" height="70" data-sketch="1"/>
+<rect class="shadow" x="1330.4" y="298.5" width="112" height="70" rx="12"/>
+<text x="1386" y="328" class="label" text-anchor="middle"><tspan x="1386" dy="0">MoE</tspan><tspan x="1386" dy="17">output</tspan></text>
+
+<rect class="ok" x="730" y="498" width="696" height="84" data-sketch="1"/>
+<rect class="shadow" x="730.5" y="498.4" width="696" height="84" rx="12"/>
+<text x="1078" y="522" class="label" text-anchor="middle"><tspan x="1078" dy="0">One kernel: no separate dense MLP, at least two fewer launches, no extra residual add.</tspan><tspan x="1078" dy="17">The same fusion covers MTP variants that share the routed-expert path.</tspan></text>
+
+<rect class="panel" x="150" y="628" width="1200" height="58" data-sketch="1"/>
+<rect class="shadow" x="150.5" y="628.4" width="1200" height="58" rx="20"/>
+<text x="194" y="664" class="stat">Per-MoE-layer accounting:</text>
+<text x="536" y="664" class="label">launches: 3 -> 1</text>
+<text x="788" y="664" class="label">no separate dense MLP</text>
+<text x="1080" y="664" class="label">no extra residual add</text>
+</svg>

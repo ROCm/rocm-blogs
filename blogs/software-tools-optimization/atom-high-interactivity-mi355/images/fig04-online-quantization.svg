@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="680" viewBox="0 0 1500 680" role="img" aria-labelledby="title desc">
+<title id="title">Online quantization keeps the checkpoint flexible</title>
+<desc id="desc">Online quantization flow from source checkpoint to runtime weights.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}.shadow{fill:none;stroke:#c9bfae;stroke-width:1;opacity:.45}
+    .title{font:800 30px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 15px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.stat{font:800 20px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .blue{fill:#dbeafe;stroke:#2563eb;stroke-width:2;rx:12}.green{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.yellow{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.red{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.purple{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.pink{fill:#fce7f3;stroke:#db2777;stroke-width:2;rx:12}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;rx:10}
+    .arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7}.thin{stroke-width:1.4}.line{stroke:#3f3f46;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:2.4}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="680"/>
+<text x="42" y="54" class="title"><tspan x="42" dy="0">Online quantization keeps the checkpoint flexible</tspan></text>
+<text x="44" y="84" class="subtitle"><tspan x="44" dy="0">One source checkpoint can feed mixed runtime precision recipes without an offline conversion step.</tspan></text>
+<rect class="panel" x="85" y="150" width="1260" height="470" data-sketch="1"/>
+<rect class="shadow" x="85.5" y="150.4" width="1260" height="470" rx="12"/>
+<text x="125" y="195" class="section"><tspan x="125" dy="0">Online quantization during checkpoint load</tspan></text>
+<rect class="blue" x="145" y="285" width="210" height="90" data-sketch="1"/>
+<rect class="shadow" x="145.5" y="285.4" width="210" height="90" rx="12"/>
+<text x="250.0" y="327.0" class="label" text-anchor="middle"><tspan x="250.0" dy="0">Source checkpoint</tspan><tspan x="250.0" dy="17">bf16 / FP8-block</tspan></text>
+<path class="arrow" d="M355 330 C420.0 330 420.0 330 485 330" data-sketch="1"/>
+<rect class="muted" x="485" y="285" width="170" height="90" data-sketch="1"/>
+<rect class="shadow" x="485.5" y="285.4" width="170" height="90" rx="12"/>
+<text x="570.0" y="335.0" class="label" text-anchor="middle"><tspan x="570.0" dy="0">Load tensor</tspan></text>
+<path class="arrow" d="M655 330 C722.5 330 722.5 330 790 330" data-sketch="1"/>
+<rect class="yellow" x="790" y="250" width="180" height="160" data-sketch="1"/>
+<rect class="shadow" x="790.5" y="250.4" width="180" height="160" rx="12"/>
+<text x="880.0" y="327.0" class="label" text-anchor="middle"><tspan x="880.0" dy="0">Layer rule</tspan><tspan x="880.0" dy="17">resolver</tspan></text>
+<path class="arrow" d="M970 330 C1035.0 330 1035.0 260 1100 260" data-sketch="1"/>
+<rect class="purple" x="1100" y="215" width="190" height="90" data-sketch="1"/>
+<rect class="shadow" x="1100.5" y="215.4" width="190" height="90" rx="12"/>
+<text x="1195.0" y="257.0" class="label" text-anchor="middle"><tspan x="1195.0" dy="0">Attention</tspan><tspan x="1195.0" dy="17">per-token FP8</tspan></text>
+<path class="arrow" d="M970 330 C1035.0 330 1035.0 375 1100 375" data-sketch="1"/>
+<rect class="green" x="1100" y="330" width="190" height="90" data-sketch="1"/>
+<rect class="shadow" x="1100.5" y="330.4" width="190" height="90" rx="12"/>
+<text x="1195.0" y="372.0" class="label" text-anchor="middle"><tspan x="1195.0" dy="0">MoE experts</tspan><tspan x="1195.0" dy="17">MXFP4</tspan></text>
+<path class="arrow" d="M970 330 C1035.0 330 1035.0 490 1100 490" data-sketch="1"/>
+<rect class="red" x="1100" y="445" width="190" height="90" data-sketch="1"/>
+<rect class="shadow" x="1100.5" y="445.4" width="190" height="90" rx="12"/>
+<text x="1195.0" y="487.0" class="label" text-anchor="middle"><tspan x="1195.0" dy="0">Router / lm_head</tspan><tspan x="1195.0" dy="17">keep precision</tspan></text>
+<rect class="green" x="590" y="500" width="430" height="68" data-sketch="1"/>
+<rect class="shadow" x="590.5" y="500.4" width="430" height="68" rx="12"/>
+<text x="805.0" y="531.0" class="label" text-anchor="middle"><tspan x="805.0" dy="0">Serve lower-bit runtime weights</tspan><tspan x="805.0" dy="17">without changing the source checkpoint</tspan></text>
+</svg>

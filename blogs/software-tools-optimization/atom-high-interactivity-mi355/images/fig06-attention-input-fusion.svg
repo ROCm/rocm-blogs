@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="710" viewBox="0 0 1500 710" role="img" aria-labelledby="title desc">
+<title id="title">Attention input fusion writes the KV cache in final form</title>
+<desc id="desc">Fused QK norm, RoPE, quantization, and KV cache write.</desc>
+<defs>
+  <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L9,4 L0,8 Z" fill="#334155"/></marker>
+  <style>
+    .bg{fill:#fffaf0}.panel{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:20}.panel2{fill:#fffdf7;stroke:#c9bfae;stroke-width:2;rx:14}.shadow{fill:none;stroke:#c9bfae;stroke-width:1;opacity:.45}
+    .title{font:800 30px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.subtitle{font:500 15px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.section{font:800 18px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .label{font:700 13px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}.small{font:500 12px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#5f5a50}.tiny{font:600 10px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#665f55}.stat{font:800 20px "Comic Sans MS","Comic Neue","Chalkboard SE",cursive;fill:#1f2937}
+    .blue{fill:#dbeafe;stroke:#2563eb;stroke-width:2;rx:12}.green{fill:#ecfdf5;stroke:#10b981;stroke-width:2;rx:12}.yellow{fill:#fff7ed;stroke:#f97316;stroke-width:2;rx:12}.red{fill:#fef2f2;stroke:#ef4444;stroke-width:2;rx:12}.purple{fill:#f5f3ff;stroke:#7c3aed;stroke-width:2;rx:12}.pink{fill:#fce7f3;stroke:#db2777;stroke-width:2;rx:12}.muted{fill:#f1f5f9;stroke:#94a3b8;stroke-width:1.4;rx:10}
+    .arrow{stroke:#3f3f46;stroke-width:2.4;fill:none;marker-end:url(#arrow);stroke-linecap:round;stroke-linejoin:round}.dash{stroke-dasharray:7 7}.thin{stroke-width:1.4}.line{stroke:#3f3f46;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.grid{fill:#ffffff;stroke:#cbd5e1;stroke-width:1}.hot{fill:#fce7f3;stroke:#db2777;stroke-width:2.4}.k0{fill:#dbeafe;stroke:#2563eb;stroke-width:2}.k1{fill:#dcfce7;stroke:#16a34a;stroke-width:2}.k2{fill:#fef3c7;stroke:#f59e0b;stroke-width:2}.k3{fill:#fce7f3;stroke:#db2777;stroke-width:2}
+  </style>
+</defs>
+<rect class="bg" width="1500" height="710"/>
+<text x="42" y="54" class="title"><tspan x="42" dy="0">Attention input fusion writes the KV cache in final form</tspan></text>
+<text x="44" y="84" class="subtitle"><tspan x="44" dy="0">The pre-attention chain becomes one kernel that emits quantized, shuffled cache entries.</tspan></text>
+<rect class="panel" x="80" y="140" width="1320" height="520" data-sketch="1"/>
+<rect class="shadow" x="80.5" y="140.4" width="1320" height="520" rx="12"/>
+<text x="120" y="185" class="section"><tspan x="120" dy="0">Attention input fusion</tspan></text>
+<rect class="muted" x="135" y="300" width="160" height="70" data-sketch="1"/>
+<rect class="shadow" x="135.5" y="300.4" width="160" height="70" rx="12"/>
+<text x="215.0" y="332.0" class="label" text-anchor="middle"><tspan x="215.0" dy="0">Q, K, V</tspan><tspan x="215.0" dy="17">projections</tspan></text>
+<path class="arrow" d="M295 335 C342.5 335 342.5 335 390 335" data-sketch="1"/>
+<rect class="green" x="390" y="220" width="360" height="270" data-sketch="1"/>
+<rect class="shadow" x="390.5" y="220.4" width="360" height="270" rx="12"/>
+<text x="570.0" y="260.0" class="section" text-anchor="middle"><tspan x="570.0" dy="0">Fused attention-input kernel</tspan></text>
+<rect class="panel2" x="425" y="295" width="275" height="34" data-sketch="1"/>
+<rect class="shadow" x="425.5" y="295.4" width="275" height="34" rx="12"/>
+<text x="562.5" y="317.0" class="label" text-anchor="middle"><tspan x="562.5" dy="0">Q/K norm</tspan></text>
+<rect class="panel2" x="425" y="340" width="275" height="34" data-sketch="1"/>
+<rect class="shadow" x="425.5" y="340.4" width="275" height="34" rx="12"/>
+<text x="562.5" y="362.0" class="label" text-anchor="middle"><tspan x="562.5" dy="0">RoPE</tspan></text>
+<rect class="panel2" x="425" y="385" width="275" height="34" data-sketch="1"/>
+<rect class="shadow" x="425.5" y="385.4" width="275" height="34" rx="12"/>
+<text x="562.5" y="407.0" class="label" text-anchor="middle"><tspan x="562.5" dy="0">FP8 scales</tspan></text>
+<rect class="panel2" x="425" y="430" width="275" height="34" data-sketch="1"/>
+<rect class="shadow" x="425.5" y="430.4" width="275" height="34" rx="12"/>
+<text x="562.5" y="452.0" class="label" text-anchor="middle"><tspan x="562.5" dy="0">Cache layout</tspan></text>
+<path class="arrow" d="M750 355 C825.0 355 825.0 335 900 335" data-sketch="1"/>
+<rect class="purple" x="900" y="280" width="220" height="110" data-sketch="1"/>
+<rect class="shadow" x="900.5" y="280.4" width="220" height="110" rx="12"/>
+<text x="1010.0" y="332.0" class="label" text-anchor="middle"><tspan x="1010.0" dy="0">Quantized shuffled</tspan><tspan x="1010.0" dy="17">KV cache</tspan></text>
+<path class="arrow" d="M1120 335 C1187.5 335 1187.5 335 1255 335" data-sketch="1"/>
+<rect class="blue" x="1255" y="285" width="120" height="100" data-sketch="1"/>
+<rect class="shadow" x="1255.5" y="285.4" width="120" height="100" rx="12"/>
+<text x="1315.0" y="332.0" class="label" text-anchor="middle"><tspan x="1315.0" dy="0">Decode</tspan><tspan x="1315.0" dy="17">attention</tspan></text>
+<rect class="green" x="330" y="520" width="760" height="68" data-sketch="1"/>
+<rect class="shadow" x="330.5" y="520.4" width="760" height="68" rx="12"/>
+<text x="710.0" y="551.0" class="label" text-anchor="middle"><tspan x="710.0" dy="0">QK-norm, RoPE, quantization, and cache write stay in one launch</tspan><tspan x="710.0" dy="17">K/V land directly in paged-cache layout</tspan></text>
+</svg>
