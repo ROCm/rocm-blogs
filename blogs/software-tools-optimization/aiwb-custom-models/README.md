@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Onboard and Deploy Custom Models in AMD AI Workbench"
 date: "23 Jul 2026"
-author: "Daniel Gustafsson, Rasmus Larson, Kevin Wong, Clyde Hoang"
+author: "Daniel Gustafsson, Rasmus Larsson, Kevin Wong, Clyde Hoang"
 thumbnail: "custom-models-thumbnail.png"
 tags: "AI/ML, Kubernetes, GenAI"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Learn how to deploy custom models from Hugging Face or 
 language: English
 myst:
     html_meta:
-        "author": "Daniel Gustafsson, Rasmus Larson, Kevin Wong, Clyde Hoang"
+        "author": "Daniel Gustafsson, Rasmus Larsson, Kevin Wong, Clyde Hoang"
         "description lang=en": "Learn how to deploy custom models in AMD AI Workbench, utilizing the AIM Engine, orchestration, scaling, profile parameters and API keys."
         "keywords": "AIM, AMD AI Workbench, AIM Engine, AMD, AMD Instinct, AMD Radeon"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "Open-Source Tools, ROCm Software"
         "amd_blog_applications": "Generative AI, AI Inference, Deploying AI at Scale"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Daniel Gustafsson, Rasmus Larson, Kevin Wong, Clyde Hoang"
+        "amd_blog_authors": "Daniel Gustafsson, Rasmus Larsson, Kevin Wong, Clyde Hoang"
 ---
 
 <!---
