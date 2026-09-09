@@ -3123,3 +3123,13 @@ gmu
 schemas
 undersize
 lmcache
+GEMV
+MemVW
+Monotonicity
+Prec
+ReadVW
+TensileLite's
+bimodality
+monotonicity
+decompositions
+optimality
