@@ -1,0 +1,40 @@
+# Copyright © Advanced Micro Devices, Inc., or its affiliates.
+#
+# SPDX-License-Identifier: MIT
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poro2-vllm-deployment
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: vllm-server
+        image: rocm/vllm:latest
+        command:
+        - "python"
+        - "-m"
+        - "vllm.entrypoints.openai.api_server"
+        - "--model"
+        - "LumiOpen/Llama-Poro-2-70B-Instruct"
+        - "--tensor-parallel-size"
+        - "2"
+        - "--max-model-len"
+        - "8192"
+        - "--gpu-memory-utilization"
+        - "0.9"
+        resources:
+          requests:
+            amd.com/gpu: 2
+          limits:
+            amd.com/gpu: 2
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: shm
+      volumes:
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 32Gi
+        name: shm

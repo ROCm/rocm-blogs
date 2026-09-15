@@ -1,0 +1,3 @@
+atrofia = kutistuminen
+atrofiaa = kutistumista
+haimaparenkyymissä = haimakudoksessa

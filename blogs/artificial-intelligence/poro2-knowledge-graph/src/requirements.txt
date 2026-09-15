@@ -1,0 +1,5 @@
+pydantic-ai~=1.26
+pydantic-ai-slim[openai]~=1.26
+mcp~=1.23
+fastmcp~=3.4
+httpx~=0.28

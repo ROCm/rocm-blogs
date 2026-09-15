@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "rdf_knowledge_graph": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "mcp-rdf-explorer:latest"],
+      "description": "RDF Knowledge Graph for structured medical data queries"
+    }
+  }
+}
