@@ -53,7 +53,7 @@ Medical documentation contains specialized terminology, such as terms like "hepa
 
 In this post, we demonstrate a two-stage agentic architecture that addresses this challenge. Using Model Context Protocol (MCP) tools to query a medical knowledge graph and a hand-curated terminology dictionary, [GLM-4.7-Flash](https://arxiv.org/abs/2508.06471), a 30B model selected for its strong tool-calling capabilities, enriches medical terminology. Then [Poro2](https://huggingface.co/LumiOpen/Llama-Poro-2-70B-Instruct), a 70-billion-parameter model with exceptional Finnish language capabilities, uses the enriched context from the previous step to generate patient-friendly Finnish translations that preserve clinical accuracy. To get you rolling on deploying this on AMD, we provide Kubernetes deployment manifests and a ready-to-use pipeline developed for MI300X GPUs.
 
-This work was developed in collaboration with [Lingsoft](https://www.lingsoft.fi/en/), a Finnish language technology company. Their expertise in Finnish medical terminology and clinical language guided the design of the terminology dictionary and the evaluation methodology.
+This work was developed in collaboration with [Lingsoft](https://lingsoft.ai/), a Finnish language technology company. Their expertise in Finnish medical terminology and clinical language guided the design of the terminology dictionary and the evaluation methodology.
 
 ```{note}
 Throughout this post, we use the word "translate" to describe converting medical terminology into patient-friendly language (both remain in Finnish). This is text simplification rather than language translation (e.g., Finnish to English). However, healthcare professionals often describe this paraphrasing as "translating medical jargon into lay-term language", reflecting how specialized medical terminology can feel like a foreign language to patients.
@@ -148,7 +148,7 @@ This example demonstrates how tool access enables more informative translations 
 
 ### Evaluation on Finnish Medical Example Findings
 
-We evaluated the system on 117 pseudonymized Finnish-language upper-abdomen medical findings extracted from 6 radiology reports focused on pancreatic cysts, produced in collaboration with radiologists from [Tampere University Hospital](https://www.tays.fi/en-US) and [Lingsoft](https://www.lingsoft.fi/en/). The findings contain dense terminology mixing Finnish, Latin, and abbreviations.
+We evaluated the system on 117 pseudonymized Finnish-language upper-abdomen medical findings extracted from 6 radiology reports focused on pancreatic cysts, produced in collaboration with radiologists from [Tampere University Hospital](https://www.tays.fi/en-US) and [Lingsoft](https://lingsoft.ai/). The findings contain dense terminology mixing Finnish, Latin, and abbreviations.
 
 Here is a more complex example where Stage 1 extracts five medical-to-layperson mappings using `full_text_search` and `sparql_query` tools:
 
