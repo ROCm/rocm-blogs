@@ -894,6 +894,7 @@ MQA
 MSE
 MSVC
 MTP
+MTP's
 mtypes
 Mudigere
 Multicore
@@ -2258,6 +2259,8 @@ unquantized
 V4
 VJPs
 DFlash
+DFlash's
+dflash
 InferenceX
 Luo's
 MML
@@ -2683,6 +2686,8 @@ Hasssan
 Hoffmeyer
 HSwag
 HumanEval
+humaneval
+IFEval
 infera
 Infera
 InferenceMAX
@@ -2702,6 +2707,7 @@ LiDAR
 LoC
 Longmino
 MBPP
+mbpp
 mcp
 md
 MegaMath
