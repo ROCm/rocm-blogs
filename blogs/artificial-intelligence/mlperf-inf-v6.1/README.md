@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Technical Dive into AMD MLPerf Inference v6.1 Submission"
 date: "17 Sep 2026"
-author: "Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Uma Kannikanti, Rita Brugarolas, Hemanth Acharya, Karan Verma, Yamini Preethi Kamisetty, Rebecca Lee, Neha Matthews, Rajesh Poornachandran, Karan Verma,  Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
+author: "Meena Arunachalam, Miro Hodak, Poovaiah Palangappa, Uma Kannikanti, Rita Brugarolas, Hemanth Acharya, Karan Verma, Yamini Preethi Kamisetty, Rebecca Lee, Neha Mathews, Rajesh Poornachandran, Karan Verma,  Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
 thumbnail: 'mlperf_inf_v61_thumbnail.png'
 tags: "AI/ML, GenAI, Performance, Optimization, LLM, MLPerf, MLPerf Inference"
 category: "Applications & models"

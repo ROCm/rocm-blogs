@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Reproducing AMD MLPerf Inference v6.1 Submission Results"
 date: "17 Sep 2026"
-author: "Meena Arunachalam, Miro Hodak, Uma Kannikanti, Poovaiah Palangappa, Yamini Preethi Kamisetty, Rebecca Lee, Neha Matthews, Rajesh Poornachandran, Karan Verma, Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
+author: "Meena Arunachalam, Miro Hodak, Uma Kannikanti, Poovaiah Palangappa, Yamini Preethi Kamisetty, Rebecca Lee, Neha Mathews, Rajesh Poornachandran, Karan Verma, Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
 thumbnail: 'mlperf_inf_v61_repro_thumbnail.png'
 tags: "AI/ML, GenAI, Performance, Optimization, LLM, MLPerf, MLPerf Inference"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Share the technical details of how we accomplish the re
 language: English
 myst:
     html_meta:
-        "author": "Meena Arunachalam, Miro Hodak, Uma Kannikanti, Poovaiah Palangappa, Yamini Preethi Kamisetty, Rebecca Lee, Neha Matthews, Rajesh Poornachandran, Karan Verma, Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
+        "author": "Meena Arunachalam, Miro Hodak, Uma Kannikanti, Poovaiah Palangappa, Yamini Preethi Kamisetty, Rebecca Lee, Neha Mathews, Rajesh Poornachandran, Karan Verma, Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
         "description lang=en": "In this blog, we share the technical details of how we accomplish the results in our MLPerf Inference v6.1 submission."
         "keywords": "MLPerf Inference v6.1, AMD Instinct MI355X, ROCm, reproduce MLPerf results, dlrm-v3, llama2-70b, gpt-oss-120b, MLCommons, MXFP4"
         "vertical": "AI"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference, Generative AI"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Meena Arunachalam, Miro Hodak, Uma Kannikanti, Poovaiah Palangappa, Yamini Preethi Kamisetty, Rebecca Lee, Neha Matthews, Rajesh Poornachandran, Karan Verma, Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
+        "amd_blog_authors": "Meena Arunachalam, Miro Hodak, Uma Kannikanti, Poovaiah Palangappa, Yamini Preethi Kamisetty, Rebecca Lee, Neha Mathews, Rajesh Poornachandran, Karan Verma, Jiawei Chen, Huasha Zhao, Mikko Lauri, Jesus Carabano Bravo, Nico Holmberg, Eliot Li"
 ---
 
 <!---
