@@ -604,8 +604,10 @@ hunyuan
 Hur
 HWE
 hwLat
+hyperloom
 Hyperloom
 Hyperloom's
+KernelForge
 hyperparameter
 Hyperparameters
 hyperparameters
@@ -3114,6 +3116,9 @@ underutilizes
 WMMAs
 worklog
 Tseng
+disqualifier
+schnell
+worktree
 DAPO
 H20
 VeOmni
