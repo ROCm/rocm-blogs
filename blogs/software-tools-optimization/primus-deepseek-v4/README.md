@@ -580,12 +580,12 @@ and the optimizations above free enough memory to stop paying that tax.
 
 Measured one at a time against the same reference:<sup>[2]</sup>
 
-| Change | Layout | Recompute | TFLOP/s | Gain | Peak memory |
+| Change | Layout | Recompute | tokens/s/GPU | Gain | Peak memory |
 | --- | --- | ---: | ---: | ---: | ---: |
-| reference | `Et*10\|t*11\|t*11\|t*11mL` | 3 | 1167.2 | — | 217.2 GB |
-| layout only | `Et*10\|t*12\|t*12\|t*9mL` | 3 | 1273.4 | +9.1% | 225.9 GB |
-| recompute only | `Et*10\|t*11\|t*11\|t*11mL` | 0 | 1255.7 | +7.6% | 260.9 GB |
-| both | `Et*10\|t*12\|t*12\|t*9mL` | 0 | 1378.8 | +18.1% | 260.9 GB |
+| reference | `Et*10\|t*11\|t*11\|t*11mL` | 3 | 3245.5 | — | 217.2 GB |
+| layout only | `Et*10\|t*12\|t*12\|t*9mL` | 3 | 3540.9 | +9.1% | 225.9 GB |
+| recompute only | `Et*10\|t*11\|t*11\|t*11mL` | 0 | 3491.6 | +7.6% | 260.9 GB |
+| both | `Et*10\|t*12\|t*12\|t*9mL` | 0 | 3833.8 | +18.1% | 260.9 GB |
 
 They contribute almost equally, and doing both is worth 1.5 points more than the
 sum of doing each alone: dropping recompute frees time that an unbalanced
@@ -631,7 +631,7 @@ iterations per rung, averaged over iterations 4 to 10.<sup>[2]</sup>
 ```{figure} ./images/deepseek-v4-flash-optimization-ladder.png
 :align: center
 :width: 100%
-:alt: Throughput of DeepSeek-V4-Flash pretraining as seven optimizations are switched on one at a time, rising from 439.5 to 1378.8 TFLOP/s per GPU
+:alt: Throughput of DeepSeek-V4-Flash pretraining as seven optimizations are switched on one at a time, rising from 1222.0 to 3833.8 tokens/s per GPU
 
 Figure 8: Throughput as each optimization is added to the ones above it, on 4 nodes × 8 MI355X.
 ```
@@ -639,16 +639,16 @@ Figure 8: Throughput as each optimization is added to the ones above it, on 4 no
 Figure 8 plots that climb, and the table below gives the exact number each rung
 lands on:
 
-| Stage | Optimization | What it changes | TFLOP/s/GPU | This step | Cumulative |
+| Stage | Optimization | What it changes | tokens/s/GPU | This step | Cumulative |
 | --- | --- | --- | ---: | ---: | ---: |
-| 0 | Baseline | Every optimization off: unfused elementwise chains, first-generation Triton attention, the native MoE layer, an even pipeline split with three recomputed layers per stage | 439.5 | — | — |
-| 1 | Kernel fusions | The fusions listed above, plus Megatron's permutation, cross-entropy and gradient-accumulation fusions | 875.4 | +99.2% | +99.2% |
-| 2 | Gluon attention | Sparse-MLA moves to the Gluon dialect (`gluon_v3`), scheduled explicitly for gfx950 | 917.0 | +4.8% | +108.6% |
-| 3 | FlyDSL attention | Sparse-MLA moves again, to the FlyDSL kernels in Primus-Turbo | 954.3 | +4.1% | +117.1% |
-| 4 | DeepEP | Token dispatch and combine become dedicated kernels instead of PyTorch permutation around two all-to-all collectives | 966.5 | +1.3% | +119.9% |
-| 5 | Turbo grouped GEMM | The 32 local expert GEMMs issue as one ragged-batch kernel | 1042.6 | +7.9% | +137.2% |
-| 6 | MegaMoE | Replaces both of the above: the all-to-all is fused into the grouped GEMM rather than sitting next to it | 1167.2 | +12.0% | +165.6% |
-| 7 | Pipeline layout and recompute | Layers rebalanced to 10/12/12/9, recompute dropped to zero | 1378.8 | +18.1% | +213.7% |
+| 0 | Baseline | Every optimization off: unfused elementwise chains, first-generation Triton attention, the native MoE layer, an even pipeline split with three recomputed layers per stage | 1222.0 | — | — |
+| 1 | Kernel fusions | The fusions listed above, plus Megatron's permutation, cross-entropy and gradient-accumulation fusions | 2434.0 | +99.2% | +99.2% |
+| 2 | Gluon attention | Sparse-MLA moves to the Gluon dialect (`gluon_v3`), scheduled explicitly for gfx950 | 2549.7 | +4.8% | +108.6% |
+| 3 | FlyDSL attention | Sparse-MLA moves again, to the FlyDSL kernels in Primus-Turbo | 2653.4 | +4.1% | +117.1% |
+| 4 | DeepEP | Token dispatch and combine become dedicated kernels instead of PyTorch permutation around two all-to-all collectives | 2687.5 | +1.3% | +119.9% |
+| 5 | Turbo grouped GEMM | The 32 local expert GEMMs issue as one ragged-batch kernel | 2898.9 | +7.9% | +137.2% |
+| 6 | MegaMoE | Replaces both of the above: the all-to-all is fused into the grouped GEMM rather than sitting next to it | 3245.5 | +12.0% | +165.6% |
+| 7 | Pipeline layout and recompute | Layers rebalanced to 10/12/12/9, recompute dropped to zero | 3833.8 | +18.1% | +213.7% |
 
 ## Reproduce: training DeepSeek-V4-Flash
 
@@ -678,8 +678,8 @@ optimization family, so any rung of the ladder is a single variable away, and a
 dry-run mode that resolves a combination and prints what it means before you
 spend an allocation on it.
 
-A healthy four-node run settles at roughly 8.5 s per iteration and 1,370–1,385
-TFLOP/s per GPU, with peak memory around 261 GB of the 288 GB on each MI355X.<sup>[2]</sup>
+A healthy four-node run settles at roughly 8.5 s per iteration and 3,810–3,850
+tokens/s per GPU, with peak memory around 261 GB of the 288 GB on each MI355X.<sup>[2]</sup>
 The launcher is tuned for four nodes; another node count needs its own
 `PRIMUS_PP` and `PRIMUS_PP_LAYOUT`.
 
@@ -708,10 +708,10 @@ both by fusing the expert-parallel all-to-all into the GEMM itself. And the last
 switching recompute off, which only fits because the kernel work freed the
 memory first.
 
-Together they take a four-node run from 439.5 to 1,378.8 TFLOP/s per GPU — 3.1× —
-with the model holding at 261 GB of the 288 GB each GPU provides. All of it is in
-the [Primus repository](https://github.com/AMD-AGI/Primus) and on by default:
-attach a four-node allocation and run the launcher.
+Together they take a four-node run from 1,222.0 to 3,833.8 tokens/s per GPU —
+3.1× — with the model holding at 261 GB of the 288 GB each GPU provides. All of
+it is in the [Primus repository](https://github.com/AMD-AGI/Primus) and on by
+default: attach a four-node allocation and run the launcher.
 
 Three threads continue from here, and we will cover them in future posts as they
 land. FP8 is the nearest — the experiment config already sits beside the BF16 one
@@ -778,7 +778,7 @@ AMD system configuration:
 
 [2] Test Environment
 
-End-to-end pretraining throughput (TFLOP/s per GPU) — the optimization ladder,
+End-to-end pretraining throughput (tokens/s per GPU) — the optimization ladder,
 the pipeline layout and recompute comparison, and the four-node figures in the
 reproduce section — was measured on 4 MI355X nodes (32 GPUs total) with BF16
 precision, TP=1, PP=4, EP=8, global batch 256, micro-batch 1 and sequence
