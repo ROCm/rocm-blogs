@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Zebra-HyLo: Upcycling Transformers into Long-Context Hybrid LLMs on AMD Instinct™ GPUs"
 date: "22 Sep 2026"
-author: "Parsa Ashrafi Fashi, Utkarsh Saxena, Mehdi Rezagholizadeh, Aref Jafari, Akash Haridas, Mingyu Yang, Vansh Bhatia, Guihong Li, Vikram Appia, Emad Barsoum"
+author: "Parsa Ashrafi Fashi, Utkarsh Saxena, Mehdi Rezagholizadeh, Vansh Bhatia, Aref Jafari, Akash Haridas, Mingyu Yang, Guihong Li, Vikram Appia, Emad Barsoum"
 thumbnail: 'hylo-thumbnail.png'
 tags: "LLM, PyTorch, AI/ML, Fine-Tuning"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Zebra-HyLo converts pretrained Transformers into hybrid
 language: English
 myst:
     html_meta:
-        "author": "Parsa Ashrafi Fashi, Utkarsh Saxena, Mehdi Rezagholizadeh, Aref Jafari, Akash Haridas, Mingyu Yang, Vansh Bhatia, Guihong Li, Vikram Appia, Emad Barsoum"
+        "author": "Parsa Ashrafi Fashi, Utkarsh Saxena, Mehdi Rezagholizadeh, Vansh Bhatia, Aref Jafari, Akash Haridas, Mingyu Yang, Guihong Li, Vikram Appia, Emad Barsoum"
         "description lang=en": "Upcycle pretrained Transformers into long-context hybrid MLA + linear models on AMD Instinct MI300X GPUs, with 14 open checkpoints and training code."
         "keywords": "rocm, hybrid models, MLA, mamba-2, gated deltanet, long context, knowledge distillation, KV cache, Zebra-HyLo, HyLo, Zebra-Llama, MI300X"
         "property=og:locale": "en_US"
@@ -23,7 +23,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software, Open-Source Tools"
         "amd_blog_applications": "AI Training"
         "amd_blog_topic_categories": "AI & Intelligent Systems"
-        "amd_blog_authors": "Parsa Ashrafi Fashi, Utkarsh Saxena, Mehdi Rezagholizadeh, Aref Jafari, Akash Haridas, Mingyu Yang, Vansh Bhatia, Guihong Li, Vikram Appia, Emad Barsoum"
+        "amd_blog_authors": "Parsa Ashrafi Fashi, Utkarsh Saxena, Mehdi Rezagholizadeh, Vansh Bhatia, Aref Jafari, Akash Haridas, Mingyu Yang, Guihong Li, Vikram Appia, Emad Barsoum"
 ---
 
 <!---
@@ -505,18 +505,6 @@ Figure 3: Teacher size at long-context distillation. A larger teacher improves b
 commonsense reasoning and long-context ability. Source: Figure 4 from the
 [HyLo paper](https://arxiv.org/abs/2604.24715).
 ```
-
-### Two Things That Did Not Work
-
-These results are worth reporting because both approaches are widely recommended. **NoPE** (removing positional embeddings from
-attention layers) and **gated attention** both improve long-context extrapolation when used during
-pretraining. In our upcycling setting, neither helped. NoPE applied to MLA layers collapses past
-16K — 4.8 at 16K and 0.0 at 64K, against 41.6 and 31.3 for our baseline. Gated attention gives small
-gains at 4K-16K that vanish by 64K, ending 1 point below baseline.
-
-The lesson we draw is that architectural tricks which pay off across a full pretraining run do not
-necessarily transfer to a short post-training budget, where the model has to preserve what the
-backbone already knows rather than learn a new positional scheme from scratch.
 
 ### Inference: 2M Tokens on Eight MI300X GPUs
 
