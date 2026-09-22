@@ -31,6 +31,7 @@ AITER
 Ajit
 Akshay
 al
+Alexa
 AlexNet
 Alisson
 AllGather
