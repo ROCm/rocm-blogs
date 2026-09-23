@@ -498,7 +498,7 @@ The walkthrough shows two examples that share the same async machinery but diffe
 
 ## Acknowledgements
 
-The authors would also like to acknowledge the broader AMD team whose contributions were instrumental in this work: Jared Bowden, Dong Li, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Zicheng Liu, Emad Barsoum, Marco Grond, Lillian Zheng, Ramesh Mantha, Wenbo Shao, Pei Zhang, Matthew Steggink, Gazi Rashid, Bhavesh Lad, Pankaj Gupta, Aakash Sudhanwa, Joseph Macaranas, Kiran Thumma, Ian Dass, Ram Seenivasan, Amit Kumar, Anisha Sankar, Saad Rahim, Ehud Sharlin, Liam Berry, Cindy Lee, Lindsey Brown, Catherine Ortega, Ashley Cowart, Keith Anderson, Lorelei Misajlovich, Jennifer Barry.
+The authors would also like to acknowledge the broader AMD team whose contributions were instrumental in this work: Jared Bowden, Dong Li, Gowtham Ramesh, Jiang Liu, Zhenyu Gu, Zicheng Liu, Emad Barsoum, Marco Grond, Lillian Zheng, Ramesh Mantha, Wenbo Shao, Pei Zhang, Matthew Steggink, Gazi Rashid, Ritesh Hiremath, Bhavesh Lad, Pankaj Gupta, Aakash Sudhanwa, Joseph Macaranas, Kiran Thumma, Ian Dass, Ram Seenivasan, Amit Kumar, Anisha Sankar, Saad Rahim, Ehud Sharlin, Liam Berry, Cindy Lee, Lindsey Brown, Catherine Ortega, Ashley Cowart, Keith Anderson, Lorelei Misajlovich, Jennifer Barry.
 
 ## Disclaimers
 
