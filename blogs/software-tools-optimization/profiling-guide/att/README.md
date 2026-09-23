@@ -82,7 +82,9 @@ Currently, ATT supports AMD Instinct MI200 and MI300 series and AMD Radeon gfx10
    - **Where to start with ATT**: how to come up with a narrative on why the performance looks the way it does.
 
 3. **What This Guide Will NOT Teach You**:
-   - **How to run ATT in detail**: the official [documentation of ATT](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/how-to/using-thread-trace.html) is the right place.
+   - **How to run ATT in detail**: the official [documentation of ATT](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/how-to/using-thread-trace.html)
+     and [Thread Trace Part 1: ROCprof Compute Viewer](https://rocm.blogs.amd.com/software-tools-optimization/thread-trace/README.html)
+     cover collection and visualization.
 
 By the end of this blog, you will be able to successfully profile your application using ATT
 and prove/disprove your theory on why the performance looks the way it does.
@@ -592,6 +594,7 @@ above for your quick reference, along with earlier posts in this series.
   - Open source at [rocprofiler-sdk GitHub repo](https://github.com/ROCm/rocm-systems/tree/develop/projects/rocprofiler-sdk)
   - [`rocprofv3` tool documentation](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/how-to/using-rocprofv3.html#using-rocprofv3)
 - ATT:
+  - [Thread Trace Part 1: ROCprof Compute Viewer](https://rocm.blogs.amd.com/software-tools-optimization/thread-trace/README.html)
   - Open source ROCprof Compute Viewer at [rocprof-compute-viewer GitHub repo](https://github.com/ROCm/rocprof-compute-viewer)
   - [`rocprofv3` Thread Trace documentation](https://rocm.docs.amd.com/projects/rocprofiler-sdk/en/latest/how-to/using-thread-trace.html)
 - Performance Profiling on AMD GPUs blog series:
