@@ -125,7 +125,7 @@ Kernel optimization works directly on GPU kernels and delegates the phase to one
 3. Collect the kernels it accepted and the speedup it claims.
 4. Re-measure every accepted change end to end under Hyperloom's benchmark protocol. A change is kept only if throughput improves and accuracy holds against the session baseline.
 
-Hyperloom can delegate this work to one of two AMD backends: [GEAK](https://github.com/AMD-AGI/GEAK), which autonomously selects and optimizes kernel targets across the phase, or [KernelForge](https://github.com/AMD-AGI/KernelForge), which applies specialized optimization passes to targets selected from the profiling trace. Their scopes differ:
+Hyperloom can delegate this work to one of two AMD backends: [GEAK](https://github.com/AMD-AGI/GEAK), which autonomously selects and optimizes kernel targets across the phase, or [KernelForge](https://github.com/AMD-AGI/Hyperloom/tree/main/src/kernelforge), which applies specialized optimization passes to targets selected from the profiling trace. Their scopes differ:
 
 - **GEAK** runs the complete kernel-optimization phase and independently selects the kernels and optimization strategies to explore.
 - **KernelForge** runs a sequence of specialized lanes, bounded optimization passes for tuning, fusion, rewriting, or communication collectives. Hyperloom selects candidate kernels from the profiling trace based on GPU time and rewrite feasibility.
@@ -270,7 +270,7 @@ Hyperloom is open source under the MIT license, and the [documentation](https://
 
 - Hyperloom: [https://github.com/AMD-AGI/Hyperloom](https://github.com/AMD-AGI/Hyperloom)
 - GEAK: [https://github.com/AMD-AGI/GEAK](https://github.com/AMD-AGI/GEAK)
-- KernelForge: [https://github.com/AMD-AGI/KernelForge](https://github.com/AMD-AGI/KernelForge)
+- KernelForge: [https://github.com/AMD-AGI/Hyperloom/tree/main/src/kernelforge](https://github.com/AMD-AGI/Hyperloom/tree/main/src/kernelforge)
 
 ### Documentation
 
