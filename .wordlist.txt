@@ -482,6 +482,7 @@ GDS
 GELU
 GEMM
 GEMMs
+GGUF
 Gemma
 GenAI
 generalizable
@@ -631,6 +632,7 @@ IDEs
 IFEVAL
 iGPU
 iGPUs
+iFairy
 IK
 ImageNet
 IMDB
@@ -3161,6 +3163,16 @@ gmu
 schemas
 undersize
 lmcache
+BERT's
+MoE's
+PagedAttention
+normalizations
+perceptron
+retiled
+squarified
+tensor's
+treemap
+treemaps
 
 BCM
 CSVs

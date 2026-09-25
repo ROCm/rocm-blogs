@@ -1,0 +1,86 @@
+model_id: Vaswani et al. Transformer
+architecture:
+  model_type: transformer
+  hidden_size: 512
+  num_hidden_layers: 6
+  num_attention_heads: 8
+  intermediate_size: 2048
+  vocab_size: 37000
+sources:
+  architecture: attention_is_all_you_need_table_3
+  stored_params: reconstructed_from_paper
+stored_params:
+  bytes_on_disk: 252182528
+  bytes_accounted: 252182528
+  parameters: 63045632
+  families:
+    embedding:
+      parameters: 18944000
+      bytes: 75776000
+      param_groups:
+        shared_embedding_and_pre_softmax:
+          parameters: 18944000
+          bytes: 75776000
+          dtype: F32
+          tensor_shape:
+          - 37000
+          - 512
+    attention:
+      parameters: 18874368
+      bytes: 75497472
+      param_groups:
+        encoder_self_attn:
+          parameters: 6291456
+          bytes: 25165824
+          dtype: F32
+          tensor_shape:
+          - 512
+          - 512
+        decoder_self_attn:
+          parameters: 6291456
+          bytes: 25165824
+          dtype: F32
+          tensor_shape:
+          - 512
+          - 512
+        decoder_cross_attn:
+          parameters: 6291456
+          bytes: 25165824
+          dtype: F32
+          tensor_shape:
+          - 512
+          - 512
+    dense:
+      parameters: 25196544
+      bytes: 100786176
+      param_groups:
+        encoder_ffn:
+          parameters: 12582912
+          bytes: 50331648
+          dtype: F32
+          tensor_shape:
+          - 2048
+          - 512
+        decoder_ffn:
+          parameters: 12582912
+          bytes: 50331648
+          dtype: F32
+          tensor_shape:
+          - 2048
+          - 512
+        ffn_bias:
+          parameters: 30720
+          bytes: 122880
+          dtype: F32
+          tensor_shape:
+          - 2560
+    other:
+      parameters: 30720
+      bytes: 122880
+      param_groups:
+        layer_norm:
+          parameters: 30720
+          bytes: 122880
+          dtype: F32
+          tensor_shape:
+          - 1024

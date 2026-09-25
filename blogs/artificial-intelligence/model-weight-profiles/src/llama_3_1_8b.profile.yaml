@@ -1,0 +1,94 @@
+model_id: unsloth/Meta-Llama-3.1-8B
+architecture:
+  model_type: llama
+  hidden_size: 4096
+  num_hidden_layers: 32
+  num_attention_heads: 32
+  num_key_value_heads: 8
+  intermediate_size: 14336
+  vocab_size: 128256
+  max_position_embeddings: 131072
+  tie_word_embeddings: false
+sources:
+  architecture: hub_config_json
+  stored_params: hub_safetensors_headers + hub_paths_info
+stored_params:
+  bytes_on_disk: 16060556376
+  bytes_accounted: 16060522496
+  parameters: 8030261248
+  families:
+    embedding:
+      parameters: 1050673152
+      bytes: 2101346304
+      param_groups:
+        lm_head:
+          parameters: 525336576
+          bytes: 1050673152
+          dtype: BF16
+          tensor_shape:
+          - 128256
+          - 4096
+        token_embeddings:
+          parameters: 525336576
+          bytes: 1050673152
+          dtype: BF16
+          tensor_shape:
+          - 128256
+          - 4096
+    attention:
+      parameters: 1342439424
+      bytes: 2684878848
+      param_groups:
+        k_proj:
+          parameters: 134217728
+          bytes: 268435456
+          dtype: BF16
+          tensor_shape:
+          - 1024
+          - 4096
+        layer_norm:
+          parameters: 262144
+          bytes: 524288
+          dtype: BF16
+          tensor_shape:
+          - 4096
+        o_proj:
+          parameters: 536870912
+          bytes: 1073741824
+          dtype: BF16
+          tensor_shape:
+          - 4096
+          - 4096
+        q_proj:
+          parameters: 536870912
+          bytes: 1073741824
+          dtype: BF16
+          tensor_shape:
+          - 4096
+          - 4096
+        v_proj:
+          parameters: 134217728
+          bytes: 268435456
+          dtype: BF16
+          tensor_shape:
+          - 1024
+          - 4096
+    dense:
+      parameters: 5637144576
+      bytes: 11274289152
+      param_groups:
+        mlp_weights:
+          parameters: 5637144576
+          bytes: 11274289152
+          dtype: BF16
+          tensor_shape: null
+    other:
+      parameters: 4096
+      bytes: 8192
+      param_groups:
+        norm:
+          parameters: 4096
+          bytes: 8192
+          dtype: BF16
+          tensor_shape:
+          - 4096

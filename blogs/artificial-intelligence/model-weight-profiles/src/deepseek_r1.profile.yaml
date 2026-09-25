@@ -1,0 +1,235 @@
+model_id: deepseek-ai/DeepSeek-R1
+architecture:
+  model_type: deepseek_v3
+  hidden_size: 7168
+  num_hidden_layers: 61
+  num_attention_heads: 128
+  num_key_value_heads: 128
+  intermediate_size: 18432
+  vocab_size: 129280
+  max_position_embeddings: 163840
+  num_nextn_predict_layers: 1
+  moe:
+    n_routed_experts: 256
+    num_experts_per_tok: 8
+    n_shared_experts: 1
+    first_k_dense_replace: 3
+    moe_intermediate_size: 2048
+  quantization:
+    quant_method: fp8
+    fmt: e4m3
+    weight_block_size:
+    - 128
+    - 128
+sources:
+  architecture: hub_config_json
+  stored_params: hub_safetensors_headers + hub_paths_info
+  activated_params: deepseek_v3_moe_activation_rules
+stored_params:
+  bytes_on_disk: 688586727753
+  bytes_accounted: 688574839360
+  parameters: 684531386000
+  families:
+    embedding:
+      parameters: 2780037120
+      bytes: 5560074240
+      param_groups:
+        lm_head:
+          parameters: 926679040
+          bytes: 1853358080
+          dtype: BF16
+          tensor_shape:
+          - 129280
+          - 7168
+        token_embeddings:
+          parameters: 1853358080
+          bytes: 3706716160
+          dtype: BF16
+          tensor_shape:
+          - 129280
+          - 7168
+    attention:
+      parameters: 11601543168
+      bytes: 11602558976
+      param_groups:
+        attention_weights:
+          parameters: 4319215616
+          bytes: 4319215616
+          dtype: F8_E4M3
+          tensor_shape: null
+        attn_norm:
+          parameters: 126976
+          bytes: 253952
+          dtype: BF16
+          tensor_shape: null
+        layer_norm:
+          parameters: 888832
+          bytes: 1777664
+          dtype: BF16
+          tensor_shape:
+          - 7168
+        o_proj:
+          parameters: 7281311744
+          bytes: 7281311744
+          dtype: F8_E4M3
+          tensor_shape:
+          - 7168
+          - 16384
+    dense:
+      parameters: 668970516480
+      bytes: 668970516480
+      param_groups:
+        expert_weights:
+          parameters: 665183059968
+          bytes: 665183059968
+          dtype: F8_E4M3
+          tensor_shape: null
+        mlp_weights:
+          parameters: 1189085184
+          bytes: 1189085184
+          dtype: F8_E4M3
+          tensor_shape: null
+        shared_expert_weights:
+          parameters: 2598371328
+          bytes: 2598371328
+          dtype: F8_E4M3
+          tensor_shape: null
+    other:
+      parameters: 1179289232
+      bytes: 2441689664
+      param_groups:
+        expert_quant_scales:
+          parameters: 40599552
+          bytes: 162398208
+          dtype: F32
+          tensor_shape: null
+        moe_router:
+          parameters: 108265472
+          bytes: 216530944
+          dtype: BF16
+          tensor_shape:
+          - 256
+          - 7168
+        moe_router_bias:
+          parameters: 15104
+          bytes: 60416
+          dtype: F32
+          tensor_shape:
+          - 256
+        nextn_predict:
+          parameters: 1029460992
+          bytes: 2058921984
+          dtype: BF16
+          tensor_shape: null
+        norm:
+          parameters: 7168
+          bytes: 14336
+          dtype: BF16
+          tensor_shape:
+          - 7168
+        quant_scales:
+          parameters: 940944
+          bytes: 3763776
+          dtype: F32
+          tensor_shape: null
+activated_params:
+  bytes_accounted: 39521833312
+  parameters: 37554471512
+  families:
+    embedding:
+      parameters: 1853358080
+      bytes: 3706716160
+      param_groups:
+        lm_head:
+          parameters: 926679040
+          bytes: 1853358080
+          dtype: BF16
+          tensor_shape:
+          - 129280
+          - 7168
+        token_embeddings:
+          parameters: 926679040
+          bytes: 1853358080
+          dtype: BF16
+          tensor_shape:
+          - 129280
+          - 7168
+    attention:
+      parameters: 11414421504
+      bytes: 11415420928
+      param_groups:
+        attention_weights:
+          parameters: 4249550848
+          bytes: 4249550848
+          dtype: F8_E4M3
+          tensor_shape: null
+        attn_norm:
+          parameters: 124928
+          bytes: 249856
+          dtype: BF16
+          tensor_shape: null
+        layer_norm:
+          parameters: 874496
+          bytes: 1748992
+          dtype: BF16
+          tensor_shape:
+          - 7168
+        o_proj:
+          parameters: 7163871232
+          bytes: 7163871232
+          dtype: F8_E4M3
+          tensor_shape:
+          - 7168
+          - 16384
+    dense:
+      parameters: 24178065408
+      bytes: 24178065408
+      param_groups:
+        expert_weights:
+          parameters: 20434649088
+          bytes: 20434649088
+          dtype: F8_E4M3
+          tensor_shape: null
+        mlp_weights:
+          parameters: 1189085184
+          bytes: 1189085184
+          dtype: F8_E4M3
+          tensor_shape: null
+        shared_expert_weights:
+          parameters: 2554331136
+          bytes: 2554331136
+          dtype: F8_E4M3
+          tensor_shape: null
+    other:
+      parameters: 108626520
+      bytes: 221630816
+      param_groups:
+        expert_quant_scales:
+          parameters: 1247232
+          bytes: 4988928
+          dtype: F32
+          tensor_shape: null
+        moe_router:
+          parameters: 106430464
+          bytes: 212860928
+          dtype: BF16
+          tensor_shape:
+          - 256
+          - 7168
+        moe_router_bias:
+          parameters: 14848
+          bytes: 59392
+          dtype: F32
+          tensor_shape:
+          - 256
+        norm:
+          parameters: 7168
+          bytes: 14336
+          dtype: BF16
+          tensor_shape:
+          - 7168
+        quant_scales:
+          parameters: 926808
+          bytes: 3707232
+          dtype: F32
+          tensor_shape: null

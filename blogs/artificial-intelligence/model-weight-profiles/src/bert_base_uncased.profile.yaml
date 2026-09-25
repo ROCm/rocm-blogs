@@ -1,0 +1,101 @@
+model_id: google-bert/bert-base-uncased
+architecture:
+  model_type: bert
+  hidden_size: 768
+  num_hidden_layers: 12
+  num_attention_heads: 12
+  intermediate_size: 3072
+  vocab_size: 30522
+  max_position_embeddings: 512
+  type_vocab_size: 2
+sources:
+  architecture: hub_config_json
+  stored_params: hub_safetensors_headers + hub_paths_info
+stored_params:
+  bytes_on_disk: 440449768
+  bytes_accounted: 440425712
+  parameters: 110106428
+  families:
+    embedding:
+      parameters: 23835648
+      bytes: 95342592
+      param_groups:
+        position_embeddings:
+          parameters: 393216
+          bytes: 1572864
+          dtype: F32
+          tensor_shape:
+          - 512
+          - 768
+        token_type_embeddings:
+          parameters: 1536
+          bytes: 6144
+          dtype: F32
+          tensor_shape:
+          - 2
+          - 768
+        word_embeddings:
+          parameters: 23440896
+          bytes: 93763584
+          dtype: F32
+          tensor_shape:
+          - 30522
+          - 768
+    attention:
+      parameters: 28366848
+      bytes: 113467392
+      param_groups:
+        layer_norm:
+          parameters: 18432
+          bytes: 73728
+          dtype: F32
+          tensor_shape:
+          - 768
+        projection_bias:
+          parameters: 36864
+          bytes: 147456
+          dtype: F32
+          tensor_shape:
+          - 768
+        projection_weights:
+          parameters: 28311552
+          bytes: 113246208
+          dtype: F32
+          tensor_shape:
+          - 768
+          - 768
+    dense:
+      parameters: 57822720
+      bytes: 231290880
+      param_groups:
+        ffn_weights:
+          parameters: 56623104
+          bytes: 226492416
+          dtype: F32
+          tensor_shape: null
+        layer_norm:
+          parameters: 18432
+          bytes: 73728
+          dtype: F32
+          tensor_shape:
+          - 768
+        output_heads:
+          parameters: 1181184
+          bytes: 4724736
+          dtype: F32
+          tensor_shape: null
+    other:
+      parameters: 81212
+      bytes: 324848
+      param_groups:
+        norm:
+          parameters: 3072
+          bytes: 12288
+          dtype: F32
+          tensor_shape:
+          - 768
+        other:
+          parameters: 78140
+          bytes: 312560
+          dtype: F32
+          tensor_shape: null
