@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Local Quantization and Multi-Backend Deployment with AMD Quark on Strix Halo"
 date: 25 Sep 2026
-author: HongWei Meng, Wei Luo, Xinjun Niu, Lin Zhao, Spandan Tiwari
+author: HongWei Meng, Wei Luo, Xinjun Niu, Lin Zhao, Spandan Tiwari, Ashish Sirasao
 thumbnail: 'quark-strix-halo-thumbnail.jpg'
 tags: LLM, Optimization, Serving
 target_audience: Developers and ML engineers deploying quantized LLMs on AMD hardware
@@ -11,7 +11,7 @@ category: Applications & models
 language: English
 myst:
     html_meta:
-        "author": "HongWei Meng, Wei Luo, Xinjun Niu, Lin Zhao, Spandan Tiwari"
+        "author": "HongWei Meng, Wei Luo, Xinjun Niu, Lin Zhao, Spandan Tiwari, Ashish Sirasao"
         "description lang=en": "Quantize a 35B MoE model directly on AMD Strix Halo with AMD Quark, export to GGUF and safetensors, validate with llama.cpp and vLLM, and deploy through Lemonade."
         "keywords": "AMD Quark, Strix Halo, Ryzen AI Max, local quantization, W4A16, MoE, GGUF, llama.cpp, vLLM, Lemonade"
         "property=og:locale": "en_US"
@@ -170,7 +170,7 @@ The GS128 safetensors models are evaluated with vLLM using `tensor_parallel_size
 | GSM8K (5-shot) | strict-match | 0.9090 | 0.8976 | 0.8961 | 0.9151 | 0.8916 |
 
 > Testing by AMD in August 2026 using the hardware and software configuration described in this article. Results may vary based on hardware configuration, software versions, model revisions, runtime settings, workloads, and other factors.
-
+>
 > **Note:** The GS128 vLLM benchmark was executed on a separate data-center GPU system to reduce evaluation turnaround time. This was a benchmarking choice rather than a Strix Halo platform limitation.
 
 Overall, the results show that the impact of 4-bit weight quantization is task dependent. Several configurations remain close to, or occasionally exceed, the 16-bit baseline on individual metrics, while other tasks show more noticeable degradation. The results do not indicate a single quantization configuration that is uniformly best across all tasks.
