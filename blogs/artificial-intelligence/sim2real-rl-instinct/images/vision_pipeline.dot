@@ -1,0 +1,51 @@
+// Render PNG from this directory:
+//   dot -Tpng vision_pipeline.dot -o vision_pipeline.png
+
+digraph vision_pipeline {
+    rankdir=LR;
+    bgcolor="#0b0f14";
+    pad=0.3;
+    nodesep=0.45;
+    ranksep=0.35;
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fillcolor="#0b0f14",
+        color="#5eb3ff",
+        fontcolor="#e8eef5",
+        fontname="Helvetica",
+        penwidth=1.5
+    ];
+    edge [
+        color="#5eb3ff",
+        fontcolor="#9db4cc",
+        fontname="Helvetica",
+        fontsize=10
+    ];
+
+    WC  [label="Wrist\nCamera"];
+    WPD [label="Cube Pixel\nDetector"];
+    WCF [label="Cube Centroid\nFinder"];
+
+    SC  [label="Scene\nCamera"];
+    SPD [label="Cube Pixel\nDetector"];
+    SCF [label="Cube Centroid\nFinder"];
+
+    F [label="Fusion"];
+    P [label="Publish\n/cube_xyz"];
+
+    WC  -> WPD [label="RGBD frame"];
+    WPD -> WCF [label="cube pixel mask"];
+    WCF -> F   [label="cube xyz,\nconfidence"];
+
+    SC  -> SPD [label="RGBD frame"];
+    SPD -> SCF [label="cube pixel mask"];
+    SCF -> F   [label="cube xyz,\nconfidence"];
+
+    F -> P [label="cube xyz"];
+
+    { rank=same; WC;  SC;  }
+    { rank=same; WPD; SPD; }
+    { rank=same; WCF; SCF; }
+}

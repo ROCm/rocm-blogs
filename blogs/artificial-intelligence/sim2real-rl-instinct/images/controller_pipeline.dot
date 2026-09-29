@@ -1,0 +1,83 @@
+// Render PNG from this directory:
+//   dot -Tpng controller_pipeline.dot -o controller_pipeline.png
+
+digraph controller_pipeline {
+    rankdir=TB;
+    bgcolor="#0b0f14";
+    pad=0.3;
+    nodesep=0.45;
+    ranksep=0.5;
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fillcolor="#0b0f14",
+        color="#5eb3ff",
+        fontcolor="#e8eef5",
+        fontname="Helvetica",
+        fontsize=26,
+        penwidth=2
+    ];
+    edge [
+        color="#5eb3ff",
+        fontcolor="#9db4cc",
+        fontname="Helvetica",
+        fontsize=22,
+        penwidth=2
+    ];
+
+    PER [label="/cube_xyz"];
+    JS  [label="/xarm/joint_states"];
+    SDK [label="xArm SDK"];
+
+    subgraph cluster_controller {
+        label="xarm6_pick_hold_controller_node.py";
+        color="#4ade80";
+        style="rounded";
+        bgcolor="#0b0f14";
+        fontcolor="#4ade80";
+        fontname="Helvetica";
+        fontsize=26;
+        penwidth=2;
+
+        BO  [label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5"><B>Build Observation</B></FONT></TD></TR>
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5">4 past frames of</FONT></TD></TR>
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5">joints, TCP, cube, contact</FONT></TD></TR>
+            </TABLE>
+          >];
+        POL [label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5"><B>ONNX Policy @ 40 Hz</B></FONT></TD></TR>
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5">Action: 7 joint + 1 gripper</FONT></TD></TR>
+            </TABLE>
+          >];
+        PM  [label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5"><B>Phase machine</B></FONT></TD></TR>
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5">REACH: policy approaches</FONT></TD></TR>
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5">GRASP: close &amp; confirm</FONT></TD></TR>
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5">LIFT: policy holds</FONT></TD></TR>
+            </TABLE>
+          >];
+        STR [label=<
+            <TABLE BORDER="0" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+              <TR><TD ALIGN="CENTER"><FONT COLOR="#e8eef5"><B>Stream to Robot</B></FONT></TD></TR>
+            </TABLE>
+          >];
+
+        BO -> POL -> PM -> STR;
+        { rank=same; BO; POL; PM; STR; }
+    }
+
+    XARM [label="xArm6"];
+
+    PER -> BO  [label="Cube xyz"];
+    JS  -> BO  [label="JointState"];
+    SDK -> BO  [label="GripperState"];
+
+    STR -> XARM [label="set_servo_angle_j\nset_gripper_position"];
+
+    { rank=same; PER; JS; SDK; }
+}
