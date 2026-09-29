@@ -11,16 +11,18 @@ myst:
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Gina Sitaraman">
-  <meta name="keywords" content="AMD GPU, HPC, MI300, MI250, ROCm, blog, contributor,
-  blog author">
+  <meta name="keywords" content="AMD GPU, HPC, Sovereign AI, Profilers, Performance Analysis,
+  MI400, MI300, MI250, ROCm, blog, contributor, blog author">
 </head>
 
 (ginasita)=
 
 # Gina Sitaraman
 
-Gina Sitaraman is a Senior Member of Technical Staff (SMTS) Software System Design Engineer in the Data
-Center GPU Solutions and Performance Analysis group. She obtained her PhD in Computer Science from the
-University of Texas at Dallas. She has over a decade of experience developing and optimizing seismic
-data processing applications. She spends her time at AMD solving optimization challenges in scientific
-applications running on large-scale HPC clusters with AMD Instinct™ GPUs.
+Gina Sitaraman is a Principal Member of Technical Staff in the HPC and Sovereign AI Customer
+Enablement group at AMD. She holds a PhD in Computer Science from the University of Texas at
+Dallas and has over a decade of experience in high performance computing. Gina provides
+technical leadership in GPU profiling and performance analysis, with a strong focus on user
+engagement and tool adoption. She works closely with customers and application teams to
+understand real world performance challenges and to help shape accessible, effective profiling
+workflows for large scale HPC systems using AMD Instinct™ GPUs.
