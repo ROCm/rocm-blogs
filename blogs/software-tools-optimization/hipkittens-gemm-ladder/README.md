@@ -103,9 +103,9 @@ abstraction that simplifies intra-node memory access.
 | Memory | Description |
 | --- | --- |
 | VGPR | The SIMD-scoped vector register file: 1024 registers, each with 32 lanes of 32-bit values. |
-| LDS/L1 | Each WGP has six 64 KB hardware partitions. Up to five (320 KB) can be allocated to LDS, with at least one retained for L1. |
+| LDS/L0 | Each WGP has six 64 KB hardware partitions. Up to five (320 KB) can be allocated to LDS, with at least one retained for L0. |
 | L2 | Two coherent 96 MB halves, one per IOD, totaling 192 MB per device. |
-| High-Bandwidth Memory (HBM) | Eight 54 GB HBM4 stacks, totaling 432 GB. |
+| High-Bandwidth Memory (HBM) | Twelve 36 GB HBM4 stacks, totaling 432 GB. |
 
 <p align="center">Table 3. Physical memory hierarchy of a CDNA™ 5 Helios GPU.</p>
 

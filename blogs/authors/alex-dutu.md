@@ -8,4 +8,4 @@
 
 # Alex Duțu
 
-Alex Duțu is a Member of Technical Staff (MTS) at AMD Research and Advanced Development (RAD). He received his master's from Duke University and joined AMD RAD, where he led research projects on GPU architecture and microarchitecture. In his spare time he enjoys cycling, hiking, and photography.
+Alex Duțu is a Member of Technical Staff (MTS) at AMD Research and Advanced Development (RAD). He received his master's in computer science from Duke University and joined AMD RAD, where he led research projects on GPU architecture and microarchitecture. In his spare time he enjoys cycling, hiking, and photography.
