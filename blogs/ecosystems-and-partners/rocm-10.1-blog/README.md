@@ -75,9 +75,8 @@ Adding more CPUs and GPUs does not automatically improve performance if data mus
 
 ROCm 10.1 also brings [ROCm CLI](https://github.com/ROCm/rocm-cli) v1.0.0, which provides a single-binary tool for installing, configuring, and running local AI workloads on AMD GPUs. AMD has added first-class support for both ROCm 10.0 and ROCm 10.1, including automatic detection of compatible `flash-attn` and `amd-aiter` wheels for vLLM. The `rocm install` command handles the new ROCm 10 “next” package layout out of the box and provides a flag to enable fully non-interactive installs for scripted or CI environments. A full-screen TUI dashboard provides live GPU telemetry alongside model serving and chat. ROCm CLI is available on Linux, Windows, and WSL2.
 
-Where the CLI is the tool a developer runs directly, [AMD Skills](https://github.com/amd/skills) brings that same ROCm expertise to AI coding agents. Each skill packages verified configurations into a standardized integration that agents like Claude Code and Codex can apply consistently. AMD is highlighting three new skills that were added in this release:
+Where the CLI is the tool a developer runs directly, [AMD Skills](https://github.com/amd/skills) brings that same ROCm expertise to AI coding agents. Each skill packages verified configurations into a standardized integration that agents like Claude Code and Codex can apply consistently. AMD is highlighting two new skills that were added in this release:
 
-- **ROCm Doctor** diagnoses ROCm, HIP, and PyTorch failures on Linux and Windows against a closed list of known misconfigurations, then applies a low-risk fix with consent or routes you to the right upstream channel.
 - **quark-install** installs or verifies AMD Quark with a PyTorch build that matches your accelerator (PyPI, wheel index, local wheel, or source), then checks imports, kernels, and quark-cli.
 - **quark-torch-llm-ptq** runs post-training quantization on PyTorch / Hugging Face LLMs. It inspects the model, helps you pick a scheme (FP8, INT4 and more), and produces a verified quantized model.
 
