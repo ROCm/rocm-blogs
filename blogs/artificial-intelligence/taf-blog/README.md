@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Completing the GPU Performance Picture: Understanding TAF Alongside Peak FLOPs and MAF"
 date: "06 Oct 2026"
-author: "Ben Sander, Travis Schluessler, Anshul Gupta, Evan Masters, Jay Bennett"
+author: "Ben Sander, Travis Schluessler, Anshul Gupta, Evan Masters"
 thumbnail: 'taf-blog-thumbnail.png'
 tags: "AI/ML, Performance"
 category: "Applications & models"
@@ -11,7 +11,7 @@ key_value_propositions: "Explain how Typical Attained FLOPs complements Peak FLO
 language: English
 myst:
     html_meta:
-        "author": "Ben Sander, Travis Schluessler, Anshul Gupta, Evan Masters, Jay Bennett"
+        "author": "Ben Sander, Travis Schluessler, Anshul Gupta, Evan Masters"
         "description lang=en": "Learn how Typical Attained FLOPs complements Peak FLOPs and Max-Achievable FLOPs, including the methodology and MI325X results"
         "keywords": "Learn how Typical Attained FLOPs complements Peak FLOPs and Max-Achievable FLOPs, including the methodology and MI325X results"
         "vertical": "AI, HPC, Developers, Systems, Data Science"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "Software & Ecosystem"
-        "amd_blog_authors": "Ben Sander, Travis Schluessler, Anshul Gupta, Evan Masters, Jay Bennett"
+        "amd_blog_authors": "Ben Sander, Travis Schluessler, Anshul Gupta, Evan Masters"
 ---
 
 <!---
