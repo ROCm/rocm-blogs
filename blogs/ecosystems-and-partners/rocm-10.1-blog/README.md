@@ -61,7 +61,7 @@ As model parameters, checkpoints, and key-value (KV) caches grow, storage increa
 Comparison of the traditional storage path through host RAM versus the new hipFILE path that moves storage directly to the GPU
 ```
 
-AMD builds on this foundation with three [`hipFILE`](https://hipfile.readthedocs.io/en/latest/) improvements that reduce unnecessary data movement and increase accelerator utilization:
+AMD builds on this foundation with three [`hipFILE`](https://rocm.docs.amd.com/projects/hipFile/en/latest/) improvements that reduce unnecessary data movement and increase accelerator utilization:
 
 - **Asynchronous Fast-Path Backend.** Read and write requests now run directly on a HIP stream, skipping the host-memory staging step through which data traditionally passes. This reduces latency and increases sustained throughput for checkpoint engines and KV-cache offloading systems, improving end-to-end responsiveness.
 - **Batch I/O API.** Submits multiple file requests at once and dispatches them across an internal pool of worker threads, improving utilization across storage devices for large training datasets and data-intensive inference pipelines.
