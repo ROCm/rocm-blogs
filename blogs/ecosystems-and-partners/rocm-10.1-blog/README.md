@@ -53,7 +53,7 @@ Beyond data paths, ROCm 10.1 advances the developer workflow. AMD's growing cata
 
 ## Next-Generation Storage and I/O with AMD Infinity Storage
 
-As model parameters, checkpoints, and key-value (KV) caches grow, storage increasingly becomes the bottleneck that starves the GPU rather than feeds it. **AMD Infinity Storage (AIS)** debuted in ROCm 7.14 as a production-ready library that moves data directly between storage and memory without routing it through CPU memory.
+As model parameters, checkpoints, and key-value (KV) caches grow, storage increasingly becomes the bottleneck that starves the GPU rather than feeds it. **AMD Infinity Storage (AIS)** debuted in ROCm 7.14 as a library that moves data directly between storage and memory without routing it through CPU memory.
 
 ```{figure} images/hipFile.png
 :alt: Diagram comparing two storage data paths: the traditional path moving NVMe storage through system RAM as a bounce buffer with the CPU in the data path before reaching the GPU, versus the hipFILE path connecting NVMe storage directly to the GPU via the PCIe bus with the CPU only in the control plane
@@ -61,7 +61,7 @@ As model parameters, checkpoints, and key-value (KV) caches grow, storage increa
 Comparison of the traditional storage path through host RAM versus the new hipFILE path that moves storage directly to the GPU
 ```
 
-AMD builds on this foundation with three `hipFILE` improvements that reduce unnecessary data movement and increase accelerator utilization:
+AMD builds on this foundation with three [`hipFILE`](https://hipfile.readthedocs.io/en/latest/) improvements that reduce unnecessary data movement and increase accelerator utilization:
 
 - **Asynchronous Fast-Path Backend.** Read and write requests now run directly on a HIP stream, skipping the host-memory staging step through which data traditionally passes. This reduces latency and increases sustained throughput for checkpoint engines and KV-cache offloading systems, improving end-to-end responsiveness.
 - **Batch I/O API.** Submits multiple file requests at once and dispatches them across an internal pool of worker threads, improving utilization across storage devices for large training datasets and data-intensive inference pipelines.
