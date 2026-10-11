@@ -25,7 +25,7 @@ jobs:
       matrix:
         python-version: [3.12]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           # Need full history so we can diff against the PR base commit
           # (or HEAD~1 on push events).
