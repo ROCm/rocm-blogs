@@ -1,0 +1,79 @@
+{
+  "source": "glm5_monokernel_tasks.trace.json",
+  "sha256": "5bb7588b01877ffdda77132102276b975129f3b59298b5bf840a4a611a1d76ec",
+  "event_count": 15033,
+  "interval_count": 3186,
+  "time_unit": "microseconds",
+  "layers": [
+    {
+      "layer": 1,
+      "label": "glm5_monokernel layer 1",
+      "tasks": 1062,
+      "blocks": 256,
+      "first_us": 0.0,
+      "last_us": 52.6
+    },
+    {
+      "layer": 2,
+      "label": "glm5_monokernel layer 2",
+      "tasks": 1062,
+      "blocks": 256,
+      "first_us": 0.0,
+      "last_us": 51.05
+    },
+    {
+      "layer": 3,
+      "label": "glm5_monokernel layer 3",
+      "tasks": 1062,
+      "blocks": 256,
+      "first_us": 0.0,
+      "last_us": 51.45
+    }
+  ],
+  "counts": {
+    "qkv_a": 164,
+    "cache": 1,
+    "q_norm": 1,
+    "q_b": 128,
+    "uk": 32,
+    "split": 32,
+    "uv": 32,
+    "o": 192,
+    "router": 32,
+    "ug": 256,
+    "down": 192
+  },
+  "placement_order": [
+    "qkv_a",
+    "q_norm",
+    "cache",
+    "q_b",
+    "split",
+    "uk",
+    "uv",
+    "o",
+    "router",
+    "ug",
+    "down"
+  ],
+  "bases": {
+    "qkv_a": 0,
+    "q_norm": 164,
+    "cache": 165,
+    "q_b": 166,
+    "split": 38,
+    "uk": 70,
+    "uv": 102,
+    "o": 134,
+    "router": 70,
+    "ug": 102,
+    "down": 102
+  },
+  "block_mapping": "(stage_base + task_id) % 256; verified against a one-to-one trace-lane mapping in every layer",
+  "limitations": [
+    "No model shape, dtype, TP count, context length, or commit recorded in this trace.",
+    "No indexer stages are present.",
+    "Each layer has its own zero-based time axis.",
+    "Task spans include waits, loads, setup, compute, and publication; they are not utilization counters."
+  ]
+}
