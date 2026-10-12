@@ -33,7 +33,7 @@ FlyDSL gives developers the control to optimize that complete path. Its Python i
 
 ATOM brings these kernels into an inference engine, where they must work with real checkpoints, paged caches, speculative decoding, graph replay, and distributed execution. Together, FlyDSL and ATOM connect low-level AMD GPU optimization with the workloads that determine serving performance.
 
-The measured results show the opportunity at several levels. A GLM-5 full-layer mono kernel runs approximately **2.62–2.73× faster at four decode rows** on eight AMD Instinct MI355X GPUs. In ATOM, MiniMax-M3 at a one-million-token context reduces a batch-one decode step from **11.47 ms to 7.00 ms** with mono decode, and to **6.26 ms** with indexer context parallelism added. Published SemiAnalysis InferenceX results provide a separate view of the complete serving stack. [2][4]
+The measured results show the opportunity at several levels. A GLM-5 full-layer mono kernel runs approximately **2.62–2.73× faster at four decode rows** on eight AMD Instinct MI355X GPUs. In ATOM, MiniMax-M3 at a one-million-token context reduces a batch-one decode step from **11.47 ms to 7.00 ms** with mono decode, and to **6.26 ms** with indexer context parallelism added. Published SemiAnalysis InferenceX results provide a separate view of the complete serving stack. [2], [4]
 
 ## Why decode needs optimization across operators
 
@@ -88,7 +88,7 @@ This matters as models evolve. Sparse attention, latent MoE, recurrent state, an
 
 ## Inside the GLM mono kernel
 
-The GLM-5 implementation provides a concrete example of whole-layer fusion. With the indexer enabled, one persistent launch per tensor-parallel rank covers: [2][3]
+The GLM-5 implementation provides a concrete example of whole-layer fusion. With the indexer enabled, one persistent launch per tensor-parallel rank covers: [2], [3]
 
 ```text
 Input normalization and Q/KV projection
@@ -120,7 +120,7 @@ Weight loads that do not depend on an upstream result can start before the input
 
 The assignment follows `block = (stage_base + task_id) % 256`. For example, `q_b` starts at block 166 and has 128 tasks: its assignment wraps from block 255 back to block 0. Logical block 0 executes `qkv_a` task 0, `q_b` task 90, `o` task 122, `ug` task 154, and `down` task 154. The same block therefore changes roles as the layer advances.
 
-The figure combines the source's placement rule with the trace's task counts. Across all three recorded layers, the reconstructed 256 logical blocks map one-to-one to the trace's active hardware-lane IDs. Logical block IDs describe work assignment; the GPU determines their physical placement. [3][10]
+The figure combines the source's placement rule with the trace's task counts. Across all three recorded layers, the reconstructed 256 logical blocks map one-to-one to the trace's active hardware-lane IDs. Logical block IDs describe work assignment; the GPU determines their physical placement. [3], [10]
 
 ### Tagged handoffs and graph replay
 
@@ -160,11 +160,11 @@ Block 0 makes the dependency behavior visible. Its `o` task starts at **18.78 µ
 
 The three recorded layers span **52.60, 51.05, and 51.45 µs**, each on its own zero-based time axis. These are instrumented capture spans. The trace does not record the model shape, precision, context length, TP configuration, or source revision, and contains no indexer tasks, so these values are separate from the indexed-layer speedup measurements below.
 
-[Explore the interactive timeline](mono-timeline.html) to switch layers, zoom into a block range, filter stages, inspect individual timestamps, or save a view as a PNG. The [original Chrome Trace JSON](data/glm5_monokernel_tasks.trace.json) can also be opened in Perfetto.
+[Download the interactive timeline](mono-timeline.html) and open the saved HTML file in a browser to switch layers, zoom into a block range, filter stages, inspect individual timestamps, or save a view as a PNG. The viewer works offline. The [original Chrome Trace JSON](data/glm5_monokernel_tasks.trace.json) can also be opened in Perfetto.
 
 ## How ATOM integrates the kernels
 
-ATOM—AiTer Optimized Model—is an inference engine built around AMD-oriented model and kernel optimization. Its mono framework provides shared runtime, planning, and device components: peer memory, step mailboxes, per-width builds, dispatch, handoff contracts, reductions, and debugging support. Model packages supply their own schedules. [4][5]
+ATOM—AiTer Optimized Model—is an inference engine built around AMD-oriented model and kernel optimization. Its mono framework provides shared runtime, planning, and device components: peer memory, step mailboxes, per-width builds, dispatch, handoff contracts, reductions, and debugging support. Model packages supply their own schedules. [4], [5]
 
 That division supports several useful fusion boundaries:
 
@@ -185,7 +185,7 @@ The following results measure different scopes: standalone layers, server decode
 
 ### GLM-5: complete indexed layer
 
-The reported GLM benchmark uses **8 × MI355X, TP8, position 3000, sparse top-2048 attention, BF16 KV cache, and MXFP4 expert weights**, including the complete indexer. The underlying layer comparison uses HIP graph replay with 16 layer invocations per graph. [2][6]
+The reported GLM benchmark uses **8 × MI355X, TP8, position 3000, sparse top-2048 attention, BF16 KV cache, and MXFP4 expert weights**, including the complete indexer. The underlying layer comparison uses HIP graph replay with 16 layer invocations per graph. [2], [6]
 
 | Decode rows, S | ATOM native full layer + indexer | FlyDSL mono kernel | Latency speedup |
 |---:|---:|---:|---:|
@@ -226,7 +226,7 @@ SemiAnalysis's InferenceX AgentX workload exercises long-context, multi-turn ser
 
 The MiniMax-M3 recipe in **InferenceX PR #3750** enables mono decode at TP4 points using `rocm/atom-dev:nightly_202610070333`, with ROCm 7.2.4. The mono path supports up to 16 token rows per step, covering four requests at EAGLE3 K3; larger eligible serving configurations can still execute steps outside that mono domain. [7]
 
-The public API snapshot retrieved on **October 12, 2026**, contains these results dated **October 8, 2026**, from the same published workflow run. They use **MiniMax-M3 FP4, MI355X, ATOM, TP4, and speculative decoding**. [8][9]
+The public API snapshot retrieved on **October 12, 2026**, contains these results dated **October 8, 2026**, from the same published workflow run. They use **MiniMax-M3 FP4, MI355X, ATOM, TP4, and speculative decoding**. [8], [9]
 
 | Offered concurrency | P90 time per output token | Output throughput per GPU | Median time to first token |
 |---:|---:|---:|---:|
@@ -245,7 +245,9 @@ At concurrency one, the reported P90 TPOT corresponds to approximately **469.5 t
 
 The throughput column above uses **output tokens only**. The API also reports a much larger total-token throughput for these prompt-heavy workloads; the two metrics should not be interchanged.
 
-These serving points show ATOM operating with the mono-enabled recipe. They do not isolate the contribution of mono kernels: the published snapshot has no matched mono-off arm, and the recipe includes other optimizations. The controlled decode-step comparison above supplies the direct evidence for that uplift. InferenceX throughput runs also use prescribed speculative acceptance, so quality evaluation must use real acceptance. [7][8]
+These serving points show ATOM operating with the mono-enabled recipe. They do not isolate the contribution of mono kernels: the published snapshot has no matched mono-off arm, and the recipe includes other optimizations. The controlled decode-step comparison above supplies the direct evidence for that uplift. InferenceX throughput runs also use prescribed speculative acceptance, so quality evaluation must use real acceptance. [7], [8]
+
+The [serving-point CSV](data/inferencex-minimax-tp4.csv), [selected API rows](data/inferencex-minimax-tp4.json), and [decode-step CSV](data/minimax-decode-step.csv) accompany the performance figures.
 
 ## Developing the next specialization
 
