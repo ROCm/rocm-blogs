@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Accelerating LLM Decode on AMD GPUs with FlyDSL and ATOM Mono Kernels"
 date: 12 Oct 2026
-author: "Felix Li"
+author: ""
 thumbnail: 'mono-implementation.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
@@ -11,10 +11,9 @@ key_value_propositions: Explains how FlyDSL's control over layouts, scheduling, 
 language: English
 myst:
     html_meta:
-        "author": "Felix Li"
         "property=og:locale": "en_US"
         "description lang=en": "Explore FlyDSL and ATOM mono kernels on AMD GPUs, with block scheduling, task timelines, measured speedups, and InferenceX serving results."
-        "keywords": "FlyDSL, ATOM, mono kernel, ROCm, AMD Instinct MI355X, LLM inference, decode, InferenceX"
+        "keywords": "FlyDSL, ATOM, TileRT, mono kernel, ROCm, AMD Instinct MI355X, LLM inference, decode, InferenceX"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
@@ -22,14 +21,13 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
-        "amd_blog_authors": "Felix Li"
 ---
 
 # Accelerating LLM Decode on AMD GPUs with FlyDSL and ATOM Mono Kernels
 
 Interactive LLM inference depends on how quickly the GPU can finish the next decode step. A step passes through projections, normalization, attention, routing, expert computation, and communication. When each operation processes only a few tokens, the transitions between these operations can take a meaningful share of the total time.
 
-FlyDSL gives developers the control to optimize that complete path. Its Python interface exposes layouts, tiling, data movement, matrix instructions, and synchronization through an MLIR compiler stack. Developers can use those capabilities to write an individual operator, fuse a sequence of operators, or build a **mono kernel** that executes a decoder layer within one GPU launch per tensor-parallel rank. [1]
+Building on the **TileRT MonoKernel design**, the team developed FlyDSL mono kernels that execute a full supported GLM decode layer in **one GPU launch per tensor-parallel rank on MI355X**. That launch includes the indexer, GEMM projections, multi-head latent attention (MLA), AllReduce, and mixture-of-experts (MoE) computation. FlyDSL makes the schedule programmable through its Python interface and explicit control over layouts, data movement, matrix instructions, and synchronization. [1], [2], [12]
 
 ATOM brings these kernels into an inference engine, where they must work with real checkpoints, paged caches, speculative decoding, graph replay, and distributed execution. Together, FlyDSL and ATOM connect low-level AMD GPU optimization with the workloads that determine serving performance.
 
@@ -47,15 +45,19 @@ layer time = compute + memory movement + synchronization + exposed launch gaps
 
 These terms interact. An intermediate tensor may need a different layout for its next consumer. A reduction may delay several otherwise independent tasks. Captured GPU graphs reduce host submission overhead, while the graph still contains separate kernels and their boundaries.
 
-A mono kernel moves a larger part of this coordination into one device program. It can schedule a consumer when its inputs are ready, issue independent weight loads before a dependency wait, and coordinate reductions without returning to a separate launch at every operator boundary.
+### Launch latency and dependencies without PDL
 
-The fusion boundary is a design choice. Some models benefit from a whole-layer kernel; others run faster with several fused stages. FlyDSL supports both approaches.
+Two constraints make this especially relevant to MI355X decode: **kernel launch latency (KLL)** is substantial relative to very small operators, and the implementation cannot rely on **Programmatic Dependent Launch (PDL)**. Repeated launch boundaries can therefore become a significant part of a layer's critical path.
 
-![Conventional operator launches and a resident mono-kernel layer](images/mono-kernel-flow.svg)
+PDL allows a dependent kernel to begin before its producer finishes, perform independent work such as loading weights, and synchronize before consuming the producer's output. The optimization goal here is the same opportunity for overlap: start preparation early and wait at the point where an input is actually needed.
 
-*Figure 1. A mono kernel schedules multiple layer stages within a resident GPU grid. Cross-workgroup and cross-GPU handoffs still use memory and synchronization; fusion does not imply that every intermediate stays in registers or LDS.*
+A mono kernel moves those dependencies inside a resident GPU program. Different blocks can progress through different stages, start independent loads, and wait only where their task needs an upstream result. The fused stages require no additional kernel launch, and their handoffs use an explicit device-side protocol. This addresses both exposed launch overhead and the need to overlap preparation with dependency handling. [3]
 
-## What FlyDSL makes flexible
+HIP graph replay remains useful around the mono kernel. The GLM comparisons below already use graph replay, so the reported gains include improvements beyond host submission overhead: fewer device execution boundaries, different scheduling, memory reuse, and integrated communication. They do not isolate a separate speedup for KLL or PDL.
+
+## What is FlyDSL?
+
+**FlyDSL is a Python domain-specific language for writing GPU kernels with explicit control over tensor layouts and tiling.** Developers describe how to divide tensors among threads, move data through memory, and organize computation. The Fly dialect supplies the layout representation and MLIR compiler pipeline that lower those programs to GPU code. Python is the development interface; the resulting specialized kernel executes on the GPU. [1]
 
 FlyDSL's flexibility comes from exposing the decisions that determine GPU execution. Its layout algebra describes how logical tensors map onto physical storage and participating threads. Its kernel interface also lets developers control instruction selection and execution order. [1]
 
@@ -85,6 +87,30 @@ launcher = build_glm5_monokernel(
 The host wrapper supplies packed weights, cache pointers, scratch storage, and peer buffers. The builder specializes the device program around the selected configuration. Changing the schedule remains a Python development task, while the generated kernel retains explicit AMD GPU operations.
 
 This matters as models evolve. Sparse attention, latent MoE, recurrent state, and speculative verification introduce different dependencies. A useful kernel language must let the developer express those dependencies and change the implementation when measurements call for a different schedule.
+
+## What is a mono kernel?
+
+**A mono kernel combines several connected operator stages into one GPU program and one launch.** In the GLM example, the fusion boundary covers a supported decoder layer: normalization, projections, attention, expert computation, and the associated reductions execute within one launch per tensor-parallel rank. A complete model still runs many layers. [2], [3]
+
+Within that launch, a resident grid of GPU blocks executes tasks from the different stages. Each block can take on several roles over the layer's lifetime. Producers publish intermediate results, and consumers wait for the inputs they need. The implementation therefore has to express both the operator computations and the dependencies between them.
+
+This organization can improve small-batch decode latency in several ways. It removes separate launch boundaries between fused stages, lets independent weight loads begin before an input arrives, reuses scratch storage across stages, and integrates reductions with their producers and consumers. The amount of useful overlap depends on the schedule and workload; the performance comparisons below measure the resulting latency. [3]
+
+The fusion boundary is a design choice. Some models benefit from a whole-layer kernel; others run faster with several fused stages. FlyDSL supports both approaches.
+
+![Conventional operator launches and a resident mono-kernel layer](images/mono-kernel-flow.svg)
+
+*Figure 1. A mono kernel schedules multiple layer stages within a resident GPU grid. Cross-workgroup and cross-GPU handoffs still use memory and synchronization; fusion does not imply that every intermediate stays in registers or LDS.*
+
+## From TileRT to FlyDSL and ATOM
+
+The starting point is the **TileRT GLM submission to InferenceMAX/InferenceX** referenced by the FlyDSL GLM-5 PR. The PR pins [snapshot `8ac9834`](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9), which includes the [TileRT GLM-5.3 FP8 MI355X AgentX recipe](https://github.com/SemiAnalysisAI/InferenceX/blob/8ac98344b038a3f2da20a565fe9b974772a67ef9/benchmarks/multi_node/agentic/glm5.3_fp8_mi355x_tilert.sh). That snapshot corresponds to submission update [#3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389). [2], [12]
+
+The FlyDSL implementation credits the TileRT/GLM MonoKernel design's resident grid, tagged mailboxes, and reuse of shared memory across phases. It expresses those mechanisms in a programmable kernel language, with model-specific schedules and compile-time specialization. The FlyDSL variant described here uses a decoder layer as its fusion boundary. The implementation details in this article follow the pinned FlyDSL source. [2], [3]
+
+The GLM extension brings the complete indexer into the fused decode path, including index projections, cache updates, scoring, and exact sparse selection. Those selected indices feed MLA in the same launch; the schedule continues through output projection, tensor-parallel AllReduce, routing, and MoE. The fusion boundary therefore includes the work that discovers the attention inputs, as well as the attention and expert computation that follows. [2], [6]
+
+The collaboration moved the design from TileRT into generalized FlyDSL implementations and ATOM's production path within a week. The reusable pieces matter as much as the initial schedule: FlyDSL exposes the GPU programming mechanisms, and ATOM supplies model integration, cache handling, dispatch, and graph replay. The open, composable stack gives the team a way to create new optimizations and carry them into serving workloads quickly.
 
 ## Inside the GLM mono kernel
 
@@ -120,6 +146,20 @@ Weight loads that do not depend on an upstream result can start before the input
 
 The assignment follows `block = (stage_base + task_id) % 256`. For example, `q_b` starts at block 166 and has 128 tasks: its assignment wraps from block 255 back to block 0. Logical block 0 executes `qkv_a` task 0, `q_b` task 90, `o` task 122, `ug` task 154, and `down` task 154. The same block therefore changes roles as the layer advances.
 
+For stages with more tasks than resident blocks, a block advances its task ID by the grid size. The scheduling pattern can be expressed as the following pseudocode; each real stage specializes its loads, computation, and handoffs: [3]
+
+```text
+for stage in compile_time_schedule:
+    first_task = (block_id - stage.base) % grid_size
+    for task in range(first_task, stage.task_count, grid_size):
+        prefetch_independent_weights(task)
+        inputs = poll_tagged_payloads(task, epoch)
+        result = compute_task(task, inputs)
+        publish_tagged_payloads(task, result, epoch)
+```
+
+The grid uses dependency handoffs between tasks instead of a barrier across every block at every stage. A consumer still has to observe valid input data before using it. Co-residency and dependencies directed toward earlier stages allow the producer blocks to make progress while consumers wait.
+
 The figure combines the source's placement rule with the trace's task counts. Across all three recorded layers, the reconstructed 256 logical blocks map one-to-one to the trace's active hardware-lane IDs. Logical block IDs describe work assignment; the GPU determines their physical placement. [3], [10]
 
 ### Tagged handoffs and graph replay
@@ -134,7 +174,7 @@ epoch = decode_step × layer_slots + layer_id + 1
 
 That distinguishes current results from values left by an earlier graph replay. The wrapper manages epoch progression and scratch-buffer lifetime; graph capture alone cannot provide those guarantees.
 
-The resident-grid schedule, tagged mailbox approach, and reuse of LDS across phases build on the TileRT/GLM MonoKernel design lineage, which the FlyDSL implementation explicitly credits. The model-specific schedules and semantics are implemented in FlyDSL. [2]
+The pinned GLM source documents the tagged payload protocol and explicitly credits the TileRT/GLM MonoKernel design lineage. The model-specific schedules and semantics are implemented in FlyDSL. [2], [3], [12]
 
 ### Reuse LDS while preserving live data
 
@@ -162,9 +202,15 @@ The three recorded layers span **52.60, 51.05, and 51.45 µs**, each on its own 
 
 [Download the interactive timeline](mono-timeline.html) and open the saved HTML file in a browser to switch layers, zoom into a block range, filter stages, inspect individual timestamps, or save a view as a PNG. The viewer works offline. The [original Chrome Trace JSON](data/glm5_monokernel_tasks.trace.json) can also be opened in Perfetto.
 
-## How ATOM integrates the kernels
+## What is ATOM?
 
-ATOM—AiTer Optimized Model—is an inference engine built around AMD-oriented model and kernel optimization. Its mono framework provides shared runtime, planning, and device components: peer memory, step mailboxes, per-width builds, dispatch, handoff contracts, reductions, and debugging support. Model packages supply their own schedules. [4], [5]
+**ATOM (AiTer Optimized Model) is a lightweight LLM inference engine focused on AMD GPUs and integration with AITER kernels.** It provides the serving environment around the GPU work: model loading, request processing, cache management, speculative decoding, and execution across multiple GPUs. Its supported features include quantized models, prefix caching, and an API for text generation. [11]
+
+FlyDSL, mono kernels, and ATOM play complementary roles. FlyDSL provides the language and compiler used to implement the GPU program. The mono kernel defines how multiple operators execute together. ATOM connects that implementation to the model and selects an eligible execution path for each decode step.
+
+### Integrating mono kernels
+
+ATOM's mono framework provides shared runtime, planning, and device components: peer memory, step mailboxes, per-width builds, dispatch, handoff contracts, reductions, and debugging support. Model packages supply their own schedules. [4], [5]
 
 That division supports several useful fusion boundaries:
 
@@ -179,7 +225,7 @@ Dispatch must account for the number of rows in the actual decode or verificatio
 
 ATOM also has to preserve cache addressing, state updates, routing, numerical boundaries, and graph behavior. Kimi-K3 illustrates the state requirement: speculative token `s` consumes one recurrent snapshot and produces the snapshot needed by token `s+1`. Treating those tokens as independent requests would change the model. The FlyDSL implementation explicitly represents that ordered snapshot chain. [2]
 
-## Measured performance on MI355X
+## Performance improvements on AMD Instinct MI355X
 
 The following results measure different scopes: standalone layers, server decode steps, and full serving workloads. Each answers a different performance question.
 
@@ -269,6 +315,8 @@ FlyDSL makes that iteration practical by keeping the schedule programmable. ATOM
 8. [InferenceX public MiniMax-M3 benchmark API](https://inferencex.semianalysis.com/api/v1/benchmarks?model=MiniMax-M3), retrieved October 12, 2026. Selected row IDs: 444377, 444373, 444387, 444391, 444374, and 444382.
 9. [Published InferenceX workflow run](https://github.com/SemiAnalysisAI/InferenceX/actions/runs/37598205362/attempts/1), completed successfully.
 10. [Supplied GLM mono-kernel task trace](data/glm5_monokernel_tasks.trace.json), with [derived task intervals](data/mono-task-intervals.csv) and [capture summary](data/mono-trace-summary.json).
+11. [ATOM: inference engine overview and supported features](https://github.com/ROCm/ATOM).
+12. [TileRT GLM InferenceMAX/InferenceX submission snapshot cited by FlyDSL PR #1204](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9): [submission update #3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389) and [pinned GLM-5.3 FP8 MI355X AgentX recipe](https://github.com/SemiAnalysisAI/InferenceX/blob/8ac98344b038a3f2da20a565fe9b974772a67ef9/benchmarks/multi_node/agentic/glm5.3_fp8_mi355x_tilert.sh).
 
 [1]: https://github.com/ROCm/FlyDSL
 [2]: https://github.com/ROCm/FlyDSL/pull/1204
@@ -280,3 +328,5 @@ FlyDSL makes that iteration practical by keeping the schedule programmable. ATOM
 [8]: https://inferencex.semianalysis.com/api/v1/benchmarks?model=MiniMax-M3
 [9]: https://github.com/SemiAnalysisAI/InferenceX/actions/runs/37598205362/attempts/1
 [10]: data/glm5_monokernel_tasks.trace.json
+[11]: https://github.com/ROCm/ATOM
+[12]: https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9
