@@ -7,13 +7,13 @@ thumbnail: 'minimax-decode-step.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Explains MiniMax-M3 mono decode and indexer context parallelism in ATOM, using FlyDSL scheduling and synchronization on AMD Instinct MI355X, with measured 1M-context improvements and a published InferenceX serving snapshot.
+key_value_propositions: Explains MiniMax-M3 mono decode and indexer context parallelism in ATOM, using FlyDSL scheduling and synchronization on AMD Instinct MI355X, with measured 1M-context improvements from mono decode and the additional effect of indexer context parallelism.
 language: English
 myst:
     html_meta:
         "property=og:locale": "en_US"
-        "description lang=en": "Explore MiniMax-M3 mono decode in ATOM with FlyDSL, long-context indexer parallelism, measured MI355X speedups, and InferenceX serving results."
-        "keywords": "MiniMax-M3, FlyDSL, ATOM, TileRT, mono kernel, ROCm, AMD Instinct MI355X, LLM inference, decode, InferenceX"
+        "description lang=en": "Explore MiniMax-M3 mono decode in ATOM with FlyDSL, long-context indexer parallelism, and measured MI355X decode-step and layer-level speedups."
+        "keywords": "MiniMax-M3, FlyDSL, ATOM, TileRT, mono kernel, ROCm, AMD Instinct MI355X, LLM inference, decode, indexer context parallelism"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
@@ -29,7 +29,7 @@ MiniMax-M3 decode at a one-million-token context puts two costs on the critical 
 
 [ATOM PR #2419](https://github.com/ROCm/ATOM/pull/2419) reports a batch-one median GPU decode step of **11.47 ms on the original path, 7.00 ms with mono decode, and 6.26 ms with mono plus indexer CP**. That is **39.0% lower latency from mono alone** and **45.4% lower latency with both optimizations**, measured with MiniMax-M3-MXFP4, TP4, a 1M context, and EAGLE3 with three speculative tokens. [1]
 
-This article follows the M3 implementation from the language and execution model through block scheduling, long-context selection, and ATOM integration. The controlled measurements come from the ATOM PR; a published SemiAnalysis InferenceX snapshot then shows how the integrated stack behaves in a serving workload.
+This article follows the M3 implementation from the language and execution model through block scheduling, long-context selection, and ATOM integration. The ATOM PR reports the original path, mono decode, and mono plus indexer CP separately, so the measurements distinguish the benefit of mono from the additional effect of CP.
 
 ## MiniMax-M3: the measured decode improvement
 
@@ -165,42 +165,13 @@ The PR checks selection against the reference Triton selector on all four ranks 
 
 The reported GSM8K chat five-shot scores are **0.9447 for the original path**, **0.9371 / 0.9424 for mono**, and **0.9378 for mono plus CP**. The mono-plus-CP result is 0.69 percentage points below the original path in those runs. Selection equivalence validates the CP transformation; these model-quality measurements have a broader scope and do not establish general accuracy equivalence. [1]
 
-## SemiAnalysis InferenceX: the serving view
-
-SemiAnalysis's InferenceX AgentX workload exercises long-context, multi-turn serving. It adds effects that a layer benchmark cannot capture: prompt processing, cache reuse, scheduling, draft generation, request timing, and concurrent users.
-
-The MiniMax-M3 recipe in **InferenceX PR #3750** enables mono decode at TP4 points using `rocm/atom-dev:nightly_202610070333`, with ROCm 7.2.4. The mono path supports up to 16 token rows per step, covering four requests at EAGLE3 K3; larger eligible serving configurations can still execute steps outside that mono domain. [8]
-
-The public API snapshot retrieved on **October 12, 2026**, contains these results dated **October 8, 2026**, from the same published workflow run. They use **MiniMax-M3 FP4, MI355X, ATOM, TP4, and speculative decoding**. [9], [10]
-
-| Offered concurrency | P90 time per output token | Output throughput per GPU | Median time to first token |
-| ---: | ---: | ---: | ---: |
-| 1 | 2.13 ms | 42.49 output tokens/s | 730 ms |
-| 2 | 2.45 ms | 50.79 output tokens/s | 352 ms |
-| 4 | 2.67 ms | 63.47 output tokens/s | 287 ms |
-| 8 | 3.39 ms | 110.52 output tokens/s | 325 ms |
-| 24 | 6.83 ms | 264.75 output tokens/s | 412 ms |
-| 48, CPU offload | 22.60 ms | 395.63 output tokens/s | 576 ms |
-
-![Published InferenceX MiniMax-M3 serving tradeoff](images/inferencex-serving.png)
-
-*Figure 4. Published ATOM TP4 serving points. Interactivity is the API's reciprocal of P90 TPOT. Filled circles use GPU-resident caching; hollow squares use CPU offload. Labels indicate offered concurrency. These are complete-stack operating points.*
-
-At concurrency one, the reported P90 TPOT corresponds to approximately **469.5 tokens/s of interactivity**. Increasing concurrency raises aggregate output throughput while per-user responsiveness declines. Deployment choices depend on which part of this curve meets the application's latency requirements.
-
-The throughput column above uses **output tokens only**. The API also reports a much larger total-token throughput for these prompt-heavy workloads; the two metrics should not be interchanged.
-
-These serving points show ATOM operating with the mono-enabled recipe. They do not isolate the contribution of mono kernels: the published snapshot has no matched mono-off arm, and the recipe includes other optimizations. The controlled decode-step comparison above supplies the direct evidence for that uplift. InferenceX throughput runs also use prescribed speculative acceptance, so quality evaluation must use real acceptance. [8], [9]
-
-The [serving-point CSV](data/inferencex-minimax-tp4.csv), [selected API rows](data/inferencex-minimax-tp4.json), and [decode-step CSV](data/minimax-decode-step.csv) accompany the performance figures.
-
 ## Developing the next specialization
 
 The M3 results illustrate an optimization loop that crosses kernel and engine boundaries. Start with a concrete ATOM decode shape, identify expensive operator transitions and memory access, then choose the fusion boundary and task schedule in FlyDSL. M3 combines one sparse-layer launch with row-dependent MoE scheduling and reductions; indexer CP addresses the additional cost of long contexts.
 
 Validation should follow those same boundaries: selection and intermediate checks for the kernel, changed-input graph replay and speculative-state checks for the runtime, and model-quality evaluation for serving. Report the actual row count, context length, precision, parallel configuration, and measurement scope alongside each speedup.
 
-For the measured batch-one, 1M-context M3 workload, this combination reduces median GPU decode-step latency from **11.47 ms to 6.26 ms**. The separate InferenceX results show the serving behavior of the integrated ATOM stack, while the controlled ATOM comparisons quantify the improvements from mono decode and indexer CP.
+For the measured batch-one, 1M-context M3 workload, **mono decode reduces median GPU decode-step latency from 11.47 ms to 7.00 ms**. Adding indexer CP reduces it further to **6.26 ms**. These ATOM comparisons connect the sparse-layer implementation to a measured decode-step improvement and show the additional benefit of distributing the long-context indexer across ranks. [1]
 
 ## References
 
@@ -211,9 +182,6 @@ For the measured batch-one, 1M-context M3 workload, this combination reduces med
 5. [FlyDSL PR #1204: MonoKernel design lineage and TileRT submission reference](https://github.com/ROCm/FlyDSL/pull/1204).
 6. [TileRT InferenceMAX/InferenceX submission snapshot cited by FlyDSL PR #1204](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9), associated with [submission update #3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389).
 7. [M3 device primitives and tagged mailboxes at the ATOM #2419 merge commit](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py).
-8. [InferenceX PR #3750: MiniMax-M3 TP4 mono-enabled recipe](https://github.com/SemiAnalysisAI/InferenceX/pull/3750).
-9. [InferenceX public MiniMax-M3 benchmark API](https://inferencex.semianalysis.com/api/v1/benchmarks?model=MiniMax-M3), retrieved October 12, 2026. Selected row IDs: 444377, 444373, 444387, 444391, 444374, and 444382.
-10. [Published InferenceX workflow run](https://github.com/SemiAnalysisAI/InferenceX/actions/runs/37598205362/attempts/1), completed successfully.
 
 [1]: https://github.com/ROCm/ATOM/pull/2419
 [2]: https://github.com/ROCm/FlyDSL
@@ -222,6 +190,3 @@ For the measured batch-one, 1M-context M3 workload, this combination reduces med
 [5]: https://github.com/ROCm/FlyDSL/pull/1204
 [6]: https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9
 [7]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py
-[8]: https://github.com/SemiAnalysisAI/InferenceX/pull/3750
-[9]: https://inferencex.semianalysis.com/api/v1/benchmarks?model=MiniMax-M3
-[10]: https://github.com/SemiAnalysisAI/InferenceX/actions/runs/37598205362/attempts/1
