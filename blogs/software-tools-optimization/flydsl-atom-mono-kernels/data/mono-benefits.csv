@@ -1,17 +1,17 @@
 model,baseline,optimized,configuration,metric,baseline_value,optimized_value,reported_improvement_pct,unit,source
-MiniMax-M3,original path,mono,MI355X; TP4; MXFP4; 1M context; batch 1; EAGLE3 with three speculative tokens,median GPU decode-step latency,11.47,7.0,39.0,ms,https://github.com/ROCm/ATOM/pull/2419
-MiniMax-M3,original path,mono + indexer CP,MI355X; TP4; MXFP4; 1M context; batch 1; EAGLE3 with three speculative tokens,median GPU decode-step latency,11.47,6.26,45.4,ms,https://github.com/ROCm/ATOM/pull/2419
-Kimi-K3,reference,MoE-tail mono,MI355X; TP8; C1; DCP1; DSpark7; graph mode,output throughput,169.15,197.92,17.01,tokens/s,https://github.com/ROCm/ATOM/pull/2435
-Kimi-K3,reference,MoE-tail mono,MI355X; TP8; C1; DCP1; DSpark7; graph mode,time per output token,5.55-5.60,4.7,,ms,https://github.com/ROCm/ATOM/pull/2435
-DeepSeek-V4.1-Flash,previous mono schedule,updated mono schedule,TP4; batch 1,decode-step time improvement,,,4,percent as reported,https://github.com/ROCm/ATOM/pull/2545
-DeepSeek-V4.1-Flash,previous mono schedule,updated mono schedule,TP4; batch 2,decode-step time improvement,,,10,percent as reported,https://github.com/ROCm/ATOM/pull/2545
-DeepSeek-V4.1-Flash,previous mono schedule,updated mono schedule,TP4; batch 4,decode-step time improvement,,,11,percent as reported,https://github.com/ROCm/ATOM/pull/2545
-DeepSeek-V4.1-Flash,previous mono schedule,updated mono schedule,TP4; batch 8,decode-step time improvement,,,12,percent as reported,https://github.com/ROCm/ATOM/pull/2545
-GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,Agentic throughput,,,15.92,percent as reported,https://github.com/ROCm/ATOM/pull/2435
-GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,Agentic time per output token,6.897,5.38,21.98,ms; percent as reported,https://github.com/ROCm/ATOM/pull/2435
-GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,fixed-512 decode throughput,,,5.42,percent as reported,https://github.com/ROCm/ATOM/pull/2435
-GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,Agentic throughput,,,16.8,percent as reported,https://github.com/ROCm/ATOM/pull/2435
-GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,Agentic time per output token,,,26.2,ms; percent as reported,https://github.com/ROCm/ATOM/pull/2435
-GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,fixed-512 decode throughput,,,33.4,percent as reported,https://github.com/ROCm/ATOM/pull/2435
-GLM-5,ATOM latest,FlyDSL full-indexer mono,MI355X; TP8; position 3000; S=4; one launch per layer and rank,layer-harness latency,205.8-213.7,78.4-78.6,,us,https://github.com/ROCm/FlyDSL/pull/1204
-GLM-5,ATOM latest,FlyDSL full-indexer mono,MI355X; TP8; position 3000; S=8; one launch per layer and rank,layer-harness latency,223.4,118.2-118.3,,us,https://github.com/ROCm/FlyDSL/pull/1204
+MiniMax-M3,ATOM separate kernels,ATOM FlyDSL mono,MI355X; TP4; MXFP4; 1M context; batch 1; EAGLE3 with three speculative tokens,median GPU decode-step latency,11.47,7.0,39.0,ms,https://github.com/ROCm/ATOM/pull/2419
+MiniMax-M3,ATOM separate kernels,ATOM FlyDSL mono + indexer CP,MI355X; TP4; MXFP4; 1M context; batch 1; EAGLE3 with three speculative tokens,median GPU decode-step latency,11.47,6.26,45.4,ms,https://github.com/ROCm/ATOM/pull/2419
+Kimi-K3,ATOM separate kernels (reference),ATOM FlyDSL MoE-tail mono,MI355X; TP8; C1; DCP1; DSpark7; graph mode,output throughput,169.15,197.92,17.01,tokens/s,https://github.com/ROCm/ATOM/pull/2435
+Kimi-K3,ATOM separate kernels (reference),ATOM FlyDSL MoE-tail mono,MI355X; TP8; C1; DCP1; DSpark7; graph mode,time per output token,5.55-5.60,4.7,,ms,https://github.com/ROCm/ATOM/pull/2435
+DeepSeek-V4.1-Flash,previous ATOM FlyDSL mono schedule,updated ATOM FlyDSL mono schedule,TP4; batch 1,decode-step time improvement,,,4,percent as reported,https://github.com/ROCm/ATOM/pull/2545
+DeepSeek-V4.1-Flash,previous ATOM FlyDSL mono schedule,updated ATOM FlyDSL mono schedule,TP4; batch 2,decode-step time improvement,,,10,percent as reported,https://github.com/ROCm/ATOM/pull/2545
+DeepSeek-V4.1-Flash,previous ATOM FlyDSL mono schedule,updated ATOM FlyDSL mono schedule,TP4; batch 4,decode-step time improvement,,,11,percent as reported,https://github.com/ROCm/ATOM/pull/2545
+DeepSeek-V4.1-Flash,previous ATOM FlyDSL mono schedule,updated ATOM FlyDSL mono schedule,TP4; batch 8,decode-step time improvement,,,12,percent as reported,https://github.com/ROCm/ATOM/pull/2545
+GLM-5.2,ATOM separate kernels (production),ATOM FlyDSL mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,Agentic throughput,,,15.92,percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5.2,ATOM separate kernels (production),ATOM FlyDSL mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,Agentic time per output token,6.897,5.38,21.98,ms; percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5.2,ATOM separate kernels (production),ATOM FlyDSL mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,fixed-512 decode throughput,,,5.42,percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5.2,ATOM separate kernels (production),ATOM FlyDSL mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,Agentic throughput,,,16.8,percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5.2,ATOM separate kernels (production),ATOM FlyDSL mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,Agentic time per output token,,,26.2,ms; percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5.2,ATOM separate kernels (production),ATOM FlyDSL mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,fixed-512 decode throughput,,,33.4,percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5,ATOM separate kernels (latest in source PR),FlyDSL full-indexer mono (layer harness),MI355X; TP8; position 3000; S=4; one launch per layer and rank,layer-harness latency,205.8-213.7,78.4-78.6,,us,https://github.com/ROCm/FlyDSL/pull/1204
+GLM-5,ATOM separate kernels (latest in source PR),FlyDSL full-indexer mono (layer harness),MI355X; TP8; position 3000; S=8; one launch per layer and rank,layer-harness latency,223.4,118.2-118.3,,us,https://github.com/ROCm/FlyDSL/pull/1204

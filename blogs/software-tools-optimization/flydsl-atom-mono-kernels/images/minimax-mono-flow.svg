@@ -4,7 +4,7 @@
 <rect width="1280" height="680" rx="18" fill="#f8fafc"/>
 <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
 <text x="40" y="48" font-size="27" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: one sparse layer, one launch per TP rank</text>
-<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · 1–16 token rows · first three dense layers use the original ATOM modules</text>
+<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · 1–16 token rows · first three dense layers use ATOM's separate kernels</text>
 <rect x="28" y="111" width="1224" height="416" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
 <text x="50" y="148" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Resident grid: 256 workgroups × 512 threads</text>
 <text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">Blocks change roles as their tasks complete; consumers wait for the inputs they need.</text>

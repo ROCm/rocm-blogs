@@ -4,7 +4,7 @@
 <rect width="1280" height="710" rx="18" fill="#f8fafc"/>
 <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
 <text x="40" y="48" font-size="26" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: partition the long-context indexer across TP4</text>
-<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">CP activates past 288 index blocks (about 36K tokens); short requests keep the original path.</text>
+<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">CP activates past 288 index blocks (about 36K tokens); short requests keep TP index scoring.</text>
 <text x="40" y="125" font-size="20" font-weight="700" fill="#172033" text-anchor="start">Score each context quarter for all four index-query heads</text>
 <rect x="40" y="148" width="270" height="125" rx="10" fill="white" stroke="#145d80" stroke-width="2"/>
 <text x="60" y="181" font-size="21" font-weight="700" fill="#145d80" text-anchor="start">TP rank 0</text>

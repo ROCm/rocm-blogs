@@ -7,7 +7,7 @@ thumbnail: 'mono-overlap.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Explains how mono kernels reduce launch overhead in low-concurrency decode, with M3 and DeepSeek-V4.1 examples, measured gains, and ATOM deployment steps.
+key_value_propositions: Explains how mono kernels reduce launch overhead in low-concurrency decode, with M3 and DeepSeek-V4.1 examples, measured gains, and ATOM integration.
 language: English
 myst:
     html_meta:
@@ -29,7 +29,7 @@ Interactive chat and coding assistants need to respond quickly even when only on
 
 At low concurrency, many of these kernels do only a small amount of work, but each still has to be launched and coordinated with the next one. Repeating that sequence across layers and decode steps can make kernel launch overhead a substantial part of latency. **A fast decode path needs to reduce the overhead between these small operations.**
 
-**A mono kernel puts a layer's connected operations into one GPU kernel launch.** It can also load weights before they are needed and combine GPU-to-GPU reductions with the computations around them. This article explains how [FlyDSL](https://github.com/ROCm/FlyDSL) and [ATOM](https://github.com/ROCm/ATOM) do this for MiniMax-M3 on AMD Instinct MI355X, how the approach extends to DeepSeek-V4.1, and what the measurements show.
+**A mono kernel puts a layer's connected operations into one GPU kernel launch.** It can also load weights before they are needed and combine GPU-to-GPU reductions with the computations around them. This article explains **[ATOM](https://github.com/ROCm/ATOM)'s mono-kernel path, implemented with [FlyDSL](https://github.com/ROCm/FlyDSL)**: how it fuses MiniMax-M3 decode on AMD Instinct MI355X, how the approach extends to DeepSeek-V4.1, and how it improves on ATOM's separate-kernel path.
 
 ## Why many small kernels slow down decode
 
@@ -57,13 +57,13 @@ There are three main benefits:
 
 *Figure 1. Mono combines stages in one launch, starts independent loads early, and overlaps reductions with computation. Bars show execution order, not measured durations.*
 
-**FlyDSL provides the tools to write this kernel; ATOM decides when and how to run it.** FlyDSL is a Python domain-specific language for GPU kernels. The Python code controls tensor layouts, matrix instructions, memory loads, and synchronization, and an MLIR compiler pipeline turns it into GPU code. ATOM (AiTer Optimized Model) loads the model, manages requests and caches, and selects the kernel variant for the current decode step. It also handles graph replay, speculative decoding, and execution across GPUs. [2], [4]
+**ATOM uses FlyDSL to implement its mono kernels.** FlyDSL is a Python domain-specific language for GPU kernels. The Python code controls tensor layouts, matrix instructions, memory loads, and synchronization, and an MLIR compiler pipeline turns it into GPU code. ATOM (AiTer Optimized Model) loads the model, manages requests and caches, and selects the kernel variant for the current decode step. It also handles graph replay, speculative decoding, and execution across GPUs. [2], [4]
 
 The design is inspired by the **TileRT MonoKernel work**. FlyDSL #1204 cites the TileRT InferenceMAX/InferenceX submission at [snapshot `8ac9834`](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9), associated with [#3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389). FlyDSL's [kernels/monokernel/](https://github.com/ROCm/FlyDSL/tree/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel) supplies reusable components such as gfx950 GEMM, MXFP8 linear, and tagged symmetric AllReduce. ATOM's shared `atom/mono` framework connects these components to each model. [5], [6], [10]
 
 ## MiniMax-M3: one launch for a sparse decoder layer
 
-M3's [mono kernel](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/post_attn.py) covers the complete sparse-layer path, including attention and mixture-of-experts (MoE) AllReduce, in **one launch per tensor-parallel (TP) rank**, with one rank on each participating GPU. The first three dense layers use the original modules. The kernel specializes for 1–16 token rows; in the EAGLE3 configuration used here, three speculative tokens produce four target-model rows per request. [1], [3]
+M3's [mono kernel](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/post_attn.py) covers the complete sparse-layer path, including attention and mixture-of-experts (MoE) AllReduce, in **one launch per tensor-parallel (TP) rank**, with one rank on each participating GPU. The first three dense layers use ATOM's separate-kernel modules. The kernel specializes for 1–16 token rows; in the EAGLE3 configuration used here, three speculative tokens produce four target-model rows per request. [1], [3]
 
 ### Which operations are fused?
 
@@ -85,7 +85,7 @@ All of these operations stay in the same launch. To make that useful, M3 needs t
 
 M3 launches **256 workgroups of 512 threads**, targeting one active workgroup per MI355X compute unit. Each block runs its assigned tasks in order. A block waiting for data can rely on the producing blocks remaining active. This avoids stopping the entire grid at every stage boundary, although threads within a workgroup still use local barriers. [3]
 
-Task `t` of a stage runs on block `(stage_base + t) % 256`. At four rows, split-attention tasks occupy blocks 0–31, merge tasks occupy 32–35, and output-projection tasks occupy 36–227. The router starts at block 228 and wraps to block 35. Blocks that performed attention can therefore take on routing work later in the same launch. [11]
+Blocks that perform attention can take on routing work later in the same launch. FlyDSL assigns those jobs before execution, so the same group of blocks carries the layer forward without a new launch for each stage. [11]
 
 **FlyDSL generates a kernel variant for each row count from 1 to 16.** Python code assigns tasks to blocks and lays out their LDS storage. At four rows, routed up/gate tasks are grouped by token so a block can reuse one staged activation. At wider shapes, tokens sharing an expert become matrix columns, reusing that expert's weights. The row count determines the layout before the kernel runs. Actual token positions and selected experts are supplied at runtime. [3], [11]
 
@@ -93,37 +93,13 @@ Task `t` of a stage runs on block `(stage_base + t) % 256`. At four rows, split-
 
 The weights for a later stage can be loaded before that stage receives its input. In the narrow MoE path, a block starts loading its down-projection weights while its up/gate computation runs. Shared-expert tasks are assigned according to each block's routed-work load; where that load is balanced, shared-expert computation runs while the first routed task's weights are in flight. [3], [11]
 
-FlyDSL also lets the layout change with the schedule. This excerpt from M3's `layout.py` selects the wider expert path and pads its activation and scale rows: [11]
-
-```python
-WIDE_FROM = 5
-
-def wide_moe(tokens: int) -> bool:
-    return tokens >= WIDE_FROM
-
-XN8_ROW = HIDDEN // 4 + 4
-XSC_ROW = HIDDEN // 32 + 4
-```
-
-At S=16, where S is the number of token rows, the unpadded pitches cause **16-way LDS bank conflicts costing about 3 µs per up/gate task**, according to the source comment. Adding four words, or 16 bytes, to each pitch spreads gathers across banks and removes that source of stalls. This is a small Python layout change that removes a measured stall in the fused expert computation. [11]
+FlyDSL also controls how activations and scales are laid out in LDS. At 16 token rows, the unpadded layout causes **16-way LDS bank conflicts costing about 3 µs per up/gate task**, according to the source comment. Adding 16 bytes of padding to each row spreads accesses across memory banks and removes that source of stalls. The [M3 layout code](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py) makes this adjustment alongside the expert task assignments. [11]
 
 ### Tell each block when its input is ready
 
-After loading its weights, a block still needs the previous stage's output. M3 uses mailboxes in GPU memory: each payload word is paired with an epoch tag identifying the current step and layer. The block checks those tags until its input is ready. This is the poll loop from `common.py`, with only the docstring omitted: [7]
+After loading its weights, a block still needs the previous stage's output. M3 uses mailboxes in GPU memory: each value has a tag identifying its decode step and layer. A block waits until the tags show that its input is ready. Advancing the step counter prevents graph replay from mistaking an old result for a new one. Mailbox memory accesses make writes visible to the blocks or peer GPUs that need them. The [mailbox implementation](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py) supplies this synchronization inside the fused kernel. [3], [7]
 
-```python
-@traced
-def _spin(load_all, pending):
-    v = load_all()
-    while pending(v):
-        rocdl.s_sleep(1)
-        v = load_all()
-    return v
-```
-
-The epoch is `decode_step × 128 + layer_id + 1`. A device counter advances between steps, so graph replay cannot mistake an old result for a new one. Mailboxes within one GPU use device-scope memory accesses; mailboxes shared across GPUs use system-scope accesses. The scope determines where the writes must become visible. [3], [7]
-
-The mailbox layout also affects performance. M3 replicates the router's score mailbox eight ways, with block `b` polling copy `b % 8`. This spreads **240 expert blocks** across copies of a 1 KB payload. The source records **K4 on four GPUs improving from 37.3 to 35.9 µs** with the eight copies. [11] FlyDSL's wave operations, including `fx.rocdl.readlane`, `fx.rocdl.ballot`, `fx.ctpop`, and shared `permlane_swap` and `memrealtime` helpers, support the reductions, selection, and instrumentation around these handoffs. [1], [7]
+The mailbox layout also affects performance. M3 makes eight copies of the router's 1 KB score payload and spreads **240 expert blocks** across those copies. This reduces contention when many blocks wait for routing results at once. The source records **K4 on four GPUs improving from 37.3 to 35.9 µs** with the eight copies. [11]
 
 ### Combine AllReduce with the computations around it
 
@@ -183,13 +159,13 @@ In both models, an output can pass to its next computation inside the same kerne
 
 ### Scope and methodology
 
-The measurements below come from the linked implementation PRs. Each comparison retains its baseline and configuration. GPU decode-step time, layer-harness latency, and serving throughput measure different scopes; M3's headline combines mono and indexer CP. Kimi-K3 and GLM-5.2 results from the open ATOM PR #2435 remain **in progress**.[^benchmark-data]
+The serving comparisons measure **ATOM's separate-kernel path versus its FlyDSL mono-kernel path**. GLM-5 is measured separately in a layer harness against ATOM's separate-kernel implementation. GPU decode-step time, layer latency, and serving throughput measure different scopes; M3's 1.83× result combines mono and indexer CP. Kimi-K3 and GLM-5.2 results from the open ATOM PR #2435 remain **in progress**.[^benchmark-data]
 
 ### M3: decode latency with mono and indexer CP
 
-The server measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M context, and EAGLE3 with three speculative tokens. Batches of 1, 2, and 4 produce 4, 8, and 16 target-model rows before graph padding. Latencies are median GPU decode-step times in milliseconds; gains list mono / mono + CP speedups relative to the original path. [1]
+The server measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M context, and EAGLE3 with three speculative tokens. Batches of 1, 2, and 4 produce 4, 8, and 16 target-model rows before graph padding. Latencies are median GPU decode-step times in milliseconds; gains list mono / mono + CP speedups relative to ATOM's separate-kernel path. In the table, **Separate** is ATOM with separate kernels and **Mono** is ATOM with FlyDSL mono kernels. [1]
 
-| Batch | Original | Mono | Mono + CP | Gain |
+| Batch | Separate | Mono | Mono + CP | Gain |
 | ---: | ---: | ---: | ---: | ---: |
 | 1 | 11.47 | 7.00 | 6.26 | 1.64× / 1.83× |
 | 2 | 13.40 | 9.50 | 7.77 | 1.41× / 1.72× |
@@ -197,7 +173,7 @@ The server measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M context, and EAG
 
 ![MiniMax-M3 decode-step latency comparison](images/minimax-decode-step.png)
 
-*Figure 5. M3 decode-step latency; lower is better. The [decode-step CSV](data/minimax-decode-step.csv) retains the reported values.*
+*Figure 5. M3 decode-step latency within ATOM: separate kernels, FlyDSL mono kernels, and mono with indexer CP. Lower is better. The [decode-step CSV](data/minimax-decode-step.csv) retains the reported values.*
 
 At batch one, mono saves **4.47 ms** and CP saves a further **0.74 ms**. At batch four, mono saves **2.59 ms** and CP saves another **3.52 ms**. With more rows, each launch processes more useful work, so its overhead is spread across that work. This is consistent with the smaller mono speedup at batch four. Weight loads, expert computation, and index scoring then account for more of the work; grouping tokens by expert and splitting the index scan across GPUs target those costs.
 
@@ -205,14 +181,12 @@ The CP layer harness isolates the indexer change: at 1M context, 16 rows, and fo
 
 ### One-launch layer results: GLM-5
 
-[GLM-5's full-indexer mono kernel](https://github.com/ROCm/FlyDSL/blob/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel/glm/kernel.py) provides another complete-layer example: indexer, sparse MLA, router, MXFP4 MoE, TP reductions, and residual update in **one launch per rank**. FlyDSL #1204 reports the following on MI355X TP8 at position 3000, against ATOM latest: [5]
+[GLM-5's full-indexer mono kernel](https://github.com/ROCm/FlyDSL/blob/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel/glm/kernel.py) provides another complete-layer example: indexer, sparse MLA, router, MXFP4 MoE, TP reductions, and residual update in **one launch per rank**. FlyDSL #1204 reports the following on MI355X TP8 at position 3000, using ATOM's separate-kernel layer implementation as the baseline: [5]
 
-| Token rows | Mono launches per layer and rank | Layer latency, ATOM → mono (µs) | Speedup |
+| Token rows | Mono launches per layer and rank | Layer latency, separate → mono (µs) | Speedup |
 | ---: | ---: | ---: | ---: |
 | 4 | **1** | 205.8–213.7 → **78.4–78.6** | **2.62–2.73×** |
 | 8 | **1** | 223.4 → **118.2–118.3** | **1.89×** |
-
-These measurements cover a full layer with arithmetic and reductions fused into one launch. FlyDSL also improves staged execution: the same PR's Kimi-K3 MLA and KDA paths are **1.55–1.99× faster than ATOM** across S=4/8, including ordered true-MTP KDA updates. Its staged true-MTP KDA path outperforms its one-launch version, so the best set of operations to fuse depends on the model. [5]
 
 ### Results across models
 
@@ -220,10 +194,10 @@ The reported improvements extend to several models, with different groups of ope
 
 | Model and mono path | Comparison and configuration | Reported benefit |
 | --- | --- | --- |
-| **MiniMax-M3**: fused sparse layer | Original path → mono; MI355X, TP4, MXFP4, 1M context, batch 1, EAGLE3 with three speculative tokens | **1.64× faster GPU decode step**, or **1.83× with indexer CP**. [1] |
-| **Kimi-K3**: fused MoE tail | Reference → mono; MI355X, TP8, concurrency 1, `DCP1`, DSpark7, graph mode | Output throughput **169.15 → 197.92 tokens/s (+17.01%)**; time per output token (TPOT) **5.55–5.60 → 4.70 ms**. [8] |
-| **GLM-5.2**: decoder-layer mono | Production → mono; MI355X, TP4, MXFP4, FP8 KV, MTP4, graph mode | At concurrency 1, Agentic throughput **+15.92%**, TPOT **6.897 → 5.380 ms**. At concurrency 2, throughput **+16.8%**, TPOT **26.2% lower**. [8] |
-| **GLM-5**: full-indexer mono | ATOM latest → FlyDSL mono; MI355X, TP8, position 3000, S=4/8; **layer harness** | **2.62–2.73× faster at S=4**; **1.89× at S=8**. [5] |
+| **MiniMax-M3**: fused sparse layer | ATOM: separate kernels → mono (FlyDSL); MI355X, TP4, MXFP4, 1M context, batch 1, EAGLE3 with three speculative tokens | **1.64× faster GPU decode step**, or **1.83× with indexer CP**. [1] |
+| **Kimi-K3**: fused MoE tail | ATOM: separate kernels (reference) → mono (FlyDSL); MI355X, TP8, concurrency 1, `DCP1`, DSpark7, graph mode | Output throughput **169.15 → 197.92 tokens/s (+17.01%)**; time per output token (TPOT) **5.55–5.60 → 4.70 ms**. [8] |
+| **GLM-5.2**: decoder-layer mono | ATOM: separate kernels (production) → mono (FlyDSL); MI355X, TP4, MXFP4, FP8 KV, MTP4, graph mode | At concurrency 1, Agentic throughput **+15.92%**, TPOT **6.897 → 5.380 ms**. At concurrency 2, throughput **+16.8%**, TPOT **26.2% lower**. [8] |
+| **GLM-5**: full-indexer mono | ATOM separate kernels → FlyDSL mono layer harness; MI355X, TP8, position 3000, S=4/8; **layer harness** | **2.62–2.73× faster at S=4**; **1.89× at S=8**. [5] |
 
 **DeepSeek-V4.1-Flash also benefits from further work inside mono.** Its updated TP4 implementation reduces decode-step time by **4% / 10% / 11% / 12%** at batches 1/2/4/8, with bit-identical outputs, relative to its previous mono schedule. Those incremental gains come from the token-parallel sublayers and earlier independent loads described above. [9]
 
@@ -231,72 +205,19 @@ The reported improvements extend to several models, with different groups of ope
 
 M3's #2419 checks report **bit-identical index selection** over 3K–1.04M contexts, **bit-identical outputs through 16 chained layers with CP off versus on** at the tested 3K, 37K, and 200K contexts, and a successfully served **1,040,186-token request**. Selection coverage includes mixed lengths across the CP threshold and speculative row counts. These checks cover cache access and intermediate results affected by the fused implementation. [1]
 
-*Quality note: M3's GSM8K five-shot scores are 0.9447 for the original path, 0.9371/0.9424 for mono, and 0.9378 for mono plus CP. The two mono runs span 0.53 percentage points; the 0.69-point difference between the original path and mono plus CP is of similar magnitude. PR #2435 reports Kimi-K3 mono/reference scores of 0.959060/0.959818 and GLM-5.2 mono/main scores of 0.9606/0.9674, a 0.68-point difference for GLM. [1], [8]*
+*Quality note: M3's GSM8K five-shot scores are 0.9447 for ATOM's separate-kernel path, 0.9371/0.9424 for mono, and 0.9378 for mono plus CP. The two mono runs span 0.53 percentage points; the 0.69-point difference between the separate-kernel path and mono plus CP is of similar magnitude. PR #2435 reports Kimi-K3 mono/separate-kernel scores of 0.959060/0.959818 and GLM-5.2 mono/separate-kernel scores of 0.9606/0.9674, a 0.68-point difference for GLM. [1], [8]*
 
-## Run and inspect mono in ATOM
+## How ATOM integrates the FlyDSL mono kernels
 
-For each decode step, ATOM selects the kernel variant for its row count and provides the cache metadata. It prepares buffers and peer connections before graph capture, and TP ranks agree on whether to use mono. Steps outside the supported conditions automatically use the existing model path. [3]
+For each decode step, ATOM selects the FlyDSL kernel variant for its row count and provides the cache metadata. It prepares buffers and peer connections before graph capture, and TP ranks agree on whether to use mono. Steps outside the supported conditions automatically use ATOM's separate-kernel path. Speculative verification preserves EAGLE3's auxiliary hidden states and prevents an earlier speculative row from reading a later token. [3]
 
-Speculative verification also stays consistent with the original request: for a request with `Q` query tokens, row `j` sees `seq_len - (Q - 1 - j)` keys. Earlier speculative rows cannot read later tokens, and the runner preserves EAGLE3's auxiliary hidden states. [3]
+M3's mono dispatch defaults on. The [stock M3 recipe](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md) enables the shared index cache, which disables mono; using mono requires `use_index_cache: false`. At #2419, the supported configuration is TP4, DP=PP=1, FP8 KV and index caches, 128-token cache blocks, a maximum context of 1,048,576 tokens, a non-piecewise graph mode or eager execution, TBO disabled, and no vLLM/SGLang plugin mode. Eligible steps contain 1–16 token rows including graph padding and matching cache metadata. [3], [12], [13]
 
-### Enable the supported M3 path
-
-**`ATOM_MONO_ENABLE=1` is the default**, but the stock M3 recipe linked below enables the shared index cache with `use_index_cache: true`, which disables mono. **Set `use_index_cache: false`** so each sparse layer computes its own selection, as in this article's command. [3], [12], [13]
-
-At #2419, deployment requires **TP4, DP=PP=1, FP8 KV and index caches, 128-token cache blocks, and `--max-model-len` at most 1,048,576**, with a non-piecewise graph mode (or eager execution), TBO disabled, and no vLLM/SGLang plugin mode. Eligible decode steps contain **1–16 token rows including graph padding** and matching cache metadata. [3]
-
-Start from the [ATOM installation environment](https://github.com/ROCm/ATOM#installation) with **four MI355X GPUs**, the MXFP4 target, and its EAGLE3 draft checkpoint. This launch adapts the pinned M3 recipe, enables mono, and opts into indexer CP: [13]
-
-```bash
-export ATOM_MONO_ENABLE=1
-export ATOM_M3_INDEXER_CP=1
-export ATOM_FORCE_ATTN_TRITON=1
-export AITER_QUICK_REDUCE_QUANTIZATION=INT4
-export AITER_QUICK_REDUCE_CAST_BF16_TO_FP16=0
-
-python -m atom.entrypoints.openai_server \
-  --model amd/MiniMax-M3-MXFP4 \
-  --tensor-parallel-size 4 \
-  --host 127.0.0.1 --server-port 8000 \
-  --trust-remote-code \
-  --kv_cache_dtype fp8 --index_cache_dtype fp8 \
-  --block-size 128 --max-model-len 1048576 \
-  --max-num-seqs 4 --max-num-batched-tokens 32768 \
-  --attn-prefill-chunk-size 16384 \
-  --gpu-memory-utilization 0.90 \
-  --cudagraph-mode FULL \
-  --hf-overrides '{"use_index_cache": false}' \
-  --online_quant_config '{
-    "global_quant_config": "ptpc_fp8",
-    "exclude_layer": [
-      "lm_head", "model.embed_tokens", "vision_tower",
-      "multi_modal_projector", "patch_merge_mlp", "*block_sparse_moe"
-    ]
-  }' \
-  --method eagle3 \
-  --draft-model Inferact/MiniMax-M3-EAGLE3 \
-  --num-speculative-tokens 3
-```
-
-The runner logs `MiniMax-M3 mono decode on` at its first eligible step; a deployment refusal logs `MiniMax-M3 mono decode off` with its reason. The maximum context setting enables long requests, and CP begins work when a request passes its threshold.
-
-For a local comparison, keep checkpoints, requests, graph configuration, and speculative settings fixed. Restart with `(ATOM_MONO_ENABLE, ATOM_M3_INDEXER_CP)` set to **`(0, 0)`**, **`(1, 0)`**, and **`(1, 1)`**. Use ATOM's [serving benchmark](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md#serving-benchmark) with identical long-context requests and warmup, and disable debug tools during timing.
-
-### Inspect work inside the fused launch
-
-ATOM provides three M3 tools to inspect what happens inside the fused kernel: [12]
-
-| Setting | What it exposes |
-| --- | --- |
-| `ATOM_MONO_CHECK=1` | Per-layer differences against the original modules. |
-| `ATOM_MONO_TRACE` | Step inputs, positions, and top logits; set to a JSONL output path. |
-| `ATOM_MONO_TIMELINE` | Per-phase timestamps for every sparse layer and workgroup; set to an output prefix. Files are saved by rank and row count. |
-
-Use these with `--enforce-eager` as documented in the pinned implementation. The timeline captures a small number of steps after warmup, helping locate a stalled handoff or imbalanced stage inside the fused program.
+ATOM also makes the fused kernel observable: per-layer checks compare its output with the separate-kernel modules, traces record step inputs and outputs, and timelines show work inside each layer. These [debug tools](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/utils/envs.py) help inspect the fused path during development. [12]
 
 ## Takeaways
 
-Low-concurrency decode repeats many small operations, making launch and synchronization overhead worth reducing. Mono combines connected operations in one launch, loads weights early, and runs reductions alongside the computations that use them. FlyDSL lets developers write and tune these kernels, while ATOM selects and runs them for supported requests.
+Low-concurrency decode repeats many small operations, making launch and synchronization overhead worth reducing. Mono combines connected operations in one launch, loads weights early, and runs reductions alongside the computations that use them. ATOM's FlyDSL mono kernels apply these optimizations within the serving engine, with the separate-kernel path available for steps outside the supported conditions.
 
 > - **Run connected stages in one launch.** M3 fuses a sparse layer; V4.1 fuses attention and experts inside K2.
 > - **Use waiting time for useful work.** Load weights before their inputs arrive and overlap reductions with computation.
