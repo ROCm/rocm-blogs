@@ -5,6 +5,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 import os
+import re
 import shutil
 
 import ablog
@@ -129,8 +130,27 @@ def copy_generated_images(app, exception):
         shutil.copytree(source, os.path.join(app.outdir, "_images"), dirs_exist_ok=True)
 
 
+def omit_empty_author_meta(app, docname, source):
+    """Omit empty HTML author fields generated for drafts without attribution."""
+    if not source[0].startswith("---\n"):
+        return
+    parts = source[0].split("---", 2)
+    if len(parts) != 3 or not re.search(
+        r"(?m)^author:\s*(?:\"\"|'')[ \t]*$", parts[1]
+    ):
+        return
+    parts[1] = re.sub(
+        r"(?m)^[ \t]+[\"'](?:author|amd_blog_authors|property=article:author)"
+        r"[\"']:[ \t]*(?:\"\"|'')[ \t]*\n",
+        "",
+        parts[1],
+    )
+    source[0] = "---".join(parts)
+
+
 def setup(app):
     app.connect("build-finished", copy_generated_images)
+    app.connect("source-read", omit_empty_author_meta)
     app.connect("autodoc-process-docstring", cut_lines(4, what=["module"]))
     app.add_css_file("css/custom.css")
     app.add_object_type(

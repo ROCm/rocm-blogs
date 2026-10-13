@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="850" viewBox="0 0 1280 850" role="img" aria-labelledby="title desc">
+<title id="title">What mono kernels buy: early preparation, tile handoffs, and integrated reductions</title>
+<desc id="desc">A staged stream finishes producer, reduction, and consumer kernels in sequence. A resident mono grid loads consumer weights early, hands off each completed tile, and reduces tiles while other producer and consumer work progresses. This is a schematic, not a measured timeline.</desc>
+<defs><pattern id="wait" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#eef2f6"/><path d="M0 8 L8 0" stroke="#ccd5df" stroke-width="1"/></pattern><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="#64748b"/></marker></defs>
+<rect width="1280" height="850" rx="18" fill="#f8fafc"/>
+<g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
+<text x="40" y="49" font-size="29" font-weight="700" fill="#172033" text-anchor="start">What mono buys: overlap inside one resident launch</text>
+<text x="40" y="82" font-size="18" font-weight="400" fill="#64748b" text-anchor="start">Move the dependency boundary from a complete kernel to the data each task needs.</text>
+<rect x="28" y="113" width="1224" height="188" rx="9" fill="white" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="50" y="149" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Separate kernels on one stream</text>
+<text x="50" y="176" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Each launch finishes before the next starts.</text>
+<rect x="190" y="197" width="285" height="56" rx="9" fill="#ffe2dd" stroke="#d6766b" stroke-width="1.5"/>
+<text x="332" y="231" font-size="18" font-weight="500" fill="#172033" text-anchor="middle">Producer: all tiles</text>
+<path d="M479 225 L503 225" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="512" y="197" width="230" height="56" rx="9" fill="#dbeaf4" stroke="#6b9dbb" stroke-width="1.5"/>
+<text x="627" y="231" font-size="18" font-weight="500" fill="#172033" text-anchor="middle">AllReduce: all tiles</text>
+<path d="M746 225 L770 225" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+<rect x="779" y="197" width="150" height="56" rx="9" fill="#e3e5f3" stroke="#9298c1" stroke-width="1.5"/>
+<text x="854" y="231" font-size="16" font-weight="500" fill="#172033" text-anchor="middle">Load weights</text>
+<rect x="938" y="197" width="278" height="56" rx="9" fill="#daeee7" stroke="#79ab99" stroke-width="1.5"/>
+<text x="1077" y="231" font-size="18" font-weight="500" fill="#172033" text-anchor="middle">Consumer: all tiles</text>
+<text x="500" y="279" font-size="13" font-weight="400" fill="#64748b" text-anchor="middle">launch boundary</text>
+<text x="766" y="279" font-size="13" font-weight="400" fill="#64748b" text-anchor="middle">launch boundary</text>
+<rect x="28" y="322" width="1224" height="343" rx="9" fill="#fff9f7" stroke="#e34b48" stroke-width="1.5"/>
+<text x="50" y="361" font-size="21" font-weight="700" fill="#172033" text-anchor="start">One mono launch: blocks make progress on independent tasks</text>
+<text x="50" y="388" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">A completed tile can move forward while other tiles are still being produced.</text>
+<text x="50" y="439" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Producer blocks</text>
+<text x="50" y="518" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Consumer blocks</text>
+<text x="50" y="597" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Peer reductions</text>
+<path d="M245 407 L245 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<path d="M400 407 L400 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<path d="M555 407 L555 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<path d="M710 407 L710 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<path d="M865 407 L865 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<path d="M1020 407 L1020 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<path d="M1175 407 L1175 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
+<rect x="245" y="410" width="145" height="47" rx="9" fill="#ffe2dd" stroke="#d6766b" stroke-width="1.5"/>
+<text x="317.5" y="440" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Tile 0</text>
+<rect x="400" y="410" width="145" height="47" rx="9" fill="#ffe2dd" stroke="#d6766b" stroke-width="1.5"/>
+<text x="472.5" y="440" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Tile 1</text>
+<rect x="555" y="410" width="145" height="47" rx="9" fill="#ffe2dd" stroke="#d6766b" stroke-width="1.5"/>
+<text x="627.5" y="440" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Tile 2</text>
+<rect x="245" y="489" width="130" height="47" rx="9" fill="#e3e5f3" stroke="#9298c1" stroke-width="1.5"/>
+<text x="310" y="519" font-size="15" font-weight="500" fill="#172033" text-anchor="middle">Load weights</text>
+<rect x="382" y="489" width="108" height="47" rx="9" fill="url(#wait)" stroke="#cbd5e1" stroke-width="1.5"/>
+<text x="436" y="519" font-size="15" font-weight="400" fill="#64748b" text-anchor="middle">Wait</text>
+<rect x="500" y="489" width="135" height="47" rx="9" fill="#daeee7" stroke="#79ab99" stroke-width="1.5"/>
+<text x="567.5" y="519" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Use tile 0</text>
+<rect x="655" y="489" width="135" height="47" rx="9" fill="#daeee7" stroke="#79ab99" stroke-width="1.5"/>
+<text x="722.5" y="519" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Use tile 1</text>
+<rect x="810" y="489" width="135" height="47" rx="9" fill="#daeee7" stroke="#79ab99" stroke-width="1.5"/>
+<text x="877.5" y="519" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Use tile 2</text>
+<rect x="405" y="568" width="90" height="47" rx="9" fill="#dbeaf4" stroke="#6b9dbb" stroke-width="1.5"/>
+<text x="450" y="598" font-size="16" font-weight="500" fill="#172033" text-anchor="middle">Tile 0</text>
+<rect x="560" y="568" width="90" height="47" rx="9" fill="#dbeaf4" stroke="#6b9dbb" stroke-width="1.5"/>
+<text x="605" y="598" font-size="16" font-weight="500" fill="#172033" text-anchor="middle">Tile 1</text>
+<rect x="715" y="568" width="90" height="47" rx="9" fill="#dbeaf4" stroke="#6b9dbb" stroke-width="1.5"/>
+<text x="760" y="598" font-size="16" font-weight="500" fill="#172033" text-anchor="middle">Tile 2</text>
+<path d="M395 450 L401 563" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" stroke-dasharray="4 5"/>
+<path d="M497 567 L504 541" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)" stroke-dasharray="4 5"/>
+<text x="1020" y="451" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">Later stages can</text>
+<text x="1020" y="476" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">prepare early.</text>
+<text x="1020" y="548" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">Only the needed</text>
+<text x="1020" y="573" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">data gates progress.</text>
+<path d="M245 641 L1180 641" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+<text x="245" y="655" font-size="12" font-weight="400" fill="#64748b" text-anchor="start">Execution order (schematic)</text>
+<rect x="42" y="697" width="34" height="34" rx="17" fill="#172033" stroke="#172033" stroke-width="1.5"/>
+<text x="59" y="721" font-size="19" font-weight="700" fill="white" text-anchor="middle">1</text>
+<text x="88" y="722" font-size="18" font-weight="700" fill="#172033" text-anchor="start">Cross-stage prefetch</text>
+<text x="42" y="755" font-size="16" font-weight="400" fill="#475569" text-anchor="start">Bring weights in while upstream</text>
+<text x="42" y="780" font-size="16" font-weight="400" fill="#475569" text-anchor="start">compute is still running.</text>
+<rect x="454" y="697" width="34" height="34" rx="17" fill="#172033" stroke="#172033" stroke-width="1.5"/>
+<text x="471" y="721" font-size="19" font-weight="700" fill="white" text-anchor="middle">2</text>
+<text x="500" y="722" font-size="18" font-weight="700" fill="#172033" text-anchor="start">No per-stage grid barrier</text>
+<text x="454" y="755" font-size="16" font-weight="400" fill="#475569" text-anchor="start">Wait for the relevant payload,</text>
+<text x="454" y="780" font-size="16" font-weight="400" fill="#475569" text-anchor="start">then advance that task.</text>
+<rect x="866" y="697" width="34" height="34" rx="17" fill="#172033" stroke="#172033" stroke-width="1.5"/>
+<text x="883" y="721" font-size="19" font-weight="700" fill="white" text-anchor="middle">3</text>
+<text x="912" y="722" font-size="18" font-weight="700" fill="#172033" text-anchor="start">Integrated AllReduce</text>
+<text x="866" y="755" font-size="16" font-weight="400" fill="#475569" text-anchor="start">Reduce ready tiles alongside</text>
+<text x="866" y="780" font-size="16" font-weight="400" fill="#475569" text-anchor="start">producer and consumer work.</text>
+<text x="42" y="824" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Source: M3 schedule and mailbox protocol in ATOM PR #2419. No measured timing or speedup is implied.</text>
+</g></svg>
