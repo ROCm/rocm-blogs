@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="900" viewBox="0 0 1280 900" role="img" aria-labelledby="title desc">
+<title id="title">DeepSeek-V4.1: two mono regions around the model state updates</title>
+<desc id="desc">Optional Engram runs before K1. K1 fuses residual mixing, normalization, input projections, index query preparation, RoPE and window cache insertion. Selecting layers then run the original compressor. K2 fuses K2a index selection, sparse attention, output projections and attention reduction with K2b routing, experts and FFN reduction. K2a and K2b share a launch and hand off normalized rows.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
+<rect width="1280" height="900" rx="18" fill="#f8fafc"/>
+<g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
+<text x="40" y="47" font-size="27" font-weight="700" fill="#172033" text-anchor="start">DeepSeek-V4.1: two mono regions around model state updates</text>
+<text x="40" y="79" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">K1 prepares attention; K2 carries index selection through attention, experts, and both reductions.</text>
+<rect x="410" y="102" width="460" height="47" rx="10" fill="#edf2f7" stroke="#cbd5e1" stroke-width="1.8"/>
+<text x="640" y="132" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Engram where present · original module</text>
+<path d="M640 153 L640 176" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="183" width="1224" height="173" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="1.8"/>
+<text x="50" y="217" font-size="21" font-weight="700" fill="#172033" text-anchor="start">K1: attention preparation — one mono launch per rank</text>
+<rect x="50" y="240" width="350" height="94" rx="10" fill="white" stroke="#efaaa8" stroke-width="1.8"/>
+<text x="66" y="267" font-size="18" font-weight="700" fill="#172033" text-anchor="start">Residual and normalization</text>
+<text x="66" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">mHC stream mixing</text>
+<text x="66" y="316" font-size="15" font-weight="400" fill="#172033" text-anchor="start">RMSNorm + FP8 input quantization</text>
+<rect x="465" y="240" width="350" height="94" rx="10" fill="white" stroke="#efaaa8" stroke-width="1.8"/>
+<text x="481" y="267" font-size="18" font-weight="700" fill="#172033" text-anchor="start">Input and index projections</text>
+<text x="481" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Low-rank Q/KV + query expansion</text>
+<text x="481" y="316" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Index-query preparation</text>
+<rect x="880" y="240" width="350" height="94" rx="10" fill="white" stroke="#efaaa8" stroke-width="1.8"/>
+<text x="896" y="267" font-size="18" font-weight="700" fill="#172033" text-anchor="start">Prepare attention inputs</text>
+<text x="896" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Q/KV norm + RoPE</text>
+<text x="896" y="316" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Window-cache insertion</text>
+<path d="M405 287 L458 287" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M820 287 L873 287" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M640 362 L640 386" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="410" y="393" width="460" height="58" rx="10" fill="#edf2f7" stroke="#cbd5e1" stroke-width="1.8"/>
+<text x="640" y="418" font-size="17" font-weight="500" fill="#172033" text-anchor="middle">Compressor on selecting layers</text>
+<text x="640" y="439" font-size="14" font-weight="400" fill="#64748b" text-anchor="middle">Original module call</text>
+<path d="M640 457 L640 481" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="28" y="488" width="1224" height="289" rx="10" fill="#f0f7fa" stroke="#145d80" stroke-width="1.8"/>
+<text x="50" y="524" font-size="21" font-weight="700" fill="#172033" text-anchor="start">K2: K2a + K2b — one mono launch per rank</text>
+<rect x="50" y="547" width="557" height="157" rx="10" fill="white" stroke="#7da6bd" stroke-width="1.8"/>
+<text x="69" y="579" font-size="20" font-weight="700" fill="#145d80" text-anchor="start">K2a: indexer and attention</text>
+<text x="69" y="612" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Index scores + top-k → sparse attention</text>
+<text x="69" y="642" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Inverse RoPE + FP8 wo_a / wo_b projections</text>
+<text x="69" y="672" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Attention reduction → mHC + FFN normalization</text>
+<rect x="674" y="547" width="557" height="157" rx="10" fill="white" stroke="#7da6bd" stroke-width="1.8"/>
+<text x="693" y="579" font-size="20" font-weight="700" fill="#145d80" text-anchor="start">K2b: router and experts</text>
+<text x="693" y="612" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Top-6 of 384 experts + shared expert</text>
+<text x="693" y="642" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Up/gate → activation + quantization → down</text>
+<text x="693" y="672" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Routing-weighted outputs → FFN reduction</text>
+<path d="M614 625 L666 625" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="50" y="724" width="1181" height="33" rx="7" fill="#172033" stroke="#172033" stroke-width="1.8"/>
+<text x="640" y="747" font-size="16" font-weight="500" fill="white" text-anchor="middle">Normalized rows pass from attention into MoE inside the same resident K2 grid</text>
+<text x="40" y="813" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Token parallel at eligible widths: each rank reduces and processes its own group of token rows.</text>
+<text x="40" y="844" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">Normal execution shown; debug checks can launch K2a and K2b separately.</text>
+<text x="40" y="877" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Source: ATOM #2545 runner and mono kernels. Original module and metadata work adds its own launches.</text>
+</g></svg>

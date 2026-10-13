@@ -13,3 +13,5 @@ GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C1; graph mode,fixed-5
 GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,Agentic throughput,,,16.8,percent as reported,https://github.com/ROCm/ATOM/pull/2435
 GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,Agentic time per output token,,,26.2,ms; percent as reported,https://github.com/ROCm/ATOM/pull/2435
 GLM-5.2,production,mono,MI355X; TP4; MXFP4; FP8 KV; MTP4; C2; graph mode,fixed-512 decode throughput,,,33.4,percent as reported,https://github.com/ROCm/ATOM/pull/2435
+GLM-5,ATOM latest,FlyDSL full-indexer mono,MI355X; TP8; position 3000; S=4; one launch per layer and rank,layer-harness latency,205.8-213.7,78.4-78.6,,us,https://github.com/ROCm/FlyDSL/pull/1204
+GLM-5,ATOM latest,FlyDSL full-indexer mono,MI355X; TP8; position 3000; S=8; one launch per layer and rank,layer-harness latency,223.4,118.2-118.3,,us,https://github.com/ROCm/FlyDSL/pull/1204
