@@ -7,7 +7,7 @@ thumbnail: 'minimax-decode-step.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Explains MiniMax-M3 mono decode and indexer context parallelism in ATOM, using FlyDSL scheduling and synchronization on AMD Instinct MI355X, with measured 1M-context improvements from mono decode and the additional effect of indexer context parallelism.
+key_value_propositions: Explains MiniMax-M3 mono decode and indexer context parallelism in ATOM, using FlyDSL scheduling and synchronization on AMD Instinct MI355X, with measured 1M-context improvements and a separate comparison of reported mono benefits for M3, Kimi-K3, DeepSeek-V4.1, and GLM-5.2.
 language: English
 myst:
     html_meta:
@@ -29,7 +29,7 @@ MiniMax-M3 decode at a one-million-token context puts two costs on the critical 
 
 [ATOM PR #2419](https://github.com/ROCm/ATOM/pull/2419) reports a batch-one median GPU decode step of **11.47 ms on the original path, 7.00 ms with mono decode, and 6.26 ms with mono plus indexer CP**. That is **39.0% lower latency from mono alone** and **45.4% lower latency with both optimizations**, measured with MiniMax-M3-MXFP4, TP4, a 1M context, and EAGLE3 with three speculative tokens. [1]
 
-This article follows the M3 implementation from the language and execution model through block scheduling, long-context selection, and ATOM integration. The ATOM PR reports the original path, mono decode, and mono plus indexer CP separately, so the measurements distinguish the benefit of mono from the additional effect of CP.
+This article follows the M3 implementation from the language and execution model through block scheduling, long-context selection, and ATOM integration. The ATOM PR reports the original path, mono decode, and mono plus indexer CP separately, so the measurements distinguish the benefit of mono from the additional effect of CP. A separate performance section also covers Kimi-K3, DeepSeek-V4.1, and GLM-5.2.
 
 ## MiniMax-M3: the measured decode improvement
 
@@ -63,7 +63,7 @@ The design builds on the **TileRT MonoKernel work**, carried into FlyDSL and the
 
 Small decode batches expose little work in each operator. **Kernel launch latency (KLL)** can therefore occupy a meaningful share of the critical path, even when individual matrix operations are efficient. GPU graph replay reduces host submission overhead, while separate device kernels still have execution boundaries.
 
-The implementation also cannot rely on **Programmatic Dependent Launch (PDL)**. PDL allows a consumer kernel to begin independent work, such as loading weights, before its producer finishes, then synchronize before reading the producer's output. M3's mono kernel creates opportunities for that preparation inside one resident GPU program: different blocks advance through stage tasks and wait where inputs are consumed.
+**AMD GPUs do not support Programmatic Dependent Launch (PDL).** PDL allows a consumer kernel to begin independent work, such as loading weights, before its producer finishes, then synchronize before reading the producer's output. M3's mono kernel creates opportunities for that preparation inside one resident GPU program: different blocks advance through stage tasks and wait where inputs are consumed.
 
 The performance results measure the combined effect of fusion, scheduling, memory access, and communication. They do not isolate separate speedups for launch latency or dependency overlap.
 
@@ -165,6 +165,25 @@ The PR checks selection against the reference Triton selector on all four ranks 
 
 The reported GSM8K chat five-shot scores are **0.9447 for the original path**, **0.9371 / 0.9424 for mono**, and **0.9378 for mono plus CP**. The mono-plus-CP result is 0.69 percentage points below the original path in those runs. Selection equivalence validates the CP transformation; these model-quality measurements have a broader scope and do not establish general accuracy equivalence. [1]
 
+## Reported mono benefits across four models
+
+Mono gives the developer control over the operator boundaries, work distribution, and communication in a decode step. The useful fusion boundary depends on the model: M3 uses one launch per sparse layer, Kimi-K3 can fuse the MoE tail, and DeepSeek-V4.1 uses several fused sublayers. The ATOM PRs report the following improvements, with each comparison's baseline and measurement scope stated explicitly. [1], [8], [9], [10]
+
+| Model and mono path | Comparison and configuration | Reported benefit |
+| --- | --- | --- |
+| **MiniMax-M3**: fused sparse layer | Original path → mono; MI355X, TP4, MXFP4, 1M context, batch 1, EAGLE3 K3 | GPU decode step **11.47 → 7.00 ms**, **39.0% lower latency**. Indexer CP adds a further reduction to **6.26 ms**. [1] |
+| **Kimi-K3**: fused MoE tail | Reference → ATOM's MoE-tail mono path; MI355X, TP8, concurrency 1, `DCP1`, DSpark7, graph mode | Output throughput **169.15 → 197.92 tokens/s**, **+17.01%**; TPOT **5.55–5.60 → 4.70 ms**. [8] |
+| **DeepSeek-V4.1-Flash**: fused sublayers | Earlier mono schedule → updated mono schedule; TP4, request batches 1/2/4/8 | Reported decode-step time improvements of **4% / 10% / 11% / 12%**, respectively, with bit-identical outputs. [9] |
+| **GLM-5.2**: decoder-layer mono path | Production → ATOM mono; MI355X, TP4, MXFP4, FP8 KV, MTP4, graph mode | At concurrency 1, Agentic request throughput **+15.92%** and TPOT **6.897 → 5.380 ms** (about **22% lower**). At concurrency 2, Agentic throughput **+16.8%** and TPOT **26.2% lower**. [8] |
+
+The Kimi-K3 and GLM-5.2 figures refer to the proposed implementations benchmarked in **ATOM PR #2435**. The Kimi-K3 path retains production attention, KDA, and `AttnRes` and fuses the MoE tail; its 17.01% gain does not require turning the entire layer into one launch. The same PR reports fixed-512 decode-throughput gains of **5.42% at concurrency 1** and **33.4% at concurrency 2** for GLM-5.2 MTP4. These fixed-output-length measurements have a different workload scope from the Agentic results. [8]
+
+DeepSeek-V4.1's comparison measures an **additional improvement within mono**. The updated schedule replaces attention and FFN AllReduce with reduce-scatter to each token's owner at eligible widths, runs per-token stages on that rank's rows, and gathers quantized rows. It also moves independent loads ahead of mailbox waits and adjusts normalization around the model's mHC connection mixing. Token parallelism applies when the step has at least 12 rows and its width is divisible by TP; the draft runner keeps its existing execution scheme. The reported 4–12% improvements compare this schedule with the previous mono implementation. [9]
+
+The reports also bound where these paths apply. PR #2435 keeps GLM-5.2 MTP5 and higher-concurrency Kimi configurations on the production path. Its GSM8K five-shot scores are **0.959060 versus 0.959818** for Kimi-K3 mono and reference, and **0.9606 versus 0.9674** for GLM-5.2 mono and main. Performance and model quality both need to be assessed for the particular fusion boundary and supported decode shape. [8]
+
+The [mono-benefit comparison CSV](data/mono-benefits.csv) records the configurations, metrics, baselines, and PR sources behind these results.
+
 ## Developing the next specialization
 
 The M3 results illustrate an optimization loop that crosses kernel and engine boundaries. Start with a concrete ATOM decode shape, identify expensive operator transitions and memory access, then choose the fusion boundary and task schedule in FlyDSL. M3 combines one sparse-layer launch with row-dependent MoE scheduling and reductions; indexer CP addresses the additional cost of long contexts.
@@ -182,6 +201,9 @@ For the measured batch-one, 1M-context M3 workload, **mono decode reduces median
 5. [FlyDSL PR #1204: MonoKernel design lineage and TileRT submission reference](https://github.com/ROCm/FlyDSL/pull/1204).
 6. [TileRT InferenceMAX/InferenceX submission snapshot cited by FlyDSL PR #1204](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9), associated with [submission update #3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389).
 7. [M3 device primitives and tagged mailboxes at the ATOM #2419 merge commit](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py).
+8. [ATOM PR #2435: Kimi-K3 MoE-tail and GLM-5.2 MTP4 mono performance and accuracy](https://github.com/ROCm/ATOM/pull/2435).
+9. [ATOM PR #2545: DeepSeek-V4.1 mono token parallelism, handoff prefetch, and decode-step improvements](https://github.com/ROCm/ATOM/pull/2545).
+10. [ATOM PR #2479: DeepSeek-V4.1 fused sublayers and shared mono framework](https://github.com/ROCm/ATOM/pull/2479).
 
 [1]: https://github.com/ROCm/ATOM/pull/2419
 [2]: https://github.com/ROCm/FlyDSL
@@ -190,3 +212,6 @@ For the measured batch-one, 1M-context M3 workload, **mono decode reduces median
 [5]: https://github.com/ROCm/FlyDSL/pull/1204
 [6]: https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9
 [7]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py
+[8]: https://github.com/ROCm/ATOM/pull/2435
+[9]: https://github.com/ROCm/ATOM/pull/2545
+[10]: https://github.com/ROCm/ATOM/pull/2479
