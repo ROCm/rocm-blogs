@@ -27,7 +27,7 @@ myst:
 
 **Mono kernels turn a chain of GPU operators into a programmable resident execution schedule.** On AMD Instinct MI355X, [ATOM](https://github.com/ROCm/ATOM)'s [FlyDSL](https://github.com/ROCm/FlyDSL) mono decode plus indexer context parallelism delivers a **1.83× faster MiniMax-M3 GPU decode step at a one-million-token context**: 11.47 ms becomes 6.26 ms. Mono alone delivers 1.64×; context parallelism adds the next increment. [1]
 
-**ROCm currently has no equivalent of CUDA's Programmatic Dependent Launch (PDL).** Mono kernels address that scheduling gap inside one resident grid: load a consumer's weights early, hand off a producer's output as it becomes ready, and integrate tensor-parallel reductions with the work around them. FlyDSL makes those decisions programmable; ATOM brings the resulting kernels into a model-serving runtime.
+**Mono kernels bring computation and communication into one resident grid:** load a consumer's weights early, hand off a producer's output as it becomes ready, and integrate tensor-parallel reductions with the work around them. FlyDSL makes those decisions programmable; ATOM brings the resulting kernels into a model-serving runtime.
 
 M3 is the main example in this article, with **EAGLE3 using three speculative tokens**—four target-model rows per request. Results from Kimi-K3, GLM-5, and GLM-5.2, alongside continued work on DeepSeek-V4.1, show how the technique extends to different layer structures and fusion boundaries.
 
@@ -50,7 +50,7 @@ Each comparison uses the baseline and configuration listed above. GPU decode-ste
 
 Small decode batches leave each operator with little work, so kernel launch latency and synchronization can become a substantial part of the layer's critical path. HIP graph replay reduces host submission overhead, but each separate kernel still has a device execution boundary.
 
-PDL lets a dependent kernel begin independent preparation before its producer finishes, then synchronize at the point of consumption. A mono kernel creates that opportunity within one GPU program. Its blocks execute different stage tasks, prefetch independent operands, and synchronize on the data each task needs.
+A mono kernel keeps the layer's tasks inside one GPU program. Its blocks execute different stages, prefetch independent operands, and synchronize on the data each task needs. This lets later-stage preparation overlap with earlier computation and keeps tensor-parallel reductions in the same schedule.
 
 ![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
 
