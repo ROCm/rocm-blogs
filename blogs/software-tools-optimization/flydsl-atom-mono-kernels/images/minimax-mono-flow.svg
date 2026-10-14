@@ -7,7 +7,7 @@
 <text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · 1–16 token rows · first three dense layers use ATOM's separate kernels</text>
 <rect x="28" y="111" width="1224" height="416" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
 <text x="50" y="148" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Resident grid: 256 workgroups × 512 threads</text>
-<text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">Blocks change roles as their tasks complete; consumers wait for the inputs they need.</text>
+<text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">M3's schedule assigns workgroups their tasks; consumers wait for the inputs they need.</text>
 <rect x="50" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2"/>
 <text x="66" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">1  Prepare queries and caches</text>
 <text x="66" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Input norm + Q/K/V/index projections</text>
