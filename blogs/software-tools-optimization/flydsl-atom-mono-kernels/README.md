@@ -1,19 +1,19 @@
 ---
 blogpost: true
-blog_title: "Mono Kernels with FlyDSL: Up to 1.83× Faster LLM Decode in ATOM"
+blog_title: "Mono Kernels with FlyDSL: Faster LLM Decode in ATOM and vLLM"
 date: 12 Oct 2026
 author: ""
 thumbnail: 'mono-overlap.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Shows how FlyDSL mono kernels reduce launch overhead and stage-boundary stalls, with up to 1.83x faster M3 decode in ATOM and reusable components for other models and serving engines.
+key_value_propositions: Shows how FlyDSL mono kernels reduce launch overhead and stage-boundary stalls in ATOM and vLLM, with M3 decode up to 1.83x faster in ATOM and measured layer and serving gains.
 language: English
 myst:
     html_meta:
         "property=og:locale": "en_US"
-        "description lang=en": "Explore mono kernels on AMD Instinct: FlyDSL scheduling, prefetch, tagged handoffs, fused AllReduce, and up to 1.83x faster M3 decode with indexer CP."
-        "keywords": "MiniMax-M3, FlyDSL, ATOM, TileRT, mono kernel, ROCm, AMD Instinct MI355X, LLM inference, decode, indexer context parallelism"
+        "description lang=en": "Explore FlyDSL mono kernels in ATOM and vLLM on AMD Instinct: fused layers, overlapping computation and AllReduce, and measured decode and serving gains."
+        "keywords": "MiniMax-M3, FlyDSL, ATOM, vLLM, TileRT, mono kernel, ROCm, AMD Instinct MI355X, LLM inference, decode, indexer context parallelism"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
@@ -23,11 +23,13 @@ myst:
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
 ---
 
-# Mono Kernels with FlyDSL: Up to 1.83× Faster LLM Decode in ATOM
+# Mono Kernels with FlyDSL: Faster LLM Decode in ATOM and vLLM
 
 Interactive chat and coding assistants need fast responses when only one or a few requests are active. Each decode step sends a small number of token rows through every layer, often as many short GPU kernels. Launching those kernels and waiting between stages can take a substantial share of the step.
 
 **Mono kernels speed up low-concurrency decode by keeping connected computations and communication in one resident GPU schedule.** [FlyDSL](https://github.com/ROCm/FlyDSL) makes that schedule programmable; [ATOM](https://github.com/ROCm/ATOM) (AiTer Optimized Model) runs it as part of its serving engine. On MI355X at batch one and a 1M context, MiniMax-M3's GPU decode step is **1.64× faster with mono**, rising to **1.83× with indexer context parallelism (CP)**: **11.47 → 7.00 → 6.26 ms** within ATOM. [1]
+
+The approach has also merged into [vLLM](https://github.com/vllm-project/vllm): its DeepSeek-V4.1-Flash path uses ATOM-derived FlyDSL mono kernels, with measured gains at both the layer and serving levels. [14], [15]
 
 ![M3 GPU decode-step latency: ATOM separate kernels 11.47 ms, FlyDSL mono 7.00 ms, FlyDSL mono plus indexer CP 6.26 ms](images/minimax-flydsl-decode-step.png)
 
@@ -140,7 +142,7 @@ Each head's owning rank receives candidates and completes selection. The extra i
 
 *Figure 4. For each head, four ranks contribute two partitions each. Each partition returns its top 16 candidates; the owning rank merges 128 candidates into the final selection of 16 blocks.*
 
-The CP layer harness isolates the indexer change: at 1M context, 16 rows, and four query tokens per request, HIP Graph replay latency falls from **222.2 to 156.7 µs**, a **1.42× speedup**. Short-context changes stay within the PR's reported ±0.9 µs. The [CP layer-harness CSV](data/minimax-indexer-cp-layer.csv) records this separate measurement. [1]
+The layer harness measures CP separately by comparing mono with CP off and on under HIP Graph replay. The [CP layer-harness CSV](data/minimax-indexer-cp-layer.csv) records the long-context measurement shown below; short-context changes stay within the PR's reported ±0.9 µs. [1]
 
 Mono reorganizes connected stages; CP improves key-data reuse in the long-context scan. The results below compare those path configurations.
 
@@ -164,7 +166,7 @@ M3 can fuse a whole sparse layer. V4.1 keeps the compressor between K1 and K2, p
 
 ### Scope and methodology
 
-Separate-versus-mono results compare **complete implementation paths**, so they do not isolate launch reduction, prefetch, or communication overlap. Speedup is **baseline / mono for latency** and **mono / baseline for throughput or interactivity**. M3's CP result adds an indexer optimization; Kimi-K3 and GLM-5.2 from open ATOM PR #2435 remain **in progress**.[^benchmark-data]
+Separate-versus-mono results compare **complete implementation paths**, so they do not isolate launch reduction, prefetch, or communication overlap. Speedup is **baseline / optimized for latency** and **optimized / baseline for throughput or interactivity**. M3's CP result adds an indexer optimization. The Kimi-K3 and GLM serving paths are **in progress** in open ATOM PRs; the newer Kimi-K3 result is a controlled target-forward measurement.[^benchmark-data]
 
 ### M3: decode latency with mono and indexer CP
 
@@ -182,31 +184,46 @@ At batch one, M3 mono saves **4.47 ms** and CP saves a further **0.74 ms**. At b
 
 Mono is most useful when a layer has many short, dependent operations. A resident grid must fit on the GPU, and a larger fused region does not automatically run faster. Use the actual decode widths to choose the fusion boundary and keep the separate path for steps outside that range. [3], [5]
 
-### One-launch layer results: GLM-5
+### Layer-level results
 
-[GLM-5's full-indexer mono kernel](https://github.com/ROCm/FlyDSL/blob/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel/glm/kernel.py) combines indexer, sparse MLA, router, MXFP4 MoE, TP reductions, and residual update in **one launch per rank**. FlyDSL #1204 reports these results on MI355X TP8 at position 3000, against ATOM's separate-kernel layer implementation: [5]
+[The GLM full-indexer mono kernel](https://github.com/ROCm/FlyDSL/blob/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel/glm/kernel.py) combines indexer, sparse MLA, router, MXFP4 MoE, TP reductions, and residual update in **one launch per rank**. FlyDSL #1204 measures GLM and Kimi layers on MI355X TP8 at position 3000, using ATOM's separate-kernel layers as the baseline. The table also includes M3's additional indexer-CP gain and a standard DeepSeek-V4.1-Flash layer in vLLM. Launch counts are per layer and rank; S is the number of token rows. [5], [1], [14]
 
-| Token rows | Mono launches per layer and rank | Layer latency, separate → mono (µs) | Speedup |
-| ---: | ---: | ---: | ---: |
-| 4 | **1** | 205.8–213.7 → **78.4–78.6** | **2.62–2.73×** |
-| 8 | **1** | 223.4 → **118.2–118.3** | **1.89×** |
+| Model, test, and execution path | Layer latency (µs) | Speedup |
+| --- | ---: | ---: |
+| **MiniMax-M3**, TP4, 1M context, S16/Q4<br>Mono → mono + indexer CP; one launch in both | 222.2 → **156.7** | **1.42×** [1] |
+| **GLM-5**, TP8, S4<br>Separate → mono; **one launch** | 205.8–213.7 → **78.4–78.6** | **2.62–2.73×** [5] |
+| **GLM-5**, TP8, S8<br>Separate → mono; **one launch** | 223.4 → **118.2–118.3** | **1.89×** [5] |
+| **Kimi-K3 MLA**, TP8, S8<br>Separate → FlyDSL staged; seven launches | 253.93 → **127.76** | **1.99×** [5] |
+| **Kimi-K3 KDA**, TP8, S8, ordered MTP<br>Separate → FlyDSL staged; nine launches | 241.80 → **155.75** | **1.55×** [5] |
+| **DeepSeek-V4.1-Flash**, vLLM TP4, S6, standard ratio-1 layer<br>Separate → mono; two launches | 180 → **94** | **1.91×** [14] |
 
-### Results across models
+The Kimi entries use FlyDSL's retained staged schedules. Across the MLA, independent KDA, and ordered-MTP KDA tests at four and eight rows, those paths report **1.55–1.99×**. The [comparison CSV](data/mono-benefits.csv) records all six configurations. [5]
 
-All four models below use MI355X. Each ratio uses the metric in its row; the [comparison CSV](data/mono-benefits.csv) records the full test configuration.
+### Decode and serving results
+
+All four models below use MI355X. These measurements cover GPU forward time or serving behavior, with the metric specified in each row; the [comparison CSV](data/mono-benefits.csv) records the full test configuration.
 
 | Model, engine, and test | Measured metric | Speedup |
 | --- | --- | ---: |
 | **MiniMax-M3**: sparse layer; ATOM TP4, batch 1, 1M context | GPU decode step: 11.47 → 7.00 ms (6.26 with CP) | **1.64×** (**1.83×** with CP) [1] |
-| **Kimi-K3**: MoE tail; ATOM TP8, concurrency 1 | Output throughput: 169.15 → 197.92 tokens/s | **1.17×** [8] |
-| **GLM-5.2**: decoder layer; ATOM TP4, concurrency 1 | Agentic throughput: +15.92% | **1.16×** [8] |
-| **DeepSeek-V4.1-Flash**: standard layer; vLLM TP4, six rows, ratio-1 harness | Layer latency: 180 → 94 µs | **1.91×** [14] |
+| **Kimi-K3**: KDA + MoE; ATOM TP8, eight rows, controlled acceptance[^kimi-benchmark] | Target forward: 22.021 → 16.368 ms | **1.35×** [17] |
+| **GLM-5.2**: decoder layer; ATOM TP4, concurrency 1 | Time per output token: 6.897 → 5.380 ms | **1.28×** [8] |
+| **DeepSeek-V4.1-Flash**: vLLM TP2, concurrency 1, AgentX[^vllm-benchmark] | P90 interactivity: 318.1 → 429.1 tokens/s/user | **1.35×** [14] |
 
-Kimi-K3 keeps production attention, KDA, and `AttnRes`; the comparison changes only the MoE tail. GLM-5.2 also reports **1.17× throughput** at concurrency two. The [comparison CSV](data/mono-benefits.csv) includes the additional throughput and time-per-output-token measurements. [8]
+Kimi-K3's newer path fuses the KDA attention pipeline and MoE into two launches while keeping MLA layers on the production path. The eight-row controlled run also reports **167.7 → 223.8 output tokens/s (1.33×)**. The earlier MoE-tail-only path reported **169.15 → 197.92 tokens/s (1.17×)**; that number describes a smaller fused region. [17], [8]
 
-The approach has also landed in **vLLM**: merged PRs [#60397](https://github.com/vllm-project/vllm/pull/60397) and [#61082](https://github.com/vllm-project/vllm/pull/61082) bring ATOM-derived FlyDSL mono kernels to DeepSeek-V4.1-Flash, with the separate-path layer-latency improvement shown above. [14], [15]
+At concurrency two, the GLM serving result reports **26.2% lower time per output token**, equivalent to **1.36×**. Request throughput improves by **15.92% / 16.8%** at concurrency one/two; these give **1.16× / 1.17×** when expressed as throughput ratios. The [comparison CSV](data/mono-benefits.csv) retains these metrics, the fixed-length decode results, and the calculated ratios. [8]
 
-The ATOM V4.1 schedule also continues to improve: #2545 reports **4% / 10% / 11% / 12% lower decode-step time** at batches 1/2/4/8, with bit-identical outputs, relative to the previous mono schedule. This is the combined result of updates including token parallelism, handoff prefetch, and mHC seam ordering; individual contributions were not isolated. [9]
+The ATOM V4.1 schedule also continues to improve: #2545 reports **4% / 10% / 11% / 12% faster decode steps** at batches 1/2/4/8, with bit-identical outputs, relative to the previous mono schedule. This is the combined result of updates including token parallelism, handoff prefetch, and mHC seam ordering; individual contributions were not isolated. [9]
+
+## Merged into vLLM
+
+The shared FlyDSL and ATOM work now supports DeepSeek-V4.1-Flash decode in vLLM on MI355X. Two merged PRs bring the kernels into the engine:
+
+- **[#60397](https://github.com/vllm-project/vllm/pull/60397), merged October 10:** integrates K1 + K2 for 30 standard backbone layers and a fused FFN path for the remaining 10, including TP AllReduce inside the kernels. Its layer tests report **1.10–2.18×** across 96 configurations. At TP2 and concurrency one, the AgentX comparison above improves P90 interactivity by **1.35×** and total throughput by **1.16×** against the same-node mono-off baseline. [14]
+- **[#61082](https://github.com/vllm-project/vllm/pull/61082), merged October 13:** extends K1 + K2 coverage to **all 40 backbone layers** and exposes the **`--monokernel`** switch. Engram, compressor, and indexer calls remain around the two kernels where the model needs them; DSpark draft layers retain their existing path. [15]
+
+With the broader coverage, the TP4, concurrency-one AgentX test reports **541.6 → 562.6 tokens/s/user at P90, a further 3.9% gain over the previous mono implementation**.[^vllm-benchmark] The same PR validates all-layer coverage and evaluates model quality with mono enabled and disabled. [15]
 
 ## Quality results
 
@@ -229,15 +246,19 @@ Start with the [FlyDSL mono components](https://github.com/ROCm/FlyDSL/tree/31f3
 2. **Compose and schedule it.** Reuse GEMM, quantization, mailbox, and AllReduce pieces. Give workgroups enough independent work to issue weight loads early and pass completed data to consumers. Specialize task placement and LDS layouts for each supported width.
 3. **Validate it in the engine.** Compare intermediate and layer outputs with the separate modules, using tools such as `ATOM_MONO_CHECK`. Exercise HIP Graph replay and all participating ranks, then measure layer and serving performance. Add dispatch conditions and a fallback alongside the kernel.
 
-There is concrete work to build on: the open Kimi-K3 and GLM-5.2 paths extend model coverage, and a [proposed gfx942 port](https://github.com/vllm-project/vllm/pull/60731) targets MI300X and MI325X, with measurements on MI325X. That port identifies larger decode widths and additional TP sizes as follow-ups. [8], [16]
+There is concrete work to build on: the open Kimi-K3 and GLM-5.2 paths extend model coverage, and a [proposed gfx942 port](https://github.com/vllm-project/vllm/pull/60731) targets MI300X and MI325X, with measurements on MI325X. That port identifies larger decode widths and additional TP sizes as follow-ups. [8], [16], [17]
 
-Bring a model, a profile, or a measured schedule improvement to [FlyDSL](https://github.com/ROCm/FlyDSL) or [ATOM](https://github.com/ROCm/ATOM). The reusable pieces are available; the next step is to find which waits your model can remove.
+Bring a model, a profile, or a measured schedule improvement to [FlyDSL](https://github.com/ROCm/FlyDSL), [ATOM](https://github.com/ROCm/ATOM), or [vLLM](https://github.com/vllm-project/vllm). The reusable pieces are available; the next step is to find which waits your model can remove.
 
-[^benchmark-data]: Results are reported in the linked PRs. The [comparison CSV](data/mono-benefits.csv) and M3 CSVs retain source configurations and reported values. PR status was checked on October 14, 2026.
+[^benchmark-data]: Results are reported in the linked PRs. The [comparison CSV](data/mono-benefits.csv) retains raw values, calculated ratios, and configuration notes. GLM serving results use #2435; #2535's newer GLM experiments fix speculative acceptance and report an unresolved disagreement between engine and agentic measurements. PR status was checked on October 14, 2026. [8], [17]
+
+[^kimi-benchmark]: ATOM #2535 fixes speculative acceptance on both arms. Its eight-row reference uses BF16 for three KDA projections, so this is a controlled schedule comparison. The PR remains open, enables at most eight rows, and reports no task-level accuracy evaluation for this new path. The separate 16-row experiment is outside that enabled range. [17]
+
+[^vllm-benchmark]: The #60397 TP2 AgentX pair compares mono off with K1 + K2 on 30 standard layers on the same node; total throughput is 21,573 → 25,039 tokens/s. The #61082 TP4 pair compares two mono versions, with one 3,600-second run per arm. Both performance protocols fix DSpark acceptance at 3.51; the quality evaluations use actual rejection sampling. [14], [15]
 
 [^m3-support]: At ATOM #2419, M3 mono requires TP4, DP=PP=1, FP8 KV/index caches with 128-token blocks, `max_model_len` ≤ 1,048,576, eager or non-piecewise graphs, no TBO, and no ATOM vLLM/SGLang plugin mode. Eligible decode steps have 1–16 rows including graph padding and matching cache metadata. The [example launch script](data/run-minimax-m3-mono.sh) adapts the pinned recipe for four MI355X GPUs, an ATOM installation containing #2419 with its FlyDSL/AITER dependencies, and access to the M3 MXFP4 and EAGLE3 checkpoints. `ATOM_MONO_CHECK` provides per-layer comparisons; `ATOM_MONO_TRACE` and `ATOM_MONO_TIMELINE` expose step data and timing during development. [1], [3], [12]
 
-[^quality]: M3's GSM8K five-shot scores are 0.9447 for ATOM's separate-kernel path, 0.9371/0.9424 for mono, and 0.9378 for mono plus CP. The two mono runs span 0.53 percentage points. PR #2435 reports Kimi-K3 mono/separate-kernel scores of 0.959060/0.959818 and GLM-5.2 mono/separate-kernel scores of 0.9606/0.9674. [1], [8]
+[^quality]: M3's GSM8K five-shot scores are 0.9447 for ATOM's separate-kernel path, 0.9371/0.9424 for mono, and 0.9378 for mono plus CP. The two mono runs span 0.53 percentage points. PR #2435 reports 0.959060/0.959818 for Kimi-K3's earlier MoE-tail mono/separate-kernel paths and 0.9606/0.9674 for GLM-5.2 mono/separate-kernel paths. [1], [8]
 
 ## References
 
@@ -257,6 +278,7 @@ Bring a model, a profile, or a measured schedule improvement to [FlyDSL](https:/
 14. [vLLM PR #60397: merged DeepSeek-V4.1-Flash mono decode, launch counts, and separate-path comparisons](https://github.com/vllm-project/vllm/pull/60397).
 15. [vLLM PR #61082: merged whole-layer coverage, GPQA-Diamond, AIME25, and RULER NIAH results](https://github.com/vllm-project/vllm/pull/61082).
 16. [vLLM PR #60731: proposed gfx942 port for MI300X and MI325X, with MI325X measurements](https://github.com/vllm-project/vllm/pull/60731).
+17. [ATOM PR #2535: Kimi-K3 KDA + MoE controlled benchmarks, GLM schedule experiments, and validation limits](https://github.com/ROCm/ATOM/pull/2535).
 
 [1]: https://github.com/ROCm/ATOM/pull/2419
 [2]: https://github.com/ROCm/FlyDSL
@@ -274,3 +296,4 @@ Bring a model, a profile, or a measured schedule improvement to [FlyDSL](https:/
 [14]: https://github.com/vllm-project/vllm/pull/60397
 [15]: https://github.com/vllm-project/vllm/pull/61082
 [16]: https://github.com/vllm-project/vllm/pull/60731
+[17]: https://github.com/ROCm/ATOM/pull/2535
