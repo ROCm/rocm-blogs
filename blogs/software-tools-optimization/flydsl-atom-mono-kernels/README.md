@@ -7,7 +7,7 @@ thumbnail: 'mono-overlap.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Explains how mono kernels reduce launch overhead in low-concurrency decode, with M3 and DeepSeek-V4.1 examples, measured gains, and ATOM integration.
+key_value_propositions: Explains how mono kernels reduce launch overhead in low-concurrency decode, with M3 and DeepSeek-V4.1 examples, measured gains, and comparisons with ATOM's separate-kernel path.
 language: English
 myst:
     html_meta:
@@ -129,9 +129,9 @@ Mono reduces the cost of running the layer as many separate stages. CP reduces t
 
 ## DeepSeek-V4.1: fuse attention and experts in one kernel
 
-DeepSeek-V4.1 includes extra state-update operations: Engram runs before attention preparation where present, and selecting layers run a compressor before index scoring. The [#2545 runner](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/runner.py) uses **two mono launches per rank, K1 and K2**, with the original module calls around them. [14]
+DeepSeek-V4.1 includes extra state-update operations: Engram runs before attention preparation where present, and selecting layers run a compressor before index scoring. The [#2545 runner](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/runner.py) uses **two mono launches per rank, K1 and K2**, with the original module calls around them. [13]
 
-[K1](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/attn_pre.py) prepares attention: mHC residual-stream mixing, normalization, FP8 Q/KV projections, index-query preparation, Q/KV normalization, RoPE, and window-cache insertion. After the compressor on selecting layers, [K2](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/layer_post.py) runs index scoring, sparse attention, output projections, expert computation, and both reductions. Its **K2a attention stages and K2b MoE stages share one launch** in normal execution. [14]
+[K1](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/attn_pre.py) prepares attention: mHC residual-stream mixing, normalization, FP8 Q/KV projections, index-query preparation, Q/KV normalization, RoPE, and window-cache insertion. After the compressor on selecting layers, [K2](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/layer_post.py) runs index scoring, sparse attention, output projections, expert computation, and both reductions. Its **K2a attention stages and K2b MoE stages share one launch** in normal execution. [13]
 
 ![DeepSeek-V4.1 fusion boundaries: K1, compressor, and K2 with attention and MoE](images/deepseek-v41-mono-flow.svg)
 
@@ -139,19 +139,19 @@ DeepSeek-V4.1 includes extra state-update operations: Engram runs before attenti
 
 ### Fuse index selection with attention and GEMMs
 
-Selecting layers choose up to **512 compressed-cache rows**, which sparse attention combines with the token's local window. With the FP4 index cache enabled, the [index scorer](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/index_score_fp4.py) reuses each key load across up to six query rows sharing a request's cache view, with two 64-key steps in flight per wave. Scoring and top-k merging publish the rows needed by sparse attention within K2a. [14]
+Selecting layers choose up to **512 compressed-cache rows**, which sparse attention combines with the token's local window. With the FP4 index cache enabled, the [index scorer](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/index_score_fp4.py) reuses each key load across up to six query rows sharing a request's cache view, with two 64-key steps in flight per wave. Scoring and top-k merging publish the rows needed by sparse attention within K2a. [13]
 
-Attention then feeds inverse RoPE and group-wise FP8 quantization, followed by the two output projections, **`wo_a` and `wo_b`**. Their intermediate quantization remains explicit. Attention reduction and normalization prepare the next operand: a BF16 token row for the router and expert computation. [14]
+Attention then feeds inverse RoPE and group-wise FP8 quantization, followed by the two output projections, **`wo_a` and `wo_b`**. Their intermediate quantization remains explicit. Attention reduction and normalization prepare the next operand: a BF16 token row for the router and expert computation. [13]
 
 ### Carry the attention result into the MoE
 
-Normalization publishes that BF16 row and a ready flag. The [K2b MoE stages](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/moe.py) consume it to route each token to **six of 384 experts**, plus a shared expert. Routed up/gate and down projections use MXFP4 weights with MXFP8 activations; the shared expert uses FP8 projections. Work is organized around the union of selected experts, preserving reuse across tokens. Activation, intermediate quantization, down projection, routing weights, and shared-expert combination all stay in K2. [14]
+Normalization publishes that BF16 row and a ready flag. The [K2b MoE stages](https://github.com/ROCm/ATOM/blob/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono/kernels/moe.py) consume it to route each token to **six of 384 experts**, plus a shared expert. Routed up/gate and down projections use MXFP4 weights with MXFP8 activations; the shared expert uses FP8 projections. Work is organized around the union of selected experts, preserving reuse across tokens. Activation, intermediate quantization, down projection, routing weights, and shared-expert combination all stay in K2. [13]
 
-The main benefit is that **the attention result becomes the expert input inside the same kernel**. Attention reduction and FFN reduction also run in this launch. V4.1 runs FFN normalization before the mHC gate because MoE needs the normalized input immediately, while the gate prepares the next layer's mixing. Output-projection weights and residual inputs load before their mailbox waits. [14]
+The main benefit is that **the attention result becomes the expert input inside the same kernel**. Attention reduction and FFN reduction also run in this launch. V4.1 runs FFN normalization before the mHC gate because MoE needs the normalized input immediately, while the gate prepares the next layer's mixing. Output-projection weights and residual inputs load before their mailbox waits. [13]
 
 ### Let each GPU finish work for its own token rows
 
-For eligible target-model steps with **S ≥ 12 and S divisible by TP**, the attention and FFN reductions become reduce-scatter operations. Each rank owns a consecutive group of `S / TP` token rows; at S=16 and TP4, that is four rows per rank. The owner sums TP partials in the existing rank order and performs the corresponding residual, mixing, and normalization work. Later stages exchange the representations they need: K1 distributes quantized query latents, while K2 gathers BF16 normalized rows before the MoE. [9], [14]
+For eligible target-model steps with **S ≥ 12 and S divisible by TP**, the attention and FFN reductions become reduce-scatter operations. Each rank owns a consecutive group of `S / TP` token rows; at S=16 and TP4, that is four rows per rank. The owner sums TP partials in the existing rank order and performs the corresponding residual, mixing, and normalization work. Later stages exchange the representations they need: K1 distributes quantized query latents, while K2 gathers BF16 normalized rows before the MoE. [9], [13]
 
 In both models, an output can pass to its next computation inside the same kernel, including when it needs a GPU-to-GPU reduction first. M3 fuses the whole sparse layer. V4.1 uses K1 and K2 around its state updates, with attention and experts fused inside K2.
 
@@ -207,24 +207,15 @@ M3's #2419 checks report **bit-identical index selection** over 3K–1.04M conte
 
 *Quality note: M3's GSM8K five-shot scores are 0.9447 for ATOM's separate-kernel path, 0.9371/0.9424 for mono, and 0.9378 for mono plus CP. The two mono runs span 0.53 percentage points; the 0.69-point difference between the separate-kernel path and mono plus CP is of similar magnitude. PR #2435 reports Kimi-K3 mono/separate-kernel scores of 0.959060/0.959818 and GLM-5.2 mono/separate-kernel scores of 0.9606/0.9674, a 0.68-point difference for GLM. [1], [8]*
 
-## How ATOM integrates the FlyDSL mono kernels
-
-For each decode step, ATOM selects the FlyDSL kernel variant for its row count and provides the cache metadata. It prepares buffers and peer connections before graph capture, and TP ranks agree on whether to use mono. Steps outside the supported conditions automatically use ATOM's separate-kernel path. Speculative verification preserves EAGLE3's auxiliary hidden states and prevents an earlier speculative row from reading a later token. [3]
-
-M3's mono dispatch defaults on. The [stock M3 recipe](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md) enables the shared index cache, which disables mono; using mono requires `use_index_cache: false`. At #2419, the supported configuration is TP4, DP=PP=1, FP8 KV and index caches, 128-token cache blocks, a maximum context of 1,048,576 tokens, a non-piecewise graph mode or eager execution, TBO disabled, and no vLLM/SGLang plugin mode. Eligible steps contain 1–16 token rows including graph padding and matching cache metadata. [3], [12], [13]
-
-ATOM also makes the fused kernel observable: per-layer checks compare its output with the separate-kernel modules, traces record step inputs and outputs, and timelines show work inside each layer. These [debug tools](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/utils/envs.py) help inspect the fused path during development. [12]
-
 ## Takeaways
 
-Low-concurrency decode repeats many small operations, making launch and synchronization overhead worth reducing. Mono combines connected operations in one launch, loads weights early, and runs reductions alongside the computations that use them. ATOM's FlyDSL mono kernels apply these optimizations within the serving engine, with the separate-kernel path available for steps outside the supported conditions.
+Low-concurrency decode repeats many small operations, making launch and synchronization overhead worth reducing. Mono combines connected operations in one launch, loads weights early, and runs reductions alongside the computations that use them. ATOM's FlyDSL mono kernels use these techniques to accelerate the decode path within the serving engine.
 
 > - **Run connected stages in one launch.** M3 fuses a sparse layer; V4.1 fuses attention and experts inside K2.
 > - **Use waiting time for useful work.** Load weights before their inputs arrive and overlap reductions with computation.
 > - **Adapt as the workload grows.** Reuse expert weights across token rows and split long-context index scans across GPUs.
-> - **Make the fast path practical.** ATOM provides dispatch, automatic fallback, and tools to check and trace the fused kernel.
 
-[^benchmark-data]: No new GPU benchmarks were run for this article. The [comparison CSV](data/mono-benefits.csv) records the reported metrics, baselines, configurations, and PR sources.
+[^benchmark-data]: No new GPU benchmarks were run for this article. The [comparison CSV](data/mono-benefits.csv) records the reported metrics, baselines, configurations, and PR sources. M3 mono requires `use_index_cache: false`; the pinned stock recipe enables the shared index cache, which disables mono. The recipe and dispatch implementation document the configuration. [12], [3]
 
 ## References
 
@@ -239,9 +230,8 @@ Low-concurrency decode repeats many small operations, making launch and synchron
 9. [ATOM PR #2545: DeepSeek-V4.1 mono token parallelism, handoff prefetch, and decode-step improvements](https://github.com/ROCm/ATOM/pull/2545).
 10. [ATOM PR #2479: DeepSeek-V4.1 fused sublayers and shared mono framework](https://github.com/ROCm/ATOM/pull/2479).
 11. [M3 task placement, LDS pitches, and row-count specialization at #2419](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py).
-12. [ATOM mono defaults and debug settings at #2419](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/utils/envs.py).
-13. [MiniMax-M3 recipe and EAGLE3 server configuration at #2419](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md).
-14. [DeepSeek-V4.1 mono runner, indexer, projections, experts, and token-parallel reductions at #2545](https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono).
+12. [MiniMax-M3 recipe and EAGLE3 server configuration at #2419](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md).
+13. [DeepSeek-V4.1 mono runner, indexer, projections, experts, and token-parallel reductions at #2545](https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono).
 
 [1]: https://github.com/ROCm/ATOM/pull/2419
 [2]: https://github.com/ROCm/FlyDSL
@@ -254,6 +244,5 @@ Low-concurrency decode repeats many small operations, making launch and synchron
 [9]: https://github.com/ROCm/ATOM/pull/2545
 [10]: https://github.com/ROCm/ATOM/pull/2479
 [11]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py
-[12]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/utils/envs.py
-[13]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md
-[14]: https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono
+[12]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md
+[13]: https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/models/deepseek_v41/mono
