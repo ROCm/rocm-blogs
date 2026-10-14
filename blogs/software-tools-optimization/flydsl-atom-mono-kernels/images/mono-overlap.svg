@@ -8,7 +8,7 @@
 <text x="40" y="82" font-size="18" font-weight="400" fill="#64748b" text-anchor="start">Move the dependency boundary from a complete kernel to the data each task needs.</text>
 <rect x="28" y="113" width="1224" height="188" rx="9" fill="white" stroke="#cbd5e1" stroke-width="1.5"/>
 <text x="50" y="149" font-size="21" font-weight="700" fill="#172033" text-anchor="start">ATOM: separate kernels on one stream</text>
-<text x="50" y="176" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Each launch finishes before the next starts.</text>
+<text x="50" y="176" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Each kernel completes before the next kernel executes on the same stream.</text>
 <rect x="190" y="197" width="285" height="56" rx="9" fill="#ffe2dd" stroke="#d6766b" stroke-width="1.5"/>
 <text x="332" y="231" font-size="18" font-weight="500" fill="#172033" text-anchor="middle">Producer: all tiles</text>
 <path d="M479 225 L503 225" stroke="#64748b" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
@@ -26,7 +26,7 @@
 <text x="50" y="388" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">A completed tile can move forward while other tiles are still being produced.</text>
 <text x="50" y="428" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Producer<tspan x="50" dy="21">workgroups</tspan></text>
 <text x="50" y="507" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Consumer<tspan x="50" dy="21">workgroups</tspan></text>
-<text x="50" y="597" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Peer reductions</text>
+<text x="50" y="580" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Reduction<tspan x="50" dy="21">workgroups</tspan><tspan x="50" dy="19" font-size="13">Peer-memory accesses</tspan></text>
 <path d="M245 407 L245 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
 <path d="M400 407 L400 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
 <path d="M555 407 L555 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>

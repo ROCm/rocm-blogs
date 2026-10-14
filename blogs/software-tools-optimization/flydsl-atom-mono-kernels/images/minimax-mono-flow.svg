@@ -3,7 +3,7 @@
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
 <rect width="1280" height="680" rx="18" fill="#f8fafc"/>
 <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
-<text x="40" y="48" font-size="27" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: one sparse layer, one launch per TP rank</text>
+<text x="40" y="48" font-size="27" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3 with FlyDSL mono: one sparse layer, one launch</text>
 <text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · 1–16 token rows · first three dense layers use ATOM's separate kernels</text>
 <rect x="28" y="111" width="1224" height="416" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
 <text x="50" y="148" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Resident grid: 256 workgroups × 512 threads</text>
@@ -38,7 +38,7 @@
 <path d="M873 428 H820" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M458 428 H405" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 <rect x="40" y="550" width="1200" height="71" rx="10" fill="#172033" stroke="#172033" stroke-width="2"/>
-<text x="640" y="580" font-size="18" font-weight="500" fill="white" text-anchor="middle">Tagged payloads in local and peer memory · LDS reused across stages</text>
+<text x="640" y="580" font-size="18" font-weight="500" fill="white" text-anchor="middle">Tagged payloads in global-memory and peer-accessible buffers · LDS reused across stages</text>
 <text x="640" y="605" font-size="15" font-weight="400" fill="#cbd5e1" text-anchor="middle">Row-count specialization changes task placement, expert grouping, and AllReduce strategy.</text>
 <text x="40" y="652" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Source: ATOM PR #2419 and its pinned M3 source. Dependency schematic; no timing is implied.</text>
 </g></svg>

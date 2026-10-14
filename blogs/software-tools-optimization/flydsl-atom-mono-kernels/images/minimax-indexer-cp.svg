@@ -3,7 +3,7 @@
 <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
 <rect width="1280" height="710" rx="18" fill="#f8fafc"/>
 <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
-<text x="40" y="48" font-size="26" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: partition the long-context indexer across TP4</text>
+<text x="40" y="48" font-size="26" font-weight="700" fill="#172033" text-anchor="start">FlyDSL indexer CP: split M3’s long-context scan across TP4</text>
 <text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">CP activates past 288 index blocks (about 36K tokens); short requests keep TP index scoring.</text>
 <text x="40" y="125" font-size="20" font-weight="700" fill="#172033" text-anchor="start">Reuse each key-block load across four heads and the query rows</text>
 <rect x="40" y="148" width="270" height="125" rx="10" fill="white" stroke="#145d80" stroke-width="2"/>
