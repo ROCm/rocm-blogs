@@ -4,10 +4,10 @@
 <defs><pattern id="wait" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#eef2f6"/><path d="M0 8 L8 0" stroke="#ccd5df" stroke-width="1"/></pattern><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7" fill="#64748b"/></marker></defs>
 <rect width="1280" height="850" rx="18" fill="#f8fafc"/>
 <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
-<text x="40" y="49" font-size="29" font-weight="700" fill="#172033" text-anchor="start">ATOM mono with FlyDSL: overlap inside one launch</text>
+<text x="40" y="49" font-size="29" font-weight="700" fill="#172033" text-anchor="start">FlyDSL mono: overlap inside one launch</text>
 <text x="40" y="82" font-size="18" font-weight="400" fill="#64748b" text-anchor="start">Move the dependency boundary from a complete kernel to the data each task needs.</text>
 <rect x="28" y="113" width="1224" height="188" rx="9" fill="white" stroke="#cbd5e1" stroke-width="1.5"/>
-<text x="50" y="149" font-size="21" font-weight="700" fill="#172033" text-anchor="start">ATOM: separate kernels on one stream</text>
+<text x="50" y="149" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Separate kernels on one stream</text>
 <text x="50" y="176" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Each kernel completes before the next kernel executes on the same stream.</text>
 <rect x="190" y="197" width="285" height="56" rx="9" fill="#ffe2dd" stroke="#d6766b" stroke-width="1.5"/>
 <text x="332" y="231" font-size="18" font-weight="500" fill="#172033" text-anchor="middle">Producer: all tiles</text>
@@ -22,7 +22,7 @@
 <text x="500" y="279" font-size="13" font-weight="400" fill="#64748b" text-anchor="middle">launch boundary</text>
 <text x="766" y="279" font-size="13" font-weight="400" fill="#64748b" text-anchor="middle">launch boundary</text>
 <rect x="28" y="322" width="1224" height="343" rx="9" fill="#fff9f7" stroke="#e34b48" stroke-width="1.5"/>
-<text x="50" y="361" font-size="21" font-weight="700" fill="#172033" text-anchor="start">ATOM mono (FlyDSL): several stages in one launch</text>
+<text x="50" y="361" font-size="21" font-weight="700" fill="#172033" text-anchor="start">FlyDSL mono: several stages in one launch</text>
 <text x="50" y="388" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">A completed tile can move forward while other tiles are still being produced.</text>
 <text x="50" y="428" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Producer<tspan x="50" dy="21">workgroups</tspan></text>
 <text x="50" y="507" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Consumer<tspan x="50" dy="21">workgroups</tspan></text>
@@ -79,5 +79,5 @@
 <text x="912" y="722" font-size="18" font-weight="700" fill="#172033" text-anchor="start">Integrated AllReduce</text>
 <text x="866" y="755" font-size="16" font-weight="400" fill="#475569" text-anchor="start">Reduce ready tiles alongside</text>
 <text x="866" y="780" font-size="16" font-weight="400" fill="#475569" text-anchor="start">producer and consumer work.</text>
-<text x="42" y="824" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Source: M3 schedule and mailbox protocol in ATOM PR #2419. No measured timing or speedup is implied.</text>
+<text x="42" y="824" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Based on the M3 schedule and mailbox protocol in ATOM PR #2419. No measured timing or speedup is implied.</text>
 </g></svg>

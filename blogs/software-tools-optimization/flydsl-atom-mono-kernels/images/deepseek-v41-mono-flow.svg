@@ -28,5 +28,5 @@
 <path d="M545 190 L571 190" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 <path d="M765 190 L791 190" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
 <text x="40" y="308" font-size="17" font-weight="400" fill="#172033" text-anchor="start">K2a and K2b share one launch; normalized rows pass from attention to experts inside K2.</text>
-<text x="40" y="342" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Source: ATOM #2545 runner and mono kernels. Each mono launch runs per TP rank.</text>
+<text x="40" y="342" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Source: vLLM #60397 and #61082. Each mono launch runs per TP rank.</text>
 </g></svg>
