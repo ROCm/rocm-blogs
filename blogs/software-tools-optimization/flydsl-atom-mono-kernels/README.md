@@ -33,11 +33,11 @@ myst:
 
 ## Why mono kernels speed up decode
 
-Small-batch decode runs many short kernels. Each launch has overhead, and individual kernels may have too little work to use the GPU's parallel resources fully.
+Small-batch decode runs many short kernels over a small number of token rows. Each launch adds overhead, and some kernels have too little parallel work to keep the GPU busy. Separate dependent kernels also create waits: the next kernel cannot start until the previous one finishes.
 
-Mono kernels combine related operations into fewer launches and let thread blocks handle work from multiple stages. This allows weights to load early, computation to overlap with reductions, and ready data to reach the next stage sooner. [3], [11]
+Mono kernels combine related operations into fewer launches and let thread blocks work across stages. Developers can schedule weight loads alongside earlier computation and let consumers start as soon as the portions of data they need are ready. They can also overlap computation with reductions across GPUs. Together, these choices reduce idle time and help the decode step finish sooner. [3], [11]
 
-HIP Graph replay reduces CPU submission overhead; mono also changes how work is scheduled on the GPU.
+HIP Graph replay reduces CPU submission overhead, but it does not automatically remove these GPU-side dependencies. Mono complements graph replay by changing how work runs within each launch.
 
 ## What FlyDSL provides
 
