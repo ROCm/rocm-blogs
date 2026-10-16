@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "FlyDSL Mono Kernels for High-Interactivity LLM Serving"
+blog_title: "FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM"
 date: 12 Oct 2026
 author: ""
 thumbnail: 'mono-overlap.png'
@@ -12,7 +12,7 @@ language: English
 myst:
     html_meta:
         "property=og:locale": "en_US"
-        "description lang=en": "Explore FlyDSL mono kernels for high-interactivity LLM serving, with scheduling examples in ATOM and controlled serving measurements in vLLM."
+        "description lang=en": "Explore how ATOM uses FlyDSL mono kernels for high-interactivity LLM serving, with scheduling examples and controlled measurements of reuse in vLLM."
         "keywords": "FlyDSL, mono kernel, interactivity, AgentX, InferenceX, ATOM, vLLM, MiniMax-M3, DeepSeek-V4.1-Flash, TileRT, ROCm, AMD Instinct MI355X, LLM inference, decode"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
@@ -23,11 +23,11 @@ myst:
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
 ---
 
-# FlyDSL Mono Kernels for High-Interactivity LLM Serving
+# FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM
 
 **High interactivity is essential for LLM agents.** An agent needs to generate its next action quickly, call a tool, and continue the task. Keeping this loop moving requires fast decode, especially when only one or a few requests are active.
 
-[FlyDSL](https://github.com/ROCm/FlyDSL) lets developers write **mono kernels** that combine connected GPU operations and reduce the waits between them. This article explains how that works with MiniMax-M3 in [ATOM](https://github.com/ROCm/ATOM), then shows how the components and scheduling ideas carry over to DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [4], [11]
+[ATOM](https://github.com/ROCm/ATOM) uses [FlyDSL](https://github.com/ROCm/FlyDSL) to build **mono kernels** that combine connected GPU operations and reduce the waits between them. This article explains the approach through ATOM's MiniMax-M3 implementation, then shows how ATOM's components and scheduling ideas carry over to DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [4], [11]
 
 ## Why every operator can be fast while the decode step is still slow
 
