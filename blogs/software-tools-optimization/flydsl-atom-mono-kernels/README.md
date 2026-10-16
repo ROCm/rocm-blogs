@@ -25,9 +25,9 @@ myst:
 
 # FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM
 
-**High interactivity is essential for LLM agents.** An agent needs to generate its next action quickly, call a tool, and continue the task. Keeping this loop moving requires fast decode, especially when only one or a few requests are active.
+**Extremely high interactivity is critical for LLM applications with strict latency requirements.** Fast token generation helps a coding agent produce its next action sooner and move on to the next step. The goal is to increase throughput while maintaining that responsiveness.
 
-[ATOM](https://github.com/ROCm/ATOM) uses [FlyDSL](https://github.com/ROCm/FlyDSL) to build **mono kernels** that combine connected GPU operations and reduce the waits between them. This article explains the approach through ATOM's MiniMax-M3 implementation, then shows how ATOM's components and scheduling ideas carry over to DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [4], [11]
+[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. This article shows how [ATOM][4] uses that flexibility for MiniMax-M3, and how ATOM's components and scheduling ideas are reused for DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [3], [8], [11]
 
 ## Why every operator can be fast while the decode step is still slow
 
