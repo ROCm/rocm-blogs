@@ -63,7 +63,7 @@ ax.set_axisbelow(True)
 for spine in ax.spines.values():
     spine.set_visible(False)
 ax.tick_params(length=0, pad=8)
-fig.text(0.13, 0.93, "More work served, faster token delivery", fontsize=20, weight="bold")
+fig.text(0.13, 0.93, "Higher interactivity with mono decode", fontsize=20, weight="bold")
 fig.text(0.13, 0.87, "DeepSeek-V4.1-Flash in vLLM · MI355X · TP2", fontsize=13)
 fig.text(0.13, 0.15, "Arrows pair the same concurrency (C1, C2, C4, C8); four measured points, not a full curve.", fontsize=10)
 fig.text(0.13, 0.11, "Same-node comparison · 3,600 s/point · synthetic DSpark acceptance 3.51", fontsize=10)
