@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="680" viewBox="0 0 1280 680" role="img" aria-labelledby="title desc">
+<title id="title">MiniMax-M3 in ATOM: one sparse layer, one FlyDSL launch per TP rank</title><desc id="desc">Thread blocks run six groups of sparse-layer tasks inside one launch, from preparing attention inputs through expert reduction.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b" /></marker></defs>
+<rect width="1280" height="680" rx="18" fill="#f8fafc" />
+<g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
+<text x="40" y="48" font-size="27" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3 in ATOM: one sparse layer, one FlyDSL launch</text>
+<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · Sparse decode layers</text>
+<rect x="28" y="111" width="1224" height="416" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2" />
+<text x="50" y="148" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Thread blocks work across stages</text>
+<text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">ATOM's schedule assigns thread blocks their tasks; consumers wait for the inputs they need.</text>
+<rect x="50" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
+<text x="66" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">1  Prepare queries and caches</text>
+<text x="66" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Input norm + Q/K/V/index projections</text>
+<text x="66" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Head norm + RoPE + cache insertion</text>
+<rect x="465" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
+<text x="481" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">2  Find the sparse keys</text>
+<text x="481" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Score cached tokens</text>
+<text x="481" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Select attention keys</text>
+<rect x="880" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
+<text x="896" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">3  Compute attention</text>
+<text x="896" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Compute sparse attention</text>
+<text x="896" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Combine outputs + projection</text>
+<rect x="880" y="371" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
+<text x="896" y="402" font-size="18" font-weight="700" fill="#172033" text-anchor="start">4  Reduce and route</text>
+<text x="896" y="434" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Attention AllReduce + residual</text>
+<text x="896" y="460" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Normalization + router</text>
+<rect x="465" y="371" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
+<text x="481" y="402" font-size="18" font-weight="700" fill="#172033" text-anchor="start">5  Compute the experts</text>
+<text x="481" y="434" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Shared and routed experts</text>
+<text x="481" y="460" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Up/gate → activation → down</text>
+<rect x="50" y="371" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
+<text x="66" y="402" font-size="18" font-weight="700" fill="#172033" text-anchor="start">6  Complete the layer</text>
+<text x="66" y="434" font-size="15" font-weight="400" fill="#172033" text-anchor="start">MoE AllReduce</text>
+<text x="66" y="460" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Prepare the next layer’s inputs</text>
+<path d="M405 262 H458" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M820 262 H873" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M1055 326 V364" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M873 428 H820" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M458 428 H405" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<rect x="40" y="550" width="1200" height="71" rx="10" fill="#172033" stroke="#172033" stroke-width="2" />
+<text x="640" y="580" font-size="18" font-weight="500" fill="white" text-anchor="middle">Pass ready results between stages</text>
+<text x="640" y="605" font-size="15" font-weight="400" fill="#cbd5e1" text-anchor="middle">Thread blocks load upcoming weights and overlap independent work.</text>
+<text x="40" y="652" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Based on ATOM’s M3 implementation. Arrows show data dependencies.</text>
+</g></svg>

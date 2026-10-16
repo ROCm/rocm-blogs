@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+<title id="title">DeepSeek-V4.1-Flash in vLLM: the fusion boundary adapts to the model</title>
+<desc id="desc">Engram runs where present before K1, which prepares attention. Index-source layers run vLLM's compressor and indexer, including scoring and top-k selection, between K1 and K2. On those layers K2 builds a key table from selected indices. K2 combines attention, output projections, attention reduction, normalization, MoE, and FFN reduction. Conditional modules launch additional kernels.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b" /></marker></defs>
+<rect width="1280" height="360" rx="18" fill="#f8fafc" />
+<g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
+<text x="40" y="46" font-size="27" font-weight="700" fill="#172033" text-anchor="start">DeepSeek-V4.1-Flash in vLLM: choose what to fuse</text>
+<text x="40" y="78" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">K1 prepares attention; K2 keeps attention and experts in the same launch.</text>
+<rect x="40" y="134" width="180" height="112" rx="10" fill="#edf2f7" stroke="#cbd5e1" stroke-width="1.8" />
+<text x="130" y="166" font-size="20" font-weight="700" fill="#172033" text-anchor="middle">Engram</text>
+<text x="130" y="193" font-size="15" font-weight="400" fill="#172033" text-anchor="middle">Where present</text>
+<text x="130" y="224" font-size="14" font-weight="400" fill="#64748b" text-anchor="middle">Separate operation</text>
+<rect x="260" y="112" width="280" height="156" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="1.8" />
+<text x="278" y="144" font-size="20" font-weight="700" fill="#172033" text-anchor="start">K1 · one mono launch</text>
+<text x="278" y="178" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Norm + Q/KV projections</text>
+<text x="278" y="207" font-size="15" font-weight="400" fill="#172033" text-anchor="start">RoPE + cache insertion</text>
+<text x="278" y="246" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Prepare attention inputs</text>
+<rect x="580" y="134" width="180" height="112" rx="10" fill="#edf2f7" stroke="#cbd5e1" stroke-width="1.8" />
+<text x="670" y="158" font-size="18" font-weight="700" fill="#172033" text-anchor="middle">Compressor</text>
+<text x="670" y="182" font-size="18" font-weight="700" fill="#172033" text-anchor="middle">+ indexer / top-k</text>
+<text x="670" y="208" font-size="14" font-weight="400" fill="#172033" text-anchor="middle">Index-source layers</text>
+<text x="670" y="233" font-size="13" font-weight="400" fill="#64748b" text-anchor="middle">Separate operations</text>
+<rect x="800" y="112" width="440" height="156" rx="10" fill="#f0f7fa" stroke="#145d80" stroke-width="1.8" />
+<text x="818" y="144" font-size="20" font-weight="700" fill="#145d80" text-anchor="start">K2 · one mono launch</text>
+<text x="818" y="178" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Attention → output GEMMs</text>
+<text x="818" y="207" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Attention reduction → normalization → MoE</text>
+<text x="818" y="246" font-size="16" font-weight="400" fill="#172033" text-anchor="start">Expert GEMMs → FFN reduction</text>
+<path d="M225 190 L251 190" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M545 190 L571 190" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<path d="M765 190 L791 190" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+<text x="40" y="308" font-size="17" font-weight="400" fill="#172033" text-anchor="start">Gray boxes are conditional and launch additional kernels. Index scoring and top-k remain outside K1 and K2.</text>
+<text x="40" y="342" font-size="14" font-weight="400" fill="#64748b" text-anchor="start">Based on vLLM’s DeepSeek mono schedule. Each mono launch runs per TP rank.</text>
+</g></svg>
