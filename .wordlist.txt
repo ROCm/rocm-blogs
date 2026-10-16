@@ -16,6 +16,7 @@ AdaptiveTopK
 Adaptivity
 addr
 AddressSanitizer
+Adel
 Adi
 Adithya
 adversarially
@@ -519,6 +520,7 @@ GPT
 gpt
 gpu
 GPU
+GPUOpen
 GPUs
 GPU's
 Graf
@@ -676,6 +678,7 @@ IRLens
 ISA
 ISCA
 isn
+Istvan
 ISV
 ISVs
 ITL
@@ -695,6 +698,7 @@ jitter
 Jiyan
 Jiyuan
 JNCIE
+Johar
 Jongsoo
 jpeg
 jpg
@@ -1177,6 +1181,7 @@ RCCL
 RDC
 rdma
 RDMA
+rdna
 RDNA
 rdzv
 rebalance
@@ -1404,6 +1409,7 @@ STL
 stochastically
 strided
 Strix
+struct
 STX
 stxb
 subcommand
@@ -3312,3 +3318,7 @@ Vikram
 Woosuk
 Yuxian
 Zhong
+FoldContext
+FoldStep
+FoldPosition
+builtins
