@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM"
 date: 12 Oct 2026
-author: ""
+author: "Lingpeng Jin, Felix Li, Hattie Wu, Carlus Huang, Ziming Huang, Shijie Feng, Jun Chen, Yifeng Huang, Bin Ding, Yi Gan, Fangzhou Ai, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
 thumbnail: 'mono-overlap.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
@@ -11,11 +11,13 @@ key_value_propositions: Explains how FlyDSL mono kernels reduce decode latency i
 language: English
 myst:
     html_meta:
+        "author": "Lingpeng Jin, Felix Li, Hattie Wu, Carlus Huang, Ziming Huang, Shijie Feng, Jun Chen, Yifeng Huang, Bin Ding, Yi Gan, Fangzhou Ai, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
         "property=og:locale": "en_US"
         "description lang=en": "Explore how ATOM uses FlyDSL mono kernels to reduce decode latency, with reuse across model families and interactivity measurements from vLLM."
         "keywords": "FlyDSL, mono kernel, interactivity, AgentX, InferenceX, ATOM, vLLM, MiniMax-M3, DeepSeek-V4.1-Flash, TileRT, ROCm, AMD Instinct MI355X, LLM inference, decode"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
+        "amd_blog_authors": "Lingpeng Jin, Felix Li, Hattie Wu, Carlus Huang, Ziming Huang, Shijie Feng, Jun Chen, Yifeng Huang, Bin Ding, Yi Gan, Fangzhou Ai, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
         "amd_technical_blog_type": "Tools, Features, and Optimizations"
         "amd_blog_hardware_platforms": "Instinct GPUs"
         "amd_blog_development_tools": "ROCm Software"
