@@ -24,9 +24,9 @@
 <rect x="28" y="322" width="1224" height="343" rx="9" fill="#fff9f7" stroke="#e34b48" stroke-width="1.5"/>
 <text x="50" y="361" font-size="21" font-weight="700" fill="#172033" text-anchor="start">FlyDSL mono: several stages in one launch</text>
 <text x="50" y="388" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">A completed tile can move forward while other tiles are still being produced.</text>
-<text x="50" y="428" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Producer<tspan x="50" dy="21">workgroups</tspan></text>
-<text x="50" y="507" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Consumer<tspan x="50" dy="21">workgroups</tspan></text>
-<text x="50" y="580" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Reduction<tspan x="50" dy="21">workgroups</tspan><tspan x="50" dy="19" font-size="13">Peer-memory accesses</tspan></text>
+<text x="50" y="428" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Producer<tspan x="50" dy="21">thread blocks</tspan></text>
+<text x="50" y="507" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Consumer<tspan x="50" dy="21">thread blocks</tspan></text>
+<text x="50" y="580" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Reduction<tspan x="50" dy="21">thread blocks</tspan><tspan x="50" dy="19" font-size="13">Peer-memory accesses</tspan></text>
 <path d="M245 407 L245 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
 <path d="M400 407 L400 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>
 <path d="M555 407 L555 620" stroke="#64748b" stroke-width="1.5" fill="none" stroke-dasharray="4 5"/>

@@ -7,12 +7,12 @@ thumbnail: 'mono-overlap.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Explains how FlyDSL gives developers control over decode scheduling, with a MiniMax-M3 case study in ATOM and measured throughput and interactivity gains under controlled replay in vLLM.
+key_value_propositions: Explains how ATOM implements mono decode with FlyDSL and how vLLM adapts ATOM's components, with measured throughput and interactivity gains under controlled replay.
 language: English
 myst:
     html_meta:
         "property=og:locale": "en_US"
-        "description lang=en": "Explore how ATOM uses FlyDSL mono kernels for high-interactivity LLM serving, with scheduling examples and controlled measurements of reuse in vLLM."
+        "description lang=en": "Explore FlyDSL mono decode in ATOM for MiniMax-M3 and DeepSeek-V4.1, and the extension of ATOM's components to vLLM with controlled serving measurements."
         "keywords": "FlyDSL, mono kernel, interactivity, AgentX, InferenceX, ATOM, vLLM, MiniMax-M3, DeepSeek-V4.1-Flash, TileRT, ROCm, AMD Instinct MI355X, LLM inference, decode"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
@@ -27,7 +27,7 @@ myst:
 
 **Extremely high interactivity is critical for LLM applications with strict latency requirements.** Fast token generation helps a coding agent produce its next action sooner and move on to the next step. The goal is to increase throughput while maintaining that responsiveness.
 
-[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. This article shows how [ATOM][4] uses that flexibility for MiniMax-M3, and how ATOM's components and scheduling ideas are reused for DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [3], [8], [11]
+[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. [ATOM][4] uses these capabilities to build mono decode for MiniMax-M3 and DeepSeek-V4.1; [vLLM](https://github.com/vllm-project/vllm) adapts ATOM's DeepSeek components. [2], [3], [8], [11]
 
 ## Why mono kernels speed up decode
 
@@ -43,9 +43,9 @@ The related ROCm posts on [low-latency matrix multiplications (GEMMs)](https://r
 
 ## What FlyDSL provides, and who does what
 
-In these implementations, a **mono kernel** combines several stages in one launch. It uses a grid of **workgroups (thread blocks in HIP)** designed to remain resident for that invocation: all workgroups must be able to run on the GPU at the same time. A workgroup can take on new tasks as the layer advances. Consumers wait for their required inputs while independent tasks continue elsewhere in the grid. [3], [7]
+In ATOM, a **mono kernel** combines several stages in one launch. It uses a grid of **thread blocks** designed to remain resident for that invocation: all thread blocks must be able to run on the GPU at the same time. A thread block can take on new tasks as the layer advances. Consumers wait for their required inputs while independent tasks continue elsewhere in the grid. [3], [7]
 
-Workgroups exchange intermediate results through global-memory buffers. Registers and Local Data Share (LDS), the software-managed on-chip memory local to each compute unit, hold local working data. The schedule uses workgroup barriers where needed; it avoids requiring the entire grid to finish every stage together. [3], [7]
+Thread blocks exchange intermediate results through global-memory buffers. Registers and Local Data Share (LDS), the software-managed on-chip memory local to each compute unit, hold local working data. The schedule uses thread block barriers where needed; it avoids requiring the entire grid to finish every stage together. [3], [7]
 
 ![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
 
@@ -65,11 +65,13 @@ These capabilities make a mono schedule practical to write, but **FlyDSL does no
 | **Kernel developer** | Design the schedule, assign tasks, place weight prefetches, and define handoffs. Check that the compiled resource use allows residency and that waiting consumers cannot prevent producers from running. |
 | **Serving engine (ATOM, vLLM)** | Choosing the execution path for each step; runtime metadata, caches, and buffers; keeping all TP ranks on the same path; HIP Graph compatibility; correctness checks; and fallback to separate kernels. |
 
-The design is inspired by the **TileRT MonoKernel work** in the [InferenceMAX/InferenceX snapshot `8ac9834`](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9), cited by FlyDSL #1204 and associated with [#3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389). ATOM contributes the M3 and DeepSeek-V4.1 implementations and shared [`atom/mono/`](https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/mono) components. vLLM adapts ATOM's DeepSeek stages and common helpers to its own weights, numerical operations, buffers, and execution paths. This is reuse of code and scheduling ideas with engine-specific adaptation. [5], [6], [8], [11]
+The design is inspired by the **TileRT MonoKernel work** in the [InferenceMAX/InferenceX snapshot `8ac9834`](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9), cited by FlyDSL #1204 and associated with [#3389](https://github.com/SemiAnalysisAI/InferenceX/pull/3389). [5], [6]
 
-## Case study: MiniMax-M3 in ATOM
+## Bringing mono kernels to ATOM
 
-M3's [mono kernel](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/post_attn.py) covers the complete sparse-layer path in **one launch per TP rank**. That path includes input projections, index scoring and selection, sparse attention, the attention AllReduce, routing, the shared and routed experts, and the MoE AllReduce. The first three dense layers keep ATOM's separate-kernel modules. [1], [3]
+ATOM implements mono decode for MiniMax-M3 and DeepSeek-V4.1 and provides reusable [`atom/mono/`](https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/mono) components. [1], [8]
+
+For MiniMax-M3, ATOM's [mono kernel](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/post_attn.py) covers the complete sparse-layer path in **one launch per TP rank**. That path includes input projections, index scoring and selection, sparse attention, the attention AllReduce, routing, the shared and routed experts, and the MoE AllReduce. The first three dense layers keep ATOM's separate-kernel modules. [1], [3]
 
 ![MiniMax-M3 sparse-layer stages inside one FlyDSL launch](images/minimax-mono-flow.svg)
 
@@ -77,15 +79,15 @@ M3's [mono kernel](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9
 
 Three mechanisms show how FlyDSL's controls address the waits described above. The results later compare complete implementations; they do not measure each mechanism's contribution separately.
 
-### 1. Workgroups carry the layer across stages
+### 1. Thread blocks handle tasks across stages
 
-M3 launches **256 workgroups of 512 threads**, or eight **64-thread wavefronts (wave64)** per workgroup, targeting one resident workgroup per MI355X compute unit. M3's Python schedule assigns each workgroup a sequence of tasks: a workgroup that performs attention can take on routing or expert work later in the same launch. The stages share one launch, and local handoffs let tasks advance without a grid-wide barrier at every stage. Synchronization still has a cost, but it can follow the data each task needs. [3], [9]
+For M3, ATOM launches **256 thread blocks of 512 threads**, or eight **64-thread wavefronts (wave64)** per thread block, targeting one resident thread block per MI355X compute unit. ATOM's Python schedule assigns each thread block a sequence of tasks: a thread block that performs attention can take on routing or expert work later in the same launch. The stages share one launch, and local handoffs let tasks advance without a grid-wide barrier at every stage. Synchronization still has a cost, but it can follow the data each task needs. [3], [9]
 
-The grid size alone does not guarantee progress. Register and LDS use must allow all workgroups to be resident, and the task order must let producers finish the data that consumers are waiting for. The developer checks these conditions; the engine also checks deployment requirements. For example, the cited vLLM path rejects mono on a partitioned GPU with fewer than 256 compute units. [3], [11]
+The grid size alone does not guarantee progress. Register and LDS use must allow all thread blocks to be resident, and the task order must let producers finish the data that consumers are waiting for. The developer checks these conditions; the engine also checks deployment requirements. For example, the cited vLLM path rejects mono on a partitioned GPU with fewer than 256 compute units. [3], [11]
 
 ### 2. Weight loads overlap the preceding computation
 
-A workgroup can request the weights for a later stage before that stage receives its input. In M3's MoE path for 1–4 token rows, **after the first up/gate task round**, the workgroup issues loads for the down-projection weights, which a later stage will use. These loads cover the first token's routed experts and the shared expert. They can remain in flight during subsequent computation and data exchange. [3], [9]
+A thread block can request the weights for a later stage before that stage receives its input. In M3's MoE path for 1–4 token rows, **after the first up/gate task round**, the thread block issues loads for the down-projection weights, which a later stage will use. These loads cover the first token's routed experts and the shared expert. They can remain in flight during subsequent computation and data exchange. [3], [9]
 
 The timing is a tuned choice. Issuing the loads too early competes with upstream loads for bandwidth and keeps vector registers occupied for longer. Issuing them too late leaves the dependency-chain wait in place. Because FlyDSL exposes when loads are issued, the developer can place this point deliberately and move it when the schedule changes.
 
@@ -93,7 +95,7 @@ The timing is a tuned choice. Issuing the loads too early competes with upstream
 
 M3's [mailbox helper](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py) stores each value beside a tag in global-memory or peer-accessible buffers. **The consumer reads the tag and the value together**, so a successful readiness check also supplies the data for its next computation. The tag combines the decode-step counter and layer number to distinguish the current invocation from an earlier one. The memory-access protocol makes the data visible: it uses device scope within a GPU and system scope between peer GPUs. [3], [7]
 
-The TP AllReduce applies the same idea across GPUs. Workgroups exchange partial sums through peer memory inside the kernel and reduce completed **32-channel output tiles** while other workgroups are still producing other tiles. Residual updates can consume reduced tiles immediately; RMSNorm, which needs the complete hidden row, waits for that row rather than for a separate AllReduce kernel to finish. [3]
+The TP AllReduce applies the same idea across GPUs. Thread blocks exchange partial sums through peer memory inside the kernel and reduce completed **32-channel output tiles** while other thread blocks are still producing other tiles. Residual updates can consume reduced tiles immediately; RMSNorm, which needs the complete hidden row, waits for that row rather than for a separate AllReduce kernel to finish. [3]
 
 ### Results in ATOM
 
@@ -115,9 +117,9 @@ All times are in milliseconds; parentheses give speedup relative to Separate.
 
 M3's source PR reports bit-identical index selection against the reference over 3K–1.04M contexts and bit-identical outputs through 16 chained layers with CP off versus on at 3K, 37K, and 200K contexts. It also reports serving a 1,040,186-token request. GSM8K chat five-shot scores are 0.9447 for the separate path, 0.9371 and 0.9424 for two mono runs, and 0.9378 for mono + CP. These scores provide task-level checks, but do not establish exact numerical equivalence or unchanged quality across tasks. [1]
 
-## Across frameworks: DeepSeek-V4.1-Flash in vLLM
+## Extending ATOM's mono kernels to vLLM
 
-The second test of the approach is whether it carries beyond one engine and one model. vLLM runs DeepSeek-V4.1-Flash decode on MI355X with FlyDSL mono kernels, merged in two PRs. [11], [12]
+vLLM adapts ATOM's DeepSeek stages and shared helpers to its own weights, numerical operations, buffers, and execution paths. The resulting DeepSeek-V4.1-Flash mono decode implementation runs on MI355X and was merged in two PRs. [8], [11], [12]
 
 ### The fusion boundary follows the model
 
@@ -190,21 +192,21 @@ The results suggest where mono kernels are useful and what deploying them requir
 Start with the [FlyDSL mono components](https://github.com/ROCm/FlyDSL/tree/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel) and [ATOM's shared mono framework](https://github.com/ROCm/ATOM/tree/5e8d9131739aaa53836713c79e6d547c23980f03/atom/mono):
 
 1. **Find the waits.** Profile the separate path at the decode widths you serve. Map which inputs each stage actually waits for and where communication sits on the critical path.
-2. **Write the schedule in FlyDSL.** Reuse the GEMM, quantization, mailbox, and AllReduce components. Choose the fusion boundary from the model's dependencies, give workgroups independent work so that they can prefetch, and specialize task placement per width.
+2. **Write the schedule in FlyDSL.** Reuse the GEMM, quantization, mailbox, and AllReduce components. Choose the fusion boundary from the model's dependencies, give thread blocks independent work so that they can prefetch, and specialize task placement per width.
 3. **Integrate and evaluate.** Add dispatch conditions and a fallback, keep ranks in lockstep, and verify HIP Graph replay. Check outputs against the separate path with tools such as `ATOM_MONO_CHECK`, then run task evaluations with actual rejection sampling. Sweep concurrency and compare throughput at the required interactivity, while also recording TTFT.
 
 Bring a model, a profile, or a measured schedule improvement to [FlyDSL](https://github.com/ROCm/FlyDSL), [ATOM](https://github.com/ROCm/ATOM), or [vLLM](https://github.com/vllm-project/vllm).
 
 ## Appendix: M3 implementation notes
 
-These details support the case study but are not needed to follow the main argument.
+These notes describe ATOM's M3 implementation in more detail.
 
 **Stages inside the launch.** The [pre-attention stages](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/pre_attn.py) normalize and quantize inputs to per-token FP8. They then use FP8 MFMA (matrix fused multiply-add) instructions for the Q/K/V and index projections, followed by head normalization, RoPE, and cache insertion. Index scoring and selection choose up to 16 blocks of 128 tokens; sparse attention uses eight partitions of up to 256 keys. In the [index scorer](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/index_score.py), only a block that may contain newly inserted keys waits for that insertion. The router selects four routed experts alongside a shared expert. Both narrow and wider MoE paths use MXFP8 activation operands with MXFP4 weights in native scaled MFMA instructions. [3]
 
 **Layout choices.** Two choices in the [M3 layout code](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py) show why explicit layout control matters: [9]
 
 - At 16 token rows, one operand layout produced 16-way LDS bank conflicts. The source comment records them as costing about **3 µs per up/gate task**. Adding 16 bytes to each row's pitch removes those conflicts.
-- In the source-reported four-GPU configuration, **240 expert workgroups** poll one 1 KB router-score payload. Writing eight copies spreads those reads; the source comment records K4 layer-kernel latency falling from **37.3 to 35.9 µs** for that configuration.
+- In the source-reported four-GPU configuration, **240 expert thread blocks** poll one 1 KB router-score payload. Writing eight copies spreads those reads; the source comment records K4 layer-kernel latency falling from **37.3 to 35.9 µs** for that configuration.
 
 The M3 work also added or adopted FlyDSL primitives such as `fx.rocdl.readlane`, `ballot`, and `fx.ctpop`. [1]
 
