@@ -1,4 +1,4 @@
-"""Regenerate Figure 1 from mono-benefits.csv. Requires matplotlib."""
+"""Regenerate Figure 5 from mono-benefits.csv. Requires matplotlib."""
 
 import csv
 import re

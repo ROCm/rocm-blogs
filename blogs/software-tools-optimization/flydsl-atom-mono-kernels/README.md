@@ -1,6 +1,6 @@
 ---
 blogpost: true
-blog_title: "FlyDSL Mono Kernels: More Responsive LLM Decode in ATOM and vLLM"
+blog_title: "FlyDSL Mono Kernels for High-Interactivity LLM Serving"
 date: 12 Oct 2026
 author: ""
 thumbnail: 'mono-overlap.png'
@@ -12,7 +12,7 @@ language: English
 myst:
     html_meta:
         "property=og:locale": "en_US"
-        "description lang=en": "Learn how developers use FlyDSL mono kernels to reduce waits during LLM decode on AMD Instinct MI355X, with an ATOM case study and controlled vLLM serving results."
+        "description lang=en": "Explore FlyDSL mono kernels for high-interactivity LLM serving, with scheduling examples in ATOM and controlled serving measurements in vLLM."
         "keywords": "FlyDSL, mono kernel, interactivity, AgentX, InferenceX, ATOM, vLLM, MiniMax-M3, DeepSeek-V4.1-Flash, TileRT, ROCm, AMD Instinct MI355X, LLM inference, decode"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
@@ -23,21 +23,11 @@ myst:
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
 ---
 
-# FlyDSL Mono Kernels: More Responsive LLM Decode in ATOM and vLLM
+# FlyDSL Mono Kernels for High-Interactivity LLM Serving
 
-For interactive LLM serving, throughput is only part of the objective. A coding agent must produce its next action, call a tool, and continue the task quickly enough to keep the user moving. The practical goal is to serve more work while preserving responsiveness for each user. Higher aggregate throughput is less useful if every user has to wait longer.
+**High interactivity is essential for LLM agents.** An agent needs to generate its next action quickly, call a tool, and continue the task. Keeping this loop moving requires fast decode, especially when only one or a few requests are active.
 
-Throughput measures serving capacity. To compare interactive services fairly, measure the throughput each delivers **while meeting the same responsiveness requirement**, or examine the full throughput–interactivity curve. The [InferenceX AgentX](https://inferencex.semianalysis.com/agentx) benchmark replays multi-turn, long-context agent sessions and uses **interactivity** for the per-user token rate on the horizontal axis. Its P90 interactivity is **1 / P90 inter-token latency**, with latency in seconds: higher is better. The P90 label refers to the latency percentile, so this metric describes the slower end of the request distribution. [15], [16]
-
-Token delivery is only part of the experience. Time to first token (TTFT), tool execution, and the correctness of the agent's actions also matter. This article focuses on reducing waits during **decode**, when the model generates tokens after processing the prompt.
-
-**[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the control to write *mono kernels*: GPU programs that combine connected stages and reduce the waits between them.** MiniMax-M3 in [ATOM](https://github.com/ROCm/ATOM) (AiTer Optimized Model) shows how this works. [4] DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm) shows how the components can be adapted to another serving engine.
-
-In the reported vLLM replay on two AMD Instinct MI355X GPUs at concurrency one, P90 interactivity rises from **318.1 to 429.1 tokens/s/user (1.35×)** and total throughput rises **1.16×**. Here, total throughput counts **input plus output tokens**, including input context already in cache; it is not the rate of newly generated tokens. Both runs use the same synthetic speculative-decoding acceptance setting of 3.51, rather than actual draft/target rejection sampling. **TTFT p90 rises from 1.18 to 1.28 seconds.** These are controlled serving measurements, not a measurement of how quickly an agent completes a task. [11], [16]
-
-![DeepSeek-V4.1-Flash in vLLM on MI355X TP2: at concurrency 1, 2, 4, and 8, FlyDSL mono raises both P90 interactivity and total throughput relative to mono off](images/vllm-dsv41-throughput-interactivity.png)
-
-*Figure 1. Four measured throughput–interactivity points for DeepSeek-V4.1-Flash in vLLM on MI355X, TP2: mono off versus K1 + K2 on 30 standard layers. Each arrow connects runs at the same concurrency on the same node; these points do not establish the full curve. The vertical axis counts input plus output tokens. Both runs use synthetic DSpark acceptance 3.51, with 3,600 seconds per point. [11], [16]*
+[FlyDSL](https://github.com/ROCm/FlyDSL) lets developers write **mono kernels** that combine connected GPU operations and reduce the waits between them. This article explains how that works with MiniMax-M3 in [ATOM](https://github.com/ROCm/ATOM), then shows how the components and scheduling ideas carry over to DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [4], [11]
 
 ## Why every operator can be fast while the decode step is still slow
 
@@ -61,7 +51,7 @@ Workgroups exchange intermediate results through global-memory buffers. Register
 
 ![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
 
-*Figure 2. Mono combines stages in one launch, starts independent loads early, passes ready tiles forward without per-stage grid-wide barriers, and overlaps reductions with computation. Bars show execution order, not measured durations.*
+*Figure 1. Mono combines stages in one launch, starts independent loads early, passes ready tiles forward without per-stage grid-wide barriers, and overlaps reductions with computation. Bars show execution order, not measured durations.*
 
 Calling separate library operators does not give a developer control over the work inside each call. FlyDSL is a Python domain-specific language for GPU kernels, compiled to GPU code through MLIR. It lets kernel developers: [2]
 
@@ -85,7 +75,7 @@ M3's [mono kernel](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9
 
 ![MiniMax-M3 sparse-layer stages inside one FlyDSL launch](images/minimax-mono-flow.svg)
 
-*Figure 3. M3's sparse-layer dependency chain inside one launch. Stage-by-stage details are in the [implementation notes](#appendix-m3-implementation-notes).*
+*Figure 2. M3's sparse-layer dependency chain inside one launch. Stage-by-stage details are in the [implementation notes](#appendix-m3-implementation-notes).*
 
 Three mechanisms show how FlyDSL's controls address the waits described above. The results later compare complete implementations; they do not measure each mechanism's contribution separately.
 
@@ -121,7 +111,7 @@ All times are in milliseconds; parentheses give speedup relative to Separate.
 
 ![M3 GPU decode-step latency: ATOM separate kernels 11.47 ms, FlyDSL mono 7.00 ms, FlyDSL mono plus indexer CP 6.26 ms](images/minimax-flydsl-decode-step.png)
 
-*Figure 4. At batch one, FlyDSL mono shortens M3's GPU decode step in ATOM, and indexer CP adds a further gain at long context. [1]*
+*Figure 3. At batch one, FlyDSL mono shortens M3's GPU decode step in ATOM, and indexer CP adds a further gain at long context. [1]*
 
 **Mono saves 4.47 ms at batch one and 2.59 ms at batch four** in these measurements. The smaller relative gain at batch four is consistent with fixed costs being spread over more work, but the measurements do not establish a breakdown of the bottlenecks. The two paths also differ in kernel code, data handling, and communication. Adding CP saves a further 0.74 ms at batch one and 3.52 ms at batch four. These GPU-step results help assess the implementation; they do not directly measure per-user token rate.
 
@@ -139,7 +129,7 @@ Some operations remain outside those launches. Where present, Engram runs before
 
 ![DeepSeek-V4.1-Flash in vLLM: Engram before K1 where present, compressor and indexer between K1 and K2 on index-source layers, attention and experts inside K2](images/deepseek-v41-mono-flow.svg)
 
-*Figure 5. The vLLM path after #61082. Engram and the compressor/indexer calls are conditional on the layer. Index scoring and top-k selection remain outside the mono launches; K2 consumes their result. [12]*
+*Figure 4. The vLLM path after #61082. Engram and the compressor/indexer calls are conditional on the layer. Index scoring and top-k selection remain outside the mono launches; K2 consumes their result. [12]*
 
 ### What the engine provides
 
@@ -154,11 +144,13 @@ On a standard layer at TP4 with six token rows and cold weights, the vLLM layer 
 
 ### Serving results, with their conditions
 
+The [InferenceX AgentX](https://inferencex.semianalysis.com/agentx) benchmark replays multi-turn, long-context agent sessions and compares throughput with per-user interactivity. The serving goal is to handle more work while meeting a required interactivity level. Its **P90 interactivity is 1 / P90 inter-token latency**, with latency in seconds: higher is better. The P90 label refers to the latency percentile, so this metric describes the slower end of the request distribution. [15], [16]
+
 The AgentX comparison in [vLLM #60397](https://github.com/vllm-project/vllm/pull/60397), merged October 10, 2026, uses MI355X, TP2, a same-node mono-off baseline, the InferenceX recipe, and **3,600 seconds per point**. The four concurrency settings ran concurrently on one eight-GPU node, using two GPUs per setting. The table below compares mono off with **K1 + K2 on the 30 standard layers only**; it predates the PR's additional FFN-only path on the other 10 layers. [11]
 
 Both runs use DSpark with five draft tokens and a **synthetic acceptance setting of 3.51**. This sets an acceptance curve instead of using actual draft/target rejection sampling; 3.51 is an acceptance-length setting, not a percentage. The replay controls how much accepted output each step delivers, but it cannot show a change in natural acceptance or establish task accuracy. In the table, arrows mean mono off → mono on. Total throughput counts input plus output tokens, including cached input context. [11], [16]
 
-**Table units:** C is request concurrency per server; interactivity is P90 tokens/s/user; throughput is input + output tokens/s; TTFT is p90 seconds.
+**Table units:** C is request concurrency per server; interactivity is P90 tokens/s/user; throughput is input + output tokens/s; time to first token (TTFT) is reported at p90 in seconds.
 
 | C | Interactivity | Throughput | TTFT |
 | ---: | --- | --- | --- |
@@ -166,6 +158,10 @@ Both runs use DSpark with five draft tokens and a **synthetic acceptance setting
 | 2 | 299.3 → **381.7 (1.28×)** | 22,735 → **25,695 (1.13×)** | 1.10 → 1.08 |
 | 4 | 288.0 → **332.4 (1.15×)** | 33,043 → **35,885 (1.09×)** | 1.27 → 1.26 |
 | 8 | 214.6 → **245.3 (1.14×)** | 58,294 → **60,501 (1.04×)** | 1.01 → 1.08 |
+
+![DeepSeek-V4.1-Flash in vLLM on MI355X TP2: at concurrency 1, 2, 4, and 8, FlyDSL mono raises both P90 interactivity and total throughput relative to mono off](images/vllm-dsv41-throughput-interactivity.png)
+
+*Figure 5. Four measured throughput–interactivity points for DeepSeek-V4.1-Flash in vLLM on MI355X, TP2: mono off versus K1 + K2 on 30 standard layers. Each arrow connects runs at the same concurrency on the same node; these points do not establish the full curve. The vertical axis counts input plus output tokens. Both runs use synthetic DSpark acceptance 3.51, with 3,600 seconds per point. [11], [16]*
 
 At all four measured concurrency settings, both interactivity and total throughput improve. Those paired points show that the throughput gain did not require a lower per-user token rate in this replay. They do not quantify the gain at an exactly matched interactivity target or establish the full capacity curve. **TTFT does not improve consistently:** it rises by 0.10 seconds at concurrency one and 0.07 seconds at concurrency eight. TTFT includes queuing, prompt processing, and other work outside the decode kernels, so it must be tracked alongside interactivity. [11]
 
@@ -234,7 +230,7 @@ Exchanging and merging candidates also costs time, so CP applies to requests pas
 
 The separate Kimi-K3 KDA + MoE serving integration in ATOM #2535 remains under review as of October 15, 2026. Its review confirms an unresolved DSpark auxiliary-buffer issue: on mono steps, the drafter can read stale features because the required capture hooks are bypassed. Fixed-acceptance replay cannot reveal the effect on natural acceptance, and the PR reports no task-level accuracy evaluation for this path. It is therefore excluded from this article's serving evidence. [14]
 
-**Data and reproduction.** The three linked CSVs retain the reported values and derived ratios. The [Figure 1 plotting script](data/plot-vllm-agentx.py) reads the comparison CSV and requires Matplotlib. All measurements and quality checks above are source-reported; this article adds no new GPU benchmark or task evaluation.
+**Data and reproduction.** The three linked CSVs retain the reported values and derived ratios. The [Figure 5 plotting script](data/plot-vllm-agentx.py) reads the comparison CSV and requires Matplotlib. All measurements and quality checks above are source-reported; this article adds no new GPU benchmark or task evaluation.
 
 [^m3-support]: At ATOM #2419, M3 mono requires TP4, DP=PP=1, FP8 KV/index caches with 128-token blocks, `max_model_len` ≤ 1,048,576, eager or non-piecewise graphs, no TBO, and no ATOM vLLM/SGLang plugin mode. The stock recipe enables the shared index cache, which disables mono, so using mono requires `use_index_cache: false`. Eligible decode steps have 1–16 rows including graph padding and matching cache metadata. The [example launch script](data/run-minimax-m3-mono.sh) adapts the pinned recipe for four MI355X GPUs. `ATOM_MONO_CHECK` provides per-layer comparisons; `ATOM_MONO_TRACE` and `ATOM_MONO_TIMELINE` expose step data and timing during development. [1], [3], [10]
 
