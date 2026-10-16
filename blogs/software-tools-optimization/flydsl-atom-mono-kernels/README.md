@@ -3,7 +3,7 @@ blogpost: true
 blog_title: "FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM"
 date: 16 Oct 2026
 author: "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
-thumbnail: 'flydsl-mono-atom-cover.png'
+thumbnail: 'atom-high-interactivity-reference.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
@@ -48,6 +48,8 @@ FlyDSL gives developers four kinds of control over a GPU program: [2]
 - **Data movement and synchronization.** Decide when to load data and how to signal that an output is ready, within a GPU or across GPUs.
 - **Low-level control.** Write and tune a wide range of operations at the block, wavefront, and thread levels, with control down to individual GPU instructions. [2], [7]
 
+These controls connect local kernel tuning with scheduling across a layer. Developers can tune work within a block, coordinate threads within a wavefront, and then decide how blocks hand data to later stages. This lets them optimize both the operations themselves and the way those operations work together. [2], [7]
+
 ATOM uses these controls to keep **thread blocks** active across stages, passing ready results to consumers and taking on new tasks as the layer advances. [3], [7]
 
 ![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
@@ -62,6 +64,8 @@ The design draws on **TileRT's MonoKernel work**. [5], [6]
 
 ATOM supports FlyDSL mono decode for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and MiniMax-M3**. Its [shared mono components](https://github.com/ROCm/ATOM/tree/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/mono) let developers adapt scheduling and data handoffs to each model. Kimi-K3 uses mono for its linear-attention (KDA) layers; its MLA layers keep the existing path. [1], [8], [13]
 
+The shared components handle recurring needs such as buffers, synchronization, and reductions. Each model supplies the schedule that connects its own stages. ATOM then connects that schedule to serving: batching and speculative decoding can change the number of tokens in a step, so runtime dispatch must select a supported path and keep participating GPUs in agreement. [8], [13]
+
 For MiniMax-M3, ATOM combines attention, mixture-of-experts (MoE) computation, and their supporting operations into **one launch per sparse layer and TP rank**. The first three dense layers keep the separate path. [1], [3]
 
 ![MiniMax-M3 sparse-layer stages inside one FlyDSL launch](images/minimax-mono-flow.svg)
@@ -70,9 +74,9 @@ For MiniMax-M3, ATOM combines attention, mixture-of-experts (MoE) computation, a
 
 Three scheduling choices reduce waits:
 
-- **Reuse thread blocks across stages.** A block can finish attention work and then take on routing or expert tasks. [3], [9]
-- **Load weights early.** A later stage's weights can load while earlier work is still running. [3], [9]
-- **Pass on ready data.** Tagged buffers let consumers and cross-GPU reductions begin on ready portions of the current step's output. [3], [7]
+- **Reuse thread blocks across stages.** A block can finish attention work and then take on routing or expert tasks. Its role changes as the layer progresses, allowing the schedule to use the same GPU resources for different operations. [3], [9]
+- **Load weights early.** A later stage's weights can load while earlier work is still running. The later calculation still waits for its input, but its weight loads can already be under way. [3], [9]
+- **Pass on ready data.** Tagged buffers identify outputs from the current decode step. Consumers and cross-GPU reductions can begin on ready portions, while other blocks are still producing the rest. Progress depends on the data each task needs. [3], [7]
 
 ### Decode latency in ATOM
 
@@ -92,9 +96,13 @@ Times are median GPU decode-step latency in milliseconds; parentheses show speed
 
 **Mono alone delivers 1.64× speedup at batch one; the 1.83× result includes CP.** Gains are smaller at larger batches. These GPU-step measurements do not directly measure per-user token rate or isolate the contribution of each scheduling choice.
 
+A larger batch gives separate kernels more work to distribute across the GPU and more tokens over which to spread launch overhead. That can reduce the relative benefit of mono, although the balance depends on the model and schedule.
+
 ## Extending mono decode to vLLM
 
 FlyDSL mono decode is also integrated into vLLM for DeepSeek-V4.1-Flash on MI355X. It builds on ATOM's mono work, with vLLM handling execution-path selection, memory management, and coordination across GPUs. [8], [11], [12]
+
+The GPU scheduling ideas carry across frameworks, while each engine connects them to its own batches, buffers, and graph execution. This is the division between reusable kernel work and the integration needed to serve a model. [11]
 
 The schedule uses **two mono launches, K1 and K2, per eligible layer and TP rank**. K1 prepares attention inputs; K2 handles attention, expert computation, and reductions. Some operations, such as compression and token selection, remain outside these launches. [11], [12]
 
@@ -123,11 +131,15 @@ Arrows mean mono off → mono on. C is request concurrency per server; interacti
 
 *Figure 5. Throughput and interactivity with mono off versus K1 + K2 on 30 standard layers. Arrows connect runs at the same concurrency under the conditions above; these four points do not establish the full curve. [11]*
 
+Moving right in Figure 5 means faster token generation per user; moving up means higher input-plus-output throughput. Looking at both axes shows how much work the server handles alongside the responsiveness users receive. For deployment, compare configurations at the level of responsiveness your application needs.
+
 At concurrency one, **P90 interactivity increases from 318.1 to 429.1 tokens/s/user (1.35×)**. Interactivity and total throughput improve at all four tested settings. **TTFT does not improve consistently:** at concurrency one it rises from 1.18 to 1.28 seconds. Faster decode is one part of responsiveness; TTFT and time spent waiting for tools also matter. [11]
 
 A further extension covers all 40 backbone layers. At **TP4, concurrency one**, it reports **541.6 → 562.6 P90 tokens/s/user (+3.9%)**, using synthetic DSpark acceptance 3.51 and one 3,600-second run per version. **This compares two mono versions**: the baseline already uses K1 + K2 on 30 layers and FFN-only mono on the other 10. [12]
 
 ## Scope and costs
+
+A fused kernel keeps more work and state in one program. Register and shared-memory use must leave enough thread blocks able to run at once. That resource budget is part of schedule design and can limit how much work to combine. [3], [7]
 
 - **Workload fit.** Short, dependent kernels at small batch sizes offer opportunities to reduce waits. Benefits depend on the model, context length, and batch size; profile the workload you intend to serve.
 - **Supported configurations.** Each schedule targets particular GPU architectures, TP sizes, and decode shapes. The engine must check eligibility and provide a fallback for other steps. [1], [11], [12]
