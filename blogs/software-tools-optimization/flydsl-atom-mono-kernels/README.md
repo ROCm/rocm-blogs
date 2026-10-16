@@ -7,12 +7,12 @@ thumbnail: 'mono-overlap.png'
 tags: AI/ML, Performance
 category: Software tools & optimizations
 target_audience: GPU kernel developers and LLM inference engineers
-key_value_propositions: Explains how ATOM implements mono decode with FlyDSL and how vLLM adapts ATOM's components, with measured throughput and interactivity gains under controlled replay.
+key_value_propositions: Explains how FlyDSL mono kernels reduce decode latency in ATOM and how mono decode improves per-user interactivity in vLLM under controlled replay.
 language: English
 myst:
     html_meta:
         "property=og:locale": "en_US"
-        "description lang=en": "Explore FlyDSL mono decode across multiple model families in ATOM, and the extension of ATOM's components to vLLM with controlled serving measurements."
+        "description lang=en": "Explore how ATOM uses FlyDSL mono kernels to reduce decode latency, with reuse across model families and interactivity measurements from vLLM."
         "keywords": "FlyDSL, mono kernel, interactivity, AgentX, InferenceX, ATOM, vLLM, MiniMax-M3, DeepSeek-V4.1-Flash, TileRT, ROCm, AMD Instinct MI355X, LLM inference, decode"
         "amd_category": "Developer Resources"
         "amd_asset_type": "Blog"
@@ -25,29 +25,26 @@ myst:
 
 # FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM
 
-**Extremely high interactivity is critical for LLM applications with strict latency requirements.** Fast token generation helps a coding agent produce its next action sooner and move on to the next step. The goal is to increase throughput while maintaining that responsiveness.
+**Extremely high interactivity is critical for LLM applications with strict latency requirements.** Fast token generation helps a coding agent produce its next action sooner and move on to the next step. The goal is to improve interactivity by reducing decode latency.
 
-[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. [ATOM][4] uses these capabilities to build mono decode across several model families; [vLLM](https://github.com/vllm-project/vllm) adapts ATOM's DeepSeek components. [2], [3], [8], [11], [14]
+[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. [ATOM][4] uses these capabilities to build mono decode across several model families. The approach also extends to [vLLM](https://github.com/vllm-project/vllm). [2], [3], [8], [11], [14]
 
 ## Why mono kernels speed up decode
 
-Small-batch decode runs many short kernels. For example, a standard DeepSeek-V4.1-Flash layer in the cited vLLM implementation launches **about 40 separate kernels**, covering normalization, projections, attention, mixture-of-experts (MoE) computation, and reductions across GPUs. With only a few token rows, many operations do little arithmetic work, so **repeated kernel launches can account for a substantial share of decode time**. [11]
+Small-batch decode runs many short kernels. Each launch has overhead, and individual kernels may have too little work to use the GPU's parallel resources fully.
 
-These small kernels can also **leave GPU resources idle**. Some do not have enough parallel work to keep all compute units busy; others wait for data. When they run sequentially on one stream, the next kernel cannot use that idle capacity until the current one finishes.
+Mono kernels combine related operations into fewer launches and let thread blocks handle work from multiple stages. This allows weights to load early, computation to overlap with reductions, and ready data to reach the next stage sooner. [3], [11]
 
-**Mono kernels bring these operations into a shared schedule with fewer launches.** Thread blocks can take on different tasks, load a later stage's weights during earlier computation, and start tensor-parallel (TP) reductions as soon as part of an output is ready. Those reductions combine partial results from GPUs working on the same layer. This reduces both launch overhead and waits inside the layer. On the standard vLLM layers above, **two mono launches replace about 40 separate kernels**. [3], [11]
-
-HIP Graph replay helps with CPU submission overhead, but it preserves the boundaries between GPU kernels. Mono changes the GPU schedule itself, so independent loads, computation, and communication can overlap while respecting data dependencies.
-
-The related ROCm posts on [low-latency matrix multiplications (GEMMs)](https://rocm.blogs.amd.com/software-tools-optimization/accelerating-llm-inference-on-amd-gpus-with-low-latency-gemms/README.html) and [ATOM's Two-Batch Overlap](https://rocm.blogs.amd.com/software-tools-optimization/atom-optimiztion/README.html) cover operator tuning and overlap across micro-batches. Mono targets work and waits **inside a model layer**.
+HIP Graph replay reduces CPU submission overhead; mono also changes how work is scheduled on the GPU.
 
 ## What FlyDSL provides
 
-FlyDSL gives developers control over three parts of a GPU program: [2]
+FlyDSL gives developers four kinds of control over a GPU program: [2]
 
 - **Work assignment.** Map tasks to thread blocks and threads, and specialize them for each decode width.
-- **Layout and computation.** Choose data layouts, tile sizes, and matrix instructions for each stage.
+- **Layout and tiling.** Choose data layouts and tile sizes for each stage.
 - **Data movement and synchronization.** Decide when to load data and how to signal that an output is ready, within a GPU or across GPUs.
+- **Low-level control.** Use GPU intrinsics or inline assembly to control the specific instructions a kernel executes. [7]
 
 In ATOM, each mono launch runs a resident grid of **thread blocks**. The blocks pass ready results to consumers and take on new tasks as the layer advances. [3], [7]
 
@@ -55,7 +52,7 @@ In ATOM, each mono launch runs a resident grid of **thread blocks**. The blocks 
 
 *Figure 1. Mono loads weights early, passes ready portions of the output forward, and overlaps reductions with computation. Bars show execution order, not measured durations.*
 
-**Developers design the fusion.** FlyDSL supplies the language, compiler, and reusable components; it does not automatically merge stages or guarantee progress. The schedule must allow all thread blocks to remain resident and avoid waits that prevent producers from running. ATOM handles runtime buffers and metadata, coordination across TP ranks, graph replay, correctness checks, and fallback. [3], [8]
+**Developers design the fusion.** FlyDSL supplies the language, compiler, and reusable components; it does not automatically merge stages or guarantee progress. The schedule must allow all thread blocks to remain resident and avoid waits that prevent producers from running. ATOM handles runtime buffers and metadata, coordination across tensor-parallel (TP) ranks, graph replay, correctness checks, and fallback. [3], [8]
 
 The design draws on **TileRT's MonoKernel work**, cited by FlyDSL #1204. [5], [6]
 
@@ -63,7 +60,7 @@ The design draws on **TileRT's MonoKernel work**, cited by FlyDSL #1204. [5], [6
 
 ATOM now includes merged FlyDSL mono decode implementations for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and MiniMax-M3**. They reuse [`atom/mono/`](https://github.com/ROCm/ATOM/tree/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/mono) components while adapting task assignment, fusion boundaries, and data handoffs to each model. This shows how the approach extends across model architectures. Kimi-K3 currently uses mono for its linear-attention (KDA) layers; its MLA layers keep the existing path. [1], [8], [14]
 
-For MiniMax-M3, ATOM combines attention, expert computation, and their supporting operations into **one launch per sparse layer and TP rank**. The first three dense layers keep the separate path. [1], [3]
+For MiniMax-M3, ATOM combines attention, mixture-of-experts (MoE) computation, and their supporting operations into **one launch per sparse layer and TP rank**. The first three dense layers keep the separate path. [1], [3]
 
 ![MiniMax-M3 sparse-layer stages inside one FlyDSL launch](images/minimax-mono-flow.svg)
 
@@ -75,7 +72,7 @@ Three scheduling choices reduce waits:
 - **Load weights early.** A later stage's weights can load while earlier work is still running. [3], [9]
 - **Pass on ready data.** Tagged buffers identify outputs from the current step. Consumers and cross-GPU reductions can begin on ready portions of the output without waiting for a separate kernel to finish. [3], [7]
 
-### Results in ATOM
+### Decode latency in ATOM
 
 The server measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M-token context, and EAGLE3 with three speculative tokens, so batches of 1, 2, and 4 produce 4, 8, and 16 target-model rows before graph padding.[^m3-support] **Separate** and **Mono** are two complete execution paths in ATOM, so the comparison does not isolate the three mechanisms from each other. **Mono + CP** adds indexer context parallelism, a separate long-context optimization described in the [supporting measurements](#appendix-supporting-measurements). Latencies are median GPU decode-step times in milliseconds; the [decode-step CSV](data/minimax-decode-step.csv) retains the reported values. [1]
 
@@ -95,11 +92,13 @@ All times are in milliseconds; parentheses give speedup relative to Separate.
 
 M3's source PR reports bit-identical index selection against the reference over 3K–1.04M contexts and bit-identical outputs through 16 chained layers with CP off versus on at 3K, 37K, and 200K contexts. It also reports serving a 1,040,186-token request. GSM8K chat five-shot scores are 0.9447 for the separate path, 0.9371 and 0.9424 for two mono runs, and 0.9378 for mono + CP. These scores provide task-level checks, but do not establish exact numerical equivalence or unchanged quality across tasks. [1]
 
-## Extending ATOM's mono kernels to vLLM
+## Extending mono decode to vLLM
 
-vLLM adapts ATOM's DeepSeek stages and shared helpers to its own weights, numerical operations, buffers, and execution paths. The resulting DeepSeek-V4.1-Flash mono decode implementation runs on MI355X and was merged in two PRs. [8], [11], [12]
+FlyDSL mono decode is also integrated into vLLM for DeepSeek-V4.1-Flash on MI355X. The implementation builds on ATOM's mono work, with integration into vLLM's execution and memory management. [8], [11], [12]
 
 The vLLM integration uses **two mono launches, K1 and K2, per eligible layer and TP rank**. K1 prepares attention inputs; K2 handles attention, expert computation, and reductions. [11], [12]
+
+For the 30 standard layers covered by vLLM #60397, the authors report that K1 + K2 replace **about 40 separate kernel launches per layer**. [11]
 
 Engram runs before K1 where present. On layers that select their own cached tokens, compression, index scoring, and top-k selection remain between K1 and K2. **Two mono launches do not mean two total kernels on every layer.** The all-layer version runs compression and indexing serially there. [12]
 
@@ -109,9 +108,9 @@ Engram runs before K1 where present. On layers that select their own cached toke
 
 vLLM selects eligible steps, keeps all TP ranks on the same path, and falls back for other steps. The source reports operator comparisons, multi-layer tests, and 100,000 graph replays. On a standard layer at TP4 with six token rows and cold weights, the layer test reports **180 → 94 µs (1.91×)**. [11], [12]
 
-### Serving results, with their conditions
+### Interactivity results
 
-The [InferenceX AgentX](https://inferencex.semianalysis.com/agentx) benchmark replays multi-turn, long-context agent sessions and compares throughput with per-user interactivity. The serving goal is to handle more work while meeting a required interactivity level. Its **P90 interactivity is 1 / P90 inter-token latency**, with latency in seconds: higher is better. The P90 label refers to the latency percentile, so this metric describes the slower end of the request distribution. [15], [16]
+The [InferenceX AgentX](https://inferencex.semianalysis.com/agentx) benchmark replays multi-turn, long-context agent sessions and measures per-user interactivity. Its **P90 interactivity is 1 / P90 inter-token latency**, with latency in seconds: higher is better. The P90 label refers to the latency percentile, so this metric describes the slower end of the request distribution. AgentX also reports total throughput. [15], [16]
 
 The AgentX comparison in [vLLM #60397](https://github.com/vllm-project/vllm/pull/60397), merged October 10, 2026, uses MI355X, TP2, a same-node mono-off baseline, the InferenceX recipe, and **3,600 seconds per point**. The four concurrency settings ran concurrently on one eight-GPU node, using two GPUs per setting. The table below compares mono off with **K1 + K2 on the 30 standard layers only**; it predates the PR's additional FFN-only path on the other 10 layers. [11]
 
@@ -130,7 +129,7 @@ Both runs use DSpark with five draft tokens and a **synthetic acceptance setting
 
 *Figure 5. Four measured throughput–interactivity points for DeepSeek-V4.1-Flash in vLLM on MI355X, TP2: mono off versus K1 + K2 on 30 standard layers. Each arrow connects runs at the same concurrency on the same node; these points do not establish the full curve. The vertical axis counts input plus output tokens. Both runs use synthetic DSpark acceptance 3.51, with 3,600 seconds per point. [11], [16]*
 
-At all four measured concurrency settings, both interactivity and total throughput improve. Those paired points show that the throughput gain did not require a lower per-user token rate in this replay. They do not quantify the gain at an exactly matched interactivity target or establish the full capacity curve. **TTFT does not improve consistently:** it rises by 0.10 seconds at concurrency one and 0.07 seconds at concurrency eight. TTFT includes queuing, prompt processing, and other work outside the decode kernels, so it must be tracked alongside interactivity. [11]
+At concurrency one, **P90 interactivity increases from 318.1 to 429.1 tokens/s/user (1.35×)**. It also improves at the other three tested concurrency settings. Total throughput rises alongside it. These four measured points do not establish the full throughput–interactivity curve. **TTFT does not improve consistently:** it rises by 0.10 seconds at concurrency one and 0.07 seconds at concurrency eight. TTFT includes queuing, prompt processing, and other work outside the decode kernels, so it must be tracked alongside interactivity. [11]
 
 The PR evaluates quality separately with actual rejection sampling. On GSM8K five-shot at TP2, the strict-match score is **0.9742 ± 0.0044** for the original path and **0.9750 ± 0.0043** for K1 + K2. These are scores on a specific task, not an accuracy result from the fixed-acceptance replay. [11]
 
@@ -149,7 +148,7 @@ The table retains the source's reported uncertainty values. Both modes also scor
 
 The results suggest where mono kernels are useful and what deploying them requires:
 
-- **Where they help.** A chain of short, dependent operations at small row counts offers opportunities to remove waits. Both reported comparisons show smaller relative gains at higher concurrency or batch size. The result for another workload needs measurement, including whether it meets the desired responsiveness target.
+- **Where they help.** A chain of short, dependent operations at small row counts offers opportunities to remove waits. Both reported comparisons show smaller relative gains at higher concurrency or batch size. For another workload, measure whether mono reduces decode latency and improves per-user interactivity.
 - **What they constrain.** Each schedule supports specific GPUs, TP sizes, and decode widths. The cited M3 path requires TP4 and 1–16 rows; the vLLM path supports gfx950, TP2 or TP4, and at most 48 rows. Ineligible steps use the separate path. An unsupported vLLM deployment with mono explicitly requested raises an error. These are necessary conditions, not a complete compatibility list. [1], [11], [12]
 - **What they cost.** Each model needs its own schedule, specialized per decode width and validated against the separate path in the engine. The separate path must be kept as a fallback, and changes to the model's layer must be reflected in the kernel; vLLM's layer tests are designed to fail when they are not. [11]
 - **What is not yet shown.** The sources cited here demonstrate integration in ATOM and vLLM, not SGLang. ATOM's M3 path excludes its vLLM and SGLang plugin modes; the vLLM example in this article is a separate DeepSeek integration. A [proposed gfx942 port](https://github.com/vllm-project/vllm/pull/60731) targets MI300X and MI325X and remains open as of October 16, 2026. [1], [13]
@@ -159,8 +158,8 @@ The results suggest where mono kernels are useful and what deploying them requir
 Start with the [FlyDSL mono components](https://github.com/ROCm/FlyDSL/tree/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel) and [ATOM's shared mono framework](https://github.com/ROCm/ATOM/tree/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/mono):
 
 1. **Find the waits.** Profile the separate path at the decode widths you serve. Map which inputs each stage actually waits for and where communication sits on the critical path.
-2. **Write the schedule in FlyDSL.** Reuse the GEMM, quantization, mailbox, and AllReduce components. Choose the fusion boundary from the model's dependencies, give thread blocks independent work so that they can prefetch, and specialize task placement per width.
-3. **Integrate and evaluate.** Add dispatch conditions and a fallback, keep ranks in lockstep, and verify HIP Graph replay. Check outputs against the separate path with tools such as `ATOM_MONO_CHECK`, then run task evaluations with actual rejection sampling. Sweep concurrency and compare throughput at the required interactivity, while also recording TTFT.
+2. **Write the schedule in FlyDSL.** Reuse the matrix multiplication (GEMM), quantization, mailbox, and AllReduce components. Choose the fusion boundary from the model's dependencies, give thread blocks independent work so that they can prefetch, and specialize task placement per width.
+3. **Integrate and evaluate.** Add dispatch conditions and a fallback, keep ranks in lockstep, and verify HIP Graph replay. Check outputs against the separate path with tools such as `ATOM_MONO_CHECK`, then run task evaluations with actual rejection sampling. Compare per-user interactivity with mono on and off at each concurrency level, and record TTFT and total throughput alongside it.
 
 Bring a model, a profile, or a measured schedule improvement to [FlyDSL](https://github.com/ROCm/FlyDSL), [ATOM](https://github.com/ROCm/ATOM), or [vLLM](https://github.com/vllm-project/vllm).
 
