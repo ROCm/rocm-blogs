@@ -46,7 +46,7 @@ FlyDSL gives developers four kinds of control over a GPU program: [2]
 - **Work assignment.** Map tasks to thread blocks and threads, and specialize them for each decode width.
 - **Layout and tiling.** Choose data layouts and tile sizes for each stage.
 - **Data movement and synchronization.** Decide when to load data and how to signal that an output is ready, within a GPU or across GPUs.
-- **Low-level control.** Use GPU intrinsics or inline assembly to control the specific instructions a kernel executes. [7]
+- **Low-level control.** Write and tune a wide range of operations at the block, wavefront, and thread levels, with control down to individual GPU instructions. [2], [7]
 
 In ATOM, each mono launch runs a resident grid of **thread blocks**. The blocks pass ready results to consumers and take on new tasks as the layer advances. [3], [7]
 
