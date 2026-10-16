@@ -29,19 +29,17 @@ myst:
 
 [FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. This article shows how [ATOM][4] uses that flexibility for MiniMax-M3, and how ATOM's components and scheduling ideas are reused for DeepSeek-V4.1-Flash in [vLLM](https://github.com/vllm-project/vllm). [2], [3], [8], [11]
 
-## Why every operator can be fast while the decode step is still slow
+## Why mono kernels speed up decode
 
-Consider one sparse decoder layer. Normalization and projections prepare the inputs to attention. Attention uses cached tokens selected for that layer, then passes its result to the mixture of experts (MoE), which routes each token to a few expert networks. These stages use matrix multiplications, often called GEMMs. When tensor parallelism (TP) splits the work across GPUs, reductions combine the GPUs' partial results. A standard DeepSeek-V4.1-Flash layer in the cited vLLM implementation issues **about 40 separate kernels** along this path. [3], [11]
+Small-batch decode runs many short kernels. For example, a standard DeepSeek-V4.1-Flash layer in the cited vLLM implementation launches **about 40 separate kernels**, covering normalization, projections, attention, mixture-of-experts (MoE) computation, and reductions across GPUs. With only a few token rows, many operations do little arithmetic work, so **repeated kernel launches can account for a substantial share of decode time**. [11]
 
-With one or a few active requests, tuning each kernel still leaves three difficulties:
+These small kernels can also **leave GPU resources idle**. Some do not have enough parallel work to keep all compute units busy; others wait for data. When they run sequentially on one stream, the next kernel cannot use that idle capacity until the current one finishes.
 
-- **Small batches do little work per launch.** Each step processes only a few token rows, including any speculative tokens being checked. Launch overhead and intermediate data transfers can then take a substantial share of the time.
-- **Dependent stages wait for one another.** In a sequence of kernels on one stream, a consumer starts after the producer kernel finishes. Even if the consumer's weights are independent of the producer's output, their loads wait too.
-- **Computation and communication wait on one another.** TP reductions, result handoffs, and the next stage's weight reads add to the critical path when they cannot overlap with work that is already running.
+**Mono kernels bring these operations into a shared schedule with fewer launches.** Thread blocks can take on different tasks, load a later stage's weights during earlier computation, and start tensor-parallel (TP) reductions as soon as part of an output is ready. Those reductions combine partial results from GPUs working on the same layer. This reduces both launch overhead and waits inside the layer. On the standard vLLM layers above, **two mono launches replace about 40 separate kernels**. [3], [11]
 
-The **critical path** is the chain of work and waits that determines when a decode step can finish. HIP Graph replay reduces CPU submission overhead, but it preserves the dependencies between GPU kernels. On the standard vLLM layers above, two mono launches replace about 40 separate kernels. The useful change is that a later GEMM can load weights while an earlier stage computes, and a reduction can start on a completed **tile**, a small part of the output. **Reducing these waits is the goal; fewer launches are one means of doing so.** [11]
+HIP Graph replay helps with CPU submission overhead, but it preserves the boundaries between GPU kernels. Mono changes the GPU schedule itself, so independent loads, computation, and communication can overlap while respecting data dependencies.
 
-The related ROCm posts on [low-latency GEMMs](https://rocm.blogs.amd.com/software-tools-optimization/accelerating-llm-inference-on-amd-gpus-with-low-latency-gemms/README.html) and [ATOM's Two-Batch Overlap](https://rocm.blogs.amd.com/software-tools-optimization/atom-optimiztion/README.html) speed up individual GEMMs and overlap work across micro-batches. Mono kernels address the waits **inside one layer**.
+The related ROCm posts on [low-latency matrix multiplications (GEMMs)](https://rocm.blogs.amd.com/software-tools-optimization/accelerating-llm-inference-on-amd-gpus-with-low-latency-gemms/README.html) and [ATOM's Two-Batch Overlap](https://rocm.blogs.amd.com/software-tools-optimization/atom-optimiztion/README.html) cover operator tuning and overlap across micro-batches. Mono targets work and waits **inside a model layer**.
 
 ## What FlyDSL provides, and who does what
 
