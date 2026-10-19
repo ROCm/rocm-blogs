@@ -7,15 +7,15 @@
 <text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · Sparse decode layers</text>
 <rect x="28" y="111" width="1224" height="416" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2" />
 <text x="50" y="148" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Thread blocks work across stages</text>
-<text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">ATOM's schedule assigns thread blocks their tasks; consumers wait for the inputs they need.</text>
+<text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">The mono schedule assigns thread blocks their tasks; consumers wait for the inputs they need.</text>
 <rect x="50" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
 <text x="66" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">1  Prepare queries and caches</text>
 <text x="66" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Input norm + Q/K/V/index projections</text>
 <text x="66" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Head norm + RoPE + cache insertion</text>
 <rect x="465" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
 <text x="481" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">2  Find the sparse keys</text>
-<text x="481" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Score cached tokens</text>
-<text x="481" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Select attention keys</text>
+<text x="481" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Score index-cache blocks</text>
+<text x="481" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Select attention blocks</text>
 <rect x="880" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
 <text x="896" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">3  Compute attention</text>
 <text x="896" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Compute sparse attention</text>

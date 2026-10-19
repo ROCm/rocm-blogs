@@ -20,7 +20,10 @@ for row in rows:
     if row["source"] != SOURCE or "AgentX" not in row["configuration"]:
         continue
     concurrency = int(re.search(r"concurrency (\d+);", row["configuration"])[1])
-    points.setdefault(concurrency, {})[row["metric"]] = (
+    metrics = points.setdefault(concurrency, {})
+    if row["metric"] in metrics:
+        raise ValueError(f"Duplicate {row['metric']} for concurrency {concurrency}")
+    metrics[row["metric"]] = (
         float(row["baseline_value"]),
         float(row["optimized_value"]),
     )
@@ -34,19 +37,30 @@ for concurrency, metrics in sorted(points.items()):
     x0, x1 = metrics["P90 interactivity"]
     y0, y1 = metrics["total throughput (input + output)"]
     ax.annotate(
-        "", xy=(x1, y1), xytext=(x0, y0),
+        "",
+        xy=(x1, y1),
+        xytext=(x0, y0),
         arrowprops={"arrowstyle": "->", "color": "#a3adb9", "lw": 1.7},
         zorder=1,
     )
     ax.scatter([x0], [y0], s=64, color=colors[0], zorder=3)
     ax.scatter([x1], [y1], s=64, color=colors[1], zorder=3)
     ax.annotate(
-        f"C{concurrency}", (x0, y0), xytext=(-9, -17),
-        textcoords="offset points", ha="right", color=colors[0], fontsize=11,
+        f"C{concurrency}",
+        (x0, y0),
+        xytext=(-9, -17),
+        textcoords="offset points",
+        ha="right",
+        color=colors[0],
+        fontsize=11,
     )
     ax.annotate(
-        f"C{concurrency}", (x1, y1), xytext=(9, 5),
-        textcoords="offset points", color=colors[1], fontsize=11,
+        f"C{concurrency}",
+        (x1, y1),
+        xytext=(9, 5),
+        textcoords="offset points",
+        color=colors[1],
+        fontsize=11,
     )
 
 for color, label in zip(colors, ("Mono off", "FlyDSL mono: K1 + K2 on 30 layers")):
@@ -63,10 +77,27 @@ ax.set_axisbelow(True)
 for spine in ax.spines.values():
     spine.set_visible(False)
 ax.tick_params(length=0, pad=8)
-fig.text(0.13, 0.93, "Higher interactivity with mono decode", fontsize=20, weight="bold")
+fig.text(
+    0.13, 0.93, "Higher interactivity with mono decode", fontsize=20, weight="bold"
+)
 fig.text(0.13, 0.87, "DeepSeek-V4.1-Flash in vLLM · MI355X · TP2", fontsize=13)
-fig.text(0.13, 0.15, "Arrows pair the same concurrency (C1, C2, C4, C8); four measured points, not a full curve.", fontsize=10)
-fig.text(0.13, 0.11, "Same-node comparison · 3,600 s/point · synthetic DSpark acceptance 3.51", fontsize=10)
-fig.text(0.13, 0.07, "Throughput includes cached input context. TTFT is reported separately. Source: vLLM #60397.", fontsize=10)
+fig.text(
+    0.13,
+    0.15,
+    "Arrows pair the same concurrency (C1, C2, C4, C8); four measured points, not a full curve.",
+    fontsize=10,
+)
+fig.text(
+    0.13,
+    0.11,
+    "Same-node comparison · 3,600 s/point · synthetic DSpark acceptance 3.51",
+    fontsize=10,
+)
+fig.text(
+    0.13,
+    0.07,
+    "Throughput includes cached input context. TTFT is reported separately. Source: vLLM #60397.",
+    fontsize=10,
+)
 fig.savefig(ROOT.parent / "images" / "vllm-dsv41-throughput-interactivity.png", dpi=160)
 plt.close(fig)

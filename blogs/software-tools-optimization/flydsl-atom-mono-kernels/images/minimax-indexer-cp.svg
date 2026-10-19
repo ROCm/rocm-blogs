@@ -4,7 +4,7 @@
 <rect width="1280" height="710" rx="18" fill="#f8fafc" />
 <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
 <text x="40" y="48" font-size="26" font-weight="700" fill="#172033" text-anchor="start">FlyDSL indexer CP: split M3’s long-context scan across TP4</text>
-<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">Split the long-context cache across four GPUs.</text>
+<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">Split index scoring work across four GPUs.</text>
 <text x="40" y="125" font-size="20" font-weight="700" fill="#172033" text-anchor="start">Score different parts of the cache in parallel</text>
 <rect x="40" y="148" width="270" height="125" rx="10" fill="white" stroke="#145d80" stroke-width="2" />
 <text x="60" y="181" font-size="21" font-weight="700" fill="#145d80" text-anchor="start">TP rank 0</text>
@@ -45,6 +45,6 @@
 <rect x="210" y="496" width="860" height="100" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2" />
 <text x="640" y="532" font-size="20" font-weight="700" fill="#172033" text-anchor="middle">Combine candidates to select the final keys</text>
 <text x="640" y="567" font-size="17" font-weight="400" fill="#172033" text-anchor="middle">Repeat for each index head</text>
-<text x="40" y="641" font-size="17" font-weight="500" fill="#172033" text-anchor="start">Produces the same selection as the separate scoring path in the reported checks.</text>
+<text x="40" y="641" font-size="17" font-weight="500" fill="#172033" text-anchor="start">CP on and off produce the same selection in the reported checks.</text>
 <text x="40" y="681" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Based on ATOM’s M3 indexer. Candidate exchange is shown for one head.</text>
 </g></svg>

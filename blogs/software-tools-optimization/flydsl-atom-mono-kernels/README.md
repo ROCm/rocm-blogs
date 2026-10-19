@@ -54,7 +54,7 @@ Mono kernels use these controls to keep **thread blocks** active across stages, 
 
 ![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
 
-*Figure 1. Mono loads weights early, passes ready portions of the output forward, and overlaps reductions with computation. Bars show execution order, not measured durations.*
+*Figure 1. Mono loads weights early, passes ready portions of the output forward, and overlaps reductions with computation. The timeline is schematic.*
 
 **Developers design the fusion.** They manage scheduling and synchronization, including keeping the required thread blocks resident so the kernel can make progress. ATOM handles runtime buffers, coordination across tensor-parallel (TP) ranks, graph replay, correctness checks, and fallback. [3], [8]
 
@@ -121,7 +121,7 @@ The table reports P90 interactivity in tokens/s/user and P90 time to first token
 
 *Figure 4. ATOM serving results with mono enabled. Labels show request concurrency. Lines connect measured points within the same model and TP configuration. [16], [17]*
 
-Moving right means faster token generation per user; moving up means higher throughput per GPU. For M3, increasing concurrency from one to four raises throughput from **6,580 to 9,201 tokens/s/GPU**, while interactivity falls from **469.5 to 374.5 tokens/s/user**. For DeepSeek-V4.1-Flash at TP2, C1 to C8 raises throughput from **13,915 to 32,005**, while interactivity falls from **505.1 to 315.5**. Use both axes to choose a configuration that meets your application's responsiveness needs. [16], [17]
+Moving right means faster token generation per user; moving up means higher throughput per GPU. M3 delivers **469.5 tokens/s/user at C1** and **374.5 at C4**, while throughput rises from **6,580 to 9,201 tokens/s/GPU**. DeepSeek-V4.1-Flash at TP2 delivers **505.1 tokens/s/user at C1** and **315.5 at C8**, with throughput rising from **13,915 to 32,005 tokens/s/GPU**. Use both axes to choose a configuration that meets your application's responsiveness needs. [16], [17]
 
 These measurements show the complete ATOM serving configurations, including scheduling, caching, and speculative decoding. **They do not include a matched mono-off baseline**, so they cannot isolate mono's contribution. The M3 GPU-step comparison above provides that separate evidence. TTFT and tool waits also affect responsiveness; interactivity describes the pace of token generation once it starts.
 
@@ -165,11 +165,11 @@ At 1M context, TP4, 16 token rows, and four query rows per request, the [layer m
 
 *Figure 6. Each rank scores part of the cache, then exchanges its best candidates so the owning rank can make the final selection.*
 
-**Additional vLLM measurements.** The [comparison CSV](data/mono-benefits.csv) retains the TP2 mono-off/on results at C1, C2, C4, and C8, including throughput and TTFT. [11] The later **541.6 → 562.6 P90 tokens/s/user (+3.9%)** result at TP4/C1 compares two mono versions as coverage expands to all 40 backbone layers. Both use synthetic DSpark acceptance 3.51 and one 3,600-second run per version. [12]
+**Additional vLLM measurements.** The [comparison CSV](data/mono-benefits.csv) and [supplementary plot](images/vllm-dsv41-throughput-interactivity.png) retain the TP2 mono-off/on results at C1, C2, C4, and C8; the CSV also records TTFT. The [plotting script](data/plot-vllm-agentx.py) reads those values directly. [11] The later **541.6 → 562.6 P90 tokens/s/user (+3.9%)** result at TP4/C1 compares two mono versions as coverage expands to all 40 backbone layers. Both use synthetic DSpark acceptance 3.51 and one 3,600-second run per version. [12]
 
-**Validation and additional models.** The M3 and vLLM sources include correctness checks and task evaluations; vLLM evaluates quality separately with actual rejection sampling. [1], [11], [12] The [comparison CSV](data/mono-benefits.csv) also includes GLM-5 and Kimi-K3 layer tests, separate from ATOM serving results. [5] The Kimi-K3 source does not report task-level accuracy, so its fixed-acceptance serving results are excluded here. [13]
+**Validation and additional models.** The M3 and vLLM sources include correctness checks and task evaluations; vLLM evaluates quality separately with actual rejection sampling. [1], [11], [12] The [comparison CSV](data/mono-benefits.csv) also includes historical GLM-5 and Kimi-K3 layer tests, separate from ATOM serving results. [5] The cited Kimi-K3 serving results lack task-level accuracy and have a [confirmed DSpark auxiliary-state capture issue](https://github.com/ROCm/ATOM/pull/2535#discussion_r4266162046), so they are excluded here. [13]
 
-**Data and reproduction.** The [M3 decode-step CSV](data/minimax-decode-step.csv) and other linked CSVs preserve reported values and configurations. The [M3 launch example](data/run-minimax-m3-mono.sh) adapts the source recipe for four MI355X GPUs; the [Figure 4 script](data/plot-atom-agentx.py) plots the ATOM AgentX data from the [archived source records](data/atom-agentx-source.json). [10] All measurements in this article come from the cited sources.
+**Data and reproduction.** The [M3 decode-step CSV](data/minimax-decode-step.csv) and other linked CSVs preserve reported values and configurations. The [Figure 3 script](data/plot-minimax-decode-step.py) plots the M3 latency data, and the [Figure 4 script](data/plot-atom-agentx.py) plots the ATOM AgentX data from the [archived source records](data/atom-agentx-source.json). The [M3 launch example](data/run-minimax-m3-mono.sh) adapts the source recipe for four MI355X GPUs; it starts a server and does not run the measurements. [10] All measurements in this article come from the cited sources.
 
 ## References
 
