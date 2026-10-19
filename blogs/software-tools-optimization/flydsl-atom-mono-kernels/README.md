@@ -50,7 +50,7 @@ FlyDSL gives developers four kinds of control over a GPU program: [2]
 
 These controls connect local kernel tuning with scheduling across a layer. Developers can coordinate blocks across a grid, tune work within a block, and control how threads cooperate within a wave. They can also decide how blocks hand data to later stages. This lets them optimize both the operations themselves and the way those operations work together. [2], [7]
 
-ATOM uses these controls to keep **thread blocks** active across stages, passing ready results to consumers and taking on new tasks as the layer advances. [3], [7]
+Mono kernels use these controls to keep **thread blocks** active across stages, passing ready results to consumers and taking on new tasks as the layer advances. [3], [7]
 
 ![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
 
@@ -66,11 +66,11 @@ ATOM supports FlyDSL mono decode for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and Mini
 
 The shared components handle recurring needs such as buffers, synchronization, and reductions. Each model supplies the schedule that connects its own stages. ATOM then connects that schedule to serving: batching and speculative decoding can change the number of tokens in a step, so runtime dispatch must select a supported path and keep participating GPUs in agreement. [8], [13]
 
-For MiniMax-M3, ATOM combines attention, mixture-of-experts (MoE) computation, and their supporting operations into **one launch per sparse layer and TP rank**. The first three dense layers keep the separate path. [1], [3]
+For MiniMax-M3, the mono kernel combines attention, mixture-of-experts (MoE) computation, and their supporting operations into **one launch per sparse layer and TP rank**. The first three dense layers keep the separate path. [1], [3]
 
 ![MiniMax-M3 sparse-layer stages inside one FlyDSL launch](images/minimax-mono-flow.svg)
 
-*Figure 2. ATOM combines M3's sparse-layer stages in one launch. Arrows show data dependencies.*
+*Figure 2. M3's mono kernel combines the sparse-layer stages in one launch. Arrows show data dependencies.*
 
 Three scheduling choices reduce waits:
 
