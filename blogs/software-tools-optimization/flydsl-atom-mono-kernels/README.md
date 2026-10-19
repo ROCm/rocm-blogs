@@ -100,9 +100,9 @@ A larger batch gives separate kernels more work to distribute across the GPU and
 
 ## Extending FlyDSL mono decode to vLLM
 
-vLLM also uses **FlyDSL mono kernels** for DeepSeek-V4.1-Flash on MI355X. The implementation takes inspiration from ATOM's mono work, with vLLM handling execution-path selection, memory management, and coordination across GPUs. [8], [11], [12]
+ATOM already provides **FlyDSL mono decode for DeepSeek-V4.1**. The vLLM implementation takes inspiration from that work and adapts the kernels to vLLM's KV-cache layout and runtime data structures, supporting DeepSeek-V4.1-Flash on MI355X. [8], [11], [12]
 
-FlyDSL provides control over task assignment, data movement, and synchronization. Developers use these controls to adapt the GPU schedule to DeepSeek's layers, while vLLM connects the kernels to its own batches, buffers, and graph execution. [11]
+FlyDSL makes this adaptation practical through explicit layout, data movement, and synchronization controls. vLLM supplies the corresponding cache views, metadata, and buffers, and manages execution-path selection, coordination across GPUs, and graph replay. [11]
 
 The schedule uses **two FlyDSL mono launches, K1 and K2, per eligible layer and TP rank**. K1 prepares attention inputs; K2 handles attention, expert computation, and reductions. Some operations, such as compression and token selection, remain outside these launches. [11], [12]
 
