@@ -1,4 +1,4 @@
-"""Regenerate Figure 4 from mono-benefits.csv. Requires matplotlib."""
+"""Regenerate Figure 5 from mono-benefits.csv. Requires matplotlib."""
 
 import csv
 import math
@@ -9,6 +9,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.patches import Patch
 
 ROOT = Path(__file__).resolve().parent
 SOURCE = "https://github.com/vllm-project/vllm/pull/60397"
@@ -34,45 +35,38 @@ if set(points) != {1, 2, 4, 8}:
 
 plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 12})
 fig, ax = plt.subplots(figsize=(10.5, 6.6), facecolor="#f8fafc")
-fig.subplots_adjust(left=0.13, right=0.96, top=0.77, bottom=0.30)
+fig.subplots_adjust(left=0.13, right=0.97, top=0.77, bottom=0.25)
 ax.set_facecolor("#f8fafc")
-colors = ("#526274", "#d64440")
-for y, (concurrency, (off, on)) in zip(range(3, -1, -1), sorted(points.items())):
-    ax.annotate(
-        "",
-        xy=(on, y),
-        xytext=(off, y),
-        arrowprops={"arrowstyle": "->", "color": "#a3adb9", "lw": 1.7},
-        zorder=1,
-    )
-    ax.scatter([off], [y], s=64, color=colors[0], zorder=3)
-    ax.scatter([on], [y], s=64, color=colors[1], zorder=3)
-    ax.annotate(
-        f"{off:.1f}",
-        (off, y),
-        xytext=(0, -19),
-        textcoords="offset points",
-        ha="center",
-        color=colors[0],
+colors = ("#94a3b8", "#dc4a48")
+for y, (concurrency, (off, on)) in zip([6, 4, 2, 0], sorted(points.items())):
+    ax.axhspan(y - 0.8, y + 0.8, color="#edf2f7", zorder=0)
+    ax.barh(y + 0.3, off, height=0.48, color=colors[0])
+    ax.barh(y - 0.3, on, height=0.48, color=colors[1])
+    ax.text(off + 6, y + 0.3, f"{off:.1f}", va="center", fontsize=11)
+    ax.text(
+        on + 6,
+        y - 0.3,
+        f"{on:.1f} · {on / off:.2f}×",
+        va="center",
         fontsize=11,
+        weight="bold",
     )
-    ax.annotate(
-        f"{on:.1f}",
-        (on, y),
-        xytext=(0, 10),
-        textcoords="offset points",
-        ha="center",
-        color=colors[1],
-        fontsize=11,
-    )
-    ax.text(510, y, f"{on / off:.2f}×", ha="right", va="center", weight="bold")
 
-for color, label in zip(colors, ("Mono off", "FlyDSL mono: K1 + K2 on 30 layers")):
-    ax.scatter([], [], s=64, color=color, label=label)
-ax.legend(loc="upper left", bbox_to_anchor=(0, 1.19), frameon=False, fontsize=10)
-ax.set_xlim(0, 520)
-ax.set_ylim(-0.6, 3.55)
-ax.set_yticks([3, 2, 1, 0], ["C1", "C2", "C4", "C8"])
+ax.legend(
+    handles=[
+        Patch(color=color, label=label)
+        for color, label in zip(
+            colors, ("Mono off", "FlyDSL mono: K1 + K2 on 30 layers")
+        )
+    ],
+    loc="upper left",
+    bbox_to_anchor=(0, 1.17),
+    frameon=False,
+    fontsize=10,
+)
+ax.set_xlim(0, 550)
+ax.set_ylim(-1, 7)
+ax.set_yticks([6, 4, 2, 0], ["C1", "C2", "C4", "C8"])
 ax.set_xlabel("P90 interactivity (tokens/s/user) — higher is better", labelpad=12)
 ax.set_ylabel("Request concurrency", labelpad=10)
 ax.grid(axis="x", color="#dce2e8", linewidth=0.8)
@@ -86,19 +80,19 @@ fig.text(
 fig.text(0.13, 0.885, "DeepSeek-V4.1-Flash in vLLM · MI355X · TP2", fontsize=13)
 fig.text(
     0.13,
-    0.15,
-    "Arrows pair mono off and on at each concurrency; labels on the right show the interactivity ratio.",
+    0.13,
+    "Each group pairs mono off and on at the same concurrency; labels show values and ratios.",
     fontsize=10,
 )
 fig.text(
     0.13,
-    0.11,
+    0.09,
     "One 3,600 s run per mode and concurrency · synthetic DSpark acceptance 3.51",
     fontsize=10,
 )
 fig.text(
     0.13,
-    0.07,
+    0.05,
     "Interactivity = 1 / P90 inter-token latency. TTFT is reported separately. Source: vLLM #60397.",
     fontsize=10,
 )

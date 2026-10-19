@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="760" viewBox="0 0 960 760" role="img" aria-labelledby="title desc">
+  <title id="title">DeepSeek-V4.1 in ATOM: two FlyDSL mono launches</title>
+  <desc id="desc">Engram runs where present before K1. K1 prepares attention inputs. Layers that use compression run it between K1 and K2. K2 combines attention-block selection where needed, attention, output projections, normalization, experts, and their reductions. The diagram shows the main execution stages, not measured duration.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="960" height="760" rx="18" fill="#f8fafc"/>
+  <g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
+    <text x="40" y="48" font-size="28" font-weight="700">DeepSeek-V4.1 in ATOM</text>
+    <text x="40" y="82" font-size="22" fill="#64748b">Two FlyDSL mono launches per layer and TP rank</text>
+
+    <rect x="240" y="110" width="480" height="68" rx="10" fill="#edf2f7" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="480" y="138" font-size="23" font-weight="700" text-anchor="middle">Engram, where present</text>
+    <text x="480" y="164" font-size="19" fill="#64748b" text-anchor="middle">Outside the mono launches</text>
+    <path d="M480 183 V211" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="40" y="220" width="880" height="140" rx="12" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
+    <text x="64" y="256" font-size="25" font-weight="700">K1 · Prepare attention inputs</text>
+    <text x="64" y="295" font-size="22">Normalization → query and KV projections</text>
+    <text x="64" y="332" font-size="22">Positional encoding → window-cache writes</text>
+    <path d="M480 365 V393" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="240" y="402" width="480" height="68" rx="10" fill="#edf2f7" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="480" y="430" font-size="23" font-weight="700" text-anchor="middle">Compression, where needed</text>
+    <text x="480" y="456" font-size="19" fill="#64748b" text-anchor="middle">Outside the mono launches</text>
+    <path d="M480 475 V503" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <rect x="40" y="512" width="880" height="181" rx="12" fill="#f0f7fa" stroke="#145d80" stroke-width="2"/>
+    <text x="64" y="549" font-size="25" font-weight="700" fill="#145d80">K2 · Connect attention to the experts</text>
+    <text x="64" y="589" font-size="22">Select blocks where needed → attention → output projections</text>
+    <text x="64" y="626" font-size="22">Attention reduction → normalization → MoE</text>
+    <text x="64" y="663" font-size="22">Expert computation → expert reduction</text>
+
+    <text x="40" y="732" font-size="18" fill="#64748b">Source: ATOM V4.1 mono runner [23]. Main execution stages shown.</text>
+  </g>
+</svg>
