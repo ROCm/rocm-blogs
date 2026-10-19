@@ -52,7 +52,7 @@ These controls connect local kernel tuning with scheduling across a layer. Devel
 
 Mono kernels use these controls to keep **thread blocks** active across stages, passing ready results to consumers and taking on new tasks as the layer advances. [3], [7]
 
-![Staged launches versus a resident mono grid with early loads and tile-level handoffs](images/mono-overlap.svg)
+![Work inside a mono kernel: prepare weights early, pass ready output to reductions, and feed the next computation](images/mono-overlap.svg)
 
 *Figure 1. Mono loads weights early, passes ready portions of the output forward, and overlaps reductions with computation. The timeline is schematic.*
 
@@ -62,17 +62,21 @@ The design is inspired by **TileRT**. [5], [6]
 
 ## Bringing mono kernels to ATOM
 
-ATOM supports FlyDSL mono decode for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and MiniMax-M3**. Its [shared mono components](https://github.com/ROCm/ATOM/tree/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/mono) let developers adapt scheduling and data handoffs to each model. Kimi-K3 uses mono for its linear-attention (KDA) layers; its MLA layers keep the existing path. [1], [8], [13]
+ATOM supports FlyDSL mono decode for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and MiniMax-M3**. Its [shared mono components](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono) let developers adapt scheduling and data handoffs to each model. Kimi-K3 uses mono for its linear-attention (KDA) layers; its MLA layers keep the existing path. [1], [8], [13]
 
 The shared components handle recurring needs such as buffers, synchronization, and reductions. Each model supplies the schedule that connects its own stages. ATOM then connects that schedule to serving: batching and speculative decoding can change the number of tokens in a step, so runtime dispatch must select a supported path and keep participating GPUs in agreement. [8], [13]
 
-### MiniMax-M3: one launch per sparse layer
+The following diagrams focus on the computations handled by mono kernels and how their data flows between stages.
 
-For MiniMax-M3, the mono kernel combines attention, mixture-of-experts (MoE) computation, and their supporting operations into **one launch per sparse layer and TP rank**. The first three dense layers keep the separate path. [1], [3]
+### MiniMax-M3: connecting attention and experts
 
-![MiniMax-M3 sparse-layer stages inside one FlyDSL launch](images/minimax-mono-flow.svg)
+For MiniMax-M3's sparse layers, mono fuses the path from input normalization through attention and mixture-of-experts (MoE) computation to the reduced expert output. **The matrix multiplications are included:** Q/K/V and index projections, the attention output projection, routing, and the shared and routed experts' up/gate and down projections. Head normalization, positional encoding (RoPE), cache writes, and TP reductions are also part of the fused computation. [3]
 
-*Figure 2. M3's mono kernel combines the sparse-layer stages in one launch. Arrows show data dependencies.*
+Layers that reuse an earlier layer's selected blocks skip index scoring and selection. The first three dense layers also use fused input preparation and fused output-projection/MLP computation; their attention calculation uses the existing backend. [3]
+
+![MiniMax-M3 mono computation: input projections, query and cache preparation, sparse attention, output projection and reduction, routing, and expert projections and reduction](images/minimax-mono-flow.svg)
+
+*Figure 2. Computations fused in M3's sparse-layer mono path. Matrix multiplications appear in the input projections, attention, output projection, router, and experts. Arrows summarize data flow; independent tasks can overlap. [3]*
 
 Three scheduling choices reduce waits:
 
@@ -80,7 +84,7 @@ Three scheduling choices reduce waits:
 - **Load weights early.** A later stage's weights can load while earlier work is still running. The later calculation still waits for its input, but its weight loads can already be under way. [3], [9]
 - **Pass on ready data.** Tagged buffers identify outputs from the current decode step. Consumers and cross-GPU reductions can begin on ready portions, while other blocks are still producing the rest. Progress depends on the data each task needs. [3], [7]
 
-**Decode latency.** These measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M-token context, and EAGLE3 with three speculative tokens. **Separate** and **Mono** compare complete ATOM execution paths. **Mono + CP** adds indexer context parallelism, a separate long-context optimization described in the [supporting measurements](#appendix-supporting-measurements). [1]
+**Decode latency.** These measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M-token context, and EAGLE3 with three speculative tokens. **Separate** and **Mono** compare complete ATOM execution paths at the revision measured in [1], where the first three dense layers still used the original path. **Mono + CP** adds indexer context parallelism, a separate long-context optimization described in the [supporting measurements](#appendix-supporting-measurements). [1]
 
 Times are median GPU decode-step latency in milliseconds; parentheses show speedup relative to Separate.
 
@@ -100,16 +104,16 @@ A larger batch gives separate kernels more work to distribute across the GPU and
 
 ### DeepSeek-V4.1 in ATOM
 
-DeepSeek-V4.1 uses ATOM's shared mono framework with a schedule tailored to its layers. The implementation divides each layer's decode work between **two FlyDSL mono launches per TP rank**: [8], [23]
+DeepSeek-V4.1 uses FlyDSL mono kernels to fuse attention preparation and to connect attention with MoE. The fused computations include: [8], [23]
 
-- **K1 prepares attention inputs.** It combines normalization, query and KV projections, positional encoding, and window-cache writes.
-- **K2 connects attention to the experts.** It selects attention blocks where needed, computes attention and output projections, then passes normalized results to MoE. Attention and expert reductions also run inside K2.
+- **Prepare attention inputs.** Combine residual updates and normalization with query, KV, and indexer projections, RoPE, and window-cache writes. Indexer inputs are prepared only for layers that select keys.
+- **Connect attention to MoE.** Score and select keys where needed, compute attention and output projections, then reduce the results across TP ranks and normalize the input to MoE. Routing, shared and routed expert projections, and the expert reduction are fused into this path.
 
-Engram, where present, runs before K1. Layers that use the compressor run it between K1 and K2. Keeping these operations outside lets the mono schedule fit the model's data dependencies. The DSpark draft runner reuses the same mono kernels. [23]
+The attention-to-MoE schedule passes each ready normalized row to the router and expert stages. It also starts loading output-projection weights before the attention results are ready. FlyDSL lets developers express these data handoffs and early loads directly. The DSpark draft runner reuses the same kernel implementations with window-only attention and its own expert configuration. [23]
 
-![DeepSeek-V4.1 in ATOM: optional Engram, FlyDSL K1 attention preparation, compression where needed, and FlyDSL K2 combining attention, experts, and reductions](images/atom-deepseek-v41-mono-flow.svg)
+![DeepSeek-V4.1 mono computations: prepare attention inputs, select keys where needed, compute attention, project and reduce its output, then route tokens and compute and reduce expert outputs](images/atom-deepseek-v41-mono-flow.svg)
 
-*Figure 4. DeepSeek-V4.1's mono schedule in ATOM. Colored boxes show the two FlyDSL launches per layer and TP rank; gray boxes show operations outside them. Arrows show execution order, not measured duration. [23]*
+*Figure 4. Data flow through DeepSeek-V4.1's mono computations. The diagram focuses on fused work; model-specific operations outside mono and runtime setup are omitted. Arrows show data dependencies, not a launch timeline. [23]*
 
 For eligible steps, GPUs divide token rows among themselves for some stages, instead of every GPU repeating that work for all rows. Independent loads also start before the kernel waits for data from another stage. The schedule uses FlyDSL to adjust work assignment and communication together. [20]
 
@@ -156,7 +160,7 @@ A fused kernel keeps more work and state in one program. Register and shared-mem
 
 ## Build a mono path for your model
 
-Start with the [FlyDSL mono components](https://github.com/ROCm/FlyDSL/tree/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel) and [ATOM's shared mono framework](https://github.com/ROCm/ATOM/tree/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/mono):
+Start with the [FlyDSL mono components](https://github.com/ROCm/FlyDSL/tree/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel) and [ATOM's shared mono framework](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono):
 
 1. **Find the waits.** Profile the separate path at your serving batch sizes. Identify where stages wait for data or communication.
 2. **Write the schedule in FlyDSL.** Use reusable compute and communication components to connect stages and give thread blocks independent work to overlap.
@@ -203,13 +207,13 @@ The [Figure 7 script](data/plot-mono-speedups.py) calculates each speedup from t
 
 1. [ATOM: MiniMax-M3 mono decode and measurements](https://github.com/ROCm/ATOM/pull/2419).
 2. [FlyDSL language and compiler](https://github.com/ROCm/FlyDSL).
-3. [ATOM's M3 mono implementation](https://github.com/ROCm/ATOM/tree/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono).
+3. [ATOM's M3 mono implementation](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/models/minimax_m3/mono).
 4. [ATOM inference engine](https://github.com/ROCm/ATOM).
 5. [FlyDSL: GLM-5 and Kimi-K3 mono work](https://github.com/ROCm/FlyDSL/pull/1204).
 6. [TileRT](https://github.com/tile-ai/TileRT).
-7. [M3 device primitives and tagged mailboxes](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py).
+7. [ATOM device synchronization and tagged mailboxes](https://github.com/ROCm/ATOM/blob/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono/device/sync.py).
 8. [ATOM: DeepSeek-V4.1 and shared mono components](https://github.com/ROCm/ATOM/pull/2479).
-9. [M3 task scheduling](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py).
+9. [M3 task scheduling](https://github.com/ROCm/ATOM/blob/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/models/minimax_m3/mono/layout.py).
 10. [MiniMax-M3 serving recipe](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md).
 11. [vLLM: DeepSeek-V4.1-Flash mono decode and AgentX results](https://github.com/vllm-project/vllm/pull/60397).
 12. [vLLM: all-layer mono coverage and evaluations](https://github.com/vllm-project/vllm/pull/61082).
@@ -223,17 +227,17 @@ The [Figure 7 script](data/plot-mono-speedups.py) calculates each speedup from t
 20. [ATOM: DeepSeek-V4.1 mono scheduling and replay updates](https://github.com/ROCm/ATOM/pull/2545).
 21. [InferenceX synthetic acceptance for AgentX performance runs](https://github.com/SemiAnalysisAI/InferenceX/blob/4b94f096b74191b8af6b7c89e50e0b6bc69f7aba/inferencex-e2e/infx/srt_slurm/synthetic_acceptance.py).
 22. [SGLang: mono kernel framework RFC](https://github.com/sgl-project/sglang/issues/43949).
-23. [ATOM: DeepSeek-V4.1 mono runner](https://github.com/ROCm/ATOM/blob/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/models/deepseek_v41/mono/runner.py).
+23. [ATOM: DeepSeek-V4.1 mono implementation](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/models/deepseek_v41/mono).
 
 [1]: https://github.com/ROCm/ATOM/pull/2419
 [2]: https://github.com/ROCm/FlyDSL
-[3]: https://github.com/ROCm/ATOM/tree/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono
+[3]: https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/models/minimax_m3/mono
 [4]: https://github.com/ROCm/ATOM
 [5]: https://github.com/ROCm/FlyDSL/pull/1204
 [6]: https://github.com/tile-ai/TileRT
-[7]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py
+[7]: https://github.com/ROCm/ATOM/blob/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono/device/sync.py
 [8]: https://github.com/ROCm/ATOM/pull/2479
-[9]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py
+[9]: https://github.com/ROCm/ATOM/blob/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/models/minimax_m3/mono/layout.py
 [10]: https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/recipes/MiniMax-M3.md
 [11]: https://github.com/vllm-project/vllm/pull/60397
 [12]: https://github.com/vllm-project/vllm/pull/61082
@@ -247,4 +251,4 @@ The [Figure 7 script](data/plot-mono-speedups.py) calculates each speedup from t
 [20]: https://github.com/ROCm/ATOM/pull/2545
 [21]: https://github.com/SemiAnalysisAI/InferenceX/blob/4b94f096b74191b8af6b7c89e50e0b6bc69f7aba/inferencex-e2e/infx/srt_slurm/synthetic_acceptance.py
 [22]: https://github.com/sgl-project/sglang/issues/43949
-[23]: https://github.com/ROCm/ATOM/blob/53cbd6415a30e62421e76d67650e97e0090bbd95/atom/models/deepseek_v41/mono/runner.py
+[23]: https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/models/deepseek_v41/mono

@@ -1,44 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="680" viewBox="0 0 1280 680" role="img" aria-labelledby="title desc">
-<title id="title">MiniMax-M3 in ATOM: one sparse layer, one FlyDSL launch per TP rank</title><desc id="desc">Thread blocks run six groups of sparse-layer tasks inside one launch, from preparing attention inputs through expert reduction.</desc>
-<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b" /></marker></defs>
-<rect width="1280" height="680" rx="18" fill="#f8fafc" />
-<g font-family="DejaVu Sans,Arial,sans-serif" fill="#172033">
-<text x="40" y="48" font-size="27" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3 in ATOM: one sparse layer, one FlyDSL launch</text>
-<text x="40" y="82" font-size="17" font-weight="400" fill="#64748b" text-anchor="start">MI355X · TP4 · Sparse decode layers</text>
-<rect x="28" y="111" width="1224" height="416" rx="10" fill="#fff5f4" stroke="#e34b48" stroke-width="2" />
-<text x="50" y="148" font-size="21" font-weight="700" fill="#172033" text-anchor="start">Thread blocks work across stages</text>
-<text x="50" y="176" font-size="16" font-weight="400" fill="#64748b" text-anchor="start">The mono schedule assigns thread blocks their tasks; consumers wait for the inputs they need.</text>
-<rect x="50" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
-<text x="66" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">1  Prepare queries and caches</text>
-<text x="66" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Input norm + Q/K/V/index projections</text>
-<text x="66" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Head norm + RoPE + cache insertion</text>
-<rect x="465" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
-<text x="481" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">2  Find the sparse keys</text>
-<text x="481" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Score index-cache blocks</text>
-<text x="481" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Select attention blocks</text>
-<rect x="880" y="205" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
-<text x="896" y="236" font-size="18" font-weight="700" fill="#172033" text-anchor="start">3  Compute attention</text>
-<text x="896" y="268" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Compute sparse attention</text>
-<text x="896" y="294" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Combine outputs + projection</text>
-<rect x="880" y="371" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
-<text x="896" y="402" font-size="18" font-weight="700" fill="#172033" text-anchor="start">4  Reduce and route</text>
-<text x="896" y="434" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Attention AllReduce + residual</text>
-<text x="896" y="460" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Normalization + router</text>
-<rect x="465" y="371" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
-<text x="481" y="402" font-size="18" font-weight="700" fill="#172033" text-anchor="start">5  Compute the experts</text>
-<text x="481" y="434" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Shared and routed experts</text>
-<text x="481" y="460" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Up/gate → activation → down</text>
-<rect x="50" y="371" width="350" height="115" rx="10" fill="white" stroke="#efaaa8" stroke-width="2" />
-<text x="66" y="402" font-size="18" font-weight="700" fill="#172033" text-anchor="start">6  Complete the layer</text>
-<text x="66" y="434" font-size="15" font-weight="400" fill="#172033" text-anchor="start">MoE AllReduce</text>
-<text x="66" y="460" font-size="15" font-weight="400" fill="#172033" text-anchor="start">Prepare the next layer’s inputs</text>
-<path d="M405 262 H458" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
-<path d="M820 262 H873" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
-<path d="M1055 326 V364" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
-<path d="M873 428 H820" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
-<path d="M458 428 H405" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
-<rect x="40" y="550" width="1200" height="71" rx="10" fill="#172033" stroke="#172033" stroke-width="2" />
-<text x="640" y="580" font-size="18" font-weight="500" fill="white" text-anchor="middle">Pass ready results between stages</text>
-<text x="640" y="605" font-size="15" font-weight="400" fill="#cbd5e1" text-anchor="middle">Thread blocks load upcoming weights and overlap independent work.</text>
-<text x="40" y="652" font-size="15" font-weight="400" fill="#64748b" text-anchor="start">Based on ATOM’s M3 implementation. Arrows show data dependencies.</text>
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="914" viewBox="0 0 760 914" role="img" aria-labelledby="title desc">
+  <title id="title">MiniMax-M3: fused decode computation</title>
+  <desc id="desc">Logical data flow in M3's sparse-layer mono computation, including matrix multiplications, index selection when needed, cache writes, and TP reductions. Blocks show groups of computations, not separate kernels.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
+  <rect width="760" height="914" rx="18" fill="#f8fafc"/>
+  <g font-family="DejaVu Sans,Arial,sans-serif">
+    <text x="32" y="44" font-size="29" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: fused decode computation</text>
+    <text x="32" y="78" font-size="21" font-weight="400" fill="#64748b" text-anchor="start">FlyDSL mono connects projections, attention, and experts.</text>
+    <rect x="32" y="110" width="696" height="88" rx="12" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
+    <text x="54" y="144" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Normalize inputs and project Q/K/V</text>
+    <text x="54" y="176" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Matrix multiplies: Q/K/V + index inputs where needed</text>
+    <path d="M380 202 V224" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="32" y="230" width="696" height="88" rx="12" fill="#f0f7fa" stroke="#145d80" stroke-width="2"/>
+    <text x="54" y="264" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Prepare queries and caches</text>
+    <text x="54" y="296" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Head normalization → RoPE → cache writes</text>
+    <path d="M380 322 V344" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="32" y="350" width="696" height="114" rx="12" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
+    <text x="54" y="384" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Select keys and compute attention</text>
+    <text x="54" y="416" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Index scoring and selection when needed</text>
+    <text x="54" y="444" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Sparse attention over the selected keys</text>
+    <path d="M380 468 V490" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="32" y="496" width="696" height="88" rx="12" fill="#f0f7fa" stroke="#145d80" stroke-width="2"/>
+    <text x="54" y="530" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Project and combine attention outputs</text>
+    <text x="54" y="562" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Output projection → TP reduction → residual</text>
+    <path d="M380 588 V610" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="32" y="616" width="696" height="114" rx="12" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
+    <text x="54" y="650" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Compute routed and shared experts</text>
+    <text x="54" y="682" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Normalize inputs; select routed experts</text>
+    <text x="54" y="710" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Up/gate projection → activation → down projection</text>
+    <path d="M380 734 V756" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="32" y="762" width="696" height="88" rx="12" fill="#f0f7fa" stroke="#145d80" stroke-width="2"/>
+    <text x="54" y="796" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Combine expert outputs</text>
+    <text x="54" y="828" font-size="21" font-weight="400" fill="#172033" text-anchor="start">TP reduction → output for the next layer</text>
+    <text x="32" y="890" font-size="19" font-weight="400" fill="#64748b" text-anchor="start">Arrows show data flow. Independent tasks can overlap.</text>
+  </g>
+</svg>
