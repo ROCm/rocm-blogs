@@ -31,7 +31,7 @@ conditions = (
 )
 if len({tuple(row[key] for key in conditions) for row in rows}) != 1:
     raise ValueError("All batch comparisons must use the same benchmark configuration")
-labels = ["Separate kernels", "FlyDSL mono", "FlyDSL mono + indexer CP"]
+labels = ["Separate kernels", "FlyDSL Mono", "FlyDSL Mono + indexer CP"]
 colors = ["#94a3b8", "#dc4a48", "#146184"]
 centers = [8, 4, 0]
 offsets = [0.72, 0, -0.72]
@@ -45,7 +45,9 @@ plt.rcParams.update(
     }
 )
 fig, ax = plt.subplots(figsize=(10.8, 6.7))
-fig.text(0.045, 0.93, "M3 decode latency in ATOM", fontsize=23, weight="bold")
+fig.text(
+    0.045, 0.93, "FlyDSL Mono: M3 decode latency in ATOM", fontsize=23, weight="bold"
+)
 fig.text(
     0.045,
     0.872,
@@ -92,7 +94,7 @@ fig.text(
 fig.text(
     0.045,
     0.032,
-    "Source: ATOM PR #2419. CP adds a long-context indexer optimization to mono.",
+    "Source: ATOM PR #2419. CP adds a long-context indexer optimization to FlyDSL Mono.",
     fontsize=9,
     color="#586b7b",
 )

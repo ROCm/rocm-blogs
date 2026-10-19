@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="940" viewBox="0 0 760 940" role="img" aria-labelledby="title desc">
-  <title id="title">DeepSeek-V4.1: mono computations</title>
-  <desc id="desc">Data dependencies through computations handled by DeepSeek-V4.1 mono kernels: residual mixing and normalization, query and KV projections and cache writes, conditional index selection, attention, output projections and reduction, MoE projections and reduction. This is a computation overview; model-specific work outside mono and runtime setup are omitted.</desc>
+  <title id="title">DeepSeek-V4.1: FlyDSL mono</title>
+  <desc id="desc">Data dependencies through computations handled by DeepSeek-V4.1 FlyDSL mono kernels: residual mixing and normalization, query and KV projections and cache writes, conditional index selection, attention, output projections and reduction, MoE projections and reduction. Arrows show data dependencies between the fused computations.</desc>
   <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
   <rect width="760" height="940" rx="18" fill="#f8fafc"/>
   <g font-family="DejaVu Sans,Arial,sans-serif">
-    <text x="32" y="44" font-size="29" font-weight="700" fill="#172033" text-anchor="start">DeepSeek-V4.1: mono computations</text>
-    <text x="32" y="78" font-size="21" font-weight="400" fill="#64748b" text-anchor="start">FlyDSL fuses attention preparation and attention-to-MoE work.</text>
+    <text x="32" y="44" font-size="29" font-weight="700" fill="#172033" text-anchor="start">DeepSeek-V4.1: FlyDSL mono</text>
+    <text x="32" y="78" font-size="21" font-weight="400" fill="#64748b" text-anchor="start">Fused attention preparation and attention-to-MoE computation.</text>
     <rect x="32" y="110" width="696" height="114" rx="12" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
     <text x="54" y="144" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Prepare attention inputs</text>
     <text x="54" y="176" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Residual mixing → normalization → query/KV projections</text>
@@ -32,6 +32,6 @@
     <rect x="32" y="788" width="696" height="88" rx="12" fill="#f0f7fa" stroke="#145d80" stroke-width="2"/>
     <text x="54" y="822" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Combine expert outputs</text>
     <text x="54" y="854" font-size="21" font-weight="400" fill="#172033" text-anchor="start">TP reduction → output for the next layer</text>
-    <text x="32" y="916" font-size="19" font-weight="400" fill="#64748b" text-anchor="start">Data flow through mono work; external operations omitted.</text>
+    <text x="32" y="916" font-size="19" font-weight="400" fill="#64748b" text-anchor="start">Data flow through FlyDSL mono computations.</text>
   </g>
 </svg>

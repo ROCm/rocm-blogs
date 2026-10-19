@@ -59,7 +59,9 @@ for y, (concurrency, (off, on)) in zip([6, 4, 2, 0], sorted(points.items())):
 ax.legend(
     handles=[
         Patch(color=color, label=label)
-        for color, label in zip(colors, ("Mono off", "FlyDSL mono (30 layers)"))
+        for color, label in zip(
+            colors, ("FlyDSL Mono off", "FlyDSL Mono on (30 layers)")
+        )
     ],
     loc="upper left",
     bbox_to_anchor=(0, 1.17),
@@ -77,13 +79,13 @@ for spine in ax.spines.values():
     spine.set_visible(False)
 ax.tick_params(length=0, pad=8)
 fig.text(
-    0.13, 0.94, "Higher interactivity with mono decode", fontsize=20, weight="bold"
+    0.13, 0.94, "Higher interactivity with FlyDSL Mono", fontsize=20, weight="bold"
 )
 fig.text(0.13, 0.885, "DeepSeek-V4.1-Flash in vLLM · MI355X · TP2", fontsize=13)
 fig.text(
     0.13,
     0.13,
-    "Each group pairs mono off and on at the same concurrency; labels show values and ratios.",
+    "Each group pairs FlyDSL Mono off and on at the same concurrency; labels show values and ratios.",
     fontsize=10,
 )
 fig.text(

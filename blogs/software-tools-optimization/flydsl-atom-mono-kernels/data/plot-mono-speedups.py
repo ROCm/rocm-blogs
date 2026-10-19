@@ -54,9 +54,13 @@ if set(v41) != {1, 2, 4, 8}:
 plt.rcParams.update({"font.family": "DejaVu Sans", "text.color": "#152a3c"})
 fig, axes = plt.subplots(1, 2, figsize=(12, 5.7), sharey=True)
 colors = ["#94a3b8", "#dc4a48", "#146184"]
-labels = ["Non-mono baseline", "FlyDSL mono", "FlyDSL mono + indexer CP (M3)"]
+labels = ["FlyDSL Mono off", "FlyDSL Mono on", "FlyDSL Mono + indexer CP (M3)"]
 fig.text(
-    0.05, 0.94, "Mono gains against a matched baseline", fontsize=23, weight="bold"
+    0.05,
+    0.94,
+    "FlyDSL Mono gains against a matched baseline",
+    fontsize=23,
+    weight="bold",
 )
 fig.legend(
     handles=[Patch(color=color, label=label) for color, label in zip(colors, labels)],

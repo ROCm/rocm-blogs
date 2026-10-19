@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="760" height="914" viewBox="0 0 760 914" role="img" aria-labelledby="title desc">
-  <title id="title">MiniMax-M3: fused decode computation</title>
-  <desc id="desc">Logical data flow in M3's sparse-layer mono computation, including matrix multiplications, index selection when needed, cache writes, and TP reductions. Blocks show groups of computations, not separate kernels.</desc>
+  <title id="title">MiniMax-M3: FlyDSL mono</title>
+  <desc id="desc">Logical data flow in M3's sparse-layer FlyDSL mono computation, including matrix multiplications, index selection when needed, cache writes, and TP reductions. Blocks show groups of computations, not separate kernels.</desc>
   <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
   <rect width="760" height="914" rx="18" fill="#f8fafc"/>
   <g font-family="DejaVu Sans,Arial,sans-serif">
-    <text x="32" y="44" font-size="29" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: fused decode computation</text>
-    <text x="32" y="78" font-size="21" font-weight="400" fill="#64748b" text-anchor="start">FlyDSL mono connects projections, attention, and experts.</text>
+    <text x="32" y="44" font-size="29" font-weight="700" fill="#172033" text-anchor="start">MiniMax-M3: FlyDSL mono</text>
+    <text x="32" y="78" font-size="21" font-weight="400" fill="#64748b" text-anchor="start">Fused projections, attention, and expert computation.</text>
     <rect x="32" y="110" width="696" height="88" rx="12" fill="#fff5f4" stroke="#e34b48" stroke-width="2"/>
     <text x="54" y="144" font-size="24" font-weight="700" fill="#172033" text-anchor="start">Normalize inputs and project Q/K/V</text>
     <text x="54" y="176" font-size="21" font-weight="400" fill="#172033" text-anchor="start">Matrix multiplies: Q/K/V + index inputs where needed</text>
