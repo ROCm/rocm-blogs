@@ -29,7 +29,7 @@ myst:
 
 **Extremely high interactivity is critical for LLM applications with strict latency requirements.** Fast token generation helps a coding agent produce its next action sooner and move on to the next step. The goal is to improve interactivity by reducing decode latency.
 
-[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **block, wavefront, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. [ATOM][4] uses these capabilities to build mono decode across several model families. The approach also extends to [vLLM](https://github.com/vllm-project/vllm).
+[FlyDSL](https://github.com/ROCm/FlyDSL) gives developers the flexibility to write and tune GPU code at the **grid, block, wave, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. [ATOM][4] uses these capabilities to build mono decode across several model families. The approach also extends to [vLLM](https://github.com/vllm-project/vllm).
 
 ## Why mono kernels speed up decode
 
@@ -46,9 +46,9 @@ FlyDSL gives developers four kinds of control over a GPU program: [2]
 - **Work assignment.** Assign tasks to thread blocks and threads, and tune the mapping for different numbers of tokens per step.
 - **Layout and tiling.** Choose how data is arranged and divided into tiles for each stage.
 - **Data movement and synchronization.** Decide when to load data and how to signal that an output is ready, within a GPU or across GPUs.
-- **Low-level control.** Write and tune a wide range of operations at the block, wavefront, and thread levels, with control down to individual GPU instructions. [2], [7]
+- **Low-level control.** Write and tune a wide range of operations at the grid, block, wave, and thread levels, with control down to individual GPU instructions. [2], [7]
 
-These controls connect local kernel tuning with scheduling across a layer. Developers can tune work within a block, coordinate threads within a wavefront, and then decide how blocks hand data to later stages. This lets them optimize both the operations themselves and the way those operations work together. [2], [7]
+These controls connect local kernel tuning with scheduling across a layer. Developers can coordinate blocks across a grid, tune work within a block, and control how threads cooperate within a wave. They can also decide how blocks hand data to later stages. This lets them optimize both the operations themselves and the way those operations work together. [2], [7]
 
 ATOM uses these controls to keep **thread blocks** active across stages, passing ready results to consumers and taking on new tasks as the layer advances. [3], [7]
 
@@ -58,7 +58,7 @@ ATOM uses these controls to keep **thread blocks** active across stages, passing
 
 **Developers design the fusion.** They manage scheduling and synchronization, including keeping the required thread blocks resident so the kernel can make progress. ATOM handles runtime buffers, coordination across tensor-parallel (TP) ranks, graph replay, correctness checks, and fallback. [3], [8]
 
-The design draws on **TileRT's MonoKernel work**. [5], [6]
+The design is inspired by **TileRT**. [5], [6]
 
 ## Bringing mono kernels to ATOM
 
@@ -174,7 +174,7 @@ At 1M context, TP4, 16 token rows, and four query rows per request, the [layer m
 3. [ATOM's M3 mono implementation](https://github.com/ROCm/ATOM/tree/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono).
 4. [ATOM inference engine](https://github.com/ROCm/ATOM).
 5. [FlyDSL: GLM-5 and Kimi-K3 mono work](https://github.com/ROCm/FlyDSL/pull/1204).
-6. [TileRT MonoKernel source cited by FlyDSL](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9).
+6. [TileRT source cited by FlyDSL](https://github.com/SemiAnalysisAI/InferenceX/tree/8ac98344b038a3f2da20a565fe9b974772a67ef9).
 7. [M3 device primitives and tagged mailboxes](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/kernels/common.py).
 8. [ATOM: DeepSeek-V4.1 and shared mono components](https://github.com/ROCm/ATOM/pull/2479).
 9. [M3 task scheduling](https://github.com/ROCm/ATOM/blob/2b9f3412e466fd4172a4a621fe9215a1041130c1/atom/models/minimax_m3/mono/layout.py).
