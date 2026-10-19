@@ -137,9 +137,7 @@ In vLLM's same-node comparison at **TP2, concurrency one**, enabling K1 + K2 on 
 
 *Figure 5. Each arrow connects mono off to mono on at the same request concurrency. Moving right means higher interactivity; moving up means higher throughput. Throughput is per server and includes cached input. These four measured pairs do not establish the full curve. [11]*
 
-## Extending FlyDSL mono decode to SGLang
-
-SGLang's **AMD mono kernel backend** also supports FlyDSL mono decode for **GLM-5.3 and GLM-5.3-Flash** on MI355X. The implementations in `sgl-amd-mono` adapt FlyDSL kernels from AITER and vLLM to SGLang's weight layouts, KV caches, and state buffers. For supported small-batch decode steps, each covered MoE layer runs as one launch per TP rank. SGLang handles request scheduling, cache management, and sampling, while other steps use its standard execution path. [22], [23]
+FlyDSL mono decode also extends to **SGLang**. [22], [23]
 
 ## Scope and costs
 
