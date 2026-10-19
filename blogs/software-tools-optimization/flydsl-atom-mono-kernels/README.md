@@ -27,13 +27,13 @@ myst:
 
 # FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM
 
-**Extremely high interactivity is critical for LLM applications with strict latency requirements.** Fast token generation helps a coding agent produce its next action sooner and move on to the next step. The goal is to improve interactivity by reducing decode latency.
+**Extremely high interactivity is critical for LLM applications with strict latency requirements.** A coding agent needs to generate its next action quickly so it can call a tool and continue the task. Reducing decode latency helps keep this loop moving.
 
-[FlyDSL][1] gives developers the flexibility to write and tune GPU code at the **grid, block, wave, thread, and instruction levels** in Python. They can control how work is assigned, how data is laid out and moved, and where synchronization is needed. These controls let them optimize individual operations and connect the stages of a model layer into **mono kernels** that overlap independent work and reduce waits. [ATOM](https://github.com/ROCm/ATOM) uses these capabilities to build mono decode across several model families. The approach also extends to [vLLM](https://github.com/vllm-project/vllm) and [SGLang](https://github.com/sgl-project/sglang).
+[FlyDSL][1] gives developers the flexibility to write GPU programs in Python and tune them at the **grid, block, wave, thread, and instruction levels**. They control how work is assigned, how data is laid out and moved, and where synchronization is needed. This lets them tune individual operations and combine stages of a model layer into **mono kernels**, overlapping independent work to reduce waits. [ATOM](https://github.com/ROCm/ATOM) brings these kernels into serving across several model families. The approach also extends to [vLLM](https://github.com/vllm-project/vllm) and [SGLang](https://github.com/sgl-project/sglang).
 
 ## Why mono kernels speed up decode
 
-Small-batch decode runs many short kernels to process a few tokens at a time. Each launch adds overhead, and some kernels have too little parallel work to keep the GPU busy. On a stream, kernels run in sequence: a later stage waits for the previous kernel to finish, even when some of its input is already available.
+Small-batch decode runs many short kernels to process a few tokens at a time. Each launch adds overhead, and some kernels have too little parallel work to keep the GPU busy. A GPU stream executes these kernels in order, so the next stage waits for the whole kernel to finish even if part of its input is already available.
 
 Mono kernels combine related operations into fewer launches and let thread blocks work across stages. Developers can load weights alongside earlier computation and let the next stage process portions of the output as they become ready. They can also overlap computation with reductions across GPUs. Together, these choices reduce idle time and help the decode step finish sooner. [2], [3]
 
@@ -48,43 +48,41 @@ FlyDSL gives developers four kinds of control over a GPU program: [1]
 - **Data movement and synchronization.** Decide when to load data and how to signal that an output is ready, within a GPU or across GPUs.
 - **Low-level control.** Write and tune a wide range of operations at the grid, block, wave, and thread levels, with control down to individual GPU instructions. [1], [2]
 
-These controls connect local kernel tuning with scheduling across a layer. Developers can coordinate blocks across a grid, tune work within a block, and control how threads cooperate within a wave. They can also decide how blocks hand data to later stages. This lets them optimize both the operations themselves and the way those operations work together. [1], [2]
-
-Mono kernels use these controls to keep **thread blocks** active across stages, passing ready results to consumers and taking on new tasks as the layer advances. [2]
+Together, these controls let developers tune both the work inside each stage and the handoffs between stages. In a mono kernel, **thread blocks** can stay active as the layer advances: a block passes on a ready result, then takes on another task. [1], [2]
 
 ![Work inside a mono kernel: prepare weights early, pass ready output to reductions, and feed the next computation](images/mono-overlap.svg)
 
 *Figure 1. Mono loads weights early, passes ready portions of the output forward, and overlaps reductions with computation. The timeline is schematic.*
 
-**Developers design the fusion.** They manage scheduling and synchronization, including keeping the required thread blocks resident so the kernel can make progress. ATOM handles runtime buffers, coordination across tensor-parallel (TP) ranks, graph replay, correctness checks, and fallback. [2], [4]
+**Developers design the fusion.** They choose the schedule and synchronization scheme, and must keep enough cooperating thread blocks resident on the GPU for the kernel to make progress. ATOM provides the serving integration: runtime buffers, coordination across tensor-parallel (TP) ranks, graph replay, correctness checks, and fallback. [2], [4]
 
 The design is inspired by **TileRT**. [5]
 
 ## Bringing mono kernels to ATOM
 
-ATOM supports FlyDSL mono decode for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and MiniMax-M3**. Its [shared mono components](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono) let developers adapt scheduling and data handoffs to each model. Kimi-K3 uses mono for eligible linear-attention (KDA) layers; its first layer and MLA layers keep the existing path. [2], [4], [6]
+ATOM supports FlyDSL mono decode for **GLM-5.2, Kimi-K3, DeepSeek-V4.1, and MiniMax-M3**. Its [shared mono components](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono) provide buffers, synchronization, and reductions that model-specific schedules can reuse. Kimi-K3 uses mono for eligible linear-attention (KDA) layers; its first layer and MLA layers keep the existing path. [2], [4], [6]
 
-The shared components handle recurring needs such as buffers, synchronization, and reductions. Each model supplies the schedule that connects its own stages. ATOM then connects that schedule to serving: batching and speculative decoding can change the number of tokens in a step, so runtime dispatch must select a supported path and keep participating GPUs in agreement. [4], [6]
+Each model supplies the schedule that connects its own stages. ATOM connects that schedule to serving, where batching and speculative decoding can change the number of tokens in a step. The runtime must select a supported path and make the same choice on every TP rank. [4], [6]
 
-The following diagrams focus on the computations handled by mono kernels and how their data flows between stages.
+M3 and V4.1 show how these shared controls support different model designs.
 
 ### MiniMax-M3: connecting attention and experts
 
-For MiniMax-M3's sparse layers, mono fuses the path from input normalization through attention and mixture-of-experts (MoE) computation to the reduced expert output. **The matrix multiplications are included:** Q/K/V and index projections, the attention output projection, routing, and the shared and routed experts' up/gate and down projections. Head normalization, positional encoding (RoPE), cache writes, and TP reductions are also part of the fused computation. [2]
+In MiniMax-M3's sparse layers, mono connects input normalization, attention, and mixture-of-experts (MoE) computation through to the final TP reduction. The fused path includes the main matrix multiplications: Q/K/V and indexer projections, the attention output projection, routing, and the shared and routed experts' up/gate and down projections. It also handles head normalization, rotary position embeddings (RoPE), and cache writes. [2]
 
-Layers that reuse an earlier layer's selected blocks skip indexer projections, scoring, and selection. The first three dense layers also use fused input preparation and fused output-projection/MLP computation; their attention calculation uses the existing backend. [2]
+Layers that reuse selected blocks from an earlier layer skip indexer projections, scoring, and selection. The first three dense layers fuse input preparation and combine the output projection with MLP computation, while keeping the existing attention backend. [2]
 
 ![MiniMax-M3 mono computation: input projections, query and cache preparation, sparse attention, output projection and reduction, routing, and expert projections and reduction](images/minimax-mono-flow.svg)
 
-*Figure 2. Computations fused in M3's sparse-layer mono path. Matrix multiplications appear in the input projections, attention, output projection, router, and experts. Arrows summarize data flow; independent tasks can overlap. [2]*
+*Figure 2. Computations fused in M3's sparse-layer mono path. Arrows summarize data flow; independent tasks can overlap. [2]*
 
-Three scheduling choices reduce waits:
+Three scheduling choices reduce waits: [2]
 
-- **Reuse thread blocks across stages.** A block can finish attention work and then take on routing or expert tasks. Its role changes as the layer progresses, allowing the schedule to use the same GPU resources for different operations. [2]
-- **Load weights early.** A later stage's weights can load while earlier work is still running. The later calculation still waits for its input, but its weight loads can already be under way. [2]
-- **Pass on ready data.** Tagged buffers let consumers check that the outputs they need are ready. Consumers and cross-GPU reductions can begin on ready portions, while other blocks are still producing the rest. Progress depends on the data each task needs. [2]
+- **Reuse thread blocks across stages.** A block that finishes attention work can take on routing or expert tasks, letting the schedule reuse GPU resources as the layer progresses.
+- **Load weights early.** Blocks can load a later stage's weights while earlier stages compute. The calculation waits for its input, but the weight loads can already be in progress.
+- **Pass on ready data.** Tagged buffers signal when an output is ready. Later stages and cross-GPU reductions can start on the portions they need while other blocks produce the rest.
 
-**Decode latency.** These measurements use MI355X, TP4, MiniMax-M3-MXFP4, a 1M-token context, and EAGLE3 with three speculative tokens. **Separate** and **Mono** compare complete ATOM execution paths at the revision measured in [7], where the first three dense layers still used the original path. **Mono + CP** adds indexer context parallelism, a separate long-context optimization described in the [supporting measurements](#appendix-supporting-measurements). [7]
+**Decode latency.** The [published measurements][7] use MI355X, TP4, MiniMax-M3-MXFP4, a 1M-token context, and EAGLE3 with three draft tokens. **Separate** and **Mono** compare complete ATOM execution paths. The measured revision kept the first three dense layers on their original path. **Mono + CP** adds indexer context parallelism, a separate long-context optimization described in the [supporting measurements](#appendix-supporting-measurements).
 
 Times are median GPU decode-step latency in milliseconds; parentheses show speedup relative to Separate.
 
@@ -98,77 +96,81 @@ Times are median GPU decode-step latency in milliseconds; parentheses show speed
 
 *Figure 3. Each batch size has its own separate-kernel baseline. Labels show latency and speedup against that baseline. Indexer CP is an additional long-context optimization. [7]* [Data](data/minimax-decode-step.csv) · [Plotting script](data/plot-minimax-decode-step.py)
 
-**Mono alone delivers 1.64× speedup at batch one; the 1.83× result includes CP.** Gains are smaller at larger batches. These GPU-step measurements do not directly measure per-user token rate or isolate the contribution of each scheduling choice. A [launch example](data/run-minimax-m3-mono.sh) starts an ATOM server using the measured revision's recipe.
+**Mono alone delivers a 1.64× speedup at batch one; adding CP brings the speedup to 1.83×.** Gains shrink as batch size grows. A larger batch gives separate kernels more parallel work and spreads launch overhead across more tokens, which can reduce mono's relative advantage.
 
-A larger batch gives separate kernels more work to distribute across the GPU and more tokens over which to spread launch overhead. That can reduce the relative benefit of mono, although the balance depends on the model and schedule.
+These measurements cover GPU decode steps; they do not measure per-user token rate or isolate the contribution of each scheduling choice. A [launch example](data/run-minimax-m3-mono.sh) starts an ATOM server using the measured revision's recipe.
 
 ### DeepSeek-V4.1 in ATOM
 
-DeepSeek-V4.1 uses FlyDSL mono kernels to fuse attention preparation and to connect attention with MoE. The fused computations include: [4]
+DeepSeek-V4.1 applies FlyDSL mono kernels to attention preparation and the path from attention to MoE: [4]
 
 - **Prepare attention inputs.** Combine residual updates and normalization with query, KV, and indexer projections, RoPE, and window-cache writes. Indexer inputs are prepared only for layers that select keys.
 - **Connect attention to MoE.** Score and select keys where needed, compute attention and output projections, then reduce the results across TP ranks and normalize the input to MoE. Routing, shared and routed expert projections, and the expert reduction are fused into this path.
 
-The attention-to-MoE schedule passes each ready normalized row to the router and expert stages. It starts loading output-projection weights before waiting for the attention output, allowing those loads to overlap earlier work. FlyDSL lets developers express these data handoffs and early loads directly. The DSpark draft runner reuses the same kernel implementations with window-only attention and its own expert configuration. [4]
+The schedule makes each normalized row available to the router and expert stages as it becomes ready. Output-projection weight loads start before the kernel waits for attention output, allowing memory access to overlap earlier computation. For eligible steps, GPUs also divide token rows among themselves for some stages, reducing work repeated on every GPU. FlyDSL gives developers control over these choices: when to load, when to wait, and how to assign work. [4]
 
 ![DeepSeek-V4.1 mono computations: prepare attention inputs, select keys where needed, compute attention, project and reduce its output, then route tokens and compute and reduce expert outputs](images/atom-deepseek-v41-mono-flow.svg)
 
-*Figure 4. Data flow through DeepSeek-V4.1's mono computations. The diagram focuses on fused work; model-specific operations outside mono and runtime setup are omitted. Arrows show data dependencies, not a launch timeline. [4]*
+*Figure 4. Data flow through DeepSeek-V4.1's mono computations. Arrows show dependencies between the fused computations. Model-specific operations outside mono and runtime setup are omitted. [4]*
 
-For eligible steps, GPUs divide token rows among themselves for some stages, instead of every GPU repeating that work for all rows. Independent loads also start before the kernel waits for data from another stage. The schedule uses FlyDSL to adjust work assignment and communication together. [4]
+The DSpark draft runner reuses these kernel implementations with window-only attention and its own expert configuration. [4]
 
 ### Interactivity results in ATOM
 
-The [InferenceX AgentX](https://inferencex.semianalysis.com/agentx) benchmark replays multi-turn, long-context agent sessions. It collects inter-token latency for each request and reports **P90 interactivity as 1 / P90 inter-token latency**, with latency in seconds. Higher values mean faster token generation at the slower end of the request distribution. [8]
+The [InferenceX AgentX](https://inferencex.semianalysis.com/agentx) benchmark replays multi-turn, long-context agent sessions. It collects inter-token latency for each request and reports **P90 interactivity as 1 / P90 inter-token latency**, with latency in seconds. Higher values mean shorter delays between tokens at the slower end of the request distribution. [8]
 
-The [published ATOM results](data/atom-agentx-source.json) below use **MI355X** with FlyDSL mono decode enabled. **They have no matched mono-off baseline:** the table describes complete serving configurations, not the gain from enabling mono. It shows concurrency one (C1).
+The [published ATOM results](data/atom-agentx-source.json) below use **MI355X** with FlyDSL mono decode enabled at concurrency one (C1). **The source provides no matched mono-off baseline**, so these figures describe complete serving configurations rather than the gain from enabling mono.
 
 - **MiniMax-M3-MXFP4, TP4:** EAGLE3 with three draft tokens and synthetic acceptance length 2.78, FP8 KV and index caches.
 - **DeepSeek-V4.1-Flash, TP2 and TP4:** DSpark with five draft tokens and synthetic acceptance length 3.51, BF16 KV and an FP4 index cache.
 
-Acceptance length counts the average output tokens per verification step, including the target token. Each point uses a configured **3,600-second profiling window**. These controlled replays do not establish natural acceptance. Both sets use GPU-resident KV caches. Exact recipes, images, acceptance settings, and source records are linked in the [ATOM serving data](data/atom-agentx.csv).
+Acceptance length is the average number of output tokens per verification step, including the target token. These runs set acceptance synthetically, so acceptance during normal serving may differ. Both model setups use GPU-resident KV caches and a configured **3,600-second profiling window**. The [ATOM serving data](data/atom-agentx.csv) links to the exact recipes, container images, acceptance settings, and source records.
 
-The table reports P90 interactivity in tokens/s/user, **output throughput** in generated tokens/s/GPU, and P90 time to first token (TTFT) in seconds. Output throughput counts generated tokens over the profiling window; interactivity describes the pace between tokens once generation starts.
+The table reports P90 interactivity in tokens/s/user, **output throughput** in generated tokens/s/GPU, and P90 time to first token (TTFT) in seconds. Output throughput is averaged over the full profiling window; interactivity describes the pace between tokens once a request starts generating.
 
-| Model / TP | Interactivity | Output | TTFT |
+| Model / TP | Interactivity | Output rate | TTFT |
 | --- | ---: | ---: | ---: |
 | M3 / TP4 | **469.5** | 42.5 | 1.13 |
 | V4.1 / TP2 | **505.1** | 86.5 | 1.20 |
 | V4.1 / TP4 | **641.0** | 45.5 | 1.20 |
 
-The distinction matters: M3's C1 input + output total is **6,580 tokens/s/GPU**, but only **42.5** is output. The total mainly counts input tokens, including cached input, and should not be read as generation speed. Mono targets decode; the M3 GPU-step comparison above measures its contribution directly. These serving results also include scheduling, caching, and speculative decoding. TTFT and tool waits remain part of user responsiveness.
+For M3 at C1, input + output throughput is **6,580 tokens/s/GPU**, but generated output contributes only **42.5**. The larger total is dominated by input tokens, including cached input, so it does not represent generation speed. The M3 GPU-step comparison above measures the effect of enabling mono; serving results also reflect scheduling, caching, and speculative decoding. TTFT and tool waits also affect user responsiveness.
 
 ## Extending to vLLM and SGLang
 
-**vLLM** takes inspiration from ATOM's mono work and adapts the FlyDSL kernels to its KV-cache layout and runtime. A published same-node **TP2, concurrency-one** comparison for DeepSeek-V4.1-Flash on MI355X raises P90 interactivity from **318.1 to 429.1 tokens/s/user (1.35×)** with mono on 30 standard layers. Each concurrency setting has **one 3,600-second run per mode**, using DSpark with five draft tokens and synthetic acceptance length 3.51. [3]
+**vLLM** takes inspiration from ATOM's mono work and adapts the FlyDSL kernels to its KV-cache layout and runtime. For DeepSeek-V4.1-Flash on MI355X, a published same-node mono-off/on comparison uses **TP2** with mono enabled on 30 standard layers. At **concurrency one**, P90 interactivity rises from **318.1 to 429.1 tokens/s/user (1.35×)**. Each concurrency setting has **one 3,600-second run per mode**, using DSpark with five draft tokens and synthetic acceptance length 3.51. [3]
 
 ![DeepSeek-V4.1-Flash in vLLM on MI355X TP2: paired mono-off/on bars show 1.35, 1.28, 1.15, and 1.14 times P90 interactivity at concurrency 1, 2, 4, and 8](images/vllm-dsv41-interactivity.png)
 
 *Figure 5. Each group compares mono off and on at the same request concurrency. Longer bars mean faster token generation. Labels show the measured values and their ratio. [3]*
 
-TTFT rises at C1/C8 and falls at C2/C4 in these runs; a repeatable TTFT change is not established. The [supporting measurements](#vllm-evaluation-details) include all four TTFT pairs. These performance replays use a fixed acceptance setting; they do not establish the full user experience with natural acceptance.
+TTFT is higher at C1/C8 and lower at C2/C4 in these runs. More runs would be needed to establish a repeatable change; the [supporting measurements](#vllm-evaluation-details) include all four pairs. As with the ATOM benchmarks, acceptance is set synthetically, so these runs do not measure the full user experience under natural acceptance.
 
 **SGLang's [mono kernel framework RFC][9]** describes how to extend mono decode through a shared framework and GPU-vendor plugins, including AMD's `sgl-amd-mono`. The plugins supply model kernels, while SGLang handles step selection and runtime integration.
 
 ## Scope and costs
 
-A fused kernel keeps more work and state in one program. Register and shared-memory use must leave enough thread blocks able to run at once. That resource budget is part of schedule design and can limit how much work to combine. [2]
+Fusion can increase register and shared-memory use, leaving room for fewer thread blocks to run at once. Developers must account for that limit when choosing which operations to combine. [2]
 
-- **Where gains shrink.** M3's GPU-step speedup falls from 1.64× at batch one to 1.16× at batch four; vLLM's interactivity gain falls from 1.35× at C1 to 1.14× at C8. A separate vLLM FFN-only layer test is already near parity at TP2/C8: **345 → 342 µs (1.01×)** at 48 token rows. The cited full-model comparisons do not locate a 1.0× crossover. [3], [7]
-- **When mono takes over.** Dispatch checks the model, GPU, TP size, layouts, and step metadata. In the cited revisions, M3 supports up to **16 token rows** per step; ATOM and vLLM V4.1 support up to **48**. Speculative tokens and graph padding count toward these limits: one request with five drafts can use six rows before padding. In a supported deployment, larger or unsupported steps use the standard path, with every TP rank making the same choice. The vLLM path requires decode-only steps, supported cache metadata, and eager execution or full graph replay; explicitly enabling it on unsupported hardware or backends raises a configuration error. These coverage limits are not measured break-even thresholds. [2], [3], [4]
-- **Development cost.** Developers tailor and validate schedules for each model and keep them in sync with model changes. Correctness checks and task evaluations are part of that work. [3]
+**Where gains shrink.** M3's GPU-step speedup falls from 1.64× at batch one to 1.16× at batch four; vLLM's interactivity gain falls from 1.35× at C1 to 1.14× at C8. A separate vLLM FFN-only layer test is already near parity at TP2/C8: **345 → 342 µs (1.01×)** at 48 token rows. The available full-model measurements do not show where mono and the separate path reach parity. [3], [7]
+
+**When mono takes over.** The runtime selects mono based on the model, GPU, TP size, layouts, and step metadata. In the cited revisions, M3 supports up to **16 token rows** per step; ATOM and vLLM V4.1 support up to **48**. Speculative tokens and graph padding count toward these limits: one request with five drafts can use six rows before padding. In a supported deployment, larger or unsupported steps use the standard path, with every TP rank making the same choice. These row limits define supported shapes; they do not identify where mono stops improving performance. [2], [3], [4]
+
+The vLLM path also requires decode-only steps, supported cache metadata, and either eager execution or full graph replay. Explicitly enabling mono on unsupported hardware or backends raises a configuration error. [3]
+
+**Development cost.** Each model needs a schedule that developers must validate and maintain as the model changes. Correctness checks and task evaluations are part of that work. [3]
 
 ## Build a mono path for your model
 
 Start with the [FlyDSL mono components](https://github.com/ROCm/FlyDSL/tree/31f389b3838d83f82e5bd9ccf646076243e24e18/kernels/monokernel) and [ATOM's shared mono framework](https://github.com/ROCm/ATOM/tree/53e4fb52403707ab07b69ee909501ea3cc25ca5c/atom/mono):
 
 1. **Find the waits.** Profile the separate path at your serving batch sizes. Identify where stages wait for data or communication.
-2. **Write the schedule in FlyDSL.** Use reusable compute and communication components to connect stages and give thread blocks independent work to overlap.
-3. **Integrate and evaluate.** Add runtime dispatch, fallback, and correctness checks. Evaluate task quality with actual rejection sampling, then compare interactivity, TTFT, and throughput at each concurrency level.
+2. **Write the schedule in FlyDSL.** Use reusable compute and communication components to connect stages. Assign independent tasks to thread blocks so their work can overlap.
+3. **Integrate and evaluate.** Add runtime dispatch, fallback, and correctness checks. Evaluate task quality with actual rejection sampling, then compare interactivity, TTFT, and throughput at the same concurrency levels.
 
 ## Appendix: Supporting measurements
 
-**Indexer context parallelism in M3.** ATOM splits index scoring across four TP ranks, then exchanges candidates to recover the final selection. This is the additional optimization behind the Mono + CP results. [2], [7]
+**Indexer context parallelism in M3.** ATOM splits index scoring across four TP ranks, then exchanges candidates to make the final selection. This is the additional optimization behind the Mono + CP results. [2], [7]
 
 At 1M context, TP4, 16 token rows, and four query rows per request, the [layer measurement](data/minimax-indexer-cp-layer.csv) records **222.2 → 156.7 µs (1.42×)** with CP. Both runs use mono and graph replay. [7]
 
@@ -184,7 +186,7 @@ At 1M context, TP4, 16 token rows, and four query rows per request, the [layer m
 
 ### vLLM evaluation details
 
-**TTFT.** P90 TTFT, in seconds, changes as follows in the TP2 mono-off/on runs plotted in Figure 5. Each mode has one 3,600-second run per concurrency, so these observations do not establish a repeatable TTFT change. [3]
+**TTFT.** The table below gives P90 TTFT in seconds for the TP2 mono-off/on runs in Figure 5. Each mode has one 3,600-second run per concurrency; repeated measurements would be needed to establish a consistent effect. [3]
 
 | Concurrency | Mono off | Mono on |
 | ---: | ---: | ---: |
