@@ -98,17 +98,17 @@ Times are median GPU decode-step latency in milliseconds; parentheses show speed
 
 A larger batch gives separate kernels more work to distribute across the GPU and more tokens over which to spread launch overhead. That can reduce the relative benefit of mono, although the balance depends on the model and schedule.
 
-## Extending mono decode to vLLM
+## Extending FlyDSL mono decode to vLLM
 
-FlyDSL mono decode is also integrated into vLLM for DeepSeek-V4.1-Flash on MI355X. It builds on ATOM's mono work, with vLLM handling execution-path selection, memory management, and coordination across GPUs. [8], [11], [12]
+vLLM also uses **FlyDSL mono kernels** for DeepSeek-V4.1-Flash on MI355X. The implementation takes inspiration from ATOM's mono work, with vLLM handling execution-path selection, memory management, and coordination across GPUs. [8], [11], [12]
 
-The GPU scheduling ideas carry across frameworks, while each engine connects them to its own batches, buffers, and graph execution. This is the division between reusable kernel work and the integration needed to serve a model. [11]
+FlyDSL provides control over task assignment, data movement, and synchronization. Developers use these controls to adapt the GPU schedule to DeepSeek's layers, while vLLM connects the kernels to its own batches, buffers, and graph execution. [11]
 
-The schedule uses **two mono launches, K1 and K2, per eligible layer and TP rank**. K1 prepares attention inputs; K2 handles attention, expert computation, and reductions. Some operations, such as compression and token selection, remain outside these launches. [11], [12]
+The schedule uses **two FlyDSL mono launches, K1 and K2, per eligible layer and TP rank**. K1 prepares attention inputs; K2 handles attention, expert computation, and reductions. Some operations, such as compression and token selection, remain outside these launches. [11], [12]
 
 ![DeepSeek-V4.1-Flash in vLLM: Engram before K1 where present, compressor and indexer between K1 and K2 on index-source layers, attention and experts inside K2](images/deepseek-v41-mono-flow.svg)
 
-*Figure 4. vLLM's mono schedule. Conditional operations outside K1 and K2 depend on the layer. [12]*
+*Figure 4. FlyDSL mono decode in vLLM. Conditional operations outside K1 and K2 depend on the layer. [12]*
 
 ### Interactivity results
 
