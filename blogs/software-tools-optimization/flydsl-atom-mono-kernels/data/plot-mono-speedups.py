@@ -115,7 +115,7 @@ fig.text(
 fig.text(
     0.05,
     0.035,
-    "Sources: ATOM #2419 and vLLM #60397. M3 includes a separate CP option; V4.1 uses K1 + K2 on 30 layers.",
+    "Sources: ATOM #2419 and vLLM #60397. M3 includes a separate CP option; V4.1 measurements cover 30 layers.",
     fontsize=10,
     color="#586b7b",
 )

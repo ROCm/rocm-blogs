@@ -21,8 +21,12 @@ for row in rows:
     if row["source"] != SOURCE or row["metric"] != "P90 interactivity":
         continue
     match = re.search(r"concurrency (\d+);", row["configuration"])
-    if match is None or row["unit"] != "tokens/s/user":
-        raise ValueError("Expected request concurrency and tokens/s/user")
+    if (
+        match is None
+        or row["unit"] != "tokens/s/user"
+        or "TP2;" not in row["configuration"]
+    ):
+        raise ValueError("Expected TP2, request concurrency, and tokens/s/user")
     concurrency = int(match[1])
     if concurrency in points:
         raise ValueError(f"Duplicate interactivity for concurrency {concurrency}")
@@ -55,9 +59,7 @@ for y, (concurrency, (off, on)) in zip([6, 4, 2, 0], sorted(points.items())):
 ax.legend(
     handles=[
         Patch(color=color, label=label)
-        for color, label in zip(
-            colors, ("Mono off", "FlyDSL mono: K1 + K2 on 30 layers")
-        )
+        for color, label in zip(colors, ("Mono off", "FlyDSL mono (30 layers)"))
     ],
     loc="upper left",
     bbox_to_anchor=(0, 1.17),
@@ -87,7 +89,7 @@ fig.text(
 fig.text(
     0.13,
     0.09,
-    "One 3,600 s run per mode and concurrency · synthetic DSpark acceptance 3.51",
+    "One 3,600 s run per mode and concurrency · synthetic DSpark acceptance length 3.51",
     fontsize=10,
 )
 fig.text(
