@@ -1,4 +1,4 @@
-"""Regenerate Figure 4 from atom-agentx.csv. Requires matplotlib."""
+"""Regenerate Figure 7 from atom-agentx.csv. Requires matplotlib."""
 
 import csv
 import math
