@@ -8,7 +8,6 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FuncFormatter
 
 ROOT = Path(__file__).resolve().parent
 with (ROOT / "atom-agentx.csv").open(newline="") as stream:
@@ -22,8 +21,8 @@ fig, axes = plt.subplots(2, 1, figsize=(10.5, 10), facecolor="#f8fafc")
 fig.subplots_adjust(left=0.14, right=0.94, top=0.83, bottom=0.19, hspace=0.65)
 
 panels = (
-    ("MiniMax-M3-MXFP4", (4,), (345, 510), (5000, 11000), [6000, 8000, 10000]),
-    ("DeepSeek-V4.1-Flash", (2, 4), (280, 690), (4000, 39000), [10000, 20000, 30000]),
+    ("MiniMax-M3-MXFP4", (4,), (345, 510), (30, 75), [40, 50, 60, 70]),
+    ("DeepSeek-V4.1-Flash", (2, 4), (280, 690), (20, 260), [50, 100, 150, 200, 250]),
 )
 for ax, (model, tps, xlim, ylim, ticks) in zip(axes, panels):
     ax.set_facecolor("#f8fafc")
@@ -33,7 +32,7 @@ for ax, (model, tps, xlim, ylim, ticks) in zip(axes, panels):
             key=lambda r: int(r["concurrency"]),
         )
         x = [float(r["p90_interactivity_tokens_per_s_per_user"]) for r in group]
-        y = [float(r["input_output_throughput_tokens_per_s_per_gpu"]) for r in group]
+        y = [float(r["output_throughput_tokens_per_s_per_gpu"]) for r in group]
         if not group or not all(math.isfinite(v) and v > 0 for v in x + y):
             raise ValueError(f"Missing or invalid measurements for {model} TP{tp}")
         if not all(xlim[0] < v < xlim[1] for v in x) or not all(
@@ -59,9 +58,8 @@ for ax, (model, tps, xlim, ylim, ticks) in zip(axes, panels):
     ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
     ax.set_yticks(ticks)
-    ax.yaxis.set_major_formatter(FuncFormatter(lambda value, _: f"{value / 1000:.0f}K"))
     ax.set_xlabel("P90 interactivity (tokens/s/user)", labelpad=10)
-    ax.set_ylabel("Input + output throughput\n(tokens/s/GPU)", labelpad=10)
+    ax.set_ylabel("Output throughput\n(tokens/s/GPU)", labelpad=10)
     ax.grid(axis="y", color="#dce2e8", linewidth=0.8)
     ax.set_axisbelow(True)
     for spine in ax.spines.values():
@@ -92,7 +90,7 @@ fig.text(
 fig.text(
     0.14,
     0.05,
-    "Throughput includes cached input context. TTFT appears in the table. Source: InferenceX.",
+    "Output throughput excludes all input tokens. TTFT appears in the table. Source: InferenceX.",
     fontsize=10,
 )
 fig.savefig(ROOT.parent / "images" / "atom-throughput-interactivity.png", dpi=160)
