@@ -1,5 +1,10 @@
 ---
 thumbnail: Sarunas-Kalade.jpg
+myst:
+  html_meta:
+    "description lang=en": "Sarunas Kalade"
+    "keywords": "robotics, blog, contributor, blog author"
+    "property=og:locale": "en_US"
 ---
 
 <head>
@@ -12,4 +17,4 @@ thumbnail: Sarunas-Kalade.jpg
 
 # Sarunas Kalade
 
-Sarunas (Shawn) is a Member of Technical Staff (MTS) at AMD Research, focusing on robotics. His primary interests include deploying vision-language-action (VLA) models efficiently using the ROCm stack and developing LLM-based agents for code generation. He holds a PhD in Electronic and Electrical Engineering from the University of Strathclyde, Scotland.
+Sarunas (Shawn) is a Senior Member of Technical Staff at AMD Research, leading research efforts in agentic robotics and physical AI. He is investigating how coding agents can generate and improve robot control code and accelerator kernels. His experience working with end-to-end trainable robot policies such as VLAs and WAMs ranges from teleoperation-based data collection to deployment on real robots. He is also working on robot policy acceleration on GPUs and edge hardware like FPGAs and NPUs. He holds a PhD in Electronic and Electrical Engineering from the University of Strathclyde, Scotland.

@@ -1600,6 +1600,8 @@ virtualized
 VJP
 VL
 VLA
+IIT
+WAMs
 vllm
 vLLM
 vLLM's
@@ -3318,6 +3320,7 @@ Vikram
 Woosuk
 Yuxian
 Zhong
+SPECT
 DFlash2
 MT
 megakernel
