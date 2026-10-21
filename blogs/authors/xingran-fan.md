@@ -1,16 +1,16 @@
 ---
-thumbnail: Xingran-Fan.png
+thumbnail: Xingran-Fan.jpg
 myst:
   html_meta:
     "description lang=en": "Xingran Fan"
-    "keywords": "blog, contributor, blog author"
+    "keywords": "AMD GPUs, ROCm, LLM inference, large-scale model inference, inference acceleration, high-performance serving, distributed inference, GPU architecture, HPC, high performance computing, training optimization, AMD Instinct, blog, contributor, blog author"
     "property=og:locale": "en_US"
 ---
 
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Xingran Fan">
-  <meta name="keywords" content="blog, contributor, blog author">
+  <meta name="keywords" content="AMD GPUs, ROCm, LLM inference, large-scale model inference, inference acceleration, high-performance serving, distributed inference, GPU architecture, HPC, high performance computing, training optimization, AMD Instinct, blog, contributor, blog author">
 </head>
 
 (xingran-fan)=
