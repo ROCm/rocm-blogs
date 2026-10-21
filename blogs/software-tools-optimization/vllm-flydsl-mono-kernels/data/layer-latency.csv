@@ -1,0 +1,25 @@
+path,compression_ratio,tp,requests,token_rows,baseline_us,flydsl_us,speedup_x,graph_layers,weights,source
+K1 + K2,1,2,1,6,209,122,1.713115,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,2,2,12,262,179,1.463687,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,2,4,24,336,280,1.200000,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,2,8,48,474,427,1.110070,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,2,1,6,210,123,1.707317,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,2,2,12,255,172,1.482558,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,2,4,24,325,269,1.208178,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,2,8,48,446,406,1.098522,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,4,1,6,180,94,1.914894,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,4,2,12,218,123,1.772358,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,4,4,24,256,192,1.333333,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,1,4,8,48,324,282,1.148936,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,4,1,6,180,95,1.894737,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,4,2,12,216,121,1.785124,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,4,4,24,248,185,1.340541,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+K1 + K2,2,4,8,48,316,270,1.170370,8,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,2,1,6,136,81,1.679012,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,2,2,12,181,128,1.414062,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,2,4,24,241,215,1.120930,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,2,8,48,345,342,1.008772,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,4,1,6,111,57,1.947368,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,4,2,12,147,85,1.729412,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,4,4,24,176,140,1.257143,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
+FFN launch,not applicable,4,8,48,234,209,1.119617,10,cold; real checkpoint,https://github.com/vllm-project/vllm/pull/60397
