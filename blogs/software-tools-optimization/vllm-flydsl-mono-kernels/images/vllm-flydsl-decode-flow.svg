@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1010" viewBox="0 0 1000 1010" role="img" aria-labelledby="title desc">
+<title id="title">FlyDSL mono kernels in vLLM</title>
+<desc id="desc">Thirty standard layers use FlyDSL K1 for attention preparation and K2 for attention, reductions, and the FFN. The other ten keep vLLM attention and use the same FlyDSL FFN stages. Both return the same layer tensor contract.</desc>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#64748b"/></marker>
+  <style>text { font-family: DejaVu Sans, sans-serif; fill: #17283d; } .title { font-size: 32px; font-weight: 700; } .head { font-size: 25px; font-weight: 700; } .body { font-size: 22px; } .small { font-size: 20px; } .arrow { fill: none; stroke: #64748b; stroke-width: 3; marker-end: url(#arrow); }</style>
+</defs>
+<rect width="1000" height="1010" fill="#f8fafc"/>
+<text x="44" y="56" class="title">FlyDSL mono kernels in vLLM</text>
+<text x="44" y="96" class="body">DeepSeek-V4.1-Flash · eligible decode steps on MI355X</text>
+<text x="44" y="158" class="head">30 standard layers</text>
+<text x="536" y="158" class="head">Other 10 backbone layers</text>
+
+<rect x="44" y="181" width="420" height="250" rx="14" fill="#fcecee" stroke="#ce3e44" stroke-width="2"/>
+<text x="68" y="222" class="head">FlyDSL K1</text>
+<text x="68" y="262" class="body">mHC residual mixing + norm</text>
+<text x="68" y="300" class="body">Query / KV projections + norms</text>
+<text x="68" y="338" class="body">KV-cache insertion</text>
+<text x="68" y="376" class="body">Query projection + RoPE</text>
+<path d="M254 435 L254 477" class="arrow"/>
+
+<rect x="44" y="484" width="420" height="392" rx="14" fill="#fcecee" stroke="#ce3e44" stroke-width="2"/>
+<text x="68" y="528" class="head">FlyDSL K2</text>
+<text x="68" y="568" class="body">Split attention + combine</text>
+<text x="68" y="606" class="body">Inverse RoPE + output projections</text>
+<line x1="68" y1="629" x2="440" y2="629" stroke="#e9b6bd" stroke-width="2"/>
+<text x="68" y="665" class="body">Attention TP reduction</text>
+<text x="68" y="703" class="body">FFN residual mixing + norm</text>
+<text x="68" y="741" class="body">Router + top-6 selection</text>
+<text x="68" y="779" class="body">Shared + routed projections</text>
+<text x="68" y="817" class="body">MoE TP reduction</text>
+
+<rect x="536" y="181" width="420" height="310" rx="14" fill="#e9eef4" stroke="#8798ad" stroke-width="2"/>
+<text x="560" y="222" class="head">vLLM attention path</text>
+<text x="560" y="262" class="body">Model-specific residual mixing</text>
+<text x="560" y="300" class="body">Compressor / indexer as needed</text>
+<text x="560" y="338" class="body">Attention + output projections</text>
+<text x="560" y="398" class="small">Output: unreduced TP partials</text>
+<text x="560" y="446" class="small">Includes embedding / Engram layers</text>
+<path d="M746 495 L746 537" class="arrow"/>
+
+<rect x="536" y="544" width="420" height="332" rx="14" fill="#e5f3f3" stroke="#087f8c" stroke-width="2"/>
+<text x="560" y="588" class="head">FlyDSL FFN launch</text>
+<text x="560" y="627" class="small">Reuses K2's FFN stages</text>
+<text x="560" y="665" class="body">Attention TP reduction</text>
+<text x="560" y="703" class="body">FFN residual mixing + norm</text>
+<text x="560" y="741" class="body">Router + top-6 selection</text>
+<text x="560" y="779" class="body">Shared + routed projections</text>
+<text x="560" y="817" class="body">MoE TP reduction</text>
+
+<path d="M254 880 L254 916" class="arrow"/>
+<path d="M746 880 L746 916" class="arrow"/>
+<rect x="44" y="923" width="912" height="53" rx="10" fill="#17283d"/>
+<text x="500" y="957" text-anchor="middle" style="fill:white;font-size:23px;font-weight:700">Same layer tensor contract · vLLM continues execution</text>
+</svg>

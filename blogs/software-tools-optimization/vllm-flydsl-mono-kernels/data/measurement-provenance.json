@@ -1,0 +1,46 @@
+{
+  "source": "https://github.com/vllm-project/vllm/pull/60397",
+  "retrieved_utc": "2026-10-21",
+  "implementation_reviewed_revision": "f6b54daade305b3387feb4666e0df7d908a2bec3",
+  "model": "DeepSeek-V4.1-Flash",
+  "hardware": "AMD Instinct MI355X (gfx950)",
+  "ratio_policy": "All ratios are recomputed from the displayed source values. They can differ in the last digit from ratios reported from unrounded measurements.",
+  "benchmark_provenance": [
+    "The initial K1 + K2 kernel, GSM8K and AgentX measurements used these kernels while hosted in ROCm/aiter#6196. The source reports import/helper/formatting changes when moving the code into vLLM and reproduces selected numerical checks.",
+    "All FFN-launch measurements and TP4 GSM8K used the in-tree vLLM implementation.",
+    "The kernel, GSM8K and AgentX measurements predate per-width scratch isolation. The source reports unchanged kernel time after the fix across 24 TP2/TP4 points: mean ratio 1.000, range 0.996-1.009.",
+    "The pinned reviewed revision is not presented as the exact revision used for every benchmark. No new GPU benchmarks were run for this article."
+  ],
+  "serving_protocol": {
+    "benchmark": "InferenceX AgentX",
+    "recipe_source": "https://github.com/SemiAnalysisAI/InferenceX/pull/3690",
+    "speculation": "DSpark; five draft tokens; synthetic acceptance length 3.51 including target token",
+    "seconds_per_mode_per_concurrency": 3600,
+    "runs_per_mode_per_concurrency": 1,
+    "concurrency": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "interactivity_definition": "1 / P90 per-request inter-token latency in seconds",
+    "throughput_definition": "Request input + output token count divided by duration; includes cached input. Not generated-output throughput and not normalized per GPU.",
+    "off_on_baseline": "TP2, same node and protocol; four concurrency settings run concurrently on one eight-GPU node. K1 + K2 on 30 layers only.",
+    "coverage_baseline": "FlyDSL K1 + K2 on 30 layers versus adding the FlyDSL FFN launch on the other 10. TP2 is the rerun reported by the source after node-wide stalls in an earlier round.",
+    "coverage_itl_ratio": "Median of matched requests inter-token latency: 40-layer / 30-layer configuration.",
+    "limits": "No repeated-run confidence intervals. Synthetic acceptance bypasses natural rejection sampling. TTFT reported only for the TP2 off/on table; no TTFT values are supplied for the coverage table."
+  },
+  "layer_protocol": {
+    "baseline": "vLLM modules for the same layer or FFN path, in a TP process group",
+    "weights": "real checkpoint, cold weights",
+    "execution": "HIP Graph replay",
+    "tokens_per_request": 6,
+    "K1_K2_graph_layers": 8,
+    "FFN_graph_layers": 10,
+    "scope": "Microseconds per layer; not full-model or serving latency."
+  },
+  "quality_sources": [
+    "https://github.com/vllm-project/vllm/pull/60397#issuecomment-6051909168",
+    "https://github.com/vllm-project/vllm/pull/60397#issuecomment-6052301592"
+  ]
+}

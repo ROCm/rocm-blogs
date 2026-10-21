@@ -1,0 +1,5 @@
+tp,concurrency,baseline,optimized,baseline_interactivity,flydsl_interactivity,interactivity_unit,interactivity_gain_x,baseline_ttft_s,flydsl_ttft_s,baseline_total_tokens_s,flydsl_total_tokens_s,throughput_scope,source
+2,1,FlyDSL Mono off,FlyDSL K1 + K2 on 30 standard layers,318.1,429.1,tokens/s/user,1.348947,1.18,1.28,21573,25039,input + output including cached input; not generated-output throughput,https://github.com/vllm-project/vllm/pull/60397
+2,2,FlyDSL Mono off,FlyDSL K1 + K2 on 30 standard layers,299.3,381.7,tokens/s/user,1.275309,1.1,1.08,22735,25695,input + output including cached input; not generated-output throughput,https://github.com/vllm-project/vllm/pull/60397
+2,4,FlyDSL Mono off,FlyDSL K1 + K2 on 30 standard layers,288.0,332.4,tokens/s/user,1.154167,1.27,1.26,33043,35885,input + output including cached input; not generated-output throughput,https://github.com/vllm-project/vllm/pull/60397
+2,8,FlyDSL Mono off,FlyDSL K1 + K2 on 30 standard layers,214.6,245.3,tokens/s/user,1.143057,1.01,1.08,58294,60501,input + output including cached input; not generated-output throughput,https://github.com/vllm-project/vllm/pull/60397
