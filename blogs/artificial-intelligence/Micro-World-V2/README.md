@@ -47,25 +47,25 @@ SOFTWARE.
 
 Diffusion models have advanced rapidly in recent years, enabling high-quality video generation across a wide range of creative scenarios. As visual quality continues to improve, however, the field is increasingly shifting its focus from passive content generation toward controllable and interactive experiences. YUME 1.5 [1] explores controllable video generation through explicit interaction signals, while LingBot-World [2] and Sana-WM [3] investigate world models that generate future observations conditioned on the current environment and user actions. World Labs’ Marble [27] and Atlas [28] represent a complementary spatial-modeling direction: Marble creates editable, explicit 3D worlds from multimodal inputs, while Atlas organizes text, images, camera poses, and depth into a shared spatial context for generation, reconstruction, and simulation. Together, these efforts illustrate how generative models are evolving from passive content-synthesis tools toward controllable, persistent, and interactive world simulators.
 
-Despite this progress, many existing approaches still rely on computationally intensive generation pipelines and are not designed for sustained, real-time interaction. This limitation presents a fundamental challenge for practical world models: they must continuously generate future observations while responding to user actions with low latency. 
+Despite this progress, many existing approaches still rely on computationally intensive generation pipelines and are not designed for sustained, real-time interaction. This limitation presents a fundamental challenge for practical world models: they must continuously generate future observations while responding to user actions with low latency.
 
 Meeting this requirement demands more than conventional offline video generation. A practical world model must operate as a real-time streaming system, with causal generation at its core. Specifically, it must continuously predict future frames using only past observations and current control inputs, without access to future frames or the complete video sequence.  
 
 In this blog, we introduce **Micro-World 2**, a minute-scale interactive world model for causal streaming generation, which can reach real-time (>30FPS) performance on a single AMD Instinct™ MI350X GPU. Micro-World 1 established our action-controlled world-modeling pipeline with Wan2.1-based 1.3B text-to-world and 14B image-to-world models trained on 6,000 Minecraft clips. It demonstrated keyboard and mouse control for open-domain video generation but primarily targeted offline, short-clip inference. Micro-World 2 extends this work with a unified Wan2.2 5B causal autoregressive model obtained through four-step distillation. It uses longer Capsaicin [4] trajectories with frame-aligned action and camera-pose metadata, together with a ROCm-optimized inference stack, to sustain streaming generation for up to one minute.
- 
+
 During each four-step streaming iteration, Micro-World 2 conditions on previously generated visual context, cached text features, and frame-aligned keyboard and mouse inputs to generate the next video chunk. It reaches 32.12 decoded FPS with the original Wan2.2 VAE and 42.49 decoded FPS with the optional lightweight VAE. Using the original VAE, it achieves a WBench average score of 76.68 and leads 8 of the 21 metrics reported in Table 4, with particular strengths in interaction, scene consistency, and action generalization. Together, the frame-accurate Capsaicin dataset, dedicated causal and action-control training, long-sequence DMD distillation, and ROCm-optimized inference enable interactive, long-horizon world generation on a single GPU.
 
 The key takeaways from our blog are summarized below (see also Figure 1):
 
-- **Data Collection**: We curated a dataset of 440 **interactive navigation clips** using open-source assets. Each clip contains either **200** or **400** frames and includes synchronized keyboard and mouse inputs, text captions and action annotations, enabling flexible and precise interaction control. 
+- **Data Collection**: We curated a dataset of 440 **interactive navigation clips** using open-source assets. Each clip contains either **200** or **400** frames and includes synchronized keyboard and mouse inputs, text captions and action annotations, enabling flexible and precise interaction control.
 
-- **Efficient Training Pipeline**: We developed a dedicated training pipeline that enables action controllability, open-domain generation, and efficient few-step inference. All training stages were completed in approximately four days using eight AMD Instinct™ MI350X GPUs. 
+- **Efficient Training Pipeline**: We developed a dedicated training pipeline that enables action controllability, open-domain generation, and efficient few-step inference. All training stages were completed in approximately four days using eight AMD Instinct™ MI350X GPUs.
 
-- **Real-Time Inference**: Through AI agent-assisted inference optimization, Micro-World 2 achieves real-time video generation at **42.49 FPS** on a single **AMD Instinct™ MI350X GPU**. 
+- **Real-Time Inference**: Through AI agent-assisted inference optimization, Micro-World 2 achieves real-time video generation at **42.49 FPS** on a single **AMD Instinct™ MI350X GPU**.
 
-- **Fully Open Source**: Built on **Wan2.2 TI2V-5B**, Micro-World 2 is fully open source, including the curated dataset, training pipeline, and inference code. 
+- **Fully Open Source**: Built on **Wan2.2 TI2V-5B**, Micro-World 2 is fully open source, including the curated dataset, training pipeline, and inference code.
 
-- **AMD ROCm™ Software Support**: The entire training and deployment pipeline is built on the **AMD ROCm™ software ecosystem** and optimized for **AMD Instinct™ GPUs**. 
+- **AMD ROCm™ Software Support**: The entire training and deployment pipeline is built on the **AMD ROCm™ software ecosystem** and optimized for **AMD Instinct™ GPUs**.
 
 ```{figure} ./images/image1.png
 :align: center
@@ -98,7 +98,7 @@ A key design choice is to separate **visual diversity** from **action consistenc
 
 ### Training Scheduler
 
-Based on the dataset collected and prepared as described in the preceding section, this section presents the model training process. To enable real-time interaction in the world model, we train a four-step action-controllable autoregressive model based on Wan2.2 5B [5]. As shown in Figure 3, our training pipeline consists of five stages: causal autoregressive base model training, LoRA-based visual-quality adaptation, action-control module training, teacher model adaptation, and few-step distillation. We describe each of these stages in detail below. 
+Based on the dataset collected and prepared as described in the preceding section, this section presents the model training process. To enable real-time interaction in the world model, we train a four-step action-controllable autoregressive model based on Wan2.2 5B [5]. As shown in Figure 3, our training pipeline consists of five stages: causal autoregressive base model training, LoRA-based visual-quality adaptation, action-control module training, teacher model adaptation, and few-step distillation. We describe each of these stages in detail below.
 
 ```{figure} ./images/image3.png
 :align: center
@@ -118,7 +118,7 @@ All training was conducted on eight AMD MI350X GPUs and completed in approximate
 
 ### Inference Optimization
 
-To enable real-time streaming generation after model training, both a few-step generation model and an efficient execution pipeline are essential. Therefore, the following section presents the techniques adopted to accelerate model inference. We optimize attention, transformer operators, computation reuse, and VAE decoding. All measurements in this section were collected on a single AMD Instinct™ MI350X GPU at 352 × 640 resolution with a three-latent-frame streaming chunk. 
+To enable real-time streaming generation after model training, both a few-step generation model and an efficient execution pipeline are essential. Therefore, the following section presents the techniques adopted to accelerate model inference. We optimize attention, transformer operators, computation reuse, and VAE decoding. All measurements in this section were collected on a single AMD Instinct™ MI350X GPU at 352 × 640 resolution with a three-latent-frame streaming chunk.
 
 #### AITER FlashAttention Backend
 
@@ -159,14 +159,14 @@ AdaLN fusion provides the largest individual gain. RMSNorm fusion is numerically
 
 #### Lightweight VAE Decoder
 
-After optimizing generation, VAE decoding becomes the largest remaining latency block. We optionally replace the original Wan2.2 decoder with a lightweight decoder introduced in AMD’s prior Hummingbird-XT work. The lightweight decoder preserves the same 48-channel latent space and temporal and spatial compression ratios. This replacement requires no retraining of the diffusion model. 
+After optimizing generation, VAE decoding becomes the largest remaining latency block. We optionally replace the original Wan2.2 decoder with a lightweight decoder introduced in AMD’s prior Hummingbird-XT work. The lightweight decoder preserves the same 48-channel latent space and temporal and spatial compression ratios. This replacement requires no retraining of the diffusion model.
 
 *Table 3. VAE decoder results after enabling all generation-side optimizations on a single AMD Instinct MI350X GPU.*
 
 | **Decoder configuration** | **Decode latency** | **Decoded output FPS** | **Cumulative FPS gain vs. unoptimized implementation** |
-| ------------------------- | ------------------ | ---------------------- | ------------------------------ |
-| Original Wan2.2 VAE       | 124.19 ms          | 32.12                  | +20.9%                         |
-| Lightweight VAE           | 32.05 ms           | 42.49                  | +60.0%                         |
+| ------------------------- | ------------------ | ---------------------- | ------------------------------------------------------ |
+| Original Wan2.2 VAE       | 124.19 ms          | 32.12                  | +20.9%                                                 |
+| Lightweight VAE           | 32.05 ms           | 42.49                  | +60.0%                                                 |
 
 The lightweight decoder reduces decoding latency by 3.87× and raises decoded-video throughput from 32.12 to 42.49 FPS. Relative to the original unoptimized pipeline, this corresponds to a 60.0% cumulative throughput improvement.
 
@@ -180,14 +180,13 @@ Figure 4. Per-chunk latency breakdown and Pixel FPS across the cumulative optimi
 
 #### Optimization Summary
 
-AITER accelerates the attention kernels, output-equivalent operator and caching optimizations improve decoded-video throughput by 20.9%, and the optional lightweight VAE increases the cumulative gain to 60.0%. Figure 4 illustrates the cumulative performance gains across the successive optimization stages. These optimizations complement four-step DMD distillation and enable low-latency causal generation on a single AMD Instinct MI350X GPU. 
+AITER accelerates the attention kernels, output-equivalent operator and caching optimizations improve decoded-video throughput by 20.9%, and the optional lightweight VAE increases the cumulative gain to 60.0%. Figure 4 illustrates the cumulative performance gains across the successive optimization stages. These optimizations complement four-step DMD distillation and enable low-latency causal generation on a single AMD Instinct MI350X GPU.
 
 ## Experimental Results
 
 We evaluate Micro-World 2 on Mind Benchmark, WBench, and GameWorld Score. Table 4 compares our 5B model with seven recent video action models and interactive world models, including LingBot-World-V2-1.3B and Sana-WM, with model sizes ranging from 1.3B to 5B parameters. For this comparison, we use the Micro-World 2 checkpoint distilled with 161-frame sequences and the original Wan2.2 VAE decoder. This configuration achieves 32.12 decoded FPS on a single AMD Instinct™ MI350X GPU (Table 3); the optional lightweight decoder raises throughput to 42.49 FPS, with its quality trade-offs evaluated in Table 5.
 
 *Table 4. Quantitative comparison of Micro-World 2 with recent video action models and interactive world models.*
-
 
 ```{figure} ./images/table4.png
 :align: center
@@ -289,6 +288,10 @@ On a single AMD Instinct MI350X GPU, AITER FlashAttention, operator fusion, and 
 
 ## Additional Resources
 
+**Huggingface Model Cards:**
+
+- [amd/Micro-World-2](https://huggingface.co/amd/Micro-World-2)
+
 **Huggingface Dataset Cards:**
 
 - [amd/Micro-World-MC-Capsaicin](https://huggingface.co/datasets/amd/Micro-World-Capsaicin)
@@ -303,7 +306,6 @@ Related Work on Diffusion Models by the AMD Team:
 - [Bridging the Last Mile: Deploying Hummingbird-XT for Efficient Video Generation on AMD Consumer-Grade Platforms](https://rocm.blogs.amd.com/artificial-intelligence/hummingbirdxt/README.html)
 - [AMD Hummingbird Image to Video: A Lightweight Feedback-Driven Model for Efficient Image-to-Video Generation](https://rocm.blogs.amd.com/artificial-intelligence/image-to-video/README.html)
 - [Nitro-E: A 304M Diffusion Transformer Model for High Quality Image Generation](https://rocm.blogs.amd.com/artificial-intelligence/nitro-e/README.html)
-
 
 ## Acknowledgments
 
