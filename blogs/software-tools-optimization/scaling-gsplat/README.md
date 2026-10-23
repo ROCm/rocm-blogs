@@ -1,7 +1,7 @@
 ---
 blogpost: true
 blog_title: "Scaling 3D Gaussian Splatting with Distributed Compute: Why One GPU Is Never Enough"
-date: 23 Oct 2025
+date: 23 Oct 2026
 author: 'Ish Kool, Shaghayegh Roohi, Mark Granroth Wilding, Deeksha Goplani, Karthik Kashyap Thatipamula, Pier Luigi Dovesi, Vish Vadlamani, Vikas C Sajjan, Phani Vaddadi.'
 thumbnail: 'gsp_scl.png'
 tags: AI/ML, HPC, Computer Vision, Memory, Performance, PyTorch
