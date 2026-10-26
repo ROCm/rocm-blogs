@@ -629,6 +629,7 @@ IB
 ib_core
 ibm
 ICML
+ICSE
 ICV
 IDEs
 IFEVAL
@@ -1593,6 +1594,7 @@ VGPRs
 videogame
 videogames
 Vijay
+VISAPP
 ViT
 Vitis
 Vin
