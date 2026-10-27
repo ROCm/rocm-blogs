@@ -120,7 +120,17 @@ def parse_event(env, sig, signode):
     return name
 
 
+def display_author_names(app, pagename, templatename, context, doctree):
+    """Keep distinct author profile slugs while displaying the person's name."""
+    # The blog theme uses "Lei Zhang antiagainst" as an author identity so
+    # this compiler author is not merged with the other Lei Zhang profile.
+    for key in ("body", "metatags", "title", "pagetitle"):
+        if isinstance(context.get(key), str):
+            context[key] = context[key].replace("Lei Zhang antiagainst", "Lei Zhang")
+
+
 def setup(app):
+    app.connect("html-page-context", display_author_names, priority=900)
     app.connect("autodoc-process-docstring", cut_lines(4, what=["module"]))
     app.add_css_file("css/custom.css")
     app.add_object_type(

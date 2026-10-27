@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="528" viewBox="0 0 1560 858" role="img" aria-labelledby="title desc">
+<title id="title">MI450 FP16 FlashAttention: WMMA, memory, and VALU overlap</title><desc id="desc">Three instruction-class lanes per wave group. At the highlighted slot, Group A executes WMMA while Group B executes memory and VALU work. Both groups follow the same four stages.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1560" height="858" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="48.75" y="61.75" font-size="39.0" fill="#0f172a" font-weight="700" text-anchor="start">MI450 FP16 FlashAttention: WMMA, memory, and VALU overlap</text>
+<text x="48.75" y="108.875" font-size="27.625" fill="#475569" font-weight="400" text-anchor="start">gfx1250 · CDNA 5 · four stages per trip · i is the PV block consumed in the current trip</text>
+<rect x="48.75" y="147.875" width="29.25" height="22.75" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="2.03125"/>
+<text x="89.375" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">WMMA</text>
+<rect x="168.025" y="147.875" width="29.25" height="22.75" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="2.03125"/>
+<text x="208.65" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">LDS read</text>
+<rect x="330.2" y="147.875" width="29.25" height="22.75" rx="0" fill="#67e8f9" stroke="#0891b2" stroke-width="2.03125"/>
+<text x="370.825" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">TDM</text>
+<rect x="438.75" y="147.875" width="29.25" height="22.75" rx="0" fill="#86efac" stroke="#16a34a" stroke-width="2.03125"/>
+<text x="479.375" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">VALU / softmax</text>
+<rect x="665.275" y="147.875" width="29.25" height="22.75" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<text x="705.9" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">no work in this lane</text>
+<line x1="969.15" y1="143.0" x2="969.15" y2="177.125" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<text x="996.775" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">execution barrier</text>
+<g opacity="0.45">
+<rect x="1214.85" y="147.875" width="29.25" height="22.75" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="2.03125"/>
+</g>
+<text x="1255.475" y="169.0" font-size="21.125" fill="#334155" font-weight="400" text-anchor="start">adjacent trip</text>
+<rect x="784" y="225" width="242" height="457" fill="#f0fdf4"/>
+<text x="421.0" y="239" font-size="18" fill="#64748b" font-weight="700" text-anchor="middle">S0</text>
+<text x="663.0" y="239" font-size="18" fill="#64748b" font-weight="700" text-anchor="middle">S1</text>
+<text x="905.0" y="239" font-size="18" fill="#64748b" font-weight="700" text-anchor="middle">S2 · overlap</text>
+<text x="1147.0" y="239" font-size="18" fill="#64748b" font-weight="700" text-anchor="middle">S3</text>
+<text x="1389.0" y="239" font-size="18" fill="#64748b" font-weight="700" text-anchor="middle">S0 · next trip</text>
+<text x="48.75" y="320" font-size="29.25" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="48.75" y="346" font-size="24.375" fill="#475569" font-weight="400" text-anchor="start">waves 0–3</text>
+<text x="284" y="288" font-size="21.125" fill="#475569" font-weight="400" text-anchor="end">WMMA</text>
+<text x="284" y="350" font-size="21.125" fill="#475569" font-weight="400" text-anchor="end">memory</text>
+<text x="284" y="420" font-size="21.125" fill="#475569" font-weight="400" text-anchor="end">VALU</text>
+<rect x="300" y="255" width="242" height="50" rx="0" fill="#fbbf24" stroke="none" stroke-width="2.03125"/>
+<path d="M 300 255 H 542 M 300 305 H 542" fill="none" stroke="#b45309" stroke-width="2.03125"/>
+<text x="421.0" y="273.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">QK = Q × Kᵀ</text>
+<text x="421.0" y="297.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">block i+1</text>
+<rect x="300" y="317" width="242" height="58" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 300 317 H 542 M 300 375 H 542" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="300" y="387" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 300 387 H 542 M 300 437 H 542" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="542" y="255" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 542 255 H 784 M 542 305 H 784" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="542" y="317" width="121.0" height="58" rx="0" fill="#c4b5fd" stroke="none" stroke-width="2.03125"/>
+<path d="M 542 317 H 663 M 542 375 H 663 M 663 317 V 375" fill="none" stroke="#7c3aed" stroke-width="2.03125"/>
+<text x="602.5" y="342.0" font-size="18" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="602.5" y="360.0" font-size="17" fill="#4c1d95" font-weight="400" text-anchor="middle">V[i]</text>
+<rect x="663.0" y="317" width="121.0" height="58" rx="0" fill="#67e8f9" stroke="none" stroke-width="2.03125"/>
+<path d="M 663 317 H 784 M 663 375 H 784 M 663 317 V 375" fill="none" stroke="#0891b2" stroke-width="2.03125"/>
+<text x="723.5" y="342.0" font-size="18" fill="#164e63" font-weight="700" text-anchor="middle">TDM</text>
+<text x="723.5" y="360.0" font-size="17" fill="#164e63" font-weight="400" text-anchor="middle">K[i+3]</text>
+<rect x="542" y="387" width="242" height="50" rx="0" fill="#86efac" stroke="none" stroke-width="2.03125"/>
+<path d="M 542 387 H 784 M 542 437 H 784" fill="none" stroke="#16a34a" stroke-width="2.03125"/>
+<text x="663.0" y="408.0" font-size="18" fill="#14532d" font-weight="700" text-anchor="middle">softmax_part1</text>
+<text x="663.0" y="426.0" font-size="17" fill="#14532d" font-weight="400" text-anchor="middle">rescale acc, l_i · block i</text>
+<rect x="784" y="255" width="242" height="50" rx="0" fill="#fbbf24" stroke="none" stroke-width="2.03125"/>
+<path d="M 784 255 H 1026 M 784 305 H 1026" fill="none" stroke="#b45309" stroke-width="2.03125"/>
+<text x="905.0" y="273.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">acc += P × V</text>
+<text x="905.0" y="297.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">block i</text>
+<rect x="784" y="317" width="242" height="58" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 784 317 H 1026 M 784 375 H 1026" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="784" y="387" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 784 387 H 1026 M 784 437 H 1026" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="1026" y="255" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 1026 255 H 1268 M 1026 305 H 1268" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="1026" y="317" width="121.0" height="58" rx="0" fill="#c4b5fd" stroke="none" stroke-width="2.03125"/>
+<path d="M 1026 317 H 1147 M 1026 375 H 1147 M 1147 317 V 375" fill="none" stroke="#7c3aed" stroke-width="2.03125"/>
+<text x="1086.5" y="342.0" font-size="18" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1086.5" y="360.0" font-size="17" fill="#4c1d95" font-weight="400" text-anchor="middle">K[i+2]</text>
+<rect x="1147.0" y="317" width="121.0" height="58" rx="0" fill="#67e8f9" stroke="none" stroke-width="2.03125"/>
+<path d="M 1147 317 H 1268 M 1147 375 H 1268 M 1147 317 V 375" fill="none" stroke="#0891b2" stroke-width="2.03125"/>
+<text x="1207.5" y="342.0" font-size="18" fill="#164e63" font-weight="700" text-anchor="middle">TDM</text>
+<text x="1207.5" y="360.0" font-size="17" fill="#164e63" font-weight="400" text-anchor="middle">V[i+2]</text>
+<rect x="1026" y="387" width="242" height="50" rx="0" fill="#86efac" stroke="none" stroke-width="2.03125"/>
+<path d="M 1026 387 H 1268 M 1026 437 H 1268" fill="none" stroke="#16a34a" stroke-width="2.03125"/>
+<text x="1147.0" y="408.0" font-size="18" fill="#14532d" font-weight="700" text-anchor="middle">softmax_part0</text>
+<text x="1147.0" y="426.0" font-size="17" fill="#14532d" font-weight="400" text-anchor="middle">max, exp2, alpha · block i+1</text>
+<g opacity="0.45">
+<rect x="1268" y="255" width="242" height="50" rx="0" fill="#fbbf24" stroke="none" stroke-width="2.03125"/>
+<path d="M 1268 255 H 1510 M 1268 305 H 1510" fill="none" stroke="#b45309" stroke-width="2.03125"/>
+<text x="1389.0" y="273.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">QK = Q × Kᵀ</text>
+<text x="1389.0" y="297.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">block i+2</text>
+<rect x="1268" y="317" width="242" height="58" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 1268 317 H 1510 M 1268 375 H 1510" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="1268" y="387" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 1268 387 H 1510 M 1268 437 H 1510" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+</g>
+<text x="48.75" y="558" font-size="29.25" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<text x="48.75" y="584" font-size="24.375" fill="#475569" font-weight="400" text-anchor="start">waves 4–7</text>
+<text x="284" y="526" font-size="21.125" fill="#475569" font-weight="400" text-anchor="end">WMMA</text>
+<text x="284" y="588" font-size="21.125" fill="#475569" font-weight="400" text-anchor="end">memory</text>
+<text x="284" y="658" font-size="21.125" fill="#475569" font-weight="400" text-anchor="end">VALU</text>
+<g opacity="0.45">
+<rect x="300" y="493" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 300 493 H 542 M 300 543 H 542" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="300" y="555" width="121.0" height="58" rx="0" fill="#c4b5fd" stroke="none" stroke-width="2.03125"/>
+<path d="M 300 555 H 421 M 300 613 H 421 M 421 555 V 613" fill="none" stroke="#7c3aed" stroke-width="2.03125"/>
+<text x="360.5" y="580.0" font-size="18" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="360.5" y="598.0" font-size="17" fill="#4c1d95" font-weight="400" text-anchor="middle">K[i+1]</text>
+<rect x="421.0" y="555" width="121.0" height="58" rx="0" fill="#f1f5f9" stroke="none" stroke-width="2.03125"/>
+<path d="M 421 555 H 542 M 421 613 H 542 M 421 555 V 613" fill="none" stroke="#94a3b8" stroke-width="2.03125"/>
+<text x="481.5" y="580.0" font-size="18" fill="#475569" font-weight="700" text-anchor="middle">TDM</text>
+<text x="481.5" y="598.0" font-size="17" fill="#475569" font-weight="400" text-anchor="middle">no transfer</text>
+<rect x="300" y="625" width="242" height="50" rx="0" fill="#86efac" stroke="none" stroke-width="2.03125"/>
+<path d="M 300 625 H 542 M 300 675 H 542" fill="none" stroke="#16a34a" stroke-width="2.03125"/>
+<text x="421.0" y="646.0" font-size="18" fill="#14532d" font-weight="700" text-anchor="middle">softmax_part0</text>
+<text x="421.0" y="664.0" font-size="17" fill="#14532d" font-weight="400" text-anchor="middle">max, exp2, alpha · block i</text>
+</g>
+<rect x="542" y="493" width="242" height="50" rx="0" fill="#fbbf24" stroke="none" stroke-width="2.03125"/>
+<path d="M 542 493 H 784 M 542 543 H 784" fill="none" stroke="#b45309" stroke-width="2.03125"/>
+<text x="663.0" y="511.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">QK = Q × Kᵀ</text>
+<text x="663.0" y="535.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">block i+1</text>
+<rect x="542" y="555" width="242" height="58" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 542 555 H 784 M 542 613 H 784" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="542" y="625" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 542 625 H 784 M 542 675 H 784" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="784" y="493" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 784 493 H 1026 M 784 543 H 1026" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="784" y="555" width="121.0" height="58" rx="0" fill="#c4b5fd" stroke="none" stroke-width="2.03125"/>
+<path d="M 784 555 H 905 M 784 613 H 905 M 905 555 V 613" fill="none" stroke="#7c3aed" stroke-width="2.03125"/>
+<text x="844.5" y="580.0" font-size="18" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="844.5" y="598.0" font-size="17" fill="#4c1d95" font-weight="400" text-anchor="middle">V[i]</text>
+<rect x="905.0" y="555" width="121.0" height="58" rx="0" fill="#f1f5f9" stroke="none" stroke-width="2.03125"/>
+<path d="M 905 555 H 1026 M 905 613 H 1026 M 905 555 V 613" fill="none" stroke="#94a3b8" stroke-width="2.03125"/>
+<text x="965.5" y="580.0" font-size="18" fill="#475569" font-weight="700" text-anchor="middle">TDM</text>
+<text x="965.5" y="598.0" font-size="17" fill="#475569" font-weight="400" text-anchor="middle">no transfer</text>
+<rect x="784" y="625" width="242" height="50" rx="0" fill="#86efac" stroke="none" stroke-width="2.03125"/>
+<path d="M 784 625 H 1026 M 784 675 H 1026" fill="none" stroke="#16a34a" stroke-width="2.03125"/>
+<text x="905.0" y="646.0" font-size="18" fill="#14532d" font-weight="700" text-anchor="middle">softmax_part1</text>
+<text x="905.0" y="664.0" font-size="17" fill="#14532d" font-weight="400" text-anchor="middle">rescale acc, l_i · block i</text>
+<rect x="1026" y="493" width="242" height="50" rx="0" fill="#fbbf24" stroke="none" stroke-width="2.03125"/>
+<path d="M 1026 493 H 1268 M 1026 543 H 1268" fill="none" stroke="#b45309" stroke-width="2.03125"/>
+<text x="1147.0" y="511.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">acc += P × V</text>
+<text x="1147.0" y="535.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">block i</text>
+<rect x="1026" y="555" width="242" height="58" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 1026 555 H 1268 M 1026 613 H 1268" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="1026" y="625" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 1026 625 H 1268 M 1026 675 H 1268" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="1268" y="493" width="242" height="50" fill="#f8fafc" stroke="none" stroke-width="1.625" stroke-dasharray="5 4"/>
+<path d="M 1268 493 H 1510 M 1268 543 H 1510" fill="none" stroke="#cbd5e1" stroke-width="1.625" stroke-dasharray="5 4"/>
+<rect x="1268" y="555" width="121.0" height="58" rx="0" fill="#c4b5fd" stroke="none" stroke-width="2.03125"/>
+<path d="M 1268 555 H 1389 M 1268 613 H 1389 M 1389 555 V 613" fill="none" stroke="#7c3aed" stroke-width="2.03125"/>
+<text x="1328.5" y="580.0" font-size="18" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1328.5" y="598.0" font-size="17" fill="#4c1d95" font-weight="400" text-anchor="middle">K[i+2]</text>
+<rect x="1389.0" y="555" width="121.0" height="58" rx="0" fill="#f1f5f9" stroke="none" stroke-width="2.03125"/>
+<path d="M 1389 555 H 1510 M 1389 613 H 1510 M 1389 555 V 613" fill="none" stroke="#94a3b8" stroke-width="2.03125"/>
+<text x="1449.5" y="580.0" font-size="18" fill="#475569" font-weight="700" text-anchor="middle">TDM</text>
+<text x="1449.5" y="598.0" font-size="17" fill="#475569" font-weight="400" text-anchor="middle">no transfer</text>
+<rect x="1268" y="625" width="242" height="50" rx="0" fill="#86efac" stroke="none" stroke-width="2.03125"/>
+<path d="M 1268 625 H 1510 M 1268 675 H 1510" fill="none" stroke="#16a34a" stroke-width="2.03125"/>
+<text x="1389.0" y="646.0" font-size="18" fill="#14532d" font-weight="700" text-anchor="middle">softmax_part0</text>
+<text x="1389.0" y="664.0" font-size="17" fill="#14532d" font-weight="400" text-anchor="middle">max, exp2, alpha · block i+1</text>
+<line x1="300" y1="248" x2="300" y2="682" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<line x1="542" y1="248" x2="542" y2="682" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<line x1="784" y1="248" x2="784" y2="682" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<line x1="1026" y1="248" x2="1026" y2="682" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<line x1="1268" y1="248" x2="1268" y2="682" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<line x1="1510" y1="248" x2="1510" y2="682" stroke="#6d28d9" stroke-width="4.0625" stroke-dasharray="8.125 8.125"/>
+<path d="M 300 702 V 710 H 1268 V 702" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="784.0" y="739.25" font-size="22.75" fill="#475569" font-weight="400" text-anchor="middle">Group A: one trip through the loop, four stages</text>
+<path d="M 542 762 V 770 H 1510 V 762" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="1026.0" y="799.25" font-size="22.75" fill="#475569" font-weight="400" text-anchor="middle">Group B: one stage later</text>
+<text x="48.75" y="830" font-size="26" fill="#334155" font-weight="400" text-anchor="start">Highlighted column: Group A’s WMMA overlaps Group B’s memory and VALU work.</text>
+</g></svg>

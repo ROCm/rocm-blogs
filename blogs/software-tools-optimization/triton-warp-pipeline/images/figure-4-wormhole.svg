@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="328" viewBox="0 0 960 328" role="img" aria-labelledby="title desc">
+<title id="title">The wormhole: a historical prototype</title><desc id="desc">Both groups call one helper containing s_barrier. They return to different stages and remain one stage apart.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="960" height="328" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="30" y="38" font-size="24" fill="#0f172a" font-weight="700" text-anchor="start">The wormhole: a historical prototype</text>
+<text x="30" y="67" font-size="17" fill="#475569" font-weight="400" text-anchor="start">One shared barrier helper, two return points.</text>
+<text x="397" y="120" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">call</text>
+<text x="710" y="120" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">return</text>
+<text x="30" y="168" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<rect x="180" y="136" width="180" height="52" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.25"/>
+<text x="270.0" y="168.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Stage k+1</text>
+<rect x="744" y="136" width="180" height="52" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="834.0" y="168.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Stage k+2</text>
+<line x1="372" y1="162" x2="436" y2="201" stroke="#6d28d9" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="690" y1="201" x2="732" y2="162" stroke="#6d28d9" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="30" y="288" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="256" width="180" height="52" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="270.0" y="288.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Stage k</text>
+<rect x="744" y="256" width="180" height="52" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.25"/>
+<text x="834.0" y="288.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Stage k+1</text>
+<line x1="372" y1="282" x2="436" y2="245" stroke="#6d28d9" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="690" y1="245" x2="732" y2="282" stroke="#6d28d9" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="448" y="171" width="230" height="104" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="563.0" y="220.0" font-size="20" fill="#5b21b6" font-weight="700" text-anchor="middle">wormhole()</text>
+<text x="563.0" y="240.0" font-size="15" fill="#5b21b6" font-weight="400" text-anchor="middle">s_barrier</text>
+</g></svg>

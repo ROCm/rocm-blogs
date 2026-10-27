@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="397" viewBox="0 0 1440 596" role="img" aria-labelledby="title desc">
+<title id="title">MI300X FP16 GEMM: the BlockPingpong schedule</title><desc id="desc">One continuous eight-stage schedule per group, offset by one stage. Global loads prefetch tile i+1 into registers while LDS supplies tile i.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1440" height="596" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="45.0" y="57.0" font-size="36.0" fill="#0f172a" font-weight="700" text-anchor="start">MI300X FP16 GEMM: the BlockPingpong schedule</text>
+<text x="45" y="100.5" font-size="25.5" fill="#475569" font-weight="400" text-anchor="start">gfx942 · CDNA 3 · one LDS buffer · four K slices per dot</text>
+<rect x="45.0" y="136.5" width="27.0" height="21.0" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.875"/>
+<text x="82.5" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">global load</text>
+<rect x="224.39999999999998" y="136.5" width="27.0" height="21.0" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="261.9" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">LDS read</text>
+<rect x="374.09999999999997" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.875"/>
+<text x="411.59999999999997" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">MFMA</text>
+<rect x="484.2" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbcfe8" stroke="#db2777" stroke-width="1.875"/>
+<text x="521.7" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">LDS store</text>
+<line x1="655.8" y1="132.0" x2="655.8" y2="163.5" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<text x="681.3" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">execution barrier</text>
+<g opacity="0.45">
+<rect x="882.5999999999999" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.875"/>
+</g>
+<text x="920.0999999999999" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">adjacent tile</text>
+<text x="247.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem0</text>
+<text x="382.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">dot0</text>
+<text x="517.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem1</text>
+<text x="652.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">dot1</text>
+<text x="787.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem2</text>
+<text x="922.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">dot2</text>
+<text x="1057.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem3</text>
+<text x="1192.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">dot3</text>
+<text x="1327.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem0 · i+1</text>
+<text x="45" y="271" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="45" y="295" font-size="22.5" fill="#475569" font-weight="400" text-anchor="start">waves 0–3</text>
+<rect x="180.0" y="242" width="67.5" height="68" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.875"/>
+<path d="M 180 242 H 247.5 M 180 310 H 247.5 M 247.5 242 V 310" fill="none" stroke="#3b82f6" stroke-width="1.875"/>
+<text x="213.75" y="272.0" font-size="14" fill="#1e3a8a" font-weight="700" text-anchor="middle">global A</text>
+<text x="213.75" y="290.0" font-size="13" fill="#1e3a8a" font-weight="400" text-anchor="middle">tile i+1</text>
+<rect x="247.5" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 247.5 242 H 315 M 247.5 310 H 315 M 247.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="281.25" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="281.25" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 1/4</text>
+<rect x="315" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 315 242 H 450 M 315 310 H 450" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="382.5" y="269.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="382.5" y="293.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 1/4</text>
+<rect x="450.0" y="242" width="67.5" height="68" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.875"/>
+<path d="M 450 242 H 517.5 M 450 310 H 517.5 M 517.5 242 V 310" fill="none" stroke="#3b82f6" stroke-width="1.875"/>
+<text x="483.75" y="272.0" font-size="14" fill="#1e3a8a" font-weight="700" text-anchor="middle">global B</text>
+<text x="483.75" y="290.0" font-size="13" fill="#1e3a8a" font-weight="400" text-anchor="middle">tile i+1</text>
+<rect x="517.5" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 517.5 242 H 585 M 517.5 310 H 585 M 517.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="551.25" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="551.25" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 2/4</text>
+<rect x="585" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 585 242 H 720 M 585 310 H 720" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="652.5" y="269.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="652.5" y="293.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 2/4</text>
+<rect x="720.0" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 720 242 H 787.5 M 720 310 H 787.5 M 787.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="753.75" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="753.75" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 3/4</text>
+<rect x="787.5" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 787.5 242 H 855 M 787.5 310 H 855 M 787.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="821.25" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="821.25" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 4/4</text>
+<rect x="855" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 855 242 H 990 M 855 310 H 990" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="922.5" y="269.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="922.5" y="293.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 3/4</text>
+<rect x="990.0" y="242" width="67.5" height="68" rx="0" fill="#fbcfe8" stroke="none" stroke-width="1.875"/>
+<path d="M 990 242 H 1057.5 M 990 310 H 1057.5 M 1057.5 242 V 310" fill="none" stroke="#db2777" stroke-width="1.875"/>
+<text x="1023.75" y="272.0" font-size="14" fill="#831843" font-weight="700" text-anchor="middle">ds_write</text>
+<text x="1023.75" y="290.0" font-size="13" fill="#831843" font-weight="400" text-anchor="middle">A, tile i+1</text>
+<rect x="1057.5" y="242" width="67.5" height="68" rx="0" fill="#fbcfe8" stroke="none" stroke-width="1.875"/>
+<path d="M 1057.5 242 H 1125 M 1057.5 310 H 1125 M 1057.5 242 V 310" fill="none" stroke="#db2777" stroke-width="1.875"/>
+<text x="1091.25" y="272.0" font-size="14" fill="#831843" font-weight="700" text-anchor="middle">ds_write</text>
+<text x="1091.25" y="290.0" font-size="13" fill="#831843" font-weight="400" text-anchor="middle">B, tile i+1</text>
+<rect x="1125" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 1125 242 H 1260 M 1125 310 H 1260" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1192.5" y="269.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="1192.5" y="293.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 4/4</text>
+<g opacity="0.15">
+<rect x="1260.0" y="242" width="67.5" height="68" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.875"/>
+<path d="M 1260 242 H 1327.5 M 1260 310 H 1327.5 M 1327.5 242 V 310" fill="none" stroke="#3b82f6" stroke-width="1.875"/>
+<text x="1293.75" y="272.0" font-size="14" fill="#1e3a8a" font-weight="700" text-anchor="middle">global A</text>
+<text x="1293.75" y="290.0" font-size="13" fill="#1e3a8a" font-weight="400" text-anchor="middle">tile i+2</text>
+<rect x="1327.5" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 1327.5 242 H 1395 M 1327.5 310 H 1395 M 1327.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1361.25" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1361.25" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 1/4</text>
+</g>
+<text x="45" y="381" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<text x="45" y="405" font-size="22.5" fill="#475569" font-weight="400" text-anchor="start">waves 4–7</text>
+<g opacity="0.15">
+<rect x="180" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 180 352 H 315 M 180 420 H 315" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="247.5" y="379.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="247.5" y="403.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 4/4</text>
+</g>
+<rect x="315.0" y="352" width="67.5" height="68" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.875"/>
+<path d="M 315 352 H 382.5 M 315 420 H 382.5 M 382.5 352 V 420" fill="none" stroke="#3b82f6" stroke-width="1.875"/>
+<text x="348.75" y="382.0" font-size="14" fill="#1e3a8a" font-weight="700" text-anchor="middle">global A</text>
+<text x="348.75" y="400.0" font-size="13" fill="#1e3a8a" font-weight="400" text-anchor="middle">tile i+1</text>
+<rect x="382.5" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 382.5 352 H 450 M 382.5 420 H 450 M 382.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="416.25" y="382.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="416.25" y="400.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 1/4</text>
+<rect x="450" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 450 352 H 585 M 450 420 H 585" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="517.5" y="379.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="517.5" y="403.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 1/4</text>
+<rect x="585.0" y="352" width="67.5" height="68" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.875"/>
+<path d="M 585 352 H 652.5 M 585 420 H 652.5 M 652.5 352 V 420" fill="none" stroke="#3b82f6" stroke-width="1.875"/>
+<text x="618.75" y="382.0" font-size="14" fill="#1e3a8a" font-weight="700" text-anchor="middle">global B</text>
+<text x="618.75" y="400.0" font-size="13" fill="#1e3a8a" font-weight="400" text-anchor="middle">tile i+1</text>
+<rect x="652.5" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 652.5 352 H 720 M 652.5 420 H 720 M 652.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="686.25" y="382.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="686.25" y="400.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 2/4</text>
+<rect x="720" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 720 352 H 855 M 720 420 H 855" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="787.5" y="379.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="787.5" y="403.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 2/4</text>
+<rect x="855.0" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 855 352 H 922.5 M 855 420 H 922.5 M 922.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="888.75" y="382.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="888.75" y="400.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 3/4</text>
+<rect x="922.5" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 922.5 352 H 990 M 922.5 420 H 990 M 922.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="956.25" y="382.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="956.25" y="400.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A/B 4/4</text>
+<rect x="990" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 990 352 H 1125 M 990 420 H 1125" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1057.5" y="379.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="1057.5" y="403.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 3/4</text>
+<rect x="1125.0" y="352" width="67.5" height="68" rx="0" fill="#fbcfe8" stroke="none" stroke-width="1.875"/>
+<path d="M 1125 352 H 1192.5 M 1125 420 H 1192.5 M 1192.5 352 V 420" fill="none" stroke="#db2777" stroke-width="1.875"/>
+<text x="1158.75" y="382.0" font-size="14" fill="#831843" font-weight="700" text-anchor="middle">ds_write</text>
+<text x="1158.75" y="400.0" font-size="13" fill="#831843" font-weight="400" text-anchor="middle">A, tile i+1</text>
+<rect x="1192.5" y="352" width="67.5" height="68" rx="0" fill="#fbcfe8" stroke="none" stroke-width="1.875"/>
+<path d="M 1192.5 352 H 1260 M 1192.5 420 H 1260 M 1192.5 352 V 420" fill="none" stroke="#db2777" stroke-width="1.875"/>
+<text x="1226.25" y="382.0" font-size="14" fill="#831843" font-weight="700" text-anchor="middle">ds_write</text>
+<text x="1226.25" y="400.0" font-size="13" fill="#831843" font-weight="400" text-anchor="middle">B, tile i+1</text>
+<rect x="1260" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 1260 352 H 1395 M 1260 420 H 1395" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1327.5" y="379.0" font-size="20" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<text x="1327.5" y="403.0" font-size="19" fill="#713f12" font-weight="400" text-anchor="middle">dot slice 4/4</text>
+<line x1="180" y1="234" x2="180" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="315" y1="234" x2="315" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="450" y1="234" x2="450" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="585" y1="234" x2="585" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="720" y1="234" x2="720" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="855" y1="234" x2="855" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="990" y1="234" x2="990" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1125" y1="234" x2="1125" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1260" y1="234" x2="1260" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1395" y1="234" x2="1395" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<path d="M 180 440 V 448 H 1260 V 440" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="720.0" y="475.0" font-size="21.0" fill="#475569" font-weight="400" text-anchor="middle">Group A: one K-step, eight stages</text>
+<path d="M 315 500 V 508 H 1395 V 500" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="855.0" y="535.0" font-size="21.0" fill="#475569" font-weight="400" text-anchor="middle">Group B: one stage later</text>
+<text x="45" y="568" font-size="24" fill="#475569" font-weight="400" text-anchor="start">Refill LDS after both groups finish reading it. Stage widths are schematic.</text>
+</g></svg>

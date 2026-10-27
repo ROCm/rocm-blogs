@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="397" viewBox="0 0 1440 596" role="img" aria-labelledby="title desc">
+<title id="title">MI350 FP16 GEMM: the eight-wave inter-wave schedule</title><desc id="desc">Eight stages per K-step on one continuous timeline; the unrolled loop has sixteen stages. Wait markers precede compute stages and protect later LDS reads; matrix work already in flight can continue during a wait.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1440" height="596" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="45.0" y="57.0" font-size="36.0" fill="#0f172a" font-weight="700" text-anchor="start">MI350 FP16 GEMM: the eight-wave inter-wave schedule</text>
+<text x="45" y="100.5" font-size="25.5" fill="#475569" font-weight="400" text-anchor="start">gfx950 · CDNA 4 · 256×256 output tile · four 128×128 quadrants</text>
+<text x="58.5" y="156.0" font-size="19.5" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<text x="82.5" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">boundary wait</text>
+<rect x="244.20000000000002" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.875"/>
+<text x="281.70000000000005" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">MFMA</text>
+<rect x="354.3" y="136.5" width="27.0" height="21.0" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="391.8" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">LDS read</text>
+<rect x="504.0" y="136.5" width="27.0" height="21.0" rx="0" fill="#67e8f9" stroke="#0891b2" stroke-width="1.875"/>
+<text x="541.5" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">async copy</text>
+<line x1="685.5" y1="132.0" x2="685.5" y2="163.5" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<text x="711.0" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">execution barrier</text>
+<g opacity="0.45">
+<rect x="912.3" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.875"/>
+</g>
+<text x="949.8" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">adjacent K-step</text>
+<text x="247.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">acc_tl</text>
+<text x="382.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem tl</text>
+<text x="517.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">acc_bl</text>
+<text x="652.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem bl</text>
+<text x="787.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">acc_tr</text>
+<text x="922.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem tr</text>
+<text x="1057.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">acc_br</text>
+<text x="1192.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">mem br</text>
+<text x="1327.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">acc_tl</text>
+<text x="45" y="271" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="45" y="295" font-size="22.5" fill="#475569" font-weight="400" text-anchor="start">waves 0–3</text>
+<text x="192" y="236" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="180" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 180 242 H 315 M 180 310 H 315" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="247.5" y="269.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA tl</text>
+<text x="247.5" y="293.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_top × b_left</text>
+<rect x="315" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 315 242 H 382.5 M 315 310 H 382.5 M 382.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="348.75" y="272.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="348.75" y="290.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">a_bot</text>
+<rect x="382.5" y="242" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 382.5 242 H 450 M 382.5 310 H 450 M 382.5 242 V 310" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="416.25" y="272.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="416.25" y="290.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">B_left</text>
+<text x="462" y="236" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="450" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 450 242 H 585 M 450 310 H 585" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="517.5" y="269.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA bl</text>
+<text x="517.5" y="293.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_bot × b_left</text>
+<rect x="585" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 585 242 H 652.5 M 585 310 H 652.5 M 652.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="618.75" y="272.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="618.75" y="290.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">b_right</text>
+<rect x="652.5" y="242" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 652.5 242 H 720 M 652.5 310 H 720 M 652.5 242 V 310" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="686.25" y="272.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="686.25" y="290.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">A_top</text>
+<text x="732" y="236" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="720" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 720 242 H 855 M 720 310 H 855" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="787.5" y="269.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA tr</text>
+<text x="787.5" y="293.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_top × b_right</text>
+<rect x="855" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 855 242 H 922.5 M 855 310 H 922.5 M 922.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="888.75" y="272.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="888.75" y="290.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">b_left¹</text>
+<rect x="922.5" y="242" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 922.5 242 H 990 M 922.5 310 H 990 M 922.5 242 V 310" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="956.25" y="272.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="956.25" y="290.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">A_bot</text>
+<text x="1002" y="236" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="990" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 990 242 H 1125 M 990 310 H 1125" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1057.5" y="269.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA br</text>
+<text x="1057.5" y="293.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_bot × b_right</text>
+<rect x="1125" y="242" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 1125 242 H 1192.5 M 1125 310 H 1192.5 M 1192.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1158.75" y="272.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1158.75" y="290.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">a_top¹</text>
+<rect x="1192.5" y="242" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 1192.5 242 H 1260 M 1192.5 310 H 1260 M 1192.5 242 V 310" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="1226.25" y="272.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="1226.25" y="290.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">B_right</text>
+<g opacity="0.15">
+<text x="1272" y="236" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="1260" y="242" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 1260 242 H 1395 M 1260 310 H 1395" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1327.5" y="269.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA tl</text>
+<text x="1327.5" y="293.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_top × b_left</text>
+</g>
+<text x="45" y="381" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<text x="45" y="405" font-size="22.5" fill="#475569" font-weight="400" text-anchor="start">waves 4–7</text>
+<g opacity="0.15">
+<rect x="180" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 180 352 H 247.5 M 180 420 H 247.5 M 247.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="213.75" y="382.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="213.75" y="400.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">a_top¹</text>
+<rect x="247.5" y="352" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 247.5 352 H 315 M 247.5 420 H 315 M 247.5 352 V 420" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="281.25" y="382.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="281.25" y="400.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">B_right</text>
+</g>
+<text x="327" y="346" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="315" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 315 352 H 450 M 315 420 H 450" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="382.5" y="379.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA tl</text>
+<text x="382.5" y="403.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_top × b_left</text>
+<rect x="450" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 450 352 H 517.5 M 450 420 H 517.5 M 517.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="483.75" y="382.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="483.75" y="400.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">a_bot</text>
+<rect x="517.5" y="352" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 517.5 352 H 585 M 517.5 420 H 585 M 517.5 352 V 420" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="551.25" y="382.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="551.25" y="400.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">B_left</text>
+<text x="597" y="346" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="585" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 585 352 H 720 M 585 420 H 720" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="652.5" y="379.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA bl</text>
+<text x="652.5" y="403.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_bot × b_left</text>
+<rect x="720" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 720 352 H 787.5 M 720 420 H 787.5 M 787.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="753.75" y="382.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="753.75" y="400.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">b_right</text>
+<rect x="787.5" y="352" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 787.5 352 H 855 M 787.5 420 H 855 M 787.5 352 V 420" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="821.25" y="382.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="821.25" y="400.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">A_top</text>
+<text x="867" y="346" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="855" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 855 352 H 990 M 855 420 H 990" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="922.5" y="379.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA tr</text>
+<text x="922.5" y="403.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_top × b_right</text>
+<rect x="990" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 990 352 H 1057.5 M 990 420 H 1057.5 M 1057.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1023.75" y="382.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1023.75" y="400.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">b_left¹</text>
+<rect x="1057.5" y="352" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 1057.5 352 H 1125 M 1057.5 420 H 1125 M 1057.5 352 V 420" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="1091.25" y="382.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="1091.25" y="400.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">A_bot</text>
+<text x="1137" y="346" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">W</text>
+<rect x="1125" y="352" width="135" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 1125 352 H 1260 M 1125 420 H 1260" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1192.5" y="379.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA br</text>
+<text x="1192.5" y="403.0" font-size="17" fill="#713f12" font-weight="400" text-anchor="middle">a_bot × b_right</text>
+<rect x="1260" y="352" width="67.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 1260 352 H 1327.5 M 1260 420 H 1327.5 M 1327.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1293.75" y="382.0" font-size="15" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1293.75" y="400.0" font-size="14" fill="#4c1d95" font-weight="400" text-anchor="middle">a_top¹</text>
+<rect x="1327.5" y="352" width="67.5" height="68" rx="0" fill="#67e8f9" stroke="none" stroke-width="1.875"/>
+<path d="M 1327.5 352 H 1395 M 1327.5 420 H 1395 M 1327.5 352 V 420" fill="none" stroke="#0891b2" stroke-width="1.875"/>
+<text x="1361.25" y="382.0" font-size="15" fill="#164e63" font-weight="700" text-anchor="middle">copy</text>
+<text x="1361.25" y="400.0" font-size="14" fill="#164e63" font-weight="400" text-anchor="middle">B_right</text>
+<line x1="180" y1="234" x2="180" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="315" y1="234" x2="315" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="450" y1="234" x2="450" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="585" y1="234" x2="585" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="720" y1="234" x2="720" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="855" y1="234" x2="855" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="990" y1="234" x2="990" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1125" y1="234" x2="1125" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1260" y1="234" x2="1260" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1395" y1="234" x2="1395" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<path d="M 180 440 V 448 H 1260 V 440" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="720.0" y="475.0" font-size="21.0" fill="#475569" font-weight="400" text-anchor="middle">Group A: one K-step, eight stages</text>
+<path d="M 315 500 V 508 H 1395 V 500" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="855.0" y="535.0" font-size="21.0" fill="#475569" font-weight="400" text-anchor="middle">Group B: one stage later</text>
+<text x="45" y="568" font-size="24" fill="#475569" font-weight="400" text-anchor="start">W: wait instruction. In-flight MFMA continues during the wait. ¹ Read from the next buffer.</text>
+</g></svg>
