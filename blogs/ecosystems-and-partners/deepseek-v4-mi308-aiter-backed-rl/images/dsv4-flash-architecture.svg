@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="684pt" height="319.32pt" viewBox="0 0 684 319.32" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-09</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>AMD AITER-backed RL stack</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 319.32
+L 684 319.32
+L 684 0
+L 0 0
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 7.2 52.6608
+L 676.8 52.6608
+L 676.8 7.2
+L 7.2 7.2
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #eff1ef; stroke: #eff1ef; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 7.2 52.6608
+L 13.152 52.6608
+L 13.152 7.2
+L 7.2 7.2
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #a66f78; stroke: #a66f78; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 27.536 110.8728
+L 95.984 110.8728
+Q 99.952 110.8728 99.952 106.4376
+L 99.952 73.1736
+Q 99.952 68.7384 95.984 68.7384
+L 27.536 68.7384
+Q 23.568 68.7384 23.568 73.1736
+L 23.568 106.4376
+Q 23.568 110.8728 27.536 110.8728
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f4f4f0; stroke: #c8cfce; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 109.376 110.8728
+L 177.824 110.8728
+Q 181.792 110.8728 181.792 106.4376
+L 181.792 73.1736
+Q 181.792 68.7384 177.824 68.7384
+L 109.376 68.7384
+Q 105.408 68.7384 105.408 73.1736
+L 105.408 106.4376
+Q 105.408 110.8728 109.376 110.8728
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f4f4f0; stroke: #c8cfce; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 191.216 110.8728
+L 259.664 110.8728
+Q 263.632 110.8728 263.632 106.4376
+L 263.632 73.1736
+Q 263.632 68.7384 259.664 68.7384
+L 191.216 68.7384
+Q 187.248 68.7384 187.248 73.1736
+L 187.248 106.4376
+Q 187.248 110.8728 191.216 110.8728
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f4f4f0; stroke: #c8cfce; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 273.056 110.8728
+L 341.504 110.8728
+Q 345.472 110.8728 345.472 106.4376
+L 345.472 73.1736
+Q 345.472 68.7384 341.504 68.7384
+L 273.056 68.7384
+Q 269.088 68.7384 269.088 73.1736
+L 269.088 106.4376
+Q 269.088 110.8728 273.056 110.8728
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f4f4f0; stroke: #c8cfce; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 354.896 110.8728
+L 433.264 110.8728
+Q 437.232 110.8728 437.232 106.4376
+L 437.232 73.1736
+Q 437.232 68.7384 433.264 68.7384
+L 354.896 68.7384
+Q 350.928 68.7384 350.928 73.1736
+L 350.928 106.4376
+Q 350.928 110.8728 354.896 110.8728
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f4f4f0; stroke: #c8cfce; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 446.656 110.8728
+L 515.104 110.8728
+Q 519.072 110.8728 519.072 106.4376
+L 519.072 73.1736
+Q 519.072 68.7384 515.104 68.7384
+L 446.656 68.7384
+Q 442.688 68.7384 442.688 73.1736
+L 442.688 106.4376
+Q 442.688 110.8728 446.656 110.8728
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f4f4f0; stroke: #c8cfce; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 27.536 205.1208
+L 98.464 205.1208
+Q 102.432 205.1208 102.432 200.6856
+L 102.432 149.1264
+Q 102.432 144.6912 98.464 144.6912
+L 27.536 144.6912
+Q 23.568 144.6912 23.568 149.1264
+L 23.568 200.6856
+Q 23.568 205.1208 27.536 205.1208
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f1eef4; stroke: #9588aa; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 121.776 205.1208
+L 182.784 205.1208
+Q 186.752 205.1208 186.752 200.6856
+L 186.752 149.1264
+Q 186.752 144.6912 182.784 144.6912
+L 121.776 144.6912
+Q 117.808 144.6912 117.808 149.1264
+L 117.808 200.6856
+Q 117.808 205.1208 121.776 205.1208
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f1eef4; stroke: #9588aa; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 208.576 205.1208
+L 306.784 205.1208
+Q 310.752 205.1208 310.752 200.6856
+L 310.752 149.1264
+Q 310.752 144.6912 306.784 144.6912
+L 208.576 144.6912
+Q 204.608 144.6912 204.608 149.1264
+L 204.608 200.6856
+Q 204.608 205.1208 208.576 205.1208
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #edf2f5; stroke: #7b98b0; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 332.576 205.1208
+L 393.584 205.1208
+Q 397.552 205.1208 397.552 200.6856
+L 397.552 149.1264
+Q 397.552 144.6912 393.584 144.6912
+L 332.576 144.6912
+Q 328.608 144.6912 328.608 149.1264
+L 328.608 200.6856
+Q 328.608 205.1208 332.576 205.1208
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f1eef4; stroke: #9588aa; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 419.376 205.1208
+L 502.704 205.1208
+Q 506.672 205.1208 506.672 200.6856
+L 506.672 149.1264
+Q 506.672 144.6912 502.704 144.6912
+L 419.376 144.6912
+Q 415.408 144.6912 415.408 149.1264
+L 415.408 200.6856
+Q 415.408 205.1208 419.376 205.1208
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f5f0e9; stroke: #b09272; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 528.496 205.1208
+L 594.464 205.1208
+Q 598.432 205.1208 598.432 200.6856
+L 598.432 149.1264
+Q 598.432 144.6912 594.464 144.6912
+L 528.496 144.6912
+Q 524.528 144.6912 524.528 149.1264
+L 524.528 200.6856
+Q 524.528 205.1208 528.496 205.1208
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f0f3ec; stroke: #879b7a; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 103.43623 174.906
+Q 110.118495 174.906 115.123708 174.906
+" clip-path="url(#pbb70754d4f)" style="fill: none; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 109.923708 172.306
+L 115.123708 174.906
+L 109.923708 177.506
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #a66f78; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 187.760469 174.906
+Q 195.680681 174.906 201.923841 174.906
+" clip-path="url(#pbb70754d4f)" style="fill: none; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 196.723841 172.306
+L 201.923841 174.906
+L 196.723841 177.506
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #a66f78; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 311.760469 174.906
+Q 319.680681 174.906 325.923841 174.906
+" clip-path="url(#pbb70754d4f)" style="fill: none; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 320.723841 172.306
+L 325.923841 174.906
+L 320.723841 177.506
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #a66f78; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 398.560469 174.906
+Q 406.480681 174.906 412.723841 174.906
+" clip-path="url(#pbb70754d4f)" style="fill: none; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 407.523841 172.306
+L 412.723841 174.906
+L 407.523841 177.506
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #a66f78; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 507.680469 174.906
+Q 515.600681 174.906 521.843841 174.906
+" clip-path="url(#pbb70754d4f)" style="fill: none; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 516.643841 172.306
+L 521.843841 174.906
+L 516.643841 177.506
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #a66f78; stroke: #a66f78; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 196.176 308.2392
+L 515.104 308.2392
+Q 519.568 308.2392 519.568 303.2496
+L 519.568 223.9704
+Q 519.568 218.9808 515.104 218.9808
+L 196.176 218.9808
+Q 191.712 218.9808 191.712 223.9704
+L 191.712 303.2496
+Q 191.712 308.2392 196.176 308.2392
+z
+" clip-path="url(#pbb70754d4f)" style="fill: #f7f6f2; stroke: #cad2da; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 600; font-size: 21px; font-family: 'Segoe UI'; text-anchor: start; fill: #394650" x="26.048" y="30.299081" transform="rotate(-0 26.048 30.299081)">DeepSeek-V4 Flash architecture</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #74808a" x="26.048" y="46.755244" transform="rotate(-0 26.048 46.755244)">The model features that cross the FP8 rollout ↔ BF16 actor boundary</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(49.734219 86.093378)">284B</text>
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(34.898047 99.390439)">parameters</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(135.401797 86.111425)">13B</text>
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(111.135313 100.472431)">active / token</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(219.500117 86.090917)">43</text>
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(190.774414 99.847353)">decoder layers</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(304.254687 86.090917)">4</text>
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(275.564258 100.871923)">mHC streams</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(374.974922 86.085996)">256 → 6</text>
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(359.096133 99.875244)">routed experts</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(473.914727 86.172949)">1M</text>
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; fill: #394650" transform="translate(446.477734 101.02122)">model context</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 600; font-size: 10.5px; font-family: 'Segoe UI'; text-anchor: start; fill: #a66f78" x="24.56" y="130.2768" transform="rotate(-0 24.56 130.2768)">ONE DECODER BLOCK</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(38.980547 170.385413)">4-stream</text>
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(27.420234 187.787071)">residual state</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(139.051094 170.454554)">mHC</text>
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(131.3645 186.461415)">pre-mix</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(232.367156 170.584538)">Attention</text>
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(210.850594 187.002556)">SWA / CSA / HCA</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(349.851094 170.454554)">mHC</text>
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(339.531625 186.461415)">post-mix</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(449.008609 170.385413)">MoE</text>
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(427.069828 186.564665)">Top-6 of 256</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(546.98075 170.622335)">Block</text>
+    <text style="font-weight: 600; font-size: 11.8px; font-family: 'Segoe UI'; fill: #394650" transform="translate(543.252687 185.954384)">output</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #a66f78" x="205.6" y="236.1672" transform="rotate(-0 205.6 236.1672)">HYBRID ATTENTION SCHEDULE</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #394650" x="205.6" y="252.2448" transform="rotate(-0 205.6 252.2448)">SWA</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #74808a" x="235.36" y="252.2448" transform="rotate(-0 235.36 252.2448)">2 layers · 128-token local window</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #394650" x="205.6" y="269.9856" transform="rotate(-0 205.6 269.9856)">CSA</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #74808a" x="235.36" y="269.9856" transform="rotate(-0 235.36 269.9856)">21 layers · 4:1 pooling + Top-512</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #394650" x="205.6" y="287.7264" transform="rotate(-0 205.6 287.7264)">HCA</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 600; font-size: 11px; font-family: 'Segoe UI'; text-anchor: start; fill: #74808a" x="235.36" y="287.7264" transform="rotate(-0 235.36 287.7264)">20 layers · 128:1 dense compressed attention</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 600; font-size: 16px; font-family: 'Segoe UI'; text-anchor: start; fill: #a66f78" x="608.352" y="179.878225" transform="rotate(-0 608.352 179.878225)">× 43</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pbb70754d4f">
+   <rect x="7.2" y="7.2" width="669.6" height="304.92"/>
+  </clipPath>
+ </defs>
+</svg>
