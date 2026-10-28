@@ -1,0 +1,476 @@
+# Stage 3: Distributed KV Cache — LMCache + Mooncake Central Store
+#
+# Diff from Stage 2:
+#   + Mooncake pod (etcd + master + store co-located on CPU node)
+#   + Mooncake ClusterIP Service (stable DNS)
+#   + LMCache config template ConfigMap (with remote_url → Mooncake)
+#   + initContainer on workers (resolves local IP into config)
+#   + LMCACHE_CONFIG_FILE + LMCACHE_USE_EXPERIMENTAL env vars
+#   - Removed LMCACHE_LOCAL_CPU / LMCACHE_MAX_LOCAL_CPU_SIZE env vars (now in config file)
+#
+# DeepSeek-V3.2 (671B MoE, FP8) on 8×MI300X per node
+# Mooncake provides cross-instance KV cache sharing via TCP
+#
+# Apply:  kubectl apply -f stage3-distributed.yaml
+# =============================================================================
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vllm-serving
+
+---
+# ---------------------------------------------------------------------------
+# RBAC (identical to Stage 1/2)
+# ---------------------------------------------------------------------------
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vllm-router
+  namespace: vllm-serving
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: vllm-router
+  namespace: vllm-serving
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "services", "endpoints"]
+    verbs: ["get", "list", "watch"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: vllm-router
+  namespace: vllm-serving
+subjects:
+  - kind: ServiceAccount
+    name: vllm-router
+    namespace: vllm-serving
+roleRef:
+  kind: Role
+  name: vllm-router
+  apiGroup: rbac.authorization.k8s.io
+
+---
+# ---------------------------------------------------------------------------
+# Router Service + Pod (identical to Stage 1/2)
+# ---------------------------------------------------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: router
+  namespace: vllm-serving
+spec:
+  type: NodePort
+  selector:
+    app: vllm-router
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: router
+  namespace: vllm-serving
+  labels:
+    app: vllm-router
+spec:
+  serviceAccountName: vllm-router
+  restartPolicy: Always
+  containers:
+    - name: router
+      image: vllm/vllm-router:latest
+      command:
+        - vllm-router
+        - --host=0.0.0.0
+        - --port=8080
+        - --service-discovery
+        - --selector
+        - app=vllm-worker
+        - --service-discovery-namespace=vllm-serving
+        - --service-discovery-port=8000
+        - --policy=consistent_hash
+      ports:
+        - containerPort: 8080
+      resources:
+        requests:
+          cpu: "1"
+          memory: 1Gi
+        limits:
+          cpu: "2"
+          memory: 2Gi
+      livenessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 10
+        periodSeconds: 30
+      readinessProbe:
+        httpGet:
+          path: /health
+          port: 8080
+        initialDelaySeconds: 5
+        periodSeconds: 10
+
+---
+# ===========================================================================
+# Mooncake ClusterIP Service — stable DNS for etcd + master
+# All vLLM pods reach this via mooncake.vllm-serving.svc.cluster.local
+# ===========================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: mooncake
+  namespace: vllm-serving
+spec:
+  selector:
+    app: mooncake
+  ports:
+    - name: etcd
+      port: 2379
+      targetPort: 2379
+    - name: master
+      port: 50051
+      targetPort: 50051
+
+---
+# ===========================================================================
+# Mooncake — etcd + master + store co-located (dedicated CPU node)
+#
+# Components:
+#   - etcd: metadata registry (key existence, segment allocation)
+#   - mooncake_master: allocation manager (segment layout, PutStart/PutEnd)
+#   - store: MooncakeDistributedStore data node (256 GB DRAM for KV blocks)
+#
+# No GPU needed. Requires 300+ GB RAM for the store segment.
+# ===========================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mooncake
+  namespace: vllm-serving
+  labels:
+    app: mooncake
+spec:
+  restartPolicy: Always
+  hostNetwork: true
+  dnsPolicy: ClusterFirstWithHostNet
+  nodeSelector:
+    kubernetes.io/hostname: cpu-node-1  # UPDATE: your dedicated CPU/storage node
+  containers:
+    - name: etcd
+      image: quay.io/coreos/etcd:v3.6.1
+      command:
+        - etcd
+        - --listen-client-urls=http://0.0.0.0:2379
+        - --advertise-client-urls=http://mooncake.vllm-serving.svc.cluster.local:2379
+      ports:
+        - containerPort: 2379
+      resources:
+        requests:
+          cpu: "1"
+          memory: 2Gi
+        limits:
+          cpu: "2"
+          memory: 4Gi
+
+    - name: master
+      image: vllm/vllm-openai-rocm:nightly
+      command: ["mooncake_master"]
+      args: ["-v", "1", "--port", "50051"]
+      ports:
+        - containerPort: 50051
+      resources:
+        requests:
+          cpu: "1"
+          memory: 2Gi
+        limits:
+          cpu: "2"
+          memory: 4Gi
+
+    - name: store
+      image: vllm/vllm-openai-rocm:nightly
+      command: ["python3", "-c"]
+      args:
+        - |
+          import os, signal, threading
+          from mooncake.store import MooncakeDistributedStore
+
+          shutdown = threading.Event()
+          signal.signal(signal.SIGTERM, lambda *_: shutdown.set())
+          signal.signal(signal.SIGINT, lambda *_: shutdown.set())
+
+          store = MooncakeDistributedStore()
+          store.setup({
+              "local_hostname": os.environ.get("POD_IP", "0.0.0.0"),
+              "metadata_server": "etcd://127.0.0.1:2379",
+              "global_segment_size": str(256 * 1024**3),
+              "local_buffer_size": str(4 * 1024**3),
+              "protocol": "tcp",
+              "rdma_devices": "",
+              "master_server_addr": "127.0.0.1:50051",
+          })
+          print("Mooncake store ready (256 GB segment, TCP)", flush=True)
+          while not shutdown.is_set():
+              shutdown.wait(1.0)
+          store.close()
+      env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+      resources:
+        requests:
+          cpu: "4"
+          memory: 300Gi
+        limits:
+          cpu: "8"
+          memory: 300Gi
+
+---
+# ===========================================================================
+# LMCache config template — shared by all vLLM workers
+# __LOCAL_IP__ is replaced at container startup by the initContainer
+# ===========================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lmcache-config-template
+  namespace: vllm-serving
+data:
+  config.template.yaml: |
+    chunk_size: 256
+    local_device: cpu
+    remote_url: "mooncakestore://mooncake.vllm-serving.svc.cluster.local:50051/"
+    remote_serde: naive
+    local_cpu: true
+    max_local_cpu_size: 256
+    extra_config:
+      local_hostname: "__LOCAL_IP__"
+      metadata_server: "etcd://mooncake.vllm-serving.svc.cluster.local:2379"
+      protocol: tcp
+      device_name: ""
+      master_server_address: "mooncake.vllm-serving.svc.cluster.local:50051"
+      global_segment_size: 274877906944
+      local_buffer_size: 10737418240
+      transfer_timeout: 30
+
+---
+# ===========================================================================
+# Shared environment — AMD optimizations + LMCache config file mode
+# ===========================================================================
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: vllm-env
+  namespace: vllm-serving
+data:
+  # AMD ROCm optimizations
+  VLLM_ROCM_USE_AITER: "1"
+  VLLM_ROCM_USE_AITER_MLA: "1"
+  VLLM_ROCM_USE_AITER_MOE: "1"
+  VLLM_ROCM_QUICK_REDUCE_QUANTIZATION: "INT4"
+  NCCL_MIN_NCHANNELS: "112"
+  # LMCache — config file mode (replaces individual LMCACHE_* vars)
+  PYTHONHASHSEED: "0"
+  LMCACHE_USE_EXPERIMENTAL: "True"
+
+---
+# ===========================================================================
+# vLLM Worker — Node 1 (8×MI300X, TP=8, Mooncake distributed cache)
+# ===========================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vllm-node1
+  namespace: vllm-serving
+  labels:
+    app: vllm-worker
+spec:
+  hostNetwork: true
+  hostIPC: true
+  dnsPolicy: ClusterFirstWithHostNet
+  restartPolicy: Always
+  nodeSelector:
+    kubernetes.io/hostname: gpu-node-1  # UPDATE: your first GPU node hostname
+  initContainers:
+    - name: resolve-config
+      image: vllm/vllm-openai-rocm:nightly
+      command: ["sh", "-c"]
+      args:
+        - |
+          IP=${POD_IP:-$(hostname -I | awk '{print $1}')}
+          echo -n "$IP" > /shared/local_ip
+          sed "s/__LOCAL_IP__/$IP/g" /etc/lmcache/config.template.yaml > /shared/lmcache_config.yaml
+          echo "Resolved local IP: $IP"
+          cat /shared/lmcache_config.yaml
+      env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+        - name: lmcache-template
+          mountPath: /etc/lmcache/config.template.yaml
+          subPath: config.template.yaml
+          readOnly: true
+  containers:
+    - name: vllm
+      image: vllm/vllm-openai-rocm:nightly
+      securityContext:
+        privileged: true
+      command: ["sh", "-c"]
+      args:
+        - exec vllm serve deepseek-ai/DeepSeek-V3.2
+            --tensor-parallel-size 8
+            --enable-prefix-caching
+            --enable-expert-parallel
+            --async-scheduling
+            --max-model-len 65536
+            --gpu-memory-utilization 0.85
+            --kv-cache-dtype fp8
+            --block-size 64
+            --trust-remote-code
+            --host 0.0.0.0
+            --port 8000
+            --kv-transfer-config
+              '{"kv_connector":"LMCacheConnectorV1","kv_role":"kv_both"}'
+      env:
+        - name: LMCACHE_CONFIG_FILE
+          value: /shared/lmcache_config.yaml
+      envFrom:
+        - configMapRef:
+            name: vllm-env
+      resources:
+        requests:
+          memory: 1400Gi
+        limits:
+          amd.com/gpu: 8
+          memory: 1400Gi
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+        - name: model-cache
+          mountPath: /root/.cache/huggingface/hub
+        - name: dshm
+          mountPath: /dev/shm
+  volumes:
+    - name: shared
+      emptyDir: {}
+    - name: lmcache-template
+      configMap:
+        name: lmcache-config-template
+    - name: model-cache
+      hostPath:
+        path: /models  # UPDATE: path to HuggingFace model cache on this node
+        type: Directory
+    - name: dshm
+      emptyDir:
+        medium: Memory
+        sizeLimit: 128Gi
+
+---
+# ===========================================================================
+# vLLM Worker — Node 2 (8×MI300X, TP=8, Mooncake distributed cache)
+# ===========================================================================
+apiVersion: v1
+kind: Pod
+metadata:
+  name: vllm-node2
+  namespace: vllm-serving
+  labels:
+    app: vllm-worker
+spec:
+  hostNetwork: true
+  hostIPC: true
+  dnsPolicy: ClusterFirstWithHostNet
+  restartPolicy: Always
+  nodeSelector:
+    kubernetes.io/hostname: gpu-node-2  # UPDATE: your second GPU node hostname
+  initContainers:
+    - name: resolve-config
+      image: vllm/vllm-openai-rocm:nightly
+      command: ["sh", "-c"]
+      args:
+        - |
+          IP=${POD_IP:-$(hostname -I | awk '{print $1}')}
+          echo -n "$IP" > /shared/local_ip
+          sed "s/__LOCAL_IP__/$IP/g" /etc/lmcache/config.template.yaml > /shared/lmcache_config.yaml
+          echo "Resolved local IP: $IP"
+          cat /shared/lmcache_config.yaml
+      env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+        - name: lmcache-template
+          mountPath: /etc/lmcache/config.template.yaml
+          subPath: config.template.yaml
+          readOnly: true
+  containers:
+    - name: vllm
+      image: vllm/vllm-openai-rocm:nightly
+      securityContext:
+        privileged: true
+      command: ["sh", "-c"]
+      args:
+        - exec vllm serve deepseek-ai/DeepSeek-V3.2
+            --tensor-parallel-size 8
+            --enable-prefix-caching
+            --enable-expert-parallel
+            --async-scheduling
+            --max-model-len 65536
+            --gpu-memory-utilization 0.85
+            --kv-cache-dtype fp8
+            --block-size 64
+            --trust-remote-code
+            --host 0.0.0.0
+            --port 8000
+            --kv-transfer-config
+              '{"kv_connector":"LMCacheConnectorV1","kv_role":"kv_both"}'
+      env:
+        - name: LMCACHE_CONFIG_FILE
+          value: /shared/lmcache_config.yaml
+      envFrom:
+        - configMapRef:
+            name: vllm-env
+      resources:
+        requests:
+          memory: 1400Gi
+        limits:
+          amd.com/gpu: 8
+          memory: 1400Gi
+      volumeMounts:
+        - name: shared
+          mountPath: /shared
+        - name: model-cache
+          mountPath: /root/.cache/huggingface/hub
+        - name: dshm
+          mountPath: /dev/shm
+  volumes:
+    - name: shared
+      emptyDir: {}
+    - name: lmcache-template
+      configMap:
+        name: lmcache-config-template
+    - name: model-cache
+      hostPath:
+        path: /models  # UPDATE: path to HuggingFace model cache on this node
+        type: Directory
+    - name: dshm
+      emptyDir:
+        medium: Memory
+        sizeLimit: 128Gi
