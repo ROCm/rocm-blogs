@@ -59,7 +59,7 @@ There are two shader-copy implementations. Do not mix them up.
 HIP’s default is the **CLR blit kernel** `__amd_rocclr_copyBuffer`, compiled at
 runtime and dispatched on the HIP stream queue. **ROCr BlitKernel**
 (`CopyAligned` / `CopyMisaligned`) is hand-written ISA on ROCr’s internal blit
-queue. `HSA_ENABLE_SDMA=0`, a failed SDMA queue, or the A8 redirect below all
+queue. `HSA_ENABLE_SDMA=0`, a failed SDMA queue, or the same-GPU redirect below all
 land on ROCr BlitKernel — not the CLR kernel HIP uses every day.
 
 ## How CLR chooses a path
@@ -81,7 +81,7 @@ unless `DEBUG_CLR_DISABLE_FALLBACK` or `requireSDMA` is set. The source comment
 for default D2D is blunt: resolving an SDMA dependent signal is slow; a
 same-queue blit is cheaper. The numbers below agree.
 
-## A8: a same-GPU SDMA API call is not always SDMA
+## A same-GPU SDMA API call is not always SDMA
 
 Even after the caller reaches ROCr’s `hsa_amd_memory_async_copy_on_engine`,
 same-GPU copies hit another gate in `GpuAgent::DmaCopyOnEngine`:
@@ -95,7 +95,7 @@ ROCr BlitKernel at `blits_[0]`. Logs still look like a DMA copy. The hardware is
 not SDMA.
 
 Default HIP D2D never reaches this API; CLR calls `shaderCopyBuffer` directly.
-You hit A8 if you:
+You hit this redirect if you:
 
 - call the HSA SDMA API for a same-GPU copy without `force_copy_on_sdma`
 - copy IPC / VMM-imported pointers that CLR treats as P2P-like (> 1 MiB intended
