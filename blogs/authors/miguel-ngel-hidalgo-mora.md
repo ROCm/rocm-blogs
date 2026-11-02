@@ -1,3 +1,12 @@
+---
+thumbnail: Miguel-Angel-Hidalgo-Mora.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Miguel Ángel Hidalgo Mora"
+    "keywords": "blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Miguel Ángel Hidalgo Mora">
