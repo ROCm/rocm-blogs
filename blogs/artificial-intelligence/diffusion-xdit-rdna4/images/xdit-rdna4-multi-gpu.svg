@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="720" viewBox="0 0 1600 720" role="img" aria-labelledby="title desc">
+  <title id="title">One generation distributed across four Radeon GPUs</title>
+  <desc id="desc">A prompt enters xDiT and a generated image or video returns. xDiT uses four separate 32GB Radeon AI PRO R9700S GPUs, providing 128GB of aggregate GPU memory. On this system, GPU-to-GPU transfers stage through host memory, so PCIe bandwidth, host memory bandwidth, and NUMA placement can limit scaling.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#050505"/><stop offset="1" stop-color="#081622"/></linearGradient>
+    <linearGradient id="card" x2="1" y2="1"><stop stop-color="#1b2125"/><stop offset="1" stop-color="#101315"/></linearGradient>
+    <style>
+      text{font-family:"Open Sans",Arial,sans-serif;fill:#fff}.klav{font-family:Klavika,"Open Sans",Arial,sans-serif;font-weight:700}
+      .eyebrow{font:700 14px Consolas,monospace;fill:#2899ff;letter-spacing:.8px}.title{font-size:42px}.sub{font-size:18px;fill:#c9d1d6}
+      .label{font-size:18px;font-weight:700}.small{font-size:14px;fill:#b9c4ca}.number{font-size:28px;font-weight:700}.total{font-size:27px;font-weight:700}.tradeoff{font-size:16px;fill:#c9d1d6}
+      .panel{fill:#111416;stroke:#516069;stroke-width:1.5}.card{fill:url(#card);stroke:#667780;stroke-width:1.5}.mem{fill:#168ce8;stroke:#76bdff}
+      .wire{fill:none;stroke:#2899ff;stroke-width:4}.flow{fill:none;stroke:#2899ff;stroke-width:4}.muted{stroke:#71818a;stroke-width:1.5}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#2899ff"/></marker>
+  </defs>
+  <rect width="1600" height="720" fill="url(#bg)"/>
+  <path d="M1375 0h225v205z" fill="#2899ff" opacity=".07"/>
+  <text x="64" y="62" class="eyebrow">MULTI-GPU DIFFUSION INFERENCE</text>
+  <text x="64" y="114" class="title klav">One generation across four separate GPUs</text>
+  <text x="64" y="150" class="sub">xDiT splits one image or video generation across the cards.</text>
+  <line x1="64" y1="178" x2="1536" y2="178" stroke="#46545c"/>
+
+  <!-- One application sends a request and receives the generated result -->
+  <g transform="translate(64 276)">
+    <rect width="240" height="184" rx="6" class="panel"/>
+    <rect width="7" height="184" rx="3" fill="#2899ff"/>
+    <text x="28" y="38" class="eyebrow">YOUR APPLICATION</text>
+    <line x1="28" y1="56" x2="212" y2="56" class="muted"/>
+    <rect x="28" y="76" width="28" height="28" rx="3" fill="#153b58" stroke="#2899ff"/>
+    <path d="M36 90h12M42 84v12" stroke="#76bdff" stroke-width="2"/>
+    <text x="70" y="96" class="label">Prompt + settings</text>
+    <rect x="28" y="126" width="28" height="28" rx="3" fill="#153b58" stroke="#2899ff"/>
+    <circle cx="48" cy="134" r="3" fill="#76bdff"/><path d="M33 149l7-8 5 5 4-4 5 7z" fill="#2899ff"/>
+    <text x="70" y="146" class="label">Image or video</text>
+  </g>
+  <path d="M304 326h81" class="flow" marker-end="url(#arrow)"/><text x="344" y="314" text-anchor="middle" class="small">request</text>
+  <path d="M385 416h-81" class="flow" marker-end="url(#arrow)"/><text x="344" y="441" text-anchor="middle" class="small">result</text>
+  <!-- Distributed system -->
+  <g transform="translate(400 205)">
+    <rect width="1136" height="450" rx="7" class="panel"/>
+    <text x="38" y="43" class="eyebrow">XDIT COORDINATES THE FOUR GPUS</text>
+
+    <!-- Sixteen 8GB blocks form one column along the system's left edge -->
+    <g transform="translate(18 72)" aria-label="Sixteen 8GB memory blocks totaling 128GB">
+      <rect y="0" width="12" height="12" class="mem"/><rect y="17" width="12" height="12" class="mem"/><rect y="34" width="12" height="12" class="mem"/><rect y="51" width="12" height="12" class="mem"/>
+      <rect y="68" width="12" height="12" class="mem"/><rect y="85" width="12" height="12" class="mem"/><rect y="102" width="12" height="12" class="mem"/><rect y="119" width="12" height="12" class="mem"/>
+      <rect y="136" width="12" height="12" class="mem"/><rect y="153" width="12" height="12" class="mem"/><rect y="170" width="12" height="12" class="mem"/><rect y="187" width="12" height="12" class="mem"/>
+      <rect y="204" width="12" height="12" class="mem"/><rect y="221" width="12" height="12" class="mem"/><rect y="238" width="12" height="12" class="mem"/><rect y="255" width="12" height="12" class="mem"/>
+    </g>
+    <text x="64" y="208" text-anchor="middle" class="label klav" transform="rotate(-90 64 208)">128GB aggregate</text>
+
+    <!-- GPU cards: memory blocks face the PCIe spine -->
+    <g transform="translate(140 72)">
+      <rect width="370" height="105" rx="5" class="card"/><rect width="7" height="105" fill="#2899ff"/>
+      <text x="28" y="39" class="label klav">R9700S</text><text x="28" y="77" class="number">32GB</text>
+      <g transform="translate(248 54)"><rect width="24" height="24" class="mem"/><rect x="29" width="24" height="24" class="mem"/><rect x="58" width="24" height="24" class="mem"/><rect x="87" width="24" height="24" class="mem"/></g>
+    </g>
+    <g transform="translate(140 214)">
+      <rect width="370" height="105" rx="5" class="card"/><rect width="7" height="105" fill="#2899ff"/>
+      <text x="28" y="39" class="label klav">R9700S</text><text x="28" y="77" class="number">32GB</text>
+      <g transform="translate(248 54)"><rect width="24" height="24" class="mem"/><rect x="29" width="24" height="24" class="mem"/><rect x="58" width="24" height="24" class="mem"/><rect x="87" width="24" height="24" class="mem"/></g>
+    </g>
+    <g transform="translate(616 72)">
+      <rect width="370" height="105" rx="5" class="card"/><rect x="363" width="7" height="105" fill="#2899ff"/>
+      <g transform="translate(18 54)"><rect width="24" height="24" class="mem"/><rect x="29" width="24" height="24" class="mem"/><rect x="58" width="24" height="24" class="mem"/><rect x="87" width="24" height="24" class="mem"/></g>
+      <text x="156" y="39" class="label klav">R9700S</text><text x="156" y="77" class="number">32GB</text>
+    </g>
+    <g transform="translate(616 214)">
+      <rect width="370" height="105" rx="5" class="card"/><rect x="363" width="7" height="105" fill="#2899ff"/>
+      <g transform="translate(18 54)"><rect width="24" height="24" class="mem"/><rect x="29" width="24" height="24" class="mem"/><rect x="58" width="24" height="24" class="mem"/><rect x="87" width="24" height="24" class="mem"/></g>
+      <text x="156" y="39" class="label klav">R9700S</text><text x="156" y="77" class="number">32GB</text>
+    </g>
+
+    <!-- PCIe deliberately occupies the visual center -->
+    <path d="M510 124h16M510 266h16M600 124h16M600 266h16" class="wire"/>
+    <rect x="526" y="72" width="74" height="247" rx="7" fill="#12344d" stroke="#2899ff" stroke-width="2"/>
+    <text x="563" y="197" text-anchor="middle" class="label klav" transform="rotate(-90 563 197)">PCIe interconnect</text>
+
+    <!-- Explain the communication tradeoff -->
+    <line x1="38" y1="345" x2="1098" y2="345" class="muted"/>
+    <text x="38" y="386" class="tradeoff">GPU-to-GPU transfers stage through host memory on this system.</text>
+    <text x="38" y="410" class="tradeoff">PCIe bandwidth, host memory bandwidth, and NUMA placement constrain</text>
+    <text x="38" y="432" class="tradeoff">multi-GPU communication performance and the resulting speedup.</text>
+  </g>
+</svg>
