@@ -27,3 +27,12 @@
         margin-bottom:0
     }
 }
+
+/* Keep the full TeaCache cover visible on narrow screens. */
+@media (max-width: 768px) {
+    .image-container img.responsive-image[src*="teacache-stable-diffusion"] {
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+    }
+}

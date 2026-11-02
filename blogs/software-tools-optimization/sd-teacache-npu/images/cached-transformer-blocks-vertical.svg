@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="2240" viewBox="0 0 760 2240" role="img" aria-labelledby="title desc">
+  <title id="title">CachedTransformerBlocks forward call</title>
+  <desc id="desc">Vertical flowchart. Prepare modulated inputs and save original hidden states. Compare current and cached modulated inputs, apply a polynomial, and accumulate the relative L1 distance. A distance below the threshold uses cached residuals. Otherwise run all transformer blocks and cache new residuals. Both paths return updated hidden states and encoder hidden states.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 Z" fill="#475569"/></marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; font-size: 30px; fill: #172033; text-anchor: middle; }
+      .heading { font-size: 34px; font-weight: 700; }
+      .label { font-size: 28px; font-weight: 700; }
+      .shape { font-size: 28px; }
+      .box { fill: #f1f5f9; stroke: #64748b; stroke-width: 2; }
+      .line { fill: none; stroke: #475569; stroke-width: 3; marker-end: url(#arrow); }
+      .rule { stroke: #cbd5e1; stroke-width: 2; }
+    </style>
+  </defs>
+  <rect width="760" height="2240" fill="white"/>
+  <text x="380" y="44" class="heading">CachedTransformerBlocks</text>
+  <text x="380" y="85">Forward call</text>
+
+  <rect x="40" y="115" width="680" height="150" rx="16" class="box"/>
+  <text x="380" y="154" class="label">INPUTS</text>
+  <text x="380" y="198" class="shape">hidden_states: (2, 1024, 1536)</text>
+  <text x="380" y="241" class="shape">encoder_hidden_states: (2, 333, 1536)</text>
+  <path d="M380 265 V310" class="line"/>
+
+  <rect x="40" y="310" width="680" height="160" rx="16" class="box"/>
+  <text x="380" y="351" class="label">get_modulated_inputs</text>
+  <text x="380" y="395">Apply norm1 to hidden_states</text>
+  <text x="380" y="436">using timestep embedding (temb)</text>
+  <path d="M380 470 V515" class="line"/>
+
+  <rect x="40" y="515" width="680" height="125" rx="16" class="box"/>
+  <text x="380" y="555" class="label">Save original states</text>
+  <text x="380" y="591">Cache hidden_states and</text>
+  <text x="380" y="628">encoder_hidden_states</text>
+  <path d="M380 640 V685" class="line"/>
+
+  <rect x="40" y="685" width="680" height="430" rx="16" fill="#eef5ff" stroke="#4773a8" stroke-width="2"/>
+  <text x="380" y="728" class="label">are_two_tensor_similar</text>
+  <path d="M65 750 H695" class="rule"/>
+  <text x="380" y="793">Compare current modulated inputs</text>
+  <text x="380" y="833">with cached prev_modulated_inputs</text>
+  <text x="380" y="875" class="shape">Each tensor: (2, 1024, 1536)</text>
+  <path d="M65 899 H695" class="rule"/>
+  <text x="380" y="942">Apply polynomial to the difference</text>
+  <text x="380" y="988">Add to accumulated L1 distance</text>
+  <path d="M65 1011 H695" class="rule"/>
+  <text x="380" y="1054">Save current modulated inputs</text>
+  <text x="380" y="1092">to cache after the comparison</text>
+  <path d="M380 1115 V1170" class="line"/>
+
+  <path d="M380 1170 L710 1260 L380 1350 L50 1260 Z" fill="#fff7df" stroke="#92702c" stroke-width="2"/>
+  <text x="380" y="1239" class="label">Accumulated L1</text>
+  <text x="380" y="1281" class="label">&lt; threshold?</text>
+  <path d="M50 1260 H20 V1388 H195 V1440" class="line"/>
+  <path d="M710 1260 H740 V1388 H565 V1440" class="line"/>
+  <rect x="65" y="1368" width="100" height="40" fill="white"/>
+  <text x="115" y="1397" class="label">YES</text>
+  <rect x="605" y="1368" width="90" height="40" fill="white"/>
+  <text x="650" y="1397" class="label">NO</text>
+
+  <rect x="40" y="1440" width="310" height="470" rx="16" fill="#eaf6f0" stroke="#35745b" stroke-width="2"/>
+  <text x="195" y="1485" class="label">CACHING STEP</text>
+  <path d="M60 1510 H330" class="rule"/>
+  <text x="195" y="1560">Load cached</text>
+  <text x="195" y="1600">hidden-state</text>
+  <text x="195" y="1640">residuals</text>
+  <text x="195" y="1710">Add residuals to</text>
+  <text x="195" y="1750">original hidden</text>
+  <text x="195" y="1790">states</text>
+  <text x="195" y="1860" class="shape">Repeat for encoder</text>
+
+  <rect x="410" y="1440" width="310" height="470" rx="16" fill="#eef5ff" stroke="#4773a8" stroke-width="2"/>
+  <text x="565" y="1485" class="label">FULL FORWARD</text>
+  <path d="M430 1510 H700" class="rule"/>
+  <text x="565" y="1560">Run all</text>
+  <text x="565" y="1600">transformer blocks</text>
+  <text x="565" y="1640">to update states</text>
+  <text x="565" y="1710">Cache residuals:</text>
+  <text x="565" y="1750">updated states</text>
+  <text x="565" y="1790">− original states</text>
+  <text x="565" y="1860" class="shape">Repeat for encoder</text>
+
+  <path d="M195 1910 V1970 H380 V2030" class="line"/>
+  <path d="M565 1910 V1970 H380" fill="none" stroke="#475569" stroke-width="3"/>
+  <circle cx="380" cy="1970" r="5" fill="#475569"/>
+  <rect x="40" y="2030" width="680" height="165" rx="16" class="box"/>
+  <text x="380" y="2074" class="label">OUTPUTS</text>
+  <text x="380" y="2121" class="shape">hidden_states: (2, 1024, 1536)</text>
+  <text x="380" y="2166" class="shape">encoder_hidden_states: (2, 333, 1536)</text>
+</svg>
