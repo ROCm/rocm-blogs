@@ -1,0 +1,3 @@
+model,hardware,tensor_parallel_size,context,token_rows_S,query_tokens_Q,measurement,indexer_cp,latency_us,source,implementation_commit
+MiniMax-M3-MXFP4,MI355X,4,1M,16,4,ATOM FlyDSL mono sparse layer; harness with graph replay,off,222.2,https://github.com/ROCm/ATOM/pull/2419,2b9f3412e466fd4172a4a621fe9215a1041130c1
+MiniMax-M3-MXFP4,MI355X,4,1M,16,4,ATOM FlyDSL mono sparse layer; harness with graph replay,on,156.7,https://github.com/ROCm/ATOM/pull/2419,2b9f3412e466fd4172a4a621fe9215a1041130c1

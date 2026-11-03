@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="738" viewBox="0 0 760 738" role="img" aria-labelledby="title desc">
+  <title id="title">How FlyDSL mono overlaps work</title>
+  <desc id="desc">A schematic example of a FlyDSL mono kernel. Later tasks load weights during earlier computation. Tagged ready data moves to TP reductions, then to the next computation. These are task roles, not separate kernels or fixed groups of thread blocks.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8" fill="#64748b"/></marker></defs>
+  <rect width="760" height="738" rx="18" fill="#f8fafc"/>
+  <g font-family="DejaVu Sans,Arial,sans-serif">
+    <text x="32" y="44" font-size="29" font-weight="700" fill="#172033" text-anchor="start">How FlyDSL mono overlaps work</text>
+    <text x="32" y="78" font-size="23" font-weight="400" fill="#64748b" text-anchor="start">Compute → publish → reduce → consume</text>
+    <text x="32" y="143" font-size="23" font-weight="700" fill="#172033" text-anchor="start">Earlier</text>
+    <text x="32" y="173" font-size="23" font-weight="700" fill="#172033" text-anchor="start">computation</text>
+    <rect x="210" y="120" width="140" height="64" rx="12" fill="#ffe2dd" stroke="#d6766b" stroke-width="2"/>
+    <text x="280" y="160" font-size="23" font-weight="500" fill="#172033" text-anchor="middle">Tile A</text>
+    <rect x="370" y="120" width="140" height="64" rx="12" fill="#ffe2dd" stroke="#d6766b" stroke-width="2"/>
+    <text x="440" y="160" font-size="23" font-weight="500" fill="#172033" text-anchor="middle">Tile B</text>
+    <text x="32" y="260" font-size="23" font-weight="700" fill="#172033" text-anchor="start">TP reduction</text>
+    <rect x="360" y="220" width="92" height="64" rx="12" fill="#dbeaf4" stroke="#6b9dbb" stroke-width="2"/>
+    <text x="406" y="260" font-size="23" font-weight="500" fill="#172033" text-anchor="middle">A</text>
+    <rect x="520" y="220" width="92" height="64" rx="12" fill="#dbeaf4" stroke="#6b9dbb" stroke-width="2"/>
+    <text x="566" y="260" font-size="23" font-weight="500" fill="#172033" text-anchor="middle">B</text>
+    <text x="32" y="354" font-size="23" font-weight="700" fill="#172033" text-anchor="start">Next</text>
+    <text x="32" y="384" font-size="23" font-weight="700" fill="#172033" text-anchor="start">computation</text>
+    <rect x="210" y="320" width="112" height="80" rx="12" fill="#e3e5f3" stroke="#9298c1" stroke-width="2"/>
+    <text x="266" y="354" font-size="21" font-weight="500" fill="#172033" text-anchor="middle">Load</text>
+    <text x="266" y="382" font-size="21" font-weight="500" fill="#172033" text-anchor="middle">weights</text>
+    <rect x="462" y="330" width="120" height="64" rx="12" fill="#daeee7" stroke="#79ab99" stroke-width="2"/>
+    <text x="522" y="370" font-size="22" font-weight="500" fill="#172033" text-anchor="middle">Use A</text>
+    <rect x="622" y="330" width="110" height="64" rx="12" fill="#daeee7" stroke="#79ab99" stroke-width="2"/>
+    <text x="677" y="370" font-size="22" font-weight="500" fill="#172033" text-anchor="middle">Use B</text>
+    <path d="M340 190 L368 214" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+    <path d="M500 190 L528 214" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+    <path d="M442 290 L470 324" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+    <path d="M602 290 L630 324" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="5 5"/>
+    <path d="M210 432 H726" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="210" y="462" font-size="20" font-weight="400" fill="#64748b" text-anchor="start">Execution progresses (schematic)</text>
+    <rect x="32" y="492" width="696" height="148" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="54" y="528" font-size="23" font-weight="500" fill="#172033" text-anchor="start">Load weights while earlier work runs.</text>
+    <text x="54" y="568" font-size="23" font-weight="500" fill="#172033" text-anchor="start">Publish ready data to move each portion forward.</text>
+    <text x="54" y="608" font-size="23" font-weight="500" fill="#172033" text-anchor="start">Thread blocks take on new tasks across stages.</text>
+    <text x="32" y="678" font-size="19" font-weight="400" fill="#64748b" text-anchor="start">Roles shown are tasks, not fixed groups of thread blocks.</text>
+    <text x="32" y="708" font-size="19" font-weight="400" fill="#64748b" text-anchor="start">Bar lengths do not represent measured time.</text>
+  </g>
+</svg>
