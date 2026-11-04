@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "FlyDSL Mono Kernels for High-Interactivity LLM Serving in ATOM"
 date: "03 Nov 2026"
-author: "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
+author: "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Amanzhol Salykov, Andy Luo, Jin Pan, Hyukjoon Lee, Hai Xiao, Richard Li, Peng Sun, Emad Barsoum"
 thumbnail: 'flydsl-mono-kernels-thumbnail.jpg'
 tags: "AI/ML, LLM, Performance, Serving"
 category: "Software tools & optimizations"
@@ -11,7 +11,7 @@ key_value_propositions: "Explains how FlyDSL mono kernels reduce decode latency,
 language: English
 myst:
     html_meta:
-        "author": "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
+        "author": "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Amanzhol Salykov, Andy Luo, Jin Pan, Hyukjoon Lee, Hai Xiao, Richard Li, Peng Sun, Emad Barsoum"
         "description lang=en": "FlyDSL mono kernels cut decode latency in ATOM, with MiniMax-M3 and DeepSeek-V4.1 results."
         "keywords": "FlyDSL mono kernel, interactivity, AgentX, InferenceX, ATOM, vLLM, SGLang, MiniMax-M3, DeepSeek-V4.1-Flash, TileRT, ROCm, AMD Instinct MI355X, LLM inference, decode"
         "vertical": "AI, Developers"
@@ -22,7 +22,7 @@ myst:
         "amd_blog_development_tools": "ROCm Software"
         "amd_blog_applications": "AI Inference"
         "amd_blog_topic_categories": "Enterprise & Data Center Trends"
-        "amd_blog_authors": "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Richard Li, Peng Sun, Emad Barsoum"
+        "amd_blog_authors": "Felix Li, Lingpeng Jin, Hattie Wu, Carlus Huang, Ziming Huang, Jun Chen, Yifeng Huang, Bin Ding, Xiaobing Zhang, Yi Gan, Fangzhou Ai, Wei Sun, Li Li, Doug Lehr, Amanzhol Salykov, Andy Luo, Jin Pan, Hyukjoon Lee, Hai Xiao, Richard Li, Peng Sun, Emad Barsoum"
 ---
 
 <!---
