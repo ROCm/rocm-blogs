@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="470" viewBox="0 0 900 470" role="img" aria-labelledby="title desc">
+  <title id="title">Per-dimension VBench comparison for RTN and SVDQuant</title>
+  <desc id="desc">Grouped bar chart comparing RTN and SVDQuant on six VBench dimensions.</desc>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="450" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#1f2937">Per-dimension VBench: RTN vs SVDQuant</text>
+
+  <g font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    <line x1="90" y1="350" x2="830" y2="350" stroke="#d1d5db"/>
+    <line x1="90" y1="275" x2="830" y2="275" stroke="#e5e7eb"/>
+    <line x1="90" y1="200" x2="830" y2="200" stroke="#e5e7eb"/>
+    <line x1="90" y1="125" x2="830" y2="125" stroke="#e5e7eb"/>
+    <line x1="90" y1="50" x2="830" y2="50" stroke="#e5e7eb"/>
+
+    <text x="80" y="354" text-anchor="end">0.6</text>
+    <text x="80" y="279" text-anchor="end">0.7</text>
+    <text x="80" y="204" text-anchor="end">0.8</text>
+    <text x="80" y="129" text-anchor="end">0.9</text>
+    <text x="80" y="54" text-anchor="end">1.0</text>
+  </g>
+
+  <line x1="90" y1="50" x2="90" y2="350" stroke="#6b7280"/>
+  <line x1="90" y1="350" x2="830" y2="350" stroke="#6b7280"/>
+  <text x="22" y="200" transform="rotate(-90 22 200)" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#374151">VBench score</text>
+
+  <g>
+    <rect x="680" y="24" width="14" height="14" fill="#2563eb"/>
+    <text x="700" y="36" font-family="Arial, sans-serif" font-size="12" fill="#374151">RTN</text>
+    <rect x="740" y="24" width="14" height="14" fill="#f97316"/>
+    <text x="760" y="36" font-family="Arial, sans-serif" font-size="12" fill="#374151">SVDQuant</text>
+  </g>
+
+  <g>
+    <rect x="120" y="83.5" width="28" height="266.5" fill="#2563eb"/>
+    <rect x="152" y="78.6" width="28" height="271.4" fill="#f97316"/>
+    <text x="150" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="150" dy="0">Subject</tspan>
+      <tspan x="150" dy="13">consistency</tspan>
+    </text>
+    <text x="134" y="78" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.955</text>
+    <text x="166" y="73" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.962</text>
+  </g>
+
+  <g>
+    <rect x="240" y="82.7" width="28" height="267.3" fill="#2563eb"/>
+    <rect x="272" y="81.9" width="28" height="268.1" fill="#f97316"/>
+    <text x="270" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="270" dy="0">Background</tspan>
+      <tspan x="270" dy="13">consistency</tspan>
+    </text>
+    <text x="254" y="77" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.956</text>
+    <text x="286" y="76" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.958</text>
+  </g>
+
+  <g>
+    <rect x="360" y="67.1" width="28" height="282.9" fill="#2563eb"/>
+    <rect x="392" y="71.3" width="28" height="278.7" fill="#f97316"/>
+    <text x="390" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="390" dy="0">Temporal</tspan>
+      <tspan x="390" dy="13">flickering</tspan>
+    </text>
+    <text x="374" y="62" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.977</text>
+    <text x="406" y="66" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.972</text>
+  </g>
+
+  <g>
+    <rect x="480" y="59.2" width="28" height="290.8" fill="#2563eb"/>
+    <rect x="512" y="60.9" width="28" height="289.1" fill="#f97316"/>
+    <text x="510" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="510" dy="0">Motion</tspan>
+      <tspan x="510" dy="13">smoothness</tspan>
+    </text>
+    <text x="494" y="54" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.988</text>
+    <text x="526" y="56" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.986</text>
+  </g>
+
+  <g>
+    <rect x="600" y="344.5" width="28" height="5.5" fill="#2563eb"/>
+    <rect x="632" y="341.4" width="28" height="8.6" fill="#f97316"/>
+    <text x="630" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="630" dy="0">Aesthetic</tspan>
+      <tspan x="630" dy="13">quality</tspan>
+    </text>
+    <text x="614" y="337" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.607</text>
+    <text x="646" y="334" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.612</text>
+  </g>
+
+  <g>
+    <rect x="720" y="285.7" width="28" height="64.3" fill="#2563eb"/>
+    <rect x="752" y="274.3" width="28" height="75.7" fill="#f97316"/>
+    <text x="750" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="750" dy="0">Imaging</tspan>
+      <tspan x="750" dy="13">quality</tspan>
+    </text>
+    <text x="734" y="279" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.686</text>
+    <text x="766" y="268" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.701</text>
+  </g>
+
+  <text x="460" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Scores are from the RTN vs SVDQuant ablation on the same rotation+SmoothQuant-selected W4A8 blocks.</text>
+</svg>

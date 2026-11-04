@@ -53,8 +53,6 @@ Salykov
 Amy
 Wiebe
 Andy
-Luo
-Andy
 Ye
 Anik
 Chaudhuri
@@ -254,8 +252,6 @@ Gulsum
 Akbulut
 Haani
 Ahmed
-Hai
-Xiao
 Haichen
 Zhang
 Haishuo
@@ -285,8 +281,6 @@ Hui
 Sun
 Huidong
 Ji
-Hyukjoon
-Lee
 Hyunji
 Kim
 Indira
@@ -335,8 +329,6 @@ Jiaqiang
 Liu
 Jiaxin
 Jiejing
-Jin
-Pan
 Jin
 Zhou
 Jingai
@@ -760,6 +752,8 @@ William
 Anzen
 William
 Hu
+Xiao
+Yu
 Xiaobo
 Xiaodong
 Xiaofei
