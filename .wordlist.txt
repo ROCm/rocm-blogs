@@ -117,6 +117,7 @@ Autoscaling
 autoscaling
 AutoSmoothQuant
 AutoSmothQuant
+autotunes
 Avinash
 avx
 awk
@@ -243,6 +244,7 @@ comprehensize
 concretization
 Concretized
 Conda
+Conde
 config
 configs
 conformant
@@ -434,6 +436,7 @@ etcetera
 ethernet
 eval
 EuroHPC
+Evoformer
 EXAONE
 exascale
 executables
@@ -473,6 +476,7 @@ FreeBSD
 Frostig
 Fruchterman
 Fuyu
+fwd
 GALB
 Gameplay
 gameplay
@@ -480,6 +484,7 @@ GAN
 Gangidi
 Gao
 Gazi
+Gb
 gcc
 GCD
 GCDs
@@ -597,8 +602,10 @@ HLO
 hostnames
 hotspot
 Hotspot
+hotspots
 HPC
 HPCG
+HPCTrainingExamples
 HPL
 hpp
 HSA
@@ -911,6 +918,7 @@ Monti
 mortem
 MPI
 MQA
+msa
 MSE
 MSVC
 MTP
@@ -987,6 +995,7 @@ NumPy
 NVCC
 NVIDIA
 NVPTX
+NVTX
 OAM
 OAMs
 Observability
@@ -1024,6 +1033,7 @@ OpenClaw
 OpenCV
 OpenDiLiCo
 OpenFabrics
+OpenFold
 OpenGL
 OpenMP
 openmp
@@ -1036,6 +1046,7 @@ OpenVX
 operationalize
 optimizer's
 optimizers
+Optiq
 orchestrator
 OSS
 oss
@@ -1145,6 +1156,7 @@ pseudocode
 pseudorandom
 PSNR
 PTQ
+Pujar
 px
 py
 PyPi
@@ -1155,6 +1167,7 @@ Qian
 Qiao
 Qihang
 Qinyu
+qkv
 QKV
 QMC
 QPS
@@ -1268,6 +1281,7 @@ rocMLIR
 ROCm's
 ROCmSoftwarePlatform
 ROCmValidationSuite
+rocPD
 rocPRIM
 rocprofv3
 ROCProfiler
@@ -1315,6 +1329,7 @@ Saeedi
 Sankar
 Satya
 Sauer
+Saurabh
 SBIOS
 SCA
 scalability
@@ -1360,6 +1375,7 @@ shaders
 Sharlin
 Shtrasberg
 Siang
+Sidafa
 SIGGRAPH
 sigmoid
 sigmoids
@@ -1434,6 +1450,7 @@ Subprocess
 sublicense
 Subregion
 subsequences
+substring
 Sucheng
 Sudhanwa
 summarization
@@ -1494,6 +1511,7 @@ Tianhong
 TileLang
 timestep
 timesteps
+TinyOpenFold
 ToC
 Todorov
 tok
@@ -2942,6 +2960,7 @@ skippable
 straggler
 Yao
 Fu
+Vijayalaxmi
 Zhen
 Huang
 XiaoBo
