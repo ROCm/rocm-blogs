@@ -1,0 +1,7 @@
+model,gpu,config,metric,stock,mono,speedup,source
+DeepSeek-V4.1-Flash,MI325X,TP4 c1 AgentX,P90 interactivity (tok/s/user),182.25,411.26,2.26,https://github.com/vllm-project/vllm/pull/60731
+Kimi-K3,MI355X,TP8 c1 8k input,TPOT (ms),5.47,3.40,1.61,https://github.com/vllm-project/vllm/pull/61435
+DeepSeek-V4.1-Flash,MI355X,TP8 c1,decode step (ms),8.59,5.36,1.60,https://github.com/vllm-project/vllm/pull/64101
+Muse Spark,MI355X,TP8 c1 AgentX,P90 interactivity (tok/s/user),263.1,413.8,1.57,https://github.com/vllm-project/vllm/pull/63440
+DeepSeek-V4.1-Flash,MI355X,TP2 c1 AgentX,P90 interactivity (tok/s/user),318.1,429.1,1.35,https://github.com/vllm-project/vllm/pull/60397
+MiniMax-M3,MI355X,TP4 c1 random 1k/1k,TPOT (ms),5.12,4.27,1.20,https://github.com/vllm-project/vllm/pull/62712
