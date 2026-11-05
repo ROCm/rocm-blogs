@@ -29,7 +29,7 @@ myst:
 
 ## Overview
 
-Coding agents, chat assistants, and long multi-turn sessions all care about how fast each next token arrives. They are usually served at low concurrency, often one to eight requests per GPU group, and that is where decode on today's large MoE models wastes the most time. A decode step launches thousands of short GPU kernels. Each kernel waits for the previous one to finish completely, and none of them has enough work to keep the GPU busy.
+Extremely high interactivity is critical for LLM applications with strict latency requirements. A coding agent can't call its next tool until it has generated its current action, so decode latency sits directly on the critical path of the task. Serving at this level of interactivity means trading aggregate throughput for per-user speed and running each replica at low concurrency, such as the one to eight concurrent requests measured in this post. That is exactly where decode on today's large MoE models wastes the most time. A decode step launches thousands of short GPU kernels. Each kernel waits for the previous one to finish completely, and none of them has enough work to keep the GPU busy.
 
 This post describes how we addressed this in vLLM with **MonoKernels**: persistent kernels written in [FlyDSL](https://github.com/ROCm/FlyDSL) that run most of a decoder layer, including its tensor-parallel all-reduces, in one or two launches. Since October 2026, mono decode has been merged into vLLM `main` for **DeepSeek-V4.1-Flash**, **DeepSeek-V4-Pro**, **MiniMax-M3**, **Kimi-K3**, and **Muse Spark**, on both MI355X and MI300X/MI325X. Ports for GLM-5.x, Qwen3.8, and MiniMax-M3.1 are in review. It is opt-in with a single flag, `--monokernel`. In the merged PRs it delivers:
 
@@ -40,7 +40,7 @@ with GSM8K, GPQA-Diamond, AIME25, and RULER NIAH accuracy within run-to-run nois
 
 ## The Small-Batch Decode Problem
 
-At high batch sizes, decode is a throughput problem, and a sequence of well-tuned GEMM, attention, and communication kernels works fine. At batch one to eight it becomes a latency problem, for three reasons.
+At high batch sizes, decode is a throughput problem, and a sequence of well-tuned GEMM, attention, and communication kernels works fine. At small batch sizes it becomes a latency problem, for three reasons.
 
 First, **there are a lot of kernels.** A MoE decoder layer runs norms, projections, RoPE, the KV-cache insert, attention, the combine, a TP all-reduce, the router, top-k, the shared expert, the routed experts, and a second all-reduce. Each of these is a separate launch, often more than one. CUDA graphs remove the CPU launch cost, but every kernel still has to ramp up and drain on the GPU.
 
