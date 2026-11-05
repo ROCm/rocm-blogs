@@ -29,12 +29,12 @@ myst:
 
 ## Overview
 
-Extremely high interactivity is critical for LLM applications with strict latency requirements. A coding agent can't call its next tool until it has generated its current action, so decode latency sits directly on the critical path of the task. Serving at this level of interactivity means trading aggregate throughput for per-user speed and running each replica at low concurrency, such as the one to eight concurrent requests measured in this post. That is exactly where decode on today's large MoE models wastes the most time. A decode step launches thousands of short GPU kernels. Each kernel waits for the previous one to finish completely, and none of them has enough work to keep the GPU busy.
+Extremely high interactivity is critical for LLM applications with strict latency requirements. A coding agent can't call its next tool until it has generated its current action, so decode latency sits directly on the critical path of the task. Serving at this level of interactivity means trading aggregate throughput for per-user speed and running each replica at low concurrency, such as the one to eight concurrent requests measured in this post. That is exactly where decode on today's large MoE models wastes the most time. A decode step can launch thousands of short GPU kernels. Each kernel waits for the previous one to finish completely, and none of them has enough work to keep the GPU busy.
 
-This post describes how we addressed this in vLLM with **MonoKernels**: persistent kernels written in [FlyDSL](https://github.com/ROCm/FlyDSL) that run most of a decoder layer, including its tensor-parallel all-reduces, in one or two launches. Since October 2026, mono decode has been merged into vLLM `main` for **DeepSeek-V4.1-Flash**, **DeepSeek-V4-Pro**, **MiniMax-M3**, **Kimi-K3**, and **Muse Spark**, on both MI355X and MI300X/MI325X. Ports for GLM-5.x, Qwen3.8, and MiniMax-M3.1 are in review. It is opt-in with a single flag, `--monokernel`. In the merged PRs it delivers:
+This post describes how we addressed this in vLLM with **MonoKernels**: persistent kernels written in [FlyDSL](https://github.com/ROCm/FlyDSL) that run most of a decoder layer, including its tensor-parallel all-reduces, in one or two launches. Since October 2026, mono decode has been merged into vLLM `main` for **DeepSeek-V4.1-Flash**, **DeepSeek-V4-Pro**, **MiniMax-M3**, **Kimi-K3**, and **Muse Spark** on MI355X, and for DeepSeek-V4.1-Flash also on MI325X. Ports for GLM-5.x, Qwen3.8, and MiniMax-M3.1 are in review. Mono decode is always opt-in. In the merged PRs it delivers:
 
 - up to **2.26× P90 interactivity** on the AgentX benchmark (DeepSeek-V4.1-Flash, MI325X), and
-- up to **1.61× lower time per output token** (Kimi-K3, MI355X),
+- up to **1.59× faster time per output token** (Kimi-K3, MI355X),
 
 with GSM8K, GPQA-Diamond, AIME25, and RULER NIAH accuracy within run-to-run noise.
 
@@ -42,13 +42,13 @@ with GSM8K, GPQA-Diamond, AIME25, and RULER NIAH accuracy within run-to-run nois
 
 At high batch sizes, decode is a throughput problem, and a sequence of well-tuned GEMM, attention, and communication kernels works fine. At small batch sizes it becomes a latency problem, for three reasons.
 
-First, **there are a lot of kernels.** A MoE decoder layer runs norms, projections, RoPE, the KV-cache insert, attention, the combine, a TP all-reduce, the router, top-k, the shared expert, the routed experts, and a second all-reduce. Each of these is a separate launch, often more than one. CUDA graphs remove the CPU launch cost, but every kernel still has to ramp up and drain on the GPU.
+First, **there are a lot of kernels.** A MoE decoder layer runs norms, projections, RoPE, the KV-cache insert, attention, the combine, a TP all-reduce, the router, top-k, the shared expert, the routed experts, and a second all-reduce. Most of these are separate launches, and some take several. CUDA graphs remove the CPU launch cost, but every kernel still has to ramp up and drain on the GPU.
 
 Second, **each stage waits for the whole previous stage.** A projection can't start until the entire previous kernel has finished, even if the rows it needs were ready long before.
 
-Third, **there isn't enough work to fill the GPU.** A few token rows can't occupy 256 compute units. The time goes into streaming weights from HBM, and between kernels the GPU sits idle.
+Third, **there isn't enough work to fill the GPU.** A few token rows can't occupy the hundreds of compute units on an Instinct GPU. The time goes into streaming weights from HBM, and between kernels the GPU sits idle.
 
-RFC [#60904](https://github.com/vllm-project/vllm/issues/60904), which set the vLLM standard for this work, measured the problem on GLM-5.2-MXFP4 (TP8, 8× MI350X). A graph-mode decode step in vLLM issues about **2,459 kernels**. With MonoKernels it issues about **210**: 75 MonoKernel launches plus the dense layers, input preparation, and the head.
+RFC [#60904](https://github.com/vllm-project/vllm/issues/60904), which set the vLLM standard for this work, measured the problem on GLM-5.2-MXFP4 (TP8, 8× MI350X), using the GLM-5.2 MonoKernel that is now in review ([#60889](https://github.com/vllm-project/vllm/pull/60889)). A graph-mode decode step in vLLM issues about **2,459 kernels**. With MonoKernels it issues about **210**: 75 MonoKernel launches plus the dense layers, input preparation, and the head.
 
 | GLM-5.2-MXFP4, TP8, MI350X | vLLM | MonoKernel | Speedup |
 |---|---|---|---|
@@ -66,7 +66,7 @@ A MonoKernel is an unusual kernel. It fuses a dozen stages with different shapes
 
 - **Kernels are Python, compiled just in time.** Kernels are written with `@flyc.kernel` / `@flyc.jit`, compiled on first use, and cached. vLLM builds the variant for each step width at warm-up (for example 6, 7, 28, or 48 token rows) and replays it under CUDA graphs.
 - **Control from the grid down to individual instructions.** A single kernel decides how work is split across blocks, waves, and threads, what layout and tiling each stage uses, when each load is issued, and when each result is published. Where it matters, the schedule can name specific MFMA and buffer instructions.
-- **Layout algebra instead of byte offsets.** Tiling, LDS swizzles, and MFMA operand layouts are written as layout operations with copy and MMA atoms. This is what made it possible to port DeepSeek-V4.1 mono decode from CDNA4 (MI355X) to CDNA3 (MI300X/MI325X): the stage code is the same, and only the tile sizes change for the smaller LDS and FNUZ FP8.
+- **Layout algebra instead of byte offsets.** Tiling, LDS swizzles, and MFMA operand layouts are written as layout operations with copy and MMA atoms. This helped DeepSeek-V4.1 mono decode move from CDNA4 (MI355X) to CDNA3 (MI300X/MI325X): the port keeps the same stage structure and adapts tile sizes to the smaller LDS and the MMA paths to CDNA3, which has FNUZ FP8 and no scaled MFMA.
 - **Native low precision.** Scaled MXFP4/MXFP8 MFMAs and E8M0 scales are built in. On MI355X, the kernels read vLLM's loaded weights in place, including AITER's shuffled MXFP4 expert layout, so no second copy is needed.
 - **Easy to ship and review.** The kernel source lives in the model's directory in the vLLM repo and is reviewed like any other model code. The only new runtime dependency is the `flydsl` wheel. Because compilation is deterministic, PRs can show with an ISA diff (`FLYDSL_DUMP_IR` + `COMPILE_ONLY`) that a change leaves unrelated kernels byte-identical, or compare register, spill, and LDS counts before and after.
 
@@ -78,7 +78,7 @@ The design is inspired by [TileRT](https://github.com/tile-ai/TileRT). A MonoKer
 2. **Load weights early.** Weights for later stages, such as the output projection or the experts' up/gate projections, are prefetched while earlier stages are still computing. This hides HBM traffic, the main cost at small batch, behind compute.
 3. **Pass on ready data.** Partial results go into **tagged mailboxes**. A downstream stage, or a reduction on a peer GPU, starts as soon as the tile it needs is tagged ready, without waiting for the whole stage to finish.
 
-DeepSeek-V4.1-Flash ([#60397](https://github.com/vllm-project/vllm/pull/60397)) was the first model in vLLM to use this approach. Each decoder layer that used to issue about 40 kernels now runs as two launches:
+DeepSeek-V4.1-Flash ([#60397](https://github.com/vllm-project/vllm/pull/60397)) was the first model to land this approach in vLLM. Each decoder layer that used to issue about 40 kernels now runs as two launches:
 
 | Launch | Stages |
 |---|---|
@@ -91,13 +91,13 @@ Running this inside a production serving engine required several more design dec
 
 - **Hand-offs are tagged with an epoch instead of being cleared every step.** No host-side hook is needed between steps, so the launches can be captured in FULL CUDA graphs. Each step width gets its own scratch buffer, and a stress test ran 100K graph replays per layer without a mismatch.
 - **Mono layers take and return the same tensors as vLLM's layers.** The two paths can run in the same forward pass. Prefill, mixed batches, wider steps, and PIECEWISE graphs fall back to the stock path layer by layer.
-- **Failures stop every rank together.** Every in-kernel wait has a timeout. If a rank stalls, it sets a sticky health word, and all TP ranks raise at the same step instead of hanging in a collective.
+- **Failures stop every rank together.** Because TP ranks wait on each other inside the kernel, a stalled rank could hang the whole server. The Kimi-K3 and MiniMax-M3 paths add fail-stop: every in-kernel wait has a timeout, a stalled rank sets a sticky health word, and all TP ranks raise at the same step instead of hanging in a collective. Bringing the same bounded waits to DeepSeek-V4.1 is planned.
 
 ## Bringing Mono Decode into vLLM
 
-A specialized decode can reach tens of thousands of lines, so after the first PR landed the community agreed on how such code should live in vLLM. RFC [#60904](https://github.com/vllm-project/vllm/issues/60904) set four rules, and every mono PR since then follows them:
+A specialized decode can reach tens of thousands of lines, so while the first mono PRs were in review the community agreed on how such code should live in vLLM. RFC [#60904](https://github.com/vllm-project/vllm/issues/60904) set four rules, and the merged mono PRs follow them:
 
-1. **Opt-in.** Mono decode is off by default and enabled with one switch, `--monokernel`.
+1. **Opt-in.** Mono decode is off by default and enabled with one switch: `--monokernel` for most models, and `--additional-config '{"decode_backend": "latency_specialized"}'` for Kimi-K3.
 2. **Refuse at startup.** A deployment the kernels don't support fails immediately with one error that lists every reason: wrong TP size, expert parallelism, LoRA, KV connectors, a partitioned GPU, an unsupported KV dtype, and so on. There is no silent fallback.
 3. **The model owns the code.** Kernels and their runtime live under `vllm/models/<model>/amd/`. The existing model files only call into that folder. For Kimi-K3 this took 26 added lines, with no changes to `vllm/v1/` or `vllm/config/`.
 4. **One `plan()` per step.** The plan picks mono or stock for each layer of the step. It depends only on metadata that every TP rank holds, so all ranks stay in lockstep.
@@ -123,7 +123,7 @@ The first measurement compares mono off and on, on the same node at TP2 on MI355
 | 4 | 288.0 → 332.4 (**1.15×**) | 33,043 → 35,885 (1.09×) | 1.27 → 1.26 |
 | 8 | 214.6 → 245.3 (**1.14×**) | 58,294 → 60,501 (1.04×) | 1.01 → 1.08 |
 
-Interactivity improves at every concurrency, and the gain narrows as concurrency rises. TTFT is essentially unchanged, because prefill doesn't use the mono path.
+Interactivity improves at every concurrency, and the gain narrows as concurrency rises. Prefill doesn't use the mono path, and P90 TTFT moves by at most 0.1 s in either direction across these single runs.
 
 The same PR added an FFN launch for the remaining 10 layers, which adds another 1.02–1.19×. At TP4, P90 interactivity at concurrency 1 / 2 / 4 / 8 is **1.66× / 1.56× / 1.64× / 1.38×** that of InferenceX's published run of the same recipe. [#61082](https://github.com/vllm-project/vllm/pull/61082) then runs all 40 layers as K1 + K2, which brings TP4 concurrency-1 P90 interactivity to **562.6 tok/s/user** (+3.9%).
 
@@ -162,16 +162,16 @@ Full-layer mono decode for M3 and M3.1, which also fuses attention and the spars
 
 ### Kimi-K3
 
-Kimi-K3 mixes KDA linear-attention layers with MLA layers. The first PR ([#60683](https://github.com/vllm-project/vllm/pull/60683)) runs the KDA layers as K1 + K2 and the MoE half of the MLA layers as K2. The follow-up ([#61435](https://github.com/vllm-project/vllm/pull/61435)) adds MLA prologue and epilogue kernels and, at DCP1, fuses a FlyDSL MLA decode-attention stage into K2. An MLA layer then takes two launches. TPOT at TP8 on MI355X, concurrency 1, seven speculative tokens:
+Kimi-K3 mixes KDA linear-attention layers with MLA layers. The first PR ([#60683](https://github.com/vllm-project/vllm/pull/60683)) runs the KDA layers as K1 + K2, and runs the MLA layers' output projection and MoE as K2. The follow-up ([#61435](https://github.com/vllm-project/vllm/pull/61435)) adds MLA prologue and epilogue kernels and, at DCP1, fuses a FlyDSL MLA decode-attention stage into K2, so an MLA layer takes two launches. TPOT P50 at TP8 on MI355X, concurrency 1, seven speculative tokens (the stock and #60683 columns are #60683's published numbers; #61435 is the mean of two seeds):
 
 | Input length | Stock | #60683 | #60683 + #61435 (DCP1) | Total |
 |---|---|---|---|---|
-| 8k | 5.47 ms | 4.35 ms | **3.40 ms** | **1.61×** |
-| 64k | 5.67 ms | 4.47 ms | **3.56 ms** | **1.59×** |
+| 8k | 5.47 ms | 4.35 ms | **3.44 ms** | **1.59×** |
+| 64k | 5.67 ms | 4.47 ms | **3.58 ms** | **1.58×** |
 
 ### Muse Spark
 
-Muse Spark Open MXFP4 ([#63440](https://github.com/vllm-project/vllm/pull/63440)) runs decoder layers 1–60 of every DSpark verify step as persistent launches on 8× MI355X with TP8 and expert parallelism. The comparison is on AgentX's agentic-coding traces (median input length 159k tokens), against the faster of the recipe's two stock configurations at each concurrency:
+Muse Spark Open MXFP4 ([#63440](https://github.com/vllm-project/vllm/pull/63440)) runs decoder layers 1–60 of every DSpark verify step as persistent launches on 8× MI355X with TP8 and expert parallelism. The comparison is on AgentX's agentic-coding traces (median input length 159k tokens). The baseline is the recipe's stock TP8 configuration at concurrency 1, its stock TEP8 configuration at concurrency 8, and the faster of the two in between:
 
 | Concurrency | Interactivity (tok/s/user) | Total tok/s/GPU |
 |---|---|---|
@@ -182,17 +182,17 @@ Muse Spark Open MXFP4 ([#63440](https://github.com/vllm-project/vllm/pull/63440)
 
 ### Accuracy
 
-A fused kernel quantizes, accumulates, and reduces in a different order from the stock path, so every mono PR ships with an accuracy study. The PRs follow the protocol of RFC [#59665](https://github.com/vllm-project/vllm/issues/59665): the full GSM8K set, GPQA-Diamond, AIME25, and RULER NIAH at 32K–256K context or longer, with real speculative acceptance, compared paired by question. The differences stay within noise:
+A fused kernel quantizes, accumulates, and reduces in a different order from the stock path, so every mono PR reports accuracy with mono on and off. The DeepSeek and Muse Spark PRs follow the protocol of RFC [#59665](https://github.com/vllm-project/vllm/issues/59665): the full GSM8K set, GPQA-Diamond, AIME25, and RULER NIAH at 32K–256K context or longer, with real speculative acceptance, compared paired by question. The differences stay within noise:
 
 - **DeepSeek-V4.1-Flash, TP2:** GPQA-Diamond 85.3 → 85.1 (Δ −0.2 ± 0.6), AIME25 99.4 → 98.3 (Δ −1.0 ± 0.7), and RULER NIAH 40/40 in every cell.
 - **DeepSeek-V4.1-Flash, MI325X:** GSM8K 0.9247 → 0.9270 (p = 0.49).
 - **Muse Spark:** GPQA-Diamond 88.5 → 88.7, AIME25 98.3 → 98.6.
 
-Below the end-to-end evaluations, every layer is tested against vLLM's own op chain and an exact fp32 reference: per-token cosine similarity ≥ 0.999 and bit-exact results across hundreds of CUDA-graph replays.
+Below the end-to-end evaluations, the mono layers are tested against vLLM's own op chain and an exact fp32 reference, for example per-token cosine similarity ≥ 0.999 for DeepSeek-V4.1-Flash and bit-exact results across 300 CUDA-graph replays.
 
 ## Try It
 
-Mono decode is opt-in, so add `--monokernel` to a supported recipe. For DeepSeek-V4.1-Flash on MI355X:
+Mono decode is opt-in, so add `--monokernel` to a supported recipe. For example, the DeepSeek-V4.1-Flash setup used in the PRs on MI355X:
 
 ```bash
 VLLM_ROCM_USE_AITER=1 \
@@ -210,7 +210,7 @@ If the deployment isn't supported, vLLM refuses to start and lists every reason.
 
 ## FlyDSL Beyond Mono Decode
 
-MonoKernels are the most visible use of FlyDSL in vLLM, but they aren't the only one. Many standalone FlyDSL kernels reach vLLM's ROCm path, mostly through AITER:
+MonoKernels are the most visible use of FlyDSL in vLLM, but they aren't the only one. Many standalone FlyDSL kernels reach vLLM's ROCm path, most of them through AITER:
 
 | Area | PRs |
 |---|---|
@@ -230,7 +230,7 @@ Mono decode is a latency optimization, and its benefits have limits:
 - **Gains shrink with batch size.** On DeepSeek-V4.1-Flash TP2, P90 interactivity improves 1.35× at concurrency 1 but 1.14× at concurrency 8. Its FFN launch at TP2, concurrency 8 is at parity (345 → 342 µs per layer), and MiniMax-M3 reaches parity at 16 rows. At TP8, mono decode is a concurrency-1 configuration; by concurrency 4, two TP4 replicas deliver more throughput.
 - **Steps are limited in width.** Each kernel is built for specific step widths, and speculative tokens and graph padding count toward the limit. DeepSeek-V4.1 supports up to 48 rows on MI355X and 42 on MI325X, where LDS is 64 KB instead of 160 KB. MiniMax-M3 and Kimi-K3 support up to 16. Wider steps run on the stock path.
 - **Fusion costs registers and LDS.** Fusing more stages can lower occupancy, so each schedule is tuned for its architecture and TP size.
-- **Weight copies on gfx942.** MI300X and MI325X have no scaled FP4/FP8 MFMA, so the kernels keep their own copy of the weights. For DeepSeek-V4.1 this is 170 GiB per rank instead of 99 GiB, which fits on MI325X but not on MI300X.
+- **Weight copies on gfx942.** MI300X and MI325X have no scaled FP4/FP8 MFMA, so the kernels keep their own copy of the weights. For DeepSeek-V4.1 at TP4 this is 170 GiB per rank instead of 99 GiB. That still leaves a large KV cache on MI325X, but little room on MI300X.
 - **Each model needs its own work.** Every model needs its own schedule and ongoing validation. The RFC, the shared runtime layer, and the authoring guide are meant to keep that cost down.
 
 ## Building Mono Decode for a New Model
@@ -247,7 +247,7 @@ The authoring guide ([#62256](https://github.com/vllm-project/vllm/pull/62256)) 
 
 Small-batch decode spends most of its time between kernels: launching them, waiting for whole stages to finish, and streaming weights while the GPU idles. FlyDSL MonoKernels remove most of that time by running a decoder layer as one or two persistent launches that reuse thread blocks across stages, prefetch weights, pass ready data forward through tagged mailboxes, and reduce across GPUs inside the kernel. FlyDSL makes this practical: kernels are written in Python, specialized and compiled just in time, controlled down to individual instructions, and portable across CDNA3 and CDNA4 through its layout algebra.
 
-In vLLM, mono decode is now merged for five model families and follows a common, opt-in standard. It improves concurrency-1 interactivity or time per output token by 1.20× to 2.26×, with accuracy held within noise. We invite the vLLM community to try `--monokernel` on AMD Instinct GPUs, review the in-flight ports, and use the authoring guide to bring mono decode to new models.
+In vLLM, mono decode is now merged for five model families and follows a common, opt-in standard. It improves concurrency-1 interactivity or time per output token by 1.20× to 2.26×, with accuracy within noise. We invite the vLLM community to try `--monokernel` on AMD Instinct GPUs, review the in-flight ports, and use the authoring guide to bring mono decode to new models.
 
 ## References
 
