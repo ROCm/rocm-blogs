@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Configure xDiT on AMD RDNA 4</title>
+  <desc id="desc">A four-part decision guide groups xDiT options by weight placement, GPU parallelism, transformer execution, and VAE decode.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#050505"/><stop offset=".8" stop-color="#050505"/><stop offset="1" stop-color="#071827"/></linearGradient>
+    <style>text{font-family:"Open Sans",Arial,sans-serif;letter-spacing:0}.title,.head,.section{font-family:Klavika,"Open Sans",Arial,sans-serif;font-weight:700;fill:#fff}.title{font-size:43px}.head{font-size:27px}.section{font-size:18px}.eyebrow{font:700 14px Consolas,monospace;fill:#2899ff}.copy{font-size:16px;fill:#c8d1d7}.small{font-size:14px;fill:#c8d1d7}.code{font:700 11px Consolas,monospace;fill:#fff}.rule{stroke:#44494e}.column{fill:#121212;stroke:#4a4f54;stroke-width:1.5}.header{fill:#191919}.chip{fill:#292929}</style>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/><path d="M1370 900 1600 670V900Z" fill="#2899ff" opacity=".07"/>
+  <text x="64" y="64" class="eyebrow">XDIT ON AMD RDNA 4</text><text x="64" y="118" class="title">Configure xDiT for your workload</text><text x="64" y="154" class="copy">Choose the path that resolves the bottleneck you measured.</text><line x1="64" y1="180" x2="1536" y2="180" class="rule"/>
+  <g transform="translate(64 220)">
+    <g>
+      <rect width="340" height="580" class="column"/><rect width="340" height="96" class="header"/><rect width="8" height="580" fill="#2899ff"/>
+      <text x="28" y="50" class="eyebrow">01 / WEIGHT PLACEMENT</text><text x="28" y="94" class="head">Will it fit?</text>
+      <text x="28" y="132" class="section">1. Reduce weight memory</text><text x="28" y="157" class="small">Use FP8 before testing placement.</text>
+      <rect x="20" y="174" width="300" height="52" class="chip"/><text x="28" y="195" class="code">--gemm_quantization fp8</text><text x="28" y="215" class="code">--use_fp8_text_encoder</text>
+      <line x1="28" y1="246" x2="312" y2="246" class="rule"/>
+      <text x="28" y="278" class="section">2. If it fits on every GPU</text><text x="28" y="302" class="small">Replicate it; load each block once.</text>
+      <rect x="20" y="316" width="300" height="28" class="chip"/><text x="28" y="336" class="code">--memory_efficient_replicated_load</text>
+      <line x1="28" y1="365" x2="312" y2="365" class="rule"/>
+      <text x="28" y="397" class="section">3. If it does not fit</text><text x="28" y="421" class="small">Shard only as far as required.</text>
+      <rect x="20" y="435" width="300" height="52" class="chip"/><text x="28" y="456" class="code">--fully_shard_degree D</text><text x="28" y="476" class="code">--memory_efficient_sharding</text>
+      <text x="28" y="528" class="small">Use CPU offload only when one GPU</text><text x="28" y="548" class="small">cannot hold the model.</text>
+    </g>
+    <g transform="translate(380)">
+      <rect width="340" height="580" class="column"/><rect width="340" height="96" class="header"/><rect width="8" height="580" fill="#2899ff"/>
+      <text x="28" y="50" class="eyebrow">02 / GPU PARALLELISM</text><text x="28" y="74" class="head">How should GPUs</text><text x="28" y="94" class="head">share work?</text>
+      <text x="28" y="132" class="section">1. Split CFG branches first</text><text x="28" y="157" class="small">CFG tends to communicate least.</text>
+      <rect x="20" y="174" width="300" height="28" class="chip"/><text x="28" y="194" class="code">--use_cfg_parallel</text>
+      <line x1="28" y1="224" x2="312" y2="224" class="rule"/>
+      <text x="28" y="256" class="section">2. Pipeline supported models</text><text x="28" y="280" class="small">Place DiT blocks in balanced stages.</text>
+      <rect x="20" y="294" width="300" height="52" class="chip"/><text x="28" y="315" class="code">--pipefusion_parallel_degree P</text><text x="28" y="335" class="code">--num_pipeline_patch M</text>
+      <line x1="28" y1="368" x2="312" y2="368" class="rule"/>
+      <text x="28" y="400" class="section">3. Split attention tokens</text><text x="28" y="424" class="small">Use Ulysses for the remaining ranks.</text>
+      <rect x="20" y="438" width="300" height="52" class="chip"/><text x="28" y="459" class="code">--ulysses_degree U</text><text x="28" y="479" class="code">--use_fp8_comms</text>
+      <text x="28" y="528" class="small">Ulysses adds repeated all-to-all</text><text x="28" y="548" class="small">communication over PCIe.</text>
+    </g>
+    <g transform="translate(760)">
+      <rect width="340" height="580" class="column"/><rect width="340" height="96" class="header"/><rect width="8" height="580" fill="#2899ff"/>
+      <text x="28" y="50" class="eyebrow">03 / TRANSFORMER EXECUTION</text><text x="28" y="94" class="head">Where is time spent?</text>
+      <text x="28" y="132" class="section">Accelerate attention</text><text x="28" y="157" class="small">Use the backend tuned for the model shape.</text>
+      <rect x="20" y="174" width="300" height="28" class="chip"/><text x="28" y="194" class="code">--attention_backend BACKEND</text>
+      <text x="28" y="232" class="small">Compile stable execution regions.</text><rect x="20" y="246" width="300" height="28" class="chip"/><text x="28" y="266" class="code">--use_torch_compile</text>
+      <line x1="28" y1="298" x2="312" y2="298" class="rule"/>
+      <text x="28" y="330" class="section">Reuse long denoising schedules</text><text x="28" y="354" class="small">Cache only when output quality allows it.</text>
+      <rect x="20" y="370" width="300" height="52" class="chip"/><text x="28" y="391" class="code">--cache_method dbcache</text><text x="28" y="411" class="code">--cache_config ...</text>
+      <text x="28" y="461" class="small">Raise the threshold for more reuse,</text><text x="28" y="481" class="small">then compare identical prompts and seeds.</text>
+      <text x="28" y="528" class="small">Distilled models have fewer steps,</text><text x="28" y="548" class="small">so they offer less work to reuse.</text>
+    </g>
+    <g transform="translate(1140)">
+      <rect width="340" height="580" class="column"/><rect width="340" height="96" class="header"/><rect width="8" height="580" fill="#2899ff"/>
+      <text x="28" y="50" class="eyebrow">04 / VAE DECODE</text><text x="28" y="94" class="head">Can the decoder keep up?</text>
+      <text x="28" y="132" class="section">Control decoder memory</text><text x="28" y="157" class="small">Tile a large image into decode windows.</text>
+      <rect x="20" y="174" width="300" height="28" class="chip"/><text x="28" y="194" class="code">--enable_tiling</text>
+      <line x1="28" y1="224" x2="312" y2="224" class="rule"/>
+      <text x="28" y="256" class="section">Distribute completed tiles</text><text x="28" y="280" class="small">Use all GPUs when decode is the limit.</text>
+      <rect x="20" y="294" width="300" height="28" class="chip"/><text x="28" y="314" class="code">--use_parallel_vae</text>
+      <line x1="28" y1="344" x2="312" y2="344" class="rule"/>
+      <text x="28" y="376" class="section">Set tile geometry</text><text x="28" y="400" class="small">Measure size and overlap at the</text><text x="28" y="418" class="small">shipped resolution.</text>
+      <rect x="20" y="434" width="300" height="92" class="chip"/><text x="28" y="455" class="code">--vae_tile_size_height H</text><text x="28" y="475" class="code">--vae_tile_size_width W</text><text x="28" y="495" class="code">--vae_tile_overlap_height H</text><text x="28" y="515" class="code">--vae_tile_overlap_width W</text>
+      <text x="28" y="548" class="small">Full-width strips reduce boundaries</text><text x="28" y="568" class="small">to a single axis.</text>
+    </g>
+  </g>
+</svg>

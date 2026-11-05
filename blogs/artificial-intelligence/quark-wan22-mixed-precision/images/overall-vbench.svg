@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="470" viewBox="0 0 900 470" role="img" aria-labelledby="title desc">
+  <title id="title">Overall VBench comparison across precision configurations</title>
+  <desc id="desc">Bar chart comparing overall VBench scores for BF16, full W4A8, mixed W4A8 and W4A4, and full W4A4 configurations.</desc>
+  <rect width="900" height="470" fill="#ffffff"/>
+  <text x="450" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#1f2937">Overall VBench by Quantization Configuration</text>
+
+  <g font-family="Arial, sans-serif" font-size="12" fill="#374151">
+    <line x1="90" y1="350" x2="830" y2="350" stroke="#d1d5db"/>
+    <line x1="90" y1="275" x2="830" y2="275" stroke="#e5e7eb"/>
+    <line x1="90" y1="200" x2="830" y2="200" stroke="#e5e7eb"/>
+    <line x1="90" y1="125" x2="830" y2="125" stroke="#e5e7eb"/>
+    <line x1="90" y1="50" x2="830" y2="50" stroke="#e5e7eb"/>
+
+    <text x="80" y="354" text-anchor="end">0.850</text>
+    <text x="80" y="279" text-anchor="end">0.855</text>
+    <text x="80" y="204" text-anchor="end">0.860</text>
+    <text x="80" y="129" text-anchor="end">0.865</text>
+    <text x="80" y="54" text-anchor="end">0.870</text>
+  </g>
+
+  <line x1="90" y1="50" x2="90" y2="350" stroke="#6b7280"/>
+  <line x1="90" y1="350" x2="830" y2="350" stroke="#6b7280"/>
+  <text x="22" y="200" transform="rotate(-90 22 200)" text-anchor="middle" font-family="Arial, sans-serif" font-size="13" fill="#374151">Overall VBench score</text>
+
+  <g>
+    <rect x="116" y="78.5" width="56" height="271.5" fill="#111827"/>
+    <text x="144" y="72" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#111827">0.8681</text>
+    <text x="144" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="144" dy="0">BF16</tspan>
+      <tspan x="144" dy="13">reference</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="236" y="113" width="56" height="237" fill="#2563eb"/>
+    <text x="264" y="107" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.8658</text>
+    <text x="264" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="264" dy="0">Full</tspan>
+      <tspan x="264" dy="13">W4A8</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="356" y="128" width="56" height="222" fill="#f97316"/>
+    <text x="384" y="122" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#f97316">0.8648</text>
+    <text x="384" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="384" dy="0">W4A8-W4A4</tspan>
+      <tspan x="384" dy="13">SVDQuant</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="476" y="137" width="56" height="213" fill="#fb923c"/>
+    <text x="504" y="131" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#ea580c">0.8642</text>
+    <text x="504" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="504" dy="0">W4A8-W4A4</tspan>
+      <tspan x="504" dy="13">Rotation</tspan>
+      <tspan x="504" dy="13">+ SmoothQuant</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="596" y="176" width="56" height="174" fill="#60a5fa"/>
+    <text x="624" y="170" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#2563eb">0.8616</text>
+    <text x="624" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="624" dy="0">W4A8-W4A4</tspan>
+      <tspan x="624" dy="13">RTN</tspan>
+    </text>
+  </g>
+
+  <g>
+    <rect x="716" y="320" width="56" height="30" fill="#9ca3af"/>
+    <text x="744" y="314" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#6b7280">0.8520</text>
+    <text x="744" y="370" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" fill="#374151">
+      <tspan x="744" dy="0">Full</tspan>
+      <tspan x="744" dy="13">W4A4</tspan>
+    </text>
+  </g>
+
+  <text x="460" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#6b7280">Scores are from 25 held-out prompts evaluated with VBench overall.</text>
+</svg>

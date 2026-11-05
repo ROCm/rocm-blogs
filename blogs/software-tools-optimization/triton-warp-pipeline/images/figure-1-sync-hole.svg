@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="610" viewBox="0 0 960 610" role="img" aria-labelledby="title desc">
+<title id="title">Same work, different overlap</title><desc id="desc">Two schedules on the same time scale. In phase, Group A waits at s_barrier after its MFMA while Group B uses the shared matrix unit. One stage apart, memory preparation overlaps MFMA and matrix activity is continuous in this idealized steady state.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="960" height="610" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="30" y="38" font-size="24" fill="#0f172a" font-weight="700" text-anchor="start">Same work, different overlap</text>
+<text x="30" y="67" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Idealized steady state · equal memory and MFMA durations</text>
+<text x="30" y="105" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">In phase</text>
+<text x="30" y="155" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="211" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="127" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 180 127 H 304 M 180 171 H 304 M 180 127 V 171" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="242.0" y="155" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="304" y="127" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 304 127 H 428 M 304 171 H 428 M 428 127 V 171" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="366.0" y="155" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="428" y="127" width="124" height="44" fill="#ede9fe" stroke="none" stroke-width="1.25"/>
+<path d="M 428 127 H 552 M 428 171 H 552 M 428 127 V 171" fill="none" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="490.0" y="145" font-size="16" fill="#5b21b6" font-weight="700" text-anchor="middle">s_barrier</text>
+<text x="490.0" y="162" font-size="14" fill="#5b21b6" font-weight="400" text-anchor="middle">wait for B</text>
+<rect x="552" y="127" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 552 127 H 676 M 552 171 H 676" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="614.0" y="155" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="676" y="127" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 676 127 H 800 M 676 171 H 800 M 800 127 V 171" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="738.0" y="155" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="800" y="127" width="124" height="44" fill="#ede9fe" stroke="none" stroke-width="1.25"/>
+<path d="M 800 127 H 924 M 800 171 H 924 M 800 127 V 171" fill="none" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="862.0" y="145" font-size="16" fill="#5b21b6" font-weight="700" text-anchor="middle">s_barrier</text>
+<text x="862.0" y="162" font-size="14" fill="#5b21b6" font-weight="400" text-anchor="middle">wait for B</text>
+<rect x="180" y="183" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 180 183 H 304 M 180 227 H 304 M 180 183 V 227" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="242.0" y="211" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="304" y="183" width="124" height="44" fill="#f1f5f9" stroke="none" stroke-width="1.25"/>
+<path d="M 304 183 H 428 M 304 227 H 428 M 428 183 V 227" fill="none" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="366.0" y="201" font-size="15" fill="#475569" font-weight="700" text-anchor="middle">MFMA ready</text>
+<text x="366.0" y="218" font-size="14" fill="#475569" font-weight="400" text-anchor="middle">unit busy</text>
+<rect x="428" y="183" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 428 183 H 552 M 428 227 H 552 M 428 183 V 227" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="490.0" y="211" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="552" y="183" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 552 183 H 676 M 552 227 H 676" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="614.0" y="211" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="676" y="183" width="124" height="44" fill="#f1f5f9" stroke="none" stroke-width="1.25"/>
+<path d="M 676 183 H 800 M 676 227 H 800 M 800 183 V 227" fill="none" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="738.0" y="201" font-size="15" fill="#475569" font-weight="700" text-anchor="middle">MFMA ready</text>
+<text x="738.0" y="218" font-size="14" fill="#475569" font-weight="400" text-anchor="middle">unit busy</text>
+<rect x="800" y="183" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 800 183 H 924 M 800 227 H 924 M 800 183 V 227" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="862.0" y="211" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<line x1="304" y1="118" x2="304" y2="236" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="552" y1="118" x2="552" y2="236" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="676" y1="118" x2="676" y2="236" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="924" y1="118" x2="924" y2="236" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<text x="30" y="266" font-size="17" fill="#334155" font-weight="400" text-anchor="start">Matrix unit</text>
+<rect x="180" y="248" width="124" height="25" fill="#e2e8f0"/>
+<text x="242.0" y="266" font-size="14" fill="#475569" font-weight="400" text-anchor="middle">idle</text>
+<rect x="304" y="248" width="248" height="25" fill="#fbbf24"/>
+<text x="428.0" y="266" font-size="14" fill="#713f12" font-weight="700" text-anchor="middle">MFMA active</text>
+<rect x="552" y="248" width="124" height="25" fill="#e2e8f0"/>
+<text x="614.0" y="266" font-size="14" fill="#475569" font-weight="400" text-anchor="middle">idle</text>
+<rect x="676" y="248" width="248" height="25" fill="#fbbf24"/>
+<text x="800.0" y="266" font-size="14" fill="#713f12" font-weight="700" text-anchor="middle">MFMA active</text>
+<text x="30" y="351" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">One stage apart</text>
+<text x="30" y="401" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="457" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="373" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 180 373 H 304 M 180 417 H 304 M 180 373 V 417" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="242.0" y="401" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="304" y="373" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 304 373 H 428 M 304 417 H 428" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="366.0" y="401" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="428" y="373" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 428 373 H 552 M 428 417 H 552" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="490.0" y="401" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="552" y="373" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 552 373 H 676 M 552 417 H 676" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="614.0" y="401" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="676" y="373" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 676 373 H 800 M 676 417 H 800" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="738.0" y="401" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="800" y="373" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 800 373 H 924 M 800 417 H 924" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="862.0" y="401" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="180" y="429" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 180 429 H 304 M 180 473 H 304 M 180 429 V 473" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="242.0" y="457" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="304" y="429" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 304 429 H 428 M 304 473 H 428" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="366.0" y="457" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="428" y="429" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 428 429 H 552 M 428 473 H 552" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="490.0" y="457" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="552" y="429" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 552 429 H 676 M 552 473 H 676" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="614.0" y="457" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<rect x="676" y="429" width="124" height="44" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 676 429 H 800 M 676 473 H 800" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="738.0" y="457" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory</text>
+<rect x="800" y="429" width="124" height="44" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 800 429 H 924 M 800 473 H 924" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="862.0" y="457" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">MFMA</text>
+<line x1="304" y1="364" x2="304" y2="482" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="428" y1="364" x2="428" y2="482" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="552" y1="364" x2="552" y2="482" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="676" y1="364" x2="676" y2="482" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="800" y1="364" x2="800" y2="482" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<line x1="924" y1="364" x2="924" y2="482" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<text x="30" y="512" font-size="17" fill="#334155" font-weight="400" text-anchor="start">Matrix unit</text>
+<rect x="180" y="494" width="744" height="25" fill="#fbbf24"/>
+<text x="552.0" y="512" font-size="14" fill="#713f12" font-weight="700" text-anchor="middle">MFMA active</text>
+<line x1="30" y1="308" x2="924" y2="308" stroke="#cbd5e1" stroke-width="1"/>
+<line x1="180" y1="549" x2="924" y2="549" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<text x="924" y="571" font-size="15" fill="#475569" font-weight="400" text-anchor="end">time</text>
+<line x1="37" y1="566" x2="37" y2="590" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5 5"/>
+<text x="53" y="584" font-size="16" fill="#475569" font-weight="400" text-anchor="start">Execution barrier</text>
+</g></svg>

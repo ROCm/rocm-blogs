@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="972" height="975" viewBox="0 0 972 975" role="img">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#050505"/><stop offset="1" stop-color="#081622"/></linearGradient>
+    <style>
+      text{font-family:"Open Sans",Arial,sans-serif;fill:#fff}.klav{font-family:Klavika,"Open Sans",Arial,sans-serif;font-weight:700}
+      .eyebrow{font:700 13px Consolas,monospace;fill:#2899ff;letter-spacing:.8px}.title{font-size:32px}.sub{font-size:15px;fill:#c9d1d6}
+      .model{font-size:14px;font-weight:700}.desc{font-size:11.5px;fill:#b9c4ca}.base{font-size:14px}
+      .legend{font-size:13px;font-weight:600}.guide{font-size:12px;font-weight:600;fill:#b9c4ca}
+      .val{font-size:12px}.speed{font-size:12px}.par{font-size:10.5px}.note{font-size:12px;fill:#b9c4ca}.caveat{font-size:13px;fill:#b9c4ca}
+      .panel{fill:#111416;stroke:#516069;stroke-width:1.5}
+    </style>
+  </defs>
+  <rect width="972" height="975" fill="url(#bg)"/>
+  <path d="M812 0h160v146z" fill="#2899ff" opacity=".07"/>
+<text x="40.0" y="44.0" class="eyebrow" text-anchor="start">MULTI-GPU DIFFUSION INFERENCE</text>
+<text x="40.0" y="84.0" class="title klav" text-anchor="start">Pick the GPU count your workload benefits from</text>
+<text x="40.0" y="112.0" class="sub" text-anchor="start">End-to-end latency for one image or video, with the model already loaded.</text>
+<text x="40.0" y="138.0" class="caveat" text-anchor="start">Results depend on CPU performance, host memory bandwidth, PCIe topology, NUMA placement and driver versions,</text>
+<text x="40.0" y="157.0" class="caveat" text-anchor="start">so expect variation between systems, most of all for multi-GPU runs and runs that offload to system memory.</text>
+<line x1="40" y1="178" x2="932" y2="178" stroke="#46545c"/>
+<rect x="40" y="198" width="892" height="624" rx="7" class="panel"/>
+<text x="418.0" y="226.0" class="legend" text-anchor="end">1 GPU</text>
+<rect x="432" y="215" width="14" height="11" rx="2" fill="#168ce8"/>
+<text x="452.0" y="226.0" class="legend" text-anchor="start" style="fill:#168ce8">2 GPUs</text>
+<rect x="528" y="215" width="14" height="11" rx="2" fill="#76bdff"/>
+<text x="548.0" y="226.0" class="legend" text-anchor="start" style="fill:#76bdff">4 GPUs</text>
+<rect x="41" y="246" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="41" y="326" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="41" y="406" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="41" y="486" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="41" y="566" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="41" y="646" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="41" y="726" width="890" height="40" fill="#ffffff" opacity=".035"/>
+<rect x="432" y="250.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="290.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="330.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="370.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="410.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="450.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="490.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="530.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="570.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="610.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="650.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="690.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="730.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<rect x="432" y="770.0" width="484" height="32" rx="3" fill="#20282d" stroke="#3a464d"/>
+<line x1="795.0" y1="242" x2="795.0" y2="806" stroke="#71818a" stroke-dasharray="4 4"/>
+<text x="795.0" y="219.0" class="guide" text-anchor="middle">¼ the time</text>
+<text x="795.0" y="234.0" class="guide" text-anchor="middle">of 1 GPU</text>
+<line x1="674.0" y1="242" x2="674.0" y2="806" stroke="#71818a" stroke-dasharray="4 4"/>
+<text x="674.0" y="219.0" class="guide" text-anchor="middle">½ the time</text>
+<text x="674.0" y="234.0" class="guide" text-anchor="middle">of 1 GPU</text>
+<text x="56.0" y="263.0" class="model" text-anchor="start">FLUX.1-dev</text>
+<text x="56.0" y="279.0" class="desc" text-anchor="start">Text to image · 1024×1024 · 25 steps</text>
+<text x="418.0" y="271.0" class="base" text-anchor="end">12.3 s</text>
+<rect x="639.1" y="252.0" width="276.9" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="262.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="262.5" class="val" text-anchor="end" style="fill:#168ce8">7.1 s</text>
+<text x="576.0" y="262.5" class="speed" text-anchor="end" style="fill:#168ce8">1.7× faster</text>
+<rect x="733.9" y="267.0" width="182.1" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="277.0" class="par" text-anchor="end" style="fill:#081622">Ulysses</text>
+<text x="492.0" y="277.5" class="val" text-anchor="end" style="fill:#76bdff">4.6 s</text>
+<text x="576.0" y="277.5" class="speed" text-anchor="end" style="fill:#76bdff">2.7× faster</text>
+<text x="56.0" y="303.0" class="model" text-anchor="start">FLUX.1-dev</text>
+<text x="56.0" y="319.0" class="desc" text-anchor="start">Text to image · 2048×2048 · 25 steps</text>
+<text x="418.0" y="311.0" class="base" text-anchor="end">75.7 s</text>
+<rect x="651.0" y="292.0" width="265.0" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="302.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="302.5" class="val" text-anchor="end" style="fill:#168ce8">41.4 s</text>
+<text x="576.0" y="302.5" class="speed" text-anchor="end" style="fill:#168ce8">1.8× faster</text>
+<rect x="774.1" y="307.0" width="141.9" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="317.0" class="par" text-anchor="end" style="fill:#081622">Ulysses</text>
+<text x="492.0" y="317.5" class="val" text-anchor="end" style="fill:#76bdff">22.2 s</text>
+<text x="576.0" y="317.5" class="speed" text-anchor="end" style="fill:#76bdff">3.4× faster</text>
+<text x="56.0" y="343.0" class="model" text-anchor="start">FLUX.1-Kontext-dev</text>
+<text x="56.0" y="359.0" class="desc" text-anchor="start">Edit an image · 1024×1024 · 30 steps</text>
+<text x="418.0" y="351.0" class="base" text-anchor="end">25.7 s</text>
+<rect x="610.5" y="332.0" width="305.5" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="342.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="342.5" class="val" text-anchor="end" style="fill:#168ce8">16.2 s</text>
+<text x="576.0" y="342.5" class="speed" text-anchor="end" style="fill:#168ce8">1.6× faster</text>
+<rect x="699.8" y="347.0" width="216.2" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="357.0" class="par" text-anchor="end" style="fill:#081622">Ulysses</text>
+<text x="492.0" y="357.5" class="val" text-anchor="end" style="fill:#76bdff">11.5 s</text>
+<text x="576.0" y="357.5" class="speed" text-anchor="end" style="fill:#76bdff">2.2× faster</text>
+<text x="56.0" y="383.0" class="model" text-anchor="start">FLUX.2-dev</text>
+<text x="56.0" y="399.0" class="desc" text-anchor="start">Text to image · 1024×1024 · 25 steps</text>
+<text x="418.0" y="391.0" class="base" text-anchor="end">60.0 s</text>
+<text x="422.0" y="391.0" class="base" text-anchor="start">*</text>
+<rect x="680.8" y="372.0" width="235.2" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="382.0" class="par" text-anchor="end" style="fill:#ffffff">PipeFusion</text>
+<text x="492.0" y="382.5" class="val" text-anchor="end" style="fill:#168ce8">29.2 s</text>
+<text x="576.0" y="382.5" class="speed" text-anchor="end" style="fill:#168ce8">2.1× faster</text>
+<rect x="742.4" y="387.0" width="173.6" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="397.0" class="par" text-anchor="end" style="fill:#081622">PipeFusion</text>
+<text x="492.0" y="397.5" class="val" text-anchor="end" style="fill:#76bdff">21.5 s</text>
+<text x="576.0" y="397.5" class="speed" text-anchor="end" style="fill:#76bdff">2.8× faster</text>
+<text x="56.0" y="423.0" class="model" text-anchor="start">FLUX.2-dev</text>
+<text x="56.0" y="439.0" class="desc" text-anchor="start">Edit an image · 1024×1024 · 25 steps</text>
+<text x="418.0" y="431.0" class="base" text-anchor="end">83.4 s</text>
+<text x="422.0" y="431.0" class="base" text-anchor="start">*</text>
+<rect x="651.1" y="412.0" width="264.9" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="422.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="422.5" class="val" text-anchor="end" style="fill:#168ce8">45.6 s</text>
+<text x="576.0" y="422.5" class="speed" text-anchor="end" style="fill:#168ce8">1.8× faster</text>
+<rect x="709.0" y="427.0" width="207.0" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="437.0" class="par" text-anchor="end" style="fill:#081622">PipeFusion</text>
+<text x="492.0" y="437.5" class="val" text-anchor="end" style="fill:#76bdff">35.7 s</text>
+<text x="576.0" y="437.5" class="speed" text-anchor="end" style="fill:#76bdff">2.3× faster</text>
+<text x="56.0" y="463.0" class="model" text-anchor="start">FLUX.2-dev</text>
+<text x="56.0" y="479.0" class="desc" text-anchor="start">Edit with 2 input images · 1024×1024 · 25 steps</text>
+<text x="418.0" y="471.0" class="base" text-anchor="end">94.0 s</text>
+<text x="422.0" y="471.0" class="base" text-anchor="start">*</text>
+<rect x="613.0" y="452.0" width="303.0" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="462.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="462.5" class="val" text-anchor="end" style="fill:#168ce8">58.8 s</text>
+<text x="576.0" y="462.5" class="speed" text-anchor="end" style="fill:#168ce8">1.6× faster</text>
+<rect x="677.6" y="467.0" width="238.4" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="477.0" class="par" text-anchor="end" style="fill:#081622">PipeFusion</text>
+<text x="492.0" y="477.5" class="val" text-anchor="end" style="fill:#76bdff">46.3 s</text>
+<text x="576.0" y="477.5" class="speed" text-anchor="end" style="fill:#76bdff">2.0× faster</text>
+<text x="56.0" y="503.0" class="model" text-anchor="start">FLUX.2-klein-4B</text>
+<text x="56.0" y="519.0" class="desc" text-anchor="start">Text to image · 2048×2048 · 4 steps</text>
+<text x="418.0" y="511.0" class="base" text-anchor="end">7.7 s</text>
+<rect x="659.4" y="492.0" width="256.6" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="502.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="502.5" class="val" text-anchor="end" style="fill:#168ce8">4.1 s</text>
+<text x="576.0" y="502.5" class="speed" text-anchor="end" style="fill:#168ce8">1.9× faster</text>
+<rect x="764.0" y="507.0" width="152.0" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="517.0" class="par" text-anchor="end" style="fill:#081622">Ulysses</text>
+<text x="492.0" y="517.5" class="val" text-anchor="end" style="fill:#76bdff">2.4 s</text>
+<text x="576.0" y="517.5" class="speed" text-anchor="end" style="fill:#76bdff">3.2× faster</text>
+<text x="56.0" y="543.0" class="model" text-anchor="start">FLUX.2-klein-9B</text>
+<text x="56.0" y="559.0" class="desc" text-anchor="start">Text to image · 2048×2048 · 4 steps</text>
+<text x="418.0" y="551.0" class="base" text-anchor="end">13.9 s</text>
+<rect x="659.8" y="532.0" width="256.2" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="542.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="542.5" class="val" text-anchor="end" style="fill:#168ce8">7.4 s</text>
+<text x="576.0" y="542.5" class="speed" text-anchor="end" style="fill:#168ce8">1.9× faster</text>
+<rect x="776.8" y="547.0" width="139.2" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="557.0" class="par" text-anchor="end" style="fill:#081622">Ulysses</text>
+<text x="492.0" y="557.5" class="val" text-anchor="end" style="fill:#76bdff">4.0 s</text>
+<text x="576.0" y="557.5" class="speed" text-anchor="end" style="fill:#76bdff">3.5× faster</text>
+<text x="56.0" y="583.0" class="model" text-anchor="start">Qwen-Image-2512</text>
+<text x="56.0" y="599.0" class="desc" text-anchor="start">Text to image · 2048×2048 · 50 steps</text>
+<text x="418.0" y="591.0" class="base" text-anchor="end">200.4 s</text>
+<text x="422.0" y="591.0" class="base" text-anchor="start">*</text>
+<rect x="705.7" y="572.0" width="210.3" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="582.0" class="par" text-anchor="end" style="fill:#ffffff">PipeFusion</text>
+<text x="492.0" y="582.5" class="val" text-anchor="end" style="fill:#168ce8">87.1 s</text>
+<text x="576.0" y="582.5" class="speed" text-anchor="end" style="fill:#168ce8">2.3× faster</text>
+<rect x="772.2" y="587.0" width="143.8" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="597.0" class="par" text-anchor="end" style="fill:#081622">PipeFusion</text>
+<text x="492.0" y="597.5" class="val" text-anchor="end" style="fill:#76bdff">59.5 s</text>
+<text x="576.0" y="597.5" class="speed" text-anchor="end" style="fill:#76bdff">3.4× faster</text>
+<text x="56.0" y="623.0" class="model" text-anchor="start">Qwen-Image-Edit</text>
+<text x="56.0" y="639.0" class="desc" text-anchor="start">Edit an image · 2048×2048 · 50 steps</text>
+<text x="418.0" y="631.0" class="base" text-anchor="end">592.1 s</text>
+<text x="422.0" y="631.0" class="base" text-anchor="start">*</text>
+<rect x="774.4" y="612.0" width="141.6" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="622.0" class="par" text-anchor="end" style="fill:#ffffff">CFG</text>
+<text x="492.0" y="622.5" class="val" text-anchor="end" style="fill:#168ce8">173.2 s</text>
+<text x="576.0" y="622.5" class="speed" text-anchor="end" style="fill:#168ce8">3.4× faster</text>
+<rect x="831.4" y="627.0" width="84.6" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="637.0" class="par" text-anchor="end" style="fill:#081622">CFG × Ulysses</text>
+<text x="492.0" y="637.5" class="val" text-anchor="end" style="fill:#76bdff">103.5 s</text>
+<text x="576.0" y="637.5" class="speed" text-anchor="end" style="fill:#76bdff">5.7× faster</text>
+<text x="56.0" y="663.0" class="model" text-anchor="start">SD3.5 Large</text>
+<text x="56.0" y="679.0" class="desc" text-anchor="start">Text to image · 1024×1024 · 28 steps</text>
+<text x="418.0" y="671.0" class="base" text-anchor="end">11.3 s</text>
+<rect x="664.7" y="652.0" width="251.3" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="662.0" class="par" text-anchor="end" style="fill:#ffffff">CFG</text>
+<text x="492.0" y="662.5" class="val" text-anchor="end" style="fill:#168ce8">5.9 s</text>
+<text x="576.0" y="662.5" class="speed" text-anchor="end" style="fill:#168ce8">1.9× faster</text>
+<rect x="763.6" y="667.0" width="152.4" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="677.0" class="par" text-anchor="end" style="fill:#081622">CFG × Ulysses</text>
+<text x="492.0" y="677.5" class="val" text-anchor="end" style="fill:#76bdff">3.6 s</text>
+<text x="576.0" y="677.5" class="speed" text-anchor="end" style="fill:#76bdff">3.2× faster</text>
+<text x="56.0" y="703.0" class="model" text-anchor="start">Wan2.2-TI2V-5B</text>
+<text x="56.0" y="719.0" class="desc" text-anchor="start">Image to video · 832×1088, 121 frames · 50 steps</text>
+<text x="418.0" y="711.0" class="base" text-anchor="end">253.6 s</text>
+<rect x="680.2" y="692.0" width="235.8" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="702.0" class="par" text-anchor="end" style="fill:#ffffff">CFG</text>
+<text x="492.0" y="702.5" class="val" text-anchor="end" style="fill:#168ce8">123.5 s</text>
+<text x="576.0" y="702.5" class="speed" text-anchor="end" style="fill:#168ce8">2.1× faster</text>
+<rect x="788.7" y="707.0" width="127.3" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="717.0" class="par" text-anchor="end" style="fill:#081622">CFG × Ulysses</text>
+<text x="492.0" y="717.5" class="val" text-anchor="end" style="fill:#76bdff">66.7 s</text>
+<text x="576.0" y="717.5" class="speed" text-anchor="end" style="fill:#76bdff">3.8× faster</text>
+<text x="56.0" y="743.0" class="model" text-anchor="start">Z-Image</text>
+<text x="56.0" y="759.0" class="desc" text-anchor="start">Text to image · 1920×1088 · 50 steps</text>
+<text x="418.0" y="751.0" class="base" text-anchor="end">81.0 s</text>
+<rect x="666.4" y="732.0" width="249.6" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="742.0" class="par" text-anchor="end" style="fill:#ffffff">CFG</text>
+<text x="492.0" y="742.5" class="val" text-anchor="end" style="fill:#168ce8">41.8 s</text>
+<text x="576.0" y="742.5" class="speed" text-anchor="end" style="fill:#168ce8">1.9× faster</text>
+<rect x="780.9" y="747.0" width="135.1" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="757.0" class="par" text-anchor="end" style="fill:#081622">CFG × Ulysses</text>
+<text x="492.0" y="757.5" class="val" text-anchor="end" style="fill:#76bdff">22.6 s</text>
+<text x="576.0" y="757.5" class="speed" text-anchor="end" style="fill:#76bdff">3.6× faster</text>
+<text x="56.0" y="783.0" class="model" text-anchor="start">Z-Image-Turbo</text>
+<text x="56.0" y="799.0" class="desc" text-anchor="start">Text to image · 1024×1024 · 4 steps</text>
+<text x="418.0" y="791.0" class="base" text-anchor="end">2.1 s</text>
+<rect x="610.5" y="772.0" width="305.5" height="13" rx="2" fill="#168ce8"/>
+<text x="911.0" y="782.0" class="par" text-anchor="end" style="fill:#ffffff">Ulysses</text>
+<text x="492.0" y="782.5" class="val" text-anchor="end" style="fill:#168ce8">1.3 s</text>
+<text x="576.0" y="782.5" class="speed" text-anchor="end" style="fill:#168ce8">1.6× faster</text>
+<rect x="678.6" y="787.0" width="237.4" height="13" rx="2" fill="#76bdff"/>
+<text x="911.0" y="797.0" class="par" text-anchor="end" style="fill:#081622">Ulysses</text>
+<text x="492.0" y="797.5" class="val" text-anchor="end" style="fill:#76bdff">1.0 s</text>
+<text x="576.0" y="797.5" class="speed" text-anchor="end" style="fill:#76bdff">2.0× faster</text>
+<text x="40.0" y="850.0" class="note" text-anchor="start">All runs use torch.compile, FP8 GEMMs and FP8 attention (SD3.5: BF16 GEMMs), plus step caching except on the 4-step models.</text>
+<text x="40.0" y="873.0" class="note" text-anchor="start">* Doesn't fit on one 32GB GPU: the 1-GPU run offloads to system memory, so the speedup is larger.</text>
+<text x="40.0" y="896.0" class="note" text-anchor="start">CFG: prompt and no-prompt passes on separate GPUs. Ulysses: each GPU takes part of the image. PipeFusion: each GPU holds part of the model.</text>
+<text x="40.0" y="919.0" class="note" text-anchor="start">Multi-GPU runs also split the VAE decode across GPUs (except SD3.5 on 4 GPUs).</text>
+<text x="40.0" y="942.0" class="note" text-anchor="start">Radeon AI PRO R9700S · ROCm 10.0 · xDiT · median of 5 runs · no direct GPU link; transfers go over PCIe via system memory.</text>
+</svg>

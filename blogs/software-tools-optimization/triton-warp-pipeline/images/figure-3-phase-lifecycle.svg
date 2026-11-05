@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="663" viewBox="0 0 960 663" role="img" aria-labelledby="title desc">
+<title id="title">Create, maintain, then close the offset</title><desc id="desc">Wave-uniform conditional barriers hold Group B on entry and Group A on exit. Inside the loop, each execution barrier lets both groups advance while preserving the one-stage offset.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="960" height="663" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="30" y="38" font-size="24" fill="#0f172a" font-weight="700" text-anchor="start">Create, maintain, then close the offset</text>
+<text x="30" y="67" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Conditional barriers coordinate entry and exit.</text>
+<text x="30" y="108" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">1  Enter the loop</text>
+<text x="30" y="158" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="214" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="128" width="330" height="48" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="345.0" y="149.0" font-size="17" fill="#5b21b6" font-weight="700" text-anchor="middle">cond_barrier(false)</text>
+<text x="345.0" y="169.0" font-size="15" fill="#5b21b6" font-weight="400" text-anchor="middle">skip</text>
+<rect x="180" y="184" width="330" height="48" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="345.0" y="205.0" font-size="17" fill="#5b21b6" font-weight="700" text-anchor="middle">cond_barrier(true)</text>
+<text x="345.0" y="225.0" font-size="15" fill="#5b21b6" font-weight="400" text-anchor="middle">wait</text>
+<line x1="522" y1="152" x2="600" y2="152" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="612" y="128" width="312" height="48" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="768.0" y="158.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Enter the first stage</text>
+<text x="612" y="214" font-size="16" fill="#475569" font-weight="400" text-anchor="start">Released at A’s first boundary</text>
+<line x1="30" y1="268" x2="924" y2="268" stroke="#cbd5e1" stroke-width="1"/>
+<text x="30" y="308" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">2  Keep the offset</text>
+<text x="30" y="360" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="416" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="330" width="276" height="48" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.25"/>
+<text x="318.0" y="360.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Stage S+1</text>
+<rect x="180" y="386" width="276" height="48" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="318.0" y="416.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Stage S</text>
+<line x1="468" y1="354" x2="564" y2="354" stroke="#6d28d9" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="468" y1="410" x2="564" y2="410" stroke="#6d28d9" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="576" y="330" width="348" height="104" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="750.0" y="379.0" font-size="18" fill="#5b21b6" font-weight="700" text-anchor="middle">Execution barrier</text>
+<text x="750.0" y="399.0" font-size="15" fill="#5b21b6" font-weight="400" text-anchor="middle">Both groups advance one stage</text>
+<line x1="30" y1="476" x2="924" y2="476" stroke="#cbd5e1" stroke-width="1"/>
+<text x="30" y="517" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">3  Leave the loop</text>
+<text x="30" y="569" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="625" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="539" width="330" height="48" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="345.0" y="560.0" font-size="17" fill="#5b21b6" font-weight="700" text-anchor="middle">cond_barrier(true)</text>
+<text x="345.0" y="580.0" font-size="15" fill="#5b21b6" font-weight="400" text-anchor="middle">wait</text>
+<rect x="180" y="595" width="330" height="48" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="345.0" y="616.0" font-size="18" fill="#5b21b6" font-weight="700" text-anchor="middle">Final in-loop arrival</text>
+<text x="345.0" y="636.0" font-size="15" fill="#5b21b6" font-weight="400" text-anchor="middle">releases Group A</text>
+<line x1="522" y1="563" x2="600" y2="563" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="522" y1="619" x2="600" y2="619" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="612" y="539" width="312" height="48" rx="0" fill="#86efac" stroke="#16a34a" stroke-width="1.25"/>
+<text x="768.0" y="569.0" font-size="18" fill="#14532d" font-weight="700" text-anchor="middle">Exit after the barrier</text>
+<rect x="612" y="595" width="312" height="48" rx="0" fill="#86efac" stroke="#16a34a" stroke-width="1.25"/>
+<text x="768.0" y="616.0" font-size="17" fill="#14532d" font-weight="700" text-anchor="middle">cond_barrier(false)</text>
+<text x="768.0" y="636.0" font-size="15" fill="#14532d" font-weight="400" text-anchor="middle">skip and exit</text>
+</g></svg>

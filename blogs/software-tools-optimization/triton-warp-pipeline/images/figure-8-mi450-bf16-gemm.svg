@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="375" viewBox="0 0 1440 562" role="img" aria-labelledby="title desc">
+<title id="title">MI450 BF16 GEMM: the deferred-refill warp pipeline</title><desc id="desc">Four stages per tile, two wave groups one stage apart. Wave 0 alone performs cluster arrival and wait. Both groups execute TDM instructions, but only the leading group performs data transfers.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="1440" height="562" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="45.0" y="57.0" font-size="36.0" fill="#0f172a" font-weight="700" text-anchor="start">MI450 BF16 GEMM: the deferred-refill warp pipeline</text>
+<text x="45" y="100.5" font-size="25.5" fill="#475569" font-weight="400" text-anchor="start">gfx1250 · CDNA 5 · 4×4 workgroup cluster, 1024×1024 aggregate tile · two LDS slots</text>
+<rect x="45.0" y="136.5" width="27.0" height="21.0" rx="0" fill="#fda4af" stroke="#e11d48" stroke-width="1.875"/>
+<text x="82.5" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">cluster sync</text>
+<rect x="234.29999999999998" y="136.5" width="27.0" height="21.0" rx="0" fill="#67e8f9" stroke="#0891b2" stroke-width="1.875"/>
+<text x="271.79999999999995" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">TDM</text>
+<rect x="334.5" y="136.5" width="27.0" height="21.0" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="372.0" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">LDS read</text>
+<rect x="484.2" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.875"/>
+<text x="521.7" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">WMMA</text>
+<line x1="606.3" y1="132.0" x2="606.3" y2="163.5" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<text x="631.8" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">execution barrier</text>
+<g opacity="0.45">
+<rect x="833.0999999999999" y="136.5" width="27.0" height="21.0" rx="0" fill="#fbbf24" stroke="#b45309" stroke-width="1.875"/>
+</g>
+<text x="870.5999999999999" y="156.0" font-size="19.5" fill="#334155" font-weight="400" text-anchor="start">adjacent tile</text>
+<text x="301.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">S0 · refill / read</text>
+<text x="544.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">S1 · WMMA</text>
+<text x="787.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">S2 · read</text>
+<text x="1030.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">S3 · WMMA</text>
+<text x="1273.5" y="224" font-size="16" fill="#475569" font-weight="700" text-anchor="middle">S0 · next tile</text>
+<text x="45" y="271" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="45" y="295" font-size="22.5" fill="#475569" font-weight="400" text-anchor="start">waves 0–3</text>
+<rect x="180" y="242" width="60" height="68" rx="0" fill="#fda4af" stroke="none" stroke-width="1.875"/>
+<path d="M 180 242 H 240 M 180 310 H 240 M 240 242 V 310" fill="none" stroke="#e11d48" stroke-width="1.875"/>
+<text x="210.0" y="272.0" font-size="14" fill="#881337" font-weight="700" text-anchor="middle">cluster</text>
+<text x="210.0" y="290.0" font-size="13" fill="#881337" font-weight="400" text-anchor="middle">wave 0</text>
+<rect x="240" y="242" width="67" height="68" rx="0" fill="#67e8f9" stroke="#0891b2" stroke-width="1.875"/>
+<text x="273.5" y="272.0" font-size="14" fill="#164e63" font-weight="700" text-anchor="middle">TDM</text>
+<text x="273.5" y="290.0" font-size="13" fill="#164e63" font-weight="400" text-anchor="middle">A/B refill</text>
+<rect x="307" y="242" width="58" height="68" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="336.0" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="336.0" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A K0:64</text>
+<rect x="365" y="242" width="58" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 365 242 H 423 M 365 310 H 423 M 365 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="394.0" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="394.0" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">B K0:64</text>
+<rect x="423" y="242" width="243" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 423 242 H 666 M 423 310 H 666" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="544.5" y="269.0" font-size="21" fill="#713f12" font-weight="700" text-anchor="middle">WMMA</text>
+<text x="544.5" y="293.0" font-size="20" fill="#713f12" font-weight="400" text-anchor="middle">K0:64</text>
+<rect x="666" y="242" width="121.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 666 242 H 787.5 M 666 310 H 787.5 M 787.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="726.75" y="272.0" font-size="16" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="726.75" y="290.0" font-size="15" fill="#4c1d95" font-weight="400" text-anchor="middle">A K64:128</text>
+<rect x="787.5" y="242" width="121.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 787.5 242 H 909 M 787.5 310 H 909 M 787.5 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="848.25" y="272.0" font-size="16" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="848.25" y="290.0" font-size="15" fill="#4c1d95" font-weight="400" text-anchor="middle">B K64:128</text>
+<rect x="909" y="242" width="243" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 909 242 H 1152 M 909 310 H 1152" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1030.5" y="269.0" font-size="21" fill="#713f12" font-weight="700" text-anchor="middle">WMMA</text>
+<text x="1030.5" y="293.0" font-size="20" fill="#713f12" font-weight="400" text-anchor="middle">K64:128</text>
+<g opacity="0.15">
+<rect x="1152" y="242" width="60" height="68" rx="0" fill="#fda4af" stroke="none" stroke-width="1.875"/>
+<path d="M 1152 242 H 1212 M 1152 310 H 1212 M 1212 242 V 310" fill="none" stroke="#e11d48" stroke-width="1.875"/>
+<text x="1182.0" y="272.0" font-size="14" fill="#881337" font-weight="700" text-anchor="middle">cluster</text>
+<text x="1182.0" y="290.0" font-size="13" fill="#881337" font-weight="400" text-anchor="middle">wave 0</text>
+<rect x="1212" y="242" width="67" height="68" rx="0" fill="#67e8f9" stroke="#0891b2" stroke-width="1.875"/>
+<text x="1245.5" y="272.0" font-size="14" fill="#164e63" font-weight="700" text-anchor="middle">TDM</text>
+<text x="1245.5" y="290.0" font-size="13" fill="#164e63" font-weight="400" text-anchor="middle">A/B refill</text>
+<rect x="1279" y="242" width="58" height="68" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1308.0" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1308.0" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A K0:64</text>
+<rect x="1337" y="242" width="58" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 1337 242 H 1395 M 1337 310 H 1395 M 1337 242 V 310" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1366.0" y="272.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1366.0" y="290.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">B K0:64</text>
+</g>
+<text x="45" y="381" font-size="27" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<text x="45" y="405" font-size="22.5" fill="#475569" font-weight="400" text-anchor="start">waves 4–7</text>
+<g opacity="0.15">
+<rect x="180" y="352" width="243" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 180 352 H 423 M 180 420 H 423" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="301.5" y="379.0" font-size="21" fill="#713f12" font-weight="700" text-anchor="middle">WMMA</text>
+<text x="301.5" y="403.0" font-size="20" fill="#713f12" font-weight="400" text-anchor="middle">K64:128</text>
+</g>
+<rect x="423" y="352" width="81" height="68" rx="0" fill="#f1f5f9" stroke="none" stroke-width="1.875"/>
+<path d="M 423 352 H 504 M 423 420 H 504 M 504 352 V 420" fill="none" stroke="#94a3b8" stroke-width="1.875"/>
+<text x="463.5" y="382.0" font-size="14" fill="#475569" font-weight="700" text-anchor="middle">TDM</text>
+<text x="463.5" y="400.0" font-size="13" fill="#475569" font-weight="400" text-anchor="middle">no transfer</text>
+<rect x="504" y="352" width="81" height="68" rx="0" fill="#c4b5fd" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="544.5" y="382.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="544.5" y="400.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">A K0:64</text>
+<rect x="585" y="352" width="81" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 585 352 H 666 M 585 420 H 666 M 585 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="625.5" y="382.0" font-size="14" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="625.5" y="400.0" font-size="13" fill="#4c1d95" font-weight="400" text-anchor="middle">B K0:64</text>
+<rect x="666" y="352" width="243" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 666 352 H 909 M 666 420 H 909" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="787.5" y="379.0" font-size="21" fill="#713f12" font-weight="700" text-anchor="middle">WMMA</text>
+<text x="787.5" y="403.0" font-size="20" fill="#713f12" font-weight="400" text-anchor="middle">K0:64</text>
+<rect x="909" y="352" width="121.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 909 352 H 1030.5 M 909 420 H 1030.5 M 1030.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="969.75" y="382.0" font-size="16" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="969.75" y="400.0" font-size="15" fill="#4c1d95" font-weight="400" text-anchor="middle">A K64:128</text>
+<rect x="1030.5" y="352" width="121.5" height="68" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.875"/>
+<path d="M 1030.5 352 H 1152 M 1030.5 420 H 1152 M 1030.5 352 V 420" fill="none" stroke="#7c3aed" stroke-width="1.875"/>
+<text x="1091.25" y="382.0" font-size="16" fill="#4c1d95" font-weight="700" text-anchor="middle">ds_read</text>
+<text x="1091.25" y="400.0" font-size="15" fill="#4c1d95" font-weight="400" text-anchor="middle">B K64:128</text>
+<rect x="1152" y="352" width="243" height="68" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.875"/>
+<path d="M 1152 352 H 1395 M 1152 420 H 1395" fill="none" stroke="#b45309" stroke-width="1.875"/>
+<text x="1273.5" y="379.0" font-size="21" fill="#713f12" font-weight="700" text-anchor="middle">WMMA</text>
+<text x="1273.5" y="403.0" font-size="20" fill="#713f12" font-weight="400" text-anchor="middle">K64:128</text>
+<line x1="180" y1="234" x2="180" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="423" y1="234" x2="423" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="666" y1="234" x2="666" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="909" y1="234" x2="909" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1152" y1="234" x2="1152" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<line x1="1395" y1="234" x2="1395" y2="424" stroke="#6d28d9" stroke-width="3.75" stroke-dasharray="7.5 7.5"/>
+<path d="M 180 440 V 448 H 1152 V 440" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="666.0" y="475.0" font-size="21.0" fill="#475569" font-weight="400" text-anchor="middle">Group A: four stages per tile</text>
+<path d="M 423 500 V 508 H 1395 V 500" fill="none" stroke="#64748b" stroke-width="1.5"/>
+<text x="909.0" y="535.0" font-size="21.0" fill="#475569" font-weight="400" text-anchor="middle">Group B: one stage later</text>
+</g></svg>

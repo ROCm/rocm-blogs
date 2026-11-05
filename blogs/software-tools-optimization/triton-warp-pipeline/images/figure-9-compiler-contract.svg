@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">From source stages to GPU execution</title><desc id="desc">Stage annotations become compiler clusters and dependency analysis determines the lowered schedule. Scheduling walls constrain compilation. Execution barriers and completion waits coordinate runtime progress and memory operations.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="960" height="560" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="30" y="38" font-size="24" fill="#0f172a" font-weight="700" text-anchor="start">From source stages to GPU execution</text>
+<text x="30" y="67" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Stage annotations become scheduling constraints and runtime synchronization.</text>
+<rect x="30" y="104" width="198" height="104" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="129" y="132" font-size="17" fill="#1e3a8a" font-weight="700" text-anchor="middle">Gluon source</text>
+<text x="129" y="161" font-size="16" fill="#1e3a8a" font-weight="400" text-anchor="middle">Annotated compute</text>
+<text x="129" y="184" font-size="16" fill="#1e3a8a" font-weight="400" text-anchor="middle">and memory stages</text>
+<line x1="237" y1="156" x2="255" y2="156" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="264" y="104" width="198" height="104" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="363" y="132" font-size="17" fill="#1e3a8a" font-weight="700" text-anchor="middle">TTGIR clusters</text>
+<text x="363" y="161" font-size="16" fill="#1e3a8a" font-weight="400" text-anchor="middle">Grouped stage</text>
+<text x="363" y="184" font-size="16" fill="#1e3a8a" font-weight="400" text-anchor="middle">operations</text>
+<line x1="471" y1="156" x2="489" y2="156" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="498" y="104" width="198" height="104" rx="0" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="597" y="132" font-size="17" fill="#475569" font-weight="700" text-anchor="middle">Dependency analysis</text>
+<text x="597" y="161" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">Cross-group accesses</text>
+<text x="597" y="184" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">and buffer reuse</text>
+<line x1="705" y1="156" x2="723" y2="156" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+<rect x="732" y="104" width="198" height="104" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="831" y="132" font-size="17" fill="#5b21b6" font-weight="700" text-anchor="middle">Lowered schedule</text>
+<text x="831" y="161" font-size="16" fill="#5b21b6" font-weight="400" text-anchor="middle">Scheduling walls,</text>
+<text x="831" y="184" font-size="16" fill="#5b21b6" font-weight="400" text-anchor="middle">barriers, and waits</text>
+<text x="30" y="253" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">At compile time</text>
+<rect x="30" y="273" width="240" height="54" rx="0" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="150.0" y="306.0" font-size="18" fill="#475569" font-weight="700" text-anchor="middle">Scheduling walls</text>
+<text x="300" y="293" font-size="18" fill="#0f172a" font-weight="400" text-anchor="start">Keep operations in their intended stages.</text>
+<text x="300" y="319" font-size="16" fill="#475569" font-weight="400" text-anchor="start">Removed before machine-code emission.</text>
+<line x1="30" y1="351" x2="924" y2="351" stroke="#cbd5e1" stroke-width="1"/>
+<text x="30" y="391" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">At runtime</text>
+<rect x="30" y="411" width="240" height="52" rx="0" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="150.0" y="443.0" font-size="18" fill="#5b21b6" font-weight="700" text-anchor="middle">Execution barriers</text>
+<text x="300" y="443" font-size="18" fill="#0f172a" font-weight="400" text-anchor="start">Maintain the one-stage offset.</text>
+<rect x="30" y="487" width="240" height="52" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="150.0" y="519.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Completion waits</text>
+<text x="300" y="510" font-size="17" fill="#0f172a" font-weight="400" text-anchor="start">Finish memory operations before dependent reads</text>
+<text x="300" y="534" font-size="17" fill="#0f172a" font-weight="400" text-anchor="start">or buffer reuse.</text>
+</g></svg>

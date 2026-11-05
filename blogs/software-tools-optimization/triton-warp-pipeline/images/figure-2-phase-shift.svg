@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="370" viewBox="0 0 960 370" role="img" aria-labelledby="title desc">
+<title id="title">One stage behind in program progress</title><desc id="desc">Group B is held before the loop. Execution-barrier phases B0 through B3 keep the groups one stage apart as they follow the same sequence.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="960" height="370" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="30" y="38" font-size="24" fill="#0f172a" font-weight="700" text-anchor="start">One stage behind in program progress</text>
+<text x="30" y="67" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Group B starts later, then follows the same stage sequence.</text>
+<text x="254.4" y="106" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot 0</text>
+<text x="403.20000000000005" y="106" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot 1</text>
+<text x="552.0" y="106" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot 2</text>
+<text x="700.8000000000001" y="106" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot 3</text>
+<text x="849.6" y="106" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot 4</text>
+<text x="30" y="151" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="175" font-size="15" fill="#475569" font-weight="400" text-anchor="start">waves 0–3</text>
+<rect x="180.0" y="126" width="148.8" height="60" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 180 126 H 328.8 M 180 186 H 328.8 M 180 126 V 186" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="254.4" y="153.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory 0</text>
+<text x="254.4" y="173.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="328.8" y="126" width="148.8" height="60" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 328.8 126 H 477.6 M 328.8 186 H 477.6" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="403.20000000000005" y="153.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Compute 0</text>
+<text x="403.20000000000005" y="173.0" font-size="15" fill="#713f12" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="477.6" y="126" width="148.8" height="60" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 477.6 126 H 626.4 M 477.6 186 H 626.4" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="552.0" y="153.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory 1</text>
+<text x="552.0" y="173.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="626.4000000000001" y="126" width="148.8" height="60" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 626.4 126 H 775.2 M 626.4 186 H 775.2" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="700.8000000000001" y="153.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Compute 1</text>
+<text x="700.8000000000001" y="173.0" font-size="15" fill="#713f12" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="775.2" y="126" width="148.8" height="60" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 775.2 126 H 924 M 775.2 186 H 924 M 924 126 V 186" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="849.6" y="153.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory 0</text>
+<text x="849.6" y="173.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">iteration i+1</text>
+<text x="30" y="255" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<text x="30" y="279" font-size="15" fill="#475569" font-weight="400" text-anchor="start">waves 4–7</text>
+<rect x="180.0" y="230" width="148.8" height="60" rx="0" fill="#f1f5f9" stroke="none" stroke-width="1.25"/>
+<path d="M 180 230 H 328.8 M 180 290 H 328.8 M 180 230 V 290" fill="none" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="254.4" y="257.0" font-size="18" fill="#475569" font-weight="700" text-anchor="middle">Held</text>
+<text x="254.4" y="277.0" font-size="15" fill="#475569" font-weight="400" text-anchor="middle">before the loop</text>
+<rect x="328.8" y="230" width="148.8" height="60" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 328.8 230 H 477.6 M 328.8 290 H 477.6" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="403.20000000000005" y="257.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory 0</text>
+<text x="403.20000000000005" y="277.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="477.6" y="230" width="148.8" height="60" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 477.6 230 H 626.4 M 477.6 290 H 626.4" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="552.0" y="257.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Compute 0</text>
+<text x="552.0" y="277.0" font-size="15" fill="#713f12" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="626.4000000000001" y="230" width="148.8" height="60" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 626.4 230 H 775.2 M 626.4 290 H 775.2" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="700.8000000000001" y="257.0" font-size="18" fill="#1e3a8a" font-weight="700" text-anchor="middle">Memory 1</text>
+<text x="700.8000000000001" y="277.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">iteration i</text>
+<rect x="775.2" y="230" width="148.8" height="60" rx="0" fill="#fbbf24" stroke="none" stroke-width="1.25"/>
+<path d="M 775.2 230 H 924 M 775.2 290 H 924 M 924 230 V 290" fill="none" stroke="#b45309" stroke-width="1.25"/>
+<text x="849.6" y="257.0" font-size="18" fill="#713f12" font-weight="700" text-anchor="middle">Compute 1</text>
+<text x="849.6" y="277.0" font-size="15" fill="#713f12" font-weight="400" text-anchor="middle">iteration i</text>
+<line x1="328.8" y1="116" x2="328.8" y2="302" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<rect x="308.8" y="195" width="40" height="26" fill="white"/>
+<text x="328.8" y="214" font-size="17" fill="#6d28d9" font-weight="700" text-anchor="middle">B0</text>
+<line x1="477.6" y1="116" x2="477.6" y2="302" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<rect x="457.6" y="195" width="40" height="26" fill="white"/>
+<text x="477.6" y="214" font-size="17" fill="#6d28d9" font-weight="700" text-anchor="middle">B1</text>
+<line x1="626.4000000000001" y1="116" x2="626.4000000000001" y2="302" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<rect x="606.4000000000001" y="195" width="40" height="26" fill="white"/>
+<text x="626.4000000000001" y="214" font-size="17" fill="#6d28d9" font-weight="700" text-anchor="middle">B2</text>
+<line x1="775.2" y1="116" x2="775.2" y2="302" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<rect x="755.2" y="195" width="40" height="26" fill="white"/>
+<text x="775.2" y="214" font-size="17" fill="#6d28d9" font-weight="700" text-anchor="middle">B3</text>
+<line x1="37" y1="326" x2="37" y2="350" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<text x="53" y="344" font-size="16" fill="#475569" font-weight="400" text-anchor="start">Execution barriers B0–B3</text>
+<text x="924" y="344" font-size="16" fill="#475569" font-weight="400" text-anchor="end">B0 releases Group B.</text>
+</g></svg>

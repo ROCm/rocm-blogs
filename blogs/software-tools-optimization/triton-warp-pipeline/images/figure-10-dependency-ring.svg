@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="639" viewBox="0 0 960 639" role="img" aria-labelledby="title desc">
+<title id="title">Complete writes before the other group reads</title><desc id="desc">The unsafe schedule lets Group A read shared slot X[j] while Group B is still writing. The safe schedule completes both groups’ writes before the execution barrier releases Group A into the read stage.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="context-stroke"/></marker></defs>
+<rect width="960" height="639" fill="white"/>
+<g font-family="Segoe UI, Helvetica, Arial, sans-serif" fill="#0f172a">
+<text x="30" y="38" font-size="24" fill="#0f172a" font-weight="700" text-anchor="start">Complete writes before the other group reads</text>
+<text x="30" y="67" font-size="17" fill="#475569" font-weight="400" text-anchor="start">Shared LDS slot X[j] · Group A is one stage ahead</text>
+<text x="30" y="108" font-size="22" fill="#991b1b" font-weight="700" text-anchor="start">Unsafe: the reader overlaps the producer</text>
+<text x="30" y="162" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<text x="30" y="222" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="132" width="300" height="48" rx="0" fill="#fff1f2" stroke="#ef4444" stroke-width="1.25"/>
+<text x="330.0" y="162.0" font-size="18" fill="#991b1b" font-weight="700" text-anchor="middle">S+1 · read X[j]</text>
+<rect x="180" y="192" width="300" height="48" rx="0" fill="#fff1f2" stroke="#ef4444" stroke-width="1.25"/>
+<text x="330.0" y="222.0" font-size="18" fill="#991b1b" font-weight="700" text-anchor="middle">S · still writing X[j]</text>
+<text x="522" y="163" font-size="17" fill="#475569" font-weight="400" text-anchor="start">B’s writes can still be in flight.</text>
+<text x="522" y="192" font-size="17" fill="#475569" font-weight="400" text-anchor="start">A must not read this slot yet.</text>
+<line x1="30" y1="272" x2="924" y2="272" stroke="#cbd5e1" stroke-width="1"/>
+<text x="30" y="314" font-size="22" fill="#0f172a" font-weight="700" text-anchor="start">Safe: finish writes before the barrier</text>
+<text x="304.0" y="350" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot T0</text>
+<text x="552.0" y="350" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot T1</text>
+<text x="800.0" y="350" font-size="16" fill="#475569" font-weight="400" text-anchor="middle">slot T2</text>
+<text x="30" y="404" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group A</text>
+<rect x="180" y="368" width="248" height="62" rx="0" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="304.0" y="396.0" font-size="17" fill="#1e3a8a" font-weight="700" text-anchor="middle">S−1 · produce</text>
+<text x="304.0" y="416.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">complete writes to X[j]</text>
+<rect x="428" y="368" width="248" height="62" rx="0" fill="#f1f5f9" stroke="none" stroke-width="1.25"/>
+<path d="M 428 368 H 676 M 428 430 H 676 M 428 368 V 430" fill="none" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="552.0" y="405.0" font-size="17" fill="#475569" font-weight="700" text-anchor="middle">S · independent work</text>
+<rect x="676" y="368" width="248" height="62" rx="0" fill="#c4b5fd" stroke="none" stroke-width="1.25"/>
+<path d="M 676 368 H 924 M 676 430 H 924 M 924 368 V 430" fill="none" stroke="#7c3aed" stroke-width="1.25"/>
+<text x="800.0" y="396.0" font-size="17" fill="#4c1d95" font-weight="700" text-anchor="middle">S+1 · read</text>
+<text x="800.0" y="416.0" font-size="15" fill="#4c1d95" font-weight="400" text-anchor="middle">X[j] is ready</text>
+<text x="30" y="486" font-size="18" fill="#0f172a" font-weight="700" text-anchor="start">Group B</text>
+<rect x="180" y="450" width="248" height="62" rx="0" fill="#f1f5f9" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="304.0" y="478.0" font-size="17" fill="#475569" font-weight="700" text-anchor="middle">S−2</text>
+<text x="304.0" y="498.0" font-size="15" fill="#475569" font-weight="400" text-anchor="middle">earlier work</text>
+<rect x="428" y="450" width="248" height="62" rx="0" fill="#dbeafe" stroke="none" stroke-width="1.25"/>
+<path d="M 428 450 H 676 M 428 512 H 676 M 428 450 V 512" fill="none" stroke="#3b82f6" stroke-width="1.25"/>
+<text x="552.0" y="478.0" font-size="17" fill="#1e3a8a" font-weight="700" text-anchor="middle">S−1 · produce</text>
+<text x="552.0" y="498.0" font-size="15" fill="#1e3a8a" font-weight="400" text-anchor="middle">complete writes to X[j]</text>
+<rect x="676" y="450" width="248" height="62" rx="0" fill="#f1f5f9" stroke="none" stroke-width="1.25"/>
+<path d="M 676 450 H 924 M 676 512 H 924 M 924 450 V 512" fill="none" stroke="#94a3b8" stroke-width="1.25"/>
+<text x="800.0" y="487.0" font-size="17" fill="#475569" font-weight="700" text-anchor="middle">S · independent work</text>
+<line x1="676" y1="358" x2="676" y2="524" stroke="#6d28d9" stroke-width="2.5" stroke-dasharray="5.0 5.0"/>
+<path d="M 552.0 519 V 549 H 676 V 528" fill="none" stroke="#6d28d9" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="692" y="554" font-size="16" fill="#6d28d9" font-weight="400" text-anchor="start">Execution barrier</text>
+<line x1="30" y1="585" x2="924" y2="585" stroke="#cbd5e1" stroke-width="1"/>
+<text x="30" y="614" font-size="16" fill="#475569" font-weight="400" text-anchor="start">Before slot reuse, both groups must finish reading the previous tile.</text>
+</g></svg>
