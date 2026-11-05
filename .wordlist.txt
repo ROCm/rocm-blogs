@@ -3410,6 +3410,14 @@ Vikram
 Woosuk
 Yuxian
 Zhong
+Bozkus
+Cem
+Cijk
+Trace2Tree
+dynolog
+rocm-trace-lite
+Fuyuan
+Jing
 Kraken
 NPUs
 Rescaled
@@ -3611,3 +3619,8 @@ SFP28
 XXV710
 datasets
 quantize
+Unprofiled
+doublings
+durations
+retile
+unprofiled
