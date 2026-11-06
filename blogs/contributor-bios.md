@@ -418,4 +418,11 @@ Senior Product Manager at AMD
 :::
 
 
+
+:::{grid-item-card} [Srikanth Arunachalam](./authors/srikanth-arunachalam.md)
+:padding: 1
+
+AI/ML engineer and consultant
+:::
+
 ::::
