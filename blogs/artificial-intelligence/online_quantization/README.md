@@ -126,62 +126,62 @@ We also evaluated the latency and accuracy of ATOM online quantization, as shown
 
 <table class="table">
   <thead>
-    <tr>
-      <th rowspan="2">Model</th>
-      <th colspan="2" style="text-align: center;">TTFT (ms) ↓</th>
-      <th colspan="2" style="text-align: center;">TPOT (ms) ↓</th>
-      <th colspan="2" style="text-align: center;">GSM8K ↑</th>
-      <th rowspan="2" style="text-align: center;">Load-time quant elapsed (s)</th>
+    <tr class="row-odd">
+      <th class="head" rowspan="2" style="color: inherit;">Model</th>
+      <th class="head" colspan="2" style="text-align: center; color: inherit;">TTFT (ms) ↓</th>
+      <th class="head" colspan="2" style="text-align: center; color: inherit;">TPOT (ms) ↓</th>
+      <th class="head" colspan="2" style="text-align: center; color: inherit;">GSM8K ↑</th>
+      <th class="head" rowspan="2" style="text-align: center; color: inherit;">Load-time quant elapsed (s)</th>
     </tr>
-    <tr>
-      <th>offline</th>
-      <th>online</th>
-      <th>offline</th>
-      <th>online</th>
-      <th>offline</th>
-      <th>online</th>
+    <tr class="row-odd">
+      <th style="color: inherit;">offline</th>
+      <th style="color: inherit;">online</th>
+      <th style="color: inherit;">offline</th>
+      <th style="color: inherit;">online</th>
+      <th style="color: inherit;">offline</th>
+      <th style="color: inherit;">online</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>Qwen3-30B-A3B-Thinking-2507-ptpc</td>
-      <td>126.81</td>
-      <td>126.93</td>
-      <td>11.65</td>
-      <td>11.55</td>
-      <td>0.6861</td>
-      <td>0.6971</td>
-      <td>0.834</td>
+    <tr class="row-even">
+      <td style="color: inherit;">Qwen3-30B-A3B-Thinking-2507-ptpc</td>
+      <td style="color: inherit;">126.81</td>
+      <td style="color: inherit;">126.93</td>
+      <td style="color: inherit;">11.65</td>
+      <td style="color: inherit;">11.55</td>
+      <td style="color: inherit;">0.6861</td>
+      <td style="color: inherit;">0.6971</td>
+      <td style="color: inherit;">0.834</td>
     </tr>
-    <tr>
-      <td>Qwen3-235B-A22B-Instruct-2507-MXFP4</td>
-      <td>450.51</td>
-      <td>445.52</td>
-      <td>34.16</td>
-      <td>34.03</td>
-      <td>0.8961</td>
-      <td>0.8976</td>
-      <td>1.398</td>
+    <tr class="row-odd">
+      <td style="color: inherit;">Qwen3-235B-A22B-Instruct-2507-MXFP4</td>
+      <td style="color: inherit;">450.51</td>
+      <td style="color: inherit;">445.52</td>
+      <td style="color: inherit;">34.16</td>
+      <td style="color: inherit;">34.03</td>
+      <td style="color: inherit;">0.8961</td>
+      <td style="color: inherit;">0.8976</td>
+      <td style="color: inherit;">1.398</td>
     </tr>
-    <tr>
-      <td>DeepSeek-R1-0528-attn-ptpc-moe-mxfp4</td>
-      <td>296.06</td>
-      <td>296.39</td>
-      <td>65.46</td>
-      <td>65.22</td>
-      <td>0.9462</td>
-      <td>0.9484</td>
-      <td>8.148</td>
+    <tr class="row-even">
+      <td style="color: inherit;">DeepSeek-R1-0528-attn-ptpc-moe-mxfp4</td>
+      <td style="color: inherit;">296.06</td>
+      <td style="color: inherit;">296.39</td>
+      <td style="color: inherit;">65.46</td>
+      <td style="color: inherit;">65.22</td>
+      <td style="color: inherit;">0.9462</td>
+      <td style="color: inherit;">0.9484</td>
+      <td style="color: inherit;">8.148</td>
     </tr>
-    <tr>
-      <td>DeepSeek-R1-0528-attn-ptpc-moe-mxfp4 (with MTP)</td>
-      <td>339.86</td>
-      <td>339.78</td>
-      <td>26.39</td>
-      <td>26.47</td>
-      <td>0.9439</td>
-      <td>0.9439</td>
-      <td>8.975</td>
+    <tr class="row-odd">
+      <td style="color: inherit;">DeepSeek-R1-0528-attn-ptpc-moe-mxfp4 (with MTP)</td>
+      <td style="color: inherit;">339.86</td>
+      <td style="color: inherit;">339.78</td>
+      <td style="color: inherit;">26.39</td>
+      <td style="color: inherit;">26.47</td>
+      <td style="color: inherit;">0.9439</td>
+      <td style="color: inherit;">0.9439</td>
+      <td style="color: inherit;">8.975</td>
     </tr>
   </tbody>
 </table>
