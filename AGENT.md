@@ -18,10 +18,11 @@ The article should explain:
 The intended audience is technical readers of ROCm Blogs, including
 GPU developers, ML systems developers, and performance engineers.
 
-blogs/artificial-intelligence/blasst-amd/README.md is the final article and 
-working (top) dir: rocm-blogs/artificial-intelligence/blasst-amd
+ 
+working (top) dir: rocm-blogs/blogs/artificial-intelligence/blasst-amd
 final article: <top_dir>/README.md 
-article organization notes: <top_dir>/blog_matrix.xlsx
+article organization notes: <top_dir>/working/blog_matrix.xlsx
+
 
 ---
 
@@ -126,7 +127,7 @@ Every performance figure should clearly specify:
 Do not fabricate or approximate missing data.
 Raw data: <top_dir>/data
 Figures: <top_dir>/images
-Relevant: <top_dir>/scripts
+Relevant scripts: <top_dir>/scripts
 
 ---
 
@@ -175,7 +176,7 @@ When discussing BLASST behavior, distinguish among:
 - skipped attention blocks
 - accuracy impact
 - kernel speedup
-- end-to-end speedup
+- end-to-end model speedup
 
 These are not interchangeable.
 
@@ -185,7 +186,7 @@ These are not interchangeable.
 
 Primary target:
 
-AMD Instinct MI355X
+AMD Instinct MI350X and MI355X
 
 Software components may include:
 
