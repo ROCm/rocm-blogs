@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img">
+<rect width="1200" height="700" fill="#ffffff"/>
+<rect x="35" y="35" width="1130" height="600" rx="10" fill="#ffffff" stroke="#d9dde1"/>
+<text x="59" y="71" fill="#131416" font-size="23" font-weight="700" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">1M throughput and latency</text>
+<rect x="940" y="56" width="16" height="16" fill="#2E6FE8"/>
+<text x="964" y="69" fill="#131416" font-size="14" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Baseline</text>
+<rect x="1040" y="56" width="16" height="16" fill="#FF7A1A"/>
+<text x="1064" y="69" fill="#131416" font-size="14" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Optimized</text>
+<text x="90" y="214" fill="#131416" font-size="17" font-weight="600" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Total throughput</text>
+<text x="90" y="238" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">(tok/s)</text>
+<line x1="330" y1="160" x2="330" y2="300" stroke="#d9dde1" stroke-width="1"/>
+<rect x="330" y="170" width="85.2" height="46" fill="#2E6FE8"/>
+<text x="429.2" y="200" fill="#131416" font-size="16" font-weight="700" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">21,877</text>
+<rect x="330" y="232" width="610.2" height="46" fill="#FF7A1A"/>
+<text x="954.2" y="262" fill="#131416" font-size="16" font-weight="700" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">156,598</text>
+<text x="90" y="434" fill="#131416" font-size="17" font-weight="600" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Average TTFT</text>
+<text x="90" y="458" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">(ms)</text>
+<line x1="330" y1="380" x2="330" y2="520" stroke="#d9dde1" stroke-width="1"/>
+<rect x="330" y="390" width="610.2" height="46" fill="#2E6FE8"/>
+<text x="954.2" y="420" fill="#131416" font-size="16" font-weight="700" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">45,660</text>
+<rect x="330" y="452" width="84.7" height="46" fill="#FF7A1A"/>
+<text x="428.7" y="482" fill="#131416" font-size="16" font-weight="700" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">6,340</text>
+<text x="615" y="617" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">7.16× higher throughput and 7.20× lower TTFT; each row uses its own scale</text>
+<text x="35" y="676" fill="#5e5e5e" font-size="12" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Source: EvalScope · 8× AMD Instinct MI355X · 1M input, concurrency 1</text>
+</svg>

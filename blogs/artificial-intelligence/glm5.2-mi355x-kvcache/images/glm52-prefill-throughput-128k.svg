@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img">
+<rect width="1200" height="700" fill="#ffffff"/>
+<rect x="35" y="35" width="1130" height="600" rx="10" fill="#ffffff" stroke="#d9dde1"/>
+<text x="59" y="71" fill="#131416" font-size="23" font-weight="700" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">128K throughput</text>
+<line x1="111" y1="565.0" x2="1145" y2="565.0" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="570.0" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">0K</text>
+<line x1="111" y1="498.4" x2="1145" y2="498.4" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="503.42857142857144" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">100K</text>
+<line x1="111" y1="431.9" x2="1145" y2="431.9" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="436.8571428571429" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">200K</text>
+<line x1="111" y1="365.3" x2="1145" y2="365.3" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="370.28571428571433" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">300K</text>
+<line x1="111" y1="298.7" x2="1145" y2="298.7" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="303.7142857142857" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">400K</text>
+<line x1="111" y1="232.1" x2="1145" y2="232.1" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="237.1428571428571" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">500K</text>
+<line x1="111" y1="165.6" x2="1145" y2="165.6" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="170.5714285714286" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">600K</text>
+<line x1="111" y1="99.0" x2="1145" y2="99.0" stroke="#d9dde1" stroke-width="1"/>
+<text x="101" y="104.0" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="end" font-family="Klavika, Inter, Arial, sans-serif">700K</text>
+<rect x="137.6" y="494.4" width="47.3" height="70.6" fill="#2E6FE8"/>
+<text x="161.22285714285712" y="487.41032" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">106K</text>
+<rect x="184.9" y="421.8" width="47.3" height="143.2" fill="#FF7A1A"/>
+<text x="208.49142857142857" y="414.80752" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">215K</text>
+<text x="161.22285714285715" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">1</text>
+<rect x="285.3" y="474.0" width="47.3" height="91.0" fill="#2E6FE8"/>
+<text x="308.9371428571429" y="466.9795485714286" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">137K</text>
+<rect x="332.6" y="362.4" width="47.3" height="202.6" fill="#FF7A1A"/>
+<text x="356.2057142857143" y="355.3978457142857" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">304K</text>
+<text x="308.9371428571428" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">2</text>
+<rect x="433.0" y="482.3" width="47.3" height="82.7" fill="#2E6FE8"/>
+<text x="456.65142857142865" y="475.29232285714284" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">124K</text>
+<rect x="480.3" y="261.8" width="47.3" height="303.2" fill="#FF7A1A"/>
+<text x="503.9200000000001" y="254.77180285714286" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">455K</text>
+<text x="456.6514285714286" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">4</text>
+<rect x="580.7" y="478.3" width="47.3" height="86.7" fill="#2E6FE8"/>
+<text x="604.3657142857143" y="471.3439714285714" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">130K</text>
+<rect x="628.0" y="196.9" width="47.3" height="368.1" fill="#FF7A1A"/>
+<text x="651.6342857142857" y="189.9292342857143" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">553K</text>
+<text x="604.3657142857143" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">8</text>
+<rect x="728.4" y="478.2" width="47.3" height="86.8" fill="#2E6FE8"/>
+<text x="752.08" y="471.18220285714284" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">130K</text>
+<rect x="775.7" y="208.5" width="47.3" height="356.5" fill="#FF7A1A"/>
+<text x="799.3485714285715" y="201.53263428571427" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">535K</text>
+<text x="752.08" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">16</text>
+<rect x="876.2" y="477.8" width="47.3" height="87.2" fill="#2E6FE8"/>
+<text x="899.7942857142857" y="470.7667971428572" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">131K</text>
+<rect x="923.4" y="196.8" width="47.3" height="368.2" fill="#FF7A1A"/>
+<text x="947.0628571428572" y="189.84801714285715" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">553K</text>
+<text x="899.7942857142857" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">32</text>
+<rect x="1023.9" y="478.1" width="47.3" height="86.9" fill="#2E6FE8"/>
+<text x="1047.5085714285715" y="471.06370571428573" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">131K</text>
+<rect x="1071.1" y="213.2" width="47.3" height="351.8" fill="#FF7A1A"/>
+<text x="1094.777142857143" y="206.21060857142857" fill="#131416" font-size="15" font-weight="700" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">528K</text>
+<text x="1047.5085714285717" y="592" fill="#5e5e5e" font-size="14" font-weight="400" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">50</text>
+<text x="628.0" y="617" fill="#131416" font-size="16" font-weight="600" text-anchor="middle" font-family="Klavika, Inter, Arial, sans-serif">Concurrency</text>
+<rect x="940" y="56" width="16" height="16" fill="#2E6FE8"/>
+<text x="964" y="69" fill="#131416" font-size="14" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Baseline</text>
+<rect x="1040" y="56" width="16" height="16" fill="#FF7A1A"/>
+<text x="1064" y="69" fill="#131416" font-size="14" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Optimized</text>
+<text x="35" y="676" fill="#5e5e5e" font-size="12" font-weight="400" text-anchor="start" font-family="Klavika, Inter, Arial, sans-serif">Source: EvalScope · 8× AMD Instinct MI355X · zero-failure rows</text>
+</svg>
