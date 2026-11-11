@@ -10,6 +10,7 @@ updates:
     # "/" covers .github/workflows; composite actions keep their own `uses:`
     # pins, so .github/actions has to be listed separately to get bumped.
     directory: "/"
+    open-pull-requests-limit: 10
     schedule:
       interval: "daily"
       # Wait a week before adopting newly released action versions.
@@ -22,3 +23,10 @@ updates:
         patterns: ["ROCm/rocm-security-gh*"]
       github-actions:
         patterns: ["*"]
+
+  - package-ecosystem: "pip"
+    directory: "/blogs/sphinx"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+    versioning-strategy: increase
