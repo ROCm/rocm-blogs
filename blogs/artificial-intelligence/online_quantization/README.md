@@ -2,7 +2,7 @@
 blogpost: true
 blog_title: "Online Quantization: Smooth Path from One Checkpoint to Any Desired Serving Scenario"
 date: 05 Nov 2026
-author: "Hang Yang, Haoyang Li, Colin Zeng, Wei Luo, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
+author: "Hang Yang, Haoyang Li, Kelin Zeng, Wei Luo, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
 thumbnail: 'online-quantization-thumbnail.png'
 tags: LLM, AI/ML, Serving, Optimization, Performance
 category: Applications & models
@@ -11,7 +11,7 @@ target_audience: AI developers, AI practitioners, inference engineers
 key_value_propositions: Load-time online quantization with AMD Quark for fast scheme exploration across vLLM, ATOM, and SGLang
 myst:
     html_meta:
-        "author": "Hang Yang, Haoyang Li, Colin Zeng, Wei Luo, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
+        "author": "Hang Yang, Haoyang Li, Kelin Zeng, Wei Luo, Xinjun Niu, Spandan Tiwari, Ashish Sirasao"
         "description lang=en": "Learn how AMD Quark's online quantization quantizes LLM weights at load time across vLLM, ATOM, and SGLang, with per-layer mixed FP8/MXFP4 recipes."
         "keywords": "LLM, Quantization, Online Quantization, AMD Quark, vLLM, ATOM, SGLang, ROCm, AITER, FP8, MXFP4, MoE, MI350X, MI355X"
         "property=og:locale": "en_US"
