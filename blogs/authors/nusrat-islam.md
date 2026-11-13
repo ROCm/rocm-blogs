@@ -1,3 +1,12 @@
+---
+thumbnail: Nusrat-Islam.jpeg
+myst:
+  html_meta:
+    "description lang=en": "Nusrat Islam"
+    "keywords": "blog, contributor, blog author"
+    "property=og:locale": "en_US"
+---
+
 <head>
   <meta charset="UTF-8">
   <meta name="description" content="Nusrat Islam">
