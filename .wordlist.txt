@@ -3720,6 +3720,12 @@ doublings
 durations
 retile
 unprofiled
+Aurelien
+Bouteiller
+Garzaran
+Nusrat
+LSA
+cuMem
 IndexPool
 Pradeep
 Sakhamoori
