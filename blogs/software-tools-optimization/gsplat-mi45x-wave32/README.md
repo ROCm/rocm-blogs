@@ -104,23 +104,21 @@ CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --disable_viewer \
 
 ## The 3DGS pipeline: project, sort, composite
 
-```{figure} ./images/3dgs-pipeline.jpg
-:align: center
-:alt: Three stages of 3D Gaussian Splatting. Project maps Gaussians to 2D ellipses, sort assigns them to tiles and orders them by depth, and composite blends them front to back.
-Project, sort, and composite.
-```
+![Three stages of 3D Gaussian Splatting. Project maps Gaussians to 2D ellipses, sort assigns them to tiles and orders them by depth, and composite blends them front to back.](images/3dgs-pipeline.jpg)
+
+*Project, sort, and composite.*
+
 
 Rendering runs in three stages. **Project** maps each Gaussian to a 2D ellipse on the image plane and evaluates its color for the current view. **Sort** assigns each ellipse to the tiles it overlaps and orders those entries by depth. **Composite** walks each pixel's list front to back, blending by opacity and remaining transmittance, and stops when transmittance is near zero.
 
-```{figure} ./images/rasterizer-forward-backward.png
-:align: center
-:alt: Forward rasterizer walks pixels front to back with one thread per pixel. Backward walks Gaussians back to front, reduces partial gradients across the wave, and writes one atomic per Gaussian per tile.
-Forward and backward rasterizers.
-```
+![Forward rasterizer walks pixels front to back with one thread per pixel. Backward walks Gaussians back to front, reduces partial gradients across the wave, and writes one atomic per Gaussian per tile.](images/rasterizer-forward-backward.png)
+
+*Forward and backward rasterizers.*
+
 
 The backward kernel reverses the walk. It goes back to front, and instead of recomputing transmittance from 1 it reconstructs it from the saved final value. The mapping flips too: each lane takes a turn owning one Gaussian and broadcasts it to the other lanes, because many pixels now contribute to the same Gaussian. Those partial gradients have to be summed across the wave before a single atomic write per Gaussian per tile. That reduction is the piece of machinery the forward pass never needed.
 
-## Porting for MI45x
+## 0. Porting for MI45x
 
 MI45x is wave32, so the hardcoded warp width of 64 had to become a build-time choice before the kernels would run correctly.
 
@@ -129,9 +127,13 @@ MI45x is wave32, so the hardcoded warp width of 64 had to become a build-time ch
 * **The substitution is mechanical.** Across `Utils.cuh`, both `Projection*` kernels, and both `RasterizeToPixels*Bwd` kernels, every `rocprim::warp_reduce<float,64>`, `cg::tiled_partition<64>`, `threadIdx.x % 64`, and `for (i < 64)` lane loop now uses `GSPLAT_WARP_SIZE`.
 * **The wave64 fast path stays gated.** It is wrapped in `#if GSPLAT_WARP_SIZE == 64`. On MI45x the build uses the generic kernel.
 
-## Profiling on MI45x
+## 1. Profiling on MI45x
+
+### 1.1 The regression
 
 Right after the port, end-to-end 3DGS training of the Mip-NeRF 360 stump scene through `simple_trainer.py` ran at about 16 steps/s. The same benchmark on MI325X, which shares the gfx942 wave64 architecture with MI300X, was 49 steps/s.
+
+### 1.2 Where the time goes
 
 The profile below is `torch.profiler` around step 21100. On ROCm its "CUDA" columns are HIP device time. `TILE_SIZE=16` selects the generic backward kernel. The default tile of 8 dispatches the multi-tile kernel from the next section, so a profile without this variable will not reproduce the table. Compare runs on `Time avg`, not `Self CUDA`: the total scales with the number of profiled calls.
 
@@ -151,19 +153,21 @@ CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default \
 
 The backward rasterizer is the largest kernel in the profile, 10.4% of device time. Per launch it averages 6.244 ms. The 18.731 ms figure is that average times the three profiled calls.
 
-### Why it isn't a recompile
+### 1.3 Why it isn't a recompile
 
 The gfx942 reduction does not carry over. On wave64 the 64-lane sum is a DPP `row_shr` / `row_bcast` ladder and stays in VGPRs. gfx1250 has no `row_bcast:15` or `row_bcast:31`, so a pure DPP 32-lane reduction is not expressible. `rocprim::warp_reduce<float,32>` lowers the cross-16 step to `ds_swizzle_b32` / `ds_bpermute_b32`, and those LDS-unit ops serialize on `SQ_WAIT_INST_LDS` in this kernel.
 
 Atomic traffic doubles. The 16×16 tile is still a 256-thread block, which is 4 waves on wave64 and 8 waves on wave32. Each wave reduces its partial gradients and one lane writes them, so a Gaussian gets 4 atomic writes per tile on wave64 and 8 on wave32, to the same addresses.
 
-## The new kernel: 4-wave multi-tile
+## 2. The new kernel: 4-wave multi-tile
 
 Three different kernels show up in the rest of the post, and the measurements do not transfer between them.
 
 * The generic kernel, `rasterize_to_pixels_3dgs_bwd_kernel` at tile 16, is what the profile above measured.
 * The multi-tile kernel, `rasterize_bs32_multitile_to_pixels_3dgs_bwd_kernel` at tile 8, replaces it.
 * The optimizations in the next section sit on top of the multi-tile kernel.
+
+### 2.1 The core idea
 
 A 128-thread workgroup is 4 wave32 waves. Each wave rasterizes a different 8×8 tile: 64 pixels across 32 lanes, so each lane owns 2 pixels. The waves share nothing. Because the tiles are disjoint there is no `block.sync()`, no shared Gaussian batch, divergent per-wave trip counts are safe, and a whole-wave early return cannot deadlock the block. The workgroup is a packing container. It asks the hardware for 4 waves of resources at once. It is not a cooperation unit.
 
@@ -175,7 +179,7 @@ threads     = { 128, 1, 1 }
 
 Tile size is baked into the intersection and binning structures upstream. Shrinking it from the generic kernel's 16 grows the Gaussian-to-tile intersection list. Tile 8 is the size this kernel is built around: 64 pixels fill two pixels per lane on a 32-lane wave.
 
-### Why 4 waves and not 8
+### 2.2 Why 4 waves and not 8
 
 The kernel was originally 8 waves (256 threads). Cutting the group to 4 waves (128 threads) measured:
 
@@ -194,9 +198,9 @@ Register allocation is identical either way. The win is packing. At CDIM=8 the r
 
 The kernel did not change. Only how its waves pack onto a CU did. Going smaller than 4 strands capacity the other way: a CU has a fixed number of workgroup slots as well as a register budget, and below 4 waves per group the slots run out first. Four waves also map one-to-one onto the CU's four SIMD32s, so each group puts one wave on each SIMD.
 
-## Optimizations on top of the new kernel
+## 3. Optimizations on top of the new kernel
 
-### Getting LDS out of the inner loop
+### 3.1 Getting LDS out of the inner loop
 
 The multi-tile kernel staged four arrays in shared memory: `s_vrc`, `s_tf`, `s_va`, and `s_buf`. Each was indexed only by the lane's own pixel (`p = lane + 32*s`) and never read across lanes, so the shared memory added latency and no reuse. All four were offsets into one `extern __shared__` block. The compiler could not prove the `s_buf` stores did not alias the others, and it reissued the loop-invariant reads on every inner iteration.
 
@@ -221,7 +225,7 @@ The kernel uses the current `S` in `v_alpha`, then updates it. `R` is recomputed
 
 What remains in shared memory is the static rocprim scratch for the bin reduction, outside this loop. Holding `r_vrc` in registers is also the change that drops occupancy from 12 to 10 waves per SIMD. `-ffast-math` below gets those waves back.
 
-### Rebuilding the warp reduction
+### 3.2 Rebuilding the warp reduction
 
 `rocprim::warp_reduce<float,32>` lowers to LDS-unit operations on gfx1250, and the CDNA cross-16 DPP modes that would avoid them are not on this part. The replacement keeps the intra-16 reduction on the DPP `row_shr` ladder and does the single cross-16 combine with `v_readlane_b32`, which is VALU and does not touch the LDS unit.
 
@@ -240,7 +244,7 @@ __device__ __forceinline__ float dpp_permlane_warpSum32(float v) {
 
 After the ladder, lane 15 holds the sum of lanes 0 through 15 and lane 31 holds the sum of lanes 16 through 31. Two readlanes give every lane the full sum. This is an all-reduce, which is what the lane-scatter epilogue needs: any lane can write any component.
 
-### Lane-scatter atomic epilogue
+### 3.3 Lane-scatter atomic epilogue
 
 The conventional epilogue leaves every reduced component in lane 0, and that lane issues `NGRAD` atomic adds one after another. Lane-scatter gives each of lanes `[0, NGRAD)` one component and one address, so the wave issues one `global_atomic_add_f32` with `NGRAD` lanes active.
 
@@ -257,7 +261,7 @@ Lane map (CDIM=3, ABSGRAD=0, so NGRAD=9):
 
 The atomic count and the values stay the same. Each component is still one `f32` atomic add to the same address, so the result is bitwise identical. What changes is the issue pattern: the writes go out together. `NGRAD` is 9 at CDIM=3 and 22 at CDIM=16 with `ABSGRAD` off. `static_assert(NGRAD <= 32)` caps the kernel. With `ABSGRAD` on, `NGRAD = CDIM + 8`, so CDIM=24 fills the wave and is the hard ceiling.
 
-### Phase split
+### 3.4 Phase split
 
 Each lane owns 2 pixels, so each Gaussian requires 2 `__expf` evaluations, and the two chains share no data. Guarding each with its own `if (valid)` writes `EXEC` between them, which splits the basic block. The scheduler cannot overlap the two transcendentals, and the second waits behind the first.
 
@@ -278,7 +282,7 @@ valid_s[s] = (batch_end - t <= bin_final_arr[s]) &
 
 Outside pixels get `bin_final = -1` rather than a separate `inside[]` array, so the existing range test excludes them.
 
-### `-ffast-math`
+### 3.5 `-ffast-math`
 
 The CUDA path has always built with `nvcc --use_fast_math`. The HIP port never carried that across, so `1.0f / (1.0f - alpha)` compiled to the IEEE division sequence (`v_div_scale`, `v_div_fmas`, `v_div_fixup`) instead of one `v_rcp_f32`. That divide sits on the critical path of every Gaussian, twice per lane.
 
@@ -290,15 +294,15 @@ The CUDA path has always built with `nvcc --use_fast_math`. The HIP port never c
 
 The two changes fit together. Moving per-pixel state into registers spent occupancy (12 to 10 waves per SIMD) to buy latency, and `-ffast-math` returns it (10 to 12) while cutting VALU. The flag also turns on finite-math-only, so the compiler may drop NaN and Inf handling around tests such as `!(sigma < 0.f)`. Rebuild with `FAST_MATH=0` to compare the IEEE divide.
 
-### `-munsafe-fp-atomics`
+### 3.6 `-munsafe-fp-atomics`
 
 This flag emits a hardware `global_atomic_add_f32` instead of a compare-and-swap loop. It matters here because wave32 already doubled the atomic count per Gaussian, and the lane-scatter epilogue issues those atomics across lanes. The hardware instruction does not match the CAS loop on denormals. These atomics target device-allocated gradient buffers, which is the case this flag is meant for.
 
-### `ABSGRAD` as a template parameter
+### 3.7 `ABSGRAD` as a template parameter
 
 `v_means2d_abs` is optional and usually absent. Making it a compile-time template parameter rather than a runtime `nullptr` check means that when the caller does not request absolute gradients, the accumulator, its warp reduction, and its atomics are compiled out. `NGRAD` drops by 2.
 
-## The remaining kernels
+## 4. The remaining kernels
 
 The backward rasterizer went from 6.244 ms per launch to 1.541 ms. That moves the bottleneck. Five kernels are left, none of them that rasterizer, and each one fails differently.
 
@@ -312,7 +316,7 @@ The times below are the minimum of 15 dispatches from `rocprofv3`, on the same s
 | `rasterize_to_pixels_3dgs_fwd` | 1.618 ms | 1.395 ms | −13.8% (CDIM ≤ 8) |
 | `projection_ewa_3dgs_packed_bwd` | 2.452 ms | 0.911 ms | −62.9% |
 
-### A reduction that could never find anything
+### 4.1 A reduction that could never find anything
 
 `projection_ewa_3dgs_fused_bwd` wrote its gradients back by labelling lanes with `gid`. For each gradient it scanned the whole wave with `__shfl_sync` to build a label mask, reduced only the lanes that matched, then scanned again to elect a leader. ROCm has no `cg::labeled_partition`, so this was hand-written. Means plus covariance is two of those scans. Means plus quaternion and scale is three.
 
@@ -338,13 +342,13 @@ if (N >= GSPLAT_WARP_SIZE) {
 
 With `C == 1` each address is written by exactly one thread in the grid, so the atomic add onto a zeroed buffer becomes a plain store. With more cameras the same Gaussian is written from several warps, and the atomic add is what combines them. Kernel time dropped 74.8%. The scan was correct for any labels, which is why the impossible case survived. Check what a reduction's labels can actually be before assuming it reduces anything.
 
-### The same machinery, where it is load-bearing
+### 4.2 The same machinery, where it is load-bearing
 
 `projection_ewa_3dgs_packed_bwd` runs the same emulation, and the argument above does not transfer. Here `gid = gaussian_ids[idx]` is data dependent. A store would drop gradients: the same Gaussian is written once per camera, usually from different warps, and those stores would overwrite each other. Inside one wave a shared `gid` is uncommon, because a camera row lays Gaussians out in order, but the atomics are what make the write correct either way. Dropping the in-wave reduction needs no `N` guard. Every lane `atomicAdd`s its own contribution.
 
 The `v_viewmats` reduction is kept. It is labelled by `cid`. Lanes from the same camera share that label, so the partition really does have more than one member. Kernel time dropped 62.9%.
 
-### `intersect_tile`: one rectangle at a time, with the whole wave
+### 4.3 `intersect_tile`: one rectangle at a time, with the whole wave
 
 Pass 2 writes one entry per (Gaussian, tile) intersection. Each thread walked its own Gaussian's tile bounding box serially, so a wave retired only when its slowest lane did. The longest rectangle in a wave was 6.0× the mean, and 83% of lane-slots were idle. About 3 in 4 lanes hold no rectangle at all. That is a separate count from the 6.0× imbalance.
 
@@ -377,7 +381,7 @@ Output is bit-identical. Kernel time dropped 88.0%, from 1.924 ms to 0.231 ms.
 
 No lane may return before the cooperative loop. Every lane writes a strided share of each rectangle (`k = lane, lane+32, …`), so a lane that exits early drops its entries. Lanes with no rectangle stay resident with `my_cnt = 0` and fall through with everyone else.
 
-### `spherical_harmonics_bwd`: one thread per Gaussian
+### 4.4 `spherical_harmonics_bwd`: one thread per Gaussian
 
 The kernel parallelised over `N × 3`, one thread per (Gaussian, channel). Three threads loaded the same direction, evaluated the same spherical-harmonic basis, and then contended on the same `v_dirs` address with atomics.
 
@@ -385,7 +389,7 @@ One thread per Gaussian covering all three channels gives three independent FMA 
 
 One trap: `sh_coeffs_to_color_fast_vjp` assigns to `*v_dir` rather than accumulating into it, so the caller has to sum the per-channel results.
 
-### The forward rasterizer, and where the win stops
+### 4.5 The forward rasterizer, and where the win stops
 
 Two changes to the LDS batch. Pack each Gaussian into two `float4` values, so an entry is one `ds_load_b128` plus one `ds_load_b96` off a single base, replacing four loads off three addresses. Then prefetch entry `t+1` before consuming entry `t`, so its LDS latency overlaps this iteration's arithmetic.
 
@@ -400,7 +404,7 @@ So the path is gated. `GSPLAT_FWD_F4_MAXCDIM` is 8 on wave32. Larger CDIM keeps 
 
 This is the third time on this page the answer is a range rather than a verdict. The workgroup-size choice was made against the register budget, the register move spent occupancy to buy latency, and here a load pattern wins at small CDIM and loses at large. None of the three has a setting that is right everywhere.
 
-### Build knobs in one place
+### 4.6 Build knobs in one place
 
 The tuning constants now sit together at the top of `Utils.cuh`. Override any of them at build time with `GSPLAT_EXTRA_DEFINES="GSPLAT_FWD_F4_MAXCDIM=0"`.
 
@@ -415,17 +419,16 @@ The tuning constants now sit together at the top of `Utils.cuh`. Override any of
 
 These paths are ROCm-only. `setup.py` injects `GSPLAT_WARP_SIZE` on the HIP build, and the header stops compilation if it is missing. The CUDA path does not define the flag. It still uses `cg::labeled_partition`, and it keeps the original `intersect_tile` loop.
 
-### Validation
+### 4.7 Validation
 
 199 tests pass, plus a production-scale check of twelve output tensors against a known-good reference. `intersect_tile` is bit-identical by construction. The projection and spherical-harmonic changes alter the order of floating-point accumulation, fewer atomics and a different grouping, so they are checked against tolerance rather than exactly. The color-accumulator reassociation is in that same category.
 
-## Results
+## 5. Results and Profiling
 
-```{figure} ./images/bwd-kernel-time.png
-:align: center
-:alt: Bar chart of backward rasterizer time on MI45x. Baseline 6.244 ms, new multi-tile kernel 2.287 ms, after the optimizations 1.541 ms.
-Backward rasterizer time per launch on MI45x. 6.244 ms to 1.541 ms is 4.05×.
-```
+![Bar chart of backward rasterizer time on MI45x. Baseline 6.244 ms, new multi-tile kernel 2.287 ms, after the optimizations 1.541 ms.](images/bwd-kernel-time.png)
+
+*Backward rasterizer time per launch on MI45x. 6.244 ms to 1.541 ms is 4.05×.*
+
 
 The optimized kernel was profiled with `TILE_SIZE=8` at the same stump step window:
 
@@ -456,11 +459,11 @@ The first column is the multi-tile kernel before the inner-loop shared-memory re
 * L2 misses halved (20.4M to 10.1M), lifting the hit rate from 82.4% to 90.8%.
 * Effective HBM bandwidth stays around 150 to 210 GB/s, a small fraction of what the part can do. This kernel was stall-bound.
 
-### End to end
+### 5.2 End to end
 
 On the Mip-NeRF 360 stump scene at `data_factor` 4, the 30,000-step run averages 88.7 steps/s, computed as 30,000 divided by `ellipse_time` from `train_step29999_rank0.json`. At step 29999 the held-out result is PSNR 26.824, SSIM 0.7791, LPIPS 0.145, with 5,676,550 Gaussians. The ~16 steps/s figure from the start of the post is the rate right after the port, not this same full-run average.
 
-### MI300 kernel versus the MI45x kernel
+### 5.3 MI300 kernel versus the MI45x kernel
 
 The comparison is the specialized 8×8 backward kernels, not the generic tile-16 kernel from the first profile.
 
@@ -477,7 +480,7 @@ The comparison is the specialized 8×8 backward kernels, not the generic tile-16
 | Atomic epilogue | serialized from lane 0 | lane-scatter, one instruction |
 | Absolute-gradient path | runtime `nullptr` check | compile-time `ABSGRAD` template |
 
-## Lessons
+## 6. Lessons Learned
 
 1. **Occupancy is a means.** A drop of 2 waves per SIMD still bought 13.5% on kernel time. The win was in stall cycles. Chase the stall counters.
 2. **Workgroup size is a packing decision.** The same kernel and the same registers, in smaller workgroups (8 waves down to 4), recovered 4 stranded waves per CU and 12.5% more resident waves.
