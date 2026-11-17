@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="561" viewBox="0 0 800 374" role="img" aria-labelledby="atom-replayssm-capacity-t atom-replayssm-capacity-d">
+<title id="atom-replayssm-capacity-t">ReplaySSM: one KDA checkpoint instead of eight full copies</title>
+<desc id="atom-replayssm-capacity-d">Baseline keeps one full KDA state per draft position: 8 copies for 7 draft tokens, 28.91 GiB per rank. ReplaySSM keeps one checkpoint plus compact per-token records, 4.42 GiB per rank, and rebuilds the state at the accepted boundary, freeing 24.49 GiB per rank for KV cache.</desc>
+<style>text{font-family:"Segoe UI",Arial,sans-serif}</style>
+<defs><marker id="atom-replayssm-capacity-a" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="#64748b"/></marker></defs>
+<rect width="800" height="374" rx="16" fill="#f8fafc"/>
+<text x="22" y="31" font-size="19" font-weight="600" text-anchor="start" fill="#111827">ReplaySSM: one KDA checkpoint instead of eight full copies</text>
+<text x="22" y="54" font-size="13" font-weight="400" text-anchor="start" fill="#475569">KDA state kept per request while DSpark verifies 7 draft tokens · tiles not to scale</text>
+<rect x="22" y="70" width="756" height="112" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="38" y="96" font-size="15" font-weight="600" text-anchor="start" fill="#111827">Baseline</text>
+<text x="116" y="96" font-size="13" font-weight="400" text-anchor="start" fill="#475569">one full KDA state per draft position</text>
+<rect x="38" y="110" width="46" height="40" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="61.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S0</text>
+<rect x="92" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="115.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S1</text>
+<rect x="146" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="169.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S2</text>
+<rect x="200" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="223.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S3</text>
+<rect x="254" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="277.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S4</text>
+<rect x="308" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="331.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S5</text>
+<rect x="362" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="385.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S6</text>
+<rect x="416" y="110" width="46" height="40" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="439.0" y="135.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S7</text>
+<text x="38" y="168" font-size="12" font-weight="400" text-anchor="start" fill="#475569">S0 committed · S1–S7 one copy per draft token</text>
+<text x="762" y="122" font-size="22" font-weight="600" text-anchor="end" fill="#8A4F12">28.91 GiB</text>
+<text x="762" y="142" font-size="12" font-weight="400" text-anchor="end" fill="#475569">state pool per rank</text>
+<text x="762" y="160" font-size="12" font-weight="400" text-anchor="end" fill="#475569">1 + 7 = 8 full copies</text>
+<rect x="22" y="196" width="756" height="114" rx="8" fill="#ffffff" stroke="#246548" stroke-width="1"/>
+<text x="38" y="222" font-size="15" font-weight="600" text-anchor="start" fill="#246548">ReplaySSM</text>
+<text x="128" y="222" font-size="13" font-weight="400" text-anchor="start" fill="#475569">one checkpoint + compact per-token records (k, u, g)</text>
+<rect x="38" y="236" width="46" height="40" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="61.0" y="261.0" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">S0</text>
+<rect x="110" y="236" width="12" height="40" rx="3" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="128" y="236" width="12" height="40" rx="3" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="146" y="236" width="12" height="40" rx="3" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="164" y="236" width="12" height="40" rx="3" fill="#ffead5" stroke="#8A4F12" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="182" y="236" width="12" height="40" rx="3" fill="#ffead5" stroke="#8A4F12" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="200" y="236" width="12" height="40" rx="3" fill="#ffead5" stroke="#8A4F12" stroke-width="1" stroke-dasharray="5 4"/>
+<rect x="218" y="236" width="12" height="40" rx="3" fill="#ffead5" stroke="#8A4F12" stroke-width="1" stroke-dasharray="5 4"/>
+<line x1="161" y1="230" x2="161" y2="282" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="61" y="296" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">checkpoint</text>
+<text x="128" y="296" font-size="12" font-weight="600" text-anchor="middle" fill="#246548">accepted</text>
+<text x="197" y="296" font-size="12" font-weight="600" text-anchor="middle" fill="#8A4F12">rejected</text>
+<rect x="242" y="236" width="220" height="40" rx="8" fill="#daeee7" stroke="#246548" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="352" y="261" font-size="13" font-weight="600" text-anchor="middle" fill="#246548">freed 24.49 GiB → KV cache</text>
+<text x="762" y="248" font-size="22" font-weight="600" text-anchor="end" fill="#246548">4.42 GiB</text>
+<text x="762" y="268" font-size="12" font-weight="400" text-anchor="end" fill="#475569">state pool per rank</text>
+<rect x="22" y="324" width="756" height="34" rx="8" fill="#edf0f4" stroke="#edf0f4" stroke-width="1"/>
+<text x="36" y="346" font-size="13" font-weight="400" text-anchor="start" fill="#111827">Rewind: rebuild the state from S0 + accepted records; rejected records are overwritten next step</text>
+</svg>

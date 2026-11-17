@@ -1,0 +1,333 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="666" viewBox="0 0 800 444" role="img" aria-labelledby="atom-dcp-memory-t atom-dcp-memory-d">
+<title id="atom-dcp-memory-t">DCP: each MLA token is stored on one GPU instead of all eight</title>
+<desc id="atom-dcp-memory-d">MLA keeps one latent KV entry per token that every attention head reads, so TP8 alone stores the same KV on all eight GPUs. DCP8 deals the tokens round-robin, token i to GPU i mod 8, so each GPU stores one-eighth. In each decode step every GPU computes all query heads locally, attends over its own tokens, and one all-to-all per MLA layer merges the eight partial results.</desc>
+<style>text{font-family:"Segoe UI",Arial,sans-serif}</style>
+<defs><marker id="atom-dcp-memory-a" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="#64748b"/></marker></defs>
+<rect width="800" height="444" rx="16" fill="#f8fafc"/>
+<text x="22" y="31" font-size="19" font-weight="600" text-anchor="start" fill="#111827">DCP: each MLA token is stored on one GPU instead of all eight</text>
+<text x="22" y="54" font-size="13" font-weight="400" text-anchor="start" fill="#475569">One sequence, token positions 0–15 shown · MLA layers only · KDA state stays TP-local</text>
+<text x="22" y="86" font-size="15" font-weight="600" text-anchor="start" fill="#111827">TP8 only (DCP1)</text>
+<text x="22" y="104" font-size="13" font-weight="400" text-anchor="start" fill="#475569">every GPU stores every token</text>
+<text x="416" y="86" font-size="15" font-weight="600" text-anchor="start" fill="#246548">TP8 + DCP8</text>
+<text x="416" y="104" font-size="13" font-weight="400" text-anchor="start" fill="#475569">token i is stored on GPU i mod 8</text>
+<text x="68.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">0</text>
+<text x="88.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">1</text>
+<text x="108.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">2</text>
+<text x="128.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">3</text>
+<text x="148.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">4</text>
+<text x="168.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">5</text>
+<text x="188.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">6</text>
+<text x="208.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">7</text>
+<text x="228.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">8</text>
+<text x="248.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">9</text>
+<text x="268.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">10</text>
+<text x="288.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">11</text>
+<text x="308.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">12</text>
+<text x="328.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">13</text>
+<text x="348.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">14</text>
+<text x="368.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">15</text>
+<text x="22" y="150.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU0</text>
+<rect x="60" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="80" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="100" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="120" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="140" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="160" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="180" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="200" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="220" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="240" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="260" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="280" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="300" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="320" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="340" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<rect x="360" y="138" width="17" height="16" rx="2" fill="#dbeaf4" stroke="#285F94" stroke-width="1"/>
+<text x="22" y="170.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU1</text>
+<rect x="60" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="158" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="22" y="190.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU2</text>
+<rect x="60" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="178" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="22" y="210.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU3</text>
+<rect x="60" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="198" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="22" y="230.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU4</text>
+<rect x="60" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="218" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="22" y="250.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU5</text>
+<rect x="60" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="238" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="22" y="270.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU6</text>
+<rect x="60" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="258" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="22" y="290.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU7</text>
+<rect x="60" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="80" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="100" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="120" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="140" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="160" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="180" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="200" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="220" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="240" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="260" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="280" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="300" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="320" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="340" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<rect x="360" y="278" width="17" height="16" rx="2" fill="#f6dede" stroke="#9b2c2c" stroke-width="1"/>
+<text x="462.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">0</text>
+<text x="482.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">1</text>
+<text x="502.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">2</text>
+<text x="522.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">3</text>
+<text x="542.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">4</text>
+<text x="562.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">5</text>
+<text x="582.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">6</text>
+<text x="602.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">7</text>
+<text x="622.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">8</text>
+<text x="642.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">9</text>
+<text x="662.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">10</text>
+<text x="682.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">11</text>
+<text x="702.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">12</text>
+<text x="722.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">13</text>
+<text x="742.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">14</text>
+<text x="762.5" y="128" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">15</text>
+<text x="416" y="150.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU0</text>
+<rect x="454" y="138" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="474" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="138" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="634" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="138" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="170.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU1</text>
+<rect x="454" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="158" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="494" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="158" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="654" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="158" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="190.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU2</text>
+<rect x="454" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="178" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="514" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="178" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="674" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="178" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="210.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU3</text>
+<rect x="454" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="198" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="534" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="198" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="694" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="198" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="230.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU4</text>
+<rect x="454" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="218" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="554" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="218" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="714" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="218" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="250.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU5</text>
+<rect x="454" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="238" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="574" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="238" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="734" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="238" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="270.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU6</text>
+<rect x="454" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="258" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="594" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="614" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="258" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="754" y="258" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="416" y="290.5" font-size="12" font-weight="400" text-anchor="start" fill="#475569">GPU7</text>
+<rect x="454" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="474" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="494" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="514" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="534" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="554" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="574" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="594" y="278" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<rect x="614" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="634" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="654" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="674" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="694" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="714" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="734" y="278" width="17" height="16" rx="2" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<rect x="754" y="278" width="17" height="16" rx="2" fill="#daeee7" stroke="#246548" stroke-width="1"/>
+<text x="218" y="318" font-size="13" font-weight="600" text-anchor="middle" fill="#9b2c2c">8 copies of every token</text>
+<text x="218" y="336" font-size="13" font-weight="400" text-anchor="middle" fill="#475569">GPU1–7 repeat GPU0</text>
+<text x="612" y="318" font-size="13" font-weight="600" text-anchor="middle" fill="#246548">1 copy of every token</text>
+<text x="612" y="336" font-size="13" font-weight="400" text-anchor="middle" fill="#475569">each GPU keeps 1/8 of the KV</text>
+<text x="22" y="368" font-size="14" font-weight="600" text-anchor="start" fill="#111827">Each MLA layer with DCP8 adds one all-to-all per decode step</text>
+<rect x="22" y="380" width="236" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="36" y="401" font-size="14" font-weight="600" text-anchor="start" fill="#111827">1  Query</text>
+<text x="36" y="420" font-size="13" font-weight="400" text-anchor="start" fill="#111827">all heads computed on every GPU</text>
+<path d="M260 405H279" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#atom-dcp-memory-a)"/>
+<rect x="282" y="380" width="236" height="50" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="296" y="401" font-size="14" font-weight="600" text-anchor="start" fill="#111827">2  Attention</text>
+<text x="296" y="420" font-size="13" font-weight="400" text-anchor="start" fill="#111827">each GPU over its own tokens</text>
+<path d="M520 405H539" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#atom-dcp-memory-a)"/>
+<rect x="542" y="380" width="236" height="50" rx="8" fill="#ffead5" stroke="#8A4F12" stroke-width="1"/>
+<text x="556" y="401" font-size="14" font-weight="600" text-anchor="start" fill="#8A4F12">3  Merge outputs</text>
+<text x="556" y="420" font-size="13" font-weight="400" text-anchor="start" fill="#111827">LSE-weighted, one all-to-all</text>
+</svg>

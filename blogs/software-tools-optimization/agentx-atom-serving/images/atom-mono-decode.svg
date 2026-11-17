@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="462" viewBox="0 0 800 308" role="img" aria-labelledby="atom-mono-decode-t atom-mono-decode-d">
+<title id="atom-mono-decode-t">Mono decode: one Kimi-K3 KDA layer in two ATOM kernels</title>
+<desc id="atom-mono-decode-d">Before: one kernel per op in a KDA layer (AttnRes, in_proj, conv, KDA, norm, then o_proj, all-reduce, AttnRes, MoE, all-reduce), with each tensor-parallel all-reduce as a separate kernel. After: two persistent kernels, K1 kda_pre and K2 layer_post, with the all-reduce inside K2 and weights streamed from launch. Op boxes are schematic.</desc>
+<style>text{font-family:"Segoe UI",Arial,sans-serif}</style>
+<defs><marker id="atom-mono-decode-a" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="#64748b"/></marker></defs>
+<rect width="800" height="308" rx="16" fill="#f8fafc"/>
+<text x="22" y="31" font-size="19" font-weight="600" text-anchor="start" fill="#111827">Mono decode: one Kimi-K3 KDA layer in two ATOM kernels</text>
+<text x="22" y="54" font-size="14" font-weight="400" text-anchor="start" fill="#475569">Small-batch decode waits on launches and weight reads; fuse the layer, stream weights early.</text>
+<rect x="22" y="66" width="756" height="226" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+<text x="38" y="92" font-size="15" font-weight="600" text-anchor="start" fill="#111827">Before · one kernel per op</text>
+<text x="762" y="92" font-size="13" font-weight="400" text-anchor="end" fill="#475569">all-reduce (AR) as separate kernels</text>
+<rect x="46" y="104" width="80.03229357798166" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="86.01614678899082" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">AttnRes</text>
+<rect x="132.03229357798165" y="104" width="80.03229357798166" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="172.04844036697247" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">in_proj</text>
+<rect x="218.0645871559633" y="104" width="53.583853211009185" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="244.85651376146788" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">conv</text>
+<rect x="277.64844036697247" y="104" width="44.76770642201835" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="300.03229357798165" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">KDA</text>
+<rect x="328.41614678899083" y="104" width="53.583853211009185" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="355.20807339449544" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">norm</text>
+<rect x="418" y="104" width="82.93333333333334" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="459.4666666666667" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">o_proj</text>
+<rect x="506.93333333333334" y="104" width="41.86666666666667" height="32" rx="4" fill="#ffead5" stroke="#8A4F12" stroke-width="1"/>
+<text x="527.8666666666667" y="125" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">AR</text>
+<rect x="554.8" y="104" width="93.2" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="601.4" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">AttnRes</text>
+<rect x="654.0" y="104" width="52.13333333333333" height="32" rx="4" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="680.0666666666667" y="125" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">MoE</text>
+<rect x="712.1333333333333" y="104" width="41.86666666666667" height="32" rx="4" fill="#ffead5" stroke="#8A4F12" stroke-width="1"/>
+<text x="733.0666666666666" y="125" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">AR</text>
+<text x="38" y="166" font-size="15" font-weight="600" text-anchor="start" fill="#111827">After · 2 persistent kernels</text>
+<text x="762" y="166" font-size="13" font-weight="400" text-anchor="end" fill="#475569">all-reduce runs inside the kernel</text>
+<rect x="38" y="178" width="352" height="66" rx="8" fill="#dbeaf4" stroke="#285F94" stroke-width="1.5"/>
+<text x="50" y="199" font-size="14" font-weight="600" text-anchor="start" fill="#285F94">K1 · kda_pre</text>
+<text x="86.01614678899082" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">AttnRes</text>
+<line x1="129.03229357798165" y1="214" x2="129.03229357798165" y2="238" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="172.04844036697247" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">in_proj</text>
+<line x1="215.0645871559633" y1="214" x2="215.0645871559633" y2="238" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="244.85651376146788" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">conv</text>
+<line x1="274.64844036697247" y1="214" x2="274.64844036697247" y2="238" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="300.03229357798165" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">KDA</text>
+<line x1="325.41614678899083" y1="214" x2="325.41614678899083" y2="238" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="355.20807339449544" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">norm</text>
+<rect x="38" y="252" width="352" height="5" rx="2" fill="#285F94"/>
+<rect x="410" y="178" width="352" height="66" rx="8" fill="#dbeaf4" stroke="#285F94" stroke-width="1.5"/>
+<text x="422" y="199" font-size="14" font-weight="600" text-anchor="start" fill="#285F94">K2 · layer_post</text>
+<text x="459.4666666666667" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">o_proj</text>
+<rect x="506.93333333333334" y="214" width="41.86666666666667" height="24" rx="4" fill="#ffead5" stroke="#8A4F12" stroke-width="1"/>
+<text x="527.8666666666667" y="231" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">AR</text>
+<text x="601.4" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">AttnRes</text>
+<line x1="651.0" y1="214" x2="651.0" y2="238" stroke="#64748b" stroke-width="1" stroke-dasharray="4 4"/>
+<text x="680.0666666666667" y="231" font-size="14" font-weight="400" text-anchor="middle" fill="#111827">MoE</text>
+<rect x="712.1333333333333" y="214" width="41.86666666666667" height="24" rx="4" fill="#ffead5" stroke="#8A4F12" stroke-width="1"/>
+<text x="733.0666666666666" y="231" font-size="14" font-weight="600" text-anchor="middle" fill="#111827">AR</text>
+<rect x="410" y="252" width="352" height="5" rx="2" fill="#285F94"/>
+<text x="38" y="276" font-size="13" font-weight="400" text-anchor="start" fill="#475569">Each kernel starts streaming its weights at launch, while the op chain waits on its inputs.</text>
+</svg>

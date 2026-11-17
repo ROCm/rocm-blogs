@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="639" viewBox="0 0 800 426" role="img" aria-labelledby="atom-cache-tiers-t atom-cache-tiers-d">
+<title id="atom-cache-tiers-t">Beyond HBM: where Kimi-K3 prompt tokens come from at C48</title>
+<desc id="atom-cache-tiers-d">Per MI355X GPU: 288 GB HBM holds about 195 GB of weights; after a 10% reserve, about 64 GB is left for runtime buffers, KV and KDA state. LMCache keeps a copy in CPU DRAM. At C48, 77.3% of prompt tokens hit HBM, 16.8% are restored from DRAM and 5.9% are prefilled: first-time input plus reusable history that was not reused.</desc>
+<style>text{font-family:"Segoe UI",Arial,sans-serif}</style>
+<defs><marker id="atom-cache-tiers-a" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="#64748b"/></marker></defs>
+<rect width="800" height="426" rx="16" fill="#f8fafc"/>
+<text x="22" y="31" font-size="19" font-weight="600" text-anchor="start" fill="#111827">Beyond HBM: where Kimi-K3 prompt tokens come from at C48</text>
+<text x="22" y="54" font-size="13" font-weight="400" text-anchor="start" fill="#475569">One MI355X GPU with the recipe settings at C48 · HBM bar drawn to scale</text>
+<text x="612" y="74" font-size="12" font-weight="600" text-anchor="start" fill="#475569">share of prompt</text>
+<text x="612" y="89" font-size="12" font-weight="600" text-anchor="start" fill="#475569">tokens at C48</text>
+<rect x="22" y="96" width="576" height="100" rx="8" fill="#ffffff" stroke="#246548" stroke-width="1"/>
+<text x="38" y="122" font-size="15" font-weight="600" text-anchor="start" fill="#246548">GPU HBM</text>
+<text x="582" y="122" font-size="14" font-weight="600" text-anchor="end" fill="#111827">288 GB · 8 TB/s</text>
+<rect x="38" y="136" width="368.56944444444446" height="28" rx="2" fill="#cfd8e3"/>
+<rect x="406.56944444444446" y="136" width="121.03055555555554" height="28" rx="2" fill="#246548"/>
+<rect x="527.6" y="136" width="54.400000000000006" height="28" rx="2" fill="#edf0f4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="222.28472222222223" y="155" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">weights ≈195 GB</text>
+<text x="467.08472222222224" y="155" font-size="13" font-weight="600" text-anchor="middle" fill="#ffffff">≈64 GB</text>
+<text x="554.8000000000001" y="155" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">10%</text>
+<text x="222.28472222222223" y="182" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">all experts resident</text>
+<text x="467.08472222222224" y="182" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">KV, KDA state, buffers</text>
+<text x="582" y="182" font-size="12" font-weight="400" text-anchor="end" fill="#475569">reserve</text>
+<path d="M262 198V233" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#atom-cache-tiers-a)"/>
+<text x="254" y="221" font-size="13" font-weight="400" text-anchor="end" fill="#475569">save as computed</text>
+<path d="M330 234V199" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#atom-cache-tiers-a)"/>
+<text x="338" y="221" font-size="13" font-weight="400" text-anchor="start" fill="#475569">restore on an HBM miss</text>
+<rect x="22" y="236" width="576" height="66" rx="8" fill="#e8e4f3" stroke="#e8e4f3" stroke-width="1"/>
+<text x="38" y="262" font-size="15" font-weight="600" text-anchor="start" fill="#5b4b8a">CPU DRAM · LMCache</text>
+<text x="38" y="284" font-size="13" font-weight="400" text-anchor="start" fill="#475569">copy of KV + KDA checkpoints</text>
+<text x="582" y="262" font-size="14" font-weight="600" text-anchor="end" fill="#111827">128 GiB per GPU rank</text>
+<text x="582" y="284" font-size="13" font-weight="400" text-anchor="end" fill="#475569">PCIe 5.0 x16 · ~64 GB/s each way</text>
+<rect x="22" y="316" width="576" height="40" rx="8" fill="#edf0f4" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="38" y="341" font-size="14" font-weight="600" text-anchor="start" fill="#475569">NVMe SSD · LMCache disk tier</text>
+<text x="582" y="341" font-size="13" font-weight="400" text-anchor="end" fill="#475569" font-style="italic">not used in these runs</text>
+<rect x="22" y="370" width="576" height="40" rx="8" fill="#ffead5" stroke="#ffead5" stroke-width="1"/>
+<text x="38" y="395" font-size="14" font-weight="600" text-anchor="start" fill="#8A4F12">Prefill</text>
+<text x="134" y="395" font-size="13" font-weight="400" text-anchor="start" fill="#111827">first-time input + reusable history that was not reused</text>
+<text x="612" y="153" font-size="18" font-weight="600" text-anchor="start" fill="#246548">77.3%</text>
+<rect x="690" y="141" width="88" height="10" rx="2" fill="#edf0f4"/>
+<rect x="690" y="141" width="68.024" height="10" rx="2" fill="#246548"/>
+<text x="612" y="276" font-size="18" font-weight="600" text-anchor="start" fill="#5b4b8a">16.8%</text>
+<rect x="690" y="264" width="88" height="10" rx="2" fill="#edf0f4"/>
+<rect x="690" y="264" width="14.784" height="10" rx="2" fill="#5b4b8a"/>
+<text x="612" y="343" font-size="18" font-weight="600" text-anchor="start" fill="#475569">—</text>
+<text x="612" y="397" font-size="18" font-weight="600" text-anchor="start" fill="#8A4F12">5.9%</text>
+<rect x="690" y="385" width="88" height="10" rx="2" fill="#edf0f4"/>
+<rect x="690" y="385" width="5.192" height="10" rx="2" fill="#8A4F12"/>
+</svg>

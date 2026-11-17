@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="642" viewBox="0 0 800 428" role="img" aria-labelledby="agentx-bugfix-session-t agentx-bugfix-session-d">
+<title id="agentx-bugfix-session-t">One coding session: every call re-sends a longer history</title>
+<desc id="agentx-bugfix-session-d">Illustrative flow of one coding session from the public cc-traces-weka-062126 corpus. The parent agent makes model calls on the GPU and runs tools off the GPU. Under each call a bar shows the tokens it sends, to scale: call 2 sends 63.7K, call 3 sends 65.4K of which 63.7K is re-sent history, call 48 sends 195.5K of which 1.3K is new. After call 48 the session forks three sub-agents; two are drawn, each starting at 35.0K, and their last calls (the 7th and the 38th) send 69.1K and 113.5K. The parent waits, then call 49 sends 217.1K including 21.6K of returned results. Time is not to scale; call 1 (640 tokens) is not drawn. The corpus records token counts and timing, not what each call or tool did.</desc>
+<style>text{font-family:"Segoe UI",Arial,sans-serif}</style>
+<defs><marker id="agentx-bugfix-session-a" markerWidth="7" markerHeight="7" refX="6.5" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0L7 3.5L0 7Z" fill="#64748b"/></marker></defs>
+<rect width="800" height="428" rx="16" fill="#f8fafc"/>
+<text x="22" y="31" font-size="19" font-weight="600" text-anchor="start" fill="#111827">One coding session: every call re-sends a longer history</text>
+<text x="22" y="54" font-size="14" font-weight="400" text-anchor="start" fill="#475569">One example session from the public cc-traces corpus. Bar under each call = tokens sent, to scale.</text>
+<path d="M124 78H772" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#agentx-bugfix-session-a)"/>
+<text x="776" y="72" font-size="12" font-weight="400" text-anchor="end" fill="#475569">time</text>
+<text x="22" y="110" font-size="15" font-weight="600" text-anchor="start" fill="#111827">Parent</text>
+<text x="22" y="127" font-size="12" font-weight="400" text-anchor="start" fill="#475569">agent</text>
+<text x="146.0" y="92" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">call #2</text>
+<rect x="124" y="98" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="146.0" y="115.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<text x="278.0" y="92" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">call #3</text>
+<rect x="256" y="98" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="278.0" y="115.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<text x="426.0" y="92" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">call #48</text>
+<rect x="404" y="98" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="426.0" y="115.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<text x="746.0" y="92" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">call #49</text>
+<rect x="724" y="98" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="746.0" y="115.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<rect x="174" y="98" width="76" height="26" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="212.0" y="115.7" font-size="13" font-weight="400" text-anchor="middle" fill="#111827">tool</text>
+<rect x="306" y="98" width="44" height="26" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="328.0" y="115.7" font-size="13" font-weight="400" text-anchor="middle" fill="#111827">tool</text>
+<circle cx="362" cy="111" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<circle cx="375" cy="111" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<circle cx="388" cy="111" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<text x="375" y="136" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">+44 more</text>
+<rect x="128" y="128.0" width="36" height="36.97152" rx="0" fill="#8A4F12"/>
+<text x="146.0" y="180.0" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">63.7K</text>
+<rect x="260" y="128" width="36" height="36.97152" rx="0" fill="#a9b4c2"/>
+<rect x="260" y="164.97152" width="36" height="2" rx="0" fill="#8A4F12"/>
+<text x="278.0" y="182.0" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">65.4K</text>
+<rect x="408" y="128" width="36" height="112.6592" rx="0" fill="#a9b4c2"/>
+<rect x="408" y="240.6592" width="36" height="2" rx="0" fill="#8A4F12"/>
+<text x="426.0" y="257.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">195.5K</text>
+<text x="426.0" y="274.7" font-size="13" font-weight="600" text-anchor="middle" fill="#8A4F12">+1.3K new</text>
+<rect x="728" y="128" width="36" height="113.4016" rx="0" fill="#a9b4c2"/>
+<rect x="728" y="241.4016" width="36" height="12.509439999999989" rx="0" fill="#8A4F12"/>
+<text x="746.0" y="268.9" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">217.1K</text>
+<text x="746.0" y="285.9" font-size="13" font-weight="600" text-anchor="middle" fill="#8A4F12">+21.6K new</text>
+<path d="M448 111H466V311" fill="none" stroke="#64748b" stroke-width="1.4"/>
+<text x="480.0" y="168" font-size="14" text-anchor="start"><tspan font-weight="600" fill="#111827" font-size="14">Sub-agent A</tspan></text>
+<path d="M466 189H478" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#agentx-bugfix-session-a)"/>
+<rect x="480" y="176" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="502.0" y="193.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<rect x="532" y="176" width="40" height="26" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="552.0" y="193.7" font-size="13" font-weight="400" text-anchor="middle" fill="#111827">tool</text>
+<circle cx="584" cy="189" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<circle cx="595" cy="189" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<circle cx="606" cy="189" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<text x="593" y="214" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">+5 more</text>
+<rect x="618" y="176" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="640.0" y="193.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<rect x="484" y="206.0" width="36" height="20.30464" rx="0" fill="#8A4F12"/>
+<text x="502.0" y="241.3" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">35.0K</text>
+<rect x="622" y="206" width="36" height="33.63072" rx="0" fill="#a9b4c2"/>
+<rect x="622" y="239.63072" width="36" height="6.4588800000000015" rx="0" fill="#8A4F12"/>
+<text x="640.0" y="261.1" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">69.1K</text>
+<text x="480.0" y="290" font-size="14" text-anchor="start"><tspan font-weight="600" fill="#111827" font-size="14">Sub-agent B</tspan></text>
+<path d="M466 311H478" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#agentx-bugfix-session-a)"/>
+<rect x="480" y="298" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="502.0" y="315.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<rect x="532" y="298" width="40" height="26" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="552.0" y="315.7" font-size="13" font-weight="400" text-anchor="middle" fill="#111827">tool</text>
+<circle cx="584" cy="311" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<circle cx="595" cy="311" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<circle cx="606" cy="311" r="2.5" fill="#64748b" stroke="none" stroke-width="1"/>
+<text x="593" y="336" font-size="12" font-weight="400" text-anchor="middle" fill="#475569">+36 more</text>
+<rect x="618" y="298" width="44" height="26" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="640.0" y="315.7" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<rect x="484" y="328.0" width="36" height="20.30464" rx="0" fill="#8A4F12"/>
+<text x="502.0" y="363.3" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">35.0K</text>
+<rect x="622" y="328" width="36" height="60.394239999999996" rx="0" fill="#a9b4c2"/>
+<rect x="622" y="388.39423999999997" width="36" height="5.45664" rx="0" fill="#8A4F12"/>
+<text x="640.0" y="408.9" font-size="13" font-weight="600" text-anchor="middle" fill="#111827">113.5K</text>
+<path d="M662 189H694" fill="none" stroke="#64748b" stroke-width="1.4"/>
+<path d="M662 311H694V111" fill="none" stroke="#64748b" stroke-width="1.4"/>
+<path d="M448 111H722" fill="none" stroke="#64748b" stroke-width="1.4" marker-end="url(#agentx-bugfix-session-a)" stroke-dasharray="5 4"/>
+<rect x="512" y="99.5" width="159" height="23" rx="11.5" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="591.5" y="114.5" font-size="12" font-weight="500" text-anchor="middle" fill="#111827">waiting on sub-agents</text>
+<text x="688" y="146" font-size="12" font-weight="400" text-anchor="end" fill="#475569">returns text / tool results</text>
+<rect x="22" y="308" width="34" height="18" rx="8" fill="#dbeaf4" stroke="#cbd5e1" stroke-width="1"/>
+<text x="39.0" y="321.3" font-size="12" font-weight="600" text-anchor="middle" fill="#111827">LLM</text>
+<text x="66.0" y="322" font-size="13" text-anchor="start"><tspan font-weight="600" fill="#111827">Model call</tspan><tspan font-weight="400" fill="#475569">  runs on the GPU</tspan></text>
+<rect x="22" y="334" width="34" height="18" rx="8" fill="#ffead5" stroke="#cbd5e1" stroke-width="1"/>
+<text x="39.0" y="347.3" font-size="12" font-weight="400" text-anchor="middle" fill="#111827">tool</text>
+<text x="66.0" y="348" font-size="13" text-anchor="start"><tspan font-weight="600" fill="#111827">Tool call</tspan><tspan font-weight="400" fill="#475569">  runs off the GPU</tspan></text>
+<rect x="31" y="360" width="16" height="13" rx="0" fill="#a9b4c2"/>
+<rect x="31" y="373" width="16" height="4" rx="0" fill="#8A4F12"/>
+<text x="66.0" y="374" font-size="13" text-anchor="start"><tspan font-weight="600" fill="#111827">Tokens sent</tspan><tspan font-weight="400" fill="#475569">  re-sent history + </tspan><tspan font-weight="600" fill="#8A4F12">new tokens</tspan></text>
+</svg>
