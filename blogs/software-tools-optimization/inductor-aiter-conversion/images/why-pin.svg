@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="420" viewBox="0 0 1080 420">
+<rect width="1080" height="420" fill="#ffffff"/>
+<rect x="16" y="16" width="460" height="388" rx="14" fill="#f7f8fa" stroke="#8d97a3" stroke-width="1.5"/>
+<rect x="36" y="32" width="420" height="44" rx="8" fill="#8d97a3"/>
+<text x="246.0" y="58.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="700">Autotune cache</text>
+<circle cx="58" cy="112" r="3.5" fill="#8d97a3"/>
+<text x="74.0" y="115.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Times a candidate list</text>
+<circle cx="58" cy="160" r="3.5" fill="#8d97a3"/>
+<text x="74.0" y="163.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Winner stored under a fusion number</text>
+<circle cx="58" cy="208" r="3.5" fill="#8d97a3"/>
+<text x="74.0" y="211.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">The next compile renumbers fusions</text>
+<circle cx="58" cy="256" r="3.5" fill="#8d97a3"/>
+<text x="74.0" y="259.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">That number now names another kernel</text>
+<rect x="36" y="332" width="420" height="52" rx="8" fill="#eef1f4" stroke="#d5dbe3"/>
+<text x="246.0" y="361.8" text-anchor="middle" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="700">A later compile does not reuse it</text>
+<rect x="486" y="168" width="108" height="32" rx="8" fill="#e7eef5" stroke="#1f4e79"/>
+<text x="540.0" y="187.2" text-anchor="middle" fill="#1f4e79" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">ship instead</text>
+<line x1="500" y1="230" x2="568" y2="230" stroke="#1f4e79" stroke-width="1.8"/>
+<polygon points="568,224 582,230 568,236" fill="#1f4e79"/>
+<rect x="604" y="16" width="460" height="388" rx="14" fill="#f7f8fa" stroke="#1f4e79" stroke-width="1.5"/>
+<rect x="624" y="32" width="420" height="44" rx="8" fill="#1f4e79"/>
+<text x="834.0" y="58.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="700">Pinned package</text>
+<circle cx="646" cy="112" r="3.5" fill="#1f4e79"/>
+<text x="662.0" y="115.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Identity is the text, not the number</text>
+<circle cx="646" cy="160" r="3.5" fill="#1f4e79"/>
+<text x="662.0" y="163.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">The numeric suffix is stripped off</text>
+<circle cx="646" cy="208" r="3.5" fill="#1f4e79"/>
+<text x="662.0" y="211.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Kept only if the check passes</text>
+<circle cx="646" cy="256" r="3.5" fill="#1f4e79"/>
+<text x="662.0" y="259.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Written into the compiled package</text>
+<rect x="624" y="332" width="420" height="52" rx="8" fill="#e7eef5" stroke="#d5dbe3"/>
+<text x="834.0" y="361.8" text-anchor="middle" fill="#1f4e79" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="700">The next startup uses this config</text>
+</svg>

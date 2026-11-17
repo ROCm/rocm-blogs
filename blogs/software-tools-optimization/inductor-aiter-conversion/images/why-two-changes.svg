@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="560" viewBox="0 0 1100 560">
+<rect width="1100" height="560" fill="#ffffff"/>
+<rect x="16" y="16" width="1068" height="36" rx="8" fill="#f4f6f8" stroke="#d5dbe3"/>
+<text x="248.0" y="37.2" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">Body</text>
+<text x="498.0" y="37.2" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">Config</text>
+<text x="758.0" y="37.2" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">What this step isolates</text>
+<rect x="16" y="64" width="1068" height="68" rx="12" fill="#f7f8fa" stroke="#8d97a3" stroke-width="1.4"/>
+<line x1="228" y1="82.0" x2="228" y2="114.0" stroke="#d5dbe3"/>
+<line x1="478" y1="82.0" x2="478" y2="114.0" stroke="#d5dbe3"/>
+<line x1="738" y1="82.0" x2="738" y2="114.0" stroke="#d5dbe3"/>
+<circle cx="52" cy="98.0" r="15" fill="#8d97a3"/>
+<text x="52.0" y="101.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="700">1</text>
+<text x="80.0" y="102.0" text-anchor="start" fill="#8d97a3" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700">Inductor</text>
+<text x="248.0" y="101.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Compiler body</text>
+<text x="498.0" y="101.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">One default config</text>
+<text x="758.0" y="101.5" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="400">The list is sliced to one tile</text>
+<line x1="52" y1="134" x2="52" y2="141" stroke="#1f4e79" stroke-width="1.6"/>
+<polygon points="46,141 58,141 52,148" fill="#1f4e79"/>
+<rect x="16" y="150" width="1068" height="68" rx="12" fill="#f4f6f8" stroke="#7d8b99" stroke-width="1.4"/>
+<line x1="228" y1="168.0" x2="228" y2="200.0" stroke="#d5dbe3"/>
+<line x1="478" y1="168.0" x2="478" y2="200.0" stroke="#d5dbe3"/>
+<line x1="738" y1="168.0" x2="738" y2="200.0" stroke="#d5dbe3"/>
+<circle cx="52" cy="184.0" r="15" fill="#7d8b99"/>
+<text x="52.0" y="187.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="700">2</text>
+<text x="80.0" y="188.0" text-anchor="start" fill="#7d8b99" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700">AITER</text>
+<text x="248.0" y="187.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">A: 3 SiLU. B: 24/25 same</text>
+<text x="498.0" y="187.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">That same config</text>
+<text x="758.0" y="187.5" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="400">Only the body can differ</text>
+<line x1="52" y1="220" x2="52" y2="227" stroke="#1f4e79" stroke-width="1.6"/>
+<polygon points="46,227 58,227 52,234" fill="#1f4e79"/>
+<rect x="16" y="236" width="1068" height="68" rx="12" fill="#f4f8fc" stroke="#1f4e79" stroke-width="1.4"/>
+<line x1="228" y1="254.0" x2="228" y2="286.0" stroke="#d5dbe3"/>
+<line x1="478" y1="254.0" x2="478" y2="286.0" stroke="#d5dbe3"/>
+<line x1="738" y1="254.0" x2="738" y2="286.0" stroke="#d5dbe3"/>
+<circle cx="52" cy="270.0" r="15" fill="#1f4e79"/>
+<text x="52.0" y="273.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="700">3</text>
+<text x="80.0" y="274.0" text-anchor="start" fill="#1f4e79" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700">Tuned</text>
+<text x="248.0" y="273.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">That same body</text>
+<text x="498.0" y="273.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Pinned config</text>
+<text x="758.0" y="273.5" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="400">Only the config can differ</text>
+<line x1="52" y1="306" x2="52" y2="313" stroke="#1f4e79" stroke-width="1.6"/>
+<polygon points="46,313 58,313 52,320" fill="#1f4e79"/>
+<rect x="16" y="322" width="1068" height="68" rx="12" fill="#ffffff" stroke="#1f4e79" stroke-width="1.4"/>
+<line x1="228" y1="340.0" x2="228" y2="372.0" stroke="#d5dbe3"/>
+<line x1="478" y1="340.0" x2="478" y2="372.0" stroke="#d5dbe3"/>
+<line x1="738" y1="340.0" x2="738" y2="372.0" stroke="#d5dbe3"/>
+<circle cx="52" cy="356.0" r="15" fill="#1f4e79"/>
+<text x="52.0" y="359.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="700">4</text>
+<text x="80.0" y="360.0" text-anchor="start" fill="#1f4e79" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700">Control</text>
+<text x="248.0" y="359.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Compiler body again</text>
+<text x="498.0" y="359.8" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="400">Those same pins</text>
+<text x="758.0" y="359.5" text-anchor="start" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="400">Asks whether the pin was enough</text>
+<rect x="16" y="408" width="1068" height="132" rx="12" fill="#fbf6ef" stroke="#d4760a" stroke-width="1.3"/>
+<text x="550.0" y="447.8" text-anchor="middle" fill="#d4760a" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="700">Only one thing changes at each step.</text>
+<text x="550.0" y="477.5" text-anchor="middle" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="400">Not a stage. Leave the list open and the compiler bakes a tile.</text>
+<text x="550.0" y="507.5" text-anchor="middle" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="400">Another compile of the same graph can bake a different one.</text>
+</svg>

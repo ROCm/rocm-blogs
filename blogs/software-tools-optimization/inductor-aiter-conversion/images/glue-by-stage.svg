@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="520" viewBox="0 0 1180 520">
+<rect width="1180" height="520" fill="#ffffff"/>
+<text x="335.0" y="52.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700">Model A, 143 kernels</text>
+<line x1="100.0" y1="430.0" x2="570.0" y2="430.0" stroke="#e6e8eb"/>
+<text x="90.0" y="433.0" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">0</text>
+<line x1="100.0" y1="360.8" x2="570.0" y2="360.8" stroke="#e6e8eb"/>
+<text x="90.0" y="363.8" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">500</text>
+<line x1="100.0" y1="291.5" x2="570.0" y2="291.5" stroke="#e6e8eb"/>
+<text x="90.0" y="294.5" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">1000</text>
+<line x1="100.0" y1="222.3" x2="570.0" y2="222.3" stroke="#e6e8eb"/>
+<text x="90.0" y="225.3" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">1500</text>
+<line x1="100.0" y1="153.1" x2="570.0" y2="153.1" stroke="#e6e8eb"/>
+<text x="90.0" y="156.1" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">2000</text>
+<line x1="100.0" y1="83.8" x2="570.0" y2="83.8" stroke="#e6e8eb"/>
+<text x="90.0" y="86.8" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">2500</text>
+<line x1="100.0" y1="70.0" x2="100.0" y2="430.0" stroke="#c5ced6"/>
+<line x1="100.0" y1="430.0" x2="570.0" y2="430.0" stroke="#c5ced6"/>
+<rect x="116.0" y="134.5" width="59.7" height="295.5" rx="2" fill="#8d97a3"/>
+<text x="145.8" y="285.2" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="145.8" y="285.5" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">2134</text>
+<text x="145.8" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Default</text>
+<rect x="191.7" y="205.8" width="59.7" height="224.2" rx="2" fill="#d4760a"/>
+<text x="221.5" y="320.9" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="221.5" y="321.2" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">1619</text>
+<text x="221.5" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Open list</text>
+<rect x="267.3" y="185.0" width="59.7" height="245.0" rx="2" fill="#e0a15a"/>
+<text x="297.2" y="310.5" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="297.2" y="310.7" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">1770</text>
+<text x="297.2" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Open list</text>
+<rect x="343.0" y="172.0" width="59.7" height="258.0" rx="2" fill="#c9843a"/>
+<text x="372.8" y="304.0" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="372.8" y="304.2" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">1864</text>
+<text x="372.8" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Open list</text>
+<rect x="418.7" y="137.0" width="59.7" height="293.0" rx="2" fill="#b7c0ca"/>
+<text x="448.5" y="286.5" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="448.5" y="286.8" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">2116</text>
+<text x="448.5" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">AITER</text>
+<rect x="494.3" y="216.8" width="59.7" height="213.2" rx="2" fill="#1f4e79"/>
+<text x="524.2" y="326.4" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="524.2" y="326.6" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">1540</text>
+<text x="524.2" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Tuned</text>
+<text x="28.0" y="253.0" text-anchor="middle" transform="rotate(-90 28.0 250.0)" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12">Glue, µs per forward</text>
+<text x="910.0" y="52.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="16" font-weight="700">Model B, 25 kernels</text>
+<line x1="700.0" y1="430.0" x2="1120.0" y2="430.0" stroke="#e6e8eb"/>
+<text x="690.0" y="433.0" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">0</text>
+<line x1="700.0" y1="378.6" x2="1120.0" y2="378.6" stroke="#e6e8eb"/>
+<text x="690.0" y="381.6" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">200</text>
+<line x1="700.0" y1="327.1" x2="1120.0" y2="327.1" stroke="#e6e8eb"/>
+<text x="690.0" y="330.1" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">400</text>
+<line x1="700.0" y1="275.7" x2="1120.0" y2="275.7" stroke="#e6e8eb"/>
+<text x="690.0" y="278.7" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">600</text>
+<line x1="700.0" y1="224.3" x2="1120.0" y2="224.3" stroke="#e6e8eb"/>
+<text x="690.0" y="227.3" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">800</text>
+<line x1="700.0" y1="172.9" x2="1120.0" y2="172.9" stroke="#e6e8eb"/>
+<text x="690.0" y="175.9" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">1000</text>
+<line x1="700.0" y1="121.4" x2="1120.0" y2="121.4" stroke="#e6e8eb"/>
+<text x="690.0" y="124.4" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">1200</text>
+<line x1="700.0" y1="70.0" x2="1120.0" y2="70.0" stroke="#e6e8eb"/>
+<text x="690.0" y="73.0" text-anchor="end" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">1400</text>
+<line x1="700.0" y1="70.0" x2="700.0" y2="430.0" stroke="#c5ced6"/>
+<line x1="700.0" y1="430.0" x2="1120.0" y2="430.0" stroke="#c5ced6"/>
+<rect x="716.0" y="173.2" width="85.0" height="256.8" rx="2" fill="#8d97a3"/>
+<text x="758.5" y="304.6" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="758.5" y="304.9" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">999</text>
+<text x="758.5" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Default</text>
+<rect x="817.0" y="326.0" width="85.0" height="104.0" rx="2" fill="#d4760a"/>
+<text x="859.5" y="381.0" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="859.5" y="381.3" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">404</text>
+<text x="859.5" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Open list</text>
+<rect x="918.0" y="170.3" width="85.0" height="259.7" rx="2" fill="#b7c0ca"/>
+<text x="960.5" y="303.2" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="960.5" y="303.4" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">1010</text>
+<text x="960.5" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">AITER</text>
+<rect x="1019.0" y="339.8" width="85.0" height="90.2" rx="2" fill="#1f4e79"/>
+<text x="1061.5" y="387.9" text-anchor="start" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400"></text>
+<text x="1061.5" y="388.1" text-anchor="middle" fill="#ffffff" font-family="DejaVu Sans, sans-serif" font-size="13" font-weight="700">351</text>
+<text x="1061.5" y="451.0" text-anchor="middle" fill="#1c2833" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="400">Tuned</text>
+<text x="628.0" y="253.0" text-anchor="middle" transform="rotate(-90 628.0 250.0)" fill="#5c6b7a" font-family="DejaVu Sans, sans-serif" font-size="12">Glue, µs per forward</text>
+</svg>

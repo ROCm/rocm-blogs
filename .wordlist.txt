@@ -2391,6 +2391,7 @@ GANs
 hostname
 img
 Inductor
+inductor
 initrd
 JupyterHub
 jupyterlab
@@ -3747,3 +3748,13 @@ Elangovan
 Runfile
 SAXPY
 vectorizing
+AOTInductor
+Inductor's
+Tuned's
+ULP
+compile's
+reinitializes
+retune
+Huan
+Ph
+hyperthreading
