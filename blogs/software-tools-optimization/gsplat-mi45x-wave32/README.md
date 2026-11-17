@@ -104,7 +104,7 @@ CUDA_VISIBLE_DEVICES=0 python simple_trainer.py default --disable_viewer \
 
 ## The 3DGS pipeline: project, sort, composite
 
-![Three stages of 3D Gaussian Splatting. Project maps Gaussians to 2D ellipses, sort assigns them to tiles and orders them by depth, and composite blends them front to back.](images/3dgs-pipeline.jpg)
+![Three stages of 3D Gaussian Splatting. Project maps Gaussians to 2D ellipses, sort assigns them to tiles and orders them by depth, and composite blends them front to back.](images/3dgs-pipeline.png)
 
 *Project, sort, and composite.*
 
