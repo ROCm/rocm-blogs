@@ -293,10 +293,6 @@ On a single AMD Instinct™ MI350X GPU, AMD GEAK-guided optimization reduces gen
 Updated performance results and figures for Micro-World 2 based on the latest optimizations.
 ```
 
-```{update} Nov 18, 2026
-Updated performance results and figures for Micro-World 2 based on the latest optimizations.
-```
-
 ```{Note}
 This blog was originally uploaded on October 21, 2026
 ```
