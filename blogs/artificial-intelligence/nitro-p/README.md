@@ -444,7 +444,7 @@ We present Nitro-P, a VAE-free pixel-space extension of Nitro-E for text-to-imag
 
 Model: [amd/Nitro-P · HuggingFace](https://huggingface.co/amd/Nitro-P)
 
-Code: [AMD-AIG-AIMA/Nitro-P](https://github.com/AMD-AGI/Nitro-P)
+Code: [AMD-AGI/Nitro-P](https://github.com/AMD-AGI/Nitro-E/tree/main/Nitro-P)
 
 Related Work from AMD team:
 
