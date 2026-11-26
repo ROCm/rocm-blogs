@@ -329,7 +329,7 @@ for the 3D visualization of each segment.
 ![output.JPG](./images/output.JPG)
 
 You can package and upload the application as a Docker image using
-[monai-deploy commands](https://docs.monai.io/projects/monai-deploy-app-sdk/en/latest/getting_started/tutorials/monai_bundle_app.html).
+[monai-deploy commands](https://monai.readthedocs.io/projects/monai-deploy-app-sdk/en/latest/getting_started/tutorials/monai_bundle_app.html).
 Use the Docker tags that were used to package the application to retrieve and run it.
 
 ## Real world use case

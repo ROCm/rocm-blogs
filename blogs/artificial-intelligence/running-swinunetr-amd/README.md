@@ -91,7 +91,7 @@ and adapted them with the following key modifications:
 
 - Updating deprecated packages like [MONAI](https://github.com/Project-MONAI/MONAI) and [nibabel](https://github.com/nipy/nibabel).
 - Replacing outdated code references.
-- Incorporating specific data and data loading functions for the MONAI [TciaDataset](https://docs.monai.io/en/stable/apps.html#monai.apps.TciaDataset) dataset from [NSCLC-Radiomics](https://www.cancerimagingarchive.net/collection/nsclc-radiomics/).
+- Incorporating specific data and data loading functions for the MONAI [TciaDataset](https://monai.readthedocs.io/en/stable/apps.html#monai.apps.TciaDataset) dataset from [NSCLC-Radiomics](https://www.cancerimagingarchive.net/collection/nsclc-radiomics/).
 
 The modified code can be found [here](https://github.com/silogen/ai-samples/tree/main/life-science/medical-imaging/swinunetr).
 
@@ -316,7 +316,7 @@ This blog is part of our ongoing series on Life Science AI models, building on o
 **Related AMD resources:**
 
 - [ROCm Software Platform](https://rocm.docs.amd.com/) for GPU computing
-- [AMD Instinct™ MI300X specifications](https://www.amd.com/en/products/server-accelerators/instinct-mi300x) and performance guides
+- [AMD Instinct™ MI300X specifications](https://www.amd.com/en/products/accelerators/instinct/mi300/mi300x.html) and performance guides
 - [ROCm Life Science toolkit](https://rocm.docs.amd.com/projects/rocm-ls/en/develop/index.html) for GPU accelerated computational workloads workloads
 
 Stay tuned for more content as we continue exploring the intersection of AI, life sciences, and high-performance computing on AMD hardware.

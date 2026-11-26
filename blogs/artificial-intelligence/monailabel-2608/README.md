@@ -213,7 +213,7 @@ and to say what they need next.
 - [MONAILabel on GitHub](https://github.com/AMD-Ecosystem/MONAILabel)
 - [MONAI on GitHub](https://github.com/AMD-Ecosystem/MONAI)
 - [hipCIM on GitHub](https://github.com/AMD-Ecosystem/hipCIM)
-- [Project MONAILabel documentation](https://docs.monai.io/projects/label/en/latest/): upstream MONAILabel docs, licensed under the Apache License 2.0.
+- [Project MONAILabel documentation](https://monai.readthedocs.io/projects/label/en/latest/): upstream MONAILabel docs, licensed under the Apache License 2.0.
 - [AMD ROCm documentation](https://rocm.docs.amd.com/)
 - [AMD ROCm Blogs](https://rocm.blogs.amd.com/)
 

@@ -257,7 +257,7 @@ Composable Kernel (CK) 3D kernels. Follow the AMD ROCm Blogs for the rest of the
 - [hipCIM 26.06: GPU-Accelerated Whole-Slide Image I/O on AMD Instinct™ GPUs](https://rocm.blogs.amd.com/software-tools-optimization/hipcim-26-08/README.html): the image I/O layer beneath this work.
 - [Accelerating MONAI Digital-Pathology Pipelines on AMD Instinct™ GPUs with hipCIM](https://rocm.blogs.amd.com/artificial-intelligence/monai-hipcim-2608/README.html): hipCIM as the MONAI `WSIReader` backend.
 - [Project MONAI Model Zoo](https://github.com/Project-MONAI/model-zoo): the upstream bundle collection, licensed under the Apache License 2.0.
-- [MONAI bundle configuration documentation](https://docs.monai.io/en/stable/config_syntax.html): the configuration and overlay mechanism used here.
+- [MONAI bundle configuration documentation](https://monai.readthedocs.io/en/stable/config_syntax.html): the configuration and overlay mechanism used here.
 - [MONAI Model Zoo on GitHub](https://github.com/AMD-Ecosystem/monai-model-zoo)
 - [MONAI on GitHub](https://github.com/AMD-Ecosystem/MONAI)
 - [AMD ROCm documentation](https://rocm.docs.amd.com/)

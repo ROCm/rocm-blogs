@@ -52,19 +52,19 @@ SOFTWARE.
 Today, AMD is thrilled to announce [MONAI 1.0.0 for AMD ROCm](https://github.com/ROCm-LS/monai), now available to the community as part of the ROCm-LS Early Access release.
 In this blog you will learn how to use MONAI to load an analyze medical images, and see results from more advanced case studies.
 
-[MONAI](https://monai.io/), or the Medical Open Network for AI, is an open-source, domain-specific framework for developing, training, and deploying deep learning models for medical imaging.
+[MONAI](https://project-monai.github.io/), or the Medical Open Network for AI, is an open-source, domain-specific framework for developing, training, and deploying deep learning models for medical imaging.
 Built on PyTorch, it's designed to address the unique challenges of medical data, such as large, multi-dimensional images (like 3D and 4D scans), complex file formats (e.g., [DICOM](https://www.dicomstandard.org/), [NIfTI](https://nifti.nimh.nih.gov/)), and limited annotated datasets.
 MONAI creates a standardized and reproducible ecosystem and collaborative platform that bridges the gap between AI research and its practical application in healthcare.
 
 MONAI offers a comprehensive set of features and tools that cover the entire AI lifecycle for medical imaging.
 
-* [MONAI Core](https://monai.io/core.html): This is the foundational library providing core functionalities for developing and training models. It includes:
+* [MONAI Core](https://project-monai.github.io/core.html): This is the foundational library providing core functionalities for developing and training models. It includes:
   * Domain-specific transforms: Data augmentation and preprocessing tools optimized for medical images, handling things like intensity scaling, anatomical orientation, and resampling.
   * Specialized network architectures: MONAI includes pre-built neural networks and loss functions tailored for medical tasks, such as segmentation, classification, and registration.
   * Performance optimization: Leveraging GPU acceleration, smart caching, and distributed training to speed up workflows.
-* [MONAI Label](https://monai.io/label.html): An intelligent annotation tool that uses AI to assist in labeling medical images, which significantly reduces the time and effort required for creating new datasets.
-* [MONAI Deploy](https://monai.io/deploy.html): This framework simplifies the process of taking a trained model and integrating it into clinical workflows. It provides tools for creating lightweight, containerized applications that can be deployed in hospital environments, with support for clinical standards like DICOM and FHIR.
-* [MONAI Model Zoo](https://monai.io/model-zoo.html): A collection of pre-trained, state-of-the-art models for various medical imaging tasks. These models serve as excellent starting points for researchers and developers, enabling them to jump-start their projects without building models from scratch.
+* [MONAI Label](https://project-monai.github.io/label.html): An intelligent annotation tool that uses AI to assist in labeling medical images, which significantly reduces the time and effort required for creating new datasets.
+* [MONAI Deploy](https://project-monai.github.io/deploy.html): This framework simplifies the process of taking a trained model and integrating it into clinical workflows. It provides tools for creating lightweight, containerized applications that can be deployed in hospital environments, with support for clinical standards like DICOM and FHIR.
+* [MONAI Model Zoo](https://project-monai.github.io/model-zoo.html): A collection of pre-trained, state-of-the-art models for various medical imaging tasks. These models serve as excellent starting points for researchers and developers, enabling them to jump-start their projects without building models from scratch.
 
 The intersection of deep learning and medical imaging is rapidly reshaping healthcare. Every day, clinicians, researchers, and AI practitioners push the boundaries of what’s possible, from [cancer detection](https://www.nature.com/articles/s41591-024-03408-6) in radiology scans to [predicting blood infection](https://health.ucsd.edu/news/press-releases/2024-01-23-study-ai-surveillance-tool-successfully-helps-to-predict-sepsis-saves-lives/) from electronic health records.
 Graphics Processing Units (GPUs) are at the core of this revolution, enabling high-resolution images to be processed rapidly.
@@ -154,15 +154,15 @@ img = reader.read("tumor_111.tif")
 
 ## Accelerating Medical Imaging AI on AMD ROCm: MONAI At Work
 
-Now let's take a look at MONAI at work. Our internal validation benchmarks tested the following two high impact models from the [MONAI Model Zoo](https://monai.io/model-zoo.html).
+Now let's take a look at MONAI at work. Our internal validation benchmarks tested the following two high impact models from the [MONAI Model Zoo](https://project-monai.github.io/model-zoo.html).
 The first is a Spleen CT Segmentation Model, which is a pre-trained model for volumetric (3D) segmentation of the spleen from CT images.
 The second is a Pathology Tumor Detection Model, which is a pre-trained model for automated detection of metastases in whole-slide histopathology images.
 
-Our internal validation benchmarks tested these high-impact models from the [MONAI Model Zoo](https://monai.io/model-zoo.html).
+Our internal validation benchmarks tested these high-impact models from the [MONAI Model Zoo](https://project-monai.github.io/model-zoo.html).
 
 ### Spleen CT Segmentation Model
 
-Using the [Spleen CT Segmentation](https://monai.io/model-zoo.html#/model/spleen_ct_segmentation) model trained on the [Medical Segmentation Decathlon (MSD)](https://medicaldecathlon.com/dataaws/) Spleen dataset,
+Using the [Spleen CT Segmentation](https://project-monai.github.io/model-zoo.html#/model/spleen_ct_segmentation) model trained on the [Medical Segmentation Decathlon (MSD)](https://registry.opendata.aws/msd/) Spleen dataset,
 we observed a consistent __1.6x__ to __1.8x__ speedup over CPU-only training, demonstrating notable efficiency gains for 3D volumetric segmentation.
 The images below show examples of the training and test images used for this experiment.
 
@@ -180,7 +180,7 @@ These outcomes highlight the effectiveness of ROCm-accelerated MONAI in deliveri
 
 ### Pathology Tumor Detection
 
-For the [Pathology Tumor Detection](https://monai.io/model-zoo.html#/model/pathology_tumor_detection) task involving whole slide images (WSI) from [CAncer MEtastases in LYmph nOdes challeNge (CAMELYON)](https://registry.opendata.aws/camelyon/), integration with the newly released [hipCIM library](https://github.com/ROCm-LS/hipCIM) for fast GPU image loading proved transformative.
+For the [Pathology Tumor Detection](https://project-monai.github.io/model-zoo.html#/model/pathology_tumor_detection) task involving whole slide images (WSI) from [CAncer MEtastases in LYmph nOdes challeNge (CAMELYON)](https://registry.opendata.aws/camelyon/), integration with the newly released [hipCIM library](https://github.com/ROCm-LS/hipCIM) for fast GPU image loading proved transformative.
 Not only did we achieve a __6x__ speedup in training, but inference acceleration was even more striking —
 GPU-accelerated pipelines delivered up to __7.9x__ speedup at smaller batch sizes, and scaled dramatically to __over 15x faster throughput__ at higher batch sizes (>4), compared to CPU-based inference.
 This underlines the superior scalability and efficiency of AMD ROCm-powered solutions for large-scale, high-throughput digital pathology.
@@ -210,18 +210,18 @@ Especially for large-scale pathology and high-throughput workloads, the combined
 
 ## Seamless MONAI Model Zoo Support on AMD ROCm
 
-A key advantage of the MONAI early access release for AMD ROCm is its effortless compatibility with the [MONAI Model Zoo](https://monai.io/model-zoo.html#/).
-Our internal validation demonstrates that industry-standard models, such as Pathology Tumor Detection, Spleen CT Segmentation, and [SwinUNETR](https://monai.io/model-zoo.html#/model/swin_unetr_btcv_segmentation) for advanced segmentation, work seamlessly, right out of the box.
+A key advantage of the MONAI early access release for AMD ROCm is its effortless compatibility with the [MONAI Model Zoo](https://project-monai.github.io/model-zoo.html#/).
+Our internal validation demonstrates that industry-standard models, such as Pathology Tumor Detection, Spleen CT Segmentation, and [SwinUNETR](https://project-monai.github.io/model-zoo.html#/model/swin_unetr_btcv_segmentation) for advanced segmentation, work seamlessly, right out of the box.
 
 Users can select and deploy state-of-the-art architectures from the Model Zoo without requiring low-level hardware tuning or custom engineering.
 Whether running classification pipelines on gigapixel pathology slides or training transformer-based networks for complex 3D segmentation, the ROCm stack (with MONAI and hipCIM) ensures models perform efficiently and reliably on AMD Instinct™ accelerators.
-For more details on the MONAI Model Zoo support, see [our documentation](https://rocm.docs.amd.com/projects/monai/en/latest/reference/model-zoo.html).
+For more details on the MONAI Model Zoo support, see [our documentation](https://rocm.docs.amd.com/projects/monai-model-zoo/en/docs-26.08/).
 
 This “it just works” experience accelerates innovation and reduces friction for medical imaging researchers and developers, enabling fast iteration, experimentation, and scaling with trusted, community-maintained models.
 
 ## Effortless MONAI Bundle Integration on AMD ROCm
 
-The early access release of MONAI for AMD ROCm not only ensures Model Zoo compatibility, but also delivers seamless support for [MONAI Bundles](https://docs.monai.io/en/stable/bundle_intro.html) — reproducible, portable packages that encapsulate models, configurations, and workflows.
+The early access release of MONAI for AMD ROCm not only ensures Model Zoo compatibility, but also delivers seamless support for [MONAI Bundles](https://monai.readthedocs.io/en/stable/bundle_intro.html) — reproducible, portable packages that encapsulate models, configurations, and workflows.
 
 Our validation confirms that loading, running, and customizing MONAI Bundles, across tasks such as pathology classification, organ segmentation, or transformer-powered pipelines, works without friction on ROCm-powered AMD Instinct™ GPUs.
 This empowers researchers and practitioners to deploy, share, and scale AI solutions in clinical and research environments, leveraging optimized, community-vetted resources.
