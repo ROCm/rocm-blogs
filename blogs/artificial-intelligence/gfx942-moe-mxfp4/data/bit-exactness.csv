@@ -1,0 +1,8 @@
+check,value,note
+weights_compared,22020096,"16 experts x 3584 x 384, read back through GEMM2 one-hot rows"
+e8m0_scale_min,0x00,
+e8m0_scale_max,0xFC,0xFD-0xFF left out: they overflow bf16 for the largest magnitudes or are NaN
+byte_scale_pairs_covered,64768,of 64768 possible
+nonzero_weights_differing_software_vs_lut,0,zeros compared by value
+weights_differing_lut_vs_exact,76208,all at e8m0 0x00: the shared scale loader returns 0
+weights_differing_software_vs_exact,76208,all at e8m0 0x00: the shared scale loader returns 0
